@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>纵向项目结题详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="/IMIS/libs/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/IMIS/libs/bootstrap/css/bootstrap-datetimepicker.min.css"/>
+    <link rel="stylesheet" href="/IMIS/css/child_pages.css"/>
+    <!--[if lt IE 9]>
+    <script src="/IMIS/libs/html5shiv.js"></script>
+    <script src="/IMIS/libs/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+    <script src="/IMIS/libs/jquery-1.11.1.min.js"></script>
+    <script src="/IMIS/libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/IMIS/libs/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/IMIS/libs/avalon.min.js"></script>
+
+    <script src="/IMIS/js/main.js"></script>
+    <script src="/IMIS/js/get_connect/code.js"></script>
+    <script src="/IMIS/js/get_connect/connect_http.js"></script>
+    <script src="/IMIS/js/get_connect/return_data.js"></script>
+    <script src="/IMIS/js/纵向项目/在研项目/纵向项目结题详情.js"></script>
+</head>
+<body ms-controller="root" class="ms-controller" style="background: #fff;">
+<div class="form-horizontal page-details">
+    <ul class="nav nav-tabs">
+        <li role="presentation" class="active">
+            <a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">结题信息</a>
+        </li>
+        <li role="presentation">
+            <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">结题专家评审</a>
+        </li>
+        <li role="presentation">
+            <a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">结题审核记录</a>
+        </li>
+    </ul>
+    <div class="tab-content add-user">
+        <div role="tabpanel" id="tab1" class="tab-pane active">
+            <form class="form-horizontal content">
+                <div class="col-sm-12">
+                    <h5 class="title"><span>结题信息</span></h5>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">结题验收编号：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.项目结题信息.结题验收编号}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">结题验收时间：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.项目结题信息.结题验收时间|date("yyyy-MM-dd")}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">结题验收是否合格：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.项目结题信息.结题验收是否合格?'合格':'不合格'}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <label class="col-sm-3 control-label">备注：</label>
+                        <div class="col-sm-9">
+                            <span>{{@model.项目结题信息.备注}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <h5 class="title"><span>结题参与人</span></h5>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th width="80">序号</th>
+                                <th>参与人姓名</th>
+                                <th>所属部门</th>
+                                <th>建立时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ms-for="($index,el) in @model.结题参与人信息">
+                                <td>{{$index+1}}</td>
+                                <td>{{el.姓名}}</td>
+                                <td>{{el.部门名称}}</td>
+                                <td>{{el.建立时间}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div ms-if="@model.结题参与人信息.length==0||@model.结题参与人信息==null">
+                        <p class="text-center"><img src="/IMIS/images/nothing-3.png"></p>
+                    </div>
+                </div>
+                <div class="col-sm-12 fileUpload-box">
+                    <h5 class="title"><span>结题资料</span></h5>
+                    <div class="form-group col-sm-12">
+                        <label class="col-sm-3 control-label">结题资料：</label>
+                        <div class="form-group col-sm-8 items">
+                            <div class="item" ms-for="el in @otherFile">
+                                <a class="name" ms-attr="{'href':@el}" download="">{{@getHtmlDocName(el)}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div role="tabpanel" id="tab2" class="tab-pane">
+            <div class="title-box">
+                <a class="btn btn-success btn-Printing" ms-if="model.结题专家评审.length!=0" href="javascript:;"
+                   ms-on-click="@Printing()">
+                    <i class="icon iconfont icon-dayin2"></i> 打印记录
+                </a>
+                <!-- <a class="btn btn-default btn-export" href="javascript:;" ms-on-click="@batchExport()">
+                 <i class="icon iconfont icon-download"></i> 导出PDF
+             </a>-->
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th width="80">序号</th>
+                        <th>专家姓名</th>
+                        <th>部门</th>
+                        <th>评分类型</th>
+                        <th>评分</th>
+                        <th>评审时间</th>
+                        <th>专家推荐意见</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ms-for="($index,el) in @model.结题专家评审">
+                        <td>{{$index+1}}</td>
+                        <td>{{el.专家姓名}}</td>
+                        <td>{{el.专家部门名称}}</td>
+                        <td>{{el.评分项}}</td>
+                        <td>{{el.评分}}</td>
+                        <td>{{el.建立时间|date("yyyy-MM-dd")}}</td>
+                        <td>{{el.备注}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ms-if="@model.结题专家评审.length==0||@model.结题专家评审==null">
+                <p class="text-center"><img src="/IMIS/images/nothing-3.png"></p>
+            </div>
+        </div>
+        <div role="tabpanel" id="tab3" class="tab-pane">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th width="60">序号</th>
+                        <th>步骤名称</th>
+                        <th>处理人</th>
+                        <th>处理人部门</th>
+                        <th>状态</th>
+                        <th>执行时间</th>
+                        <th>备注</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ms-for="($index,el) in @model.结题审核记录">
+                        <td>{{$index+1}}</td>
+                        <td>{{el.名称}}</td>
+                        <td>{{el.姓名}}</td>
+                        <td>{{el.部门名称}}</td>
+                        <td ms-class="getClass(el.状态说明)">{{el.状态说明}}</td>
+                        <td>{{el.执行时间}}</td>
+                        <td>{{el.备注}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ms-if="@model.结题审核记录.length==0||@model.结题审核记录==null">
+                <p class="text-center"><img src="/IMIS/images/nothing-3.png"></p>
+            </div>
+        </div>
+    </div>
+</div>

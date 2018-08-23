@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>横向项目经费到账详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="/IMIS/libs/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/IMIS/libs/bootstrap/css/bootstrap-datetimepicker.min.css"/>
+    <link rel="stylesheet" href="/IMIS/libs/mCustomScrollbar/jquery.mCustomScrollbar.min.css"/>
+    <link rel="stylesheet" href="/IMIS/css/child_pages.css"/>
+    <!--[if lt IE 9]>
+    <script src="/IMIS/libs/html5shiv.js"></script>
+    <script src="/IMIS/libs/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+    <script src="/IMIS/libs/jquery-1.11.1.min.js"></script>
+    <script src="/IMIS/libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/IMIS/libs/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/IMIS/libs/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="/IMIS/libs/avalon.min.js"></script>
+
+    <script src="/IMIS/js/main.js"></script>
+    <script src="/IMIS/js/get_connect/code.js"></script>
+    <script src="/IMIS/js/get_connect/connect_http.js"></script>
+    <script src="/IMIS/js/get_connect/return_data.js"></script>
+    <script src="/IMIS/js/项目经费管理/横向经费管理/横向项目经费到账详情.js"></script>
+</head>
+<body ms-controller="root" class="ms-controller" style="background: #fff;">
+<div class="form-horizontal page-details">
+    <ul class="nav nav-tabs">
+        <li role="presentation" class="active">
+            <a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">到账信息</a>
+        </li>
+        <li role="presentation">
+            <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">项目基本信息</a>
+        </li>
+        <li role="presentation">
+            <a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">审核记录</a>
+        </li>
+    </ul>
+    <div class="tab-content add-user">
+        <div role="tabpanel" id="tab1" class="tab-pane active">
+            <form class="form-horizontal content">
+                <div class="col-sm-12">
+                    <h5 class="title"><span>到账信息</span></h5>
+                    <div class="form-group col-sm-12">
+                        <label class="col-sm-3 control-label">拨款单位：</label>
+                        <div class="col-sm-9">
+                            <span>{{@model.横向项目到账详情.拨款单位}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">到账金额：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.横向项目到账详情.到账金额|currency}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">到账日期：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.横向项目到账详情.到账日期|date("yyyy-MM-dd")}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">管理费用：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.横向项目到账详情.管理费用|currency}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">技术合同认定服务费：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.横向项目到账详情.技术合同认定服务费|currency}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">技术交易额：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.横向项目到账详情.技术交易额|currency}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">增值税：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.横向项目到账详情.增值税|currency}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">到账单位：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.横向项目到账详情.到账单位}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <label class="col-sm-3 control-label">备注：</label>
+                        <div class="col-sm-9">
+                            <span>{{@model.横向项目到账详情.备注}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 fileUpload-box">
+                    <h5 class="title"><span>到账凭证</span></h5>
+                    <div class="form-group col-sm-12">
+                        <label class="col-sm-3 control-label">附件：</label>
+                        <div class="form-group col-sm-8 items">
+                            <div class="item" ms-for="el in @files">
+                                <a class="name" ms-attr="{'href':@el}" download="">{{@getHtmlDocName(el)}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div role="tabpanel" id="tab2" class="tab-pane">
+            <form class="form-horizontal content">
+                <div class="col-sm-12">
+                    <h5 class="title"><span>项目基本信息</span></h5>
+                    <div class="form-group col-sm-12">
+                        <label class="col-sm-3 control-label">合同名称：</label>
+                        <div class="col-sm-9">
+                            <span>{{@model.横向项目立项详情.合同名称}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">合同编号：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.横向项目立项详情.合同编号}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">项目负责人：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.横向项目立项详情.项目负责人姓名}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">负责人部门：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.横向项目立项详情.项目负责人部门名称}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">归属部门：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.横向项目立项详情.项目归属部门}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">合同金额：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.横向项目立项详情.合同金额|currency}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">合同总经费：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.横向项目立项详情.经费|currency}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">未到账经费：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.横向项目立项详情.未到经费|currency}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">待审核到账：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.横向项目立项详情.待审核到账|currency}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">已审核到账：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.横向项目立项详情.已审核到账|currency}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">签订时间：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.横向项目立项详情.签订时间}}</span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div role="tabpanel" id="tab3" class="tab-pane">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th width="60">序号</th>
+                        <th>步骤名称</th>
+                        <th>处理人</th>
+                        <th>处理人部门</th>
+                        <th>状态</th>
+                        <th>执行时间</th>
+                        <th>备注</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ms-for="($index,el) in @model.横向项目到账审核记录">
+                        <td>{{$index+1}}</td>
+                        <td>{{el.名称}}</td>
+                        <td>{{el.姓名}}</td>
+                        <td>{{el.部门名称}}</td>
+                        <td ms-class="getClass(el.状态说明)">{{el.状态说明}}</td>
+                        <td>{{el.执行时间}}</td>
+                        <td>{{el.备注}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ms-if="@model.横向项目到账审核记录.length==0||@model.横向项目到账审核记录==null">
+                <p class="text-center"><img src="/IMIS/images/nothing-3.png"></p>
+            </div>
+        </div>
+    </div>
+</div>

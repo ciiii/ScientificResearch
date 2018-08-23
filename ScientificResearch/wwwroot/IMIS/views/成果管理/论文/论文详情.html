@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>论文详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="/IMIS/libs/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/IMIS/libs/bootstrap/css/bootstrap-datetimepicker.min.css"/>
+    <link rel="stylesheet" href="/IMIS/css/child_pages.css"/>
+    <!--[if lt IE 9]>
+    <script src="/IMIS/libs/html5shiv.js"></script>
+    <script src="/IMIS/libs/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+    <script src="/IMIS/libs/jquery-1.11.1.min.js"></script>
+    <script src="/IMIS/libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/IMIS/libs/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/IMIS/libs/avalon.min.js"></script>
+
+    <script src="/IMIS/js/main.js"></script>
+    <script src="/IMIS/js/get_connect/code.js"></script>
+    <script src="/IMIS/js/get_connect/connect_http.js"></script>
+    <script src="/IMIS/js/get_connect/return_data.js"></script>
+    <script src="/IMIS/js/成果管理/论文/论文详情.js"></script>
+
+</head>
+<body ms-controller="root" class="ms-controller" style="background: #fff;">
+<div class="form-horizontal page-details">
+    <ul class="nav nav-tabs">
+        <li role="presentation" class="active">
+            <a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">论文信息</a>
+        </li>
+        <li role="presentation">
+            <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">刊物信息</a>
+        </li>
+        <li role="presentation">
+            <a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">相关项目</a>
+        </li>
+        <li role="presentation">
+            <a href="#tab4" aria-controls="tab4" role="tab" data-toggle="tab">作者信息</a>
+        </li>
+        <li role="presentation">
+            <a href="#tab5" aria-controls="tab5" role="tab" data-toggle="tab">相关文件</a>
+        </li>
+        <li role="presentation">
+            <a href="#tab6" aria-controls="tab6" role="tab" data-toggle="tab">审核记录</a>
+        </li>
+    </ul>
+    <div class="tab-content add-user">
+        <div role="tabpanel" id="tab1" class="tab-pane active">
+            <form class="form-horizontal content">
+                <div class="col-sm-12">
+                    <h5 class="title"><span>论文信息</span></h5>
+                    <div class="form-group col-sm-12">
+                        <label class="col-sm-3 control-label">{{@model.论文详情.论文标题类型=='中文标题'?'中文标题':'英文标题'}}：</label>
+                        <div class="col-sm-9">
+                            <span>{{@model.论文详情.论文标题}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">论文Online日期：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.论文在线日期|date("yyyy-MM-dd")}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">正式出版日期：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.论文正式出版日期|date("yyyy-MM-dd")}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">他引用次数：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.他引次数}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">年度：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.年度}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">收稿日期：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.收稿日期|date("yyyy-MM-dd")}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">版面费(元)：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.版面费|currency}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">超额版面费(元)：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.超额版面费|currency}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">超额费用来源：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.超额费用来源}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">奖励情况：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.奖励情况}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">论文字数：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.论文字数}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">计划来源：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.计划来源}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">论文版面：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.论文版面}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">学科门类：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.学科门类}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">一级学科：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.一级学科}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">二级学科：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.二级学科}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">三级学科：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.三级学科}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">作者人数：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.作者人数}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <label class="col-sm-3 control-label">关键字：</label>
+                        <div class="col-sm-9">
+                            <span>{{@model.论文详情.关键字}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <label class="col-sm-3 control-label">论文摘要：</label>
+                        <div class="col-sm-9">
+                            <span class="text-justify">{{@model.论文详情.论文摘要}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <label class="col-sm-3 control-label">备注：</label>
+                        <div class="col-sm-9">
+                            <span>{{@model.论文详情.备注}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <h5 class="title"><span>关联信息</span></h5>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">是否与行业联合发表：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.是否与行业联合发表?'是':'否'}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">是否与地方联合发表：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.是否与地方联合发表?'是':'否'}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">是否与国际联合发表：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.是否与国际联合发表?'是':'否'}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">是否跨学科：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.是否跨学科?'是':'否'}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">是否与本专业相关：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.是否与本专业相关?'是':'否'}}</span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div role="tabpanel" id="tab2" class="tab-pane">
+            <form class="form-horizontal content">
+                <div class="col-sm-12">
+                    <h5 class="title"><span>刊物信息</span></h5>
+                    <div class="form-group col-sm-12">
+                        <label class="col-sm-3 control-label">刊物名称：</label>
+                        <div class="col-sm-9">
+                            <span>{{@model.论文详情.刊物名称}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">期刊影响因子：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.影响因子}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">特征因子分值：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.特征因子分值}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">主办单位：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.主办单位}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">编目名称：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.编目名称}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">编目类别：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.编目类别}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">创刊日期：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.创刊日期|date("yyyy-MM-dd")}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">期刊所属系列：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.期刊系列}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">JCR分区：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.jcR分区}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">CN号：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.cN号}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">ISSN号：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.issN号}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">卷号：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.卷号}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">期号：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.期号}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">页码范围：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.页码范围起}} ~ {{@model.论文详情.页码范围止}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">论文类型：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.论文详情.论文类型}}</span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div role="tabpanel" id="tab3" class="tab-pane">
+            <h4 class="text-center auditing-title">相关项目</h4>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th width="80">序号</th>
+                        <th>项目名称</th>
+                        <th>项目编号</th>
+                        <th>项目类型名称</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ms-for="($index,el) in @model.成果项目">
+                        <td>{{$index+1}}</td>
+                        <td>{{el.项目名称}}</td>
+                        <td>{{el.项目编号}}</td>
+                        <td>{{el.项目类型名称}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ms-if="@model.成果项目.length==0||@model.成果项目==null">
+                <p class="text-center"><img src="/IMIS/images/nothing-3.png"></p>
+            </div>
+        </div>
+        <div role="tabpanel" id="tab4" class="tab-pane">
+            <h4 class="text-center auditing-title">作者信息</h4>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th width="80">序号</th>
+                        <th>作者姓名</th>
+                        <th>部门名称</th>
+                        <th>作者级别</th>
+                        <th>工作量占比（%）</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ms-for="($index,el) in @model.成果作者">
+                        <td>{{$index+1}}</td>
+                        <td>{{el.姓名}}</td>
+                        <td>{{el.部门名称}}</td>
+                        <td>{{el.作者级别}}</td>
+                        <td>{{el.工作量占比}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ms-if="@model.成果作者.length==0||@model.成果作者==null">
+                <p class="text-center"><img src="/IMIS/images/nothing-3.png"></p>
+            </div>
+        </div>
+        <div role="tabpanel" id="tab5" class="tab-pane">
+            <form class="form-horizontal content fileUpload-box">
+                <div class="col-sm-12">
+                    <h5 class="title"><span>检索信息页相关文件</span></h5>
+                    <div class="form-group col-sm-12">
+                        <label class="col-sm-3 control-label">检索信息页相关文件：</label>
+                        <div class="form-group col-sm-8 items">
+                            <div class="item" ms-for="el in @infoFiles">
+                                <a class="name" ms-attr="{'href':@el}" download="">{{@getHtmlDocName(el)}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <h5 class="title"><span>论文正文</span></h5>
+                    <div class="form-group col-sm-12">
+                        <label class="col-sm-3 control-label">论文正文：</label>
+                        <div class="form-group col-sm-8 items">
+                            <div class="item" ms-for="el in @contentFiles">
+                                <a class="name" ms-attr="{'href':@el}" download="">{{@getHtmlDocName(el)}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <h5 class="title"><span>其他相关文件</span></h5>
+                    <div class="form-group col-sm-12">
+                        <label class="col-sm-3 control-label">其他相关文件：</label>
+                        <div class="form-group col-sm-8 items">
+                            <div class="item" ms-for="el in @otherFiles">
+                                <a class="name" ms-attr="{'href':@el}" download="">{{@getHtmlDocName(el)}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div role="tabpanel" id="tab6" class="tab-pane">
+            <h4 class="text-center auditing-title">审核记录</h4>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th width="80">序号</th>
+                        <th>步骤名称</th>
+                        <th>处理人</th>
+                        <th>状态</th>
+                        <th>执行时间</th>
+                        <th>备注</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ms-for="($index,el) in @model.审核情况">
+                        <td>{{$index+1}}</td>
+                        <td>{{el.名称}}</td>
+                        <td>{{el.姓名}}</td>
+                        <td ms-class="getClass(el.状态说明)">{{el.状态说明}}</td>
+                        <td>{{el.执行时间}}</td>
+                        <td>{{el.备注}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ms-if="@model.审核情况.length==0||@model.审核情况==null">
+                <p class="text-center"><img src="/IMIS/images/nothing-3.png"></p>
+            </div>
+        </div>
+    </div>
+</div>

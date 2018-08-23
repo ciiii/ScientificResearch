@@ -1,0 +1,671 @@
+<script src="/IMIS/js/纵向项目/项目立项/纵向项目立项申请.js" type="text/javascript"></script>
+<div class="modal-content ms-controller add-user" ms-controller="Add">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                aria-hidden="true" ms-on-click="@clickBtnReturn">&times;</span></button>
+        <h4 class="modal-title" id="NoPermissionModalLabel">{{title}}</h4>
+    </div>
+    <div class="modal-body">
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="active">
+                <a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">基本资料</a>
+            </li>
+            <li role="presentation">
+                <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">参与人配置</a>
+            </li>
+            <li role="presentation">
+                <a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">相关文件</a>
+            </li>
+            <li role="presentation">
+                <a href="#tab4" aria-controls="tab4" role="tab" data-toggle="tab">项目预算</a>
+            </li>
+            <li role="presentation">
+                <a href="#tab5" aria-controls="tab5" role="tab" data-toggle="tab">项目计划与目标</a>
+            </li>
+            <li role="presentation">
+                <a href="#tab6" aria-controls="tab6" role="tab" data-toggle="tab">项目预期成果</a>
+            </li>
+            <li role="presentation" ms-if="@editType">
+                <a href="#tab7" aria-controls="tab7" role="tab" data-toggle="tab">审核记录</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" id="tab1" class="tab-pane active">
+                <form class="form-horizontal content">
+                    <div class="col-sm-12">
+                        <h5 class="title"><span>合同详细信息</span></h5>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">项目登记情况：</label>
+                            <div class="col-sm-7">
+                                <label class="radio-inline">
+                                    <input type="radio" value="负责人补充" name="register" ms-duplex="@info.基本资料.项目登记情况">
+                                    负责人补充
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" value="项目登记入库" name="register" ms-duplex="@info.基本资料.项目登记情况">
+                                    项目登记入库
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>项目编号：
+                            </label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control project-number" ms-duplex="@info.基本资料.项目编号"
+                                       ms-on-change="@inputVal('.project-name')">
+                                <span class="error-texe">项目编号不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>项目中文名称：
+                            </label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control project-cnNname" ms-duplex="@info.基本资料.项目中文名称"
+                                       ms-on-change="@inputVal('.project-name')">
+                                <span class="error-texe">项目中文名称不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-3 control-label">项目英文名称：</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control project-enName" ms-duplex="@info.基本资料.项目英文名称">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">项目分类：</label>
+                            <div class="col-sm-7">
+                                <select class="form-control" ms-duplex="@info.基本资料.项目分类">
+                                    <option value="">请选择</option>
+                                    <option value="纵向课题">纵向课题</option>
+                                    <option value="人文社科课题">人文社科课题</option>
+                                    <option value="教育教学课题">教育教学课题</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-3 control-label">成果归属部门：</label>
+                            <div class="col-sm-9 people-box">
+                                <input type="text" class="form-control fruit-department" readonly ms-duplex="@info.基本资料.成果归属部门">
+                                <a ms-attr="{'href':@getUrl('/IMIS/views/纵向项目/项目立项/选择部门.html')}" class="btn btn-default btn-people"
+                                   data-toggle="modal"
+                                   data-target=".modal-choice" onclick="changeUrlChoice(this,'.modal-choice')">
+                                    <i class="icon iconfont icon-icon-test"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>负责人：
+                            </label>
+                            <div class="col-sm-7 people-box">
+                                <input type="text" class="form-control people-name" ms-duplex="@info.基本资料.负责人姓名"
+                                       readonly
+                                       ms-on-change="@inputVal('.declare-name')">
+                                <span class="error-texe">负责人不能为空！</span>
+                                <a ms-attr="{'href':@getUrl('/IMIS/views/纵向项目/项目申报/选择申报人.html')}"
+                                   class="btn btn-default btn-people"
+                                   data-toggle="modal"
+                                   data-target=".modal-choice" onclick="changeUrlChoice(this,'.modal-choice')">
+                                    <i class="icon iconfont icon-yiyuanfuzeren"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>立项年度：
+                            </label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control form-year year" readonly
+                                       ms-duplex="@info.基本资料.立项年度">
+                                <span class="error-texe">立项年度不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>登记时间：
+                            </label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control form-time apply-time" readonly
+                                       ms-duplex="@info.基本资料.登记日期">
+                                <span class="error-texe">登记时间不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">登记人：</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" ms-duplex="@info.基本资料.登记人姓名">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>批准时间：
+                            </label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control form-time approval-time"
+                                       ms-duplex="@info.基本资料.批准日期">
+                                <span class="error-texe">批准时间不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">经费卡号：</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" ms-duplex="@info.基本资料.经费卡号"
+                                       onkeyup="onlyNum(this)">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">项目等级：</label>
+                            <div class="col-sm-7">
+                                <select class="form-control" ms-duplex="@info.基本资料.项目等级">
+                                    <option value="">请选择</option>
+                                    <option value="I">I</option>
+                                    <option value="II">II</option>
+                                    <option value="III">III</option>
+                                    <option value="IV">IV</option>
+                                    <option value="V">V</option>
+                                    <option value="其他">其他</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>计划开始时间：
+                            </label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control form-time start-time" readonly
+                                       ms-duplex="@info.基本资料.计划开始日期">
+                                <span class="error-texe">计划开始时间不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>计划完成时间：
+                            </label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control form-time end-time" readonly
+                                       ms-duplex="@info.基本资料.计划完成日期"/>
+                                <span class="error-texe">计划完成时间不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">学科门类：</label>
+                            <div class="col-sm-7">
+                                <select class="form-control subject" ms-duplex="@info.基本资料.学科门类">
+                                    <option value="">请选择</option>
+                                    <option ms-for="el in @model.学科门类" ms-attr="{'value':@el}">{{el}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>学科类型：
+                            </label>
+                            <div class="col-sm-7">
+                                <select class="form-control subjectType" ms-duplex="@info.基本资料.学科类型" ms-on-change="@inputVal('.subjectType')">
+                                    <option value="">请选择</option>
+                                    <option ms-for="el in @model.学科类型" ms-attr="{'value':@el}">{{el}}</option>
+                                </select>
+                                <span class="error-texe">学科类型不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>研究类型：
+                            </label>
+                            <div class="col-sm-7">
+                                <select class="form-control researchType" ms-duplex="@info.基本资料.研究类型" ms-on-change="@inputVal('.researchType')">
+                                    <option value="">请选择</option>
+                                    <option ms-for="el in @model.研究类型" ms-attr="{'value':@el}">{{el}}</option>
+                                </select>
+                                <span class="error-texe">研究类型不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group  col-sm-6">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>项目类型：
+                            </label>
+                            <div class="col-sm-7">
+                                <select class="form-control projectOne" ms-duplex="oneSelect"
+                                        ms-on-change="@inputVal('.projectOne')">
+                                    <option value="">请选择</option>
+                                    <option ms-for="el in @projectOne" ms-attr="{'value':@el.编号}">{{el.名称}}</option>
+                                </select>
+                                <span class="error-texe">项目类型不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group  col-sm-6">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>项目级别：
+                            </label>
+                            <div class="col-sm-7">
+                                <select class="form-control projectTwo" ms-duplex="twoSelect"
+                                        ms-on-change="@inputVal('.projectTwo')">
+                                    <option ms-if="@projectTwo.length>0" value="">请选择</option>
+                                    <option ms-if="@projectTwo.length>0" ms-for="el in @projectTwo"
+                                            ms-attr="{'value':@el.编号}">
+                                        {{el.名称}}
+                                    </option>
+                                    <option ms-if="@projectTwo.length==0" value="">暂无</option>
+                                </select>
+                                <span class="error-texe">项目级别不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group  col-sm-6">
+                            <label class="col-sm-3 control-label">项目来源单位：</label>
+                            <div class="col-sm-7">
+                                <select class="form-control projectThree" ms-duplex="threeSelect"
+                                        ms-on-change="@inputVal('.projectThree')">
+                                    <option ms-if="@projectThree.length>0" value="">请选择</option>
+                                    <option ms-if="@projectThree.length>0" ms-for="el in @projectThree"
+                                            ms-attr="{'value':@el.编号}">
+                                        {{el.名称}}
+                                    </option>
+                                    <option ms-if="@projectThree.length==0" value="">暂无</option>
+                                </select>
+                                <span class="error-texe">项目来源单位不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group  col-sm-6">
+                            <label class="col-sm-3 control-label">项目类别：</label>
+                            <div class="col-sm-7">
+                                <select class="form-control projectFour" ms-duplex="@info.基本资料.项目类别"
+                                        ms-on-change="@inputVal('.projectFour')">
+                                    <option ms-if="@projectFour.length>0" value="">请选择</option>
+                                    <option ms-if="@projectFour.length>0" ms-for="el in @projectFour">{{el.名称}}
+                                    </option>
+
+                                    <option ms-if="@projectFour.length==0" value="">暂无</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">档案编号：</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" ms-duplex="@info.基本资料.档案编号">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">财务简称：</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" ms-duplex="@info.基本资料.财务简称">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-3 control-label">亚类说明：</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" ms-duplex="@info.基本资料.亚类说明">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-3 control-label">附注说明：</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" ms-duplex="@info.基本资料.附注说明">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">纵向项目合同类型：</label>
+                            <div class="col-sm-7">
+                                <select class="form-control" ms-duplex="@info.基本资料.纵向项目合同类型">
+                                    <option value="">请选择</option>
+                                    <option value="独立合同">独立合同</option>
+                                    <option value="主合同">主合同</option>
+                                    <option value="子合同">子合同</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">国民经济行业：</label>
+                            <div class="col-sm-6 people-box">
+                                <input type="text" class="form-control" ms-duplex="@info.基本资料.国民经济行业" readonly>
+                                <a ms-attr="{'href':@getUrl('/IMIS/views/纵向项目/项目立项/选择国民经济行业.html')}" class="btn btn-default btn-people"
+                                   data-toggle="modal" data-target=".modal-choice"
+                                   onclick="changeUrlChoice(this,'.modal-choice')">
+                                    <i class="icon iconfont icon-jiansuo"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">合作方式：</label>
+                            <div class="col-sm-7">
+                                <select class="form-control subjectType" ms-duplex="@info.基本资料.合作形式">
+                                    <option value="">请选择</option>
+                                    <option ms-for="el in @model.合作形式" ms-attr="{'value':@el}">{{el}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">社会经济目标：</label>
+                            <div class="col-sm-6 people-box">
+                                <input type="text" class="form-control" ms-duplex="@info.基本资料.社会经济目标" readonly>
+                                <a ms-attr="{'href':@getUrl('/IMIS/views/纵向项目/项目立项/选择社会经济目标.html')}" class="btn btn-default btn-people"
+                                   data-toggle="modal" data-target=".modal-choice"
+                                   onclick="changeUrlChoice(this,'.modal-choice')">
+                                    <i class="icon iconfont icon-jiansuo"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">伦理批文编号：</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" ms-duplex="@info.基本资料.伦理批文编号">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">伦理批文时间：</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control form-time" ms-duplex="@info.基本资料.伦理批文时间">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-3 control-label">备注：</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" ms-duplex="@info.基本资料.备注" rows="2"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div role="tabpanel" id="tab2" class="tab-pane">
+                <div class="title-box">
+                    <a ms-attr="{'href':@getUrl('/IMIS/views/纵向项目/项目申报/选择参与人.html')}" class="btn btn-primary btn-add"
+                       data-toggle="modal"
+                       data-target=".modal-choice" onclick="changeUrlChoice(this,'.modal-choice')">
+                        <i class="icon iconfont icon-tianjia"></i> 添加参与人
+                    </a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th width="80">序号</th>
+                            <th>参与人姓名</th>
+                            <th>所属部门</th>
+                            <th>工作量占比（%）</th>
+                            <th>备注</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ms-for="($index,el) in @info.参与人列表">
+                            <td>{{$index+1}}</td>
+                            <td>{{el.姓名}}</td>
+                            <td>{{el.部门名称}}</td>
+                            <td>
+                                <input type="text" class="text-center form-control" ms-duplex="@el.工作量占比"
+                                       onkeyup="onlyNum(this)"/>
+                            </td>
+                            <td>
+                                <textarea class="text-center form-control" ms-duplex="@el.备注" rows="1"></textarea>
+                            </td>
+                            <td class="operation">
+                                <ul>
+                                    <li class="bs-tooltip btn-del" data-toggle="tooltip" data-placement="bottom"
+                                        title="删除">
+                                        <a href="javascript:;" ms-on-click="@info.参与人列表.remove(el)">
+                                            <i class="icon iconfont icon-shanchu1"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div ms-if="@info.参与人列表.length==0||@info.参与人列表==null">
+                    <p class="text-center"><img src="/IMIS/images/nothing-3.png"></p>
+                </div>
+            </div>
+            <div role="tabpanel" id="tab3" class="tab-pane">
+                <form class="form-horizontal content">
+                    <div class="col-sm-12 fileUpload-box fileUpload-flie">
+                        <h5 class="title"><span>伦理批文</span></h5>
+                        <div class="form-group  col-sm-6">
+                            <label class="col-md-4 col-sm-4 control-label" for="input-file">上传伦理批文：</label>
+                            <div class="col-md-7 col-sm-7 file-box">
+                                <input type="file" id="input-file" class="input-file" name="fileUpload"
+                                       onclick="fileChange(this,'.fileUpload-flie .input-file')">
+                                <div class="file">
+                                    <a class="file-text btn btn-default" href="javascript:;">选择文件</a>
+                                    <span class="file-name"></span>
+                                </div>
+                                <a class="btn btn-primary" href="javascript:;"
+                                   ms-on-click="@clickUpload($event)">上传</a>
+                                <div class="loading">文件上传中...</div>
+                            </div>
+                        </div>
+                        <div class="form-group  col-sm-6" ms-if="@files.length>0">
+                            <label class="col-md-3 col-sm-3 control-label">已上传：</label>
+                            <div class="col-md-8 col-sm-8 items">
+                                <div class="item" ms-for="el in @files">
+                                    <a class="name" ms-attr="{'href':@el}" download="">{{@getHtmlDocName(el)}}</a>
+                                    <a class="btn-del" href="javascript:;" ms-on-click="@files.remove(el)">
+                                        <i class="icon iconfont icon-shanchu1"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 fileUpload-box fileUpload-declare">
+                        <h5 class="title"><span>立项文件</span></h5>
+                        <div class="form-group  col-sm-6">
+                            <label class="col-md-4 col-sm-4 control-label" for="input-file">上传佐证材料：</label>
+                            <div class="col-md-7 col-sm-7 file-box">
+                                <input type="file" id="input-file2" class="input-file" name="fileUpload"
+                                       onclick="fileChange(this,'.fileUpload-declare .input-file')">
+                                <div class="file">
+                                    <a class="file-text btn btn-default" href="javascript:;">选择文件</a>
+                                    <span class="file-name"></span>
+                                </div>
+                                <a class="btn btn-primary" href="javascript:;"
+                                   ms-on-click="@clickUploadDeclare($event)">上传</a>
+                                <div class="loading">文件上传中...</div>
+                            </div>
+                        </div>
+                        <div class="form-group  col-sm-6" ms-if="@declareFiles.length>0">
+                            <label class="col-md-3 col-sm-3 control-label">已上传：</label>
+                            <div class="col-md-8 col-sm-8 items">
+                                <div class="item" ms-for="el in @declareFiles">
+                                    <a class="name" ms-attr="{'href':@el}" download="">{{@getHtmlDocName(el)}}</a>
+                                    <a class="btn-del" href="javascript:;" ms-on-click="@declareFiles.remove(el)">
+                                        <i class="icon iconfont icon-shanchu1"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div role="tabpanel" id="tab4" class="tab-pane template-box">
+                <form class="form-horizontal content ">
+                    <div class="col-sm-12">
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-3 control-label">经费预算模板：</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="template" size="2"
+                                        ms-duplex="@info.基本资料.经费预算列表[0].流程模板编号"></select>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">批准经费(元)：</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" onkeyup="onlyNum(this)" ms-duplex="@info.基本资料.批准经费">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">配套经费(元)：</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" onkeyup="onlyNum(this)" ms-duplex="@info.基本资料.配套经费">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <h4 class="text-center auditing-title">纵向项目经费预算</h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th width="60">序号</th>
+                            <th>支出类型</th>
+                            <th>预算科目</th>
+                            <th>预算金额（批准经费：元）</th>
+                            <th>预算金额（配套经费：元）</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ms-for="($index,el) in @info.经费预算列表">
+                            <td>{{$index+1}}</td>
+                            <td>{{el.项目支出类型}}</td>
+                            <td>{{el.项目支出内容}}</td>
+                            <td>
+                                <input type="text" class="text-center form-control"
+                                       ms-duplex="@el.批准经费" onkeyup="onlyNum(this)" ms-on-keyup="@changeFundsA"/>
+                            </td>
+                            <td>
+                                <input type="text" class="text-center form-control" ms-on-change="changeFundsB"
+                                       ms-duplex="@el.配套经费" onkeyup="onlyNum(this)" ms-on-keyup="@changeFundsB"/>
+                            </td>
+                        </tr>
+                        <tr ms-if="@info.经费预算列表.length>0">
+                            <th class="funds" colspan="3">经费预算合计</th>
+                            <th class="funds">{{@fundsA}}</th>
+                            <th class="funds">{{@fundsB}}</th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div ms-if="@info.经费预算列表.length==0||@info.经费预算列表==null">
+                    <p class="text-center"><img src="/IMIS/images/nothing-3.png"></p>
+                </div>
+            </div>
+            <div role="tabpanel" id="tab5" class="tab-pane">
+                <div class="title-box">
+                    <a class="btn btn-primary btn-add" href="javascript:;" ms-on-click="@addPlan">
+                        <i class="icon iconfont icon-tianjia"></i> 添加计划
+                    </a>
+                </div>
+                <div class="table-responsive" ms-if="@info.计划列表.length>0">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th width="80">序号</th>
+                            <th>计划开始时间</th>
+                            <th>计划结束时间</th>
+                            <th>计划内容</th>
+                            <th width="100">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ms-for="($index,el) in @info.计划列表">
+                            <td>{{$index+1}}</td>
+                            <td>
+                                <input type="text" class="text-center form-control form-time" ms-duplex="@el.开始日期"/>
+                            </td>
+                            <td>
+                                <input type="text" class="text-center form-control form-time" ms-duplex="@el.结束日期"/>
+                            </td>
+                            <td>
+                                <textarea class="text-center form-control" ms-duplex="@el.计划内容" rows="2"></textarea>
+                            </td>
+                            <td class="operation">
+                                <ul>
+                                    <li class="bs-tooltip btn-del" data-toggle="tooltip" data-placement="bottom"
+                                        title="删除">
+                                        <a href="javascript:;" ms-on-click="@info.计划列表.remove(el)">
+                                            <i class="icon iconfont icon-shanchu1"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div ms-if="@info.计划列表.length==0||@info.计划列表==null">
+                    <p class="text-center"><img src="/IMIS/images/nothing-3.png"></p>
+                </div>
+            </div>
+            <div role="tabpanel" id="tab6" class="tab-pane">
+                <div class="title-box">
+                    <a href="javascript:;" class="btn btn-primary btn-add" ms-on-click="@addFruit">
+                        <i class="icon iconfont icon-tianjia"></i> 添加预期成果
+                    </a>
+                </div>
+                <div class="table-responsive" ms-if="@info.预期成果列表.length>0">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th width="80">序号</th>
+                            <th>预期成果（目标）</th>
+                            <th width="100">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ms-for="($index,el) in @info.预期成果列表">
+                            <td>{{$index+1}}</td>
+                            <td>
+                                <textarea class="form-control" ms-duplex="@el.预期成果" rows="2"></textarea>
+                            </td>
+                            <td class="operation">
+                                <ul>
+                                    <li class="bs-tooltip btn-del" data-toggle="tooltip" data-placement="bottom"
+                                        title="删除">
+                                        <a href="javascript:;" ms-on-click="@info.预期成果列表.remove(el)">
+                                            <i class="icon iconfont icon-shanchu1"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div ms-if="@info.预期成果列表.length==0||@info.预期成果列表==null">
+                    <p class="text-center"><img src="/IMIS/images/nothing-3.png"></p>
+                </div>
+            </div>
+            <div role="tabpanel" id="tab7" class="tab-pane">
+                <h4 class="text-center auditing-title">审核记录</h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th width="80">序号</th>
+                            <th>步骤名称</th>
+                            <th>处理人</th>
+                            <th>状态</th>
+                            <th>执行时间</th>
+                            <th>备注</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ms-for="($index,el) in @shenHe">
+                            <td>{{$index+1}}</td>
+                            <td>{{el.名称}}</td>
+                            <td>{{el.姓名}}</td>
+                            <td ms-class="getClass(el.状态说明)">{{el.状态说明}}</td>
+                            <td>{{el.执行时间}}</td>
+                            <td>{{el.备注}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div ms-if="@shenHe.length==0||@shenHe==null">
+                    <p class="text-center"><img src="/IMIS/images/nothing-3.png"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer submit-wrapper">
+        <div class="form-group">
+            <div class="submit-box text-center">
+                <button type="button" class="btn btn-primary btn-submit" ms-on-click="@clickSubmit">提交</button>
+                <button type="button" class="btn btn-success btn-submit" ms-on-click="@temporary">暂存</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ms-on-click="@clickBtnReturn">取消
+                </button>
+                <div class="tip-box"></div>
+            </div>
+        </div>
+    </div>
+</div>

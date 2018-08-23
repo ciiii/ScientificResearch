@@ -1,0 +1,734 @@
+<script src="/IMIS/js/横向项目/横向项目管理/横向项目变更申请.js" type="text/javascript"></script>
+<div class="modal-content ms-controller add-user" ms-controller="Add">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                aria-hidden="true" ms-on-click="@clickBtnReturn">&times;</span></button>
+        <h4 class="modal-title" id="NoPermissionModalLabel">{{title}}</h4>
+    </div>
+    <div class="modal-body">
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="active">
+                <a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">基本信息</a>
+            </li>
+            <li role="presentation">
+                <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">变更明细</a>
+            </li>
+            <li role="presentation">
+                <a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">变更审核记录</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" id="tab1" class="tab-pane active">
+                <form class="form-horizontal content">
+                    <div class="col-sm-12">
+                        <h5 class="title"><span>变更内容及事由</span></h5>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>变更内容简介：
+                            </label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control alteration-content" ms-duplex="@info.基本资料.变更内容简介" rows="3"
+                                          ms-on-change="@inputVal('.alteration-content')"></textarea>
+                                <span class="error-texe">变更内容简介不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>变更事由：
+                            </label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control alteration-reason" ms-duplex="@info.基本资料.变更事由" rows="2"
+                                          ms-on-change="@inputVal('.alteration-reason')"></textarea>
+                                <span class="error-texe">变更事由不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>变更时间：
+                            </label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control form-time alteration-time" readonly
+                                       ms-duplex="@info.基本资料.变更时间">
+                                <span class="error-texe">变更时间不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-3 control-label">变更备注：</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" ms-duplex="@info.基本资料.变更备注" rows="1"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <h5 class="title"><span>合同信息</span></h5>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>合同名称：
+                            </label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control contract-name" ms-duplex="@info.基本资料.合同名称"
+                                       ms-on-change="@inputVal('.contract-name')">
+                                <span class="error-texe">合同名称不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>合同编号：
+                            </label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control contract-number" ms-duplex="@info.基本资料.合同编号"
+                                       ms-on-change="@inputVal('.contract-number')">
+                                <span class="error-texe">合同编号不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">项目分类：</label>
+                            <div class="col-sm-7">
+                                <select class="form-control" ms-duplex="@info.基本资料.项目分类">
+                                    <option value="横向课题">横向课题</option>
+                                    <option value="临床药物试验">临床药物试验</option>
+                                    <option value="教育教学课题">教育教学课题</option>
+                                    <option value="人文社科课题">人文社科课题</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">项目类型：</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" ms-duplex="@info.基本资料.项目类型"/>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">是否为第一承担单位：</label>
+                            <div class="col-sm-7">
+                                <label class="radio-inline">
+                                    <input type="radio" value="true" name="isCompany" ms-duplex="@info.基本资料.是否为第一承建单位">
+                                    是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" value="false" name="isCompany" ms-duplex="@info.基本资料.是否为第一承建单位">
+                                    否
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>项目负责人：
+                            </label>
+                            <div class="col-sm-6 people-box">
+                                <input type="text" class="form-control people-name" ms-duplex="@info.基本资料.项目负责人姓名"
+                                       readonly ms-on-change="@inputVal('.people-name')">
+                                <span class="error-texe">项目负责人不能为空！</span>
+                                <a ms-attr="{'href':@getUrl('/IMIS/views/纵向项目/项目申报/选择申报人.html')}"
+                                   class="btn btn-default btn-people" data-toggle="modal"
+                                   data-target=".modal-choice" onclick="changeUrlChoice(this,'.modal-choice')">
+                                    <i class="icon iconfont icon-yiyuanfuzeren"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">所属部门：</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" readonly ms-duplex="@info.基本资料.项目负责人部门名称"/>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>项目归属部门：
+                            </label>
+                            <div class="col-sm-9 people-box">
+                                <input type="text" class="form-control project-department" readonly
+                                       ms-duplex="@info.基本资料.项目归属部门">
+                                <a ms-attr="{'href':@getUrl('/IMIS/views/纵向项目/项目立项/选择部门.html')}"
+                                   class="btn btn-default btn-people"
+                                   data-toggle="modal" data-target=".modal-choice" onclick="changeUrlChoice(this,'.modal-choice')">
+                                    <i class="icon iconfont icon-icon-test"></i>
+                                </a>
+
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">单位名称：</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" ms-duplex="@info.基本资料.单位名称">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">邮政编码：</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" ms-duplex="@info.基本资料.邮政编码">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">法定代表人：</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" ms-duplex="@info.基本资料.法定代表人">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">经费本编号：</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" ms-duplex="@info.基本资料.经费本编号">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>联系人：
+                            </label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control contacts" ms-duplex="@info.基本资料.联系人" ms-on-change="@inputVal('.contacts')">
+                                <span class="error-texe">联系人不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>联系人电话：
+                            </label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control contacts-tel" ms-duplex="@info.基本资料.联系人电话" ms-on-change="@tel('.contacts-tel')">
+                                <span class="error-texe">联系人电话不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-3 control-label">通讯地址：</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" ms-duplex="@info.基本资料.通讯地址">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">是否需要伦理评审：</label>
+                            <div class="col-sm-7">
+                                <label class="radio-inline">
+                                    <input type="radio" value="true" name="isReview" ms-duplex="@info.基本资料.是否需要伦理评审">
+                                    是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" value="false" name="isReview" ms-duplex="@info.基本资料.是否需要伦理评审">
+                                    否
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">档案编号：</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" ms-duplex="@info.基本资料.档案编号">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">财务简称：</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" ms-duplex="@info.基本资料.财务简称">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">课题来源：</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" ms-duplex="@info.基本资料.课题来源">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <h5 class="title"><span>合作方信息</span></h5>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">类型：</label>
+                            <div class="col-sm-7">
+                                <label class="radio-inline">
+                                    <input type="radio" value="院内" name="type" ms-duplex="@info.基本资料.合作方关系">
+                                    院内
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" value="院外" name="type" ms-duplex="@info.基本资料.合作方关系">
+                                    院外
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">合作方类型：</label>
+                            <div class="col-sm-7">
+                                <label class="radio-inline">
+                                    <input type="radio" value="甲" name="partnersType" ms-duplex="@info.基本资料.合作方契约关系">
+                                    甲
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" value="乙" name="partnersType" ms-duplex="@info.基本资料.合作方契约关系">
+                                    乙
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" value="丙" name="partnersType" ms-duplex="@info.基本资料.合作方契约关系">
+                                    丙
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-3 control-label">单位名称：</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" ms-duplex="@info.基本资料.合作方单位名称">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">法人或组织机构代码：</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" ms-duplex="@info.基本资料.合作方法人或组织机构代码">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">法定代表人：</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" ms-duplex="@info.基本资料.合作方法定代表人">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">单位联系人：</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" ms-duplex="@info.基本资料.合作方单位联系人">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">联系电话：</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control contact-number" ms-duplex="@info.基本资料.合作方联系电话" ms-on-change="@tel('.contact-number')">
+                                <span class="error-texe">联系电话格式不正确！</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">邮箱：</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" ms-duplex="@info.基本资料.合作方邮箱">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">邮政编码：</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" ms-duplex="@info.基本资料.合作方邮政编码">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12 region-box">
+                            <label class="col-sm-3 control-label">单位所在行政区域：</label>
+                            <div class="col-sm-8">
+                                <select class="form-control regionOne" ms-duplex="oneSelect">
+                                    <option value="">请选择</option>
+                                    <option ms-for="el in @regionOne" ms-attr="{'value':@el.编号}">{{el.名称}}</option>
+                                </select>
+                                <select class="form-control regionTwo" ms-duplex="twoSelect">
+                                    <option ms-if="@regionTwo.length>0" value="">请选择</option>
+                                    <option ms-if="@regionTwo.length>0" ms-for="el in @regionTwo"
+                                            ms-attr="{'value':@el.编号}">
+                                        {{el.名称}}
+                                    </option>
+                                    <option ms-if="@regionTwo.length==0" value="">暂无</option>
+                                </select>
+                                <select class="form-control regionThree" ms-duplex="@info.合作方所在地区" ms-on-change="@inputVal('.regionThree')">
+                                    <option ms-if="@regionThree.length>0" value="">请选择</option>
+                                    <option ms-if="@regionThree.length>0" ms-for="el in @regionThree">{{el.名称}}</option>
+
+                                    <option ms-if="@regionThree.length==0" value="">暂无</option>
+                                </select>
+                                <!--<span class="error-texe">单位所在行政区域不能为空！</span>-->
+                            </div>
+                        </div>
+                        <!--<div class="form-group col-sm-12">-->
+                        <!--<label class="col-sm-3 control-label">单位通讯地址：</label>-->
+                        <!--<div class="col-sm-9">-->
+                        <!--<input type="text" class="form-control" ms-duplex="@info.基本资料.合作方单位通讯地址">-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="form-group col-sm-12">-->
+                        <!--<label class="col-sm-3 control-label">单位注册地址：</label>-->
+                        <!--<div class="col-sm-9">-->
+                        <!--<input type="text" class="form-control" ms-duplex="@info.基本资料.合作单位注册地址">-->
+                        <!--</div>-->
+                        <!--</div>-->
+                    </div>
+                    <div class="col-sm-12">
+                        <h5 class="title"><span>合同详情信息</span></h5>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>合同金额：
+                            </label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control sum" ms-duplex="@info.基本资料.合同金额" ms-on-change="@inputVal('.sum')">
+                                <span class="error-texe">合同金额不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>签订时间：
+                            </label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control form-time apply-time" readonly
+                                       ms-duplex="@info.基本资料.签订时间">
+                                <span class="error-texe">签订时间不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>付款方式：
+                            </label>
+                            <div class="col-sm-7">
+                                <select class="form-control paymentMethod" ms-duplex="@info.基本资料.付款方式"
+                                        ms-on-change="@inputVal('.paymentMethod')">
+                                    <option value="">请选择</option>
+                                    <option ms-for="el in @model.合同付款方式" ms-attr="{'value':@el}">{{el}}</option>
+                                </select>
+                                <span class="error-texe">付款方式不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>合同开始时间：
+                            </label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control form-time start-time" readonly
+                                       ms-duplex="@info.基本资料.合同开始时间">
+                                <span class="error-texe">合同开始时间不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>合作方式：
+                            </label>
+                            <div class="col-sm-7">
+                                <select class="form-control cooperationType" ms-duplex="@info.基本资料.合作方式"
+                                        ms-on-change="@inputVal('.cooperationType')">
+                                    <option value="">请选择</option>
+                                    <option ms-for="el in @model.合作形式" ms-attr="{'value':@el}">{{el}}</option>
+                                </select>
+                                <span class="error-texe">合作方式不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>合同结束时间：
+                            </label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control form-time end-time" readonly
+                                       ms-duplex="@info.基本资料.合同结束时间">
+                                <span class="error-texe">合同结束时间不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>研究类型：
+                            </label>
+                            <div class="col-sm-7">
+                                <select class="form-control researchType" ms-duplex="@info.基本资料.研究类型"
+                                        ms-on-change="@inputVal('.researchType')">
+                                    <option value="">请选择</option>
+                                    <option ms-for="el in @model.研究类别" ms-attr="{'value':@el}">{{el}}</option>
+                                </select>
+                                <span class="error-texe">研究类型不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">技术领域：</label>
+                            <div class="col-sm-6 people-box">
+                                <input type="text" class="form-control" ms-duplex="@info.基本资料.技术领域" readonly>
+                                <a ms-attr="{'href':@getUrl('/IMIS/views/横向项目/横向项目管理/选择技术领域.html')}"
+                                   class="btn btn-default btn-people"
+                                   data-toggle="modal" data-target=".modal-choice"
+                                   onclick="changeUrlChoice(this,'.modal-choice')">
+                                    <i class="icon iconfont icon-jiansuo"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">合同类型：</label>
+                            <div class="col-sm-7">
+                                <label class="radio-inline">
+                                    <input type="radio" value="非技术" name="contractType" ms-duplex="@info.基本资料.合同类型">
+                                    非技术
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" value="技术" name="contractType" ms-duplex="@info.基本资料.合同类型">
+                                    技术
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6" ms-if="@info.基本资料.合同类型=='技术'">
+                            <label class="col-sm-3 control-label">技术合同类型：</label>
+                            <div class="col-sm-6 people-box">
+                                <input type="text" class="form-control" ms-duplex="@info.基本资料.技术合同类型" readonly>
+                                <a ms-attr="{'href':@getUrl('/IMIS/views/横向项目/横向项目管理/选择技术合同类型.html')}"
+                                   class="btn btn-default btn-people"
+                                   data-toggle="modal" data-target=".modal-choice"
+                                   onclick="changeUrlChoice(this,'.modal-choice')">
+                                    <i class="icon iconfont icon-jiansuo"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6" ms-if="@info.基本资料.合同类型=='技术'">
+                            <label class="col-sm-3 control-label">是否申请技术合同认定：</label>
+                            <div class="col-sm-7">
+                                <label class="radio-inline">
+                                    <input type="radio" value="false" name="isOgnizance"
+                                           ms-duplex="@info.基本资料.是否申请技术合同认定" ms-on-change="@changeOgnizance">否
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" value="true" name="isOgnizance"
+                                           ms-duplex="@info.基本资料.是否申请技术合同认定" ms-on-change="@changeOgnizance">是
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-3 control-label">备注：</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" ms-duplex="@info.基本资料.备注" rows="2"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" ms-if="@info.基本资料.是否申请技术合同认定&&@info.基本资料.合同类型=='技术'">
+                        <h5 class="title"><span>技术合同登记信息</span></h5>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>合同技术交易额：
+                            </label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control trading-volume" ms-on-change="@inputVal('.trading-volume')" ms-duplex="@info.基本资料.合同技术交易额">
+                                <span class="error-texe">合同技术交易额不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>知识产权：
+                            </label>
+                            <div class="col-sm-6 people-box">
+                                <input type="text" class="form-control property-right" ms-duplex="@info.基本资料.知识产权" readonly ms-on-change="@inputVal('.property-right')">
+                                <a ms-attr="{'href':@getUrl('/IMIS/views/横向项目/横向项目管理/选择知识产权.html')}"
+                                   class="btn btn-default btn-people" data-toggle="modal" data-target=".modal-choice"
+                                   onclick="changeUrlChoice(this,'.modal-choice')">
+                                    <i class="icon iconfont icon-jiansuo"></i>
+                                </a>
+                                <span class="error-texe">知识产权不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>计划来源：
+                            </label>
+                            <div class="col-sm-6 people-box">
+                                <input type="text" class="form-control planning-source" ms-duplex="@info.基本资料.计划来源" readonly ms-on-change="@inputVal('.planning-source')">
+                                <a ms-attr="{'href':@getUrl('/IMIS/views/横向项目/横向项目管理/选择计划来源.html')}"
+                                   class="btn btn-default btn-people"
+                                   data-toggle="modal" data-target=".modal-choice"
+                                   onclick="changeUrlChoice(this,'.modal-choice')">
+                                    <i class="icon iconfont icon-jiansuo"></i>
+                                </a>
+                                <span class="error-texe">计划来源不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>合作方所属国民经济行业：
+                            </label>
+                            <div class="col-sm-6 people-box">
+                                <input type="text" class="form-control national-economy" ms-duplex="@info.基本资料.合作方所属国民经济行业" readonly ms-on-change="@inputVal('.national-economy')">
+                                <a ms-attr="{'href':@getUrl('/IMIS/views/纵向项目/项目立项/选择国民经济行业.html')}"
+                                   class="btn btn-default btn-people"
+                                   data-toggle="modal" data-target=".modal-choice"
+                                   onclick="changeUrlChoice(this,'.modal-choice')">
+                                    <i class="icon iconfont icon-jiansuo"></i>
+                                </a>
+                                <span class="error-texe">合作方所属国民经济行业不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>技术服务的国民经济行业：
+                            </label>
+                            <div class="col-sm-6 people-box">
+                                <input type="text" class="form-control national-economy2" ms-duplex="@info.基本资料.技术服务的国民经济行业" readonly ms-on-change="@inputVal('.national-economy2')">
+                                <a ms-attr="{'href':@getUrl('/IMIS/views/横向项目/横向项目管理/选择国民经济行业.html')}"
+                                   class="btn btn-default btn-people"
+                                   data-toggle="modal" data-target=".modal-choice"
+                                   onclick="changeUrlChoice(this,'.modal-choice')">
+                                    <i class="icon iconfont icon-jiansuo"></i>
+                                </a>
+                                <span class="error-texe">技术服务的国民经济行业不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>合同的社会经济目标：
+                            </label>
+                            <div class="col-sm-6 people-box">
+                                <input type="text" class="form-control economic-goals" ms-duplex="@info.基本资料.合同的社会经济目标" readonly ms-on-change="@inputVal('.economic-goals')">
+                                <a ms-attr="{'href':@getUrl('/IMIS/views/纵向项目/项目立项/选择社会经济目标.html')}"
+                                   class="btn btn-default btn-people"
+                                   data-toggle="modal" data-target=".modal-choice"
+                                   onclick="changeUrlChoice(this,'.modal-choice')">
+                                    <i class="icon iconfont icon-jiansuo"></i>
+                                </a>
+                                <span class="error-texe">合同的社会经济目标不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>合作方性质：
+                            </label>
+                            <div class="col-sm-6 people-box">
+                                <input type="text" class="form-control nature" ms-duplex="@info.基本资料.合作方性质" readonly ms-on-change="@inputVal('.nature')">
+                                <a ms-attr="{'href':@getUrl('/IMIS/views/横向项目/横向项目管理/选择合作方性质.html')}"
+                                   class="btn btn-default btn-people"
+                                   data-toggle="modal" data-target=".modal-choice"
+                                   onclick="changeUrlChoice(this,'.modal-choice')">
+                                    <i class="icon iconfont icon-jiansuo"></i>
+                                </a>
+                                <span class="error-texe">合作方性质不能为空！</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">是否高新性质：</label>
+                            <div class="col-sm-7">
+                                <label class="radio-inline">
+                                    <input type="radio" value="true" name="isHighNature" ms-duplex="@info.基本资料.是否高新性质">
+                                    是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" value="false" name="isHighNature" ms-duplex="@info.基本资料.是否高新性质">
+                                    否
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" ms-if="@info.基本资料.是否申请技术合同认定&&@info.基本资料.合同类型=='技术'">
+                        <h5 class="title"><span>生成登记承诺书</span></h5>
+                        <div class="form-group col-sm-12 letterOfCommitment-box">
+                            <h6 class="text-center">技术合同认定登记承诺书</h6>
+                            <p>本人与委托单位“签订的技术合同”，其内容真实有效，如实反映技术交易活动的实际情况。若在合同文本中作虚假表示，骗取技术合同认定证明，本人对此产生的后果承担所有责任。</p>
+                            <span class="promise">承诺人（签名）：</span>
+                            <span class="text-right promise-time">日期：{{@nowTime}}</span>
+                            <a class="btn btn-default generate" href="javascript:;">生成承诺书</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 fileUpload-box fileUpload-declare" ms-if="@info.基本资料.是否申请技术合同认定&&@info.基本资料.合同类型=='技术'">
+                        <h5 class="title"><span>合同认定登记承诺书</span></h5>
+                        <div class="form-group  col-sm-6">
+                            <label class="col-md-4 col-sm-4 control-label" for="input-file">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>上传承诺书：
+                            </label>
+                            <div class="col-md-7 col-sm-7 file-box">
+                                <input type="file" id="input-file2" class="input-file" name="fileUpload"
+                                       onclick="fileChange(this,'.fileUpload-declare .input-file')">
+                                <div class="file">
+                                    <a class="file-text btn btn-default" href="javascript:;">选择文件</a>
+                                    <span class="file-name"></span>
+                                </div>
+                                <a class="btn btn-primary" href="javascript:;"
+                                   ms-on-click="@clickUploadDeclare($event)">上传</a>
+                                <div class="loading">文件上传中...</div>
+                            </div>
+                        </div>
+                        <div class="form-group  col-sm-6" ms-if="@declareFiles.length>0">
+                            <label class="col-md-3 col-sm-3 control-label">已上传：</label>
+                            <div class="col-md-8 col-sm-8 items">
+                                <div class="item" ms-for="el in @declareFiles">
+                                    <a class="name" ms-attr="{'href':@el}" download="">{{@getHtmlDocName(el)}}</a>
+                                    <a class="btn-del" href="javascript:;" ms-on-click="@declareFiles.remove(el)">
+                                        <i class="icon iconfont icon-shanchu1"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 fileUpload-box fileUpload-flie">
+                        <h5 class="title"><span>上传合同文件</span></h5>
+                        <div class="form-group  col-sm-6">
+                            <label class="col-md-4 col-sm-4 control-label" for="input-file">
+                                <i class="icon iconfont icon-text-sign icon-sign"></i>上传合同文件：
+                            </label>
+                            <div class="col-md-7 col-sm-7 file-box">
+                                <input type="file" id="input-file" class="input-file" name="fileUpload"
+                                       onclick="fileChange(this,'.fileUpload-flie .input-file')">
+                                <div class="file">
+                                    <a class="file-text btn btn-default" href="javascript:;">选择文件</a>
+                                    <span class="file-name"></span>
+                                </div>
+                                <a class="btn btn-primary" href="javascript:;"
+                                   ms-on-click="@clickUpload($event)">上传</a>
+                                <div class="loading">文件上传中...</div>
+                            </div>
+                        </div>
+                        <div class="form-group  col-sm-6" ms-if="@files.length>0">
+                            <label class="col-md-3 col-sm-3 control-label">已上传：</label>
+                            <div class="col-md-8 col-sm-8 items">
+                                <div class="item" ms-for="el in @files">
+                                    <a class="name" ms-attr="{'href':@el}" download="">{{@getHtmlDocName(el)}}</a>
+                                    <a class="btn-del" href="javascript:;" ms-on-click="@files.remove(el)">
+                                        <i class="icon iconfont icon-shanchu1"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div role="tabpanel" id="tab2" class="tab-pane">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th width="60">序号</th>
+                            <th>变更项</th>
+                            <th>变更前</th>
+                            <th>变更后</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ms-for="($index,el) in @arr">
+                            <td>{{$index+1}}</td>
+                            <td>{{el.名称}}</td>
+                            <td>{{el.变更前}}</td>
+                            <td>{{el.变更后}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div ms-if="@arr.length==0||@arr==null">
+                    <p class="text-center"><img src="/IMIS/images/nothing-3.png"></p>
+                </div>
+            </div>
+            <div role="tabpanel" id="tab3" class="tab-pane">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th width="60">序号</th>
+                            <th>步骤名称</th>
+                            <th>处理人</th>
+                            <th>处理人部门</th>
+                            <th>状态</th>
+                            <th>执行时间</th>
+                            <th>备注</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ms-for="($index,el) in @shenHe">
+                            <td>{{$index+1}}</td>
+                            <td>{{el.名称}}</td>
+                            <td>{{el.姓名}}</td>
+                            <td>{{el.部门名称}}</td>
+                            <td ms-class="getClass(el.状态说明)">{{el.状态说明}}</td>
+                            <td>{{el.执行时间}}</td>
+                            <td>{{el.备注}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div ms-if="@shenHe.length==0||@shenHe==null">
+                    <p class="text-center"><img src="/IMIS/images/nothing-3.png"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer submit-wrapper">
+        <div class="form-group">
+            <div class="submit-box text-center">
+                <button type="button" class="btn btn-primary btn-submit" ms-on-click="@clickSubmit">提交</button>
+                <button type="button" class="btn btn-success btn-submit" ms-on-click="@temporary">暂存</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ms-on-click="@clickBtnReturn">取消
+                </button>
+                <div class="tip-box"></div>
+            </div>
+        </div>
+    </div>
+</div>

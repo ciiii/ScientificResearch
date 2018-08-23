@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>横向项目详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="/IMIS/libs/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/IMIS/libs/bootstrap/css/bootstrap-datetimepicker.min.css"/>
+    <link rel="stylesheet" href="/IMIS/css/child_pages.css"/>
+    <!--[if lt IE 9]>
+    <script src="/IMIS/libs/html5shiv.js"></script>
+    <script src="/IMIS/libs/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+    <script src="/IMIS/libs/jquery-1.11.1.min.js"></script>
+    <script src="/IMIS/libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/IMIS/libs/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/IMIS/libs/avalon.min.js"></script>
+
+    <script src="/IMIS/js/main.js"></script>
+    <script src="/IMIS/js/get_connect/code.js"></script>
+    <script src="/IMIS/js/get_connect/connect_http.js"></script>
+    <script src="/IMIS/js/get_connect/return_data.js"></script>
+    <script src="/IMIS/js/横向项目/横向项目管理/横向项目详情.js"></script>
+</head>
+<body ms-controller="root" class="ms-controller" style="background: #fff;">
+<div class="form-horizontal page-details">
+    <ul class="nav nav-tabs">
+        <li role="presentation" class="active">
+            <a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">合同基本信息</a>
+        </li>
+        <li role="presentation">
+            <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">合作方信息</a>
+        </li>
+        <li role="presentation">
+            <a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">合同详情信息</a>
+        </li>
+        <li role="presentation">
+            <a href="#tab4" aria-controls="tab4" role="tab" data-toggle="tab">财务信息</a>
+        </li>
+        <li role="presentation">
+            <a href="#tab5" aria-controls="tab5" role="tab" data-toggle="tab">参与人信息</a>
+        </li>
+        <li role="presentation">
+            <a href="#tab6" aria-controls="tab6" role="tab" data-toggle="tab">审核记录</a>
+        </li>
+    </ul>
+    <div class="tab-content add-user">
+        <div role="tabpanel" id="tab1" class="tab-pane active">
+            <form class="form-horizontal content">
+                <div class="col-sm-12">
+                    <h5 class="title"><span>合同基本信息</span></h5>
+                    <div class="form-group col-sm-12">
+                        <label class="col-sm-3 control-label">合同名称：</label>
+                        <div class="col-sm-9">
+                            <span>{{@model.基本信息.合同名称}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">合同编号：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.合同编号}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">项目分类：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.项目分类}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">项目类型：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.项目类型}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">申请时间：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.建立时间|date("yyyy-MM-dd")}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">是否为第一承担单位：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.是否为第一承建单位?'是':'否'}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">项目负责人：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.项目负责人姓名}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">所属部门：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.项目负责人部门名称}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">项目归属部门：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.项目归属部门名称}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">单位名称：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.单位名称}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">邮政编码：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.邮政编码}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">法定代表人：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.法定代表人}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">经费本编号：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.经费本编号}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">联系人：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.联系人}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">联系人电话：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.联系人电话}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <label class="col-sm-3 control-label">通讯地址：</label>
+                        <div class="col-sm-9">
+                            <span>{{@model.基本信息.通讯地址}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">档案编号：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.档案编号}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">财务简称：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.财务简称}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <label class="col-sm-3 control-label">课题来源：</label>
+                        <div class="col-sm-9">
+                            <span>{{@model.基本信息.课题来源}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 fileUpload-box">
+                    <h5 class="title"><span>合同文件</span></h5>
+                    <div class="form-group col-sm-12">
+                        <label class="col-sm-3 control-label">合同文件：</label>
+                        <div class="form-group col-sm-8 items">
+                            <div class="item" ms-for="el in @contractFiles">
+                                <a class="name" ms-attr="{'href':@el}" download="">{{@getHtmlDocName(el)}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div role="tabpanel" id="tab2" class="tab-pane">
+            <form class="form-horizontal content">
+                <div class="col-sm-12">
+                    <h5 class="title"><span>合作方信息</span></h5>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">类型：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.合作方关系}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">合作方类型：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.合作方契约关系}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">合作方名称：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.合作方单位名称}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">法定代表人：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.合作方法定代表人}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">单位联系人：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.合作方单位联系人}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">联系电话：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.合作方联系电话}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">邮箱：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.合作方邮箱}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">邮政编码：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.合作方邮政编码}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">合作方所在行政区域：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.合作方所在省}} {{@model.基本信息.合作方所在市}} {{@model.基本信息.合作方所在地区}}</span>
+                        </div>
+                    </div>
+                    <!--<div class="form-group col-sm-12">-->
+                    <!--<label class="col-sm-3 control-label">通讯地址：</label>-->
+                    <!--<div class="col-sm-9">-->
+                    <!--<span>{{@model.基本信息.合作方通讯地址}}</span>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">法人代码：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.合作方法人或组织机构代码}}</span>
+                        </div>
+                    </div>
+                    <!--<div class="form-group col-sm-6">-->
+                    <!--<label class="col-sm-3 control-label">合作方(甲方)法定代表人：</label>-->
+                    <!--<div class="col-sm-7">-->
+                    <!--<span>{{@model.基本信息.项目等级}}</span>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="form-group col-sm-12">
+                        <label class="col-sm-3 control-label">合作方注册地址：</label>
+                        <div class="col-sm-9">
+                            <span>{{@model.基本信息.计划开始日期|date("yyyy-MM-dd")}}</span>
+                        </div>
+                    </div>-->
+                </div>
+            </form>
+        </div>
+        <div role="tabpanel" id="tab3" class="tab-pane">
+            <form class="form-horizontal content ">
+                <div class="col-sm-12">
+                    <h5 class="title"><span>合同详情信息</span></h5>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">合同金额：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.合同金额|currency}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">合同签订时间：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.签订时间|date("yyyy-MM-dd")}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">付款方式：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.付款方式}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">合作方式：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.合作方式}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">合同开始时间：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.合同开始时间|date("yyyy-MM-dd")}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">合同结束时间：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.合同结束时间|date("yyyy-MM-dd")}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">研究类型：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.研究类型}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">技术领域：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.技术领域}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">合同类型：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.合同类型}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">技术合同类型：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.技术合同类型}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">是否申请技术合同认定：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.是否申请技术合同认定?'是':'否'}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <label class="col-sm-3 control-label">备注：</label>
+                        <div class="col-sm-9">
+                            <span>{{@model.基本信息.计划开始日期|date("yyyy-MM-dd")}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <h5 class="title"><span>技术合同认定登记信息</span></h5>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">合同技术交易额：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.合同技术交易额|currency}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">知识产权：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.知识产权}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">计划来源：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.计划来源}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">合作方所属国民经济行业：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.合作方所属国民经济行业}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">技术服务的国民经济行业：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.技术服务的国民经济行业}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">合同的社会经济目标：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.合同的社会经济目标}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">合作方性质：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.合作方性质}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">是否高新性质：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.基本信息.是否高新性质?'是':'否'}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 fileUpload-box">
+                    <h5 class="title"><span>合同认定登记承诺书</span></h5>
+                    <div class="form-group col-sm-12">
+                        <label class="col-sm-3 control-label">登记承诺书：</label>
+                        <div class="form-group col-sm-8 items">
+                            <div class="item" ms-for="el in @files">
+                                <a class="name" ms-attr="{'href':@el}" download="">{{@getHtmlDocName(el)}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div role="tabpanel" id="tab4" class="tab-pane">
+            <form class="form-horizontal content ">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">合同金额(元)：</label>
+                    <div class="col-sm-7">
+                        <span>{{@model.基本信息.合同金额|currency}}</span>
+                    </div>
+                </div>
+            </form>
+            <h4 class="text-center auditing-title">项目预算</h4>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th width="60">序号</th>
+                        <th>支出类型</th>
+                        <th>预算科目</th>
+                        <th>预算金额（元）</th>
+                        <th>编制依据</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ms-for="($index,el) in @model.财务信息">
+                        <td>{{$index+1}}</td>
+                        <td>{{el.项目支出类型}}</td>
+                        <td>{{el.项目支出内容}}</td>
+                        <td>{{el.批准经费}}</td>
+                        <td>{{el.编制依据}}</td>
+                    </tr>
+                    <tr ms-if="@model.财务信息.length>0">
+                        <th class="funds" colspan="3">经费预算合计</th>
+                        <th class="funds" colspan="2">{{@funds}}</th>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ms-if="@model.财务信息.length==0||@model.财务信息==null">
+                <p class="text-center"><img src="/IMIS/images/nothing-3.png"></p>
+            </div>
+        </div>
+        <div role="tabpanel" id="tab5" class="tab-pane">
+            <h4 class="text-center auditing-title">参与人信息</h4>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th width="80">序号</th>
+                        <th>参与人姓名</th>
+                        <th>部门名称</th>
+                        <th>工作量占比（%）</th>
+                        <th>备注</th>
+                        <th>建立时间</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ms-for="($index,el) in @model.参与人信息">
+                        <td>{{$index+1}}</td>
+                        <td>{{el.姓名}}</td>
+                        <td>{{el.部门名称}}</td>
+                        <td>{{el.工作量占比}}</td>
+                        <td>{{el.备注}}</td>
+                        <td>{{el.建立时间}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ms-if="@model.参与人信息.length==0||@model.参与人信息==null">
+                <p class="text-center"><img src="/IMIS/images/nothing-3.png"></p>
+            </div>
+        </div>
+        <div role="tabpanel" id="tab6" class="tab-pane">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th width="60">序号</th>
+                        <th>步骤名称</th>
+                        <th>处理人</th>
+                        <th>处理人部门</th>
+                        <th>状态</th>
+                        <th>执行时间</th>
+                        <th>备注</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ms-for="($index,el) in @model.审核记录">
+                        <td>{{$index+1}}</td>
+                        <td>{{el.名称}}</td>
+                        <td>{{el.姓名}}</td>
+                        <td>{{el.部门名称}}</td>
+                        <td ms-class="getClass(el.状态说明)">{{el.状态说明}}</td>
+                        <td>{{el.执行时间}}</td>
+                        <td>{{el.备注}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ms-if="@model.审核记录.length==0||@model.审核记录==null">
+                <p class="text-center"><img src="/IMIS/images/nothing-3.png"></p>
+            </div>
+        </div>
+    </div>
+</div>

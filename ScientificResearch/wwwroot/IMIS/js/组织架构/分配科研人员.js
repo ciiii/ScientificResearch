@@ -1,0 +1,38 @@
+$(function () {
+    window.dAddVm = null;
+    avalon.ready(function () {
+        window.dAddVm = avalon.define({
+            $id: 'Add',
+            users: [],
+            haveAddScientificResearchUsers: function (data) {
+                ScientificResearch.haveAddScientificResearchUsers('post', data, function haveAddScientificResearchUsersListener(success, obj, strErro) {
+                    postBack(success, strErro, '提交成功！', '提交失败：', '.modal-add', function callBack() {
+                        vm.query();
+                    });
+                });
+            },
+            getUrl: function (url) {
+                return decodeURI(url);
+            },
+            clickSubmit: function () {
+                if (dAddVm.users.length > 0) {
+                    var data = [];
+                    for (var i in dAddVm.users) {
+                        data.push(dAddVm.users[i].编号);
+                    }
+                    dAddVm.haveAddScientificResearchUsers(data);
+                } else {
+                    $.oaNotify.error('请选择人员！');
+                }
+            },
+            clickBtnReturn: function () {
+                $('.modal').modal('hide');
+            },
+        })
+        $('.modal-choice .modal-body,.menuContent').mCustomScrollbar({
+            theme: 'dark-3',
+        });
+        dAddVm.users = [];
+        avalon.scan(document.body);
+    });
+});

@@ -1,0 +1,92 @@
+<script src="/IMIS/js/成果管理/论文/选择横向项目.js" type="text/javascript"></script>
+<div class="modal-content ms-controller choiceRoot" ms-controller="choiceRoot">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                aria-hidden="true" ms-on-click="@clickBtnReturn">&times;</span></button>
+        <h4 class="modal-title" id="NoPermissionModalLabel">选择横向项目</h4>
+    </div>
+    <div class="modal-body">
+        <div class="screen-box">
+            <div class="form-inline">
+                <div class="form-group">
+                    <a class="btn btn-success btn-batchChoice" ms-on-click="@batchChoice()" href="javascript:;">
+                        <i class="icon iconfont icon-wancheng"></i> 批量选择
+                    </a>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">合同名称</div>
+                        <input type="text" class="form-control title" ms-duplex="@title" ms-keydown="@submit">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">合同编号</div>
+                        <input type="text" class="form-control number" ms-duplex="@number" ms-keydown="@submit">
+                    </div>
+                </div>
+                <div class="form-group input-box">
+                    <div class="input-group">
+                        <div class="input-group-addon">负责人</div>
+                        <input type="text" class="form-control name" ms-duplex="@name" ms-keydown="@submit">
+                    </div>
+                </div>
+                <a class="btn btn-primary btn-search" href="javascript:;" ms-on-click="@search()">查询</a>
+                <div class="total-box">
+                    总计：<strong>{{@total}}</strong> 条
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th class="checkbox-box">
+                        <div class="checkbox">
+                            <label class="bs-tooltip" href="javascript:;" title="全选" data-toggle="tooltip"
+                                   data-placement="bottom">
+                                <input class="select-all" type="checkbox" ms-duplex-checked="@allchecked"
+                                       data-duplex-changed="@checkAll"/>
+                            </label>
+                        </div>
+                    </th>
+                    <th width="80">序号</th>
+                    <th class="periodical-title">合同名称</th>
+                    <th>负责人</th>
+                    <th>负责人部门</th>
+                    <th>所属部门</th>
+                    <th>签订时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ms-for="($index,el) in @model" ms-if="@loaded && @model!= null && @model.length != 0">
+                    <td class="checkbox-box">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="item-checkbox" ms-duplex-checked="el.checked"
+                                       data-duplex-changed="@checkOne"/>
+                            </label>
+                        </div>
+                    </td>
+                    <td>{{$index+1}}</td>
+                    <td class="text-left">{{el.合同名称}}</td>
+                    <td>{{el.项目负责人姓名}}</td>
+                    <td>{{el.项目负责人部门名称}}</td>
+                    <td>{{el.项目归属部门}}</td>
+                    <td>{{el.签订时间|date("yyyy-MM-dd")}}</td>
+                    <td>
+                        <a href="javascript:;" ms-on-click="@clickChoice(el)" class="btn btn-success">选择</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div ms-if="@loaded && (@model== null || @model.length == 0)">
+            <p class="text-center"><img src="/IMIS/images/nothing-3.png"></p>
+        </div>
+        <div class="page paging text-center">
+            <div class="pager paging"></div>
+        </div>
+    </div>
+</div>

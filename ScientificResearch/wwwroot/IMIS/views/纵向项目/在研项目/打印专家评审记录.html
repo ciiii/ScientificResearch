@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>打印专家评审记录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="/IMIS/libs/bootstrap/css/bootstrap.min.css"/>
+    <!--[if lt IE 9]>
+    <script src="/IMIS/libs/html5shiv.js"></script>
+    <script src="/IMIS/libs/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+    <script src="/IMIS/libs/jquery-1.11.1.min.js"></script>
+    <script src="/IMIS/libs/jquery.placeholder.min.js"></script>
+    <script src="/IMIS/libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/IMIS/libs/avalon.min.js"></script>
+
+    <script src="/IMIS/js/get_connect/code.js"></script>
+    <script src="/IMIS/js/get_connect/connect_http.js"></script>
+    <script src="/IMIS/js/get_connect/return_data.js"></script>
+
+    <script>
+        document.write(' <link rel="stylesheet" href="/IMIS/css/expert_printing.css?time=' + new Date().getTime() + '"/>');
+        document.write(' <script src="/IMIS/js/纵向项目/在研项目/打印专家评审记录.js?time=' + new Date().getTime() + '"></s' + 'cript>');
+    </script>
+</head>
+<body>
+<div class="page-printing" ms-controller="root">
+    <div class="main">
+        <h4 class="title text-center">{{@model.立项基本信息.项目中文名称}} - 项目中检 - 专家评审汇总</h4>
+        <div class="personnel-box">
+            <div class="personnel-list">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th colspan="8">立项信息</th>
+                        </tr>
+                        <tr>
+                            <th>项目名称：</th>
+                            <td colspan="7">{{@model.立项基本信息.项目中文名称}}</td>
+                        </tr>
+                        <tr>
+                            <th>负责人：</th>
+                            <td>{{@model.立项基本信息.负责人姓名}}</td>
+                            <th>负责人部门：</th>
+                            <td>{{@model.立项基本信息.负责人部门名称}}</td>
+                            <th>项目类型：</th>
+                            <td>{{@model.立项基本信息.项目类型}}</td>
+                            <th>项目级别：</th>
+                            <td>{{@model.立项基本信息.项目级别}}</td>
+                        </tr>
+                        <tr>
+                            <th>来源单位：</th>
+                            <td>{{@model.立项基本信息.项目来源单位}}</td>
+                            <th>项目级别：</th>
+                            <td>{{@model.立项基本信息.项目级别}}</td>
+                            <th>学科门类：</th>
+                            <td>{{@model.立项基本信息.学科门类}}</td>
+                            <th>学科类型：</th>
+                            <td>{{@model.立项基本信息.学科类型}}</td>
+                        </tr>
+                        <tr>
+                            <th>批准经费：</th>
+                            <td>{{@model.立项基本信息.批准经费|currency}}</td>
+                            <th>配套经费：</th>
+                            <td>{{@model.立项基本信息.配套经费|currency}}</td>
+                            <th>立项年度：</th>
+                            <td>{{@model.立项基本信息.立项年度}}</td>
+                            <th>建立时间：</th>
+                            <td>{{@model.立项基本信息.建立时间|date("yyyy-MM-dd")}}</td>
+                        </tr>
+                        <tr>
+                            <th colspan="8">专家评审明细</th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="printing" id="divNotPrint">
+        <a class="btn btn-primary btn-printing" href="javascript:;" ms-on-click="printView('divPrint','divNotPrint')">打印</a>
+        <a class="btn btn-danger btn-close" href="javascript:window.close()">关闭</a>
+    </div>
+</div>
+</body>
+</html>
