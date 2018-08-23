@@ -146,15 +146,9 @@ $(function () {
                         break;
                     case 20:
                         arrIds = departmentArr;
-                        if (departmentTree == null) {
-                            dAddVm.getEnableDepartment();
-                        }
                         break;
                     case 30:
                         arrIds = roleArr;
-                        if (roleTree == null) {
-                            dAddVm.getRole();
-                        }
                         break;
                 }
                 dAddVm.peopleType = parseInt(val);
