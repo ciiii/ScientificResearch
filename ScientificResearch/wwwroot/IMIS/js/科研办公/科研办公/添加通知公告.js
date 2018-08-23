@@ -26,6 +26,7 @@ $(function () {
             role: '',
             people: '',
             peopleArr: [],
+            users:[],
             loadInfo: function () {
                 //实例化编辑器
                 UM.delEditor('UMContent');
@@ -337,6 +338,7 @@ $(function () {
             clickSubmit: function () {
                 if (dAddVm.peopleType == 10) {
                     arrIds = dAddVm.peopleArr;
+                    debugger;
                 }
                 var newArr = [];
                 for (var i = 0; i < arrIds.length; i++) {
@@ -344,7 +346,7 @@ $(function () {
                     var obj = {
                         编号: 0,
                         通知公告编号: dAddVm.model.基本资料.编号,
-                        接收者类型: parseInt(dAddVm.model.通知公告接收条件列表[0].接收者类型),
+                        接收者类型: dAddVm.peopleType,
                         接收者编号: arrIds[i]
                     }
                     newArr.push(obj);

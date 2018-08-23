@@ -18,6 +18,7 @@ $(function () {
             LikeValue: '',
             allchecked: false,
             loaded: false,
+            nothing: false,
             departmentName: '',
             query: function () {
                 choiceVm.loaded = false;
@@ -29,6 +30,7 @@ $(function () {
                         if (obj == null || obj.list.length == 0) {
                             $('.modal-choice .pager').hide();
                             choiceVm.model = [];
+                            choiceVm.nothing = true;
                             return;
                         } else {
                             obj = obj.list;
@@ -37,6 +39,7 @@ $(function () {
                             }
                             choiceVm.model = obj;
                             $('.modal-choice .pager').show();
+                            choiceVm.nothing = false;
                         }
                         $('.modal-choice .pager').mamPager({
                             pageSize: choiceVm.req.Size,                           //页大小
@@ -50,6 +53,7 @@ $(function () {
                                 choiceVm.req.Index = index;
                                 choiceVm.loaded = false;
                                 choiceVm.allchecked = false;
+                                choiceVm.nothing = false;
                                 choiceVm.query();
                             }
                         });
@@ -102,17 +106,22 @@ $(function () {
                             部门名称: choiceVm.model[i].部门名称,
                         }
                         dAddVm.users.push(data);
-
+                        dAddVm.peopleArr.push(choiceVm.model[i].编号);
                     }
                 }
                 choiceVm.isRepeat(dAddVm.users);
+                choiceVm.isRepeatNumber(dAddVm.peopleArr);
                 var arrNames = [];
+
                 for (var i in dAddVm.users) {
                     arrNames.push(dAddVm.users[i].姓名);
-                    dAddVm.peopleArr.push(dAddVm.users[i].编号);
-                    choiceVm.arr.push(data);
+                    choiceVm.arr.push(dAddVm.users[i]);
                 }
-                dAddVm.people = arrNames.join();
+                if (dAddVm.people.length > 0) {
+                    dAddVm.people = dAddVm.people + ',' + arrNames.join();
+                } else {
+                    dAddVm.people = arrNames.join();
+                }
 
                 if (choiceVm.arr.length > 0) {
                     $('.modal-choice').modal('hide');
@@ -125,6 +134,17 @@ $(function () {
                     var targetNode = newArr[i];
                     for (var j = 0; j < i; j++) {
                         if (targetNode.编号 == newArr[j].编号) {
+                            newArr.splice(i, 1);
+                            break;
+                        }
+                    }
+                }
+            },
+            isRepeatNumber: function (newArr) {
+                for (var i = newArr.length - 1; i >= 0; i--) {
+                    var targetNode = newArr[i];
+                    for (var j = 0; j < i; j++) {
+                        if (targetNode == newArr[j]) {
                             newArr.splice(i, 1);
                             break;
                         }
