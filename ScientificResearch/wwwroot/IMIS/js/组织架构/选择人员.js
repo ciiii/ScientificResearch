@@ -105,17 +105,18 @@ $(function () {
                             姓名: choiceVm.model[i].姓名,
                             部门名称: choiceVm.model[i].部门名称,
                         }
+                        choiceVm.arr.push(data);
                         dAddVm.users.push(data);
                         dAddVm.peopleArr.push(choiceVm.model[i].编号);
                     }
                 }
+                choiceVm.isRepeat(choiceVm.arr);
                 choiceVm.isRepeat(dAddVm.users);
                 choiceVm.isRepeatNumber(dAddVm.peopleArr);
                 var arrNames = [];
 
-                for (var i in dAddVm.users) {
-                    arrNames.push(dAddVm.users[i].姓名);
-                    choiceVm.arr.push(dAddVm.users[i]);
+                for (var i in choiceVm.arr) {
+                    arrNames.push(choiceVm.arr[i].姓名);
                 }
                 if (dAddVm.people.length > 0) {
                     dAddVm.people = dAddVm.people + ',' + arrNames.join();
