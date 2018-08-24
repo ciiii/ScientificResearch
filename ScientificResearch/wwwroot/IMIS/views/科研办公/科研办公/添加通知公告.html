@@ -111,18 +111,19 @@
                     </div>
                 </div>
                 <div class="form-group col-sm-6">
-                    <label class="col-sm-3 control-label">关闭时间：</label>
+                    <label class="col-sm-3 control-label">
+                        <i class="icon iconfont icon-text-sign icon-sign"></i>关闭时间：
+                    </label>
                     <div class="col-sm-7">
                         <input class="form-control form-time end-time" type="text" ms-duplex="@model.基本资料.关闭时间" readonly />
+                        <span class="error-texe">关闭时间不能为空！</span>
                     </div>
                 </div>
             </div>
             <div class="col-sm-12 fileUpload-box">
                 <h5 class="title"><span>相关文件</span></h5>
                 <div class="form-group  col-sm-6">
-                    <label class="col-md-4 col-sm-4 control-label" for="input-file">
-                        <i class="icon iconfont icon-text-sign icon-sign"></i>上传相关材料：
-                    </label>
+                    <label class="col-md-4 col-sm-4 control-label" for="input-file">上传相关材料：</label>
                     <div class="col-md-7 col-sm-7 file-box">
                         <input type="file" id="input-file" class="input-file" name="fileUpload"
                                onclick="fileChange(this,'#input-file')">

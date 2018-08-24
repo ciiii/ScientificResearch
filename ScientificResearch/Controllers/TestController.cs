@@ -56,7 +56,7 @@ namespace ScientificResearch.Controllers
 
             return jobj.ToObject<object>();
         }
-        class MyClass
+        public class MyClass
         {
             public int 字段 = 1;
             public int 属性 { get; set; }
@@ -144,6 +144,13 @@ namespace ScientificResearch.Controllers
             //dynamic和IDictionary<string, object> 最后打出到前端的json其实是一样的.
             //但是他们各自拥有的方法不同,前者可以直接.一个属性出来写,后者就是IDictionary<string, object>咯;
             return new { exProd ,exProd2 = (IDictionary<string, object>)exProd,ContainProperty = ((IDictionary<string, object>)exProd).ContainsKey("Name")};
+        }
+
+        [HttpGet]
+        public object TestPoint(MyClass x)
+        {
+            x = null;
+            return new { x, x?.字段 };
         }
     }
 }

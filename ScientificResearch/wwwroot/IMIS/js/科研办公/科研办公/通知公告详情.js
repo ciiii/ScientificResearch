@@ -6,6 +6,7 @@ $(function () {
             $id: 'details',
             model: [],
             files: [],
+            names: '',
             getDetails: function () {
                 Notice.getNoticeDetails('get', id, function getNoticeDetailsListener(success, obj, strErro) {
                     if (success) {
@@ -15,7 +16,20 @@ $(function () {
                         } else {
 
                             noticeVm.model = obj;
-                            noticeVm.files = obj.通知公告.相关文件路径.split(',');
+                            if (obj.通知公告.相关文件路径 != null && obj.通知公告.相关文件路径 != '') {
+                                noticeVm.files = obj.通知公告.相关文件路径.split(',');
+                            }
+                            debugger;
+                            if (obj.接收条件.length > 0) {
+                                debugger;
+                                obj.通知公告.接收者类型名称 = obj.接收条件[0].接收者类型名称;
+                                var arr = [];
+                                for (var i in obj.接收条件) {
+                                    arr.push(obj.接收条件[i].接收者名称);
+                                }
+                                noticeVm.names = arr.join();
+                                debugger;
+                            }
                             $('.detailsPage').contents().find("body").html(noticeVm.model.通知公告.通知内容);
                             $('.detailsPage').contents().find("body").css('font-size', '12px');
                         }

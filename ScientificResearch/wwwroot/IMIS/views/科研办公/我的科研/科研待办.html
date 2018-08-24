@@ -39,7 +39,7 @@
 
 </head>
 <body ms-controller="root" class="ms-controller" onload="IFrameResize()">
-<div class="page-xueShu page-table page-common">
+<div class="page-xueShu page-table page-common page-paper">
     <div class="main">
         <h4 class="title">科研待办列表</h4>
         <div class="screen-box">
@@ -93,8 +93,8 @@
                                 </div>
                             </th>
                             <th width="80">序号</th>
-                            <th>事项类别</th>
                             <th>项目名称</th>
+                            <th>事项类别</th>
                             <th>事项详情</th>
                             <th>发起人姓名</th>
                             <th>发起人部门</th>
@@ -115,8 +115,8 @@
                                 </div>
                             </td>
                             <td>{{$index+1}}</td>
+                            <td class="text-left">{{el.项目名称}}</td>
                             <td>{{el.流程名称}}</td>
-                            <td>{{el.项目名称}}</td>
                             <td>{{el.步骤名称}}</td>
                             <td>{{el.发起人姓名}}</td>
                             <td>{{el.发起人部门名称}}</td>

@@ -29,6 +29,7 @@ $(function () {
                             vm.model = obj;
                             vm.mUsers = obj.个人资料;
                         }
+                        $('.bs-tooltip').tooltip();
                     } else {
                         console.info('获取科研详情失败！');
                         console.info(strErro);
@@ -65,6 +66,14 @@ $(function () {
             },
             clickDetails: function (el) {
                 sessionStorage.mPeriodicalInfo = JSON.stringify(el.$model);
+            },
+            getClass: function (statue) {
+                switch (statue) {
+                    case '已完成-审核通过':
+                        return 'state-mark';
+                    default:
+                        return '';
+                }
             },
             clickBtnReturn: function () {
                 $('.modal').modal('hide');

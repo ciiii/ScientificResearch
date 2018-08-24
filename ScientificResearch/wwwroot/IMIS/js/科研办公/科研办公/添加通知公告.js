@@ -73,7 +73,7 @@ $(function () {
                         dAddVm.name = obj.通知公告.发送人姓名;
                         obj.通知公告.关闭时间 = obj.通知公告.关闭时间.slice(0, 10);
 
-                        if (obj.通知公告.相关文件路径 != null) {
+                        if (obj.通知公告.相关文件路径 != null&&obj.通知公告.相关文件路径!='') {
                             dAddVm.files = obj.通知公告.相关文件路径.split(',');
                         }
 
@@ -341,10 +341,25 @@ $(function () {
                     newArr.push(obj);
                 }
                 dAddVm.model.通知公告接收条件列表 = newArr;
-                var noticeTitle = dAddVm.inputVal('.notice-title');
+                var noticeTitle = dAddVm.inputVal('.modal-add .notice-title');
+                var endTime = dAddVm.inputVal('.modal-add .end-time');
                 dAddVm.model.基本资料.相关文件路径 = dAddVm.files.join();
                 dAddVm.model.基本资料.通知内容 = um.getContent();
                 dAddVm.model.基本资料.通知类型 = dAddVm.type;
+                if(!noticeTitle){
+                    $.oaNotify.error('通知名称不能为空！');
+                    return;
+                }
+                if(!noticeTitle){
+                    $.oaNotify.error('关闭时间不能为空！');
+                    return;
+                }
+                if(dAddVm.model.通知公告接收条件列表.length==0){
+                    $.oaNotify.error('接受者不能为空！');
+                    return;
+                }
+
+
                 if (noticeTitle && dAddVm.model.通知公告接收条件列表 != []) {
                     dAddVm.addNotice(dAddVm.model.$model);
                 }
@@ -400,7 +415,9 @@ $(function () {
         e.preventDefault();
         $(this).tab('show');
     });
-
+    $('.modal-add .modal-body').mCustomScrollbar({
+        theme: 'dark-3',
+    });
     $('.form-time').datetimepicker({
         format: 'yyyy-mm-dd',
         minView: "month", //选择日期后，不会再跳转去选择时分秒
