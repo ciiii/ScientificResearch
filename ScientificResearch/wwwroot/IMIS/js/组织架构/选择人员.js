@@ -57,7 +57,7 @@ $(function () {
                                 choiceVm.query();
                             }
                         });
-                        $('.modal-add .bs-tooltip').tooltip();
+                        $('.modal-choice .bs-tooltip').tooltip();
                     } else {
                         console.info('获取' + mCategory + '列表失败！');
                         console.info(strErro);
@@ -178,7 +178,7 @@ $(function () {
                                 nodes[i].id = nodes[i].编号;
                                 nodes[i].pId = nodes[i].上级部门编号;
                             }
-                            departmentTree = $.fn.zTree.init($('.departmentTree'), setting, nodes);
+                            departmentTree = $.fn.zTree.init($('.choiceRoot .departmentTreeTwo'), setting, nodes);
                         }
                     } else {
                         console.in('获取部门数据失败！' + strErro)
@@ -195,7 +195,7 @@ $(function () {
                         text += nodes[i].name + ",";
                     }
                     if (text.length > 0) text = text.substring(0, text.length - 1);
-                    var cityObj = $('.department-box .departmentTree');
+                    var cityObj = $('.choiceRoot .department-box .departmentTreeTwo');
                     cityObj.val(text);
                     choiceVm.departmentName = treeNode.名称;
                     choiceVm.req.部门编号 = treeNode.id;
@@ -204,18 +204,18 @@ $(function () {
                 }
             },
             hideMenu: function () {
-                $('.department-box .menuContent').fadeOut('fast');
+                $('.choiceRoot .menuContent').fadeOut('fast');
                 $('body').unbind('mousedown', choiceVm.onBodyDown);
             },
             onBodyDown: function (event) {
-                if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(event.target).parents(".department-box .menuContent").length > 0)) {
+                if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(event.target).parents(".choiceRoot .menuContent").length > 0)) {
                     choiceVm.hideMenu();
                 }
             },
             showMenu: function () {
-                var obj = $('.department-box .departmentTree');
-                var offset = $('.department-box .departmentTree').offset();
-                $('.department-box .menuContent').css({
+                var obj = $('.choiceRoot .departmentTreeTwo');
+                var offset = $('.choiceRoot .departmentTreeTwo').offset();
+                $('.choiceRoot .menuContent').css({
                     left: offset.left + 'px',
                     top: offset.top + obj.outerHeight() + 'px'
                 }).slideDown('fast');

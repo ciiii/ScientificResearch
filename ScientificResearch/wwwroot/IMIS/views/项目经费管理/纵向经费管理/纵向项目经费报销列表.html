@@ -112,12 +112,12 @@
                                         <i class="icon iconfont" ms-class="@el.步骤链接样式"></i>
                                     </a>
                                 </li>
-                                <li class="bs-tooltip btn-batchPrinting" data-toggle="tooltip"
-                                    data-placement="bottom" title="打印" ms-if="@el.状态==1">
-                                    <a href="javascript:;" ms-on-click="@info(el),@clickBtnEdit(el)">
-                                        <i class="icon iconfont icon-dayin2"></i>
-                                    </a>
-                                </li>
+                                <!--<li class="bs-tooltip btn-batchPrinting" data-toggle="tooltip"-->
+                                    <!--data-placement="bottom" title="打印" ms-if="@el.状态==1">-->
+                                    <!--<a ms-attr="{'href':@getUrl('打印纵向项目报销记录.html?id='+@el.编号)}">-->
+                                        <!--<i class="icon iconfont icon-dayin2"></i>-->
+                                    <!--</a>-->
+                                <!--</li>-->
                                 <li class="bs-tooltip btn-details" data-toggle="tooltip" data-placement="bottom"
                                     title="项目详情">
                                     <a href="javascript:;" data-toggle="modal" data-target=".modal-details"

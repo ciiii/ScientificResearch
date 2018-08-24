@@ -26,7 +26,7 @@ $(function () {
             role: '',
             people: '',
             peopleArr: [],
-            users:[],
+            users: [],
             loadInfo: function () {
                 //实例化编辑器
                 UM.delEditor('UMContent');
@@ -101,25 +101,26 @@ $(function () {
                         }
                         switch (dAddVm.peopleType) {
                             case 0:
+                                $('.configure-box').hide();
                                 dAddVm.arrIds = '';
                                 break;
                             case 10:
+                                $('.configure-box').hide();
+                                $('.configure-box:eq(2)').show();
                                 dAddVm.people = arr;
                                 dAddVm.peopleArr = arrIds;
                                 break;
                             case 20:
+                                $('.configure-box').hide();
+                                $('.configure-box:eq(0)').show();
                                 dAddVm.department = arr;
                                 departmentArr = arrIds;
-                                if (departmentTree == null) {
-                                    dAddVm.getEnableDepartment();
-                                }
                                 break;
                             case 30:
+                                $('.configure-box').hide();
+                                $('.configure-box:eq(1)').show();
                                 dAddVm.role = arr;
                                 roleArr = arrIds;
-                                if (roleTree == null) {
-                                    dAddVm.getRole();
-                                }
                                 break;
                         }
 
@@ -140,20 +141,26 @@ $(function () {
             changePeopleType: function (val) {
                 switch (val) {
                     case 0:
+                        $('.configure-box').hide();
                         arrIds = [0];
                         break;
                     case 10:
+                        $('.configure-box').hide();
+                        $('.configure-box:eq(2)').show();
                         arrIds = dAddVm.peopleArr;
                         break;
                     case 20:
+                        $('.configure-box').hide();
+                        $('.configure-box:eq(0)').show();
                         arrIds = departmentArr;
                         break;
                     case 30:
+                        $('.configure-box').hide();
+                        $('.configure-box:eq(1)').show();
                         arrIds = roleArr;
                         break;
                 }
                 dAddVm.peopleType = parseInt(val);
-                console.info(dAddVm.peopleType);
             },
             showUser: function () {
                 var url = dAddVm.getUrl('/IMIS/views/组织架构/选择人员.html');
@@ -163,22 +170,8 @@ $(function () {
                     success: function (data) {
                         $('.modal-choice .modal-dialog').html('');
                         $('.modal-choice .modal-dialog').append(data);
-
                     }
                 });
-                // if (dAddVm.editType) {
-                //     if (dAddVm.oldPeopleType == dAddVm.peopleType) {
-                //
-                //         sessionStorage.selectedUsers = JSON.stringify(dAddVm.model.通知公告接收条件列表);
-                //     } else {
-                //         sessionStorage.selectedUsers = JSON.stringify(null);
-                //     }
-                // } else {
-                //     sessionStorage.selectedUsers = JSON.stringify(null);
-                // }
-                // console.info('sessionStorage.selectedUsers');
-                // console.info(sessionStorage.selectedUsers);
-
             },
             getEnableDepartment: function () {
                 var setting = {
@@ -313,8 +306,6 @@ $(function () {
                 }
             },
             showMenu: function (name) {
-                console.info(departmentTree);
-                console.info(roleTree);
                 var cityObj = $(name);
                 var cityOffset = $(name).offset();
                 $(name).next().css({
@@ -338,11 +329,9 @@ $(function () {
             clickSubmit: function () {
                 if (dAddVm.peopleType == 10) {
                     arrIds = dAddVm.peopleArr;
-                    debugger;
                 }
                 var newArr = [];
                 for (var i = 0; i < arrIds.length; i++) {
-                    debugger;
                     var obj = {
                         编号: 0,
                         通知公告编号: dAddVm.model.基本资料.编号,
@@ -352,14 +341,10 @@ $(function () {
                     newArr.push(obj);
                 }
                 dAddVm.model.通知公告接收条件列表 = newArr;
-                debugger;
                 var noticeTitle = dAddVm.inputVal('.notice-title');
                 dAddVm.model.基本资料.相关文件路径 = dAddVm.files.join();
                 dAddVm.model.基本资料.通知内容 = um.getContent();
                 dAddVm.model.基本资料.通知类型 = dAddVm.type;
-
-
-                console.info(dAddVm.model);
                 if (noticeTitle && dAddVm.model.通知公告接收条件列表 != []) {
                     dAddVm.addNotice(dAddVm.model.$model);
                 }
@@ -408,26 +393,26 @@ $(function () {
                 $('.modal').modal('hide');
             },
         });
-        $('.nav-tabs a').on('click', function (e) {
-            e.preventDefault();
-            $(this).tab('show');
-        });
-
-        $('.form-time').datetimepicker({
-            format: 'yyyy-mm-dd',
-            minView: "month", //选择日期后，不会再跳转去选择时分秒
-            todayBtn: 1,
-            autoclose: 1,
-            startDate: Tomorrow, //开始时间
-            language: 'zh-CN'
-        });
-
-        $('.menuContent').mCustomScrollbar({
-            theme: 'dark-3'
-        });
         dAddVm.loadInfo();
-        // dAddVm.getEnableDepartment();
-        // dAddVm.getRole();
         avalon.scan(document.body);
     });
+    $('.nav-tabs a').on('click', function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    });
+
+    $('.form-time').datetimepicker({
+        format: 'yyyy-mm-dd',
+        minView: "month", //选择日期后，不会再跳转去选择时分秒
+        todayBtn: 1,
+        autoclose: 1,
+        startDate: Tomorrow, //开始时间
+        language: 'zh-CN'
+    });
+
+    $('.menuContent').mCustomScrollbar({
+        theme: 'dark-3'
+    });
+    dAddVm.getEnableDepartment();
+    dAddVm.getRole();
 });

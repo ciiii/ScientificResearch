@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace ScientificResearch.Infrastucture
 {
+    /// <summary>
+    /// 目前这东西还没使用;
+    /// 目前使用的是DateTime?这个类型(原本没有使用DateTIme是因为sqlwhere一个解析没有被修复)
+    /// 这东西明显能做的事情更多
+    /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public class IsDateAttribute : ValidationAttribute
     {

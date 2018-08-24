@@ -281,6 +281,9 @@ $(function () {
             },
             clickBtnReturn: function () {
                 $('.modal').modal('hide');
+            },
+            getUrl: function (url) {
+                return decodeURI(encodeURI(encodeURI(url)));
             }
         })
 

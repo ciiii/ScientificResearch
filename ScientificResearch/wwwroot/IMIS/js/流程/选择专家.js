@@ -152,7 +152,7 @@ $(function () {
                                 nodes[i].id = nodes[i].编号;
                                 nodes[i].pId = nodes[i].上级部门编号;
                             }
-                            departmentTree = $.fn.zTree.init($('.departmentTree'), setting, nodes);
+                            departmentTree = $.fn.zTree.init($('.modal-choice .departmentTree'), setting, nodes);
                         }
                     } else {
                         console.in('获取部门数据失败！' + strErro)
@@ -169,7 +169,7 @@ $(function () {
                         text += nodes[i].name + ",";
                     }
                     if (text.length > 0) text = text.substring(0, text.length - 1);
-                    var cityObj = $('.department-box .departmentTree');
+                    var cityObj = $('.modal-choice .departmentTree');
                     cityObj.val(text);
                     choiceZJ.departmentName = treeNode.名称;
                     choiceZJ.req.部门编号 = treeNode.id;
@@ -178,7 +178,7 @@ $(function () {
                 }
             },
             hideMenu: function () {
-                $('.department-box .menuContent').fadeOut('fast');
+                $('.modal-choice .menuContent').fadeOut('fast');
                 $('body').unbind('mousedown', choiceZJ.onBodyDown);
             },
             onBodyDown: function (event) {
@@ -187,9 +187,9 @@ $(function () {
                 }
             },
             showMenu: function () {
-                var obj = $('.department-box .departmentTree');
-                var offset = $('.department-box .departmentTree').offset();
-                $('.department-box .menuContent').css({
+                var obj = $('.modal-choice .departmentTree');
+                var offset = $('.modal-choice .departmentTree').offset();
+                $('.modal-choice .menuContent').css({
                     left: offset.left + 'px',
                     top: offset.top + obj.outerHeight() + 'px'
                 }).slideDown('fast');

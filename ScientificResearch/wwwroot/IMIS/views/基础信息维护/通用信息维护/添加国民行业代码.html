@@ -2,16 +2,24 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                 aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="NoPermissionModalLabel">添加根节点-区域信息名称</h4>
+        <h4 class="modal-title" id="NoPermissionModalLabel">添加根节点-国民行业代码</h4>
     </div>
     <div class="modal-body">
         <form class="form-horizontal" role="form" action="" method='post' id='ajaxForm'>
             <div class="form-group">
                 <label class="col-sm-3 control-label">
-                    <i class="icon iconfont icon-text-sign icon-sign"></i>区域名称：
+                    <i class="icon iconfont icon-text-sign icon-sign"></i>行业名称：
                 </label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control" placeholder="请填写名称" id="name" ms-duplex="@name" value="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">
+                    <i class="icon iconfont icon-text-sign icon-sign"></i>代码值：
+                </label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" placeholder="请填写代码" id="code" ms-duplex="@code" value="">
                 </div>
             </div>
         </form>
@@ -28,4 +36,4 @@
         </div>
     </div>
 </div>
-<script src="/IMIS/js/基础信息维护/通用信息维护/add_area.js?" type="text/javascript"></script>
+<script src="/IMIS/js/基础信息维护/通用信息维护/添加国民行业代码.js" type="text/javascript"></script>

@@ -42,8 +42,9 @@
             <div class="notice box">
                 <div class="box-header">
                     <h3><i class="icon iconfont icon-hangzhenggonggao"></i> 通知公告</h3>
-                    <a class="more" ms-attr="{'href':@getUrl('/IMIS/views/科研办公/科研办公/通知公告.html')}">更多 <i
-                            class="icon iconfont icon-down1"></i></a>
+                    <a class="more" ms-attr="{'href':@getUrl('/IMIS/views/科研办公/科研办公/我的通知公告.html')}">
+                        更多 <i class="icon iconfont icon-down1"></i>
+                    </a>
                 </div>
                 <div class="content list">
                     <ul ms-if="@notice!=null&&@notice.length>0">
@@ -89,7 +90,7 @@
                             <tbody>
                             <tr ms-for="($index,el) in @ScientificResearch"
                                 ms-if="@ScientificResearch!= null && @ScientificResearch.length != 0">
-                                <td>{{$index+1}}</td>
+                                <td>{{el.number}}</td>
                                 <td>{{el.流程名称}}</td>
                                 <td>{{el.项目名称}}</td>
                                 <td>{{el.步骤名称}}</td>
@@ -162,10 +163,10 @@
                     </a>
                 </div>
                 <div class="content list">
-                    <ul ms-if="@WorkFlow!=null&&@WorkFlow.length>0">
-                        <li ms-for="el in @WorkFlow">
+                    <ul ms-if="@workFlow!=null&&@workFlow.length>0">
+                        <li ms-for="el in @workFlow">
                             <a href="javascript:;" data-toggle="modal" data-target=".modal-details"
-                               ms-on-click="@WorkFlowDetails(el)">
+                               ms-on-click="@workFlowDetails(el)">
                                 <span class="btn-icon"><i class="icon iconfont icon-liucheng"></i></span>
                                 <span class="title">{{el.名称}}</span>
                                 <span class="time"><i class="icon iconfont icon-xiayibu"></i></span>

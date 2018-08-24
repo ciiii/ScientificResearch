@@ -31,7 +31,7 @@ $(function () {
                 是否启用: true,
                 OrderType: false
             },
-            WorkFlow: [],
+            workFlow: [],
             reqWorkFlow: {
                 Index: 1,
                 Size: 5,
@@ -221,12 +221,12 @@ $(function () {
                         vm.WorkFlowTotal = obj.total;
                         if (obj == null || obj.length == 0) {
                             $('.procedure .pager').hide();
-                            vm.WorkFlow = [];
+                            vm.workFlow = [];
                             vm.nothing4 = true;
                             return;
                         } else {
                             obj = obj.list;
-                            vm.WorkFlow = obj;
+                            vm.workFlow = obj;
                             $('.procedure .pager').show();
                             vm.nothing4 = false;
                         }
@@ -241,7 +241,7 @@ $(function () {
                             pageChange: function (index) {
                                 vm.reqWorkFlow.Index = index;
                                 vm.nothing4 = false;
-                                vm.query();
+                                vm.WorkFlowTotalList();
                             }
                         });
                     } else {
@@ -303,7 +303,7 @@ $(function () {
                         return '';
                 }
             },
-            WorkFlowDetails: function (el) {
+            workFlowDetails: function (el) {
                 var details = {
                     id: el.编号,
                     name: el.名称

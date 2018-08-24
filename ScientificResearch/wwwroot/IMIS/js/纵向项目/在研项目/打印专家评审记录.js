@@ -18,7 +18,7 @@ $(function () {
                 }
             },
             getYProjectMiddleInspectionDetails: function () {
-                ResearchProject.getYProjectMiddleInspectionDetails('get', xueShuDetails.idA, xueShuDetails.idB, function getYProjectMiddleInspectionDetailsListener(success, obj, strErro) {
+                ResearchProject.getYProjectMiddleInspectionDetails('get', xueShuDetails.id, function getYProjectMiddleInspectionDetailsListener(success, obj, strErro) {
                     if (success) {
                         if (obj == null || obj.length == 0) {
                             vm.model = [];
@@ -53,7 +53,7 @@ $(function () {
                 });
             },
             getYProjectConclusionDetails: function () {
-                ResearchProject.getYProjectConclusionDetails('get', xueShuDetails.idA, xueShuDetails.idB, xueShuDetails.idC, function getYProjectConclusionDetailsListener(success, obj, strErro) {
+                ResearchProject.getYProjectConclusionDetails('get', xueShuDetails.id, function getYProjectConclusionDetailsListener(success, obj, strErro) {
                     if (success) {
                         if (obj == null || obj.length == 0) {
                             vm.model = [];
