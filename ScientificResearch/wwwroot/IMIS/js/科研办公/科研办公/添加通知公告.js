@@ -53,19 +53,11 @@ $(function () {
                             建立时间: new Date().format('yyyy-MM-dd hh:mm:ss'),
                             备注: ''
                         },
-                        通知公告接收条件列表: [
-                            {
-                                编号: 0,
-                                通知公告编号: 0,
-                                接收者类型: 0,
-                                接收者编号: 0
-                            }
-                        ]
+                        通知公告接收条件列表: []
                     }
                     dAddVm.name = userName;
                     dAddVm.peopleType = 0;
                 }
-
             },
             getDetails: function () {
                 Notice.getNoticeDetails('get', id, function getNoticeDetailsListener(success, obj, strErro) {
@@ -73,7 +65,7 @@ $(function () {
                         dAddVm.name = obj.通知公告.发送人姓名;
                         obj.通知公告.关闭时间 = obj.通知公告.关闭时间.slice(0, 10);
 
-                        if (obj.通知公告.相关文件路径 != null&&obj.通知公告.相关文件路径!='') {
+                        if (obj.通知公告.相关文件路径 != null && obj.通知公告.相关文件路径 != '') {
                             dAddVm.files = obj.通知公告.相关文件路径.split(',');
                         }
 
@@ -330,6 +322,9 @@ $(function () {
                 if (dAddVm.peopleType == 10) {
                     arrIds = dAddVm.peopleArr;
                 }
+                if (dAddVm.peopleType == 0) {
+                    arrIds = 0;
+                }
                 var newArr = [];
                 for (var i = 0; i < arrIds.length; i++) {
                     var obj = {
@@ -346,23 +341,20 @@ $(function () {
                 dAddVm.model.基本资料.相关文件路径 = dAddVm.files.join();
                 dAddVm.model.基本资料.通知内容 = um.getContent();
                 dAddVm.model.基本资料.通知类型 = dAddVm.type;
-                if(!noticeTitle){
+                if (!noticeTitle) {
                     $.oaNotify.error('通知名称不能为空！');
                     return;
                 }
-                if(!noticeTitle){
+                if (!endTime) {
                     $.oaNotify.error('关闭时间不能为空！');
                     return;
                 }
-                if(dAddVm.model.通知公告接收条件列表.length==0){
+                if (dAddVm.model.通知公告接收条件列表.length == 0) {
                     $.oaNotify.error('接受者不能为空！');
                     return;
                 }
 
-
-                if (noticeTitle && dAddVm.model.通知公告接收条件列表 != []) {
-                    dAddVm.addNotice(dAddVm.model.$model);
-                }
+                dAddVm.addNotice(dAddVm.model.$model);
             },
             clickUpload: function () {
                 var data = new FormData();
