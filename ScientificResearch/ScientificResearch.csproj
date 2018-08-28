@@ -12,12 +12,16 @@
 
   <ItemGroup>
     <Compile Remove="log4net\**" />
+    <Compile Remove="wwwroot\IMIS\libs\umeditor\net\**" />
     <Compile Remove="wwwroot\upload\**" />
     <Content Remove="log4net\**" />
+    <Content Remove="wwwroot\IMIS\libs\umeditor\net\**" />
     <Content Remove="wwwroot\upload\**" />
     <EmbeddedResource Remove="log4net\**" />
+    <EmbeddedResource Remove="wwwroot\IMIS\libs\umeditor\net\**" />
     <EmbeddedResource Remove="wwwroot\upload\**" />
     <None Remove="log4net\**" />
+    <None Remove="wwwroot\IMIS\libs\umeditor\net\**" />
     <None Remove="wwwroot\upload\**" />
   </ItemGroup>
 
@@ -41,6 +45,130 @@
 
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\IMIS\libs\avalon.min.js" />
+    <None Include="wwwroot\IMIS\libs\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <None Include="wwwroot\IMIS\libs\bootstrap\js\bootstrap-datetimepicker.fr.js" />
+    <None Include="wwwroot\IMIS\libs\bootstrap\js\bootstrap-datetimepicker.js" />
+    <None Include="wwwroot\IMIS\libs\bootstrap\js\bootstrap-datetimepicker.min.js" />
+    <None Include="wwwroot\IMIS\libs\bootstrap\js\bootstrap-editable.min.js" />
+    <None Include="wwwroot\IMIS\libs\bootstrap\js\bootstrap-multiselect.js" />
+    <None Include="wwwroot\IMIS\libs\bootstrap\js\bootstrap-table-zh-CN.min.js" />
+    <None Include="wwwroot\IMIS\libs\bootstrap\js\bootstrap-table.min.js" />
+    <None Include="wwwroot\IMIS\libs\bootstrap\js\bootstrap.min.js" />
+    <None Include="wwwroot\IMIS\libs\bootstrap\js\respond.min.js" />
+    <None Include="wwwroot\IMIS\libs\html5shiv.min.js" />
+    <None Include="wwwroot\IMIS\libs\iconfont\iconfont.svg" />
+    <None Include="wwwroot\IMIS\libs\jquery-1.11.1.min.js" />
+    <None Include="wwwroot\IMIS\libs\jquery.placeholder.min.js" />
+    <None Include="wwwroot\IMIS\libs\lightbox\lightbox.min.js" />
+    <None Include="wwwroot\IMIS\libs\mCustomScrollbar\jquery.mCustomScrollbar.concat.min.js" />
+    <None Include="wwwroot\IMIS\libs\mCustomScrollbar\jquery.mCustomScrollbar.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\dialogs\attachment\attachment.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\dialogs\background\background.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\dialogs\charts\chart.config.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\dialogs\charts\charts.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\dialogs\emotion\emotion.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\dialogs\formula\formula.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\dialogs\help\help.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\dialogs\image\image.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\dialogs\internal.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\dialogs\link\link.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\dialogs\map\map.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\dialogs\music\music.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\dialogs\scrawl\scrawl.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\dialogs\searchreplace\searchreplace.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\dialogs\spechars\spechars.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\dialogs\table\edittable.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\dialogs\template\config.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\dialogs\template\template.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\dialogs\video\video.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\dialogs\wordimage\fClipboard_ueditor.swf" />
+    <None Include="wwwroot\IMIS\libs\umeditor\dialogs\wordimage\imageUploader.swf" />
+    <None Include="wwwroot\IMIS\libs\umeditor\dialogs\wordimage\tangram.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\dialogs\wordimage\wordimage.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\lang\en\en.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\lang\zh-cn\zh-cn.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\php\action_crawler.php" />
+    <None Include="wwwroot\IMIS\libs\umeditor\php\action_list.php" />
+    <None Include="wwwroot\IMIS\libs\umeditor\php\action_upload.php" />
+    <None Include="wwwroot\IMIS\libs\umeditor\php\controller.php" />
+    <None Include="wwwroot\IMIS\libs\umeditor\php\Uploader.class.php" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\codemirror\codemirror.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\adapters\mootools-adapter.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\adapters\mootools-adapter.src.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\adapters\prototype-adapter.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\adapters\prototype-adapter.src.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\adapters\standalone-framework.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\adapters\standalone-framework.src.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\highcharts-more.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\highcharts-more.src.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\highcharts.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\highcharts.src.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\modules\annotations.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\modules\annotations.src.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\modules\canvas-tools.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\modules\canvas-tools.src.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\modules\data.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\modules\data.src.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\modules\drilldown.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\modules\drilldown.src.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\modules\exporting.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\modules\exporting.src.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\modules\funnel.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\modules\funnel.src.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\modules\heatmap.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\modules\heatmap.src.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\modules\map.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\modules\map.src.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\modules\no-data-to-display.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\modules\no-data-to-display.src.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\themes\dark-blue.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\themes\dark-green.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\themes\gray.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\themes\grid.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\highcharts\themes\skies.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\jquery-1.10.2.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\jquery-1.10.2.min.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\jquery-1.10.2.min.map" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\jquery.min.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\mathquill\font\stixgeneral-bundle\stixgeneral-webfont.svg" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\mathquill\font\stixgeneral-bundle\stixgeneralbol-webfont.svg" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\mathquill\font\stixgeneral-bundle\stixgeneralbolita-webfont.svg" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\mathquill\font\stixgeneral-bundle\stixgeneralitalic-webfont.svg" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\mathquill\font\Symbola.svg" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\mathquill\mathquill.min.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\snapscreen\UEditorSnapscreen.exe" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\SyntaxHighlighter\shCore.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\video-js\font\vjs.svg" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\video-js\video-js.swf" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\video-js\video.dev.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\video-js\video.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\webuploader\Uploader.swf" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\webuploader\webuploader.custom.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\webuploader\webuploader.custom.min.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\webuploader\webuploader.flashonly.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\webuploader\webuploader.flashonly.min.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\webuploader\webuploader.html5only.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\webuploader\webuploader.html5only.min.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\webuploader\webuploader.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\webuploader\webuploader.min.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\webuploader\webuploader.withoutimage.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\webuploader\webuploader.withoutimage.min.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\xss.min.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\zeroclipboard\ZeroClipboard.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\zeroclipboard\ZeroClipboard.min.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\third-party\zeroclipboard\ZeroClipboard.swf" />
+    <None Include="wwwroot\IMIS\libs\umeditor\ueditor.all.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\ueditor.all.min.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\ueditor.config.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\ueditor.parse.min.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\umeditor.config.js" />
+    <None Include="wwwroot\IMIS\libs\umeditor\umeditor.min.js" />
+    <None Include="wwwroot\IMIS\libs\WebP.js" />
+    <None Include="wwwroot\IMIS\libs\ztree\jquery.ztree.all.min.js" />
   </ItemGroup>
 
   <ItemGroup>

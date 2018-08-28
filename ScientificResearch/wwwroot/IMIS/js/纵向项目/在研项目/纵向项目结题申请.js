@@ -47,7 +47,6 @@ $(function () {
                             if (obj.项目结题信息.结题资料路径 != '' && obj.项目结题信息.结题资料路径 != null) {
                                 dAddVm.otherFiles = obj.项目结题信息.结题资料路径.split(',');
                             }
-                            debugger;
                             obj.项目结题信息.结题验收时间 = obj.项目结题信息.结题验收时间.slice(0, 10);
                             dAddVm.info.基本资料 = obj.项目结题信息;
                             dAddVm.info.参与人列表 = obj.结题参与人信息;
@@ -132,7 +131,7 @@ $(function () {
                             $.oaNotify.error(' 上传失败：' + e.error);
                         } else {
                             $.oaNotify.ok(' 上传成功!');
-                            for (var i in e.data) {
+                            for (var i = 0; i < e.data.length; i++) {
                                 dAddVm.otherFiles.push(e.data[i]);
                             }
                         }

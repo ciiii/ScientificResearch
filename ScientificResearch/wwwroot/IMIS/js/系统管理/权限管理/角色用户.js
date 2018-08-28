@@ -415,7 +415,7 @@ $(function () {
                 var nodes = [];
                 Department.getEnableDepartmentList('get', '', function getEnableDepartmentListListener(success, obj, strErro) {
                     if (success) {
-                        for (var i in obj) {
+                        for (var i = 0; i < obj.length; i++) {
                             obj[i].name = obj[i].名称;
                         }
                         nodes = obj;
@@ -475,11 +475,11 @@ $(function () {
             clickSubmit: function () {
                 var newAdds = [];
                 var newDeletes = [];
-                for (var i in mAdds) {
+                for ( var i = 0; i < mAdds.length; i++) {
                     newAdds.push(mAdds[i].编号);
                 }
-                for (var i in mDeletes) {
-                    newDeletes.push(mDeletes[i].编号);
+                for (var j = 0; j < mDeletes.length; j++) {
+                    newDeletes.push(mDeletes[j].编号);
                 }
                 dEditVm.addAndDelRoleUsers(newAdds, newDeletes);
             },

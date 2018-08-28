@@ -45,7 +45,13 @@ namespace ScientificResearch.Infrastucture
         /// <summary>
         /// 测试获取自定义的全局配置数据
         /// </summary>
-        protected 系统角色组编号 测试获取自定义的全局配置数据 { get { return Config.GetSection("系统角色组编号").Get<Models.系统角色组编号>(); } }
+        protected 系统角色组编号 测试获取自定义的全局配置数据
+        {
+            get
+            {
+                return Config.GetSection("系统角色组编号").Get<Models.系统角色组编号>();
+            }
+        }
 
         /// <summary>
         /// 日志服务

@@ -135,7 +135,6 @@ namespace ScientificResearch.Controllers
                 Children = new List<int>() { 1, 2, 3 }
             };
 
-            //随便写点提交到github
             dynamic exProd =MyLib.MyDynamic.ConvertToDynamic(p1);
             //下面两个属性都是 在执行期可被扩充出来的
             exProd.Description = "叙述";

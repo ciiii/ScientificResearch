@@ -115,8 +115,8 @@ $(function () {
                 choiceVm.isRepeatNumber(dAddVm.peopleArr);
                 var arrNames = [];
 
-                for (var i in choiceVm.arr) {
-                    arrNames.push(choiceVm.arr[i].姓名);
+                for (var j =0;j<choiceVm.arr.length;j++) {
+                    arrNames.push(choiceVm.arr[j].姓名);
                 }
                 if (dAddVm.people.length > 0) {
                     dAddVm.people = dAddVm.people + ',' + arrNames.join();

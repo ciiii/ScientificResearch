@@ -134,7 +134,6 @@ $(function () {
                             }
                             dAddVm.getRegionOne();
                             dAddVm.getTemplateList();
-                            console.info(111);
 
                         }
                     } else {
@@ -175,7 +174,6 @@ $(function () {
                             }
                             dAddVm.getRegionOne();
                             dAddVm.getTemplateList();
-                            console.info(222);
                         }
 
                     } else {
@@ -225,7 +223,7 @@ $(function () {
 
                         dAddVm.initMultiselect('#template');
                         var options = [];
-                        for (var i in obj) {
+                        for (var i = 0; i < obj.length; i++) {
                             var option = {
                                 label: obj[i].名称,
                                 title: obj[i].名称,
@@ -276,7 +274,7 @@ $(function () {
                         if (obj.length == 0) {
                             dAddVm.info.经费预算列表 = [];
                         }
-                        for (var i in obj) {
+                        for (var i = 0; i < obj.length; i++) {
                             var data = {
                                 编号: 0,
                                 项目支出类型: obj[i].项目支出类型,
@@ -518,7 +516,7 @@ $(function () {
                             $.oaNotify.error(' 上传失败：' + e.error);
                         } else {
                             $.oaNotify.ok(' 上传成功!');
-                            for (var i in e.data) {
+                            for (var i = 0; i < e.data.length; i++) {
                                 dAddVm.files.push(e.data[i]);
                             }
                         }
@@ -551,7 +549,7 @@ $(function () {
                             $.oaNotify.error(' 上传失败：' + e.error);
                         } else {
                             $.oaNotify.ok(' 上传成功!');
-                            for (var i in e.data) {
+                            for (var i = 0; i < e.data.length; i++) {
                                 dAddVm.declareFiles.push(e.data[i]);
                             }
                         }

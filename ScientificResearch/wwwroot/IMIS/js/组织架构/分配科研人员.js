@@ -17,7 +17,7 @@ $(function () {
             clickSubmit: function () {
                 if (dAddVm.users.length > 0) {
                     var data = [];
-                    for (var i in dAddVm.users) {
+                    for (var i = 0; i < dAddVm.users.length; i++) {
                         data.push(dAddVm.users[i].编号);
                     }
                     dAddVm.haveAddScientificResearchUsers(data);

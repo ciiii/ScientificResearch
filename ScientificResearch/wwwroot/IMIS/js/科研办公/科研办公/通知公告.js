@@ -26,13 +26,13 @@ $(function () {
             model: [],
             arr: {},
             text: '',
-            deepartmentId:'',
-            department:'',
+            deepartmentId: '',
+            department: '',
             editType: false,
             nothing: false,
             loaded: false,
             allchecked: false,
-            postName:'',
+            postName: '',
             query: function () {
                 vm.loaded = false;
                 $.support.cors = true;

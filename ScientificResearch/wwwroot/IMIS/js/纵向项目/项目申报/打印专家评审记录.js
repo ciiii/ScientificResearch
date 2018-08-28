@@ -18,7 +18,7 @@ $(function () {
                             vm.model = obj;
                             var expertInfo = obj.专家评审记录;
                             var html = '';
-                            for (var i in expertInfo) {
+                            for (var i = 0; i < expertInfo.length; i++) {
                                 var info = expertInfo[i];
                                 for (var key in info) {
                                     if (info[key] == null) {

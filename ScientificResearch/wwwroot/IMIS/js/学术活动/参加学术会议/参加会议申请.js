@@ -76,8 +76,8 @@ $(function () {
                                     obj.参加会议详情[i] = '';
                                 }
                             }
-                            for (var i in obj.财务信息) {
-                                addVm.funds += obj.财务信息[i].批准经费;
+                            for (var j = 0; j < obj.财务信息.length; j++) {
+                                addVm.funds += obj.财务信息[j].批准经费;
                             }
                             addVm.info = {
                                 基本资料: obj.参加会议详情,
@@ -123,7 +123,7 @@ $(function () {
 
                         addVm.initMultiselect('#template');
                         var options = [];
-                        for (var i in obj) {
+                        for (var i = 0; i < obj.length; i++) {
                             var option = {
                                 label: obj[i].名称,
                                 title: obj[i].名称,
@@ -174,7 +174,7 @@ $(function () {
                         if (obj.length == 0) {
                             addVm.info.经费预算列表 = [];
                         }
-                        for (var i in obj) {
+                        for (var i = 0; i < obj.length; i++) {
                             var data = {
                                 编号: 0,
                                 项目支出类型: obj[i].项目支出类型,
@@ -192,7 +192,7 @@ $(function () {
             },
             changeFunds: function () {
                 var funds = 0;
-                for (var i in addVm.info.经费预算列表) {
+                for (var i = 0; i < addVm.info.经费预算列表.length; i++) {
                     funds += parseInt(addVm.info.经费预算列表[i].批准经费);
                 }
                 addVm.funds = funds;
@@ -262,11 +262,11 @@ $(function () {
                     $.oaNotify.error('请在参会预算里选择经费预算模板！');
                     return;
                 } else {
-                    for (var i in addVm.info.经费预算列表) {
+                    for (var i = 0; i < addVm.info.经费预算列表.length; i++) {
                         addVm.info.经费预算列表[i].批准经费 = parseInt(addVm.info.经费预算列表[i].批准经费);
                     }
                 }
-                if (activityName&& hostUnit&& address && starttime && endTime) {
+                if (activityName && hostUnit && address && starttime && endTime) {
                     if (addVm.editType) {
                         var data = {
                             步骤编号: xueShuDetails.步骤编号,
@@ -316,7 +316,7 @@ $(function () {
                         } else {
                             $.oaNotify.ok(' 上传成功!');
                             addVm.type = true;
-                            for (var i in e.data) {
+                            for (var i = 0; i < e.data.length; i++) {
                                 addVm.files.push(e.data[i]);
                             }
                         }

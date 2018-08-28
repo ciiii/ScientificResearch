@@ -15,23 +15,20 @@ $(function () {
                             return;
                         } else {
 
-                            noticeVm.model = obj;
+
                             if (obj.通知公告.相关文件路径 != null && obj.通知公告.相关文件路径 != '') {
                                 noticeVm.files = obj.通知公告.相关文件路径.split(',');
                             }
-                            debugger;
-                            if (obj.接收条件.length > 0) {
-                                debugger;
+                            if (obj.接收条件.length != 0) {
                                 obj.通知公告.接收者类型名称 = obj.接收条件[0].接收者类型名称;
                                 var arr = [];
-                                for (var i in obj.接收条件) {
+                                for ( var i = 0; i < obj.接收条件.length; i++) {
                                     arr.push(obj.接收条件[i].接收者名称);
                                 }
                                 noticeVm.names = arr.join();
-                                debugger;
+                                noticeVm.model = obj;
                             }
-                            $('.detailsPage').contents().find("body").html(noticeVm.model.通知公告.通知内容);
-                            $('.detailsPage').contents().find("body").css('font-size', '12px');
+                            $('.details-content').html(noticeVm.model.通知公告.通知内容);
                         }
                     } else {
                         console.info('获取通知详情失败！');

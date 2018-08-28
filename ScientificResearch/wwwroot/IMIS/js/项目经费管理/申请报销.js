@@ -81,15 +81,15 @@ $(function () {
                                     obj.报销基本信息[i] = '';
                                 }
                             }
-                            for (var i in obj.本次报销项目列表) {
-                                if (obj.本次报销项目列表[i].报销金额 == null) {
-                                    obj.本次报销项目列表[i].报销金额 = 0;
+                            for (var j = 0; j < obj.本次报销项目列表.length; j++) {
+                                if (obj.本次报销项目列表[j].报销金额 == null) {
+                                    obj.本次报销项目列表[j].报销金额 = 0;
                                 }
-                                if (obj.本次报销项目列表[i].编制依据 == null) {
-                                    obj.本次报销项目列表[i].编制依据 = '';
+                                if (obj.本次报销项目列表[j].编制依据 == null) {
+                                    obj.本次报销项目列表[j].编制依据 = '';
                                 }
-                                obj.本次报销项目列表[i].备注 = obj.本次报销项目列表[i].编制依据;
-                                dAddVm.funds += obj.本次报销项目列表[i].报销金额;
+                                obj.本次报销项目列表[j].备注 = obj.本次报销项目列表[j].编制依据;
+                                dAddVm.funds += obj.本次报销项目列表[j].报销金额;
                             }
                             dAddVm.info.基本资料 = obj.报销基本信息;
                             dAddVm.info.报销详情列表 = obj.本次报销项目列表;
@@ -110,7 +110,7 @@ $(function () {
                             dAddVm.info.报销详情列表 = [];
                             return;
                         } else {
-                            for (var i in obj) {
+                            for (var i = 0; i < obj.length; i++) {
                                 if (obj[i].报销金额 == null) {
                                     obj[i].报销金额 = 0;
                                 }
@@ -135,7 +135,7 @@ $(function () {
                             dAddVm.info.报销详情列表 = [];
                             return;
                         } else {
-                            for (var i in obj) {
+                            for (var i = 0; i < obj.length; i++) {
                                 if (obj[i].报销金额 == null) {
                                     obj[i].报销金额 = 0;
                                 }
@@ -160,7 +160,7 @@ $(function () {
                             dAddVm.info.报销详情列表 = [];
                             return;
                         } else {
-                            for (var i in obj) {
+                            for (var i = 0; i < obj.length; i++) {
                                 if (obj[i].报销金额 == null) {
                                     obj[i].报销金额 = 0;
                                 }
@@ -180,7 +180,7 @@ $(function () {
             },
             changeFunds: function () {
                 var funds = 0;
-                for (var i in dAddVm.info.报销详情列表) {
+                for (var i = 0; i < dAddVm.info.报销详情列表.length; i++ ) {
                     dAddVm.info.报销详情列表[i].报销金额 = parseInt(dAddVm.info.报销详情列表[i].报销金额);
                     funds += dAddVm.info.报销详情列表[i].报销金额;
                 }
@@ -326,7 +326,7 @@ $(function () {
                             $.oaNotify.error(' 上传失败：' + e.error);
                         } else {
                             $.oaNotify.ok(' 上传成功!');
-                            for (var i in e.data) {
+                            for (var i = 0; i < e.data.length; i++) {
                                 dAddVm.files.push(e.data[i]);
                             }
                         }

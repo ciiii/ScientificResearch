@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -243,7 +244,15 @@ namespace ScientificResearch
             //app.UseResponseCaching();
 
             //web api应用默认用的wwwroot根目录作为静态文件目根录,
-            app.UseStaticFiles();
+            var staticfile = new StaticFileOptions();
+
+            //设置扩展文件名mime映射
+            var provider = new FileExtensionContentTypeProvider();
+            //provider.Mappings.Add(".log", "text/plain");//手动设置对应MIME
+            provider.Mappings[".txt"] = "application/txt";      //手动设置对应MIME
+            //provider.Mappings[".txt"] = "application/octet-stream";      //手动设置对应MIME
+            staticfile.ContentTypeProvider = provider;
+            app.UseStaticFiles(staticfile);
 
             //注意顺序 UseSession必须在UseMvc之前;有了session,mvc才能用
             //使用了distributedRedisCache以后,这个就是设置了redis对于session的过期时间了 

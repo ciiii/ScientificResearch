@@ -125,7 +125,7 @@ $(function () {
                             $.oaNotify.error(' 上传失败：' + e.error);
                         } else {
                             $.oaNotify.ok(' 上传成功!');
-                            for (var i in e.data) {
+                            for (var i = 0; i < e.data.length; i++) {
                                 dAddVm.otherFiles.push(e.data[i]);
                             }
                         }

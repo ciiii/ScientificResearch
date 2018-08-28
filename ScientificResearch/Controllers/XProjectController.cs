@@ -122,6 +122,8 @@ namespace ScientificResearch.Controllers
                 "upload/横向项目/合同文件",
                 Config.GetValue<int>("uploadFileMaxSize"));
             return filesNameList;
+
+            //return Content(Newtonsoft.Json.JsonConvert.SerializeObject(filesNameList.FirstOrDefault()),"text/html");
         }
 
         [HttpGet]
@@ -231,7 +233,7 @@ namespace ScientificResearch.Controllers
                 变更详情.变更时间,
                 变更前 = 状态 == 1 ? 变更中的项目详情 : 项目详情,
                 变更后 = 状态 == 1 ? 项目详情 : 变更中的项目详情,
-                审核记录 = 审核记录
+                审核记录
             };
         }
 

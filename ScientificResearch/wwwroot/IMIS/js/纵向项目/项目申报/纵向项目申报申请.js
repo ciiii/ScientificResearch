@@ -92,9 +92,9 @@ $(function () {
                                 dAddVm.declareFiles = obj.申报基本信息.项目申报书路径.split(',');
                             }
 
-                            for (var i in dAddVm.info.参与人列表) {
-                                if (dAddVm.info.参与人列表[i].工作量占比 == null) {
-                                    dAddVm.info.参与人列表[i].工作量占比 = '';
+                            for (var j = 0; j < dAddVm.info.参与人列表.length;j++) {
+                                if (dAddVm.info.参与人列表[j].工作量占比 == null) {
+                                    dAddVm.info.参与人列表[j].工作量占比 = '';
                                 }
                             }
                             dAddVm.getProjectTypeOne();
@@ -265,7 +265,7 @@ $(function () {
                             $.oaNotify.error(' 上传失败：' + e.error);
                         } else {
                             $.oaNotify.ok(' 上传成功!');
-                            for (var i in e.data) {
+                            for (var i = 0; i < e.data.length; i++) {
                                 dAddVm.files.push(e.data[i]);
                             }
                         }
@@ -298,7 +298,7 @@ $(function () {
                             $.oaNotify.error(' 上传失败：' + e.error);
                         } else {
                             $.oaNotify.ok(' 上传成功!');
-                            for (var i in e.data) {
+                            for (var i = 0; i < e.data.length; i++) {
                                 dAddVm.declareFiles.push(e.data[i]);
                             }
                         }

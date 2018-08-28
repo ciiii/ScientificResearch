@@ -95,7 +95,7 @@ $(function () {
             },
             batchChoice: function () {
                 choiceZJ.arr = [];
-                for (var i in choiceZJ.model) {
+                for (var i = 0; i < choiceZJ.model.length; i++) {
                     if (choiceZJ.model[i].checked) {
                         var data = {
                             编号: choiceZJ.model[i].编号,

@@ -118,8 +118,8 @@ $(function () {
                                     obj.基本信息[i] = '';
                                 }
                             }
-                            for (var i in obj.财务信息) {
-                                dAddVm.funds += obj.财务信息[i].批准经费;
+                            for (var j = 0; j < obj.财务信息.length; j++) {
+                                dAddVm.funds += obj.财务信息[j].批准经费;
                             }
                             dAddVm.info = {
                                 基本资料: obj.基本信息,
@@ -133,9 +133,9 @@ $(function () {
                             if (obj.基本信息.合同认定登记承诺书路径 != '' && obj.基本信息.合同认定登记承诺书路径 != null) {
                                 dAddVm.declareFiles = obj.基本信息.合同认定登记承诺书路径.split(',');
                             }
-                            for (var i in dAddVm.info.参与人列表) {
-                                if (dAddVm.info.参与人列表[i].工作量占比 == null) {
-                                    dAddVm.info.参与人列表[i].工作量占比 = '';
+                            for (var a = 0; a < dAddVm.info.参与人列表.length; a++) {
+                                if (dAddVm.info.参与人列表[a].工作量占比 == null) {
+                                    dAddVm.info.参与人列表[a].工作量占比 = '';
                                 }
                             }
                             console.info(dAddVm.info.基本资料);
@@ -183,7 +183,7 @@ $(function () {
 
                         dAddVm.initMultiselect('#template');
                         var options = [];
-                        for (var i in obj) {
+                        for (var i = 0; i < obj.length; i++) {
                             var option = {
                                 label: obj[i].名称,
                                 title: obj[i].名称,
@@ -234,7 +234,7 @@ $(function () {
                         if (obj.length == 0) {
                             dAddVm.info.经费预算列表 = [];
                         }
-                        for (var i in obj) {
+                        for (var i = 0; i < obj.length; i++) {
                             var data = {
                                 编号: 0,
                                 项目支出类型: obj[i].项目支出类型,
@@ -322,7 +322,7 @@ $(function () {
             },
             changeFunds: function () {
                 var funds = 0;
-                for (var i in dAddVm.info.经费预算列表) {
+                for (var i = 0; i < dAddVm.info.经费预算列表.length; i++) {
                     dAddVm.info.经费预算列表[i].批准经费 = parseInt(dAddVm.info.经费预算列表[i].批准经费);
                     funds += dAddVm.info.经费预算列表[i].批准经费;
                 }
@@ -363,6 +363,7 @@ $(function () {
                 }
             },
             postData: function () {
+                debugger;
                 var contractName = dAddVm.inputVal('.contract-name');
                 var contractNumber = dAddVm.inputVal('.contract-number');
                 var name = dAddVm.inputVal('.people-name');
@@ -379,7 +380,7 @@ $(function () {
 
                 dAddVm.info.基本资料.合同认定登记承诺书路径 = dAddVm.declareFiles.join();
                 dAddVm.info.基本资料.合同文件路径 = dAddVm.files.join();
-
+                debugger;
                 if (!contractName) {
                     $.oaNotify.error('合同名称不能为空！');
                     return;
@@ -432,6 +433,7 @@ $(function () {
                     $.oaNotify.error('研究类型不能为空！');
                     return;
                 }
+                debugger;
                 if (dAddVm.info.基本资料.合同类型 == '技术' && dAddVm.info.基本资料.是否申请技术合同认定) {
                     var tradingVolume = dAddVm.inputVal('.trading-volume');
                     var propertyRight = dAddVm.inputVal('.property-right');
@@ -506,6 +508,7 @@ $(function () {
             clickSubmit: function () {
                 dAddVm.stateVal = 1;
                 dAddVm.info.isHold = false;
+                debugger;
                 dAddVm.postData();
             },
             temporary: function () {
@@ -532,6 +535,50 @@ $(function () {
                     });
                 });
             },
+            ajaxFileUpload: function () {
+                $('.fileUpload-flie .loading').show();
+                $.ajaxFileUpload({
+                    url: Code.URL_POST_UPLOAD_X_PROJECT_CONTRACT_FILE, //用于文件上传的服务器端请求地址
+                    secureuri: false, //一般设置为false
+                    fileElementId: 'input-file', //文件上传空间的id属性  <input type="file" id="file" name="file" />
+                    dataType: 'html', //返回值类型 一般设置为json,
+                    success: function (data, status)  //服务器成功响应处理函数
+                    {
+                        // if (typeof (data.error) != 'undefined') {
+                        //     if (data.error != '') {
+                        //         $.oaNotify.error(' 上传失败：' + e.error);
+                        //     } else {
+                        //         for (var i = 0; i < e.data.length; i++) {
+                        //             dAddVm.files.push(e.data[i]);
+                        //         }
+                        //     }
+                        // }
+                        debugger;
+                        if (data != '') {
+                            data = JSON.parse(data);
+                            if (data.error) {
+                                $.oaNotify.error(' 上传失败：' + data.error);
+                            } else {
+                                $.oaNotify.ok(' 上传成功!');
+                                for (var i = 0; i < data.data.length; i++) {
+                                    dAddVm.files.push(data.data[i]);
+                                }
+                            }
+                        }
+
+                        // $.oaNotify.ok(' 上传成功!');
+                        // dAddVm.files.push(data);
+
+                    },
+                    error: function (data, status, e)//服务器响应失败处理函数
+                    {
+                        debugger;
+                        $.oaNotify.error(' 上传失败：' + e);
+                    }
+                });
+                $('.fileUpload-flie .loading').hide();
+                return false;
+            },
             clickUpload: function (e) {
                 var data = new FormData();
                 data.append('coverFile', $('.fileUpload-flie .input-file').get(0).files[0]);
@@ -552,7 +599,7 @@ $(function () {
                             $.oaNotify.error(' 上传失败：' + e.error);
                         } else {
                             $.oaNotify.ok(' 上传成功!');
-                            for (var i in e.data) {
+                            for (var i = 0; i < e.data.length; i++) {
                                 dAddVm.files.push(e.data[i]);
                             }
                         }
@@ -585,7 +632,7 @@ $(function () {
                             $.oaNotify.error(' 上传失败：' + e.error);
                         } else {
                             $.oaNotify.ok(' 上传成功!');
-                            for (var i in e.data) {
+                            for (var i = 0; i < e.data.length; i++) {
                                 dAddVm.declareFiles.push(e.data[i]);
                             }
                         }

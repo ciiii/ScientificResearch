@@ -26,7 +26,7 @@ $(function () {
             },
             clickSubmit: function () {
                 var arr = []
-                for (var i in AssignorVm.experts) {
+                for (var i = 0; i < AssignorVm.experts.length; i++) {
                     arr.push(AssignorVm.experts[i].编号)
                 }
                 AssignorVm.model.附加数据 = arr;

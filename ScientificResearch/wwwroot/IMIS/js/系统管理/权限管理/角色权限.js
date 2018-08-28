@@ -8,11 +8,11 @@ $(function () {
         dEditVm = avalon.define({
             $id: 'roleUsers',
             Jurisdictio: {},
-            mRoleNumber:mRoleNumber,
+            mRoleNumber: mRoleNumber,
             clickSubmit: function () {
                 var node = tree.getCheckedNodes(true);
                 var arr = [];
-                for (var i in node) {
+                for (var i = 0; i < node.length; i++) {
                     arr.push(node[i].编号);
                 }
                 var data = {
@@ -50,7 +50,7 @@ $(function () {
                         nodes = obj;
                         console.info(nodes);
                         if (nodes != null) {
-                            for (var i in nodes) {
+                            for (var i = 0; i < nodes.length; i++) {
                                 nodes[i].name = nodes[i].名称;
                                 nodes[i].checked = nodes[i].拥有;
                             }

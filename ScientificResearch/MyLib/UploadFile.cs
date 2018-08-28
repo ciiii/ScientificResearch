@@ -20,6 +20,7 @@ namespace MyLib
         /// <param name="uploadFileMaxSize"></param>
         /// <returns></returns>
         public async static Task<List<string>> Upload(
+            //TODO:IE8,9下载后返回一个json,ie8,9的form提交不能识别(真的??),以至于变为下载.除非返回一个"text/html"的content的结果
             Microsoft.AspNetCore.Http.IFormFileCollection files,
             string absolutePath,
             string relativePath,

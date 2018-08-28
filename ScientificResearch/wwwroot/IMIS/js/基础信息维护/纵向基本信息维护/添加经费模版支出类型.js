@@ -92,14 +92,14 @@ $(function () {
             },
             forData: function (selected, optional) {
                 var arr = [];
-                for (var i in optional) {
+                for (var i = 0; i < optional.length; i++) {
                     var oData = {
                         checked: false,
                         项目支出内容: optional[i],
                         财务科目: '',
                     }
 
-                    for (var j in selected) {
+                    for (var j = 0; j < selected.length; j++) {
                         if (selected[j].项目支出内容 == optional[i]) {
                             oData.checked = true;
                             oData.财务科目 = selected[j].财务科目;
@@ -141,7 +141,7 @@ $(function () {
                             title: '请选择',
                             value: 0
                         }];
-                        for (var i in obj) {
+                        for (var i = 0; i < obj.length; i++) {
                             var option = {
                                 label: obj[i].值,
                                 title: obj[i].值,
@@ -161,7 +161,7 @@ $(function () {
             getTypesChild: function (id) {
                 Dictionary.getDictionaryChild('get', id, function getDictionaryChildListener(success, obj, strErro) {
                     if (success) {
-                        for (var i in obj) {
+                        for (var i = 0; i < obj.length; i++) {
                             obj[i].checked = false;
                             obj[i].项目支出内容 = obj[i].值;
                             obj[i].财务科目 = '';

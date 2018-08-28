@@ -112,7 +112,6 @@ $(function () {
                 }
             },
             confirmDel: function (arr) {
-                console.info(arr);
                 ExpenditureTemplate.delExpenditureType('post', arr.$model, function delExpenditureTypeListener(success, obj, strErro) {
                     postBack(success, strErro, '删除成功！', '删除失败：', '.modal-del',function callBack() {
                         vm.query();

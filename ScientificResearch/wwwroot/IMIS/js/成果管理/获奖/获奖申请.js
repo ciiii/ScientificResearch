@@ -85,9 +85,9 @@ $(function () {
                             if (obj.获奖详情.获奖批文 != '' && obj.获奖详情.获奖批文 != null) {
                                 dAddVm.commentFiles = obj.获奖详情.获奖批文.split(',');
                             }
-                            for (var i in dAddVm.info.作者) {
-                                if (dAddVm.info.作者[i].工作量占比 == null) {
-                                    dAddVm.info.作者[i].工作量占比 = '';
+                            for (var j = 0; j < dAddVm.info.作者.length; j++) {
+                                if (dAddVm.info.作者[j].工作量占比 == null) {
+                                    dAddVm.info.作者[j].工作量占比 = '';
                                 }
                             }
                         }
@@ -158,7 +158,7 @@ $(function () {
                 dAddVm.info.基本资料.获奖批文 = dAddVm.commentFiles.join();
                 dAddVm.info.相关横向项目编号 = [];
                 dAddVm.info.相关纵向项目编号 = [];
-                for (var i in dAddVm.projectList) {
+                for (var i = 0; i < dAddVm.projectList.length; i++) {
                     if (dAddVm.projectList[i].项目类型名称 == '横向项目') {
 
                         dAddVm.info.相关横向项目编号.push(dAddVm.projectList[i].项目编号);
@@ -332,7 +332,7 @@ $(function () {
                             $.oaNotify.error(' 上传失败：' + e.error);
                         } else {
                             $.oaNotify.ok(' 上传成功!');
-                            for (var i in e.data) {
+                            for (var i = 0; i < e.data.length; i++) {
                                 dAddVm.files.push(e.data[i]);
                             }
                         }
@@ -365,7 +365,7 @@ $(function () {
                             $.oaNotify.error(' 上传失败：' + e.error);
                         } else {
                             $.oaNotify.ok(' 上传成功!');
-                            for (var i in e.data) {
+                            for (var i = 0; i < e.data.length; i++) {
                                 dAddVm.companyFiles.push(e.data[i]);
                             }
                         }
@@ -398,7 +398,7 @@ $(function () {
                             $.oaNotify.error(' 上传失败：' + e.error);
                         } else {
                             $.oaNotify.ok(' 上传成功!');
-                            for (var i in e.data) {
+                            for (var i = 0; i < e.data.length; i++) {
                                 dAddVm.commentFiles.push(e.data[i]);
                             }
                         }

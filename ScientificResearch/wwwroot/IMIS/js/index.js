@@ -5,7 +5,6 @@ $(function () {
         get('info', 1000 * 60 * 10)//过期时间为10分钟
     }
     window.mUserInfo = JSON.parse(localStorage.info).data;
-    console.info(mUserInfo);
     var ParentIndex;
     var TwoIndex;
     var mUsers;

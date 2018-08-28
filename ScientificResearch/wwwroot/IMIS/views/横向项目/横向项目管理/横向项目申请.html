@@ -602,14 +602,16 @@
                                 <i class="icon iconfont icon-text-sign icon-sign"></i>上传合同文件：
                             </label>
                             <div class="col-md-7 col-sm-7 file-box">
-                                <input type="file" id="input-file" class="input-file" name="fileUpload"
+                                <input type="file" id="input-file" class="input-file" name="input-file"
                                        onclick="fileChange(this,'.fileUpload-flie .input-file')">
                                 <div class="file">
                                     <a class="file-text btn btn-default" href="javascript:;">选择文件</a>
                                     <span class="file-name"></span>
                                 </div>
+                                <!--<a class="btn btn-primary" href="javascript:;"-->
+                                   <!--ms-on-click="@clickUpload($event)">上传</a>-->
                                 <a class="btn btn-primary" href="javascript:;"
-                                   ms-on-click="@clickUpload($event)">上传</a>
+                                   ms-on-click="@clickUpload()">上传</a>
                                 <div class="loading">文件上传中...</div>
                             </div>
                         </div>
@@ -768,8 +770,8 @@
     <div class="modal-footer submit-wrapper">
         <div class="form-group">
             <div class="submit-box text-center">
-                <button type="button" class="btn btn-primary btn-submit" ms-on-click="@clickSubmit">提交</button>
-                <button type="button" class="btn btn-success btn-submit" ms-on-click="@temporary">暂存</button>
+                <button type="button" class="btn btn-primary btn-submit" ms-on-click="@clickSubmit()">提交</button>
+                <button type="button" class="btn btn-success btn-submit" ms-on-click="@temporary()">暂存</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal" ms-on-click="@clickBtnReturn">取消
                 </button>
                 <div class="tip-box"></div>

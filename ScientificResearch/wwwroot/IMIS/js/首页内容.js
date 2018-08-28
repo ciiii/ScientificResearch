@@ -76,7 +76,7 @@ $(function () {
                     icon: '项目2.png'
                 },
                 {
-                    title: '人员管理',
+                    title: '组织架构',
                     url: '组织架构/部门人员信息维护.html',
                     icon: '医院负责人.png'
                 },
@@ -84,20 +84,22 @@ $(function () {
                     title: '角色管理',
                     url: '系统管理/权限管理/角色管理.html',
                     icon: '设置.png'
-                },
+                }
             ],
             newNavList: [],
             onload: function () {
-                for (var i in vm.navList) {
+                for (var i = 0; i < vm.navList.length; i++) {
                     vm.match(mUserInfo.权限, vm.newNavList, vm.navList[i]);
                 }
             },
             match: function (arrA, arrB, obj) {
-                for (var i in arrA) {
-                    var url = arrA[i].菜单;
-                    var arr = arrA[i].子级菜单;
-                    if (url && decodeURI(url.路径) == obj.url) {
-                        arrB.push(obj);
+                for (var j = 0; j < arrA.length; j++) {
+                    var url = arrA[j].菜单;
+                    var arr = arrA[j].子级菜单;
+                    if (url && url.路径 != '') {
+                        if (decodeURI(url.路径) == obj.url) {
+                            arrB.push(obj);
+                        }
                     }
                     if (arr && arr.length > 0) {
                         vm.match(arr, arrB, obj);

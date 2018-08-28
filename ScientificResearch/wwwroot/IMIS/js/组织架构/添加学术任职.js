@@ -84,7 +84,7 @@ $(function () {
                         } else {
                             $.oaNotify.ok(' 上传成功!');
                             dAddVm.type = true;
-                            for (var i in e.data) {
+                            for (var i = 0; i < e.data.length; i++) {
                                 dAddVm.files.push(e.data[i]);
                             }
                         }

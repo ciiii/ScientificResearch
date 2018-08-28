@@ -28,7 +28,7 @@ $(function () {
                             vm.model = obj;
                             var expertInfo = obj.中检专家评审;
                             var html = '';
-                            for (var i in expertInfo) {
+                            for (var i = 0; i < expertInfo.length; i++) {
                                 var info = expertInfo[i];
                                 for (var key in info) {
                                     if (info[key] == null) {
@@ -42,8 +42,6 @@ $(function () {
                                     '<th>评审意见：</th><td colspan="5">' + expertInfo[i].备注 + '</td></tr>';
                             }
                             $('.page-printing table tbody').append(html);
-
-                            console.info($('.page-printing table tbody').html());
                         }
 
                     } else {
@@ -63,7 +61,7 @@ $(function () {
                             vm.model = obj;
                             var expertInfo = obj.结题专家评审;
                             var html = '';
-                            for (var i in expertInfo) {
+                            for (var i = 0; i < expertInfo.length; i++) {
                                 var info = expertInfo[i];
                                 for (var key in info) {
                                     if (info[key] == null) {
@@ -77,8 +75,6 @@ $(function () {
                                     '<th>评审意见：</th><td colspan="5">' + expertInfo[i].备注 + '</td></tr>';
                             }
                             $('.page-printing table tbody').append(html);
-
-                            console.info($('.page-printing table tbody').html());
                         }
 
                     } else {

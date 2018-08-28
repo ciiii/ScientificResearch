@@ -4,6 +4,7 @@ $(function () {
         location.href = '/IMIS/views/login.html';
     }
     var userInfo = JSON.parse(localStorage.info).data;
+    var departmentTree;
     console.info(userInfo);
     avalon.ready(function () {
         window.vm = avalon.define({

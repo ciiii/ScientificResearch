@@ -101,9 +101,9 @@ $(function () {
                                     obj.立项基本信息[i] = '';
                                 }
                             }
-                            for (var i in obj.财务信息) {
-                                dAddVm.fundsA += obj.财务信息[i].批准经费;
-                                dAddVm.fundsB += obj.财务信息[i].配套经费;
+                            for (var j = 0; j < obj.财务信息.length; j++) {
+                                dAddVm.fundsA += obj.财务信息[j].批准经费;
+                                dAddVm.fundsB += obj.财务信息[j].配套经费;
                             }
                             dAddVm.info.基本资料 = obj.立项基本信息;
                             dAddVm.info.参与人列表 = obj.参与人信息;
@@ -114,9 +114,9 @@ $(function () {
                             if (obj.立项基本信息.伦理批文路径 != '' && obj.立项基本信息.伦理批文路径 != null) {
                                 dAddVm.files = obj.立项基本信息.伦理批文路径.split(',');
                             }
-                            for (var i in dAddVm.info.参与人列表) {
-                                if (dAddVm.info.参与人列表[i].工作量占比 == null) {
-                                    dAddVm.info.参与人列表[i].工作量占比 = '';
+                            for (var a = 0; a < dAddVm.info.参与人列表.length; a++) {
+                                if (dAddVm.info.参与人列表[a].工作量占比 == null) {
+                                    dAddVm.info.参与人列表[a].工作量占比 = '';
                                 }
                             }
                             console.info(dAddVm.info.基本资料);
@@ -147,9 +147,9 @@ $(function () {
                                     obj.立项基本信息[i] = '';
                                 }
                             }
-                            for (var i in obj.财务信息) {
-                                dAddVm.fundsA += obj.财务信息[i].批准经费;
-                                dAddVm.fundsB += obj.财务信息[i].配套经费;
+                            for (var j = 0; j < obj.财务信息.length; j++) {
+                                dAddVm.fundsA += obj.财务信息[j].批准经费;
+                                dAddVm.fundsB += obj.财务信息[j].配套经费;
                             }
                             dAddVm.info = {
                                 基本资料: obj.立项基本信息,
@@ -166,9 +166,9 @@ $(function () {
                             if (obj.立项基本信息.立项文件路径 != '' && obj.立项基本信息.立项文件路径 != null) {
                                 dAddVm.declareFiles = obj.立项基本信息.立项文件路径.split(',');
                             }
-                            for (var i in dAddVm.info.参与人列表) {
-                                if (dAddVm.info.参与人列表[i].工作量占比 == null) {
-                                    dAddVm.info.参与人列表[i].工作量占比 = '';
+                            for (var a = 0; a < dAddVm.info.参与人列表.length; a++) {
+                                if (dAddVm.info.参与人列表[a].工作量占比 == null) {
+                                    dAddVm.info.参与人列表[a].工作量占比 = '';
                                 }
                             }
                             dAddVm.getProjectTypeOne();
@@ -230,7 +230,7 @@ $(function () {
 
                         dAddVm.initMultiselect('#template');
                         var options = [];
-                        for (var i in obj) {
+                        for (var i = 0; i < obj.length; i++) {
                             var option = {
                                 label: obj[i].名称,
                                 title: obj[i].名称,
@@ -281,7 +281,7 @@ $(function () {
                         if (obj.length == 0) {
                             dAddVm.info.经费预算列表 = [];
                         }
-                        for (var i in obj) {
+                        for (var i = 0; i < obj.length; i++) {
                             var data = {
                                 编号: 0,
                                 项目支出类型: obj[i].项目支出类型,
@@ -301,14 +301,14 @@ $(function () {
             },
             changeFundsA: function () {
                 var funds = 0;
-                for (var i in dAddVm.info.经费预算列表) {
+                for (var i = 0; i < dAddVm.info.经费预算列表.length; i++) {
                     funds += parseInt(dAddVm.info.经费预算列表[i].批准经费);
                 }
                 dAddVm.fundsA = funds;
             },
             changeFundsB: function () {
                 var funds = 0;
-                for (var i in dAddVm.info.经费预算列表) {
+                for (var i = 0; i < dAddVm.info.经费预算列表.length; i++) {
                     funds += parseInt(dAddVm.info.经费预算列表[i].配套经费);
                 }
                 dAddVm.fundsB = funds;
@@ -423,7 +423,7 @@ $(function () {
                     $.oaNotify.error('请在项目预算里选择经费预算模板！');
                     return;
                 } else {
-                    for (var i in dAddVm.info.经费预算列表) {
+                    for (var i = 0; i < dAddVm.info.经费预算列表.length; i++) {
                         dAddVm.info.经费预算列表[i].批准经费 = parseInt(dAddVm.info.经费预算列表[i].批准经费);
                         dAddVm.info.经费预算列表[i].配套经费 = parseInt(dAddVm.info.经费预算列表[i].配套经费);
                     }
@@ -539,7 +539,7 @@ $(function () {
                             $.oaNotify.error(' 上传失败：' + e.error);
                         } else {
                             $.oaNotify.ok(' 上传成功!');
-                            for (var i in e.data) {
+                            for (var i = 0; i < e.data.length; i++) {
                                 dAddVm.files.push(e.data[i]);
                             }
                         }
@@ -572,7 +572,7 @@ $(function () {
                             $.oaNotify.error(' 上传失败：' + e.error);
                         } else {
                             $.oaNotify.ok(' 上传成功!');
-                            for (var i in e.data) {
+                            for (var i = 0; i < e.data.length; i++) {
                                 dAddVm.declareFiles.push(e.data[i]);
                             }
                         }

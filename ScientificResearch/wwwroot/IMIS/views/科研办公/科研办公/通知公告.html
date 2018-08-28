@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/IMIS/libs/bootstrap/css/bootstrap-datetimepicker.min.css"/>
     <link rel="stylesheet" href="/IMIS/libs/mCustomScrollbar/jquery.mCustomScrollbar.min.css"/>
     <link rel="stylesheet" href="/IMIS/libs/ztree/metroStyle/metroStyle.css"/>
-    <link rel="stylesheet" href="/IMIS/libs/umeditor/themes/default/css/umeditor.css"/>
+
     <link rel="stylesheet" href="/IMIS/libs/iconfont/iconfont.css"/>
     <!--[if lt IE 9]>
     <script src="/IMIS/libs/html5shiv.js"></script>
@@ -26,6 +26,7 @@
     <script src="/IMIS/libs/umeditor/umeditor.config.js"></script>
     <script src="/IMIS/libs/umeditor/umeditor.min.js"></script>
     <script src="/IMIS/libs/umeditor/lang/zh-cn/zh-cn.js"></script>
+    <link rel="stylesheet" href="/IMIS/libs/umeditor/themes/default/css/umeditor.css"/>
 
     <script src="/IMIS/js/pager.js"></script>
     <script src="/IMIS/js/main.js"></script>
@@ -34,11 +35,9 @@
     <script src="/IMIS/js/get_connect/return_data.js"></script>
 
     <script>
-        document.write(' <link rel="stylesheet" href="/IMIS/css/child_pages.css"/>');
+        document.write(' <link rel="stylesheet" href="/IMIS/css/child_pages.css?time=' + new Date().getTime() +'"/>');
         document.write(' <script src="/IMIS/js/科研办公/科研办公/通知公告.js?time=' + new Date().getTime() + '"></s' + 'cript>');
-
     </script>
-
 </head>
 <body ms-controller="root" class="ms-controller" onload="IFrameResize()">
 <div class="page-notice page-common page-table page-tableborder">

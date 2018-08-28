@@ -529,7 +529,7 @@ $(function () {
                         vm.initMultiselect('.modal-addDP #users');
 
                         var options = [];
-                        for (var i in obj) {
+                        for (var i = 0; i < obj.length; i++) {
                             var option = {
                                 label: obj[i].姓名,
                                 title: obj[i].姓名,

@@ -1,10 +1,14 @@
 $(function () {
     window.addVm = null;
+
     var id;
     var departmentTree = null;
     var roleTree = null;
     var userName = JSON.parse(localStorage.info).data.人员.姓名;
-    var um;
+    UM.delEditor('UMContent');
+    debugger;
+    var um = UM.getEditor('UMContent');
+    debugger;
     var roleArr = [], departmentArr = [];
     var day = new Date();
     var Tomorrow = new Date(day.setTime(day.getTime() + 24 * 60 * 60 * 1000)).format('yyyy-MM-dd 00:00:00').slice(0, 10);
@@ -29,8 +33,7 @@ $(function () {
             users: [],
             loadInfo: function () {
                 //实例化编辑器
-                UM.delEditor('UMContent');
-                um = UM.getEditor('UMContent');
+                debugger;
                 if (dAddVm.editType) {
                     dAddVm.title = '修改通知公告';
                     id = JSON.parse(sessionStorage.noticeId);
@@ -79,7 +82,7 @@ $(function () {
                             dAddVm.peopleType = obj.接收条件[0].接收者类型;
                             dAddVm.oldPeopleType = obj.接收条件[0].接收者类型;
 
-                            for (var i in obj.接收条件) {
+                            for (var i = 0; i < obj.接收条件.length; i++) {
                                 arr.push(obj.接收条件[i].接收者名称);
                                 arrIds.push(obj.接收条件[i].接收者编号);
                             }
@@ -322,9 +325,6 @@ $(function () {
                 if (dAddVm.peopleType == 10) {
                     arrIds = dAddVm.peopleArr;
                 }
-                if (dAddVm.peopleType == 0) {
-                    arrIds = 0;
-                }
                 var newArr = [];
                 for (var i = 0; i < arrIds.length; i++) {
                     var obj = {
@@ -336,6 +336,14 @@ $(function () {
                     newArr.push(obj);
                 }
                 dAddVm.model.通知公告接收条件列表 = newArr;
+                if (dAddVm.peopleType == 0) {
+                    dAddVm.model.通知公告接收条件列表 = [{
+                        编号: 0,
+                        通知公告编号: dAddVm.model.基本资料.编号,
+                        接收者类型: 0,
+                        接收者编号: 0
+                    }]
+                }
                 var noticeTitle = dAddVm.inputVal('.modal-add .notice-title');
                 var endTime = dAddVm.inputVal('.modal-add .end-time');
                 dAddVm.model.基本资料.相关文件路径 = dAddVm.files.join();
@@ -349,7 +357,7 @@ $(function () {
                     $.oaNotify.error('关闭时间不能为空！');
                     return;
                 }
-                if (dAddVm.model.通知公告接收条件列表.length == 0) {
+                if (dAddVm.model.通知公告接收条件列表 == []) {
                     $.oaNotify.error('接受者不能为空！');
                     return;
                 }
@@ -376,7 +384,7 @@ $(function () {
                             $.oaNotify.error(' 上传失败：' + e.error);
                         } else {
                             $.oaNotify.ok(' 上传成功!');
-                            for (var i in e.data) {
+                            for (var i = 0; i < e.data.length; i++) {
                                 dAddVm.files.push(e.data[i]);
                             }
                         }

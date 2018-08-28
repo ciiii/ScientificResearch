@@ -71,7 +71,7 @@ $(function () {
             batchChoice: function () {
                 node = departmentTree.getCheckedNodes(true);
                 var arr = [];
-                for (var i in node) {
+                for (var i = 0; i < node.length; i++) {
                     arr.push(node[i].名称);
                 }
                 dAddVm.info.基本资料.成果归属部门 = arr.join();

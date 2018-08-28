@@ -108,7 +108,6 @@ $(function () {
                 } else {
                     $.oaNotify.error('请先勾选！');
                 }
-                console.info(dAddVm.projectList);
             },
             isRepeat: function (newArr) {
                 for (var i = newArr.length - 1; i >= 0; i--) {
@@ -131,7 +130,6 @@ $(function () {
 
                 dAddVm.projectList.push(data);
                 choiceVm.isRepeat(dAddVm.projectList);
-                console.info(dAddVm.projectList);
             }
         })
         $('.modal-choice .modal-body').mCustomScrollbar({
