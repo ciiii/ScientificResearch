@@ -1,13 +1,8 @@
 //用户
 var User = {
-    userLogin: function (type, userId, password, userLoginListener) {
+    userLogin: function (type, options, userLoginListener) {
         var url = Code.URL_POST_LOGIN;
-        var postData = {
-            工号: userId,
-            密码: password,
-            dbKey: 'ScientificResearch_Model'
-        }
-        Connect_Http.httpDatas(type, url, postData, function getBackListener(success, obj, strErro) {
+        Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
             if (success) {
                 userLoginListener(true, obj.data, '');
 

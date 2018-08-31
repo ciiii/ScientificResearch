@@ -79,14 +79,14 @@ namespace ScientificResearch.Controllers
         async public Task<object> 获取通知公告详情(int 编号, bool 是否已接收)
         {
             var model = await Db.GetModelByIdSpAsync<v2_通知公告>(编号);
-            if (!是否已接收)
-            {
+            //if (!是否已接收)
+            //{
                 await Db.ExecuteSpAsync(new sp_通知公告_接收()
                 {
                     通知公告编号 = 编号,
                     接收人编号 = CurrentUser.编号
                 });
-            }
+            //}
 
             var list = await Db.GetListSpAsync<v1_通知公告接收条件, 通知公告接收条件Filter>(new 通知公告接收条件Filter() { 通知公告编号 = 编号 });
 

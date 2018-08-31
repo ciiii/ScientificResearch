@@ -1,8 +1,5 @@
 $(function () {
     window.vm = null;
-    if (localStorage.getItem('info') == null) {
-        location.href = '/IMIS/views/login.html';
-    }
     var TemplateId = oa.getUrlParam('id');
     var TemplateName = oa.getUrlParam('name');
     avalon.ready(function () {

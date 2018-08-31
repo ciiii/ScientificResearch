@@ -1,8 +1,5 @@
 $(function () {
     window.vm = null;
-    if (localStorage.getItem('info') == null) {
-        location.href = '/IMIS/views/login.html';
-    }
     window.mUserInfo = JSON.parse(localStorage.info).data;
     window.mUserId = mUserInfo.人员.编号;
     console.info(mUserInfo);
@@ -140,7 +137,6 @@ $(function () {
                                 vm.query();
                             }
                         });
-                        $('.regulation .bs-tooltip').tooltip();
                     } else {
                         console.info('获取科研待办列表失败！');
                         console.info(strErro);

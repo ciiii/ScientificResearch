@@ -80,8 +80,8 @@
                             </label>
                             <div class="col-sm-7">
                                 <input type="text" class="form-control gonghao" id="id"
-                                       ms-duplex="@mUsers.工号" onkeyup="onlyOther(this)"/>
-                                <span class="error-texe">工号只能是字母或数字或中文，不能有特殊字符。</span>
+                                       ms-duplex="@mUsers.工号" ms-on-change="@inputVal('.gonghao')"/>
+                                <span class="error-texe">工号不能为空！</span>
                             </div>
                         </div>
                         <div class="form-group col-sm-6">

@@ -1,8 +1,6 @@
 $(function () {
+    isOverdue();
     window.vm = null;
-    if (localStorage.getItem('info') == null) {
-        location.href = '/IMIS/views/login.html';
-    }
     avalon.ready(function () {
         window.vm = avalon.define({
             $id: 'root',
@@ -22,7 +20,7 @@ $(function () {
                 WorkFlow.WorkFlowTotalList('get', vm.req.$model, function WorkFlowTotalListListener(success, obj, strErro) {
                     if (success) {
                         vm.loaded = true;
-                        vm.total = obj.length;
+                        vm.total = obj.total;
                         if (obj == null || obj.list.length == 0) {
                             vm.model = [];
                             vm.nothing = true;

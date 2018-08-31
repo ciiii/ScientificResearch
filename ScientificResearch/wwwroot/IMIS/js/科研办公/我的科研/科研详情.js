@@ -1,8 +1,6 @@
 $(function () {
+    isOverdue();
     window.vm = null;
-    if (localStorage.getItem('info') == null) {
-        location.href = '/IMIS/views/login.html';
-    }
     window.mUserInfo = JSON.parse(localStorage.info).data;;
     var back = JSON.parse(sessionStorage.mkeyandetails);
     var userId = oa.getUrlParam('userId');
@@ -53,7 +51,6 @@ $(function () {
                     name: el.发起人姓名,
                 }
                 sessionStorage.xueShuDetails = JSON.stringify(details);
-                debugger;
                 $('.modal-details .detailsPage').attr('src', vm.getUrl(el.路径));
             },
             details: function (el) {

@@ -511,16 +511,6 @@ function refresh() {
     window.location.reload();
 }
 
-//父级页面刷新
-function parentRefresh() {
-    var userId = JSON.parse(sessionStorage.mUserId);
-    var mUserInfo = JSON.parse(localStorage.info).data;
-    if (userId != mUserInfo.人员.编号) {
-        parent.location.reload();
-        sessionStorage.mUserId = mUserInfo.人员.编号;
-    }
-}
-parentRefresh();
 
 $(function () {
     $(".btn-refresh").click(function () {
@@ -897,16 +887,27 @@ function len(s) {
 }
 
 //判断登录信息localStorage是否过期
-function get(key, exp) {
-    var data = localStorage.getItem(key);
-    var dataObj = JSON.parse(data);
-    if (new Date().getTime() - dataObj.time < exp) {
-        location.href = '/IMIS/views/index.html';
-    } else {
-        console.log('登录信息已过期');
-        localStorage.removeItem('info');
-        sessionStorage.removeItem('userInfo');
+function isOverdue() {
+    if (localStorage.getItem('info') == null) {
+        alert('登录信息已过期，请重新登录！');
+        var val = $('#loginUrl', parent.document).val();
+        if (val!='') {
+            location.href = val;
+        }
+    }
+    parentRefresh();
+}
+
+//父级页面刷新
+function parentRefresh() {
+    var userId = JSON.parse(sessionStorage.mUserId);
+    var mUserInfo = JSON.parse(localStorage.info).data;
+    if (userId != mUserInfo.人员.编号) {
+        parent.location.reload();
+        sessionStorage.mUserId = mUserInfo.人员.编号;
     }
 }
+
+
 
 

@@ -12,6 +12,7 @@ using MyLib;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 using System.Data;
+using System.Text;
 
 namespace ScientificResearch.Controllers
 {
@@ -153,24 +154,36 @@ namespace ScientificResearch.Controllers
         }
 
         [HttpPost]
-        async public Task<string> 导入知网论文()
+        async public Task<object> 导入知网论文()
         {
             var filesNameList = await MyLib.UploadFile.Upload(
                Request.Form.Files,
                Env.WebRootPath,
                "upload/成果/论文/导入知网论文",
                Config.GetValue<int>("uploadFileMaxSize"));
+            var fileName = filesNameList[0];
 
             //var f = "C:\\Users\\Administrator\\Desktop\\123.xlsx";
 
-            var result = MyXls.Import<论文导入>(
-                MyPath.Combine(Env.WebRootPath, filesNameList[0]),
-                Config.GetValue<string>("知网论文excel文件worksheet名"));
-            //var result = MyXls.Import<论文导入>(f, config.GetValue<string>("知网论文excel文件worksheet名"));
-            result = result.Where(i => !string.IsNullOrWhiteSpace(i.刊物名称));
+            var result = MyXls.Import<论文导入>(MyPath.Combine(Env.WebRootPath, fileName));
+
+            await 导入整理后的公网论文数据(result);
+            //return result;
+            return fileName;
+        }
+
+        /// <summary>
+        /// 无论是知网还是万网,无论是xlsx还是endnote文件,最后都会整理为IEnumerable[论文导入]来此;
+        /// </summary>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        private async Task 导入整理后的公网论文数据(IEnumerable<论文导入> result)
+        {
+            result = result.Where(i => !string.IsNullOrWhiteSpace(i.论文标题));
 
             foreach (var item in result)
             {
+                item.论文摘要 = item.作者 + Environment.NewLine + item.论文摘要;
                 var authors = item.作者.Split(";");
                 item.作者 = authors.FirstOrDefault();
                 item.作者人数 = authors.Count();
@@ -184,7 +197,115 @@ namespace ScientificResearch.Controllers
 
             TryValidateModel(result);
             await Db.ExecuteSpAsync(new sp_导入论文() { tt = result.ToDataTable() });
-            return filesNameList[0];
+        }
+
+        [HttpPost]
+        async public Task<object> 导入endnote格式的论文()
+        {
+            var filesNameList = await MyLib.UploadFile.Upload(
+              Request.Form.Files,
+              Env.WebRootPath,
+              "upload/成果/论文/导入知网论文",
+              Config.GetValue<int>("uploadFileMaxSize"));
+
+            var fileName = filesNameList[0];
+            //var fileName = @"C:\Users\Ly\Desktop\CNKI-636713025263281250.txt";
+
+            //var gb2312 = Encoding.GetEncoding("GB2312");
+            //var sr = new StreamReader(MyPath.Combine(Env.WebRootPath, fileName), gb2312, true); //,System.Text.Encoding.GetEncoding("gb2312")
+
+            var sr = new StreamReader(MyPath.Combine(Env.WebRootPath, fileName), Encoding.Default); //,System.Text.Encoding.GetEncoding("gb2312")
+
+            var endnote与论文字段对应关系 = Config.GetSection("endnote与论文字段对应关系").Get<IDictionary<string, string>>();
+
+            //将数据按空行分段读取到不同的List<string>
+            var listOfObj = new List<List<string>>();
+            sr.BaseStream.Seek(0, SeekOrigin.Begin);
+            var temp = sr.ReadLine();
+            while (temp != null)
+            {
+                var listOfProp = new List<string>();
+
+                while (!string.IsNullOrWhiteSpace(temp))
+                {
+                    listOfProp.Add(temp);
+                    temp = sr.ReadLine();
+                }
+
+                temp = sr.ReadLine();
+
+                listOfObj.Add(listOfProp);
+            }
+            sr.Close();
+
+            //每个List<string>解析为一个论文导入对象,其中作者有特殊的多个构成方式;
+            var listOf论文 = new List<论文导入>();
+            foreach (var item in listOfObj)
+            {
+                if (item.Count() == 0) continue;
+                var new论文 = new 论文导入();
+                ////难道这样顺序的赋值,会让 new论文 之中的属性的顺序发生变化,并且影响到后面todatatable的映射???!!!
+                //foreach (var itemProp in item)
+                //{
+                //    //TODO:改为reg
+                //    var keyInProp = itemProp.Substring(1, 1);
+                //    var key = endnote与论文字段对应关系.ContainsKey(keyInProp) ? endnote与论文字段对应关系[keyInProp] : string.Empty;
+                //    var value = itemProp.Substring(3);
+                //    if (new论文.ContainProperty(key))
+                //    {
+                //        if (key == "作者")
+                //        {
+                //            new论文.作者 += $"{value};";
+                //        }
+                //        else
+                //        {
+                //            new论文.SetValueByPropertyName(key, value);
+                //        }
+                //    }
+                //}
+
+                //调整顺序会如何.没事...只有上面的情况会改变"顺序"
+                //丑
+                new论文.作者 = string.Join(";", item.Where(i => i.Substring(1, 1) == endnote与论文字段对应关系["作者"]).Select(j => j.Substring(3)));
+
+                new论文.论文标题 = item.Where(i => i.Substring(1, 1) == endnote与论文字段对应关系["论文标题"]).FirstOrDefault().Substring(3);
+
+                var yearValue = item.Where(i => i.Substring(1, 1) == endnote与论文字段对应关系["年度"]).FirstOrDefault();
+                if (!string.IsNullOrWhiteSpace(yearValue))
+                {
+                    int.TryParse(yearValue.Substring(3), out int year);
+                    new论文.年度 = year;
+                }
+
+                new论文.关键字 = item.Where(i => i.Substring(1, 1) == endnote与论文字段对应关系["关键字"]).FirstOrDefault().Substring(3);
+
+                new论文.论文摘要 = item.Where(i => i.Substring(1, 1) == endnote与论文字段对应关系["论文摘要"]).FirstOrDefault().Substring(3);
+
+                var volumeValue = item.Where(i => i.Substring(1, 1) == endnote与论文字段对应关系["卷号"]).FirstOrDefault();
+                if (!string.IsNullOrWhiteSpace(volumeValue))
+                {
+                    int.TryParse(volumeValue.Substring(3), out int volume);
+                    new论文.卷号 = volume;
+                }
+
+                var issueValue = item.Where(i => i.Substring(1, 1) == endnote与论文字段对应关系["期号"]).FirstOrDefault();
+                if (!string.IsNullOrWhiteSpace(issueValue))
+                {
+                    int.TryParse(issueValue.Substring(3), out int issue);
+                    new论文.期号 = issue;
+                }
+                
+                new论文.页码范围 = item.Where(i => i.Substring(1, 1) == endnote与论文字段对应关系["页码范围"]).FirstOrDefault().Substring(3);
+
+                new论文.刊物名称 = item.Where(i => i.Substring(1, 1) == endnote与论文字段对应关系["刊物名称"]).FirstOrDefault().Substring(3);
+
+                listOf论文.Add(new论文);
+            }
+
+            await 导入整理后的公网论文数据(listOf论文);
+
+            //return listOf论文;
+            return fileName;
         }
 
         [HttpPost]

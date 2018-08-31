@@ -144,6 +144,7 @@ $(function () {
                                     dAddVm.info.作者[j].完成字数 = '';
                                 }
                             }
+                            dAddVm.info.基本资料.认领人编号 = dAddVm.userInfo.人员.编号;
                             dAddVm.getSubjectOne();
                             dAddVm.getsourceTree();
                         }
@@ -326,7 +327,7 @@ $(function () {
                 dAddVm.info.基本资料.论文Online日期 = dAddVm.info.基本资料.论文在线日期;
                 dAddVm.info.相关横向项目编号 = [];
                 dAddVm.info.相关纵向项目编号 = [];
-                for ( var i = 0; i < dAddVm.projectList.length; i++) {
+                for (var i = 0; i < dAddVm.projectList.length; i++) {
                     if (dAddVm.projectList[i].项目类型名称 == '横向项目') {
 
                         dAddVm.info.相关横向项目编号.push(dAddVm.projectList[i].项目编号);

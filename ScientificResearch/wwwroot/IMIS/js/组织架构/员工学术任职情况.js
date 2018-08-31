@@ -1,8 +1,6 @@
 $(function () {
+    isOverdue();
     window.vm = null;
-    if (localStorage.getItem('info') == null) {
-        location.href = '/IMIS/views/login.html';
-    }
     var userName = oa.getUrlParam('name');
     var isName;
     if (userName == null) {

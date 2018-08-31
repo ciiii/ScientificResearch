@@ -46,7 +46,6 @@ $(function () {
                     onChange: function (option, checked, select) {
                         dAddVm.typesInfo.基本信息.编号 = $(option).val();
                         var text = $(option).text();
-                        debugger;
                         if (text == dAddVm.name) {
                             dAddVm.typesChild = dAddVm.forData(dAddVm.typesInfo.经费模版项目支出内容列表, dAddVm.optional);
 

@@ -13,19 +13,19 @@
     <link title="black" rel="stylesheet" href="/IMIS/css/black.css" ty="theme" disabled="disabled"/>
     <link title="brown" rel="stylesheet" href="/IMIS/css/brown.css" ty="theme" disabled="disabled"/>
     <!--[if lt IE 9]>
-    <script src="/IMIS/libs/html5shiv.min.js"></script>
-    <script src="/IMIS/libs/bootstrap/js/respond.min.js"></script>
+    <script type="text/javascript" src="/IMIS/libs/html5shiv.min.js"></script>
+    <script type="text/javascript" src="/IMIS/libs/bootstrap/js/respond.min.js"></script>
     <![endif]-->
-    <script src="/IMIS/libs/jquery-1.11.1.min.js"></script>
-    <script src="/IMIS/libs/jquery.placeholder.min.js"></script>
-    <script src="/IMIS/libs/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/IMIS/libs/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
-    <script src="/IMIS/libs/avalon.min.js"></script>
-    <script src="/IMIS/js/get_connect/code.js"></script>
-    <script src="/IMIS/js/get_connect/connect_http.js"></script>
-    <script src="/IMIS/js/get_connect/return_data.js"></script>
+    <script type="text/javascript" src="/IMIS/libs/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/IMIS/libs/jquery.placeholder.min.js"></script>
+    <script type="text/javascript" src="/IMIS/libs/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/IMIS/libs/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script type="text/javascript" src="/IMIS/libs/avalon.min.js"></script>
+    <script type="text/javascript" src="/IMIS/js/get_connect/code.js"></script>
+    <script type="text/javascript" src="/IMIS/js/get_connect/connect_http.js"></script>
+    <script type="text/javascript" src="/IMIS/js/get_connect/return_data.js"></script>
     <script>
-        document.write(' <script src="/IMIS/js/index.js?time=' + new Date().getTime() + '"></s' + 'cript>');
+        document.write(' <script type="text/javascript" src="/IMIS/js/index.js?time=' + new Date().getTime() + '"></s' + 'cript>');
     </script>
 </head>
 <body ms-controller="root" class="ms-controller">
@@ -41,8 +41,8 @@
                 <span class="point"></span>
             </div>
             <div class="profile-text">
-                <h6 class="user">{{userInfo.姓名}}</h6>
-                <p class="department">{{userInfo.部门名称}}（工号：{{userInfo.工号}}）</p>
+                <h6 class="user">{{@userInfo.姓名}}</h6>
+                <p class="department">{{@userInfo.部门名称==null?'':@userInfo.部门名称}}（工号：{{@userInfo.工号}}）</p>
                 <a class="bs-tooltip btn-edit-info" data-toggle="tooltip" data-placement="bottom" title="编辑"
                    ms-on-click="@clickBtnEdit(true)" href="javascript:;">
                     <i class="icon iconfont icon-bianji"></i>
@@ -137,10 +137,11 @@
                     </div>
                 </li>
                 <li class="bs-tooltip btn-out" data-toggle="tooltip" data-placement="bottom" title="退出">
-                    <a class="btn-out" href="login.html"><i class="icon iconfont icon-out2"></i></a>
+                    <a class="btn-out" href="javascript:;"><i class="icon iconfont icon-out2" ms-on-click="@logOut"></i></a>
                 </li>
             </ul>
         </div>
+        <input type="hidden" ms-attr="{'value':@getUrl(@loginUrl)}" id="loginUrl"/>
 
     </div>
     <div class="subpage">
@@ -148,6 +149,10 @@
             <iframe id="subpage" scrolling="auto" frameborder="0" ms-attr="{'src':@getUrl('首页内容.html')}"></iframe>
         </div>
     </div>
+</div>
+<div class="footer">
+    <span>科研管理系统 - Copyright © 2018</span>
+    <span>{{@loginUrl}}</span>
 </div>
 </body>
 </html>

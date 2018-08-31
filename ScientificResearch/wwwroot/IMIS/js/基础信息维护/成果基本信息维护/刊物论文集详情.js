@@ -5,7 +5,6 @@ $(function () {
     avalon.ready(function () {
         window.PDetails = avalon.define({
             $id: 'details-box',
-            deviceImg: getUserImG,
             number: 0,
             model: PeriodicalInfo
         });

@@ -429,7 +429,6 @@ $(function () {
                     }
                 }
                 if (dAddVm.info.基本资料.批准经费 != dAddVm.fundsA) {
-                    debugger;
                     $.oaNotify.error('预算批准经费应等于项目批准经费!！');
                     return;
                 }

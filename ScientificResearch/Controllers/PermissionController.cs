@@ -21,7 +21,7 @@ namespace ScientificResearch.Controllers
         /// <returns></returns>
         [HttpGet]
         async public Task<IEnumerable<v1_角色>> 获取角色列表() =>
-            await Db.GetListSpAsync<v1_角色>();
+            await Db.GetListSpAsync<v1_角色>(orderType:true);
 
         /// <summary>
         /// 新增角色

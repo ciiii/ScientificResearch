@@ -1,6 +1,6 @@
 $(function () {
     window.dAddVm = null;
-    var xueShuDetails = JSON.parse(sessionStorage.xueShuDetails);
+    var xueShuDetails;
     var userInfo = vm.userInfo;
     var templateId;
     avalon.ready(function () {
@@ -363,7 +363,6 @@ $(function () {
                 }
             },
             postData: function () {
-                debugger;
                 var contractName = dAddVm.inputVal('.contract-name');
                 var contractNumber = dAddVm.inputVal('.contract-number');
                 var name = dAddVm.inputVal('.people-name');
@@ -380,7 +379,6 @@ $(function () {
 
                 dAddVm.info.基本资料.合同认定登记承诺书路径 = dAddVm.declareFiles.join();
                 dAddVm.info.基本资料.合同文件路径 = dAddVm.files.join();
-                debugger;
                 if (!contractName) {
                     $.oaNotify.error('合同名称不能为空！');
                     return;
@@ -433,7 +431,6 @@ $(function () {
                     $.oaNotify.error('研究类型不能为空！');
                     return;
                 }
-                debugger;
                 if (dAddVm.info.基本资料.合同类型 == '技术' && dAddVm.info.基本资料.是否申请技术合同认定) {
                     var tradingVolume = dAddVm.inputVal('.trading-volume');
                     var propertyRight = dAddVm.inputVal('.property-right');
@@ -508,7 +505,6 @@ $(function () {
             clickSubmit: function () {
                 dAddVm.stateVal = 1;
                 dAddVm.info.isHold = false;
-                debugger;
                 dAddVm.postData();
             },
             temporary: function () {
@@ -553,7 +549,6 @@ $(function () {
                         //         }
                         //     }
                         // }
-                        debugger;
                         if (data != '') {
                             data = JSON.parse(data);
                             if (data.error) {
@@ -572,7 +567,6 @@ $(function () {
                     },
                     error: function (data, status, e)//服务器响应失败处理函数
                     {
-                        debugger;
                         $.oaNotify.error(' 上传失败：' + e);
                     }
                 });
@@ -580,10 +574,15 @@ $(function () {
                 return false;
             },
             clickUpload: function (e) {
-                var data = new FormData();
-                data.append('coverFile', $('.fileUpload-flie .input-file').get(0).files[0]);
-                $('.fileUpload-flie .loading').show();
-                dAddVm.fileUpload(data);
+                var file = $('.fileUpload-flie .input-file').get(0).files[0];
+                if (file) {
+                    var data = new FormData();
+                    data.append('coverFile', file);
+                    $('.fileUpload-flie .loading').show();
+                    dAddVm.fileUpload(data);
+                } else {
+                    $.oaNotify.error('请先选择文件后再上传！');
+                }
             },
             fileUpload: function (data) {
                 $.ajax({

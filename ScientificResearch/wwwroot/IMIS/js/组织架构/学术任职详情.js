@@ -1,7 +1,6 @@
 $(function () {
     window.vm = null;
     var xueShuDetails = JSON.parse(sessionStorage.xueShuDetails);
-    debugger;
     avalon.ready(function () {
         window.vm = avalon.define({
             $id: 'root',

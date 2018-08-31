@@ -93,7 +93,6 @@ $(function () {
                             if (obj.讲座附件路径 != '' && obj.讲座附件路径 != null) {
                                 addVm.files = obj.讲座附件路径.split(',');
                             }
-                            debugger;
                         }
 
                     } else {

@@ -1,8 +1,6 @@
 $(function () {
+    isOverdue();
     window.vm = null;
-    if (localStorage.getItem('info') == null) {
-        location.href = '/IMIS/views/login.html';
-    }
     var bTime = getMonthStartAndEnd(0).beginTime.slice(0, 10)+' 00:00:00';
     var eTime = new Date().format('yyyy-MM-dd hh:mm:ss');
     var beginTime,endTime,timeVal;

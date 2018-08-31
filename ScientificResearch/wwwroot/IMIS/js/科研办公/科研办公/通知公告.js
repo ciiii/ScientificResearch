@@ -1,8 +1,6 @@
 $(function () {
+    isOverdue();
     window.vm = null;
-    if (localStorage.getItem('info') == null) {
-        location.href = '/IMIS/views/login.html';
-    }
     var userInfo = JSON.parse(localStorage.info).data;
     var userId = userInfo.人员.编号;
     avalon.ready(function () {

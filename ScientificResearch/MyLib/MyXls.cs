@@ -26,103 +26,170 @@ namespace MyLib
         /// <param name="columnHeaderAt">列头在哪一行</param>
         /// <param name="dataStartFrom">数据从哪一行开始</param>
         /// <returns></returns>
-        public static IEnumerable<T> Import<T>(string fileName, string workSheetsName = "Sheet1", int columnHeaderAt = 1, int dataStartFrom = 2) where T : new()
+        public static IEnumerable<T> Import<T>(string fileName, int columnHeaderAt = 1, int dataStartFrom = 2) where T : new()
         {
             var propertys = typeof(T).GetProperties();
-
-            //ExcelPackage package = new ExcelPackage(new FileStream(fileName, FileMode.Open));
-            //ExcelPackage package;
-            //ExcelWorksheet sheet;
-            //var listData = new List<T>();
-            //try
-            //{
-            //    package = new ExcelPackage(new FileInfo(fileName));
-
-            //    //第一页
-            //    if (string.IsNullOrWhiteSpace(workSheetsName))
-            //    {
-            //        sheet = package.Workbook.Worksheets[1];
-            //    }
-            //    else
-            //    {
-            //        sheet = package.Workbook.Worksheets[workSheetsName];
-            //    }
-
-            //    for (int row = dataStartFrom, n = sheet.Dimension.End.Row; row <= n; row++)
-            //    {
-            //        listData.Add(new T());
-            //    }
-            //}
-            //catch (Exception)
-            //{
-            //    throw new Exception("打开导入文件失败");
-            //}
-            ExcelPackage package = new ExcelPackage(new FileInfo(fileName));
-            ExcelWorksheet sheet = package.Workbook.Worksheets.FirstOrDefault();
             var listData = new List<T>();
 
-            for (int row = dataStartFrom, n = sheet.Dimension.End.Row; row <= n; row++)
+            var ext = Path.GetExtension(fileName).ToLower();
+            if (ext == ".xlsx")
             {
-                listData.Add(new T());
-            }
-            //TODO:这里需要重构
-            //轮询列
-            for (int column = sheet.Dimension.Start.Column, k = sheet.Dimension.End.Column; column <= k; column++)
-            {
-                var columnName = sheet.GetValue<string>(columnHeaderAt, column);
+                ExcelPackage package = new ExcelPackage(new FileInfo(fileName));
+                ExcelWorksheet sheet = package.Workbook.Worksheets.FirstOrDefault();
 
-                //轮询T的属性
-                for (int i = 0; i < propertys.Count(); i++)
+                for (int row = dataStartFrom, n = sheet.Dimension.End.Row; row <= n; row++)
                 {
-                    var displayName = propertys[i].GetCustomAttribute<DisplayNameAttribute>()?.DisplayName;
+                    listData.Add(new T());
+                }
 
-                    //如果找到了对应的属性
-                    if (displayName == columnName)
+                for (int column = sheet.Dimension.Start.Column, k = sheet.Dimension.End.Column; column <= k; column++)
+                {
+                    var columnName = sheet.GetValue<string>(columnHeaderAt, column);
+
+                    //轮询T的属性
+                    for (int i = 0; i < propertys.Count(); i++)
                     {
-                        //取该属性
-                        var property = propertys[i];
-                        //轮询行
-                        for (int row = dataStartFrom, n = sheet.Dimension.End.Row; row <= n; row++)
-                        {
+                        var displayName = propertys[i].GetCustomAttribute<DisplayNameAttribute>()?.DisplayName;
 
-                            var value = sheet.GetValue(row, column);
-                            if (value == null) continue;
-                            try
+                        //如果找到了对应的属性
+                        if (displayName == columnName)
+                        {
+                            //取该属性
+                            var property = propertys[i];
+                            //轮询行
+                            for (int row = dataStartFrom, n = sheet.Dimension.End.Row; row <= n; row++)
                             {
-                                //给listData里面的容器赋值;
-                                if (!property.PropertyType.IsGenericType)
+
+                                var value = sheet.GetValue(row, column);
+                                if (value == null) continue;
+                                try
                                 {
-                                    //非泛型
-                                    property.SetValue(listData[row - dataStartFrom], Convert.ChangeType(value, property.PropertyType), null);
+                                    listData[row - dataStartFrom].SetValueByPropertyName(property.Name, value);
                                 }
-                                else
+                                catch (Exception)
                                 {
-                                    Type genericTypeDefinition = property.PropertyType.GetGenericTypeDefinition();
-                                    if (genericTypeDefinition == typeof(Nullable<>))
-                                    //泛型Nullable<>
-                                    {
-                                        property.SetValue(listData[row - dataStartFrom], (value == null) ? null : Convert.ChangeType(value, Nullable.GetUnderlyingType(property.PropertyType)), null);
-                                    }
-                                    else
-                                    {
-                                        throw new Exception($"导入不解析对象");
-                                    }
+                                    throw new Exception($"第{row}行,第{column}列,数据缺失或错误");
                                 }
-                            }
-                            catch (Exception)
-                            {
-                                throw new Exception($"第{row}行,第{column}列,数据缺失或错误");
                             }
                         }
                     }
+
                 }
 
             }
+            else if (ext == ".xls")
+            {
+                throw new Exception("请将xls文件另存为xlsx文件再导入");
+            }
+            else
+            {
+                throw new Exception("文件格式错误");
+            }
+
 
             return listData;
 
         }
 
+
+        //public static IEnumerable<T> Import<T>(string fileName, int columnHeaderAt = 1, int dataStartFrom = 2) where T : new()
+        //{
+        //    var propertys = typeof(T).GetProperties();
+
+        //    //ExcelPackage package = new ExcelPackage(new FileStream(fileName, FileMode.Open));
+        //    //ExcelPackage package;
+        //    //ExcelWorksheet sheet;
+        //    //var listData = new List<T>();
+        //    //try
+        //    //{
+        //    //    package = new ExcelPackage(new FileInfo(fileName));
+
+        //    //    //第一页
+        //    //    if (string.IsNullOrWhiteSpace(workSheetsName))
+        //    //    {
+        //    //        sheet = package.Workbook.Worksheets[1];
+        //    //    }
+        //    //    else
+        //    //    {
+        //    //        sheet = package.Workbook.Worksheets[workSheetsName];
+        //    //    }
+
+        //    //    for (int row = dataStartFrom, n = sheet.Dimension.End.Row; row <= n; row++)
+        //    //    {
+        //    //        listData.Add(new T());
+        //    //    }
+        //    //}
+        //    //catch (Exception)
+        //    //{
+        //    //    throw new Exception("打开导入文件失败");
+        //    //}
+
+        //    var listData = new List<T>();
+
+        //    ExcelPackage package = new ExcelPackage(new FileInfo(fileName));
+        //    ExcelWorksheet sheet = package.Workbook.Worksheets.FirstOrDefault();
+
+        //    for (int row = dataStartFrom, n = sheet.Dimension.End.Row; row <= n; row++)
+        //    {
+        //        listData.Add(new T());
+        //    }
+        //    //TODO:这里需要重构
+        //    //轮询列
+        //    for (int column = sheet.Dimension.Start.Column, k = sheet.Dimension.End.Column; column <= k; column++)
+        //    {
+        //        var columnName = sheet.GetValue<string>(columnHeaderAt, column);
+
+        //        //轮询T的属性
+        //        for (int i = 0; i < propertys.Count(); i++)
+        //        {
+        //            var displayName = propertys[i].GetCustomAttribute<DisplayNameAttribute>()?.DisplayName;
+
+        //            //如果找到了对应的属性
+        //            if (displayName == columnName)
+        //            {
+        //                //取该属性
+        //                var property = propertys[i];
+        //                //轮询行
+        //                for (int row = dataStartFrom, n = sheet.Dimension.End.Row; row <= n; row++)
+        //                {
+
+        //                    var value = sheet.GetValue(row, column);
+        //                    if (value == null) continue;
+        //                    try
+        //                    {
+        //                        //给listData里面的容器赋值;
+        //                        if (!property.PropertyType.IsGenericType)
+        //                        {
+        //                            //非泛型
+        //                            property.SetValue(listData[row - dataStartFrom], Convert.ChangeType(value, property.PropertyType), null);
+        //                        }
+        //                        else
+        //                        {
+        //                            Type genericTypeDefinition = property.PropertyType.GetGenericTypeDefinition();
+        //                            if (genericTypeDefinition == typeof(Nullable<>))
+        //                            //泛型Nullable<>
+        //                            {
+        //                                property.SetValue(listData[row - dataStartFrom], (value == null) ? null : Convert.ChangeType(value, Nullable.GetUnderlyingType(property.PropertyType)), null);
+        //                            }
+        //                            else
+        //                            {
+        //                                throw new Exception($"导入不解析对象");
+        //                            }
+        //                        }
+        //                    }
+        //                    catch (Exception)
+        //                    {
+        //                        throw new Exception($"第{row}行,第{column}列,数据缺失或错误");
+        //                    }
+        //                }
+        //            }
+        //        }
+
+        //    }
+
+        //    return listData;
+
+        //}
 
         /// <summary>
         /// 根据IEnumerable T类型的数据导出

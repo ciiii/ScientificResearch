@@ -1,4 +1,4 @@
-$(function () {
+$(document).ready(function () {
     window.addVm = null;
 
     var id;
@@ -6,9 +6,7 @@ $(function () {
     var roleTree = null;
     var userName = JSON.parse(localStorage.info).data.人员.姓名;
     UM.delEditor('UMContent');
-    debugger;
     var um = UM.getEditor('UMContent');
-    debugger;
     var roleArr = [], departmentArr = [];
     var day = new Date();
     var Tomorrow = new Date(day.setTime(day.getTime() + 24 * 60 * 60 * 1000)).format('yyyy-MM-dd 00:00:00').slice(0, 10);
@@ -33,7 +31,6 @@ $(function () {
             users: [],
             loadInfo: function () {
                 //实例化编辑器
-                debugger;
                 if (dAddVm.editType) {
                     dAddVm.title = '修改通知公告';
                     id = JSON.parse(sessionStorage.noticeId);

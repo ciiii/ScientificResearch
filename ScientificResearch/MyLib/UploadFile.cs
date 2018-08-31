@@ -26,6 +26,11 @@ namespace MyLib
             string relativePath,
             int uploadFileMaxSize)
         {
+            if (files.Count() == 0)
+            {
+                throw new Exception("没有上传文件");
+            }
+
             foreach (var file in files)
             {
                 if (file.Length > uploadFileMaxSize * 1024 * 1024)

@@ -28,6 +28,7 @@ $(function () {
                     年度: new Date().getFullYear(),
                     著作出版日期: '',
                     isbN号: '',
+                    isbN: '',
                     著作字数: 0,
                     奖励情况: '',
                     出版地: '',

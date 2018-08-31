@@ -1,20 +1,27 @@
 $(function () {
-    if (localStorage.getItem('info') == null) {
-        location.href = '/IMIS/views/login.html';
-    } else {
-        get('info', 1000 * 60 * 10)//过期时间为10分钟
-    }
-    window.mUserInfo = JSON.parse(localStorage.info).data;
     var ParentIndex;
     var TwoIndex;
-    var mUsers;
     avalon.config({debug: false});
     window.vm = null;
     avalon.ready(function () {
         window.vm = avalon.define({
             $id: 'root',
-            userInfo: mUserInfo.人员,
-            jurisdiction: mUserInfo.权限,
+            userInfo: '',
+            jurisdiction: '',
+            loginUrl: '',
+            onload: function () {
+                if (localStorage.getItem('info')) {
+                    window.mUserInfo = JSON.parse(localStorage.info).data;
+                    var loginUrl = JSON.parse(localStorage.info).url;
+                    // get('info', 1000 * 60 * 20)//过期时间为20分钟
+                    vm.loginUrl = loginUrl;
+                    vm.userInfo = mUserInfo.人员;
+                    vm.jurisdiction = mUserInfo.权限;
+                } else {
+                    alert('登录信息已过期，请重新登录！');
+                    console.info('111');
+                }
+            },
             ClickLiParent: function (index, el) {
                 ParentIndex = index + 1;
                 var li = $('.nav-sidebar .parent-li:eq(' + ParentIndex + ')');
@@ -103,6 +110,11 @@ $(function () {
             getUrl: function (url) {
                 return decodeURI(encodeURI(encodeURI(url)));
             },
+            logOut: function () {
+                localStorage.removeItem('info');
+                sessionStorage.removeItem('userInfo');
+                location.href = vm.getUrl(vm.loginUrl);
+            }
         });
         //左边导航
         $('.sidebar .parent-li a:first').on('click', function () {
@@ -115,6 +127,8 @@ $(function () {
                 return false;
             }
         });
+        vm.onload();
+        console.info(vm.loginUrl);
         avalon.scan(document.body);
     });
 
@@ -151,7 +165,7 @@ $(function () {
             console.log('登录信息已过期');
             localStorage.removeItem('info');
             sessionStorage.removeItem('userInfo');
-            location.href = '/IMIS/views/login.html';
+            location.href = vm.getUrl(vm.loginUrl);
         }
     }
 
@@ -224,10 +238,6 @@ $(function () {
 
     $('.dropdown-toggle').dropdown();
 
-    $('.btn-out').on('click', function () {
-        sessionStorage.removeItem('userInfo');
-        localStorage.removeItem('info');
-    });
     $('body').on('click', function () {
         $('.dropdown-toggle').dropdown();
     });

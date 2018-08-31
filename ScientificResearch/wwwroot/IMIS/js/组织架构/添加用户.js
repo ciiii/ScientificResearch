@@ -32,7 +32,7 @@ $(function () {
                 部门编号: 0,
                 部门名称: '',
                 英文名: '',
-                性别: '',
+                性别: '男',
                 身份证: '',
                 出生日期: '',
                 入职日期: '',
@@ -89,15 +89,16 @@ $(function () {
                         if (dAddVm.mUsers[i] == null) {
                             dAddVm.mUsers[i] = '';
                         }
+                        console.info(dAddVm.mUsers[i]);
                     }
-                    dAddVm.mUsers.出生日期 = dAddVm.mUsers.出生日期 .slice(0,10);
-                    dAddVm.mUsers.入职日期 = dAddVm.mUsers.入职日期 .slice(0,10);
-                    dAddVm.mUsers.合同开始日期 = dAddVm.mUsers.合同开始日期 .slice(0,10);
-                    dAddVm.mUsers.合同结束日期 = dAddVm.mUsers.合同结束日期 .slice(0,10);
-                    dAddVm.mUsers.参加工作日期 = dAddVm.mUsers.参加工作日期 .slice(0,10);
-                    dAddVm.mUsers.毕业日期 = dAddVm.mUsers.毕业日期 .slice(0,10);
-                    dAddVm.mUsers.职务任职日期 = dAddVm.mUsers.职务任职日期 .slice(0,10);
-                    dAddVm.mUsers.专业技术获得日期 = dAddVm.mUsers.专业技术获得日期 .slice(0,10);
+                    dAddVm.mUsers.出生日期 = dAddVm.mUsers.出生日期.slice(0, 10);
+                    dAddVm.mUsers.入职日期 = dAddVm.mUsers.入职日期.slice(0, 10);
+                    dAddVm.mUsers.合同开始日期 = dAddVm.mUsers.合同开始日期.slice(0, 10);
+                    dAddVm.mUsers.合同结束日期 = dAddVm.mUsers.合同结束日期.slice(0, 10);
+                    dAddVm.mUsers.参加工作日期 = dAddVm.mUsers.参加工作日期.slice(0, 10);
+                    dAddVm.mUsers.毕业日期 = dAddVm.mUsers.毕业日期.slice(0, 10);
+                    dAddVm.mUsers.职务任职日期 = dAddVm.mUsers.职务任职日期.slice(0, 10);
+                    dAddVm.mUsers.专业技术获得日期 = dAddVm.mUsers.专业技术获得日期.slice(0, 10);
                     if (dAddVm.mUsers.人员类型.length > 0) {
                         dAddVm.arr = dAddVm.mUsers.人员类型.split(',');
                     }
@@ -122,7 +123,6 @@ $(function () {
                     $(name).removeClass('error-input');
                     return true;
                 } else {
-                    debugger;
                     $(name).next().show();
                     $(name).addClass('error-input');
                     return false;
@@ -175,14 +175,30 @@ $(function () {
             },
             clickSubmit: function () {
                 var inputVal = dAddVm.inputVal('.user-name');
+                var gonghao = dAddVm.inputVal('.gonghao');
                 var inputCard = dAddVm.inputCard('.card');
                 var password = dAddVm.inputVal('.password');
                 dAddVm.mUsers.人员类型 = dAddVm.arr.join();
+                if(!inputVal){
+                    $.oaNotify.error('姓名不能为空！');
+                }
+                if(!gonghao){
+                    $.oaNotify.error('工号不能为空！');
+                }
+                if(!inputCard){
+                    $.oaNotify.error('请输入正确的身份证号！');
+                }
+                if(!password){
+                    $.oaNotify.error('密码不能为空！');
+                }
 
-                if (inputVal && inputCard && password && dAddVm.mUsers.部门名称 != null) {
+                if (dAddVm.mUsers.部门名称 != null) {
                     if (dAddVm.type) {
                         dAddVm.addOrEditUsers(dAddVm.mUsers);
                     } else {
+                        if (addUerType == 0) {
+                            dAddVm.addOrEditUsers(dAddVm.mUsers);
+                        }
                         if (addUerType == 1) {
                             dAddVm.addExpertTalentsUsers(dAddVm.mUsers);
                         }
@@ -192,7 +208,7 @@ $(function () {
                     }
 
                 } else {
-                    $.oaNotify.error(' 请检查，资料错误！');
+                    $.oaNotify.error('请选择部门！');
                 }
             },
             addOrEditUsers: function (data) {
@@ -201,11 +217,7 @@ $(function () {
                         sessionStorage.removeItem('mUsers');
                         sessionStorage.removeItem('addUerType');
                         if (userType.infoBack) {
-                            if (addUerType == 0) {
-                                vm.getusers();
-                            } else {
-                                vm.query();
-                            }
+                            vm.query();
                         }
                     });
                 });
@@ -260,7 +272,6 @@ $(function () {
                             }
 
                             departmentTree = $.fn.zTree.init($('.departmentTree'), setting, nodes);
-                            departmentTree.expandAll(true);
                             if (dAddVm.type) {
                                 var node = departmentTree.getNodesByFilter(function (node) {
                                     return node.编号 == dAddVm.mUsers.部门编号;
@@ -296,7 +307,7 @@ $(function () {
                 $('body').unbind('mousedown', dAddVm.onBodyDown);
             },
             onBodyDown: function (event) {
-               if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(event.target).parents(".modal-add #menuContent").length > 0)) {
+                if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(event.target).parents(".modal-add #menuContent").length > 0)) {
                     dAddVm.hideMenu();
                 }
             },
@@ -439,7 +450,7 @@ $(function () {
                     }
                 })
             },
-            getUsersDetailsAuxiliaryData:function () {
+            getUsersDetailsAuxiliaryData: function () {
                 User.getUsersDetailsAuxiliaryData('get', function getUsersDetailsAuxiliaryDataListener(success, obj, strErro) {
                     if (success) {
                         dAddVm.model = obj;
@@ -459,7 +470,7 @@ $(function () {
         dAddVm.getUsersDetailsAuxiliaryData();
         avalon.scan(document.body);
     });
-    if(!userType.btnBack){
+    if (!userType.btnBack) {
         $('.page-personal-info .nav-tabs a').on('click', function (e) {
             e.preventDefault();
             $(this).tab('show');

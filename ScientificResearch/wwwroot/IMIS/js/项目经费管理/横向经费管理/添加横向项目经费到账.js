@@ -98,7 +98,6 @@ $(function () {
                 var transactionMoney = dAddVm.inputVal('.transaction-money');
                 var manageMoney = dAddVm.inputVal('.manage-money');
                 var serviceMoney = dAddVm.inputVal('.service-money');
-                debugger;
                 var tax = dAddVm.inputVal('.modal .tax');
                 var time = dAddVm.inputVal('.modal .reach-time');
                 var reachCompany = dAddVm.inputVal('.modal .reach-company');

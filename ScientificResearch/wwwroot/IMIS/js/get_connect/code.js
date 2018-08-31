@@ -405,6 +405,10 @@ var Code = {
     //导入知网论文
     URL_POST_IMPORT_HOWNET_PAPER: getApiHost + '/Fruit/导入知网论文',
 
+    //导入endnote格式的论文
+    URL_POST_IMPORT_ENDNOTE_PAPER: getApiHost + '/Fruit/导入endnote格式的论文',
+
+
     //导入论文成果模板
     URL_GET_DOWNLOAD_CUSTOM_TEMPLET: getApiHost + '/upload/成果/论文/导入论文成果模板.xlsx',
 

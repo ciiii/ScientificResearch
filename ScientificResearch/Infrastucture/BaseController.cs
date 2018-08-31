@@ -105,6 +105,7 @@ namespace ScientificResearch.Infrastucture
                 {
                     if (!Env.IsDevelopment())
                     {
+                        HttpContext.Response.StatusCode = 401;
                         throw new Exception("请登录");
                     }
                     else
@@ -112,11 +113,11 @@ namespace ScientificResearch.Infrastucture
                         HttpContext.Session.Set<CurrentUser>("user", new CurrentUser()
                         {
                             姓名 = "管理员",
-                            工号 = "0",
+                            工号 = "0001",
                             编号 = 2,
                             部门编号 = 10024,
                             部门名称 = "信息处",
-                            DbKey = "ScientificResearch_Model"
+                            DbKey = "ScientificResearch_Test"
                         });
                         currentUser = HttpContext.Session.Get<CurrentUser>("user");
                     }

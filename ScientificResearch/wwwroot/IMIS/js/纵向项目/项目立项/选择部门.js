@@ -76,7 +76,6 @@ $(function () {
                 }
                 dAddVm.info.基本资料.成果归属部门 = arr.join();
                 dAddVm.info.基本资料.项目归属部门 = arr.join();
-                debugger;
                 $('.modal-choice').modal('hide');
             }
         })

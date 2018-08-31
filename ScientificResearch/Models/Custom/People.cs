@@ -18,6 +18,7 @@ namespace ScientificResearch.Models
 
     public class 人员Filter
     {
+        public int? NotEqual编号 { get; set; } = 2;
         public int? 部门编号 { get; set; }
         //public string Like姓名 { get; set; }
         public bool? 是否启用 { get; set; }

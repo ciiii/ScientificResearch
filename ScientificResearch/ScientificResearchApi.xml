@@ -645,6 +645,13 @@
             <param name="model"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Controllers.FruitController.导入整理后的公网论文数据(System.Collections.Generic.IEnumerable{ScientificResearch.Models.论文导入})">
+            <summary>
+            无论是知网还是万网,无论是xlsx还是endnote文件,最后都会整理为IEnumerable[论文导入]来此;
+            </summary>
+            <param name="result"></param>
+            <returns></returns>
+        </member>
         <member name="M:ScientificResearch.Controllers.FruitController.完善论文资料(ScientificResearch.Models.完成步骤{ScientificResearch.Models.成果增改{ScientificResearch.Models.成果论文}})">
             <summary>
             被打回,ps:认领人不能变了;
@@ -13206,7 +13213,7 @@
             xls文件操作
             </summary>
         </member>
-        <member name="M:MyLib.MyXls.Import``1(System.String,System.String,System.Int32,System.Int32)">
+        <member name="M:MyLib.MyXls.Import``1(System.String,System.Int32,System.Int32)">
             <summary>
             上传excel,导入其中的数据,第一页,根据T
             </summary>

@@ -102,13 +102,15 @@ namespace ScientificResearch.Models
         /// <summary>
         /// 论文标题
         /// </summary>
-        [DisplayName("Title")]
+        [DisplayName("Title-题名")]
+        //[DisplayName("Title")]
         public string 论文标题 { get; set; }
 
         /// <summary>
 		/// 作者 ;分割的多个作者,保留第一个作为第一作者,在系统里面找到唯一一个则解析为人员编号放到论文作者里面去;
 		/// </summary>
-        [DisplayName("Author")]
+        [DisplayName("Author-作者")]
+        //[DisplayName("Author")]
         public string 作者 { get; set; }
 
         public int 作者人数 { get; set; }
@@ -116,7 +118,8 @@ namespace ScientificResearch.Models
         /// <summary>
         /// 年度
         /// </summary>
-        [DisplayName("Year")]
+        [DisplayName("Year-年")]
+        //[DisplayName("Year")]
         public int? 年度 { get; set; }
 
         /// <summary>
@@ -134,19 +137,22 @@ namespace ScientificResearch.Models
         /// <summary>
         /// 卷号
         /// </summary>
-        [DisplayName("Volume")]
+        [DisplayName("Roll-卷")]
+        //[DisplayName("Volume")]
         public int? 卷号 { get; set; }
 
         /// <summary>
 		/// 期号
 		/// </summary>
-		[DisplayName("Issue")]
+		[DisplayName("Period-期")]
+		//[DisplayName("Issue")]
         public int? 期号 { get; set; }
 
         /// <summary>
         /// 页码范围
         /// </summary>
-        [DisplayName("Pages")]
+        [DisplayName("PageCount-页码")]
+        //[DisplayName("Pages")]
         public string 页码范围 { get; set; }
 
         /// <summary>
@@ -162,7 +168,8 @@ namespace ScientificResearch.Models
         /// <summary>
         /// 刊物名称,
         /// </summary>
-        [DisplayName("Journal")]
+        [DisplayName("Source-刊名")]
+        //[DisplayName("Journal")]
         public string 刊物名称 { get; set; }
 
         #endregion

@@ -312,7 +312,6 @@ $(function () {
                 });
             },
             clickUploadFiles: function (e) {
-                console.info(e);
                 var data = new FormData();
                 data.append('files', $('.fileUpload-files .input-file').get(0).files[0]);
                 $('.fileUpload-files .loading').show();

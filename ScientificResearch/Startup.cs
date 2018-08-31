@@ -256,7 +256,8 @@ namespace ScientificResearch
 
             //注意顺序 UseSession必须在UseMvc之前;有了session,mvc才能用
             //使用了distributedRedisCache以后,这个就是设置了redis对于session的过期时间了 
-            app.UseSession(new SessionOptions() { IdleTimeout = TimeSpan.FromMinutes(30) });
+            app.UseSession(new SessionOptions() { IdleTimeout = TimeSpan.FromDays(1) });
+            //app.UseSession(new SessionOptions() { IdleTimeout = TimeSpan.FromMinutes(30) });
 
             //2018/1/29为了让不能设置content-type的XDomainRequest的content-type为json
             app.Use(async (context, next) =>

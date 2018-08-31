@@ -4,7 +4,7 @@ var Connect_Http = {
         if (type == 'get') {
             if (data != null) {
                 var nowTime = new Date().getTime();
-                url += '?time=' + nowTime+'&';
+                url += '?time=' + nowTime + '&';
                 for (var filed in data) {
                     url += filed + '=' + data[filed] + '&';
                 }
@@ -53,6 +53,9 @@ var Connect_Http = {
                 var status = xhr.status;
                 if (status >= 200 && status < 300) {
                     Connect_Http.callBack(xhr.responseText, callBackListener);
+                } else if (status == 401) {
+                    var loginUrl = JSON.parse(localStorage.info).url;
+                    top.location.href = Connect_Http.getUrl(loginUrl);
                 } else {
                     callBackListener(false, '', '错误代码: ' + xhr.status);
                 }
@@ -70,6 +73,9 @@ var Connect_Http = {
             xhr.send(data);
         }
         // }
+    },
+    getUrl: function (url) {
+        return decodeURI(encodeURI(encodeURI(url)));
     },
     getAjaxFormData: function (formData) {
         var obj = new Object();

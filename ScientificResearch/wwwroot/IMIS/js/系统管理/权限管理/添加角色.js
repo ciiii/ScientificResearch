@@ -34,7 +34,6 @@ $(function () {
                 }
             },
             addRole: function (data) {
-                debugger;
                 Role.addRole('post', data, function addRoleListener(success, obj, strErro) {
                     if (success) {
                         icon = 'icon-chenggong1';

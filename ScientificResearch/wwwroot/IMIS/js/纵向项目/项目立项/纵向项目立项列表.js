@@ -1,8 +1,5 @@
 $(function () {
     window.vm = null;
-    if (localStorage.getItem('info') == null) {
-        location.href = '/IMIS/views/login.html';
-    }
     var userInfo = JSON.parse(localStorage.info).data;
     avalon.ready(function () {
         window.vm = avalon.define({

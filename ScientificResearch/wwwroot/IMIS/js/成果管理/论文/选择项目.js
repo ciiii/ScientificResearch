@@ -127,7 +127,6 @@ $(function () {
                 Department.getEnableDepartmentList('get', '', function getEnableDepartmentListListener(success, obj, strErro) {
                     if (success) {
                         nodes = obj;
-                        debugger;
                         if (nodes != null) {
                             for (var i = 0, l = nodes.length; i < l; i++) {
                                 nodes[i].id = nodes[i].编号;
@@ -157,7 +156,6 @@ $(function () {
                     cityObj.val(text);
                     choiceVm.departmentName = treeNode.名称;
                     choiceVm.req.部门编号 = treeNode.id;
-                    debugger;
                     choiceVm.hideMenu();
                 }
             },

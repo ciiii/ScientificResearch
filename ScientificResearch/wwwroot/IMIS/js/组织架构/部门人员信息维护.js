@@ -1,8 +1,6 @@
 $(function () {
+    isOverdue();
     window.vm = null;
-    if (localStorage.getItem('info') == null) {
-        location.href = '/IMIS/views/login.html';
-    }
     var zTreeObj;
     var treenode;
     var newtree;
@@ -116,7 +114,7 @@ $(function () {
                 function filter(treeId, parentNode, childNodes) {
                     if (!childNodes) return null;
                     childNodes = childNodes.data;
-                    for (var i = 0, l = childNodes.length; i < l; i++) {
+                    for (var i = 0; i <childNodes.length; i++) {
 
                         childNodes[i].id = childNodes[i].编号;
                         childNodes[i].name = childNodes[i].名称.replace(/\.n/g, '.');
@@ -444,7 +442,6 @@ $(function () {
                 }
             },
             clickBtnAdd: function () {
-                vm.addTyoe = false;
                 sessionStorage.addUerType = JSON.stringify(0);
                 var userType = {
                     type: false,

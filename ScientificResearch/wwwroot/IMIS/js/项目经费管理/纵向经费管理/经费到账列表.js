@@ -1,4 +1,5 @@
 $(function () {
+    isOverdue();
     window.vm = null;
     avalon.ready(function () {
         window.vm = avalon.define({

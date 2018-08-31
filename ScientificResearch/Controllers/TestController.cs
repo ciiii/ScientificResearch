@@ -11,7 +11,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using System.Dynamic;
 using System.ComponentModel;
-//using MyLib;
+using System.IO;
+using ScientificResearch.Models;
+using MyLib;
 
 namespace ScientificResearch.Controllers
 {
@@ -135,14 +137,14 @@ namespace ScientificResearch.Controllers
                 Children = new List<int>() { 1, 2, 3 }
             };
 
-            dynamic exProd =MyLib.MyDynamic.ConvertToDynamic(p1);
+            dynamic exProd = MyLib.MyDynamic.ConvertToDynamic(p1);
             //下面两个属性都是 在执行期可被扩充出来的
             exProd.Description = "叙述";
             exProd.NewProperty1 = "我是新属性";
 
             //dynamic和IDictionary<string, object> 最后打出到前端的json其实是一样的.
             //但是他们各自拥有的方法不同,前者可以直接.一个属性出来写,后者就是IDictionary<string, object>咯;
-            return new { exProd ,exProd2 = (IDictionary<string, object>)exProd,ContainProperty = ((IDictionary<string, object>)exProd).ContainsKey("Name")};
+            return new { exProd, exProd2 = (IDictionary<string, object>)exProd, ContainProperty = ((IDictionary<string, object>)exProd).ContainsKey("Name") };
         }
 
         [HttpGet]
@@ -151,5 +153,69 @@ namespace ScientificResearch.Controllers
             x = null;
             return new { x, x?.字段 };
         }
+
+        [HttpGet]
+        public object 测试endnote的导入()
+        {
+            var fileName = @"C:\Users\Ly\Desktop\CNKI-636713025263281250.txt";
+            var sr = new StreamReader(fileName);
+
+            var endnote与论文字段对应关系 = Config.GetSection("endnote与论文字段对应关系").Get<IDictionary<string, string>>();
+
+            var listOfObj = new List<List<string>>();
+
+            sr.BaseStream.Seek(0, SeekOrigin.Begin);
+            var temp = sr.ReadLine();
+
+            while (temp != null)
+            {
+                var listOfProp = new List<string>();
+
+                while (!string.IsNullOrWhiteSpace(temp))
+                {
+                    listOfProp.Add(temp);
+                    temp = sr.ReadLine();
+                }
+
+                temp = sr.ReadLine();
+
+                listOfObj.Add(listOfProp);
+            }
+
+            sr.Close();
+            //fs.Close();
+
+            var listOf论文 = new List<论文导入>();
+            foreach (var item in listOfObj)
+            {
+                var new论文 = new 论文导入();
+
+                foreach (var itemProp in item)
+                {
+                    //TODO:改为reg
+                    var keyInProp = itemProp.Substring(1, 1);
+
+                    var key = endnote与论文字段对应关系.ContainsKey(keyInProp) ? endnote与论文字段对应关系[keyInProp] : string.Empty;
+                    var value = itemProp.Substring(3);
+                    if (new论文.ContainProperty(key))
+                    {
+                        if (key == "作者")
+                        {
+                            new论文.作者 += value + ";";
+                        }
+                        else
+                        {
+                            new论文.SetValueByPropertyName(key, value);
+
+                        }
+
+                    }
+                }
+                listOf论文.Add(new论文);
+            }
+
+            return listOf论文;
+        }
+
     }
 }
