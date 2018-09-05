@@ -14,6 +14,8 @@ using System.ComponentModel;
 using System.IO;
 using ScientificResearch.Models;
 using MyLib;
+using System.Web;
+using System.Text;
 
 namespace ScientificResearch.Controllers
 {
@@ -157,8 +159,12 @@ namespace ScientificResearch.Controllers
         [HttpGet]
         public object 测试endnote的导入()
         {
-            var fileName = @"C:\Users\Ly\Desktop\CNKI-636713025263281250.txt";
-            var sr = new StreamReader(fileName);
+            var dt1 = new 论文导入().ToDataTable();
+
+            var fileName = @"C:\Users\Ly\Desktop\新建文本文档.txt";
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            Encoding encoding = Encoding.GetEncoding("GB2312");
+            var sr = new StreamReader(fileName, encoding); // , Encoding.GetEncoding("gb2312")
 
             var endnote与论文字段对应关系 = Config.GetSection("endnote与论文字段对应关系").Get<IDictionary<string, string>>();
 
@@ -174,6 +180,7 @@ namespace ScientificResearch.Controllers
                 while (!string.IsNullOrWhiteSpace(temp))
                 {
                     listOfProp.Add(temp);
+
                     temp = sr.ReadLine();
                 }
 
@@ -214,8 +221,27 @@ namespace ScientificResearch.Controllers
                 listOf论文.Add(new论文);
             }
 
-            return listOf论文;
+            //return listOf论文;
+            return new { x = dt1, y = listOf论文.ToDataTable<论文导入>() };
         }
+
+        [HttpGet]
+        public object 测试元组()
+        {
+            //元组相关的输出|使用变量都不好用var了.
+            (string a, string b, string c) = getFullName();
+            return new { a, b };
+        }
+        //这样就是方法,getFullName名后有(),
+        //可以作为局部函数放到测试元组方法里面去;
+        (string a, string b, string c) getFullName() => ("a1", "b", "c");
+        //这样写就是属性,getFullname名后没有()
+        //(string a, string b, string c) getFullName => ("a1", "b", "c");
+        //这样当然也是方法
+        //private (string a, string b, string c) getFullName()
+        //{
+        //   return ("a", "b", "c");
+        //}
 
     }
 }

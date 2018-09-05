@@ -33,7 +33,6 @@ $(function () {
             editType: false,
             detailsUrl: '',
             allchecked: false,
-            expertAuditing:'',
             query: function () {
                 vm.loaded = false;
                 $.support.cors = true;
@@ -49,8 +48,11 @@ $(function () {
                             return;
                         } else {
                             obj = obj.list;
+                            var number = (vm.req.Index - 1) * vm.req.Size + 1;
                             for (var i = 0; i < obj.length; i++) {
+                                obj[i].number = number;
                                 obj[i].checked = false;
+                                number++;
                             }
                             vm.model = obj;
                             $('.pager').show();
@@ -155,9 +157,6 @@ $(function () {
                     步骤编号: el.步骤编号
                 }
                 sessionStorage.xueShuDetails = JSON.stringify(details);
-                if (el.步骤链接名称 == '专家评审') {
-                    vm.expertAuditing = 0;
-                }
             },
             getUrl: function (url) {
                 return decodeURI(encodeURI(encodeURI(url)));

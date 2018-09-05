@@ -26,6 +26,9 @@ $(function () {
                 shenHevm.model.状态值 = val;
                 shenHevm.postWorkFlow(shenHevm.model.$model);
             },
+            getUrl: function (url) {
+                return decodeURI(encodeURI(encodeURI(url)));
+            },
             clickBtnReturn: function () {
                 $('.modal').modal('hide');
             },

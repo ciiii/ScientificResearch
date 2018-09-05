@@ -195,12 +195,12 @@ namespace ScientificResearch.Business
         /// <param name="model"></param>
         /// <param name="流程模板编号"></param>
         /// <returns></returns>
-        async public Task 专家评审(完成步骤<IEnumerable<专家评分>> model, int 操作人编号, int 流程模板编号) =>
+        async public Task 专家评审(完成步骤<IEnumerable<专家评分>> model, int 操作人编号) =>
             await 完成步骤(
                     model.ToSimple(), 操作人编号,
                     new sp_专家评分_增改
                     {
-                        流程模板编号 = 流程模板编号,
+                        //流程模板编号 = 流程模板编号,
                         步骤编号 = model.步骤编号,
                         tt = model.附加数据.ToDataTable()
                     });

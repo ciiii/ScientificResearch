@@ -49,6 +49,11 @@ namespace ScientificResearch.Models
 		/// </summary>
         [MaxLength(500,ErrorMessage ="备注不能超过[250]字")]
 		public string 备注 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        [Required(ErrorMessage ="请提供[排序]")]
+		public int 排序 { get; set; }
         
         
         #endregion

@@ -32,7 +32,6 @@ $(function () {
             detailsUrl: '',
             allchecked: false,
             data: {},
-            expertAuditing: '',
             query: function () {
                 vm.loaded = false;
                 $.support.cors = true;
@@ -48,8 +47,11 @@ $(function () {
                             return;
                         } else {
                             obj = obj.list;
+                            var number = (vm.req.Index - 1) * vm.req.Size + 1;
                             for (var i = 0; i < obj.length; i++) {
+                                obj[i].number = number;
                                 obj[i].checked = false;
+                                number++;
                             }
                             vm.model = obj;
                             $('.pager').show();
@@ -155,11 +157,6 @@ $(function () {
                     步骤编号: el.步骤编号
                 }
                 sessionStorage.xueShuDetails = JSON.stringify(details);
-            },
-            clickBtnEdit: function (el) {
-                if (el.步骤链接名称 == '专家评审') {
-                    vm.expertAuditing = 1;
-                }
             },
             details: function () {
                 $('.modal-details .detailsPage').attr('src', vm.getUrl('/IMIS/views/纵向项目/在研项目/纵向项目中检详情.html'));

@@ -81,7 +81,7 @@ namespace ScientificResearch.Models
 		/// 
 		/// </summary>
 		//public DateTime 申请时间 { get; set; }
-        public DateTime 申请时间 { get; set; }
+        public DateTime? 申请时间 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>

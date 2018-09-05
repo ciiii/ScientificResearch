@@ -94,7 +94,7 @@
             <param name="AdditionalActionsWhenState">当前操作状态值=多少时,才执行附加动作,默认null</param>
             <returns></returns>
         </member>
-        <member name="M:ScientificResearch.Business.WorkFlowBusiness.专家评审(ScientificResearch.Models.完成步骤{System.Collections.Generic.IEnumerable{ScientificResearch.Models.专家评分}},System.Int32,System.Int32)">
+        <member name="M:ScientificResearch.Business.WorkFlowBusiness.专家评审(ScientificResearch.Models.完成步骤{System.Collections.Generic.IEnumerable{ScientificResearch.Models.专家评分}},System.Int32)">
             <summary>
             附加数据携带的是流程模板编号
             这个放在这里供各个不同流程模板编号的调用,不同于"分配步骤指定人"可以统一提供一个接口
@@ -916,7 +916,7 @@
             <param name="model"></param>
             <returns></returns>
         </member>
-        <member name="M:ScientificResearch.Controllers.YProjectController.专家评审纵向项目申报(ScientificResearch.Models.完成步骤{System.Collections.Generic.IEnumerable{ScientificResearch.Models.专家评分}})">
+        <member name="M:ScientificResearch.Controllers.YProjectController.专家评审(ScientificResearch.Models.完成步骤{System.Collections.Generic.IEnumerable{ScientificResearch.Models.专家评分}})">
             <summary>
             附加数据中的专家评分,只需要传其中的评分项和评分
             </summary>
@@ -1989,6 +1989,11 @@
         <member name="P:ScientificResearch.Models.sp_GetPagingList_作废180601.strWhere">
             <summary>
             
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_Rebuild">
+            <summary>
+            sp_Rebuild[类]
             </summary>
         </member>
         <member name="T:ScientificResearch.Models.sp_下载中心_启禁">
@@ -4847,6 +4852,11 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.权限.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.权限.排序">
             <summary>
             
             </summary>
@@ -9066,6 +9076,11 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.v1_角色的权限.排序">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.v1_角色的权限.拥有">
             <summary>
             
@@ -9462,6 +9477,11 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v2_任职.姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v2_任职.部门编号">
             <summary>
             
             </summary>
@@ -11016,6 +11036,11 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.v2_纵向项目立项_列表.纵向项目项目编号">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.v2_纵向项目立项_列表.分类名称">
             <summary>
             
@@ -12511,6 +12536,11 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.v3_项目经费到账_纵向.纵向项目项目编号">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.v3_项目经费到账_纵向.分类">
             <summary>
             
@@ -12712,6 +12742,11 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v3_项目经费报销_纵向.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v3_项目经费报销_纵向.纵向项目项目编号">
             <summary>
             
             </summary>
@@ -12986,6 +13021,11 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目总览.纵向项目项目编号">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.v4_纵向项目总览.分类名称">
             <summary>
             
@@ -13207,6 +13247,46 @@
             <param name="obj"></param>
             <param name="fieldName"></param>
             <param name="value"></param>
+        </member>
+        <member name="M:MyLib.MyPath.Combine(System.String[])">
+            <summary>
+            url和文件系统的路径都可处理,文件系统指的是windows的而不是mac os 或者linus(这两个下分割符是/)
+            </summary>
+            <param name="paths"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MyLib.MyPath.IsAbsolute(System.String)">
+            <summary>
+            是否是绝对路径,注意:这个路径为文件系统的路径,而不是url;
+            windows下判断 路径是否包含 ":"
+            Mac OS、Linux下判断 路径是否包含 "\"
+            </summary>
+            <param name="path">路径</param>
+            <returns></returns>
+        </member>
+        <member name="M:MyLib.MyPath.MapPath(System.String,System.String)">
+            <summary>
+            获取某个文件系统路径的绝对路径,
+            如果path本来为绝对路径则不处理,否则以rootpath为根路径来构成
+            在不确定path是否绝对路径的时候用;
+            </summary>
+            <param name="path"></param>
+            <param name="rootPath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MyLib.MyPath.IsDirectoryExist(System.String)">
+            <summary>
+            注意path这些请传绝对路径;自己用mappath处理了再传
+            </summary>
+            <param name="directoryPath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MyLib.MyPath.CreateDirectory(System.String)">
+            <summary>
+            如果文件夹已经存在不报错,返回已存在的文件夹即可;
+            </summary>
+            <param name="directoryPath"></param>
+            <returns></returns>
         </member>
         <member name="T:MyLib.MyXls">
             <summary>

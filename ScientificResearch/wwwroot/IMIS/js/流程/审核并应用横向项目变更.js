@@ -28,6 +28,9 @@ $(function () {
                 shenHevm.model.状态值 = val;
                 shenHevm.auditXProjectAlteration(shenHevm.model.$model);
             },
+            getUrl: function (url) {
+                return decodeURI(encodeURI(encodeURI(url)));
+            },
             clickBtnReturn: function () {
                 $('.modal').modal('hide');
             },

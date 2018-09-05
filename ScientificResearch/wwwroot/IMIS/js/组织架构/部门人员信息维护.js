@@ -354,13 +354,16 @@ $(function () {
                             return;
                         } else {
                             obj = obj.list;
+                            var number = (vm.reqUser.Index - 1) * vm.reqUser.Size + 1;
                             for (var i = 0; i < obj.length; i++) {
-                                obj[i].checked = false;
                                 if (obj[i].是否启用) {
                                     obj[i].启用禁用 = '禁用'
                                 } else {
                                     obj[i].启用禁用 = '启用'
                                 }
+                                obj[i].number = number;
+                                obj[i].checked = false;
+                                number++;
                             }
                             vm.model = obj;
                             vm.nothing = false;

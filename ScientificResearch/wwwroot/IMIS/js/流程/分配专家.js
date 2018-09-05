@@ -18,7 +18,7 @@ $(function () {
                     if (success) {
                         $.oaNotify.ok(' 提交成功！');
                         AssignorVm.clickBtnReturn();
-                        vm.search();
+                        vm.query();
                     } else {
                         $.oaNotify.error(' 提交失败：' + strErro);
                     }
@@ -34,7 +34,7 @@ $(function () {
                 console.info(AssignorVm.experts);
             },
             getUrl: function (url) {
-                return decodeURI(url);
+                return decodeURI(encodeURI(encodeURI(url)));
             },
             clickBtnReturn: function () {
                 $('.modal').modal('hide');

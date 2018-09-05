@@ -1,6 +1,6 @@
 $(function () {
     window.dAddVm = null;
-    var xueShuDetails = JSON.parse(sessionStorage.xueShuDetails);
+    var xueShuDetails;
     var userInfo = vm.userInfo;
     var templateId;
     avalon.ready(function () {
@@ -101,9 +101,11 @@ $(function () {
                                     obj.立项基本信息[i] = '';
                                 }
                             }
-                            for (var j = 0; j < obj.财务信息.length; j++) {
-                                dAddVm.fundsA += obj.财务信息[j].批准经费;
-                                dAddVm.fundsB += obj.财务信息[j].配套经费;
+                            if (dAddVm.type != 3) {
+                                for (var j = 0; j < obj.财务信息.length; j++) {
+                                    dAddVm.fundsA += obj.财务信息[j].批准经费;
+                                    dAddVm.fundsB += obj.财务信息[j].配套经费;
+                                }
                             }
                             dAddVm.info.基本资料 = obj.立项基本信息;
                             dAddVm.info.参与人列表 = obj.参与人信息;
@@ -151,6 +153,7 @@ $(function () {
                                 dAddVm.fundsA += obj.财务信息[j].批准经费;
                                 dAddVm.fundsB += obj.财务信息[j].配套经费;
                             }
+
                             dAddVm.info = {
                                 基本资料: obj.立项基本信息,
                                 参与人列表: obj.参与人信息,
@@ -187,10 +190,12 @@ $(function () {
                     if (success) {
                         dAddVm.model = obj;
                         if (dAddVm.type == 3) {
+                            xueShuDetails = JSON.parse(sessionStorage.xueShuDetails)
                             dAddVm.getYCanDeclareDetails(xueShuDetails.id);
                             dAddVm.title = '立项登记';
                         }
                         if (dAddVm.editType) {
+                            xueShuDetails = JSON.parse(sessionStorage.xueShuDetails)
                             dAddVm.getYProjectEstablishDetails(xueShuDetails.id);
                             dAddVm.title = '修改立项信息';
                         }
@@ -302,14 +307,23 @@ $(function () {
             changeFundsA: function () {
                 var funds = 0;
                 for (var i = 0; i < dAddVm.info.经费预算列表.length; i++) {
-                    funds += parseInt(dAddVm.info.经费预算列表[i].批准经费);
+                    var fund = dAddVm.info.经费预算列表[i].批准经费;
+                    if (dAddVm.info.经费预算列表[i].批准经费 == '') {
+                        fund = 0;
+                    }
+                    console.info(fund);
+                    funds += parseInt(fund);
                 }
                 dAddVm.fundsA = funds;
             },
             changeFundsB: function () {
                 var funds = 0;
                 for (var i = 0; i < dAddVm.info.经费预算列表.length; i++) {
-                    funds += parseInt(dAddVm.info.经费预算列表[i].配套经费);
+                    var fund = dAddVm.info.经费预算列表[i].配套经费;
+                    if (dAddVm.info.经费预算列表[i].配套经费 == '') {
+                        fund = 0;
+                    }
+                    funds += parseInt(fund);
                 }
                 dAddVm.fundsB = funds;
 
@@ -358,6 +372,7 @@ $(function () {
                 var startTime = dAddVm.inputVal('.start-time');
                 var endTime = dAddVm.inputVal('.end-time');
                 var subjectType = dAddVm.inputVal('.subjectType');
+                var subject = dAddVm.inputVal('.subject');
                 var researchType = dAddVm.inputVal('.researchType');
                 var projectOne = dAddVm.inputVal('.projectOne');
                 var projectTwo = dAddVm.inputVal('.projectTwo');
@@ -403,6 +418,10 @@ $(function () {
                     $.oaNotify.error('项目类型不能为空！');
                     return;
                 }
+                if (!subject) {
+                    $.oaNotify.error('学科门类不能为空！');
+                    return;
+                }
                 if (!subjectType) {
                     $.oaNotify.error('学科类型不能为空！');
                     return;
@@ -437,11 +456,6 @@ $(function () {
                     $.oaNotify.error('预算配套经费应等于项目配套经费!！');
                     return;
                 }
-
-                dAddVm.info.基本资料.批准经费 = dAddVm.fundsA;
-                dAddVm.info.基本资料.配套经费 = dAddVm.fundsB;
-
-
                 if (dAddVm.editType) {
                     var data = {
                         步骤编号: xueShuDetails.步骤编号,

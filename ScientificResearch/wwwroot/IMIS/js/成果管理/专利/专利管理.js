@@ -8,7 +8,7 @@ $(function () {
             req: {
                 Index: 1,
                 Size: 16,
-                Like专利名称	: '',
+                Like专利名称: '',
                 Like专利权人名称: '',
                 Like第一发明人:'',
                 年度:'',
@@ -42,8 +42,11 @@ $(function () {
                             return;
                         } else {
                             obj = obj.list;
+                            var number = (vm.req.Index - 1) * vm.req.Size + 1;
                             for (var i = 0; i < obj.length; i++) {
+                                obj[i].number = number;
                                 obj[i].checked = false;
+                                number++;
                             }
                             vm.model = obj;
                             $('.pager').show();

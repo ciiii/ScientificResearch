@@ -50,6 +50,11 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+		//public int 排序 { get; set; }
+        public int 排序 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
 		//public bool 拥有 { get; set; }
         public bool? 拥有 { get; set; }
         

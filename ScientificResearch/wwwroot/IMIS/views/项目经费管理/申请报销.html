@@ -100,9 +100,12 @@
                             <div class="col-sm-7">
                                 <select class="form-control reimbursement-type" ms-duplex="@info.基本资料.报销方式">
                                     <option value="">请选择</option>
-                                    <option value="现金">现金</option>
+                                    <option value="公务卡">公务卡</option>
                                     <option value="银行转账">银行转账</option>
-                                    <option value="教育费">教育费</option>
+                                    <option value="还借款">还借款</option>
+                                    <option value="内部转账">内部转账</option>
+                                    <option value="支票">支票</option>
+                                    <option value="现金">现金(需特批)</option>
                                 </select>
                                 <span class="error-texe">请选择报销方式！</span>
                             </div>
@@ -117,16 +120,6 @@
                                 <span class="error-texe">报销编号不能为空！</span>
                             </div>
                         </div>
-                        <!--<div class="form-group col-sm-6">
-                            <label class="col-sm-3 control-label">
-                                <i class="icon iconfont icon-text-sign icon-sign"></i>报销金额：
-                            </label>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control reimbursement-money"
-                                       ms-duplex="@info.基本资料.报销金额" onkeyup="onlyNum(this)">
-                                <span class="error-texe">报销金额不能为空！</span>
-                            </div>
-                        </div>-->
                         <div class="form-group col-sm-6">
                             <label class="col-sm-3 control-label">
                                 <i class="icon iconfont icon-text-sign icon-sign"></i>报销日期：

@@ -106,17 +106,17 @@
                             <th width="80">序号</th>
                             <th>工号</th>
                             <th>姓名</th>
-                            <th>登录时间</th>
                             <th>IP地址</th>
+                            <th>登录时间</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr ms-for="($index,el) in @model" ms-if="@loaded && @model!= null && @model.length != 0">
-                            <td>{{$index+1}}</td>
+                            <td>{{el.number}}</td>
                             <td>{{el.工号}}</td>
                             <td>{{el.姓名}}</td>
-                            <td>{{el.登录时间}}</td>
                             <td>{{el.ip}}</td>
+                            <td>{{el.登录时间}}</td>
                         </tr>
                         </tbody>
                     </table>

@@ -1789,14 +1789,14 @@ var Declare = {
             }
         });
     },
-    expertDeclareAuditing: function (type, options, expertDeclareAuditingListener) {
-        var url = Code.URL_POST_EXPERT_DECLARE_AUDITING;
+    expertReview: function (type, options, expertReviewListener) {
+        var url = Code.URL_POST_EXPERT_REVIEW;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
             if (success) {
-                expertDeclareAuditingListener(true, obj, '')
+                expertReviewListener(true, obj, '')
             } else {
-                expertDeclareAuditingListener(false, '', strErro)
+                expertReviewListener(false, '', strErro)
             }
         });
     },
@@ -2020,17 +2020,6 @@ var ResearchProject = {
                 editProjectMiddleInspectionListener(true, obj, '')
             } else {
                 editProjectMiddleInspectionListener(false, '', strErro)
-            }
-        });
-    },
-    expertProjectMiddleInspection: function (type, options, expertProjectMiddleInspectionListener) {
-        var url = Code.URL_POST_EXPERT_PROJECT_MIDDLE_INSPECTION;
-
-        Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
-            if (success) {
-                expertProjectMiddleInspectionListener(true, obj, '')
-            } else {
-                expertProjectMiddleInspectionListener(false, '', strErro)
             }
         });
     },

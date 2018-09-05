@@ -10,7 +10,6 @@ $(function () {
             reviewScheme: [],
             score: [],
             oneSelect: '',
-            expertAuditing: vm.expertAuditing,
             model: {
                 步骤编号: editInfo.步骤编号,
                 状态值: 1,
@@ -25,19 +24,8 @@ $(function () {
                     }
                 ]
             },
-            expertDeclareAuditing: function (data) {
-                Declare.expertDeclareAuditing('post', data, function expertDeclareAuditingListener(success, obj, strErro) {
-                    if (success) {
-                        $.oaNotify.ok(' 提交成功！');
-                        shenHevm.clickBtnReturn();
-                        vm.query();
-                    } else {
-                        $.oaNotify.error(' 提交失败：' + strErro);
-                    }
-                });
-            },
-            expertProjectMiddleInspection: function (data) {
-                ResearchProject.expertProjectMiddleInspection('post', data, function expertProjectMiddleInspectionListener(success, obj, strErro) {
+            postExpertReview: function (data) {
+                Declare.expertReview('post', data, function expertReviewListener(success, obj, strErro) {
                     if (success) {
                         $.oaNotify.ok(' 提交成功！');
                         shenHevm.clickBtnReturn();
@@ -81,7 +69,7 @@ $(function () {
                 }
             },
             clickSubmit: function () {
-                var reviewScheme = shenHevm.inputVal('.reviewScheme');
+                var reviewScheme = shenHevm.inputVal('.shenHe-box .reviewScheme');
                 var score = shenHevm.inputVal('.shenHe-box .score');
                 var opinion = shenHevm.inputVal('.shenHe-box .opinion');
                 if (!reviewScheme) {
@@ -96,12 +84,10 @@ $(function () {
                     $.oaNotify.error(' 审核意见不能为空！');
                     return;
                 }
-                if (shenHevm.expertAuditing == 0) {
-                    shenHevm.expertDeclareAuditing(shenHevm.model.$model);
-                }
-                if (shenHevm.expertAuditing == 1) {
-                    shenHevm.expertProjectMiddleInspection(shenHevm.model.$model);
-                }
+                shenHevm.postExpertReview(shenHevm.model.$model);
+            },
+            getUrl: function (url) {
+                return decodeURI(encodeURI(encodeURI(url)));
             },
             clickBtnReturn: function () {
                 $('.modal').modal('hide');

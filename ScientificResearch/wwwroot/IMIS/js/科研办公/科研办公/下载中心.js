@@ -41,8 +41,11 @@ $(function () {
                             return;
                         } else {
                             obj = obj.list;
+                            var number = (vm.req.Index - 1) * vm.req.Size + 1;
                             for (var i = 0; i < obj.length; i++) {
+                                obj[i].number = number;
                                 obj[i].checked = false;
+                                number++;
                             }
                             vm.model = obj;
                             $('.pager').show();

@@ -213,8 +213,9 @@ namespace ScientificResearch.Controllers
 
             //var gb2312 = Encoding.GetEncoding("GB2312");
             //var sr = new StreamReader(MyPath.Combine(Env.WebRootPath, fileName), gb2312, true); //,System.Text.Encoding.GetEncoding("gb2312")
-
-            var sr = new StreamReader(MyPath.Combine(Env.WebRootPath, fileName), Encoding.Default); //,System.Text.Encoding.GetEncoding("gb2312")
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            Encoding encoding = Encoding.GetEncoding("GB2312");
+            var sr = new StreamReader(MyPath.Combine(Env.WebRootPath, fileName), encoding); //,System.Text.Encoding.GetEncoding("gb2312")
 
             var endnote与论文字段对应关系 = Config.GetSection("endnote与论文字段对应关系").Get<IDictionary<string, string>>();
 
@@ -244,7 +245,8 @@ namespace ScientificResearch.Controllers
             {
                 if (item.Count() == 0) continue;
                 var new论文 = new 论文导入();
-                ////难道这样顺序的赋值,会让 new论文 之中的属性的顺序发生变化,并且影响到后面todatatable的映射???!!!
+                #region 本来是这样做的
+                #region 最早是这么做的,xmlForDatatable顺序就错了
                 //foreach (var itemProp in item)
                 //{
                 //    //TODO:改为reg
@@ -263,45 +265,65 @@ namespace ScientificResearch.Controllers
                 //        }
                 //    }
                 //}
-
-                //调整顺序会如何.没事...只有上面的情况会改变"顺序"
-                //丑
-                new论文.作者 = string.Join(";", item.Where(i => i.Substring(1, 1) == endnote与论文字段对应关系["作者"]).Select(j => j.Substring(3)));
-
-                new论文.论文标题 = item.Where(i => i.Substring(1, 1) == endnote与论文字段对应关系["论文标题"]).FirstOrDefault().Substring(3);
-
-                var yearValue = item.Where(i => i.Substring(1, 1) == endnote与论文字段对应关系["年度"]).FirstOrDefault();
-                if (!string.IsNullOrWhiteSpace(yearValue))
+                #endregion
+                foreach (var proInfo in typeof(论文导入).GetProperties())
                 {
-                    int.TryParse(yearValue.Substring(3), out int year);
-                    new论文.年度 = year;
+                    var proName = proInfo.Name;
+                    var keyInProp = endnote与论文字段对应关系.ContainsKey(proName) ? endnote与论文字段对应关系[proName] : string.Empty;
+                    if (string.IsNullOrWhiteSpace(keyInProp)) continue;
+                    if(proName == "作者")
+                    {
+                        new论文.作者 = string.Join(";", 
+                            from one in item where one.Substring(1, 1).Equals(keyInProp) select one.Substring(3));
+                    }
+                    else
+                    {
+                        new论文.SetValueByPropertyName(proName, 
+                            item.Where(i=>i.Substring(1, 1).Equals(keyInProp)).FirstOrDefault()?.Substring(3));
+                    }
                 }
+                #endregion
 
-                new论文.关键字 = item.Where(i => i.Substring(1, 1) == endnote与论文字段对应关系["关键字"]).FirstOrDefault().Substring(3);
+                #region 第二种尝试,一种郁闷的做法
+                ////调整顺序会如何.没事...只有上面的情况会改变"顺序"
+                ////丑
+                //new论文.作者 = string.Join(";", item.Where(i => i.Substring(1, 1) == endnote与论文字段对应关系["作者"]).Select(j => j.Substring(3)));
 
-                new论文.论文摘要 = item.Where(i => i.Substring(1, 1) == endnote与论文字段对应关系["论文摘要"]).FirstOrDefault().Substring(3);
+                //new论文.论文标题 = item.Where(i => i.Substring(1, 1) == endnote与论文字段对应关系["论文标题"]).FirstOrDefault().Substring(3);
 
-                var volumeValue = item.Where(i => i.Substring(1, 1) == endnote与论文字段对应关系["卷号"]).FirstOrDefault();
-                if (!string.IsNullOrWhiteSpace(volumeValue))
-                {
-                    int.TryParse(volumeValue.Substring(3), out int volume);
-                    new论文.卷号 = volume;
-                }
+                //var yearValue = item.Where(i => i.Substring(1, 1) == endnote与论文字段对应关系["年度"]).FirstOrDefault();
+                //if (!string.IsNullOrWhiteSpace(yearValue))
+                //{
+                //    int.TryParse(yearValue.Substring(3), out int year);
+                //    new论文.年度 = year;
+                //}
 
-                var issueValue = item.Where(i => i.Substring(1, 1) == endnote与论文字段对应关系["期号"]).FirstOrDefault();
-                if (!string.IsNullOrWhiteSpace(issueValue))
-                {
-                    int.TryParse(issueValue.Substring(3), out int issue);
-                    new论文.期号 = issue;
-                }
-                
-                new论文.页码范围 = item.Where(i => i.Substring(1, 1) == endnote与论文字段对应关系["页码范围"]).FirstOrDefault().Substring(3);
+                //new论文.关键字 = item.Where(i => i.Substring(1, 1) == endnote与论文字段对应关系["关键字"]).FirstOrDefault().Substring(3);
 
-                new论文.刊物名称 = item.Where(i => i.Substring(1, 1) == endnote与论文字段对应关系["刊物名称"]).FirstOrDefault().Substring(3);
+                //new论文.论文摘要 = item.Where(i => i.Substring(1, 1) == endnote与论文字段对应关系["论文摘要"]).FirstOrDefault().Substring(3);
+
+                //var volumeValue = item.Where(i => i.Substring(1, 1) == endnote与论文字段对应关系["卷号"]).FirstOrDefault();
+                //if (!string.IsNullOrWhiteSpace(volumeValue))
+                //{
+                //    int.TryParse(volumeValue.Substring(3), out int volume);
+                //    new论文.卷号 = volume;
+                //}
+
+                //var issueValue = item.Where(i => i.Substring(1, 1) == endnote与论文字段对应关系["期号"]).FirstOrDefault();
+                //if (!string.IsNullOrWhiteSpace(issueValue))
+                //{
+                //    int.TryParse(issueValue.Substring(3), out int issue);
+                //    new论文.期号 = issue;
+                //}
+
+                //new论文.页码范围 = item.Where(i => i.Substring(1, 1) == endnote与论文字段对应关系["页码范围"]).FirstOrDefault().Substring(3);
+
+                //new论文.刊物名称 = item.Where(i => i.Substring(1, 1) == endnote与论文字段对应关系["刊物名称"]).FirstOrDefault().Substring(3);
+                #endregion
 
                 listOf论文.Add(new论文);
             }
-
+            //return listOf论文.ToDataTable<论文导入>();
             await 导入整理后的公网论文数据(listOf论文);
 
             //return listOf论文;

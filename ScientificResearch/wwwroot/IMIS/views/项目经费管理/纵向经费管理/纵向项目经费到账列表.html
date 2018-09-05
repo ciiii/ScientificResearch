@@ -93,7 +93,7 @@
                                     </label>
                                 </div>
                             </td>
-                            <td>{{$index+1}}</td>
+                            <td>{{el.number}}</td>
                             <td class="text-left">{{el.项目名称}}</td>
                             <td>{{el.项目编号}}</td>
                             <td>{{el.经办人姓名}}</td>
@@ -119,7 +119,7 @@
                                     <!--</a>-->
                                 <!--</li>-->
                                 <li class="bs-tooltip btn-details" data-toggle="tooltip" data-placement="bottom"
-                                    title="项目详情">
+                                    title="到账详情">
                                     <a href="javascript:;" data-toggle="modal" data-target=".modal-details"
                                        ms-on-click="@info(el),@details(el)">
                                         <i class="icon iconfont icon-16"></i>

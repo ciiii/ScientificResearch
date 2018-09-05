@@ -115,8 +115,8 @@
                         <tr ms-for="($index,el) in @model" ms-if="@loaded && @model!= null && @model.length != 0" >
                             <td>{{$index+1}}</td>
                             <td class="text-left title">
-                                <a ms-attr="{'href':@getUrl('通知详情.html')}" data-toggle="modal" data-target=".modal-details"
-                                   ms-on-click="@details(el.编号),@clickName($index)">{{el.通知名称}}
+                                <a data-toggle="modal" data-target=".modal-add" ms-attr="{'href':@getUrl('通知公告详情.html')}"
+                                   onclick="changeUrl(this)" ms-on-click="@details(el.编号)">{{el.通知名称}}
                                 </a>
                             </td>
                             <td>{{el.通知类型}}</td>

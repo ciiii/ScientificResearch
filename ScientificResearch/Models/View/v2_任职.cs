@@ -45,6 +45,11 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+		//public int 部门编号 { get; set; }
+        public int? 部门编号 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
 		//public string 部门名称 { get; set; }
         public string 部门名称 { get; set; }
         /// <summary>

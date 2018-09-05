@@ -20,6 +20,11 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+		//public string 纵向项目项目编号 { get; set; }
+        public string 纵向项目项目编号 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
 		//public int 分类 { get; set; }
         public int 分类 { get; set; }
         /// <summary>

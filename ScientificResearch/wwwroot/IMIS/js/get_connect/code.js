@@ -524,8 +524,8 @@ var Code = {
     //上传项目申报书
     URL_POST_UPLOAD_Y_DECLARE_FILE: getApiHost + '/YProject/上传项目申报书',
 
-    //专家评审纵向项目申报
-    URL_POST_EXPERT_DECLARE_AUDITING: getApiHost + '/YProject/专家评审纵向项目申报',
+    //专家评审
+    URL_POST_EXPERT_REVIEW: getApiHost + '/YProject/专家评审',
 
 
     //分页获取可立项的科研项目申报
@@ -589,9 +589,6 @@ var Code = {
 
     //完善纵向项目中检资料
     URL_POST_EDIT_Y_PROJECT_MIDDLE_INSPECTION: getApiHost + '/YProject/完善纵向项目中检资料',
-
-    //专家评审纵向项目中检
-    URL_POST_EXPERT_PROJECT_MIDDLE_INSPECTION: getApiHost + '/YProject/专家评审纵向项目中检',
 
     //上传中检资料
     URL_POST_UPLOAD_Y_PROJECT_MIDDLE_INSPECTION_FILE: getApiHost + '/YProject/上传中检资料',

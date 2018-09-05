@@ -107,10 +107,10 @@
                         </thead>
                         <tbody>
                         <tr ms-for="($index,el) in @model" ms-if="@loaded && @model!= null && @model.length != 0" >
-                            <td>{{$index+1}}</td>
+                            <td>{{el.number}}</td>
                             <td class="text-left title">
-                                <a ms-attr="{'href':@getUrl('下载详情.html')}" data-toggle="modal" data-target=".modal-details"
-                                   ms-on-click="@details(el)">{{el.文件名称}}
+                                <a ms-attr="{'href':@getUrl('下载详情.html')}" data-toggle="modal" data-target=".modal-add"
+                                   ms-on-click="@details(el)" onclick="changeUrl(this)">{{el.文件名称}}
                                 </a>
                             </td>
                             <td>{{el.文件类型}}</td>

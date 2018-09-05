@@ -116,12 +116,11 @@
                                 </div>
                             </th>
                             <th width="45">序号</th>
-                            <!--<th>项目编号</th>-->
                             <th>项目名称</th>
-                            <th>项目类型</th>
+                            <th>项目编号</th>
+                            <th>项目分类</th>
                             <th>项目级别</th>
                             <th>项目来源单位</th>
-                            <th>项目分类</th>
                             <th>负责人</th>
                             <th>负责人部门</th>
                             <th>批准经费(元)</th>
@@ -142,13 +141,12 @@
                                     </label>
                                 </div>
                             </td>
-                            <td>{{$index+1}}</td>
-                            <!--<td>{{el.项目编号}}</td>-->
+                            <td>{{el.number}}</td>
                             <td class="text-left">{{el.项目中文名称}}</td>
-                            <td>{{el.项目类型}}</td>
+                            <td>{{el.纵向项目项目编号}}</td>
+                            <td>{{el.分类名称}}</td>
                             <td>{{el.项目级别}}</td>
                             <td>{{el.项目来源单位}}</td>
-                            <td>{{el.分类名称}}</td>
                             <td>{{el.负责人姓名}}</td>
                             <td>{{el.负责人部门名称}}</td>
                             <td>{{el.批准经费|currency}}</td>

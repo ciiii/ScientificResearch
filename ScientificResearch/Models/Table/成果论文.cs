@@ -122,7 +122,6 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        [MaxLength(1000,ErrorMessage ="论文摘要不能超过[500]字")]
 		public string 论文摘要 { get; set; }
         /// <summary>
 		/// 

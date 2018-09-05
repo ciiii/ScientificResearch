@@ -109,9 +109,9 @@ namespace ScientificResearch.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        async public Task 专家评审纵向项目申报([FromBody]完成步骤<IEnumerable<专家评分>> model)
+        async public Task 专家评审([FromBody]完成步骤<IEnumerable<专家评分>> model)
         {
-            await MyWorkFlowBusiness.专家评审(model, CurrentUser.编号, 纵向项目申报流程模板编号);
+            await MyWorkFlowBusiness.专家评审(model, CurrentUser.编号);
         }
 
         [HttpPost]
@@ -505,11 +505,11 @@ namespace ScientificResearch.Controllers
                     tt = model.附加数据.基本资料.ToDataTable()
                 }, model.附加数据.IsHold);
 
-        [HttpPost]
-        async public Task 专家评审纵向项目中检([FromBody]完成步骤<IEnumerable<专家评分>> model)
-        {
-            await MyWorkFlowBusiness.专家评审(model, CurrentUser.编号, 纵向项目中检流程模板编号);
-        }
+        //[HttpPost]
+        //async public Task 专家评审纵向项目中检([FromBody]完成步骤<IEnumerable<专家评分>> model)
+        //{
+        //    await MyWorkFlowBusiness.专家评审(model, CurrentUser.编号, 纵向项目中检流程模板编号);
+        //}
 
         [HttpPost]
         async public Task<object> 上传中检资料()

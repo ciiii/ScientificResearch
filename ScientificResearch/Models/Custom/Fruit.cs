@@ -95,6 +95,7 @@ namespace ScientificResearch.Models
         public int? 年度 { get; set; }
     }
 
+    [Serializable]
     public class 论文导入
     {
         #region 属性

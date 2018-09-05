@@ -6,7 +6,7 @@
     </div>
     <div class="modal-body">
         <div class="details-content">
-            <iframe class="detailsPage" scrolling="auto" frameborder="0" ms-attr="{'src':@editInfo.流程相关项目路径}"></iframe>
+            <iframe class="detailsPage" scrolling="auto" frameborder="0" ms-attr="{'src':@getUrl(@editInfo.流程相关项目路径)}"></iframe>
         </div>
         <div class="form-horizontal">
             <div class="col-sm-12">
@@ -17,7 +17,7 @@
                     </label>
                     <div class="col-sm-7">
                         <select class="form-control reviewScheme" ms-duplex="@oneSelect"
-                                ms-on-change="@inputVal('.reviewScheme'),@getscore(@oneSelect)">
+                                ms-on-change="@inputVal('.shenHe-box .reviewScheme'),@getscore(@oneSelect)">
                             <option value="">请选择</option>
                             <option ms-for="el in @reviewScheme" ms-attr="{'value':@el.编号}">{{el.值}}</option>
                         </select>
@@ -30,7 +30,7 @@
                     </label>
                     <div class="col-sm-7">
                         <select class="form-control score" ms-duplex="@model.附加数据[0].评分"
-                                ms-on-change="@inputVal('.score')">
+                                ms-on-change="@inputVal('.shenHe-box .score')">
                             <option value="">请选择</option>
                             <option ms-for="el in @score" ms-attr="{'value':el.值}">{{el.值}}</option>
                         </select>
@@ -42,7 +42,7 @@
                         <i class="icon iconfont icon-text-sign icon-sign"></i>审核意见：
                     </label>
                     <div class="col-sm-9">
-                        <textarea class="form-control opinion" rows="3" ms-duplex="@model.附加数据[0].备注" ms-on-change="@inputVal('.opinion')"></textarea>
+                        <textarea class="form-control opinion" rows="3" ms-duplex="@model.附加数据[0].备注"></textarea>
                         <span class="error-texe">审核意见不能为空！</span>
                     </div>
                 </div>

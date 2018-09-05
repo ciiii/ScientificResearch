@@ -62,6 +62,10 @@ $(function () {
                         return 'state-overdue';
                     case '待审核':
                         return 'state-accomplish';
+                    case '待分配专家':
+                        return 'state-accomplish';
+                    case '待专家评审':
+                        return 'state-accomplish';
                     default:
                         return '';
                 }

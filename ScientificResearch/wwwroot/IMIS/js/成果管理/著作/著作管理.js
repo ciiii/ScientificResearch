@@ -8,7 +8,7 @@ $(function () {
             req: {
                 Index: 1,
                 Size: 16,
-                Like著作名称	: '',
+                Like著作名称: '',
                 Like主编: '',
                 Like出版社名称:'',
                 年度:'',
@@ -44,8 +44,11 @@ $(function () {
                             return;
                         } else {
                             obj = obj.list;
+                            var number = (vm.req.Index - 1) * vm.req.Size + 1;
                             for (var i = 0; i < obj.length; i++) {
+                                obj[i].number = number;
                                 obj[i].checked = false;
+                                number++;
                             }
                             vm.model = obj;
                             $('.pager').show();
