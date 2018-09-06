@@ -13,16 +13,12 @@
   <ItemGroup>
     <Compile Remove="log4net\**" />
     <Compile Remove="wwwroot\IMIS\libs\umeditor\net\**" />
-    <Compile Remove="文档\**" />
     <Content Remove="log4net\**" />
     <Content Remove="wwwroot\IMIS\libs\umeditor\net\**" />
-    <Content Remove="文档\**" />
     <EmbeddedResource Remove="log4net\**" />
     <EmbeddedResource Remove="wwwroot\IMIS\libs\umeditor\net\**" />
-    <EmbeddedResource Remove="文档\**" />
     <None Remove="log4net\**" />
     <None Remove="wwwroot\IMIS\libs\umeditor\net\**" />
-    <None Remove="文档\**" />
   </ItemGroup>
 
   <ItemGroup>

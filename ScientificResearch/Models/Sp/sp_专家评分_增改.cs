@@ -14,10 +14,6 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-		public int 流程模板编号 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
 		public int 步骤编号 { get; set; }
         /// <summary>
 		/// 
