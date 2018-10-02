@@ -93,8 +93,11 @@
                                     </label>
                                 </div>
                             </td>
-                            <td>{{el.number}}</td>
-                            <td class="text-left">{{el.项目名称}}</td>
+                            <td>{{$index+1}}</td>
+                            <td class="text-left">
+                                <a href="javascript:;" data-toggle="modal" data-target=".modal-details"
+                                   ms-on-click="@info(el),@details(el)">{{el.项目名称}}</a>
+                            </td>
                             <td>{{el.项目编号}}</td>
                             <td>{{el.经办人姓名}}</td>
                             <td>{{el.拨款单位}}</td>
@@ -102,7 +105,9 @@
                             <td>{{el.到账单位}}</td>
                             <td>{{el.到账日期|date("yyyy-MM-dd")}}</td>
                             <td>{{el.审核进度}}</td>
-                            <td ms-class="getClass(el.步骤状态说明)">{{el.步骤名称==null?'':el.步骤名称}}-{{el.步骤状态说明==null?'':el.步骤状态说明}}</td>
+                            <td ms-class="getClass(el.步骤状态说明)">
+                                {{el.步骤名称==null?'':el.步骤名称}}-{{el.步骤状态说明==null?'':el.步骤状态说明}}
+                            </td>
                             <td class="operation">
                                 <li class="bs-tooltip" ms-class="getStatusClass(el.步骤链接名称
 )" data-toggle="tooltip" data-placement="bottom" ms-attr="{'title':@el.步骤名称}" ms-if="@el.是否可处理">
@@ -132,9 +137,6 @@
                 </div>
                 <div ms-if="@nothing">
                     <p class="text-center"><img src="/IMIS/images/nothing-3.png"></p>
-                </div>
-                <div class="page paging text-center">
-                    <div class="pager paging"></div>
                 </div>
             </div>
         </div>

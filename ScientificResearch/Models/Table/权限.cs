@@ -42,6 +42,11 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        [Required(ErrorMessage ="请提供[排序]")]
+		public int 排序 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
         [MaxLength(50,ErrorMessage ="图标不能超过[25]字")]
 		public string 图标 { get; set; }
         /// <summary>
@@ -49,11 +54,6 @@ namespace ScientificResearch.Models
 		/// </summary>
         [MaxLength(500,ErrorMessage ="备注不能超过[250]字")]
 		public string 备注 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        [Required(ErrorMessage ="请提供[排序]")]
-		public int 排序 { get; set; }
         
         
         #endregion

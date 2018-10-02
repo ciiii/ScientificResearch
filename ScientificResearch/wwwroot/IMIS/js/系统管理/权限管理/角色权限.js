@@ -19,7 +19,6 @@ $(function () {
                     角色编号: dEditVm.mRoleNumber.number,
                     权限编号列表: arr
                 }
-                console.info(data);
                 dEditVm.editRoleJurisdiction(data);
 
             },
@@ -29,7 +28,6 @@ $(function () {
                         name: 'name',
                         checked: 'checked'
                     },
-
                     check: {
                         enable: true
                     },
@@ -46,9 +44,7 @@ $(function () {
                 Role.getRoleJurisdiction('get', number, function getRoleJurisdictionListener(success, obj, strErro) {
                     if (success) {
                         dEditVm.Jurisdictio = obj;
-
                         nodes = obj;
-                        console.info(nodes);
                         if (nodes != null) {
                             for (var i = 0; i < nodes.length; i++) {
                                 nodes[i].name = nodes[i].名称;
@@ -56,8 +52,6 @@ $(function () {
                             }
                             tree = $.fn.zTree.init($(".treeDept"), setting, nodes);
                         }
-
-                        console.info(obj);
                     } else {
                         console.info('获取角色权限失败！');
                         console.info(strErro);

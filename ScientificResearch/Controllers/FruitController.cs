@@ -104,6 +104,7 @@ namespace ScientificResearch.Controllers
             var 论文类型 = await Db.GetListSpAsync<string, 字典Filter>(new 字典Filter() { 分类 = "论文类型" }, tbName: "字典", tbFields: "值");
             var 论文作者级别 = await Db.GetListSpAsync<string, 字典Filter>(new 字典Filter() { 分类 = "论文作者级别" }, tbName: "字典", tbFields: "值");
 
+            var 文献类型 = await Db.GetListSpAsync<string, 字典Filter>(new 字典Filter() { 分类 = "文献类型" }, tbName: "字典", tbFields: "值");
             //var 所属栏目temp = Db.GetListSpAsync<string, 字典Filter>(new 字典Filter() { 分类 = "所属栏目" }, tbName: "字典", tbFields: "值");
             //await Task.WhenAll(所属栏目temp);
             //所属栏目temp.Result;
@@ -116,7 +117,8 @@ namespace ScientificResearch.Controllers
                 论文版面,
                 学科门类,
                 论文类型,
-                论文作者级别
+                论文作者级别,
+                文献类型
             };
         }
 
@@ -187,11 +189,14 @@ namespace ScientificResearch.Controllers
                 var authors = item.作者.Split(";");
                 item.作者 = authors.FirstOrDefault();
                 item.作者人数 = authors.Count();
-                var pageFromTo = item.页码范围.Split("-");
-                if (pageFromTo.Count() > 1)
+                if (item.页码范围 != null)
                 {
-                    item.页码范围起 = int.TryParse(pageFromTo[0], out int from) ? (int?)from : null;
-                    item.页码范围止 = int.TryParse(pageFromTo[1], out int to) ? (int?)to : null;
+                    var pageFromTo = item.页码范围.Split("-");
+                    if (pageFromTo.Count() > 1)
+                    {
+                        item.页码范围起 = int.TryParse(pageFromTo[0], out int from) ? (int?)from : null;
+                        item.页码范围止 = int.TryParse(pageFromTo[1], out int to) ? (int?)to : null;
+                    }
                 }
             }
 
@@ -213,9 +218,14 @@ namespace ScientificResearch.Controllers
 
             //var gb2312 = Encoding.GetEncoding("GB2312");
             //var sr = new StreamReader(MyPath.Combine(Env.WebRootPath, fileName), gb2312, true); //,System.Text.Encoding.GetEncoding("gb2312")
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            Encoding encoding = Encoding.GetEncoding("GB2312");
-            var sr = new StreamReader(MyPath.Combine(Env.WebRootPath, fileName), encoding); //,System.Text.Encoding.GetEncoding("gb2312")
+
+            //core需要单独引入一下这个CodePagesEncodingProvider.Instance,再使用gb2312
+            //Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            //Encoding encoding = Encoding.GetEncoding("GB2312");
+            //var sr = new StreamReader(MyPath.Combine(Env.WebRootPath, fileName), encoding);
+
+            //2018-9-30 改为unicode默认的
+            var sr = new StreamReader(MyPath.Combine(Env.WebRootPath, fileName));
 
             var endnote与论文字段对应关系 = Config.GetSection("endnote与论文字段对应关系").Get<IDictionary<string, string>>();
 
@@ -271,15 +281,15 @@ namespace ScientificResearch.Controllers
                     var proName = proInfo.Name;
                     var keyInProp = endnote与论文字段对应关系.ContainsKey(proName) ? endnote与论文字段对应关系[proName] : string.Empty;
                     if (string.IsNullOrWhiteSpace(keyInProp)) continue;
-                    if(proName == "作者")
+                    if (proName == "作者")
                     {
-                        new论文.作者 = string.Join(";", 
+                        new论文.作者 = string.Join(";",
                             from one in item where one.Substring(1, 1).Equals(keyInProp) select one.Substring(3));
                     }
                     else
                     {
-                        new论文.SetValueByPropertyName(proName, 
-                            item.Where(i=>i.Substring(1, 1).Equals(keyInProp)).FirstOrDefault()?.Substring(3));
+                        new论文.SetValueByPropertyName(proName,
+                            item.Where(i => i.Substring(1, 1).Equals(keyInProp)).FirstOrDefault()?.Substring(3));
                     }
                 }
                 #endregion
@@ -331,7 +341,17 @@ namespace ScientificResearch.Controllers
         }
 
         [HttpPost]
-        async public Task<string> 导入自定义论文()
+        async public Task<string> 导入中文标题自定义论文()
+        {
+            return await 导入自定义论文("中文标题");
+        }
+
+        async public Task<string> 导入英文标题自定义论文()
+        {
+            return await 导入自定义论文("英文标题");
+        }
+
+        private async Task<string> 导入自定义论文(string 论文标题类型)
         {
             var filesNameList = await MyLib.UploadFile.Upload(
                Request.Form.Files,
@@ -351,6 +371,7 @@ namespace ScientificResearch.Controllers
                 var pageFromTo = item.页码范围.Split("-");
                 if (pageFromTo.Count() > 1)
                 {
+                    item.论文标题类型 = 论文标题类型;
                     //int from = 0;
                     //int to = 0;
                     item.页码范围起 = int.TryParse(pageFromTo[0], out int from) ? (int?)from : null;

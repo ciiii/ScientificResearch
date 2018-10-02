@@ -22,6 +22,7 @@
     <script src="/IMIS/libs/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
     <script src="/IMIS/libs/ztree/jquery.ztree.all.min.js"></script>
     <script src="/IMIS/libs/avalon.min.js"></script>
+    <script src="/IMIS/libs/jquery.form.min.js"></script>
 
     <script src="/IMIS/js/pager.js"></script>
     <script src="/IMIS/js/main.js"></script>
@@ -30,7 +31,7 @@
     <script src="/IMIS/js/get_connect/return_data.js"></script>
 
     <script>
-        document.write(' <link rel="stylesheet" href="/IMIS/css/child_pages.css?time='+ new Date().getTime() +'"/>');
+        document.write(' <link rel="stylesheet" href="/IMIS/css/child_pages.css?time=' + new Date().getTime() + '"/>');
         document.write(' <script src="/IMIS/js/学术活动/参加学术会议/参加会议反馈.js?time=' + new Date().getTime() + '"></s' + 'cript>');
 
     </script>
@@ -86,7 +87,10 @@
                         <tbody>
                         <tr ms-for="($index,el) in @model" ms-if="@loaded && @model!= null && @model.length != 0">
                             <td>{{el.number}}</td>
-                            <td class="text-left">{{el.会议名称}}</td>
+                            <td class="text-left">
+                                <a href="javascript:;" data-toggle="modal" data-target=".modal-details"
+                                   ms-on-click="@details(el)">{{el.会议名称}}</a>
+                            </td>
                             <td>{{el.会议主办单位}}</td>
                             <td>{{el.申请人姓名}}</td>
                             <td>{{el.申请人部门名称}}</td>

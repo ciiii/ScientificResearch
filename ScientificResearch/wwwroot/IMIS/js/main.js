@@ -813,6 +813,42 @@ Array.prototype.findIndex = Array.prototype.findIndex ||
         return null;
     };
 
+//pick
+(function () {
+    var concat = Array.prototype.concat,
+        slice = Array.prototype.slice;
+    _.pick = function (obj, iterator, context) {
+        var result = {};
+        if (_.isFunction(iterator)) {
+            //这个分支感觉使用者很少用
+            for (var key in obj) {
+                var value = obj[key];
+
+                if (iterator.call(context, value, key, obj)) {
+                    result[key] = value;
+                }
+            }
+
+        } else {
+
+            //获取参数里面的对应值重组keys
+            //arguments,1
+            var keys = concat.apply([], slice.call(arguments, 1));
+
+            for (var i = 0, length = keys.length; i < length; i++) {
+                var key = keys[i];
+                if (key in obj) {
+                    result[key] = obj[key];
+                }
+            }
+        }
+
+        return result;
+
+    };
+})
+
+
 //数组去重复
 function isRepeat(newArr) {
     for (var i = newArr.length - 1; i >= 0; i--) {
@@ -891,7 +927,7 @@ function isOverdue() {
     if (localStorage.getItem('info') == null) {
         alert('登录信息已过期，请重新登录！');
         var val = $('#loginUrl', parent.document).val();
-        if (val!='') {
+        if (val != '') {
             location.href = val;
         }
     }
@@ -908,6 +944,13 @@ function parentRefresh() {
     }
 }
 
-
-
-
+//判断浏览器是否支持FormData属性
+function isFormData(funFormData, funAjaxFileUpload) {
+    if (new FormData()) {
+        console.info(111);
+        funFormData(data);
+    } else {
+        console.info(222);
+        funAjaxFileUpload();
+    }
+}

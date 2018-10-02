@@ -1214,7 +1214,7 @@
             <param name="orderStr"></param>
             <returns></returns>
         </member>
-        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.GetPagingListSpAsync``2(System.Data.IDbConnection,ScientificResearch.Models.Paging,``1,System.String,System.String,System.String)">
+        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.GetPagingListSpAsync``2(System.Data.IDbConnection,ScientificResearch.Models.Paging,``1,System.String,System.String,System.String,System.Boolean)">
             <summary>
             有条件的分页获取
             T的作用有2:1默认用T的名称做TbName,2dapper返回类型的指定
@@ -1253,7 +1253,7 @@
         </member>
         <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.QuerySpAsync``2(System.Data.IDbConnection,``0,System.Data.IDbTransaction)">
             <summary>
-            
+            执行一个sp,返回指定类型的list,sp如果没有参数,则不输入model
             </summary>
             <typeparam name="T"></typeparam>
             <typeparam name="TOut"></typeparam>
@@ -1264,7 +1264,8 @@
         </member>
         <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.QueryMultipleSpAsync``1(System.Data.IDbConnection,``0,System.Data.IDbTransaction)">
             <summary>
-            
+            执行一个sp,返回多个list,需要自己再去解析,
+            sp如果没有参数,则不输入model
             </summary>
             <typeparam name="T"></typeparam>
             <param name="cnn"></param>
@@ -1608,12 +1609,12 @@
             </summary>
             <typeparam name="T"></typeparam>
         </member>
-        <member name="P:ScientificResearch.Models.PagingResult`1.Total">
+        <member name="P:ScientificResearch.Models.PagingResult`1.total">
             <summary>
             
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.PagingResult`1.List">
+        <member name="P:ScientificResearch.Models.PagingResult`1.list">
             <summary>
             
             </summary>
@@ -2021,6 +2022,11 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.sp_专利成果统计">
+            <summary>
+            sp_专利成果统计[类]
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_专家评分_增改">
             <summary>
             sp_专家评分_增改[类]
@@ -2391,6 +2397,46 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.sp_按指定字段统计成果">
+            <summary>
+            sp_按指定字段统计成果[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_按指定字段统计成果.字段名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_按指定字段统计成果.字段显示名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_按部门对指定字段统计人员">
+            <summary>
+            sp_按部门对指定字段统计人员[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_按部门对指定字段统计人员.字段名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_按部门统计成果">
+            <summary>
+            sp_按部门统计成果[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_按部门统计成果.字段名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_按部门统计成果.字段显示名">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_期刊_删">
             <summary>
             sp_期刊_删[类]
@@ -2741,6 +2787,16 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.sp_获奖成果统计">
+            <summary>
+            sp_获奖成果统计[类]
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_著作成果统计">
+            <summary>
+            sp_著作成果统计[类]
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_角色_增改">
             <summary>
             sp_角色_增改[类]
@@ -2859,6 +2915,11 @@
         <member name="P:ScientificResearch.Models.sp_讲座反馈_增改.tt">
             <summary>
             
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_论文成果统计">
+            <summary>
+            sp_论文成果统计[类]
             </summary>
         </member>
         <member name="T:ScientificResearch.Models.sp_通知公告_启禁">
@@ -4511,6 +4572,16 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.成果论文.通讯作者">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.成果论文.文献类型">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.成果项目">
             <summary>
             成果项目[项目类型 1-纵向 2-横向   成果类型 1-论文 2 著作 3 专利 4文体 5 获奖   是否项目带来成果:   1项目得到成果   2成果引发项目   类]
@@ -4811,6 +4882,21 @@
             备注
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.期刊.PMID">
+            <summary>
+            PMID
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.期刊.DOI">
+            <summary>
+            DOI
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.期刊.UT">
+            <summary>
+            UT
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.权限">
             <summary>
             权限[类]
@@ -4841,17 +4927,17 @@
             0 菜单 1-各种input
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.权限.排序">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.权限.图标">
             <summary>
             
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.权限.备注">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.权限.排序">
             <summary>
             
             </summary>
@@ -8481,12 +8567,37 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.v1_成果论文_列表.PMID">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v1_成果论文_列表.DOI">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v1_成果论文_列表.UT">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.v1_成果论文_列表.认领人编号">
             <summary>
             
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v1_成果论文_列表.第一作者">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v1_成果论文_列表.通讯作者">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v1_成果论文_列表.文献类型">
             <summary>
             
             </summary>
@@ -8691,12 +8802,37 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.v1_成果论文_详情.通讯作者">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v1_成果论文_详情.文献类型">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.v1_成果论文_详情.代码">
             <summary>
             
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v1_成果论文_详情.刊物名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v1_成果论文_详情.PMID">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v1_成果论文_详情.DOI">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v1_成果论文_详情.UT">
             <summary>
             
             </summary>
@@ -8911,6 +9047,21 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.v1_期刊.PMID">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v1_期刊.DOI">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v1_期刊.UT">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.v1_期刊.AllName">
             <summary>
             
@@ -9061,17 +9212,17 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.v1_角色的权限.排序">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.v1_角色的权限.图标">
             <summary>
             
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v1_角色的权限.备注">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v1_角色的权限.排序">
             <summary>
             
             </summary>
@@ -13001,6 +13152,156 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.v4_横向项目汇总">
+            <summary>
+            v4_横向项目汇总[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_横向项目汇总.状态名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_横向项目汇总.步骤名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_横向项目汇总.步骤状态说明">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_横向项目汇总.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_横向项目汇总.合同编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_横向项目汇总.合同名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_横向项目汇总.合同金额">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_横向项目汇总.签订时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_横向项目汇总.项目负责人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_横向项目汇总.项目负责人工号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_横向项目汇总.项目负责人姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_横向项目汇总.项目负责人部门编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_横向项目汇总.项目负责人部门名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_横向项目汇总.项目归属部门">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_横向项目汇总.经费">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_横向项目汇总.未到经费">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_横向项目汇总.待审核到账">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_横向项目汇总.已审核到账">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_横向项目汇总.剩余经费">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_横向项目汇总.待审核报销">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_横向项目汇总.已审核报销">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v4_横向项目经费统计">
+            <summary>
+            v4_横向项目经费统计[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_横向项目经费统计.项目负责人部门名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_横向项目经费统计.经费">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_横向项目经费统计.未到经费">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_横向项目经费统计.待审核到账">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_横向项目经费统计.已审核到账">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_横向项目经费统计.待审核报销">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_横向项目经费统计.已审核报销">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v4_纵向项目总览">
             <summary>
             v4_纵向项目总览[类]
@@ -13132,6 +13433,206 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v4_纵向项目总览.审核进度">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v4_纵向项目汇总">
+            <summary>
+            v4_纵向项目汇总[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.状态名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.步骤名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.步骤状态说明">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.纵向项目项目编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.分类">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.分类名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.项目中文名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.项目英文名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.项目类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.项目级别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.项目来源单位">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.项目类别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.批准经费">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.配套经费">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.计划开始日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.计划完成日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.负责人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.负责人工号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.负责人姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.负责人部门编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.负责人部门名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.登记人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.登记人姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.经费">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.未到经费">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.待审核到账">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.已审核到账">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.剩余经费">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.待审核报销">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目汇总.已审核报销">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v4_纵向项目经费统计">
+            <summary>
+            v4_纵向项目经费统计[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目经费统计.负责人部门名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目经费统计.经费">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目经费统计.未到经费">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目经费统计.待审核到账">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目经费统计.已审核到账">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目经费统计.待审核报销">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v4_纵向项目经费统计.已审核报销">
             <summary>
             
             </summary>

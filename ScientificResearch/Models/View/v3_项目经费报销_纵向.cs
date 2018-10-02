@@ -131,12 +131,12 @@ namespace ScientificResearch.Models
 		/// 
 		/// </summary>
 		//public decimal 待审核报销 { get; set; }
-        public decimal 待审核报销 { get; set; }
+        public decimal? 待审核报销 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
 		//public decimal 已审核报销 { get; set; }
-        public decimal 已审核报销 { get; set; }
+        public decimal? 已审核报销 { get; set; }
         
           
         #endregion

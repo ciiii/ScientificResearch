@@ -237,7 +237,7 @@ $(function () {
             },
             clickSubmit: function () {
                 addVm.stateVal = 1;
-                addVm.info.isHold = true;
+                addVm.info.isHold = false;
                 addVm.postData();
             },
             temporary: function () {
@@ -247,7 +247,7 @@ $(function () {
             },
             clickStop: function () {
                 addVm.stateVal = -2;
-                addVm.info.isHold = true;
+                addVm.info.isHold = false;
                 addVm.postData();
             },
             postData: function () {

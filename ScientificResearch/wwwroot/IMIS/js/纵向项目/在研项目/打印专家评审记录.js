@@ -89,7 +89,7 @@ $(function () {
                 $('#divNotPrint').show();
             }
         });
-
+        vm.load();
         avalon.scan(document.body);
     });
 

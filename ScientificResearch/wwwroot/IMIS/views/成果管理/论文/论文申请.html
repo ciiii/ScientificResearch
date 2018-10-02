@@ -35,6 +35,7 @@
                             <label class="col-sm-3 control-label">论文标题类型：</label>
                             <div class="col-sm-5">
                                 <select class="form-control" ms-duplex="@info.基本资料.论文标题类型">
+                                    <option value="">请选择</option>
                                     <option value="中文标题">中文标题</option>
                                     <option value="英文标题">英文标题</option>
                                 </select>
@@ -211,6 +212,21 @@
                                 <input type="text" class="form-control" ms-duplex="@info.基本资料.作者人数">
                             </div>
                         </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">通讯作者：</label>
+                            <div class="col-sm-7">
+                                <input class="form-control" type="text" ms-duplex="@info.基本资料.通讯作者"/>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 control-label">文献类型：</label>
+                            <div class="col-sm-7">
+                                <select class="form-control paperType" ms-duplex="@info.基本资料.文献类型">
+                                    <option value="">请选择</option>
+                                    <option ms-for="el in @model.文献类型" ms-attr="{'value':@el}">{{el}}</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="form-group col-sm-12">
                             <label class="col-sm-3 control-label">关键字：</label>
                             <div class="col-sm-9">
@@ -351,19 +367,19 @@
                         <div class="form-group col-sm-6">
                             <label class="col-sm-3 control-label">JCR分区：</label>
                             <div class="col-sm-7">
-                                <input class="form-control" type="text" ms-duplex="@publication.jcR" readonly/>
+                                <input class="form-control" type="text" ms-duplex="@publication.JCR" readonly/>
                             </div>
                         </div>
                         <div class="form-group col-sm-6">
                             <label class="col-sm-3 control-label">CN号：</label>
                             <div class="col-sm-7">
-                                <input class="form-control" type="text" ms-duplex="@publication.cN" readonly/>
+                                <input class="form-control" type="text" ms-duplex="@publication.CN" readonly/>
                             </div>
                         </div>
                         <div class="form-group col-sm-6">
                             <label class="col-sm-3 control-label">ISSN号：</label>
                             <div class="col-sm-7">
-                                <input class="form-control" type="text" ms-duplex="@publication.issN" readonly/>
+                                <input class="form-control" type="text" ms-duplex="@publication.ISSN" readonly/>
                             </div>
                         </div>
                         <div class="form-group col-sm-6">

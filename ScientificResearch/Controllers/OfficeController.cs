@@ -123,22 +123,21 @@ namespace ScientificResearch.Controllers
                 "upload/办公/通知公告图片",
                 Config.GetValue<int>("uploadFileMaxSize"));
 
-            var obj = new
-            {
-                state = "SUCCESS",
-                url = filesNameList.FirstOrDefault(),
-                //title = "new.png",
-                //original = file.FileName,
-                //type = ".png",
-                //size = 1000
+            //var obj = new
+            //{
+            //    state = "SUCCESS",
+            //    url = filesNameList.FirstOrDefault(),
+            //    //title = "new.png",
+            //    //original = file.FileName,
+            //    //type = ".png",
+            //    //size = 1000
+            //};
 
-            };
+            //var objString = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
 
-            var objString = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
-
-            return Content(objString,"text/html");
+            //return Content(objString,"text/html");
             
-            //return filesNameList.FirstOrDefault();
+            return filesNameList;
         }
 
         [HttpPost]

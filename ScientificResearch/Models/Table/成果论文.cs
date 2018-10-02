@@ -185,6 +185,16 @@ namespace ScientificResearch.Models
 		/// 
 		/// </summary>
 		public string 其他相关文件路径 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        [MaxLength(50,ErrorMessage ="通讯作者不能超过[25]字")]
+		public string 通讯作者 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        [MaxLength(50,ErrorMessage ="文献类型不能超过[25]字")]
+		public string 文献类型 { get; set; }
         
         
         #endregion

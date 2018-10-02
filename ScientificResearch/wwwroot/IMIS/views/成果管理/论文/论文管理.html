@@ -30,7 +30,7 @@
     <script src="/IMIS/js/get_connect/return_data.js"></script>
 
     <script>
-        document.write(' <link rel="stylesheet" href="/IMIS/css/child_pages.css?time='+ new Date().getTime() +'"/>');
+        document.write(' <link rel="stylesheet" href="/IMIS/css/child_pages.css?time=' + new Date().getTime() + '"/>');
         document.write(' <script src="/IMIS/js/成果管理/论文/论文管理.js?time=' + new Date().getTime() + '"></s' + 'cript>');
     </script>
 
@@ -45,7 +45,7 @@
                     <a class="btn btn-primary btn-add" data-toggle="modal" data-target=".modal-add"
                        ms-attr="{'href':@getUrl('论文申请.html')}" onclick="changeUrl(this)"
                        ms-on-click="@clickBtnAdd">
-                        <i class="icon iconfont icon-tianjia"></i> 添加
+                        <i class="icon iconfont icon-tianjia"></i> 单篇录入
                     </a>
                 </div>
                 <div class="form-group input-box">
@@ -120,16 +120,22 @@
                                 </div>
                             </td>
                             <td>{{el.number}}</td>
-                            <td class="text-left">{{el.论文标题}}</td>
+                            <td class="text-left">
+                                <a href="javascript:;" data-toggle="modal" data-target=".modal-details"
+                                   ms-on-click="@details(el)">{{el.论文标题}}</a>
+                            </td>
                             <td>{{el.刊物名称}}</td>
                             <td>{{el.第一作者}}</td>
                             <td>{{el.审核进度}}</td>
-                            <td ms-class="getClass(el.步骤状态说明)">{{el.步骤名称==null?'':el.步骤名称}}-{{el.步骤状态说明==null?'':el.步骤状态说明}}</td>
+                            <td ms-class="getClass(el.步骤状态说明)">
+                                {{el.步骤名称==null?'':el.步骤名称}}-{{el.步骤状态说明==null?'':el.步骤状态说明}}
+                            </td>
                             <td>{{el.在线日期|date("yyyy-MM-dd")}}</td>
                             <td>{{el.论文正式出版日期|date("yyyy-MM-dd")}}</td>
                             <td>{{el.认领人姓名}}</td>
                             <td class="operation">
-                                <li class="bs-tooltip" ms-class="getStatusClass(el.步骤链接名称)" data-toggle="tooltip" data-placement="bottom" ms-attr="{'title':@el.步骤名称}" ms-if="@el.是否可处理">
+                                <li class="bs-tooltip" ms-class="getStatusClass(el.步骤链接名称)" data-toggle="tooltip"
+                                    data-placement="bottom" ms-attr="{'title':@el.步骤名称}" ms-if="@el.是否可处理">
                                     <a data-toggle="modal" data-target=".modal-add"
                                        ms-attr="{'href':@getUrl(@el.步骤链接路径)}"
                                        ms-on-click="@clickBtnEdit(el)" onclick="changeUrl(this)">

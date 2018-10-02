@@ -423,6 +423,9 @@
     .state-mark {
       color: #02ae38;
     }
+    .state-notComplete {
+      color: red;
+    }
     .state-overdue {
       color: #ff0808;
     }
@@ -776,10 +779,10 @@
   }
   .modal-min .modal-body {
     height: auto;
-    .control-label{
+    .control-label {
       width: 160px;
     }
-    .file-name{
+    .file-name {
       width: 250px;
     }
     .btn-Download {
@@ -1157,15 +1160,12 @@
   }
 }
 
-.page-statistics {
-  .main{
+.page-home {
+  .main {
     height: 98%;
     position: absolute;
     width: 100%;
     overflow-y: auto;
-  }
-  .module-left{
-    //padding-left: 0;
   }
   .module {
     padding-left: 10px;
@@ -1323,7 +1323,6 @@
 }
 
 .page-role {
-
   .modal-add {
     .ztree-box {
       height: 400px;
@@ -1563,7 +1562,7 @@
       }
       tr {
         border-bottom: 1px solid #ebebeb;
-        .disable, .disable a{
+        .disable, .disable a {
           color: red;
         }
         .statue {
@@ -1722,7 +1721,7 @@
   }
 }
 
-.page-xueShu, .page-statistics {
+.page-xueShu, .page-home {
   position: relative;
   .modal-details .details-content {
     height: 470px;
@@ -1784,6 +1783,14 @@
     background: #fff;
     cursor: pointer;
   }
+  .modal-add {
+    .col-sm-12 {
+      .col-sm-12 {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+  }
 }
 
 .page-keyanDetails {
@@ -1838,11 +1845,11 @@
       border-top: 1px solid #ddd;
     }
   }
-  .modal-details{
-    .modal-dialog .modal-body{
+  .modal-details {
+    .modal-dialog .modal-body {
       overflow-y: hidden;
     }
-    .details-content{
+    .details-content {
       height: 480px;
     }
   }
@@ -1948,15 +1955,6 @@
     table {
       border: 1px solid #ddd;
     }
-    .state-accomplish {
-      color: #0769ff;
-    }
-    .state-mark {
-      color: #02ae38;
-    }
-    .state-overdue {
-      color: #ff0808;
-    }
   }
   .nav-tabs {
     margin-bottom: 10px;
@@ -1994,6 +1992,22 @@
       }
     }
   }
+  .state-overdue {
+    color: #02ae38;
+  }
+  .state-notComplete {
+    color: red;
+  }
+  .state-accomplish {
+    color: #0769ff;
+  }
+  .state-mark {
+    color: #02ae38;
+  }
+  .state-overdue {
+    color: #ff0808;
+  }
+
 }
 
 .page-template {
@@ -2233,11 +2247,11 @@
     min-height: 350px;
     height: auto;
     padding: 10px 20px 10px 10px;
-    img{
+    img {
       max-width: 100%;
       margin: 10px;
     }
-    p,span{
+    p, span {
       text-indent: 2em;
       line-height: 25px;
     }
@@ -2334,6 +2348,23 @@
     }
     .people-name, .department {
       background: #eee;
+    }
+  }
+}
+
+.page-statistics {
+  .interval {
+    width: 60px !important;
+  }
+  .table {
+    .sum td {
+      font-weight: bold;
+    }
+  }
+  .btn-printing {
+    margin-left: 10px;
+    i {
+      color: #008000;
     }
   }
 }

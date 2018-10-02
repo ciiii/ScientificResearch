@@ -84,7 +84,11 @@ $(function () {
                 vm.req.Like项目名称 = vm.title;
                 vm.req.Like流程名称 = vm.MatterType;
                 vm.req.Begin流程创建时间 = vm.startTime;
-                vm.req.End流程创建时间 = vm.endTime + ' 23:59:59';
+                if (vm.endTime != '') {
+                    vm.req.End流程创建时间 = vm.endTime + ' 23:59:59';
+                } else {
+                    vm.req.End流程创建时间 = '';
+                }
                 vm.query();
             },
             submit: function () {

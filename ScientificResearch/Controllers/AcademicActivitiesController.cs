@@ -298,6 +298,11 @@ namespace ScientificResearch.Controllers
                 Env.WebRootPath,
                 "upload/学术活动/会议反馈文件",
                 Config.GetValue<int>("uploadFileMaxSize"));
+            //return await new UploadBusiness().上传并返回text类型的结果(
+            //    Request.Form.Files,
+            //    Env.WebRootPath,
+            //    "upload/学术活动/会议反馈文件",
+            //    Config.GetValue<int>("uploadFileMaxSize"));
         }
 
         [HttpGet]

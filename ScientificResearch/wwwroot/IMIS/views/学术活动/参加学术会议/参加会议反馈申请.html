@@ -5,7 +5,7 @@
         <h4 class="modal-title" id="NoPermissionModalLabel">{{@title}}</h4>
     </div>
     <div class="modal-body">
-        <form class="form-horizontal">
+        <div class="form-horizontal">
             <div class="col-sm-12">
                 <h5 class="title"><span>基本信息</span></h5>
                 <div class="form-group">
@@ -104,7 +104,8 @@
                         <i class="icon iconfont icon-text-sign icon-sign"></i>活动持续时间(分钟)：
                     </label>
                     <div class="col-sm-7">
-                        <input type="text" class="form-control meeting-time" ms-duplex="@model.活动持续分钟" ms-on-change="@inputVal('.meeting-time')">
+                        <input type="text" class="form-control meeting-time" ms-duplex="@model.活动持续分钟"
+                               ms-on-change="@inputVal('.meeting-time')">
                     </div>
                 </div>
                 <div class="form-group col-sm-6">
@@ -112,7 +113,8 @@
                         <i class="icon iconfont icon-text-sign icon-sign"></i>参会人数：
                     </label>
                     <div class="col-sm-7">
-                        <input type="text" class="form-control meeting-people" ms-duplex="@model.参会人数" ms-on-change="@inputVal('.meeting-people')">
+                        <input type="text" class="form-control meeting-people" ms-duplex="@model.参会人数"
+                               ms-on-change="@inputVal('.meeting-people')">
                     </div>
                 </div>
             </div>
@@ -127,7 +129,7 @@
                             <a class="file-text btn btn-default" href="javascript:;">选择文件</a>
                             <span class="file-name"></span>
                         </div>
-                        <a class="btn btn-primary" href="javascript:;" ms-on-click="@clickUpload">上传</a>
+                        <button class="btn btn-primary" ms-on-click="@clickUpload">上传</button>
                         <div class="loading">文件上传中...</div>
                     </div>
                 </div>
@@ -179,7 +181,7 @@
                     </table>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
     <div class="modal-footer submit-wrapper">
         <div class="form-group">

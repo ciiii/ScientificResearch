@@ -40,6 +40,11 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+		//public int 排序 { get; set; }
+        public int 排序 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
 		//public string 图标 { get; set; }
         public string 图标 { get; set; }
         /// <summary>
@@ -47,11 +52,6 @@ namespace ScientificResearch.Models
 		/// </summary>
 		//public string 备注 { get; set; }
         public string 备注 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-		//public int 排序 { get; set; }
-        public int 排序 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>

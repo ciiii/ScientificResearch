@@ -405,6 +405,12 @@ var Code = {
     //导入知网论文
     URL_POST_IMPORT_HOWNET_PAPER: getApiHost + '/Fruit/导入知网论文',
 
+    //导入中文标题自定义论文
+    URL_POST_IMPORT_PAPER_CN: getApiHost + '/Fruit/导入中文标题自定义论文',
+
+    //导入英文标题自定义论文
+    URL_POST_IMPORT_PAPER_EN: getApiHost + '/Fruit/导入英文标题自定义论文',
+
     //导入endnote格式的论文
     URL_POST_IMPORT_ENDNOTE_PAPER: getApiHost + '/Fruit/导入endnote格式的论文',
 
@@ -775,6 +781,61 @@ var Code = {
     //完善没有预算的经费报销
     URL_POST_EDIT_MEETING_FUNDS_REIMBURSEMENT: getApiHost + '/Expense/完善没有预算的经费报销',
 
+
+
+    //获取论文成果统计
+    URL_GET_PAPER_FRUIT_STATISTICS_LIST: getApiHost + '/Statistical/获取论文成果统计',
+
+    //获取获奖成果统计
+    URL_GET_AWARD_FRUIT_STATISTICS_LIST: getApiHost + '/Statistical/获取获奖成果统计',
+
+    //获取著作成果统计
+    URL_GET_WORK_FRUIT_STATISTICS_LIST: getApiHost + '/Statistical/获取著作成果统计',
+
+    //获取专利成果统计
+    URL_GET_PATENT_FRUIT_STATISTICS_LIST: getApiHost + '/Statistical/获取专利成果统计',
+
+    //获取按部门统计所有成果
+    URL_GET_DEPARTMENT_FRUIT_STATISTICS_LIST: getApiHost + '/Statistical/获取按部门统计所有成果',
+
+    //获取按职务统计所有成果
+    URL_GET_POST_FRUIT_STATISTICS_LIST: getApiHost + '/Statistical/获取按职务统计所有成果',
+
+    //获取按专业技术级别统计所有成果
+    URL_GET_MAJOR_LEVEL_FRUIT_STATISTICS_LIST: getApiHost + '/Statistical/获取按专业技术级别统计所有成果',
+
+    //获取按岗位类型统计所有成果
+    URL_GET_POST_TYPE_FRUIT_STATISTICS_LIST: getApiHost + '/Statistical/获取按岗位类型统计所有成果',
+
+    //获取按学历统计所有成果
+    URL_GET_EDUCATION_FRUIT_STATISTICS_LIST: getApiHost + '/Statistical/获取按学历统计所有成果',
+
+
+    //获取横向项目经费统计
+    URL_GET_X_FUNDS_STATISTICS_LIST: getApiHost + '/Statistical/获取横向项目经费统计',
+
+    //获取横向项目汇总
+    URL_GET_X_PROJECT_SUMMARY_LIST: getApiHost + '/Statistical/获取横向项目汇总',
+
+
+    //获取纵向项目经费统计
+    URL_GET_Y_FUNDS_STATISTICS_LIST: getApiHost + '/Statistical/获取纵向项目经费统计',
+
+    //获取纵向项目汇总
+    URL_GET_Y_PROJECT_SUMMARY_LIST: getApiHost + '/Statistical/获取纵向项目汇总',
+
+
+    //获取按部门对专业技术级别统计人员
+    URL_GET_MAJOR_LEVEL_STATISTICS_USERS: getApiHost + '/Statistical/获取按部门对专业技术级别统计人员',
+
+    //获取按部门对岗位类型统计人员
+    URL_GET_POST_TYPE_STATISTICS_USERS: getApiHost + '/Statistical/获取按部门对岗位类型统计人员',
+
+    //获取按部门对学历统计人员
+    URL_GET_EDUCATION_STATISTICS_USERS: getApiHost + '/Statistical/获取按部门对学历统计人员',
+
+    //获取按部门对学科门类统计人员
+    URL_GET_SUBJECT_STATISTICS_USERS: getApiHost + '/Statistical/获取按部门对学科门类统计人员',
 
 
 

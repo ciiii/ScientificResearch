@@ -28,7 +28,7 @@
     <script src="/IMIS/js/get_connect/return_data.js"></script>
 
     <script>
-        document.write(' <link rel="stylesheet" href="/IMIS/css/child_pages.css?time='+ new Date().getTime() +'"/>');
+        document.write(' <link rel="stylesheet" href="/IMIS/css/child_pages.css?time=' + new Date().getTime() + '"/>');
         document.write(' <script src="/IMIS/js/成果管理/专利/专利管理.js?time=' + new Date().getTime() + '"></s' + 'cript>');
     </script>
 
@@ -118,14 +118,19 @@
                                 </div>
                             </td>
                             <td>{{$index+1}}</td>
-                            <td class="text-left">{{el.专利名称}}</td>
+                            <td class="text-left">
+                                <a href="javascript:;" data-toggle="modal" data-target=".modal-details"
+                                   ms-on-click="@details(el)">{{el.专利名称}}</a>
+                            </td>
                             <td>{{el.专利权人名称}}</td>
                             <td>{{el.专利类型}}</td>
                             <td>{{el.是否授权?'已授权':'未授权'}}</td>
                             <td>{{el.年度}}</td>
                             <td>{{el.第一发明人}}</td>
                             <td>{{el.审核进度}}</td>
-                            <td ms-class="getClass(el.步骤状态说明)">{{el.步骤名称==null?'':el.步骤名称}}-{{el.步骤状态说明==null?'':el.步骤状态说明}}</td>
+                            <td ms-class="getClass(el.步骤状态说明)">
+                                {{el.步骤名称==null?'':el.步骤名称}}-{{el.步骤状态说明==null?'':el.步骤状态说明}}
+                            </td>
                             <td class="operation">
                                 <li class="bs-tooltip" ms-class="getStatusClass(el.步骤链接名称
 )" data-toggle="tooltip" data-placement="bottom" ms-attr="{'title':@el.步骤名称}" ms-if="@el.是否可处理">

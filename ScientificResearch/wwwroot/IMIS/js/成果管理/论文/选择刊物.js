@@ -76,9 +76,9 @@ $(function () {
                     影响因子: el.影响因子,
                     特征因子分值: el.特征因子分值,
                     期刊系列: el.期刊系列,
-                    jcR: el.jcR分区,
-                    cN: el.cN号,
-                    issN: el.issN号,
+                    JCR: el.JCR分区,
+                    CN: el.CN号,
+                    ISSN: el.ISSN号,
                     编目名称: el.编目名称,
                     编目类别: el.编目类别
                 }

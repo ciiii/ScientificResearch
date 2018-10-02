@@ -240,6 +240,11 @@ namespace ScientificResearch.Models
         [DisplayName("刊物名称")]
         public string 刊物名称 { get; set; }
 
+        [DisplayName("通讯作者")]
+        public string 通讯作者 { get; set; }
+
+        [DisplayName("文献类型")]
+        public string 文献类型 { get; set; }
         #endregion
     }
 

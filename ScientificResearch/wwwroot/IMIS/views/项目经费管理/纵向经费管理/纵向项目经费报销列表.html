@@ -94,7 +94,10 @@
                                 </div>
                             </td>
                             <td>{{$index+1}}</td>
-                            <td class="text-left">{{@name}}</td>
+                            <td class="text-left">
+                                <a href="javascript:;" data-toggle="modal" data-target=".modal-details"
+                                   ms-on-click="@info(el),@details(el)">{{@name}}</a>
+                            </td>
                             <td>{{el.报销编号}}</td>
                             <td>{{el.报销人姓名}}</td>
                             <td>{{el.报销人部门名称}}</td>
@@ -132,9 +135,6 @@
                 </div>
                 <div ms-if="@nothing">
                     <p class="text-center"><img src="/IMIS/images/nothing-3.png"></p>
-                </div>
-                <div class="page paging text-center">
-                    <div class="pager paging"></div>
                 </div>
             </div>
         </div>

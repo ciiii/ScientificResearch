@@ -18,6 +18,12 @@ $(function () {
                             return;
                         } else {
                             obj.论文详情.论文在线日期 = obj.论文详情.论文Online日期;
+                            if (obj.论文详情.论文标题类型 == null||obj.论文详情.论文标题类型=='') {
+                                obj.论文详情.论文标题类型 = '';
+                            } else {
+                                obj.论文详情.论文标题类型 = '【 ' + obj.论文详情.论文标题类型 + ' 】 ';
+                            }
+
                             vm.model = obj;
                             if (obj.论文详情.检索信息页相关文件路径 != '' && obj.论文详情.检索信息页相关文件路径 != null) {
                                 vm.infoFiles = obj.论文详情.检索信息页相关文件路径.split(',');

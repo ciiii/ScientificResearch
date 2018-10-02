@@ -14,14 +14,14 @@ $(function () {
                 Like变更事由: '',
                 Begin变更时间: '',
                 End变更时间: '',
-                状态:'',
+                状态: '',
                 OrderType: false
             },
             userInfo: userInfo,
             cnTitle: '',
             name: '',
             patent: '',
-            reason:'',
+            reason: '',
             total: '',
             model: [],
             startTime: '',
@@ -108,7 +108,11 @@ $(function () {
                 vm.req.Like负责人姓名 = vm.name;
                 vm.req.Like变更事由 = vm.reason;
                 vm.req.Begin变更时间 = vm.startTime;
-                vm.req.End变更时间 = vm.endTime+' 23:59:59';
+                if (vm.endTime != '') {
+                    vm.req.End变更时间 = vm.endTime + ' 23:59:59';
+                } else {
+                    vm.req.End变更时间 = '';
+                }
                 vm.query();
             },
             submit: function () {
@@ -124,8 +128,8 @@ $(function () {
                 var val = $('.screen-box .state').val();
                 if (val != '') {
                     vm.req.状态 = parseInt(val);
-                }else{
-                    vm.req.状态='';
+                } else {
+                    vm.req.状态 = '';
                 }
                 vm.search();
             },
@@ -146,15 +150,15 @@ $(function () {
                     })
                 }
             },
-            info:function (el) {
+            info: function (el) {
                 sessionStorage.editInfo = JSON.stringify(el.$model);
                 var details = {
                     id: el.编号,
-                    idB:el.纵向项目立项编号,
+                    idB: el.纵向项目立项编号,
                     name: el.项目中文名称,
                     shenHeUrl: el.步骤链接路径,
                     步骤编号: el.步骤编号,
-                    state:el.状态
+                    state: el.状态
                 }
                 sessionStorage.xueShuDetails = JSON.stringify(details);
             },
@@ -174,7 +178,7 @@ $(function () {
                     name: el.项目中文名称,
                     shenHeUrl: el.步骤链接路径,
                     步骤编号: el.步骤编号,
-                    state:el.状态
+                    state: el.状态
                 }
                 sessionStorage.xueShuDetails = JSON.stringify(details);
                 $('.modal-details .modal-title').text('项目详情');

@@ -92,7 +92,11 @@ $(function () {
                 vm.req.Like负责人姓名 = vm.name;
                 vm.req.Like变更事由 = vm.reason;
                 vm.req.Begin变更时间 = vm.startTime;
-                vm.req.End变更时间 = vm.endTime + ' 23:59:59';
+                if (vm.endTime != '') {
+                    vm.req.End变更时间 = vm.endTime + ' 23:59:59';
+                } else {
+                    vm.req.End变更时间 = '';
+                }
                 vm.query();
             },
             submit: function () {

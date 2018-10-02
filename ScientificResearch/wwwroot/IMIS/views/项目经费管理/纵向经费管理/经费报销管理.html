@@ -30,7 +30,7 @@
     <script type="text/javascript" src="/IMIS/js/get_connect/return_data.js"></script>
 
     <script>
-        document.write(' <link rel="stylesheet" href="/IMIS/css/child_pages.css?time='+ new Date().getTime() +'"/>');
+        document.write(' <link rel="stylesheet" href="/IMIS/css/child_pages.css?time=' + new Date().getTime() + '"/>');
         document.write(' <script type="text/javascript" src="/IMIS/js/项目经费管理/纵向经费管理/经费报销管理.js?time=' + new Date().getTime() + '"></s' + 'cript>');
     </script>
 
@@ -129,7 +129,10 @@
                                 </div>
                             </td>
                             <td>{{el.number}}</td>
-                            <td class="text-left">{{el.项目中文名称}}</td>
+                            <td class="text-left">
+                                <a ms-attr="{'href':@getUrl('纵向项目经费报销列表.html?id='+@el.编号+'&name='+@el.项目中文名称)}"
+                                   ms-on-click="@info(el),@clickBtnNext">{{el.项目中文名称}}</a>
+                            </td>
                             <td>{{el.项目类别}}</td>
                             <td>{{el.分类名称}}</td>
                             <td>{{el.项目级别}}</td>
@@ -143,13 +146,16 @@
                             <td class="operation">
                                 <li class="bs-tooltip btn-addFeedback" data-toggle="tooltip"
                                     data-placement="bottom" title="添加报销">
-                                    <a data-toggle="modal" data-target=".modal-add" ms-attr="{'href':@getUrl('/IMIS/views/项目经费管理/申请报销.html')}" onclick="changeUrl(this)" ms-on-click="@info(el),@clickBtnAdd(el.编号)">
+                                    <a data-toggle="modal" data-target=".modal-add"
+                                       ms-attr="{'href':@getUrl('/IMIS/views/项目经费管理/申请报销.html')}"
+                                       onclick="changeUrl(this)" ms-on-click="@info(el),@clickBtnAdd(el.编号)">
                                         <i class="icon iconfont icon-tianjia"></i>
                                     </a>
                                 </li>
                                 <li class="bs-tooltip btn-examine" data-toggle="tooltip"
                                     data-placement="bottom" title="报销详情">
-                                    <a ms-attr="{'href':@getUrl('纵向项目经费报销列表.html?id='+@el.编号+'&name='+@el.项目中文名称)}" ms-on-click="@info(el),@clickBtnNext">
+                                    <a ms-attr="{'href':@getUrl('纵向项目经费报销列表.html?id='+@el.编号+'&name='+@el.项目中文名称)}"
+                                       ms-on-click="@info(el),@clickBtnNext">
                                         <i class="icon iconfont icon-16"></i>
                                     </a>
                                 </li>

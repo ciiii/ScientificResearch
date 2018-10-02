@@ -37,6 +37,21 @@ $(function () {
                             vm.nothing = false;
                             vm.allchecked = false;
                         }
+                        $('.pager').mamPager({
+                            pageSize: vm.req.Size,                       //页大小
+                            pageIndex: vm.req.Index,                     //当前页
+                            recordTotal: vm.total,                       //数据总数
+                            type: 1,
+                            prevText: "&laquo;",                         //上一页显示内容
+                            nextText: "&raquo;",
+                            noData: "暂无数据",
+                            pageChange: function (index) {
+                                vm.req.Index = index;
+                                vm.loaded = false;
+                                vm.nothing = false;
+                                vm.query();
+                            }
+                        });
                         $('.bs-tooltip').tooltip();
                     } else {
                         console.info('获取办事流程列表失败！');

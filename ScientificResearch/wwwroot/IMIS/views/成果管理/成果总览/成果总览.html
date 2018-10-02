@@ -113,7 +113,10 @@
                                 </div>
                             </td>
                             <td>{{el.number}}</td>
-                            <td class="text-left">{{el.成果名称}}</td>
+                            <td class="text-left">
+                                <a href="javascript:;" data-toggle="modal" data-target=".modal-details"
+                                   ms-on-click="@details(el)">{{el.成果名称}}</a>
+                            </td>
                             <td>{{el.成果类型}}</td>
                             <td>{{el.发起人姓名}}</td>
                             <td>{{el.发起人部门名称}}</td>

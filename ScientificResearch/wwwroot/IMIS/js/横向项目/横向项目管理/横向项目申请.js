@@ -531,48 +531,6 @@ $(function () {
                     });
                 });
             },
-            ajaxFileUpload: function () {
-                $('.fileUpload-flie .loading').show();
-                $.ajaxFileUpload({
-                    url: Code.URL_POST_UPLOAD_X_PROJECT_CONTRACT_FILE, //用于文件上传的服务器端请求地址
-                    secureuri: false, //一般设置为false
-                    fileElementId: 'input-file', //文件上传空间的id属性  <input type="file" id="file" name="file" />
-                    dataType: 'html', //返回值类型 一般设置为json,
-                    success: function (data, status)  //服务器成功响应处理函数
-                    {
-                        // if (typeof (data.error) != 'undefined') {
-                        //     if (data.error != '') {
-                        //         $.oaNotify.error(' 上传失败：' + e.error);
-                        //     } else {
-                        //         for (var i = 0; i < e.data.length; i++) {
-                        //             dAddVm.files.push(e.data[i]);
-                        //         }
-                        //     }
-                        // }
-                        if (data != '') {
-                            data = JSON.parse(data);
-                            if (data.error) {
-                                $.oaNotify.error(' 上传失败：' + data.error);
-                            } else {
-                                $.oaNotify.ok(' 上传成功!');
-                                for (var i = 0; i < data.data.length; i++) {
-                                    dAddVm.files.push(data.data[i]);
-                                }
-                            }
-                        }
-
-                        // $.oaNotify.ok(' 上传成功!');
-                        // dAddVm.files.push(data);
-
-                    },
-                    error: function (data, status, e)//服务器响应失败处理函数
-                    {
-                        $.oaNotify.error(' 上传失败：' + e);
-                    }
-                });
-                $('.fileUpload-flie .loading').hide();
-                return false;
-            },
             clickUpload: function (e) {
                 var file = $('.fileUpload-flie .input-file').get(0).files[0];
                 if (file) {

@@ -2631,4 +2631,207 @@ var FundsReimbursement = {
     },
 }
 
+//成果统计
+var FruitStatistics={
+    getPaperFruitStatisticsList: function (type, options, getPaperFruitStatisticsListListener) {
+        var url = Code.URL_GET_PAPER_FRUIT_STATISTICS_LIST;
 
+        Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
+            if (success) {
+                getPaperFruitStatisticsListListener(true, obj.data, '')
+            } else {
+                getPaperFruitStatisticsListListener(false, '', strErro)
+            }
+        });
+    },
+    getAwardFruitStatisticsList: function (type, options, getAwardFruitStatisticsListListener) {
+        var url = Code.URL_GET_AWARD_FRUIT_STATISTICS_LIST;
+
+        Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
+            if (success) {
+                getAwardFruitStatisticsListListener(true, obj.data, '')
+            } else {
+                getAwardFruitStatisticsListListener(false, '', strErro)
+            }
+        });
+    },
+    getWorkFruitStatisticsList: function (type, options, getWorkFruitStatisticsListListener) {
+        var url = Code.URL_GET_WORK_FRUIT_STATISTICS_LIST;
+
+        Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
+            if (success) {
+                getWorkFruitStatisticsListListener(true, obj.data, '')
+            } else {
+                getWorkFruitStatisticsListListener(false, '', strErro)
+            }
+        });
+    },
+    getPatentFruitStatisticsList: function (type, options, getPatentFruitStatisticsListListener) {
+        var url = Code.URL_GET_PATENT_FRUIT_STATISTICS_LIST;
+
+        Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
+            if (success) {
+                getPatentFruitStatisticsListListener(true, obj.data, '')
+            } else {
+                getPatentFruitStatisticsListListener(false, '', strErro)
+            }
+        });
+    },
+    getDepartmentFruitStatisticsList: function (type, options, getDepartmentFruitStatisticsListListener) {
+        var url = Code.URL_GET_DEPARTMENT_FRUIT_STATISTICS_LIST;
+
+        Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
+            if (success) {
+                getDepartmentFruitStatisticsListListener(true, obj.data, '')
+            } else {
+                getDepartmentFruitStatisticsListListener(false, '', strErro)
+            }
+        });
+    },
+    getPostFruitStatisticsList: function (type, options, getPostFruitStatisticsListListener) {
+        var url = Code.URL_GET_POST_FRUIT_STATISTICS_LIST;
+
+        Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
+            if (success) {
+                getPostFruitStatisticsListListener(true, obj.data, '')
+            } else {
+                getPostFruitStatisticsListListener(false, '', strErro)
+            }
+        });
+    },
+    getMajorLevelFruitStatisticsList: function (type, options, getMajorLevelFruitStatisticsListListener) {
+        var url = Code.URL_GET_MAJOR_LEVEL_FRUIT_STATISTICS_LIST;
+
+        Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
+            if (success) {
+                getMajorLevelFruitStatisticsListListener(true, obj.data, '')
+            } else {
+                getMajorLevelFruitStatisticsListListener(false, '', strErro)
+            }
+        });
+    },
+    getPostTypeFruitStatisticsList: function (type, options, getPostTypeFruitStatisticsListListener) {
+        var url = Code.URL_GET_POST_TYPE_FRUIT_STATISTICS_LIST;
+
+        Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
+            if (success) {
+                getPostTypeFruitStatisticsListListener(true, obj.data, '')
+            } else {
+                getPostTypeFruitStatisticsListListener(false, '', strErro)
+            }
+        });
+    },
+    getEducationFruitStatisticsList: function (type, options, getEducationFruitStatisticsListListener) {
+        var url = Code.URL_GET_EDUCATION_FRUIT_STATISTICS_LIST;
+
+        Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
+            if (success) {
+                getEducationFruitStatisticsListListener(true, obj.data, '')
+            } else {
+                getEducationFruitStatisticsListListener(false, '', strErro)
+            }
+        });
+    },
+}
+
+//横向项目统计
+var XProjectStatistics= {
+    getXFundsStatisticsList: function (type, options, getXFundsStatisticsListListener) {
+        var url = Code.URL_GET_X_FUNDS_STATISTICS_LIST;
+
+        Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
+            if (success) {
+                getXFundsStatisticsListListener(true, obj.data, '')
+            } else {
+                getXFundsStatisticsListListener(false, '', strErro)
+            }
+        });
+    },
+    getXProjectSummary: function (type, options, getXProjectSummaryListener) {
+        var url = Code.URL_GET_X_PROJECT_SUMMARY_LIST;
+
+        Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
+            if (success) {
+                getXProjectSummaryListener(true, obj.data, '')
+            } else {
+                getXProjectSummaryListener(false, '', strErro)
+            }
+        });
+    }
+}
+
+
+//纵向项目统计
+var YProjectStatistics= {
+    getYFundsStatisticsList: function (type, options, getYFundsStatisticsListListener) {
+        var url = Code.URL_GET_Y_FUNDS_STATISTICS_LIST;
+
+        Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
+            if (success) {
+                getYFundsStatisticsListListener(true, obj.data, '')
+            } else {
+                getYFundsStatisticsListListener(false, '', strErro)
+            }
+        });
+    },
+    getYProjectSummary: function (type, options, getYProjectSummaryListener) {
+        var url = Code.URL_GET_Y_PROJECT_SUMMARY_LIST;
+
+        Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
+            if (success) {
+                getYProjectSummaryListener(true, obj.data, '')
+            } else {
+                getYProjectSummaryListener(false, '', strErro)
+            }
+        });
+    }
+}
+
+
+//人员统计
+var UsersStatistics= {
+    getMajorLevelStatisticsUsers: function (type, options, getMajorLevelStatisticsUsersListener) {
+        var url = Code.URL_GET_MAJOR_LEVEL_STATISTICS_USERS;
+
+        Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
+            if (success) {
+                getMajorLevelStatisticsUsersListener(true, obj.data, '')
+            } else {
+                getMajorLevelStatisticsUsersListener(false, '', strErro)
+            }
+        });
+    },
+    getPostTypeStatisticsUsers: function (type, options, getPostTypeStatisticsUsersListener) {
+        var url = Code.URL_GET_POST_TYPE_STATISTICS_USERS;
+
+        Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
+            if (success) {
+                getPostTypeStatisticsUsersListener(true, obj.data, '')
+            } else {
+                getPostTypeStatisticsUsersListener(false, '', strErro)
+            }
+        });
+    },
+    getEducationStatisticsUsers: function (type, options, getEducationStatisticsUsersListener) {
+        var url = Code.URL_GET_EDUCATION_STATISTICS_USERS;
+
+        Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
+            if (success) {
+                getEducationStatisticsUsersListener(true, obj.data, '')
+            } else {
+                getEducationStatisticsUsersListener(false, '', strErro)
+            }
+        });
+    },
+    getSubjectStatisticsUsers: function (type, options, getSubjectStatisticsUsersListener) {
+        var url = Code.URL_GET_SUBJECT_STATISTICS_USERS;
+
+        Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
+            if (success) {
+                getSubjectStatisticsUsersListener(true, obj.data, '')
+            } else {
+                getSubjectStatisticsUsersListener(false, '', strErro)
+            }
+        });
+    },
+}

@@ -125,6 +125,21 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+		//public int PMID { get; set; }
+        public int? PMID { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+		//public string DOI { get; set; }
+        public string DOI { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+		//public string UT { get; set; }
+        public string UT { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
 		//public string AllName { get; set; }
         public string AllName { get; set; }
         

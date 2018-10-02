@@ -30,7 +30,7 @@
     <script src="/IMIS/js/get_connect/return_data.js"></script>
 
     <script>
-        document.write(' <link rel="stylesheet" href="/IMIS/css/child_pages.css?time='+ new Date().getTime() +'"/>');
+        document.write(' <link rel="stylesheet" href="/IMIS/css/child_pages.css?time=' + new Date().getTime() + '"/>');
         document.write(' <script src="/IMIS/js/项目经费管理/纵向经费管理/经费到账管理.js?time=' + new Date().getTime() + '"></s' + 'cript>');
     </script>
 
@@ -129,7 +129,10 @@
                                 </div>
                             </td>
                             <td>{{el.number}}</td>
-                            <td class="text-left">{{el.项目中文名称}}</td>
+                            <td class="text-left">
+                                <a ms-attr="{'href':@getUrl('纵向项目经费到账列表.html?id='+@el.编号+'&name='+@el.项目中文名称)}"
+                                   ms-on-click="@clickBtnNext">{{el.项目中文名称}}</a>
+                            </td>
                             <td>{{el.项目类别}}</td>
                             <td>{{el.分类名称}}</td>
                             <td>{{el.项目级别}}</td>
@@ -143,13 +146,16 @@
                             <td class="operation">
                                 <li class="bs-tooltip btn-addFeedback" data-toggle="tooltip"
                                     data-placement="bottom" title="添加到账">
-                                    <a data-toggle="modal" data-target=".modal-add" ms-attr="{'href':@getUrl('添加纵向项目经费到账.html')}" onclick="changeUrl(this)" ms-on-click="@clickBtnAdd(el.编号)">
+                                    <a data-toggle="modal" data-target=".modal-add"
+                                       ms-attr="{'href':@getUrl('添加纵向项目经费到账.html')}" onclick="changeUrl(this)"
+                                       ms-on-click="@clickBtnAdd(el.编号)">
                                         <i class="icon iconfont icon-tianjia"></i>
                                     </a>
                                 </li>
                                 <li class="bs-tooltip btn-examine" data-toggle="tooltip"
                                     data-placement="bottom" title="到账详情">
-                                    <a ms-attr="{'href':@getUrl('纵向项目经费到账列表.html?id='+@el.编号+'&name='+@el.项目中文名称)}" ms-on-click="@clickBtnNext">
+                                    <a ms-attr="{'href':@getUrl('纵向项目经费到账列表.html?id='+@el.编号+'&name='+@el.项目中文名称)}"
+                                       ms-on-click="@clickBtnNext">
                                         <i class="icon iconfont icon-16"></i>
                                     </a>
                                 </li>

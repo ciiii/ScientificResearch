@@ -11,7 +11,7 @@ $(function () {
                 $('.loading').show();
                 addVm.fileUpload(data);
             },
-            fileUpload: function (data) {
+            fileUpload: function () {
                 $.ajax({
                     url: Code.URL_POST_IMPORT_PERIODICAL,
                     type: "POST",

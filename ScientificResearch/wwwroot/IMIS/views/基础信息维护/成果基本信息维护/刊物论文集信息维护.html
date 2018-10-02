@@ -39,7 +39,7 @@
 
 </head>
 <body ms-controller="root" class="ms-controller" onload="IFrameResize()">
-<div class="page-periodical page-table page-common">
+<div class="page-periodical page-table page-common page-paper">
     <div class="main">
         <h4 class="title">刊物论文集信息列表</h4>
         <div class="screen-box">
@@ -103,10 +103,13 @@
                             <th class="name text-left">期刊名称</th>
                             <th>主办单位</th>
                             <th class="text-left">期刊索引</th>
-                            <th >影响因子</th>
-                            <th >期刊编目</th>
-                            <th >编目类别</th>
-                            <th >被引用次数</th>
+                            <th>影响因子</th>
+                            <th>期刊编目</th>
+                            <th>编目类别</th>
+                            <th>被引用次数</th>
+                            <th>PMID</th>
+                            <th>DOI</th>
+                            <th>UT</th>
                             <th class="operation">操作</th>
                         </tr>
                         </thead>
@@ -128,6 +131,9 @@
                             <td >{{el.编目名称}}</td>
                             <td >{{el.编目类别}}</td>
                             <td >{{el.被引用次数}}</td>
+                            <td >{{el.PMID}}</td>
+                            <td >{{el.DOI}}</td>
+                            <td >{{el.UT}}</td>
                             <td class="operation">
                                 <ul>
                                     <li class="bs-tooltip btn-edit" data-toggle="tooltip"

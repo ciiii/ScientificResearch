@@ -12,13 +12,18 @@ $(function () {
             catalogue: [],
             catalogueType: [],
             title: '',
-            issN: '',
-            cN: '',
-            jcR: '',
+            ISSN: '',
+            CN: '',
+            JCR: '',
             loadInfo: function () {
                 if (dAddVm.type) {
                     dAddVm.title = '修改期刊';
                     dAddVm.PeriodicalInfo = JSON.parse(sessionStorage.mPeriodicalInfo);
+                    for (var i in dAddVm.PeriodicalInfo) {
+                        if (dAddVm.PeriodicalInfo[i] == null || dAddVm.PeriodicalInfo[i].length == 0) {
+                            dAddVm.PeriodicalInfo[i] = '';
+                        }
+                    }
                 } else {
                     dAddVm.title = '添加期刊';
                     dAddVm.PeriodicalInfo = {
@@ -28,17 +33,20 @@ $(function () {
                         主办单位: '',
                         期刊系列: '',
                         语种: '中文',
-                        jcR分区: '',
+                        JCR分区: '',
                         收录情况: '',
                         编目名称: '',
                         编目类别: '',
                         创刊日期: '',
-                        被引用次数: 0,
-                        影响因子: 0,
-                        特征因子分值: 0,
-                        issN号: '',
+                        被引用次数: '',
+                        影响因子: '',
+                        特征因子分值: '',
+                        ISSN号: '',
+                        PMID: '',
+                        DOI: '',
+                        UT: '',
                         年度: '',
-                        cN号: '',
+                        CN号: '',
                         出版周期: '',
                         出版地: '',
                         期刊开本: ''
@@ -47,9 +55,9 @@ $(function () {
             },
 
             clickSubmit: function () {
-                dAddVm.PeriodicalInfo.issN号 = dAddVm.issN;
-                dAddVm.PeriodicalInfo.cN号 = dAddVm.cN;
-                dAddVm.PeriodicalInfo.jcR分区 = dAddVm.jcR;
+                dAddVm.PeriodicalInfo.ISSN号 = dAddVm.ISSN;
+                dAddVm.PeriodicalInfo.CN号 = dAddVm.CN;
+                dAddVm.PeriodicalInfo.JCR分区 = dAddVm.JCR;
                 dAddVm.PeriodicalInfo.创刊时间 = $('.modal-add .form-time').val();
 
                 if (dAddVm.PeriodicalInfo.英文刊名 == '') {
@@ -112,7 +120,7 @@ $(function () {
                 Periodical.getPeriodicalSeries('get', '期刊JCR分区', function getPeriodicalSeriesListener(success, obj, strErro) {
                     if (success) {
                         dAddVm.partition = obj;
-                        $('.partition').val(dAddVm.PeriodicalInfo.jcR分区);
+                        $('.partition').val(dAddVm.PeriodicalInfo.JCR分区);
                     } else {
                         console.info('获取期刊JCR分区失败！');
                         console.info(strErro);

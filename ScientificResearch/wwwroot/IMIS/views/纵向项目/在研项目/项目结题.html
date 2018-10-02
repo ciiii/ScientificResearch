@@ -152,7 +152,10 @@
                                 </div>
                             </td>
                             <td>{{el.number}}</td>
-                            <td class="text-left">{{el.项目中文名称}}</td>
+                            <td class="text-left">
+                                <a href="javascript:;" data-toggle="modal" data-target=".modal-details"
+                                   ms-on-click="@details(el)">{{el.项目中文名称}}</a>
+                            </td>
                             <td>{{el.纵向项目项目编号}}</td>
                             <td>{{el.分类名称}}</td>
                             <td>{{el.项目级别}}</td>

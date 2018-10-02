@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>专利成果统计</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="/IMIS/libs/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/IMIS/libs/bootstrap/css/bootstrap-datetimepicker.min.css"/>
+    <link rel="stylesheet" href="/IMIS/libs/mCustomScrollbar/jquery.mCustomScrollbar.min.css"/>
+    <link rel="stylesheet" href="/IMIS/libs/ztree/metroStyle/metroStyle.css"/>
+    <link rel="stylesheet" href="/IMIS/libs/iconfont/iconfont.css"/>
+    <!--[if lt IE 9]>
+    <script src="/IMIS/libs/html5shiv.js"></script>
+    <script src="/IMIS/libs/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+    <script src="/IMIS/libs/jquery-1.11.1.min.js"></script>
+    <script src="/IMIS/libs/jquery.placeholder.min.js"></script>
+    <script src="/IMIS/libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/IMIS/libs/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/IMIS/libs/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="/IMIS/libs/avalon.min.js"></script>
+    <script src="/IMIS/libs/ztree/jquery.ztree.all.min.js"></script>
+    <script src="/IMIS/libs/Echarts/echarts.js"></script>
+    <script src="/IMIS/libs/Echarts/macarons.js"></script>
+
+    <script src="/IMIS/js/pager.js"></script>
+    <script src="/IMIS/js/main.js"></script>
+    <script src="/IMIS/js/get_connect/code.js"></script>
+    <script src="/IMIS/js/get_connect/connect_http.js"></script>
+    <script src="/IMIS/js/get_connect/return_data.js"></script>
+
+    <script>
+        document.write(' <link rel="stylesheet" href="/IMIS/css/child_pages.css?time=' + new Date().getTime() + '"/>');
+        document.write(' <script src="/IMIS/js/科研统计/成果统计/专利成果统计.js?time=' + new Date().getTime() + '"></s' + 'cript>');
+
+    </script>
+
+</head>
+<body ms-controller="root" class="ms-controller" onload="IFrameResize()">
+<div class="page-statistics page-table page-common">
+    <div class="main">
+        <!--<div class="screen-box">-->
+            <!--<div class="form-inline">-->
+                <!--<div class="form-group input-box">-->
+                    <!--<div class="input-group">-->
+                        <!--<div class="input-group-addon">年度</div>-->
+                        <!--<input type="text" class="form-control form-year" ms-duplex="@req.年度">-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="form-group department-box">-->
+                    <!--<div class="input-group">-->
+                        <!--<div class="input-group-addon">部门</div>-->
+                        <!--<input type="text" class="form-control department" placeholder="选择部门" ms-on-click="@showMenu()"-->
+                               <!--ms-duplex="@department" readonly>-->
+                        <!--<div id="menuContent" class="menuContent">-->
+                            <!--<ul class="ztree departmentTree" id="departmentTree"></ul>-->
+                        <!--</div>-->
+                        <!--<a class="btn-del" href="javascript:;" ms-on-click="@delInput"><i-->
+                                <!--class="icon iconfont icon-shanchu"></i></a>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="form-group input-box">-->
+                    <!--<div class="input-group">-->
+                        <!--<div class="input-group-addon">获奖级别</div>-->
+                        <!--<select class="form-control level" ms-duplex="@req.收录情况" ms-on-change="@changeType">-->
+                            <!--<option value="">请选择</option>-->
+                            <!--<option ms-attr="{'value':@el.值}" ms-for="el in @level">{{el.值}}</option>-->
+                        <!--</select>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<a class="btn btn-primary btn-search" href="javascript:;" ms-on-click="@search()">查询</a>-->
+                <!--<div class="total-box">-->
+                    <!--<button type="button" class="btn btn-success btn-refresh">刷新</button>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="chart-box">
+            <div id="chart-paper" style="height:600px;"></div>
+        </div>
+        <div class="personnel-box">
+            <div class="personnel-list">
+                <h4 class="title">专利成果统计表
+                    <a href="javascript:;" class="btn btn-default btn-printing" ms-on-click="printView()"><i class="icon iconfont icon-dayin2"></i> 打印</a>
+                </h4>
+                <div class="table-responsive" ms-if="@loaded && @model!= null && @model.length != 0">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th ms-for="($key, $val) in @model[0]">{{$key}}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ms-for="($index,el) in @model" ms-class="getClass(el.部门)">
+                            <td ms-for="($key, $val) in el">{{$val}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div ms-if="@nothing">
+                    <p class="text-center"><img src="/IMIS/images/nothing-3.png"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

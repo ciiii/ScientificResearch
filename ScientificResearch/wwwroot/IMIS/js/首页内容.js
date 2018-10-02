@@ -325,29 +325,10 @@ $(function () {
             downloadDetails: function (el) {
                 sessionStorage.downloadDetails = JSON.stringify(el);
             },
-            getClass: function (statue) {
-                switch (statue) {
-                    case '审核通过':
-                        return 'state-mark';
-                    case '审核不通过':
-                        return 'state-overdue';
-                    case '审核已终止':
-                        return 'state-overdue';
-                    case '待审核':
-                        return 'state-accomplish';
-                    case '待分配专家':
-                        return 'state-accomplish';
-                    case '待专家评审':
-                        return 'state-accomplish';
-                    default:
-                        return '';
-                }
-            },
             clickBtnReturn: function () {
                 $('.modal').modal('hide');
             },
         });
-
         vm.onload();
         vm.getUserNoticeList();
         vm.getEnableDownloadList();

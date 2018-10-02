@@ -210,6 +210,16 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+		//public string 通讯作者 { get; set; }
+        public string 通讯作者 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+		//public string 文献类型 { get; set; }
+        public string 文献类型 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
 		//public string 代码 { get; set; }
         public string 代码 { get; set; }
         /// <summary>
@@ -217,6 +227,21 @@ namespace ScientificResearch.Models
 		/// </summary>
 		//public string 刊物名称 { get; set; }
         public string 刊物名称 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+		//public int PMID { get; set; }
+        public int? PMID { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+		//public string DOI { get; set; }
+        public string DOI { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+		//public string UT { get; set; }
+        public string UT { get; set; }
         /// <summary>
 		/// 
 		/// </summary>

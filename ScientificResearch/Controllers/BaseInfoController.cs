@@ -431,7 +431,7 @@ namespace ScientificResearch.Controllers
 
             var result = MyXls.Import<期刊>(Path.Combine(Env.WebRootPath, filesNameList[0]));
 
-            //var f = "C:\\Users\\Administrator\\Desktop\\导入期刊模板.xlsx";
+            //var f = @"C:\Users\Ly\Desktop\导入期刊模板.xlsx";
             //var result = MyXls.Import<期刊>(f);
 
             //名称或英文刊名都空的删掉

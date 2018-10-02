@@ -60,8 +60,14 @@
                 </div>
                 <div class="form-group">
                     <a class="btn btn-default btn-import" data-toggle="modal" data-target=".modal-min"
-                       ms-attr="{'href':@getUrl('导入自定义论文.html')}" onclick="changeUrlMin(this)">
-                        <i class="icon iconfont icon-Update"></i> 导入自定义论文
+                       ms-attr="{'href':@getUrl('导入中英文论文.html')}" onclick="changeUrlMin(this)" ms-on-click="@importFun(0)">
+                        <i class="icon iconfont icon-Update"></i> 中文文献导入
+                    </a>
+                </div>
+                <div class="form-group">
+                    <a class="btn btn-default btn-import" data-toggle="modal" data-target=".modal-min"
+                       ms-attr="{'href':@getUrl('导入中英文论文.html')}" onclick="changeUrlMin(this)" ms-on-click="@importFun(1)">
+                        <i class="icon iconfont icon-Update"></i> 英文文献导入
                     </a>
                 </div>
                 <div class="form-group input-box">
@@ -131,7 +137,10 @@
                                 </div>
                             </td>
                             <td>{{el.number}}</td>
-                            <td class="text-left">{{el.论文标题}}</td>
+                            <td class="text-left">
+                                <a href="javascript:;" data-toggle="modal" data-target=".modal-details"
+                                   ms-on-click="@details(el)">{{el.论文标题}}</a>
+                            </td>
                             <td>{{el.刊物名称}}</td>
                             <td>{{el.第一作者}}</td>
                             <td>{{el.在线日期|date("yyyy-MM-dd")}}</td>

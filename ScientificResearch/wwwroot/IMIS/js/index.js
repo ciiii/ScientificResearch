@@ -245,5 +245,4 @@ $(function () {
     });
 
     $('.bs-tooltip').tooltip();
-
 });

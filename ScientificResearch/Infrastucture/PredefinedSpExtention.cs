@@ -203,7 +203,8 @@ namespace ScientificResearch.Infrastucture
             TFilter filter = null,
             string tbName = null,
             string keyFields = null,
-            string orderStr = "") where TFilter : class
+            string orderStr = "",
+            bool orderType = true) where TFilter : class
         {
             if (paging == null) paging = new Paging();
             var result = await cnn.QueryMultipleSpAsync(new sp_GetPagingList
@@ -213,13 +214,13 @@ namespace ScientificResearch.Infrastucture
                 keyFields = keyFields ?? PredefindedKeyFields,
                 PageSize = paging.Size,
                 PageIndex = paging.Index,
-                OrderType = paging.OrderType,
+                OrderType = orderType,
                 OrderStr = orderStr,
                 tbFields = "*"
             });
             var total = result.Read<int>().FirstOrDefault();
             var list = result.Read<T>();
-            return new PagingResult<T> { Total = total, List = list };
+            return new PagingResult<T> { total = total, list = list };
         }
 
         /// <summary>
@@ -256,7 +257,7 @@ namespace ScientificResearch.Infrastucture
         }
 
         /// <summary>
-        /// 
+        /// 执行一个sp,返回指定类型的list,sp如果没有参数,则不输入model
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="TOut"></typeparam>
@@ -264,20 +265,27 @@ namespace ScientificResearch.Infrastucture
         /// <param name="model"></param>
         /// <param name="transaction"></param>
         /// <returns></returns>
-        public static Task<IEnumerable<TOut>> QuerySpAsync<T, TOut>(this IDbConnection cnn, T model, IDbTransaction transaction = null)
+        public static Task<IEnumerable<TOut>> QuerySpAsync<T, TOut>(
+            this IDbConnection cnn,
+            T model = null,
+            IDbTransaction transaction = null) where T : class
         {
             return cnn.QueryAsync<TOut>(typeof(T).Name, model, transaction, commandType: CommandType.StoredProcedure);
         }
 
         /// <summary>
-        /// 
+        /// 执行一个sp,返回多个list,需要自己再去解析,
+        /// sp如果没有参数,则不输入model
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="cnn"></param>
         /// <param name="model"></param>
         /// <param name="transaction"></param>
         /// <returns></returns>
-        public static Task<GridReader> QueryMultipleSpAsync<T>(this IDbConnection cnn, T model, IDbTransaction transaction = null)
+        public static Task<GridReader> QueryMultipleSpAsync<T>(
+            this IDbConnection cnn,
+            T model = null,
+            IDbTransaction transaction = null) where T : class
         {
             return cnn.QueryMultipleAsync(typeof(T).Name, model, transaction, commandType: CommandType.StoredProcedure);
         }

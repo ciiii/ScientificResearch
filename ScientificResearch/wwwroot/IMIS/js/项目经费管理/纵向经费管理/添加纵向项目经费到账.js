@@ -1,6 +1,6 @@
 $(function () {
     window.dAddVm = null;
-    var xueShuDetails = JSON.parse(sessionStorage.xueShuDetails);
+    var xueShuDetails;
     avalon.ready(function () {
         window.dAddVm = avalon.define({
             $id: 'Add',
@@ -15,10 +15,10 @@ $(function () {
                     项目编号: 0,
                     拨款单位: '',
                     到账日期: '',
-                    到账金额: 0,
+                    到账金额: '',
                     到账单位: '',
-                    经办人编号: 0,
-                    经办人姓名: 0,
+                    经办人编号: '',
+                    经办人姓名: '',
                     到账凭证路径: '',
                     备注: ''
                 },
@@ -27,6 +27,7 @@ $(function () {
             loadInfo: function () {
                 if (dAddVm.editType) {
                     dAddVm.title = '修改到账';
+                    xueShuDetails = JSON.parse(sessionStorage.xueShuDetails)
                     dAddVm.getYFundsIncomingDetails();
                 } else {
                     dAddVm.title = '添加到账';

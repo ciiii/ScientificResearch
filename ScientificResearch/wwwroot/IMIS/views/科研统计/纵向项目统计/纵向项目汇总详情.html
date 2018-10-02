@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>纵向项目汇总详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="/IMIS/libs/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/IMIS/libs/bootstrap/css/bootstrap-datetimepicker.min.css"/>
+    <link rel="stylesheet" href="/IMIS/css/child_pages.css"/>
+    <!--[if lt IE 9]>
+    <script src="/IMIS/libs/html5shiv.js"></script>
+    <script src="/IMIS/libs/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+    <script src="/IMIS/libs/jquery-1.11.1.min.js"></script>
+    <script src="/IMIS/libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/IMIS/libs/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/IMIS/libs/avalon.min.js"></script>
+
+    <script src="/IMIS/js/main.js"></script>
+    <script src="/IMIS/js/get_connect/code.js"></script>
+    <script src="/IMIS/js/get_connect/connect_http.js"></script>
+    <script src="/IMIS/js/get_connect/return_data.js"></script>
+    <script src="/IMIS/js/科研统计/纵向项目统计/纵向项目汇总详情.js"></script>
+</head>
+<body ms-controller="root" class="ms-controller" style="background: #fff;">
+<div class="form-horizontal page-details">
+    <ul class="nav nav-tabs">
+        <li role="presentation" class="active">
+            <a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">项目基本信息</a>
+        </li>
+    </ul>
+    <div class="tab-content add-user">
+        <div role="tabpanel" id="tab1" class="tab-pane active">
+            <form class="form-horizontal content">
+                <div class="col-sm-12">
+                    <h5 class="title"><span>项目基本信息</span></h5>
+                    <div class="form-group col-sm-12">
+                        <label class="col-sm-3 control-label">项目名称：</label>
+                        <div class="col-sm-9">
+                            <span>{{@model.项目中文名称}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">项目编号：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.纵向项目项目编号}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">项目类型：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.项目类型}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">项目级别：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.项目级别}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">项目来源单位：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.项目来源单位}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">项目类别：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.项目类别}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">批准经费：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.批准经费|currency}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">配套经费：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.配套经费|currency}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">开始日期：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.计划开始日期|date("yyyy-MM-dd")}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">完成日期：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.计划完成日期|date("yyyy-MM-dd")}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">项目负责人：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.负责人姓名}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">负责人部门：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.负责人部门名称}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">经费：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.经费|currency}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">未到经费：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.未到经费|currency}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">待审核到账：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.待审核到账|currency}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">已审核到账：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.已审核到账|currency}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">剩余经费：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.剩余经费|currency}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">待审核报销：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.待审核报销|currency}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">已审核报销：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.已审核报销|currency}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">项目状态：</label>
+                        <div class="col-sm-7">
+                            <span ms-class="getStateClass(@model.状态名称)">{{@model.状态名称}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <label class="col-sm-3 control-label">当前步骤：</label>
+                        <div class="col-sm-9">
+                            <span ms-class="getClass(@model.步骤状态说明)">{{@model.步骤名称==null?'':@model.步骤名称}}-{{@model.步骤状态说明==null?'':@model.步骤状态说明}}</span>
+                        </div>
+                    </div>
+
+                    <td >
+
+                    </td>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

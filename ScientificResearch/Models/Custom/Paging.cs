@@ -45,11 +45,11 @@ namespace ScientificResearch.Models
         /// <summary>
         /// 
         /// </summary>
-        public int Total { get; set; }
+        public int total { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        public IEnumerable<T> List { get; set; }
+        public IEnumerable<T> list { get; set; }
     }
 
     /// <summary>

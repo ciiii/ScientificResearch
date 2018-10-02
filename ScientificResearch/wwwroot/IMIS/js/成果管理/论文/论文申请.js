@@ -25,9 +25,9 @@ $(function () {
                 影响因子: '',
                 特征因子分值: '',
                 期刊系列: '',
-                jcR: '',
-                cN: '',
-                issN: '',
+                JCR: '',
+                CN: '',
+                ISSN: '',
                 编目名称: '',
                 编目类别: ''
             },
@@ -43,30 +43,32 @@ $(function () {
                     论文在线日期: '',
                     论文Online日期: '',
                     论文正式出版日期: '',
-                    他引次数: 0,
+                    他引次数: '',
                     年度: new Date().getFullYear(),
                     收稿日期: '',
                     论文所属栏目: '',
-                    版面费: 0,
-                    超额版面费: 0,
+                    版面费: '',
+                    超额版面费: '',
                     超额费用来源: '',
                     奖励情况: '',
-                    论文字数: 0,
+                    论文字数: '',
                     计划来源: '',
                     论文版面: '',
                     学科门类: '',
                     一级学科: '',
                     二级学科: '',
                     三级学科: '',
-                    作者人数: 0,
+                    作者人数: '',
+                    通讯作者:'',
+                    文献类型:'',
                     关键字: '',
                     论文摘要: '',
                     备注: '',
-                    刊物编号: 0,
-                    卷号: 0,
-                    期号: 0,
-                    页码范围起: 0,
-                    页码范围止: 0,
+                    刊物编号: '',
+                    卷号: '',
+                    期号: '',
+                    页码范围起: '',
+                    页码范围止: '',
                     论文类型: '',
                     是否与行业联合发表: true,
                     是否与地方联合发表: true,
@@ -123,9 +125,9 @@ $(function () {
                             dAddVm.publication.期刊系列 = obj.论文详情.期刊系列;
                             dAddVm.publication.编目名称 = obj.论文详情.编目名称;
                             dAddVm.publication.编目类别 = obj.论文详情.编目类别;
-                            dAddVm.publication.jcR = obj.论文详情.jcR分区;
-                            dAddVm.publication.cN = obj.论文详情.cN号;
-                            dAddVm.publication.issN = obj.论文详情.issN号;
+                            dAddVm.publication.JCR = obj.论文详情.JCR分区;
+                            dAddVm.publication.CN = obj.论文详情.CN号;
+                            dAddVm.publication.ISSN = obj.论文详情.ISSN号;
                             if (obj.论文详情.检索信息页相关文件路径 != '' && obj.论文详情.检索信息页相关文件路径 != null) {
                                 dAddVm.infoFiles = obj.论文详情.检索信息页相关文件路径.split(',');
                             }
@@ -145,6 +147,7 @@ $(function () {
                                 }
                             }
                             dAddVm.info.基本资料.认领人编号 = dAddVm.userInfo.人员.编号;
+                            dAddVm.info.基本资料.作者人数 = dAddVm.info.作者.length;
                             dAddVm.getSubjectOne();
                             dAddVm.getsourceTree();
                         }
@@ -320,7 +323,7 @@ $(function () {
             postData: function () {
                 var paperName = dAddVm.inputVal('.paper-name');
                 var formYear = dAddVm.inputVal('.form-year');
-
+                dAddVm.info.基本资料.作者人数 = dAddVm.info.作者.length;
                 dAddVm.info.基本资料.检索信息页相关文件路径 = dAddVm.infoFiles.join();
                 dAddVm.info.基本资料.论文正文路径 = dAddVm.contentFiles.join();
                 dAddVm.info.基本资料.其他相关文件路径 = dAddVm.otherFiles.join();

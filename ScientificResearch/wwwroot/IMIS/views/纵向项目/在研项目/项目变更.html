@@ -32,7 +32,7 @@
     <script src="/IMIS/js/get_connect/return_data.js"></script>
 
     <script>
-        document.write(' <link rel="stylesheet" href="/IMIS/css/child_pages.css?time='+ new Date().getTime() +'"/>');
+        document.write(' <link rel="stylesheet" href="/IMIS/css/child_pages.css?time=' + new Date().getTime() + '"/>');
         document.write(' <script src="/IMIS/js/纵向项目/在研项目/项目变更.js?time=' + new Date().getTime() + '"></s' + 'cript>');
     </script>
 
@@ -138,7 +138,10 @@
                                 </div>
                             </td>
                             <td>{{el.number}}</td>
-                            <td class="text-left">{{el.项目中文名称}}</td>
+                            <td class="text-left">
+                                <a href="javascript:;" data-toggle="modal" data-target=".modal-details"
+                                   ms-on-click="@details(el)">{{el.项目中文名称}}</a>
+                            </td>
                             <td>{{el.纵向项目项目编号}}</td>
                             <td>{{el.分类名称}}</td>
                             <td>{{el.负责人姓名}}</td>
@@ -148,7 +151,9 @@
                             <td>{{el.变更事由}}</td>
                             <td>{{el.变更时间|date("yyyy-MM-dd")}}</td>
                             <td>{{el.审核进度}}</td>
-                            <td ms-class="getClass(el.步骤状态说明)">{{el.步骤名称==null?'':el.步骤名称}}-{{el.步骤状态说明==null?'':el.步骤状态说明}}</td>
+                            <td ms-class="getClass(el.步骤状态说明)">
+                                {{el.步骤名称==null?'':el.步骤名称}}-{{el.步骤状态说明==null?'':el.步骤状态说明}}
+                            </td>
                             <td class="operation">
                                 <li class="bs-tooltip" ms-class="getStatusClass(el.步骤链接名称
 )" data-toggle="tooltip" data-placement="bottom" ms-attr="{'title':@el.步骤名称}" ms-if="@el.是否可处理">
@@ -160,7 +165,8 @@
                                 </li>
                                 <li class="bs-tooltip btn-addFeedback" data-toggle="tooltip" data-placement="bottom"
                                     title="发起变更" ms-if="@el.是否可发起变更">
-                                    <a ms-attr="{'href':@getUrl('纵向项目变更申请.html')}" data-toggle="modal" data-target=".modal-add"
+                                    <a ms-attr="{'href':@getUrl('纵向项目变更申请.html')}" data-toggle="modal"
+                                       data-target=".modal-add"
                                        ms-on-click="@info(el),@clickBtnAdd(el)" onclick="changeUrl(this)">
                                         <i class="icon iconfont icon-fabu1"></i>
                                     </a>

@@ -94,7 +94,10 @@
                                 </div>
                             </td>
                             <td>{{$index+1}}</td>
-                            <td class="text-left">{{el.项目名称}}</td>
+                            <td class="text-left">
+                                <a href="javascript:;" data-toggle="modal" data-target=".modal-details"
+                                   ms-on-click="@info(el),@details(el)">{{el.项目名称}}</a>
+                            </td>
                             <td>{{el.报销编号}}</td>
                             <td>{{el.报销人姓名}}</td>
                             <td>{{el.报销人部门名称}}</td>
@@ -154,7 +157,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="NoPermissionModalLabel">查看详情</h4>
+                    <h4 class="modal-title" id="NoPermissionModalLabel">报销详情</h4>
                 </div>
                 <div class="modal-body">
                     <div class="details-content">

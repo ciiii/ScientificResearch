@@ -1,0 +1,235 @@
+$(function () {
+    isOverdue();
+    window.vm = null;
+    var userInfo = JSON.parse(localStorage.info).data;
+    var departmentTree;
+    avalon.ready(function () {
+        window.vm = avalon.define({
+            $id: 'root',
+            req: {
+                Index: 1,
+                Size: 16,
+                Like项目名称: '',
+                Like项目编号: '',
+                Like负责人姓名: '',
+                部门编号: '',
+                状态:'',
+                Begin开始时间: '',
+                End开始时间: '',
+                OrderType: false
+            },
+            userInfo: userInfo,
+            title: '',
+            name: '',
+            number: '',
+            departmentId: '',
+            department: '',
+            total: '',
+            model: [],
+            startTime: '',
+            endTime: '',
+            nothing: false,
+            loaded: false,
+            editType: false,
+            detailsUrl: '',
+            allchecked: false,
+            data: {},
+            query: function () {
+                vm.loaded = false;
+                $.support.cors = true;
+                YProjectStatistics.getYProjectSummary('get', vm.req.$model, function getYProjectSummaryListener(success, obj, strErro) {
+                    if (success) {
+                        vm.loaded = true;
+                        vm.total = obj.total;
+                        if (obj == null || obj.list.length == 0) {
+                            $('.pager').hide();
+
+                            vm.model = [];
+                            vm.nothing = true;
+                            return;
+                        } else {
+                            obj = obj.list;
+                            var number = (vm.req.Index - 1) * vm.req.Size + 1;
+                            for (var i = 0; i < obj.length; i++) {
+                                obj[i].number = number;
+                                obj[i].checked = false;
+                                number++;
+                            }
+                            vm.model = obj;
+                            $('.pager').show();
+                            vm.nothing = false;
+                            vm.allchecked = false;
+                        }
+                        $('.pager').mamPager({
+                            pageSize: vm.req.Size,                       //页大小
+                            pageIndex: vm.req.Index,                     //当前页
+                            recordTotal: vm.total,                       //数据总数
+                            type: 1,
+                            prevText: "&laquo;",                         //上一页显示内容
+                            nextText: "&raquo;",
+                            noData: "暂无数据",
+                            pageChange: function (index) {
+                                vm.req.Index = index;
+                                vm.loaded = false;
+                                vm.nothing = false;
+                                vm.query();
+                            }
+                        });
+                        $('.bs-tooltip').tooltip();
+                    } else {
+                        console.info('获取纵向项目汇总失败！');
+                        console.info(strErro);
+                    }
+                });
+            },
+            search: function () {
+                vm.req.Index = 1;
+                vm.req.Like项目名称 = vm.title;
+                vm.req.Like项目编号 = vm.number;
+                vm.req.Like负责人姓名 = vm.name;
+                vm.req.Begin开始时间 = vm.startTime;
+                vm.req.End开始时间 = vm.endTime;
+                vm.query();
+            },
+            submit: function () {
+                if (event.keyCode == 13) {
+                    vm.search();
+                }
+            },
+            checkAll: function (e) {
+                var checked = e.target.checked
+
+                vm.model.forEach(function (el) {
+                    el.checked = checked
+                })
+            },
+            checkOne: function (e) {
+                var checked = e.target.checked
+                if (checked === false) {
+                    vm.allchecked = false
+                } else {
+                    vm.allchecked = vm.model.every(function (el) {
+                        return el.checked
+                    })
+                }
+            },
+            state: function () {
+                var val = $('.screen-box .state').val();
+                if (val != '') {
+                    vm.req.状态 = parseInt(val);
+                }else{
+                    vm.req.状态='';
+                }
+                vm.search();
+            },
+            details: function (el) {
+                sessionStorage.xueShuDetails = JSON.stringify(el);
+                $('.modal-details .detailsPage').attr('src', vm.getUrl('/IMIS/views/科研统计/纵向项目统计/纵向项目汇总详情.html'));
+            },
+            getStateClass: function (statue) {
+                if (statue == '完成') {
+                    return 'state-overdue'
+                } else {
+                    return 'state-notComplete';
+                }
+            },
+            getUrl: function (url) {
+                return decodeURI(encodeURI(encodeURI(url)));
+            },
+            batchExport: function () {
+                $('.btn-export').attr('href', '');
+            },
+            getTheDeparments: function () {
+                var setting = {
+                    data: {
+                        key: {
+                            name: 'name'
+                        },
+                        simpleData: {
+                            enable: true,
+                            idKey: 'id',
+                            pIdKey: 'pId',
+                            rootPId: 0
+                        },
+                    },
+                    callback: {
+                        onClick: onClick
+                    }
+                };
+
+                var nodes = [];
+                Department.getEnableDepartmentList('get', '', function getEnableDepartmentListListener(success, obj, strErro) {
+                    if (success) {
+                        obj = obj.reverse();
+                        if (obj != null) {
+                            for (var i = 0; i < obj.length; i++) {
+                                obj[i].id = obj[i].编号;
+                                obj[i].pId = obj[i].上级部门编号;
+                                obj[i].name = obj[i].名称;
+                            }
+
+                            nodes = obj;
+                            departmentTree = $.fn.zTree.init($('.departmentTree'), setting, nodes);
+                        }
+                    } else {
+                        alert('获取部门列表数据失败');
+                        console.info(strErro);
+                    }
+                });
+
+                function onClick(e, treeId, treeNode) {
+                    var nodes = departmentTree.getSelectedNodes(),
+                        text = '';
+                    nodes.sort(function compare(a, b) {
+                        return a.id - b.id;
+                    });
+                    for (var i = 0, l = nodes.length; i < l; i++) {
+                        text += nodes[i].name + ",";
+                    }
+                    if (text.length > 0) text = text.substring(0, text.length - 1);
+                    var cityObj = $('.screen-box .department');
+                    cityObj.val(text);
+                    vm.req.部门编号 = treeNode.编号;
+                    vm.department = treeNode.名称;
+                    vm.hideMenu();
+                    vm.query();
+                }
+            },
+            hideMenu: function () {
+                $('.screen-box #menuContent').fadeOut('fast');
+                $('body').unbind('mousedown', vm.onBodyDown);
+            },
+            onBodyDown: function (event) {
+                if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(event.target).parents(".screen-box #menuContent").length > 0)) {
+                    vm.hideMenu();
+                }
+            },
+            showMenu: function () {
+                var obj = $('.screen-box .department');
+                var offset = $('.screen-box .department').offset();
+                $('.screen-box #menuContent').css({
+                    left: offset.left + 'px',
+                    top: offset.top + obj.outerHeight() + 'px'
+                }).slideDown('fast');
+
+                $('body').bind('mousedown', vm.onBodyDown);
+                $('.screen-box .btn-del').show();
+            },
+            delInput: function () {
+                vm.department = '';
+                vm.req.部门编号 = '';
+                vm.query();
+                vm.hideMenu();
+            },
+            clickBtnReturn: function () {
+                $('.modal').modal('hide');
+            },
+        });
+        $('.modal-add .tab-pane').mCustomScrollbar({
+            theme: 'dark-3',
+        });
+        vm.search();
+        vm.getTheDeparments();
+        avalon.scan(document.body);
+    });
+});

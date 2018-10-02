@@ -35,7 +35,8 @@ namespace ScientificResearch.Controllers
         [HttpPost]
         async public Task<object> Login([FromBody]LoginInfo model)
         {
-            var IP = Request.Host.Host;
+            //var IP = Request.Host.Host;
+            var IP = HttpContext.Connection.RemoteIpAddress.ToString();
             //return await MyAccessBusiness.Login(model,IP);
 
             //var where = SqlWhereMapper.toWhere(new LoginInfoFilter() { 工号 = model.工号 });
@@ -125,7 +126,7 @@ namespace ScientificResearch.Controllers
         /// <returns></returns>
         [HttpGet]
         async public Task<PagingResult<登录日志>> 获取登录日志(Paging paging, 登录日志Filter filter) =>
-            await Db.GetPagingListSpAsync<登录日志,登录日志Filter>(paging, filter);
+            await Db.GetPagingListSpAsync<登录日志,登录日志Filter>(paging, filter,orderType:false);
 
     }
 }

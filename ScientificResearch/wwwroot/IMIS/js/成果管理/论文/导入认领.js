@@ -21,11 +21,12 @@ $(function () {
             model: [],
             startTime: '',
             endTime: '',
-            arr:[],
+            arr: [],
             nothing: false,
             loaded: false,
             editType: false,
             detailsUrl: '',
+            importType: '',
             allchecked: false,
             query: function () {
                 vm.loaded = false;
@@ -124,8 +125,11 @@ $(function () {
                     id: el.编号
                 }
                 sessionStorage.xueShuDetails = JSON.stringify(details);
-               $('.modal-details .detailsPage').attr('src', vm.getUrl('论文详情.html'));
+                $('.modal-details .detailsPage').attr('src', vm.getUrl('论文详情.html'));
 
+            },
+            importFun: function (val) {
+                vm.importType = val;
             },
             batchDel: function () {
                 vm.arr = [];

@@ -6,8 +6,8 @@ $(function () {
             $id: 'Add',
             model: {},
             details: {},
-            flieName: '',
             files: [],
+            fileUrl: Code.URL_POST_UPLOAD_MEETING_FEEDBACK_FILE,
             LectureFiles: [],
             userInfo: vm.userInfo,
             userName: '',
@@ -30,7 +30,7 @@ $(function () {
                         活动持续分钟: 0,
                         参会人数: 0,
                         参会总结: '',
-                        会议反馈文件路径:''
+                        会议反馈文件路径: ''
                     }
                     addVm.files = [];
                 }
@@ -73,7 +73,7 @@ $(function () {
                                 活动持续分钟: obj.活动持续分钟,
                                 参会人数: obj.参会人数,
                                 参会总结: obj.参会总结,
-                                会议反馈文件路径:obj.会议反馈文件路径
+                                会议反馈文件路径: obj.会议反馈文件路径
                             }
                             if (obj.参会相关文件路径 != '' && obj.参会相关文件路径 != null) {
                                 addVm.LectureFiles = obj.参会相关文件路径.split(',');
@@ -150,8 +150,8 @@ $(function () {
             clickUpload: function () {
                 var data = new FormData();
                 data.append('file', $("#input-file").get(0).files[0]);
-                $('.fileUpload-box .loading').show();
-                addVm.fileUpload(data);
+                $('.fileUpload-flie .loading').show();
+                addVm.fileUpload(data)
             },
             fileUpload: function (data) {
                 $.ajax({

@@ -45,6 +45,7 @@ namespace ScientificResearch.Business
         /// <param name="发起人编号">不是有项目发起人发起的流程时,需要填写一下发起人,比如纵向立项登记时</param>
         /// <returns></returns>
         async public Task 发起流程<T>(int 流程模板编号, T model, int 操作人编号, bool isHold = false, int? 发起人编号 = null)
+            where T : class
         {
             //string sql = PredefinedSpExtention.GetMergeSpNameByClassName<T>();
             using (var dbForTransaction = new SqlConnection(DbConnectionString))
@@ -161,7 +162,7 @@ namespace ScientificResearch.Business
                                 model.SetValueByPropertyName("下一步骤编号", 下一步骤编号);
                                 //model.SetValueByPropertyName<int>("下一步骤编号", 下一步骤编号);
                             }
-                            
+
                             if (model.ContainProperty("下一步骤编号") && isHold)
                             {
                                 throw new Exception("需要设置下一步骤的操作不能暂存");

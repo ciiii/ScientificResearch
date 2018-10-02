@@ -139,6 +139,23 @@ namespace ScientificResearch.Models
         [DisplayName("备注")]
         [MaxLength(500,ErrorMessage ="备注不能超过[250]字")]
 		public string 备注 { get; set; }
+        /// <summary>
+		/// PMID
+		/// </summary>
+        [DisplayName("PMID")]
+		public int? PMID { get; set; }
+        /// <summary>
+		/// DOI
+		/// </summary>
+        [DisplayName("DOI")]
+        [MaxLength(100,ErrorMessage ="DOI不能超过[50]字")]
+		public string DOI { get; set; }
+        /// <summary>
+		/// UT
+		/// </summary>
+        [DisplayName("UT")]
+        [MaxLength(100,ErrorMessage ="UT不能超过[50]字")]
+		public string UT { get; set; }
         
         
         #endregion

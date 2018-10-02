@@ -81,12 +81,12 @@ namespace ScientificResearch.Models
 		/// 
 		/// </summary>
 		//public decimal 待审核到账 { get; set; }
-        public decimal 待审核到账 { get; set; }
+        public decimal? 待审核到账 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
 		//public decimal 已审核到账 { get; set; }
-        public decimal 已审核到账 { get; set; }
+        public decimal? 已审核到账 { get; set; }
         
           
         #endregion
