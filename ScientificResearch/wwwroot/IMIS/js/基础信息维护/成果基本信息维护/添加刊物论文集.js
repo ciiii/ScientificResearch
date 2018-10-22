@@ -94,7 +94,7 @@ $(function () {
                 function erroTip(text) {
                     icon = 'icon-shibai1';
                     popover(icon, '提交失败：' + text);
-                    setTimeout("$('.popover').remove()", 2000);
+                    setTimeout("$('.popover').remove()", 4000);
                 }
             },
             addOrEditPeriodical: function (data) {

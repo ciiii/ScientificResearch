@@ -9,19 +9,18 @@ $(function () {
             userInfo: '',
             jurisdiction: '',
             loginUrl: '',
-            newUrl:'',
+            newUrl: '',
+            hospital: '',
             onload: function () {
                 if (localStorage.getItem('info')) {
+                    vm.hospital = JSON.parse(localStorage.info).dbKey;
                     window.mUserInfo = JSON.parse(localStorage.info).data;
                     var loginUrl = JSON.parse(localStorage.info).url;
                     // get('info', 1000 * 60 * 20)//过期时间为20分钟
                     vm.loginUrl = loginUrl;
-                    vm.newUrl=loginUrl.slice(7,11);
+                    vm.newUrl = loginUrl.slice(7, 11);
                     vm.userInfo = mUserInfo.人员;
                     vm.jurisdiction = mUserInfo.权限;
-                } else {
-                    alert('登录信息已过期，请重新登录！');
-                    console.info('111');
                 }
             },
             ClickLiParent: function (index, el) {

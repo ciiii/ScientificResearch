@@ -1,5 +1,6 @@
 $(function () {
     window.vm = null;
+    isOverdue();
     window.mUserInfo = JSON.parse(localStorage.info).data;
     window.mUserId = mUserInfo.人员.编号;
     console.info(mUserInfo);

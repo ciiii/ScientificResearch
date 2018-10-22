@@ -188,12 +188,12 @@ $(function () {
                 if (dAddVm.typesInfo.基本信息.名称 == '请选择') {
                     icon = 'icon-shibai1';
                     popover(icon, '提交失败：名称不能为空！');
-                    setTimeout("$('.popover').remove()", 2000);
+                    setTimeout("$('.popover').remove()", 4000);
                 } else {
                     if (dAddVm.typesInfo.基本信息.经费占比 <= 0) {
                         icon = 'icon-shibai1';
                         popover(icon, '提交失败：经费占比不能为0！');
-                        setTimeout("$('.popover').remove()", 2000);
+                        setTimeout("$('.popover').remove()", 4000);
                     } else {
                         var arr = [];
                         for (var i = 0; i < dAddVm.typesChild.length; i++) {

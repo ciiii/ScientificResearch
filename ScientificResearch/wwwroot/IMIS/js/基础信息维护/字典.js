@@ -143,7 +143,7 @@ $(function () {
                 sessionStorage.topInfo = JSON.stringify(data);
             },
             getUrl: function (url) {
-                return decodeURI(encodeURI(encodeURI(url)));
+                return decodeURI(encodeURI(url));
             },
             clickBtnReturn: function () {
                 $('.modal').modal('hide');

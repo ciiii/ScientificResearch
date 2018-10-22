@@ -24,7 +24,7 @@ $(function () {
                 if (dEditVm.role.名称 == '') {
                     icon = 'icon-shibai1';
                     popover(icon, '提交失败：请选择填写角色名称！');
-                    setTimeout("$('.popover').remove()", 2000);
+                    setTimeout("$('.popover').remove()", 4000);
                 } else {
                     if (dEditVm.Type) {
                         dEditVm.editRole(dEditVm.role.$model);
@@ -40,7 +40,7 @@ $(function () {
                         popover(icon, '提交成功！');
                         setTimeout(function () {
                             $('.popover').remove();
-                        }, 1000);
+                        }, 3000);
                         setTimeout(function () {
                             $('.modal-add').modal('hide');
                             vm.query();
@@ -48,7 +48,7 @@ $(function () {
                     } else {
                         icon = 'icon-shibai1';
                         popover(icon, '提交失败：' + strErro);
-                        setTimeout("$('.popover').remove()", 1000);
+                        setTimeout("$('.popover').remove()", 4000);
                     }
                 });
             },
@@ -60,7 +60,7 @@ $(function () {
                         popover(icon, '提交成功！');
                         setTimeout(function () {
                             $('.popover').remove();
-                        }, 1000);
+                        }, 3000);
                         setTimeout(function () {
                             $('.modal-add').modal('hide');
                             sessionStorage.removeItem('mRole');
@@ -69,7 +69,7 @@ $(function () {
                     } else {
                         icon = 'icon-shibai1';
                         popover(icon, '提交失败：' + strErro);
-                        setTimeout("$('.popover').remove()", 1000);
+                        setTimeout("$('.popover').remove()", 4000);
                     }
                 });
             },

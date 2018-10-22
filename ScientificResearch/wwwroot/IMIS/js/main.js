@@ -534,7 +534,7 @@ function postBack(success, strErro, tipSuccess, tipstrErro, modelName, callBack)
     } else {
         icon = 'icon-shibai1';
         popover(icon, tipstrErro + strErro);
-        setTimeout("$('.popover').remove()", 2000);
+        setTimeout("$('.popover').remove()", 4000);
     }
 }
 
@@ -924,23 +924,30 @@ function len(s) {
 
 //判断登录信息localStorage是否过期
 function isOverdue() {
+    var url;
     if (localStorage.getItem('info') == null) {
         alert('登录信息已过期，请重新登录！');
-        var val = $('#loginUrl', parent.document).val();
-        if (val != '') {
-            location.href = val;
+        url = $('#loginUrl', parent.document).val();
+        if (url != '') {
+            parent.location.href = url;
         }
+    }else{
+        var mUserInfo = JSON.parse(localStorage.info);
+        parentRefresh(mUserInfo);
     }
-    parentRefresh();
+
 }
 
 //父级页面刷新
-function parentRefresh() {
-    var userId = JSON.parse(sessionStorage.mUserId);
-    var mUserInfo = JSON.parse(localStorage.info).data;
-    if (userId != mUserInfo.人员.编号) {
-        parent.location.reload();
-        sessionStorage.mUserId = mUserInfo.人员.编号;
+function parentRefresh(mUserInfo) {
+    if(sessionStorage.mUserId){
+        var userId = JSON.parse(sessionStorage.mUserId);
+        if (userId != mUserInfo.data.人员.编号) {
+            parent.location.reload();
+            sessionStorage.mUserId = mUserInfo.data.人员.编号;
+        }
+    }else{
+        parent.location.href = mUserInfo.url;
     }
 }
 

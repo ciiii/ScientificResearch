@@ -25,13 +25,13 @@ $(function () {
                             if (e.error) {
                                 icon = 'icon-shibai1';
                                 popover(icon, ' 上传失败：' + e.error);
-                                setTimeout("$('.popover').remove()", 2000);
+                                setTimeout("$('.popover').remove()", 4000);
                             } else {
                                 icon = 'icon-chenggong1';
                                 popover(icon, ' 上传成功!');
                                 setTimeout(function () {
                                     $('.popover').remove();
-                                }, 1000);
+                                }, 3000);
                                 addVm.clickBtnReturn();
                                 vm.query();
                             }
@@ -40,7 +40,7 @@ $(function () {
                             popover(icon, ' 上传成功!');
                             setTimeout(function () {
                                 $('.popover').remove();
-                            }, 1000);
+                            }, 3000);
                             addVm.clickBtnReturn();
                             vm.query();
                         }

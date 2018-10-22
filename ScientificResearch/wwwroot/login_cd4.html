@@ -29,7 +29,7 @@
 
 </head>
 <body onload="loadTopWindow()">
-<div class="page-login">
+<div class="page-login" style="background: url('IMIS/images/bg.jpg') no-repeat;">
     <form class="form-login login" role="form" method="post">
         <h2 class="form-signin-heading">
             <img src="IMIS/images/logo.png"/>
@@ -157,7 +157,7 @@
                 var loginInfo = {
                     userId: userId,
                     password: password,
-                    dbKey: "string"
+                    dbKey: "成都第四人民医院"
                 }
                 localStorage.ImisLoginInfo = JSON.stringify(loginInfo);
             }
@@ -178,7 +178,12 @@
                     if (success) {
                         var curTime = new Date().getTime();
                         var url = getHtmlDocName();
-                        localStorage.setItem('info', JSON.stringify({data: obj, time: curTime, url: '/' + url + '.html'}));
+                        localStorage.setItem('info', JSON.stringify({
+                            data: obj,
+                            time: curTime,
+                            url: '/' + url + '.html',
+                            dbKey: '成都第四人民医院'
+                        }));
                         sessionStorage.mUserId = obj.人员.编号;
                         tip = '登录成功！';
                         $('.login-tip').addClass('login-tip-success');

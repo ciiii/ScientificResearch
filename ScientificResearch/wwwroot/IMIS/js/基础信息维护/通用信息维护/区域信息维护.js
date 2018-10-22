@@ -255,7 +255,7 @@ $(function () {
                         popover(icon, '删除成功！');
                         setTimeout(function () {
                             $('.popover').remove();
-                        }, 1000);
+                        }, 3000);
                         setTimeout(function () {
                             $('.modal-del').modal('hide');
                             vm.req.上级编号 = 0;
@@ -264,7 +264,7 @@ $(function () {
                     } else {
                         icon = 'icon-shibai1';
                         popover(icon, '删除失败' + strErro);
-                        setTimeout("$('.popover').remove()", 2000);
+                        setTimeout("$('.popover').remove()", 4000);
                     }
                 });
             },

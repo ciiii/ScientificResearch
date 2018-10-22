@@ -10,7 +10,7 @@ $(function () {
                 if (dEditVm.name == '' || dEditVm.code == '') {
                     icon = 'icon-shibai1';
                     popover(icon, '提交失败：行业名称或代码值不能为空！');
-                    setTimeout("$('.popover').remove()", 2000);
+                    setTimeout("$('.popover').remove()", 4000);
                 } else {
                     var data = {
                         编号: 0,
@@ -32,7 +32,7 @@ $(function () {
                         popover(icon, '添加成功!');
                         setTimeout(function () {
                             $('.popover').remove();
-                        }, 1000);
+                        }, 3000);
                         setTimeout(function () {
                             $('.modal-add').modal('hide');
                             vm.req.上级编号 = 0;
@@ -41,7 +41,7 @@ $(function () {
                     } else {
                         icon = 'icon-shibai1';
                         popover(icon, '添加失败:' + strErro);
-                        setTimeout("$('.popover').remove()", 2000);
+                        setTimeout("$('.popover').remove()", 4000);
                     }
                 });
             },

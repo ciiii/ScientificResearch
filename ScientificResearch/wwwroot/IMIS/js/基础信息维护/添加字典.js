@@ -38,7 +38,7 @@ $(function () {
                 if (dAddVm.dictionary.值 == '') {
                     icon = 'icon-shibai1';
                     popover(icon, '提交失败：名称不能为空！');
-                    setTimeout("$('.popover').remove()", 2000);
+                    setTimeout("$('.popover').remove()", 4000);
                 } else {
                     if (dAddVm.type) {
                         dAddVm.editDictionary(dAddVm.dictionary.$model);
@@ -55,7 +55,7 @@ $(function () {
                         popover(icon, '添加成功！');
                         setTimeout(function () {
                             $('.popover').remove();
-                        }, 1000);
+                        }, 3000);
                         setTimeout(function () {
                             $('.modal-add').modal('hide');
                             sessionStorage.removeItem('topInfo');
@@ -64,7 +64,7 @@ $(function () {
                     } else {
                         icon = 'icon-shibai1';
                         popover(icon, '添加失败：' + strErro);
-                        setTimeout("$('.popover').remove()", 2000);
+                        setTimeout("$('.popover').remove()", 4000);
                     }
                 });
             },
@@ -76,7 +76,7 @@ $(function () {
                         popover(icon, '修改成功！');
                         setTimeout(function () {
                             $('.popover').remove();
-                        }, 1000);
+                        }, 3000);
                         setTimeout(function () {
                             $('.modal-add').modal('hide');
                             sessionStorage.removeItem('mDictionary');
@@ -85,7 +85,7 @@ $(function () {
                     } else {
                         icon = 'icon-shibai1';
                         popover(icon, '修改失败：' + strErro);
-                        setTimeout("$('.popover').remove()", 2000);
+                        setTimeout("$('.popover').remove()", 4000);
                     }
                 });
             },
