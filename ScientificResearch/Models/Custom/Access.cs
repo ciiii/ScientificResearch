@@ -43,6 +43,11 @@ namespace ScientificResearch.Models
         public string 新密码 { get; set; }
     }
 
+    //public class VM登录日志 : 登录日志
+    //{
+    //    public IPTools.Core.IpInfo 地域 { get; set; }
+    //}
+
     /// <summary>
     /// 
     /// </summary>

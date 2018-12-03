@@ -16,6 +16,7 @@ using ScientificResearch.Models;
 using MyLib;
 using System.Web;
 using System.Text;
+using System.Net.Http;
 
 namespace ScientificResearch.Controllers
 {
@@ -243,5 +244,20 @@ namespace ScientificResearch.Controllers
         //   return ("a", "b", "c");
         //}
 
+
+        [HttpGet]
+        async public Task<object> getBaidu()
+        {
+            var httpClient = new HttpClient();
+
+            //请求并,如果验证非200返回则报错;
+            var response = await httpClient.GetAsync(@"http://www.cnki.net/");
+            response.EnsureSuccessStatusCode();
+
+            //解析返回内容到string
+            var responseString = await response.Content.ReadAsStringAsync();
+
+            return Content(responseString, "text/html");
+        }
     }
 }

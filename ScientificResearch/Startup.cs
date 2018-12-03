@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using log4net;
 using log4net.Config;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -18,7 +19,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-
+using Microsoft.IdentityModel.Tokens;
 using MyLib;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -76,6 +77,35 @@ namespace ScientificResearch
                 XmlConfigurator.Configure(repository, new FileInfo("log4net.xml"));
                 return LogManager.GetLogger(repository.Name, repository.Name);
             });
+
+            //test jwt 1/4
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        //将下面两个参数设置为false，可以不验证Issuer和Audience，但是不建议这样做。
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidIssuer = Configuration.GetValue<string>("JWT:ValidIssuer"),
+                        ValidAudience = Configuration.GetValue<string>("JWT:ValidAudience"),
+
+                        //是否要求Token的Claims中必须包含Expires
+                        RequireExpirationTime = false,
+                        //是否验证Token有效期，使用当前时间与Token的Claims中的NotBefore和Expires对比
+                        ValidateLifetime = false,
+
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:SecurityKey"])),
+
+                        // RequireSignedTokens = true,
+                        // SaveSigninToken = false,
+                        // ValidateActor = false,
+                        // ValidateIssuerSigningKey = false,
+                        // 允许的服务器时间偏移量
+                        // ClockSkew = TimeSpan.FromSeconds(300),
+                    };
+                });
 
             //Compression
             services.AddResponseCompression();
@@ -293,6 +323,9 @@ namespace ScientificResearch
             //        await next();
             //    }
             //});
+
+            //test jwt 2/4
+            app.UseAuthentication();
 
             //注意顺序:3 抓异常写好之后(里面都有个try{await next}),再是mvc的中间件
             app.UseMvc();

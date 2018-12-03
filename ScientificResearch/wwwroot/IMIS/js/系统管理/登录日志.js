@@ -36,6 +36,13 @@ $(function () {
                             obj = obj.list;
                             var number = (vm.req.Index - 1) * vm.req.Size + 1;
                             for (var i = 0; i < obj.length; i++) {
+                                // for (var j in obj[i].地域) {
+                                //     var newObj = obj[i].地域;
+                                //     if (newObj[j] == 0 || newObj[j]==null) {
+                                //         newObj[j] = '';
+                                //     }
+                                //
+                                // }
                                 obj[i].number = number;
                                 number++;
                             }

@@ -100,7 +100,7 @@ namespace ScientificResearch.Controllers
         /// 注销当前登录
         /// </summary>
         [HttpPost]
-        public void Logout() =>HttpContext.Session.Clear();
+        public void Logout() => HttpContext.Session.Clear();
 
         /// <summary>
         /// 修改密码
@@ -116,7 +116,7 @@ namespace ScientificResearch.Controllers
                 旧密码 = model.旧密码,
                 新密码 = model.新密码
             });
-            //await MyAccessBusiness.ChangePassword(model);
+        //await MyAccessBusiness.ChangePassword(model);
 
         /// <summary>
         /// 分页获取登录日志
@@ -125,8 +125,32 @@ namespace ScientificResearch.Controllers
         /// <param name="filter"></param>
         /// <returns></returns>
         [HttpGet]
-        async public Task<PagingResult<登录日志>> 获取登录日志(Paging paging, 登录日志Filter filter) =>
-            await Db.GetPagingListSpAsync<登录日志,登录日志Filter>(paging, filter,orderType:false);
+        async public Task<PagingResult<登录日志>> 获取登录日志(Paging paging, 登录日志Filter filter)
+        {
+            return await Db.GetPagingListSpAsync<登录日志, 登录日志Filter>(paging, filter, orderType: false);
+        }
+
+        //2018-10-24 在服务器环境出错
+        //[HttpGet]
+        //async public Task<PagingResult<VM登录日志>> 获取登录日志(Paging paging, 登录日志Filter filter)
+        //{
+
+        //    var result = await Db.GetPagingListSpAsync<登录日志, 登录日志Filter>(paging, filter, orderType: false);
+        //    return new PagingResult<VM登录日志>
+        //    {
+        //        total = result.total,
+        //        list = from item in result.list
+        //               select new VM登录日志
+        //               {
+        //                   编号 = item.编号,
+        //                   工号 = item.工号,
+        //                   姓名 = item.姓名,
+        //                   登录时间 = item.登录时间,
+        //                   IP = item.IP,
+        //                   地域 = IPTools.Core.IpTool.Search(item.IP)
+        //               }
+        //    };
+        //}
 
     }
 }
