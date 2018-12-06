@@ -185,6 +185,7 @@
                             dbKey:'ScientificResearch_test'
                         }));
                         sessionStorage.mUserId = obj.人员.编号;
+                        sessionStorage.Authorization = JSON.stringify(obj.token_type + ' ' + obj.access_token);
                         tip = '登录成功！';
                         $('.login-tip').addClass('login-tip-success');
                         $('.login-tip').html(tip);

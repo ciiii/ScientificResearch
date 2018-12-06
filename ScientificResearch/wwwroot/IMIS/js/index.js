@@ -114,6 +114,7 @@ $(function () {
             logOut: function () {
                 localStorage.removeItem('info');
                 sessionStorage.removeItem('userInfo');
+                sessionStorage.removeItem('Authorization');
                 location.href = vm.getUrl(vm.loginUrl);
             }
         });

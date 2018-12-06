@@ -226,6 +226,7 @@
         <member name="M:ScientificResearch.Controllers.AccessController.Logout">
             <summary>
             注销当前登录
+            TODO:用了jwt,这个好像没啥用了
             </summary>
         </member>
         <member name="M:ScientificResearch.Controllers.AccessController.ChangePassword(ScientificResearch.Models.ChangePassword)">

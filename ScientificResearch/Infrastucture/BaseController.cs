@@ -1,4 +1,5 @@
 ﻿using log4net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,8 @@ namespace ScientificResearch.Infrastucture
     [Consumes("application/json", "multipart/form-data")]
     //[Route("[area]/[controller]/[action]")] 
     [Route("[controller]/[action]")]
+    // jwt 5/4
+    [Authorize] 
     public class BaseController : Controller
     {
         /// <summary>
@@ -96,32 +99,72 @@ namespace ScientificResearch.Infrastucture
         /// <summary>
         /// 登录人的信息
         /// </summary>
+        //protected CurrentUser CurrentUser
+        //{
+        //    get
+        //    {
+        //        var currentUser = HttpContext.Session.Get<CurrentUser>("user");
+        //        if (currentUser == null)
+        //        {
+        //            if (!Env.IsDevelopment())
+        //            {
+        //                HttpContext.Response.StatusCode = 401;
+        //                throw new Exception("请登录");
+        //            }
+        //            else
+        //            {
+        //                HttpContext.Session.Set<CurrentUser>("user", new CurrentUser()
+        //                {
+        //                    姓名 = "管理员",
+        //                    工号 = "0001",
+        //                    编号 = 2,
+        //                    部门编号 = 10024,
+        //                    部门名称 = "信息处",
+        //                    DbKey = "ScientificResearch_Test"
+        //                });
+        //                currentUser = HttpContext.Session.Get<CurrentUser>("user");
+        //            }
+        //        }
+        //        return currentUser;
+        //    }
+        //}
+        //jwt 4/4
         protected CurrentUser CurrentUser
         {
             get
             {
-                var currentUser = HttpContext.Session.Get<CurrentUser>("user");
-                if (currentUser == null)
-                {
-                    if (!Env.IsDevelopment())
-                    {
-                        HttpContext.Response.StatusCode = 401;
-                        throw new Exception("请登录");
-                    }
-                    else
-                    {
-                        HttpContext.Session.Set<CurrentUser>("user", new CurrentUser()
-                        {
-                            姓名 = "管理员",
-                            工号 = "0001",
-                            编号 = 2,
-                            部门编号 = 10024,
-                            部门名称 = "信息处",
-                            DbKey = "ScientificResearch_Test"
-                        });
-                        currentUser = HttpContext.Session.Get<CurrentUser>("user");
-                    }
-                }
+                var currentUser =new CurrentUser();
+
+                currentUser.SetValueByPropertyName(
+                    nameof(currentUser.姓名),
+                    User.Claims.Where(i => i.Type == nameof(currentUser.姓名)).SingleOrDefault().Value
+                );
+
+                currentUser.SetValueByPropertyName(
+                    nameof(currentUser.工号),
+                    User.Claims.Where(i => i.Type == nameof(currentUser.工号)).SingleOrDefault().Value
+                );
+
+                currentUser.SetValueByPropertyName(
+                    nameof(currentUser.编号),
+                    User.Claims.Where(i => i.Type == nameof(currentUser.编号)).SingleOrDefault().Value
+                );
+
+                currentUser.SetValueByPropertyName(
+                    nameof(currentUser.部门编号),
+                    User.Claims.Where(i => i.Type == nameof(currentUser.部门编号)).SingleOrDefault().Value
+                );
+
+                currentUser.SetValueByPropertyName(
+                    nameof(currentUser.部门名称),
+                    User.Claims.Where(i => i.Type == nameof(currentUser.部门名称)).SingleOrDefault().Value
+                );
+
+                currentUser.SetValueByPropertyName(
+                    nameof(currentUser.DbKey),
+                    User.Claims.Where(i => i.Type == nameof(currentUser.DbKey)).SingleOrDefault().Value
+                );
+
                 return currentUser;
             }
         }

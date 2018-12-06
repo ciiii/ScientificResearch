@@ -24,6 +24,7 @@ using MyLib;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using ScientificResearch.Infrastucture;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace ScientificResearch
 {
@@ -173,6 +174,20 @@ namespace ScientificResearch
             //swagger
             services.AddSwaggerGen(p =>
             {
+                var security = new Dictionary<string, IEnumerable<string>> { { "Bearer", new string[] { } }, };
+                p.AddSecurityRequirement(security);//添加一个必须的全局安全信息，和AddSecurityDefinition方法指定的方案名称要一致，这里是Bearer。
+
+                p.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                {
+                    Description = "权限认证(数据将在请求头中进行传输) 参数结构: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",//jwt默认的参数名称
+                    In = "header",//jwt默认存放Authorization信息的位置(请求头中)
+                    Type = "apiKey"
+                });//Authorization的设置
+
+                p.IgnoreObsoleteActions();
+                p.IgnoreObsoleteProperties();
+
                 p.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = "科研管理系统-API", Version = "v1" });
                 var filePath = Path.Combine(Directory.GetCurrentDirectory(), "ScientificResearchApi.xml");
                 p.IncludeXmlComments(filePath);
@@ -257,6 +272,7 @@ namespace ScientificResearch
 
                     //context.Response.StatusCode = 500;
                     //2017/12/25 前端要求的返回,错误格式;
+                    context.Response.ContentType = "application/json; charset=utf-8";
                     await context.Response.WriteAsync(JsonConvert.SerializeObject(new { error = ex.Message }));
 
                     //继续抛
