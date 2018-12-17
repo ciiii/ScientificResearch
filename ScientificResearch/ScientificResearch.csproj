@@ -30,6 +30,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ScientificResearch-log-工作区.code-workspace" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Models\Table\" />
     <Folder Include="Models\View\" />
     <Folder Include="wwwroot\upload\下载中心\" />

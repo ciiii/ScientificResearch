@@ -47,6 +47,12 @@ namespace ScientificResearch.Models
         public bool? Null认领人编号 { get; set; }
     }
 
+    public class 可审核论文Filter
+    {
+        public string 步骤名称 { get; set; }
+        public bool 是否可处理 { get; set; }
+    }
+
 
     public class 著作Filter
     {

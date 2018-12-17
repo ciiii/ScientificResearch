@@ -461,6 +461,29 @@ namespace ScientificResearch.Controllers
                    filter);
         }
 
+        /// <summary>
+        /// 审核所有当前登录人可以审核的,处于"待科研管理员审核"的论文,返回处理的数量;
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task<object> 审核所有可审核的论文()
+        {
+            var filter = new 可审核论文Filter() { 是否可处理 = true, 步骤名称 = "科研管理员审核" };
+            var list = await Db.GetListSpAsync<可审核论文, 可审核论文Filter>(filter, $"tfn_成果论文({CurrentUser.编号},{论文管理流程模板编号})");
+            //return list;
+            foreach (var item in list)
+            {
+                var model = new 完成步骤() { 步骤编号 = item.步骤编号, 状态值 = 1 };
+                await MyWorkFlowBusiness.完成步骤(model, CurrentUser.编号);
+            }
+            return list.Count();
+        }
+
+        private class 可审核论文
+        {
+            public int 步骤编号 { get; set; }
+        }
+
         [HttpGet]
         async public Task<object> 获取论文详情(int 论文编号)
         {

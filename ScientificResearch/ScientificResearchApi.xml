@@ -660,6 +660,12 @@
             <param name="model"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Controllers.FruitController.审核所有可审核的论文">
+            <summary>
+            审核所有当前登录人可以审核的,处于"待科研管理员审核"的论文,返回处理的数量;
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:ScientificResearch.Controllers.OfficeController.新增通知公告(ScientificResearch.Models.通知公告增改)">
             <summary>
             接收者类型:
