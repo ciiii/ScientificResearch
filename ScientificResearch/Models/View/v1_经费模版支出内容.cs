@@ -15,37 +15,30 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-		//public int 项目支出类型编号 { get; set; }
         public int 项目支出类型编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public int 所属经费模版编号 { get; set; }
         public int 所属经费模版编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public string 项目支出类型 { get; set; }
         public string 项目支出类型 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public int 经费占比 { get; set; }
         public int 经费占比 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public int 项目支出内容编号 { get; set; }
         public int 项目支出内容编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public string 项目支出内容 { get; set; }
         public string 项目支出内容 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public string 财务科目 { get; set; }
         public string 财务科目 { get; set; }
         
           

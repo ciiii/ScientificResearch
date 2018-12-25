@@ -15,57 +15,46 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-		//public int 编号 { get; set; }
         public int 编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public int 流程模板编号 { get; set; }
         public int 流程模板编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public int 项目编号 { get; set; }
         public int 项目编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public string 项目支出类型 { get; set; }
         public string 项目支出类型 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public string 项目支出内容 { get; set; }
         public string 项目支出内容 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public string 财务科目 { get; set; }
         public string 财务科目 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public decimal 批准经费 { get; set; }
         public decimal? 批准经费 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public decimal 配套经费 { get; set; }
         public decimal? 配套经费 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public string 编制依据 { get; set; }
         public string 编制依据 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public decimal 经费 { get; set; }
         public decimal? 经费 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public decimal 已报销金额 { get; set; }
         public decimal 已报销金额 { get; set; }
         
           

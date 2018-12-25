@@ -67,7 +67,13 @@ namespace ScientificResearch.Controllers
             return await Db.GetPagingListSpAsync<v2_通知公告_列表, 通知公告Filter>(paging, filter);
         }
 
-
+        /// <summary>
+        /// 如果要获取必读且未读的通知公告,使用条件"是否必读=true 且 是否已接收=false"
+        /// </summary>
+        /// <param name="人员编号"></param>
+        /// <param name="paging"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
         [HttpGet]
         async public Task<object> 分页获取某人员可查看的通知公告(int 人员编号, Paging paging, 某人员可查看的通知公告Filter filter)
         {

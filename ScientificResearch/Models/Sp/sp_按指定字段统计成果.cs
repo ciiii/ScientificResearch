@@ -19,6 +19,10 @@ namespace ScientificResearch.Models
 		/// 
 		/// </summary>
 		public string 字段显示名 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+		public string where { get; set; }
         
           
         #endregion

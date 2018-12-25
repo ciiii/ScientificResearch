@@ -13,57 +13,103 @@ namespace ScientificResearch.Controllers
     public class StatisticalController : BaseController
     {
         [HttpGet]
-        async public Task<object> 获取论文成果统计()
+        async public Task<object> 获取论文成果统计(论文成果统计Filter filter)
         {
-            return await Db.QuerySpAsync<sp_论文成果统计, object>();
+            var where = SqlWhereMapper.toWhere(filter);
+            return await Db.QuerySpAsync<sp_论文成果统计, object>(new sp_论文成果统计()
+            {
+                where = where
+            });
         }
 
         [HttpGet]
-        async public Task<object> 获取获奖成果统计()
+        async public Task<object> 获取获奖成果统计(获奖成果统计Filter filter)
         {
-            return await Db.QuerySpAsync<sp_获奖成果统计, object>();
+            var where = SqlWhereMapper.toWhere(filter);
+            return await Db.QuerySpAsync<sp_获奖成果统计, object>(new sp_获奖成果统计()
+            {
+                where = where
+            });
         }
 
         [HttpGet]
-        async public Task<object> 获取著作成果统计()
+        async public Task<object> 获取著作成果统计(著作成果统计Filter filter)
         {
-            return await Db.QuerySpAsync<sp_著作成果统计, object>();
+            var where = SqlWhereMapper.toWhere(filter);
+            return await Db.QuerySpAsync<sp_著作成果统计, object>(new sp_著作成果统计()
+            {
+                where = where
+            });
         }
 
         [HttpGet]
-        async public Task<object> 获取专利成果统计()
+        async public Task<object> 获取专利成果统计(专利成果统计Filter filter)
         {
-            return await Db.QuerySpAsync<sp_专利成果统计, object>();
+            var where = SqlWhereMapper.toWhere(filter);
+            return await Db.QuerySpAsync<sp_专利成果统计, object>(new sp_专利成果统计()
+            {
+                where = where
+            });
         }
 
         [HttpGet]
-        async public Task<object> 获取按部门统计所有成果()
+        async public Task<object> 获取按部门统计所有成果(所有成果统计Filter filter)
         {
-            return await Db.QuerySpAsync<sp_按指定字段统计成果, object>(new sp_按指定字段统计成果() { 字段名 = "部门名称", 字段显示名 = "部门" });
+            var where = SqlWhereMapper.toWhere(filter);
+            return await Db.QuerySpAsync<sp_按指定字段统计成果, object>(new sp_按指定字段统计成果()
+            {
+                字段名 = "部门名称",
+                字段显示名 = "部门",
+                where = where
+            });
         }
 
         [HttpGet]
-        async public Task<object> 获取按职务统计所有成果()
+        async public Task<object> 获取按职务统计所有成果(所有成果统计Filter filter)
         {
-            return await Db.QuerySpAsync<sp_按指定字段统计成果, object>(new sp_按指定字段统计成果() { 字段名 = "职务名称", 字段显示名 = "职务" });
+            var where = SqlWhereMapper.toWhere(filter);
+            return await Db.QuerySpAsync<sp_按指定字段统计成果, object>(new sp_按指定字段统计成果()
+            {
+                字段名 = "职务名称",
+                字段显示名 = "职务",
+                where = where
+            });
         }
 
         [HttpGet]
-        async public Task<object> 获取按专业技术级别统计所有成果()
+        async public Task<object> 获取按专业技术级别统计所有成果(所有成果统计Filter filter)
         {
-            return await Db.QuerySpAsync<sp_按指定字段统计成果, object>(new sp_按指定字段统计成果() { 字段名 = "专业技术级别", 字段显示名 = "专业技术级别" });
+            var where = SqlWhereMapper.toWhere(filter);
+            return await Db.QuerySpAsync<sp_按指定字段统计成果, object>(new sp_按指定字段统计成果()
+            {
+                字段名 = "专业技术级别",
+                字段显示名 = "专业技术级别",
+                where = where
+            });
         }
 
         [HttpGet]
-        async public Task<object> 获取按岗位类型统计所有成果()
+        async public Task<object> 获取按岗位类型统计所有成果(所有成果统计Filter filter)
         {
-            return await Db.QuerySpAsync<sp_按指定字段统计成果, object>(new sp_按指定字段统计成果() { 字段名 = "岗位类型", 字段显示名 = "岗位类型" });
+            var where = SqlWhereMapper.toWhere(filter);
+            return await Db.QuerySpAsync<sp_按指定字段统计成果, object>(new sp_按指定字段统计成果()
+            {
+                字段名 = "岗位类型",
+                字段显示名 = "岗位类型",
+                where = where
+            });
         }
 
         [HttpGet]
-        async public Task<object> 获取按学历统计所有成果()
+        async public Task<object> 获取按学历统计所有成果(所有成果统计Filter filter)
         {
-            return await Db.QuerySpAsync<sp_按指定字段统计成果, object>(new sp_按指定字段统计成果() { 字段名 = "学历", 字段显示名 = "学历" });
+            var where = SqlWhereMapper.toWhere(filter);
+            return await Db.QuerySpAsync<sp_按指定字段统计成果, object>(new sp_按指定字段统计成果()
+            {
+                字段名 = "学历",
+                字段显示名 = "学历",
+                where = where
+            });
         }
 
         [HttpGet]

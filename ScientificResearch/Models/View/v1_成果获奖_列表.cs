@@ -15,47 +15,38 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-		//public int 编号 { get; set; }
         public int 编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public string 获奖名称 { get; set; }
         public string 获奖名称 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public DateTime 获奖日期 { get; set; }
         public DateTime 获奖日期 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public string 获奖级别 { get; set; }
         public string 获奖级别 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public string 获奖类别 { get; set; }
         public string 获奖类别 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public string 获奖等级 { get; set; }
         public string 获奖等级 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public string 颁奖单位 { get; set; }
         public string 颁奖单位 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public int 年度 { get; set; }
         public int? 年度 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public string 第一完成人 { get; set; }
         public string 第一完成人 { get; set; }
         
           

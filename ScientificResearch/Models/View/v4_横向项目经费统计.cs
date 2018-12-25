@@ -15,37 +15,30 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-		//public string 项目负责人部门名称 { get; set; }
         public string 项目负责人部门名称 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public decimal 经费 { get; set; }
         public decimal? 经费 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public decimal 未到经费 { get; set; }
         public decimal? 未到经费 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public decimal 待审核到账 { get; set; }
         public decimal? 待审核到账 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public decimal 已审核到账 { get; set; }
         public decimal? 已审核到账 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public decimal 待审核报销 { get; set; }
         public decimal? 待审核报销 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public decimal 已审核报销 { get; set; }
         public decimal? 已审核报销 { get; set; }
         
           

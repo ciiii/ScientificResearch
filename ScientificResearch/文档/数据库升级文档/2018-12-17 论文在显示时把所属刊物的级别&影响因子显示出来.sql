@@ -16,3 +16,6 @@ AS
 GO
 
 
+EXEC dbo.sp_Rebuild;
+
+GO

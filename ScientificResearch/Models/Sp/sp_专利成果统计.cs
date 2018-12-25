@@ -11,6 +11,10 @@ namespace ScientificResearch.Models
 	{       
               
         #region 属性
+        /// <summary>
+		/// 
+		/// </summary>
+		public string where { get; set; }
         
           
         #endregion

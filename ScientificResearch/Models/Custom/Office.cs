@@ -39,6 +39,7 @@ namespace ScientificResearch.Models
     public class 某人员可查看的通知公告Filter
     {
         public bool? 是否已接收 { get; set; }
+        public bool? 是否必读 { get; set; }
         public string 通知类型 { get; set; }
         public string Like通知名称 { get; set; }
         public string Like通知内容 { get; set; }

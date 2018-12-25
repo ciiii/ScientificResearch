@@ -677,6 +677,15 @@
             <param name="model"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Controllers.OfficeController.分页获取某人员可查看的通知公告(System.Int32,ScientificResearch.Models.Paging,ScientificResearch.Models.某人员可查看的通知公告Filter)">
+            <summary>
+            如果要获取必读且未读的通知公告,使用条件"是否必读=true 且 是否已接收=false"
+            </summary>
+            <param name="人员编号"></param>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
         <member name="M:ScientificResearch.Controllers.OfficeController.分页获取可查看的下载中心(ScientificResearch.Models.Paging,ScientificResearch.Models.下载中心Filter)">
             <summary>
             首页查看有下载中心时用
@@ -1647,6 +1656,11 @@
             同时对姓名和部门名称做搜索
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.所有成果统计Filter">
+            <summary>
+            比如"年度"这个条件
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.完成步骤`1">
             <summary>
             完成步骤时,提交的数据
@@ -2034,6 +2048,11 @@
             sp_专利成果统计[类]
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.sp_专利成果统计.where">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_专家评分_增改">
             <summary>
             sp_专家评分_增改[类]
@@ -2419,6 +2438,11 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.sp_按指定字段统计成果.where">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_按部门对指定字段统计人员">
             <summary>
             sp_按部门对指定字段统计人员[类]
@@ -2799,9 +2823,19 @@
             sp_获奖成果统计[类]
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.sp_获奖成果统计.where">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_著作成果统计">
             <summary>
             sp_著作成果统计[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_著作成果统计.where">
+            <summary>
+            
             </summary>
         </member>
         <member name="T:ScientificResearch.Models.sp_角色_增改">
@@ -2927,6 +2961,11 @@
         <member name="T:ScientificResearch.Models.sp_论文成果统计">
             <summary>
             sp_论文成果统计[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_论文成果统计.where">
+            <summary>
+            
             </summary>
         </member>
         <member name="T:ScientificResearch.Models.sp_通知公告_启禁">
@@ -6809,6 +6848,11 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.通知公告.是否必读">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.通知公告已接收人">
             <summary>
             通知公告已接收人[类]
@@ -8585,6 +8629,26 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v1_成果论文_列表.UT">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v1_成果论文_列表.期刊系列">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v1_成果论文_列表.JCR分区">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v1_成果论文_列表.影响因子">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v1_成果论文_列表.特征因子分值">
             <summary>
             
             </summary>
@@ -11604,6 +11668,11 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.v2_通知公告.是否必读">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.v2_通知公告.发送人工号">
             <summary>
             
@@ -11685,6 +11754,11 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v2_通知公告_列表.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v2_通知公告_列表.是否必读">
             <summary>
             
             </summary>

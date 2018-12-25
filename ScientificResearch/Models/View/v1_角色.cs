@@ -15,27 +15,22 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-		//public int 编号 { get; set; }
         public int 编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public string 名称 { get; set; }
         public string 名称 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public string 备注 { get; set; }
         public string 备注 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public int 人数 { get; set; }
         public int? 人数 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-		//public int 功能数 { get; set; }
         public int? 功能数 { get; set; }
         
           

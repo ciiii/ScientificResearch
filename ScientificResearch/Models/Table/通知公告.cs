@@ -77,6 +77,10 @@ namespace ScientificResearch.Models
 		/// </summary>
         [MaxLength(1000,ErrorMessage ="备注不能超过[500]字")]
 		public string 备注 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+		public bool? 是否必读 { get; set; }
         
         
         #endregion
