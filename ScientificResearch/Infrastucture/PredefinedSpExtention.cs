@@ -214,7 +214,7 @@ namespace ScientificResearch.Infrastucture
                 keyFields = keyFields ?? PredefindedKeyFields,
                 PageSize = paging.Size,
                 PageIndex = paging.Index,
-                OrderType = orderType,
+                OrderType = paging.OrderType,
                 OrderStr = orderStr,
                 tbFields = "*"
             });

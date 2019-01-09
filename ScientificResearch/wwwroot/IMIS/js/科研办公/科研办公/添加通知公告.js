@@ -1,6 +1,5 @@
 $(document).ready(function () {
     window.addVm = null;
-
     var id;
     var departmentTree = null;
     var roleTree = null;
@@ -17,7 +16,6 @@ $(document).ready(function () {
             model: {},
             files: [],
             title: '',
-            type: '普通通知',
             peopleType: 0,
             oldPeopleType: '',
             editType: vm.editType,
@@ -29,6 +27,7 @@ $(document).ready(function () {
             people: '',
             peopleArr: [],
             users: [],
+            noticeType:[],
             loadInfo: function () {
                 //实例化编辑器
                 if (dAddVm.editType) {
@@ -40,7 +39,7 @@ $(document).ready(function () {
                     dAddVm.model = {
                         基本资料: {
                             编号: 0,
-                            通知类型: '',
+                            通知类型: '普通通知',
                             通知标识: '',
                             发送人编号: 0,
                             通知名称: '',
@@ -50,6 +49,7 @@ $(document).ready(function () {
                             接收人数: 0,
                             已接收人数: 0,
                             是否启用: true,
+                            是否必读:true,
                             建立时间: new Date().format('yyyy-MM-dd hh:mm:ss'),
                             备注: ''
                         },
@@ -72,7 +72,7 @@ $(document).ready(function () {
                         um.ready(function () {
                             um.setContent(obj.通知公告.通知内容);
                         });
-                        dAddVm.type = obj.通知公告.通知类型;
+
                         var arr = [];
 
                         if (obj.接收条件.length > 0) {
@@ -115,8 +115,6 @@ $(document).ready(function () {
                                 roleArr = arrIds;
                                 break;
                         }
-
-
                     } else {
                         console.info('获取通知详情失败！');
                         console.info(strErro);
@@ -288,6 +286,17 @@ $(document).ready(function () {
                     console.info(roleArr);
                 }
             },
+            getNoticeType: function () {
+                Dictionary.getDictionaryList('get', '通知类型', function getDictionaryListListener(success, obj, strErro) {
+                    if (success) {
+                        dAddVm.noticeType = obj;
+
+                    } else {
+                        console.info('获取通知类型失败！');
+                        console.info(strErro);
+                    }
+                })
+            },
             hideMenu: function () {
                 $('.modal .menuContent').fadeOut('fast');
                 $('body').unbind('mousedown', dAddVm.onBodyDown);
@@ -345,7 +354,6 @@ $(document).ready(function () {
                 var endTime = dAddVm.inputVal('.modal-add .end-time');
                 dAddVm.model.基本资料.相关文件路径 = dAddVm.files.join();
                 dAddVm.model.基本资料.通知内容 = um.getContent();
-                dAddVm.model.基本资料.通知类型 = dAddVm.type;
                 if (!noticeTitle) {
                     $.oaNotify.error('通知名称不能为空！');
                     return;
@@ -375,6 +383,9 @@ $(document).ready(function () {
                     contentType: false,
                     data: data,
                     dataType: 'text',
+                    beforeSend : function(request) {
+                        request.setRequestHeader('Authorization', JSON.parse(sessionStorage.Authorization));
+                    },
                     success: function (e) {
                         e = JSON.parse(e);
                         if (e.error) {
@@ -404,8 +415,14 @@ $(document).ready(function () {
             clickBtnReturn: function () {
                 $('.modal').modal('hide');
             },
+            getData:function () {
+                dAddVm.getEnableDepartment();
+                dAddVm.getRole();
+                dAddVm.getNoticeType();
+                dAddVm.loadInfo();
+            }
         });
-        dAddVm.loadInfo();
+
         avalon.scan(document.body);
     });
     $('.nav-tabs a').on('click', function (e) {
@@ -427,6 +444,7 @@ $(document).ready(function () {
     $('.menuContent').mCustomScrollbar({
         theme: 'dark-3'
     });
-    dAddVm.getEnableDepartment();
-    dAddVm.getRole();
+
+    dAddVm.getData();
+
 });

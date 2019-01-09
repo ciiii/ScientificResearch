@@ -35,9 +35,7 @@
                     </label>
                     <div class="col-sm-7">
                         <select class="form-control file-type" ms-duplex="@model.文件类型">
-                            <option value="">请选择</option>
-                            <option value="政策法规类">政策法规类</option>
-                            <option value="普通文件类">普通文件类</option>
+                            <option ms-for="el in @fileType" ms-attr="{'value':@el.值}">{{el.值}}</option>
                         </select>
                         <span class="error-texe">文件类型不能为空！</span>
                     </div>

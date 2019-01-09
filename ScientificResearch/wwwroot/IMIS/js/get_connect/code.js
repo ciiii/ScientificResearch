@@ -285,6 +285,7 @@ var Code = {
     //分页获取通知公告
     URL_GET_PAGING_NOTICE_LIST: getApiHost + '/Office/分页获取通知公告',
 
+
     //获取通知公告详情
     URL_GET_NOTICE_DETAILS: getApiHost + '/Office/获取通知公告详情',
 
@@ -421,6 +422,9 @@ var Code = {
     //分页获取可领取论文
     URL_GET_RECEIVE_PAPER_LIST: getApiHost + '/Fruit/分页获取可领取论文',
 
+    //审核所有可审核的论文
+    URL_POST_EXAMINE_PAPER_ALL_PASS: getApiHost + '/Fruit/审核所有可审核的论文',
+
     //分页获取成果总览
     URL_GET_ALL_FRUIT_LIST: getApiHost + '/Fruit/分页获取成果总览',
 
@@ -495,6 +499,8 @@ var Code = {
 
     //上传获奖批文
     URL_POST_UPLOAD_AWARD_COMMENT: getApiHost + '/Fruit/上传获奖批文',
+
+
 
 
     //分页获取科研项目申报

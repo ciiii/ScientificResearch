@@ -171,14 +171,13 @@ $(function () {
 
         openClassName: "",
 
-        closeDelay: 2000,
+        closeDelay: 4000,
         clickToClose: true,
         closeClassName: "",
         closeCallback: function () {
         },
 
         content: "",
-
         element: null,
         position: "top"
     }

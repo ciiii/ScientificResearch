@@ -23,6 +23,7 @@ namespace ScientificResearch.Controllers
     [Produces("application/json")]
     [Consumes("application/json", "multipart/form-data")]//此处为新增
     [Route("[controller]/[action]")]
+    [ApiExplorerSettings(GroupName ="test")]
     public class TestController : BaseController
     {
         [HttpGet]

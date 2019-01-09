@@ -10,20 +10,20 @@ $(function () {
                 Size: 16,
                 Like论文标题: '',
                 Like第一作者: '',
-                Begin论文正式出版日期:'',
-                End论文正式出版日期:'',
+                Begin论文正式出版日期: '',
+                End论文正式出版日期: '',
                 OrderType: false
             },
-            userInfo:userInfo,
+            userInfo: userInfo,
             title: '',
-            name:'',
+            name: '',
             total: '',
             model: [],
-            startTime:'',
-            endTime:'',
+            startTime: '',
+            endTime: '',
             nothing: false,
             loaded: false,
-            editType:false,
+            editType: false,
             detailsUrl: '',
             allchecked: false,
             query: function () {
@@ -133,14 +133,14 @@ $(function () {
                     步骤编号: el.步骤编号
                 }
                 sessionStorage.xueShuDetails = JSON.stringify(details);
-                $('.modal-details .detailsPage').attr('src',vm.getUrl(el.流程相关项目路径));
+                $('.modal-details .detailsPage').attr('src', vm.getUrl(el.流程相关项目路径));
 
             },
             batchExport: function () {
-                $('.btn-export').attr('href', '' );
+                $('.btn-export').attr('href', '');
             },
             getStatusClass: function (name) {
-                if (name.indexOf('申请') != -1 ) {
+                if (name.indexOf('申请') != -1) {
                     return 'btn-edit';
                 } else {
                     return 'btn-examine';
@@ -161,9 +161,20 @@ $(function () {
                 }
             },
             getFeedbackClass: function (statue) {
-                if(statue){
+                if (statue) {
                     return 'btn-feedback';
                 }
+            },
+            clickBtnAllPass: function () {
+                Paper.examinePaperAllPass('post', function examinePaperAllPassListener(success, obj, strErro) {
+                    if (success) {
+                        $.oaNotify.ok(' 成功审核【' + obj + '】篇论文！');
+                        vm.clickBtnReturn();
+                        vm.search();
+                    } else {
+                        $.oaNotify.error(' 审核失败：' + strErro);
+                    }
+                })
             },
             clickBtnReturn: function () {
                 $('.modal').modal('hide');

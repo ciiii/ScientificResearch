@@ -59,8 +59,8 @@ $(function () {
                     二级学科: '',
                     三级学科: '',
                     作者人数: '',
-                    通讯作者:'',
-                    文献类型:'',
+                    通讯作者: '',
+                    文献类型: '',
                     关键字: '',
                     论文摘要: '',
                     备注: '',
@@ -351,24 +351,20 @@ $(function () {
                             }
                             if (!repeat.repeat) {
                                 if (repeat.isFirst) {
-                                    if (dAddVm.infoFiles.length > 0 && dAddVm.contentFiles.length > 0) {
-                                        if (dAddVm.editType) {
-                                            if (dAddVm.isReceive) {
-                                                dAddVm.addPaper(dAddVm.info.$model);
-                                            } else {
-                                                var data = {
-                                                    步骤编号: xueShuDetails.步骤编号,
-                                                    状态值: dAddVm.stateVal,
-                                                    备注: '',
-                                                    附加数据: dAddVm.info.$model
-                                                }
-                                                dAddVm.editPaper(data);
-                                            }
-                                        } else {
+                                    if (dAddVm.editType) {
+                                        if (dAddVm.isReceive) {
                                             dAddVm.addPaper(dAddVm.info.$model);
+                                        } else {
+                                            var data = {
+                                                步骤编号: xueShuDetails.步骤编号,
+                                                状态值: dAddVm.stateVal,
+                                                备注: '',
+                                                附加数据: dAddVm.info.$model
+                                            }
+                                            dAddVm.editPaper(data);
                                         }
                                     } else {
-                                        $.oaNotify.error(' 请上传佐证材料和论文正文！');
+                                        dAddVm.addPaper(dAddVm.info.$model);
                                     }
                                 } else {
                                     $.oaNotify.error('必须要有第一作者！');

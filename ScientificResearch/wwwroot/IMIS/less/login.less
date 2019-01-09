@@ -30,12 +30,23 @@ ul, li {
   background-size: 100% 100%;
   background-attachment: fixed; //	当页面的其余部分滚动时，背景图像不会移动。
 }
-
+.content{
+  width: 410px;
+  position: absolute;
+  top: 180px;
+  left: 50%;
+  margin-left: -205px;
+  .support {
+    font-size: 14px;
+    color: #555;
+    margin-top: 10%;
+    text-align: center;
+  }
+}
 .login {
   width: 410px;
   height: 370px;
   padding: 18px 26px 30px;
-  margin: 180px auto 0;
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.5);
   background: #424242 @hack;
@@ -266,7 +277,7 @@ ul, li {
 
 .nonsupport {
   background: none;
-  .form-login {
+  .content {
     display: none;
   }
   .browser-tips {

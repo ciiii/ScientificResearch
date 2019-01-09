@@ -1483,6 +1483,18 @@ var Paper = {
             }
         });
     },
+    examinePaperAllPass: function (type, examinePaperAllPassListener) {
+        var url = Code.URL_POST_EXAMINE_PAPER_ALL_PASS;
+
+        Connect_Http.httpDatas(type, url, '', function getBackListener(success, obj, strErro) {
+            if (success) {
+                examinePaperAllPassListener(true, obj.data, '')
+            } else {
+                examinePaperAllPassListener(false, '', strErro)
+            }
+
+        });
+    },
 }
 
 //成果
@@ -2632,7 +2644,7 @@ var FundsReimbursement = {
 }
 
 //成果统计
-var FruitStatistics={
+var FruitStatistics = {
     getPaperFruitStatisticsList: function (type, options, getPaperFruitStatisticsListListener) {
         var url = Code.URL_GET_PAPER_FRUIT_STATISTICS_LIST;
 
@@ -2735,7 +2747,7 @@ var FruitStatistics={
 }
 
 //横向项目统计
-var XProjectStatistics= {
+var XProjectStatistics = {
     getXFundsStatisticsList: function (type, options, getXFundsStatisticsListListener) {
         var url = Code.URL_GET_X_FUNDS_STATISTICS_LIST;
 
@@ -2762,7 +2774,7 @@ var XProjectStatistics= {
 
 
 //纵向项目统计
-var YProjectStatistics= {
+var YProjectStatistics = {
     getYFundsStatisticsList: function (type, options, getYFundsStatisticsListListener) {
         var url = Code.URL_GET_Y_FUNDS_STATISTICS_LIST;
 
@@ -2789,7 +2801,7 @@ var YProjectStatistics= {
 
 
 //人员统计
-var UsersStatistics= {
+var UsersStatistics = {
     getMajorLevelStatisticsUsers: function (type, options, getMajorLevelStatisticsUsersListener) {
         var url = Code.URL_GET_MAJOR_LEVEL_STATISTICS_USERS;
 

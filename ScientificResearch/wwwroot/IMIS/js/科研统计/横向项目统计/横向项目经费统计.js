@@ -3,7 +3,6 @@ $(function () {
     var chartPaper = echarts.init(document.getElementById('chart-paper'),'macarons');
     chartPaper.showLoading();
     window.vm = null;
-    var departmentTree;
     avalon.ready(function () {
         window.vm = avalon.define({
             $id: 'root',
@@ -12,20 +11,11 @@ $(function () {
                 部门编号: '',
                 负责人姓名: ''
             },
-            JCR: '',
-            start: '',
-            end: '',
-            level: '',
-            data: [],
-            series: [],
             model: [],
             sum: [],
-            total: '',
-            department: '',
             loaded: false,
             nothing: false,
-            data: [],
-            getChart: function (data, series) {
+            getChart: function (data, series,list) {
                 //图表配置
                 var option = {
                     title: {
@@ -36,7 +26,7 @@ $(function () {
                             color: '#666',
                             fontWeight: 'bold'
                         },
-                        padding: [20, 15]
+                        padding: [8, 15]
                     },
                     tooltip: {
                         trigger: 'axis',
@@ -52,16 +42,17 @@ $(function () {
                         },
                     },
                     grid: {
-                        top: 100,
-                        right: 10,
-                        bottom: 10,
-                        left: 10,
+                        top: '20%',
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
                         containLabel: true
                     },
                     calculable: true,
                     legend: {
-                        top: '70',
-                        itemWidth: 30
+                        top: '50',
+                        itemWidth: 30,
+                        data:list
                     },
                     xAxis: {
                         type: 'category',
@@ -69,15 +60,15 @@ $(function () {
                         data: data,
                         axisLabel: {
                             interval: 0,
-                            rotate: 25
+                            rotate: 10
                         }
                     },
                     yAxis: {
                         type: 'value',
-                        nameTextStyle: {
-                            color: '#666'
+                        name: '金额（元）',
+                        axisLabel: {
+                            formatter: '{value} '
                         }
-
                     },
                     series: series
                 };
@@ -100,57 +91,54 @@ $(function () {
                             vm.model = [];
                             vm.nothing = true;
                             chartPaper.hideLoading();
-
                             return;
                         } else {
                             var one = obj[0];
-                            var allObject = [];
+                            var series = [];
+                            var list = [];
                             var newObj = {
                                 项目负责人部门名称: '总计'
                             }
                             for (var key in one) {
-                                if (key != '项目负责人部门名称' && key != '合计') {
+                                if (key != '项目负责人部门名称') {
                                     var object = {
                                         name: key,
                                         type: 'bar',
+                                        barWidth: '5%',
+                                        label: {
+                                            normal: {
+                                                show: true,
+                                            }
+                                        },
                                         data: []
                                     }
-                                    allObject.push(object);
+                                    series.push(object);
+                                    list.push(object);
                                     newObj[key] = 0;
                                 }
                                 if (key != '项目负责人部门名称') {
                                     vm.sum.push(one[key]);
                                 }
                             }
-                            var name = '合计';
-                            newObj[name] = 0;
                             var data = [];
-
                             for (var j = 0; j < obj.length; j++) {
                                 var one = obj[j];
-                                obj[j].合计 = 0;
                                 data.push(one.项目负责人部门名称);
-
                                 for (var key in one) {
                                     if (key != '项目负责人部门名称') {
                                         newObj[key] += one[key];
                                     }
-                                    if (key != '项目负责人部门名称' && key != '合计') {
-                                        obj[j].合计 += one[key];
-                                    }
-                                    for (var a = 0; a < allObject.length; a++) {
-                                        if (key == allObject[a].name) {
-                                            allObject[a].data.push(one[key]);
+                                    for (var a = 0; a < series.length; a++) {
+                                        if (key == series[a].name) {
+                                            series[a].data.push(one[key]);
                                         }
                                     }
                                 }
                             }
                             obj.push(newObj);
                             vm.model = obj;
-                            vm.data = data;
-                            vm.series = allObject;
                             vm.nothing = false;
-                            vm.getChart(vm.data, vm.series);
+                            vm.getChart(data, series,list);
                         }
                         $('.bs-tooltip').tooltip();
                     } else {
@@ -175,87 +163,6 @@ $(function () {
                     return 'sum';
                 }
             },
-            getTheDeparments: function () {
-                var setting = {
-                    data: {
-                        key: {
-                            name: 'name'
-                        },
-                        simpleData: {
-                            enable: true,
-                            idKey: 'id',
-                            pIdKey: 'pId',
-                            rootPId: 0
-                        },
-                    },
-                    callback: {
-                        onClick: onClick
-                    }
-                };
-                var nodes = [];
-                Department.getEnableDepartmentList('get', '', function getEnableDepartmentListListener(success, obj, strErro) {
-                    if (success) {
-                        obj = obj.reverse();
-                        if (obj != null) {
-                            for (var i = 0; i < obj.length; i++) {
-                                obj[i].id = obj[i].编号;
-                                obj[i].pId = obj[i].上级部门编号;
-                                obj[i].name = obj[i].名称;
-                            }
-
-                            nodes = obj;
-                            departmentTree = $.fn.zTree.init($('.screen-box .departmentTree'), setting, nodes);
-                        }
-                    } else {
-                        alert('获取部门列表数据失败');
-                        console.info(strErro);
-                    }
-                });
-
-                function onClick(e, treeId, treeNode) {
-                    var nodes = departmentTree.getSelectedNodes(),
-                        text = '';
-                    nodes.sort(function compare(a, b) {
-                        return a.id - b.id;
-                    });
-                    for (var i = 0, l = nodes.length; i < l; i++) {
-                        text += nodes[i].name + ",";
-                    }
-                    if (text.length > 0) text = text.substring(0, text.length - 1);
-                    var cityObj = $('.screen-box .department');
-                    cityObj.val(text);
-                    vm.req.部门编号 = treeNode.编号;
-                    vm.department = treeNode.名称;
-                    vm.hideMenu();
-                    vm.query();
-                }
-            },
-            hideMenu: function () {
-                $('.screen-box #menuContent').fadeOut('fast');
-                $('body').unbind('mousedown', vm.onBodyDown);
-            },
-            onBodyDown: function (event) {
-                if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(event.target).parents(".screen-box #menuContent").length > 0)) {
-                    vm.hideMenu();
-                }
-            },
-            showMenu: function () {
-                var obj = $('.screen-box .department');
-                var offset = $('.screen-box .department').offset();
-                $('.screen-box #menuContent').css({
-                    left: offset.left + 'px',
-                    top: offset.top + obj.outerHeight() + 'px'
-                }).slideDown('fast');
-
-                $('body').bind('mousedown', vm.onBodyDown);
-                $('.screen-box .btn-del').show();
-            },
-            delInput: function () {
-                vm.department = '';
-                vm.req.部门编号 = '';
-                vm.query();
-                vm.hideMenu();
-            },
             printView: function () {
                 $('.btn-printing,.screen-box,.chart-box').hide();
                 window.print();
@@ -263,10 +170,6 @@ $(function () {
             }
         });
         vm.query();
-        vm.$watch('onReady', function () {
-            vm.getTheDeparments();
-        })
-
         avalon.scan(document.body);
     });
     $('.form-year').datetimepicker({

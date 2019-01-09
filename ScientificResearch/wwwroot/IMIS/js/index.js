@@ -1,6 +1,8 @@
 $(function () {
     var ParentIndex;
     var TwoIndex;
+    window.mUserInfo = JSON.parse(localStorage.info).data;
+    window.mUserId = mUserInfo.人员.编号;
     avalon.config({debug: false});
     window.vm = null;
     avalon.ready(function () {
@@ -11,6 +13,15 @@ $(function () {
             loginUrl: '',
             newUrl: '',
             hospital: '',
+            req: {
+                人员编号: mUserId,
+                Index: 1,
+                Size: 1,
+                OrderType: false,
+                是否已接收: false,
+                是否必读: true,
+            },
+            total: '',
             onload: function () {
                 if (localStorage.getItem('info')) {
                     vm.hospital = JSON.parse(localStorage.info).dbKey;
@@ -21,6 +32,7 @@ $(function () {
                     vm.newUrl = loginUrl.slice(7, 11);
                     vm.userInfo = mUserInfo.人员;
                     vm.jurisdiction = mUserInfo.权限;
+                    vm.getUserNoticeMustReadList();
                 }
             },
             ClickLiParent: function (index, el) {
@@ -93,6 +105,30 @@ $(function () {
                 sessionStorage.userType = JSON.stringify(userType);
                 vm.getUserDetail(mUserInfo.人员.编号);
             },
+            changeUrlNew: function (url) {
+                $.ajax({
+                    url: url,
+                    type: 'get',
+                    success: function (data) {
+                        $('.modal-choice .modal-dialog').html('');
+                        $('.modal-choice .modal-dialog').append(data);
+                    }
+                });
+            },
+            getUserNoticeMustReadList: function () {
+                Notice.getUserNoticeList('get', vm.req.$model, function getUserNoticeListListener(success, obj, strErro) {
+                    if (success) {
+                        vm.total = obj.total;
+                        if (obj.total && obj.total > 0) {
+                            $('.modal-choice').modal('show');
+                            vm.changeUrlNew('首页/查看通知.html');
+                        }
+                    } else {
+                        console.info('获取通知公告列表失败！');
+                        console.info(strErro);
+                    }
+                });
+            },
             clickPassWord: function () {
                 sessionStorage.mkeyandetails = true;
                 $('.subpage #subpage').attr('src', vm.getUrl('/IMIS/views/科研办公/科研办公/修改密码.html'));
@@ -107,6 +143,9 @@ $(function () {
                         console.info(strErro)
                     }
                 });
+            },
+            noticeDetails: function (id) {
+                sessionStorage.noticeId = JSON.stringify(id);
             },
             getUrl: function (url) {
                 return decodeURI(encodeURI(encodeURI(url)));

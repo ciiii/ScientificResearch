@@ -10,6 +10,7 @@ $(function () {
             userName: '',
             department: '',
             title: '',
+            fileType:[],
             editType: vm.editType,
             onLoad: function () {
                 if (addVm.editType) {
@@ -34,7 +35,7 @@ $(function () {
                     addVm.model = {
                         编号: 0,
                         文件名称: '',
-                        文件类型: '',
+                        文件类型: '普通文件类',
                         文件路径: '',
                         是否启用: true,
                         上传人编号: addVm.userInfo.人员.编号,
@@ -46,6 +47,18 @@ $(function () {
 
                     addVm.files = [];
                 }
+            },
+            getNoticeType: function () {
+                Dictionary.getDictionaryList('get', '下载中心文件类型', function getDictionaryListListener(success, obj, strErro) {
+                    if (success) {
+                        addVm.fileType = obj;
+                        addVm.onLoad();
+
+                    } else {
+                        console.info('获取下载中心文件类型失败！');
+                        console.info(strErro);
+                    }
+                })
             },
             getHtmlDocName: function (url) {
                 var arr = url.split('\\');
@@ -97,6 +110,9 @@ $(function () {
                     contentType: false,
                     data: data,
                     dataType: 'text',
+                    beforeSend : function(request) {
+                        request.setRequestHeader('Authorization', JSON.parse(sessionStorage.Authorization));
+                    },
                     success: function (e) {
                         e = JSON.parse(e);
                         if (e.error) {
@@ -124,7 +140,7 @@ $(function () {
         $('.modal-add .tab-pane').mCustomScrollbar({
             theme: 'dark-3',
         });
-        addVm.onLoad();
+        addVm.getNoticeType();
         avalon.scan(document.body);
     });
 

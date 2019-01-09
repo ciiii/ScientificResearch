@@ -27,6 +27,7 @@ $(function () {
             loaded: false,
             allchecked: false,
             postName: '',
+            fileType:[],
             query: function () {
                 vm.loaded = false;
                 $.support.cors = true;
@@ -74,6 +75,17 @@ $(function () {
                     }
                 });
 
+            },
+            getNoticeType: function () {
+                Dictionary.getDictionaryList('get', '下载中心文件类型', function getDictionaryListListener(success, obj, strErro) {
+                    if (success) {
+                        vm.fileType = obj;
+
+                    } else {
+                        console.info('获取下载中心文件类型失败！');
+                        console.info(strErro);
+                    }
+                })
             },
             search: function () {
                 vm.req.Index = 1;
@@ -157,6 +169,7 @@ $(function () {
             theme: 'dark-3',
         });
         vm.query();
+        vm.getNoticeType();
         avalon.scan(document.body);
     });
 });

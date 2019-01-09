@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using log4net;
@@ -13,6 +14,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
@@ -24,7 +26,9 @@ using MyLib;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using ScientificResearch.Infrastucture;
+
 using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace ScientificResearch
 {
@@ -172,12 +176,12 @@ namespace ScientificResearch
             });
 
             //swagger
-            services.AddSwaggerGen(p =>
+            services.AddSwaggerGen(option =>
             {
                 var security = new Dictionary<string, IEnumerable<string>> { { "Bearer", new string[] { } }, };
-                p.AddSecurityRequirement(security);//添加一个必须的全局安全信息，和AddSecurityDefinition方法指定的方案名称要一致，这里是Bearer。
+                option.AddSecurityRequirement(security);//添加一个必须的全局安全信息，和AddSecurityDefinition方法指定的方案名称要一致，这里是Bearer。
 
-                p.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                option.AddSecurityDefinition("Bearer", new ApiKeyScheme
                 {
                     Description = "权限认证(数据将在请求头中进行传输) 参数结构: \"Authorization: Bearer {token}\"",
                     Name = "Authorization",//jwt默认的参数名称
@@ -185,13 +189,29 @@ namespace ScientificResearch
                     Type = "apiKey"
                 });//Authorization的设置
 
-                p.IgnoreObsoleteActions();
-                p.IgnoreObsoleteProperties();
+                option.IgnoreObsoleteActions();
+                option.IgnoreObsoleteProperties();
 
-                p.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = "科研管理系统-API", Version = "v1" });
+                option.SwaggerDoc("ScientificResearch", new Info { Title = "科研管理系统-API", Version = "ScientificResearch-v1" });
+                option.SwaggerDoc("test", new Info { Title = "测试-API", Version = "test-v1" });
+
+                option.DocInclusionPredicate((docName, apiDesc) => {
+                    if (!apiDesc.TryGetMethodInfo(out MethodInfo methodInfo)) return false;
+                    var versions = methodInfo.DeclaringType
+                                             .GetCustomAttributes(true)
+                                             .OfType<ApiExplorerSettingsAttribute>()
+                                             .Select(attr => attr.GroupName);
+
+                    if (docName == "ScientificResearch" && versions.FirstOrDefault() == null) return true;
+
+                    return versions.Any(v => v.ToString() == docName);
+
+                });
+
                 var filePath = Path.Combine(Directory.GetCurrentDirectory(), "ScientificResearchApi.xml");
-                p.IncludeXmlComments(filePath);
+                option.IncludeXmlComments(filePath);
             });
+
 
             //sql,如果是动态指定数据库,那么每种数据库链接指定不同的login页面,在login时指定用户关联到哪个数据库并保存在session里面.然后每一次请求时,读取指定的key来建立db的连接;2018-5-7 换成了在访问时动态切换数据库
             //services.AddTransient<IDbConnection>(p => new SqlConnection(Configuration.GetValue<string>("connectionString:ScientificResearch")));
@@ -347,10 +367,13 @@ namespace ScientificResearch
             app.UseMvc();
 
             //经由Swagger
-            app.UseSwagger();
+            app.UseSwagger(c=> {
+                c.RouteTemplate = "swagger/{documentName}/swagger.json";
+            });
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "ScientificResearchApi-v1");
+                c.SwaggerEndpoint("/swagger/ScientificResearch/swagger.json", "ScientificResearch-v1");
+                c.SwaggerEndpoint("/swagger/test/swagger.json", "test-v1");
             });
         }
     }

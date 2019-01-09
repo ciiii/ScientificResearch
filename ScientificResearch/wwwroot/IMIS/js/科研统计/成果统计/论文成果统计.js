@@ -1,43 +1,33 @@
 $(function () {
     isOverdue();
-    var chartPaper = echarts.init(document.getElementById('chart-paper'),'macarons');
+    var chartPaper = echarts.init(document.getElementById('chart-paper'));
     chartPaper.showLoading();
     window.vm = null;
     avalon.ready(function () {
         window.vm = avalon.define({
             $id: 'root',
             req: {
-                年度: '',
-                收录情况: '',
-                论文类型: '',
-                JCR分区: '',
-                论文第一完成单位: '',
-                start影响因子区间: '',
-                end影响因子区间: '',
+                Begin论文正式出版日期: '',
+                End论文正式出版日期: '',
             },
-            JCR: '',
             start: '',
             end: '',
-            collection: '',
-            data: [],
-            series: [],
             model: [],
             sum: [],
-            total: '',
             loaded: false,
             nothing: false,
-            getChart: function (data, series) {
+            hasData: false,
+            getChart: function (data, series,list) {
                 //图表配置
                 var option = {
                     title: {
                         text: '论文成果统计图',
-                        // subtext: new Date().getFullYear() + '年',
                         x: 'center',
                         textStyle: {
                             color: '#666',
                             fontWeight: 'bold'
                         },
-                        padding: [20, 15]
+                        padding: [8, 15]
                     },
                     tooltip: {
                         trigger: 'axis',
@@ -53,16 +43,16 @@ $(function () {
                         },
                     },
                     grid: {
-                        top: 100,
-                        right: 10,
-                        bottom: 10,
-                        left: 10,
+                        top: '20%',
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
                         containLabel: true
                     },
-                    calculable: true,
                     legend: {
-                        top: '70',
-                        itemWidth: 30
+                        top: '50',
+                        itemWidth: 30,
+                        data: list
                     },
                     xAxis: {
                         type: 'category',
@@ -70,13 +60,14 @@ $(function () {
                         data: data,
                         axisLabel: {
                             interval: 0,
-                            rotate: 25
+                            rotate: 10
                         }
                     },
                     yAxis: {
                         type: 'value',
-                        nameTextStyle: {
-                            color: '#666'
+                        name: '数量（个）',
+                        axisLabel: {
+                            formatter: '{value} '
                         }
 
                     },
@@ -92,6 +83,7 @@ $(function () {
             },
             query: function () {
                 vm.loaded = false;
+                vm.hasData = false;
                 $.support.cors = true;
                 FruitStatistics.getPaperFruitStatisticsList('get', vm.req.$model, function getPaperFruitStatisticsListListener(success, obj, strErro) {
                     if (success) {
@@ -103,18 +95,65 @@ $(function () {
                             return;
                         } else {
                             var one = obj[0];
-                            var allObject = [];
+                            var series = [];
+                            var list = [];
                             for (var key in one) {
                                 if (key != '部门' && key != '合计') {
                                     var object = {
                                         name: key,
                                         type: 'bar',
+                                        stack: '总量',
+                                        barWidth: '8%',
+                                        label: {
+                                            normal: {
+                                                show: true,
+                                            }
+                                        },
                                         data: []
                                     }
-                                    allObject.push(object);
+                                    series.push(object);
+                                    list.push(object);
                                 }
                                 if (key != '部门') {
                                     vm.sum.push(one[key]);
+                                }
+                                if (key == '合计') {
+                                    if (one[key] != 0) {
+                                        vm.hasData = true;
+                                    }
+                                    var object = {
+                                        name: key,
+                                        type: 'line',
+                                        label: {
+                                            normal: {
+                                                show: true,
+                                                position: 'top'
+                                            }
+                                        },
+                                        lineStyle: {
+                                            normal: {
+                                                color: "none"
+                                            }
+                                        },
+                                        markLine: {
+                                            lineStyle: {
+                                                normal: {
+                                                    color: '#fc97af'
+                                                }
+                                            },
+                                            label: {
+                                                normal: {
+                                                    position: 'start'
+                                                }
+                                            },
+                                            data: [{
+                                                name: '年平均',
+                                                type: 'average'
+                                            }]
+                                        },
+                                        data: []
+                                    }
+                                    series.push(object);
                                 }
                             }
                             var data = [];
@@ -122,18 +161,16 @@ $(function () {
                                 var one = obj[j];
                                 data.push(one.部门);
                                 for (var key in one) {
-                                    for (var a = 0; a < allObject.length; a++) {
-                                        if (key == allObject[a].name) {
-                                            allObject[a].data.push(one[key]);
+                                    for (var a = 0; a < series.length; a++) {
+                                        if (key == series[a].name) {
+                                            series[a].data.push(one[key]);
                                         }
                                     }
                                 }
                             }
                             vm.model = obj;
-                            vm.data = data;
-                            vm.series = allObject;
                             vm.nothing = false;
-                            vm.getChart(vm.data, vm.series);
+                            vm.getChart(data, series,list);
                         }
                     } else {
                         console.info('获取获奖成果统计失败！');
@@ -141,25 +178,10 @@ $(function () {
                     }
                 });
             },
-            getPeriodicalCollection: function () {
-                Periodical.getPeriodicalSeries('get', '期刊收录数据库', function getPeriodicalSeriesListener(success, obj, strErro) {
-                    if (success) {
-                        vm.collection = obj;
-                    } else {
-                        console.info('获取期刊收录数据库失败！');
-                        console.info(strErro);
-                    }
-                })
-            },
             search: function () {
-                vm.req.JCR分区 = vm.JCR;
-                vm.req.start影响因子区间 = vm.start;
-                vm.req.end影响因子区间 = vm.end;
+                vm.req.Begin论文正式出版日期 = vm.start;
+                vm.req.End论文正式出版日期 = vm.end;
                 vm.query();
-            },
-            changeType: function () {
-                vm.req.收录情况 = $('.screen-box .collection').val();
-                vm.search();
             },
             submit: function () {
                 if (event.keyCode == 13) {
@@ -178,9 +200,6 @@ $(function () {
             }
         });
         vm.query();
-        vm.$watch('onReady', function () {
-            vm.getPeriodicalCollection();
-        })
         avalon.scan(document.body);
     });
     $('.form-year').datetimepicker({

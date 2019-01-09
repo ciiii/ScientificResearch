@@ -7,8 +7,9 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="stylesheet" href="/IMIS/libs/bootstrap/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/IMIS/libs/iconfont/iconfont.css"/>
+    <link rel="stylesheet" href="/IMIS/libs/bootstrap/css/bootstrap-datetimepicker.min.css"/>
     <link rel="stylesheet" href="/IMIS/libs/mCustomScrollbar/jquery.mCustomScrollbar.min.css"/>
+    <link rel="stylesheet" href="/IMIS/libs/iconfont/iconfont.css"/>
     <link rel="stylesheet" href="/IMIS/css/index.css"/>
     <link title="black" rel="stylesheet" href="/IMIS/css/black.css" ty="theme" disabled="disabled"/>
     <link title="brown" rel="stylesheet" href="/IMIS/css/brown.css" ty="theme" disabled="disabled"/>
@@ -19,8 +20,11 @@
     <script type="text/javascript" src="/IMIS/libs/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="/IMIS/libs/jquery.placeholder.min.js"></script>
     <script type="text/javascript" src="/IMIS/libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/IMIS/libs/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript" src="/IMIS/libs/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
     <script type="text/javascript" src="/IMIS/libs/avalon.min.js"></script>
+    <script type="text/javascript" src="/IMIS/js/main.js"></script>
+    <script type="text/javascript" src="/IMIS/js/pager.js"></script>
     <script type="text/javascript" src="/IMIS/js/get_connect/code.js"></script>
     <script type="text/javascript" src="/IMIS/js/get_connect/connect_http.js"></script>
     <script type="text/javascript" src="/IMIS/js/get_connect/return_data.js"></script>
@@ -51,7 +55,7 @@
         </div>
         <ul class="nav-sidebar">
             <li class="parent-li active">
-                <a ms-attr="{'href':@getUrl('首页内容.html')}">
+                <a ms-attr="{'href':@getUrl('首页/首页内容.html')}">
                     <i class="icon iconfont icon-home6"></i>
                     <span class="title">首页</span>
                 </a>
@@ -146,7 +150,7 @@
     </div>
     <div class="subpage">
         <div class="tab-content">
-            <iframe id="subpage" scrolling="auto" frameborder="0" ms-attr="{'src':@getUrl('首页内容.html')}"></iframe>
+            <iframe id="subpage" scrolling="auto" frameborder="0" ms-attr="{'src':@getUrl('首页/首页内容.html')}"></iframe>
         </div>
     </div>
 </div>
@@ -154,14 +158,28 @@
     <span>科研管理系统 - Copyright © 2018</span>
     <span>【 {{@hospital}} 】</span>
 </div>
+<div class="modal fade modal-choice" tabindex="-1" role="dialog"
+     aria-labelledby="myLargeModalLabel" aria-hidden="true"  data-backdrop="false" data-keyboard="false">
+    <div class="modal-backdrop fade in"></div>
+    <div class="modal-dialog modal-lg"></div>
+</div>
+<div class="modal fade modal-add" tabindex="-1" role="dialog"
+     aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg"></div>
+</div>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-2615565-31"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
     gtag('js', new Date());
 
     gtag('config', 'UA-2615565-31');
 </script>
+</div>
 </body>
 </html>

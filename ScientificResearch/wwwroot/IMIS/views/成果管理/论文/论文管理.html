@@ -48,6 +48,12 @@
                         <i class="icon iconfont icon-tianjia"></i> 单篇录入
                     </a>
                 </div>
+                <div class="form-group form-add-box">
+                    <a class="btn btn-success btn-add" data-toggle="modal" data-target=".modal-examine"
+                       href="javascript:;">
+                        <i class="icon iconfont icon-wancheng"></i> 全部通过
+                    </a>
+                </div>
                 <div class="form-group input-box">
                     <div class="input-group">
                         <div class="input-group-addon">论文标题</div>
@@ -101,9 +107,10 @@
                             <th>论文标题</th>
                             <th>刊物名称</th>
                             <th>第一作者</th>
+                            <th>影响因子</th>
                             <th>审核进度</th>
                             <th>当前步骤</th>
-                            <th>在线日期</th>
+                            <th>Online日期</th>
                             <th>正式出版日期</th>
                             <th>认领人</th>
                             <th>操作</th>
@@ -126,6 +133,7 @@
                             </td>
                             <td>{{el.刊物名称}}</td>
                             <td>{{el.第一作者}}</td>
+                            <td>{{el.影响因子}}</td>
                             <td>{{el.审核进度}}</td>
                             <td ms-class="getClass(el.步骤状态说明)">
                                 {{el.步骤名称==null?'':el.步骤名称}}-{{el.步骤状态说明==null?'':el.步骤状态说明}}
@@ -195,6 +203,28 @@
                             <button type="button" class="btn btn-default" ms-on-click="@clickBtnReturn">返回</button>
                             <div class="tip-box"></div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade modal-examine" tabindex="-1" role="dialog"
+         aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">【审核】所有未审核的论文！</h4>
+                </div>
+                <div class="modal-footer submit-wrapper">
+                    <div class="submit-box text-center">
+                        <button type="submit" class="btn btn-success btn-submit" ms-on-click="@clickBtnAllPass">通过
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"
+                                ms-on-click="@clickBtnReturn">关闭
+                        </button>
+                        <div class="tip-box"></div>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,6 @@
 $(function () {
     window.noticeVm = null;
+    // var id = oa.getUrlParam('id');
     var id = JSON.parse(sessionStorage.noticeId);
     avalon.ready(function () {
         window.noticeVm = avalon.define({
@@ -14,15 +15,13 @@ $(function () {
                             noticeVm.model = [];
                             return;
                         } else {
-
-
                             if (obj.通知公告.相关文件路径 != null && obj.通知公告.相关文件路径 != '') {
                                 noticeVm.files = obj.通知公告.相关文件路径.split(',');
                             }
                             if (obj.接收条件.length != 0) {
                                 obj.通知公告.接收者类型名称 = obj.接收条件[0].接收者类型名称;
                                 var arr = [];
-                                for ( var i = 0; i < obj.接收条件.length; i++) {
+                                for (var i = 0; i < obj.接收条件.length; i++) {
                                     arr.push(obj.接收条件[i].接收者名称);
                                 }
                                 noticeVm.names = arr.join();
@@ -44,7 +43,9 @@ $(function () {
                 return arr[arr.length - 1];
             },
             clickBtnReturn: function () {
-                $('.modal').modal('hide');
+                $('.modal-add').modal('hide');
+                // vm.query();
+                // vm.getUserNoticeMustReadList();();
             },
         });
         $('.nav-tabs a').on('click', function (e) {

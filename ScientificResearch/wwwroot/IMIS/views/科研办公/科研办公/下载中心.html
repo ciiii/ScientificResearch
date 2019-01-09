@@ -60,8 +60,7 @@
                         <div class="input-group-addon">文件类型</div>
                         <select class="form-control type" ms-on-change="@changeType" ms-duplex="@type">
                             <option value="">全部</option>
-                            <option value="政策法规类">政策法规类</option>
-                            <option value="普通文件类">普通文件类</option>
+                            <option ms-for="el in @fileType" ms-attr="{'value':@el.值}">{{el.值}}</option>
                         </select>
                     </div>
                 </div>

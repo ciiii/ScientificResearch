@@ -97,6 +97,9 @@ var Connect_Http = {
             data: data,
             dataType: 'json',
             contentType: 'application/json',
+            beforeSend : function(request) {
+                request.setRequestHeader('Authorization', JSON.parse(sessionStorage.Authorization));
+            },
             success: function (e) {
                 e = JSON.stringify(e);
                 Connect_Http.callBack(e, callBackListener);

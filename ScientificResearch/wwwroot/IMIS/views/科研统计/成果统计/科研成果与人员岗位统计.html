@@ -41,44 +41,26 @@
 <body ms-controller="root" class="ms-controller" onload="IFrameResize()">
 <div class="page-statistics page-table page-common">
     <div class="main">
-        <!--<div class="screen-box">-->
-            <!--<div class="form-inline">-->
-                <!--<div class="form-group input-box">-->
-                    <!--<div class="input-group">-->
-                        <!--<div class="input-group-addon">年度</div>-->
-                        <!--<input type="text" class="form-control form-year" ms-duplex="@req.年度">-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="form-group input-box">-->
-                    <!--<div class="input-group">-->
-                        <!--<div class="input-group-addon">收录情况</div>-->
-                        <!--<select class="form-control collection" ms-duplex="@req.收录情况" ms-on-change="@changeType">-->
-                            <!--<option value="">请选择</option>-->
-                            <!--<option ms-attr="{'value':@el.值}" ms-for="el in @collection">{{el.值}}</option>-->
-                        <!--</select>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="form-group input-box">-->
-                    <!--<div class="input-group">-->
-                        <!--<div class="input-group-addon">岗位名称</div>-->
-                        <!--<select class="form-control postName" ms-duplex="@req.岗位名称" ms-on-change="@changeType">-->
-                            <!--<option value="">请选择</option>-->
-                            <!--<option ms-attr="{'value':@el.值}" ms-for="el in @postName">{{el.值}}</option>-->
-                        <!--</select>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<a class="btn btn-primary btn-search" href="javascript:;" ms-on-click="@search()">查询</a>-->
-                <!--<div class="total-box">-->
-                    <!--<button type="button" class="btn btn-success btn-refresh">刷新</button>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <div class="chart-box">
-            <div id="chart-majorA" style="height:600px;"></div>
+        <div class="screen-box">
+            <div class="form-inline">
+                <div class="form-group input-box">
+                    <div class="input-group">
+                        <div class="input-group-addon">年度</div>
+                        <input type="text" class="form-control form-year" ms-duplex="@req.年度">
+                    </div>
+                </div>
+                <a class="btn btn-primary btn-search" href="javascript:;" ms-on-click="@search()">查询</a>
+                <div class="total-box">
+                    <button type="button" class="btn btn-success btn-refresh">刷新</button>
+                </div>
+            </div>
+        </div>
+        <div class="chart-box" :visible="@hasData">
+            <div id="chart-majorA" style="height:500px;"></div>
         </div>
         <div class="personnel-box">
             <div class="personnel-list">
-                <h4 class="title">科研成果与人员专业类别统计
+                <h4 class="title">{{@req.年度}}年科研成果与人员专业类别统计
                     <a href="javascript:;" class="btn btn-default btn-printing" ms-on-click="printView()"><i class="icon iconfont icon-dayin2"></i> 打印</a>
                 </h4>
                 <div class="table-responsive" ms-if="@loaded && @model!= null && @model.length != 0">
@@ -108,7 +90,7 @@
         </div>
         <div class="personnel-box">
             <div class="personnel-list">
-                <h4 class="title">科研成果与人员专业类别统计(百名中)
+                <h4 class="title">{{@req.年度}}年科研成果与人员专业类别统计(百名中)
                     <a href="javascript:;" class="btn btn-default btn-printing" ms-on-click="printView()"><i class="icon iconfont icon-dayin2"></i> 打印</a>
                 </h4>
                 <div class="table-responsive" ms-if="@loaded && @model!= null && @model.length != 0">

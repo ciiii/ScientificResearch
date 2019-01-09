@@ -17,15 +17,12 @@
                 <div class="form-group col-sm-6">
                     <label class="col-sm-3 control-label">通知类型：</label>
                     <div class="col-sm-7">
-                        <label class="radio-inline">
-                            <input type="radio" name="type" value="普通通知" ms-duplex="@type"> 普通通知
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio" name="type" value="公告" ms-duplex="@type"> 公告
-                        </label>
+                        <select class="form-control noticeType" ms-duplex="@model.基本资料.通知类型">
+                            <option ms-for="el in @noticeType" ms-attr="{'value':@el.值}">{{el.值}}</option>
+                        </select>
                     </div>
                 </div>
-                <div class="form-group col-sm-6">
+                <div class="form-group">
                     <label class="col-sm-3 control-label">
                         <i class="icon iconfont icon-text-sign icon-sign"></i>通知名称：
                     </label>
@@ -46,6 +43,17 @@
                             <option value="办事流程">办事流程</option>
                             <option value="科研平台">科研平台</option>
                         </select>
+                    </div>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label class="col-sm-3 control-label">是否必读：</label>
+                    <div class="col-sm-7">
+                        <label class="radio-inline">
+                            <input type="radio" name="mustRead" value="true" ms-duplex="@model.基本资料.是否必读"> 是
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="mustRead" value="false" ms-duplex="@model.基本资料.是否必读"> 否
+                        </label>
                     </div>
                 </div>
                 <!--<div class="form-group col-sm-6">

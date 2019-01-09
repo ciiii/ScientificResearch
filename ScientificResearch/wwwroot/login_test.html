@@ -30,31 +30,34 @@
 </head>
 <body onload="loadTopWindow()">
 <div class="page-login" style="background: url('IMIS/images/bg-test.jpg') no-repeat;">
-    <form class="form-login login" role="form" method="post" style="margin: 180px 45% 0 55%">
-        <h2 class="form-signin-heading">
-            <img src="IMIS/images/logo.png"/>
-        </h2>
-        <div class="form-group">
-            <div class="input-box">
-                <i class="icon iconfont icon-account2 "></i>
-                <input type="text" class="form-control" id="userId" placeholder="用户ID">
+    <div class="content" style="left: 75%">
+        <form class="form-login login" role="form" method="post">
+            <h2 class="form-signin-heading">
+                <img src="IMIS/images/logo.png"/>
+            </h2>
+            <div class="form-group">
+                <div class="input-box">
+                    <i class="icon iconfont icon-account2 "></i>
+                    <input type="text" class="form-control" id="userId" placeholder="用户ID">
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="input-box">
-                <i class="icon iconfont icon-xiugaimima1"></i>
-                <input type="password" class="form-control" id="password" placeholder="密码">
+            <div class="form-group">
+                <div class="input-box">
+                    <i class="icon iconfont icon-xiugaimima1"></i>
+                    <input type="password" class="form-control" id="password" placeholder="密码">
+                </div>
             </div>
-        </div>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" class="remember"> 记住账号
-            </label>
-            <!--<a class="forget-password" href="#">忘记密码？</a>-->
-        </div>
-        <div class="login-tip"></div>
-        <button type="button" class="btn btn-primary btn-lg btn-block btn-login">登 录</button>
-    </form>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" class="remember"> 记住账号
+                </label>
+                <!--<a class="forget-password" href="#">忘记密码？</a>-->
+            </div>
+            <div class="login-tip"></div>
+            <button type="button" class="btn btn-primary btn-lg btn-block btn-login">登 录</button>
+        </form>
+        <p class="support">技术支持：上海路炳通信息技术有限公司</p>
+    </div>
     <div class="browser-tips">
         <p class="tip-text"><i class="icon iconfont icon-weiwancheng1"></i>您的浏览器版本太低了！</p>
         <p>为了给您提供更优质的网页浏览体验，建议使用IE10及以上版本的浏览器。</p>
@@ -182,7 +185,7 @@
                             data: obj,
                             time: curTime,
                             url: '/' + url + '.html',
-                            dbKey:'ScientificResearch_test'
+                            dbKey: 'ScientificResearch_test'
                         }));
                         sessionStorage.mUserId = obj.人员.编号;
                         sessionStorage.Authorization = JSON.stringify(obj.token_type + ' ' + obj.access_token);

@@ -9,36 +9,25 @@ $(function () {
         window.vm = avalon.define({
             $id: 'root',
             req: {
-                年度: '',
-                收录情况: '',
-                岗位名称: ''
+                年度: new Date().getFullYear(),
             },
-            JCR: '',
-            start: '',
-            end: '',
-            collection:[],
-            postName: [],
-            data: [],
-            series: [],
             model: [],
             sum: [],
-            total: '',
-            department: '',
             loaded: false,
             nothing: false,
+            hasData: false,
             data: [],
-            getChartA: function (data, series) {
+            getChartA: function (data, series,list) {
                 //图表配置
                 var option = {
                     title: {
-                        text: '科研成果与人员岗位统计图',
-                        subtext: new Date().getFullYear() + '年',
+                        text: vm.req.年度 +'年科研成果与人员岗位统计图',
                         x: 'center',
                         textStyle: {
                             color: '#666',
                             fontWeight: 'bold'
                         },
-                        padding: [20, 15]
+                        padding: [8, 15]
                     },
                     tooltip: {
                         trigger: 'axis',
@@ -54,16 +43,16 @@ $(function () {
                         },
                     },
                     grid: {
-                        top: 100,
-                        right: 10,
-                        bottom: 10,
-                        left: 10,
+                        top: '20%',
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
                         containLabel: true
                     },
-                    calculable: true,
                     legend: {
-                        top: '70',
-                        itemWidth: 30
+                        top: '50',
+                        itemWidth: 30,
+                        data:list
                     },
                     xAxis: {
                         type: 'category',
@@ -71,13 +60,14 @@ $(function () {
                         data: data,
                         axisLabel: {
                             interval: 0,
-                            rotate: 25
+                            rotate: 10
                         }
                     },
                     yAxis: {
                         type: 'value',
-                        nameTextStyle: {
-                            color: '#666'
+                        name: '数量（个）',
+                        axisLabel: {
+                            formatter: '{value} '
                         }
 
                     },
@@ -90,8 +80,7 @@ $(function () {
                 //图表配置
                 var option = {
                     title : {
-                        text: '科研成果与人员专业类别统计图',
-                        // subtext: new Date().getFullYear() + '年',
+                        text: vm.req.年度 +'年科研成果与人员专业类别统计图',
                         x:'center',
                         textStyle: {
                             color: '#666',
@@ -141,6 +130,7 @@ $(function () {
             },
             getPostTypeFruit: function () {
                 vm.loaded = false;
+                vm.hasData = false;
                 $.support.cors = true;
                 FruitStatistics.getPostTypeFruitStatisticsList('get', vm.req.$model, function getPostTypeFruitStatisticsListListener(success, obj, strErro) {
                     if (success) {
@@ -152,18 +142,65 @@ $(function () {
                             return;
                         } else {
                             var one = obj[0];
-                            var allObject = [];
+                            var series = [];
+                            var list = [];
                             for (var key in one) {
                                 if (key != '岗位类型' && key != '合计') {
                                     var object = {
                                         name: key,
                                         type: 'bar',
+                                        stack: '总量',
+                                        barWidth: '10%',
+                                        label: {
+                                            normal: {
+                                                show: true,
+                                            }
+                                        },
                                         data: []
                                     }
-                                    allObject.push(object);
+                                    series.push(object);
+                                    list.push(object);
                                 }
                                 if (key != '岗位类型') {
                                     vm.sum.push(one[key]);
+                                }
+                                if (key == '合计') {
+                                    if (one[key] != 0) {
+                                        vm.hasData = true;
+                                    }
+                                    var object = {
+                                        name: key,
+                                        type: 'line',
+                                        label: {
+                                            normal: {
+                                                show: true,
+                                                position: 'top'
+                                            }
+                                        },
+                                        lineStyle: {
+                                            normal: {
+                                                color: "none"
+                                            }
+                                        },
+                                        markLine: {
+                                            lineStyle: {
+                                                normal: {
+                                                    color: '#fc97af'
+                                                }
+                                            },
+                                            label: {
+                                                normal: {
+                                                    position: 'start'
+                                                }
+                                            },
+                                            data: [{
+                                                name: '年平均',
+                                                type: 'average'
+                                            }]
+                                        },
+                                        data: []
+                                    }
+                                    series.push(object);
                                 }
                             }
                             var data = [];
@@ -171,18 +208,16 @@ $(function () {
                                 var one = obj[j];
                                 data.push(one.岗位类型);
                                 for (var key in one) {
-                                    for (var a = 0; a < allObject.length; a++) {
-                                        if (key == allObject[a].name) {
-                                            allObject[a].data.push(one[key]);
+                                    for (var a = 0; a < series.length; a++) {
+                                        if (key == series[a].name) {
+                                            series[a].data.push(one[key]);
                                         }
                                     }
                                 }
                             }
                             vm.model = obj;
-                            vm.data = data;
-                            vm.series = allObject;
                             vm.nothing = false;
-                            vm.getChartA(vm.data, vm.series);
+                            vm.getChartA(data, series,list);
                         }
                         $('.bs-tooltip').tooltip();
                     } else {
@@ -205,7 +240,7 @@ $(function () {
                         } else {
                             var one = obj[0];
 
-                            var allObject = [];
+                            var series = [];
                             var data = [];
                             for (var key in one) {
                                 if (key != '专业技术级别' && key != '合计') {
@@ -213,7 +248,7 @@ $(function () {
                                         value:one[key],
                                         name: key,
                                     }
-                                    allObject.push(object);
+                                    series.push(object);
                                     data.push(key);
                                 }
                                 if (key != '专业技术级别') {
@@ -224,16 +259,16 @@ $(function () {
                             for (var j = 0; j < obj.length - 1; j++) {
                                 var one = obj[j];
                                 for (var key in one) {
-                                    for (var a = 0; a < allObject.length; a++) {
-                                        if (key == allObject[a].name) {
-                                            allObject[a].value+=one[key];
+                                    for (var a = 0; a < series.length; a++) {
+                                        if (key == series[a].name) {
+                                            series[a].value+=one[key];
                                         }
                                     }
                                 }
                             }
                             vm.model = obj;
                             vm.data = data;
-                            vm.series = allObject;
+                            vm.series = series;
                             vm.nothing = false;
                             vm.getChartB(vm.data, vm.series);
                         }
@@ -244,32 +279,8 @@ $(function () {
                     }
                 });
             },
-            getDictionaryList: function () {
-                Dictionary.getDictionaryList('get', '岗位名称', function getDictionaryListListener(success, obj, strErro) {
-                    if (success) {
-                        vm.postName = obj;
-                    } else {
-                        console.info('获取岗位名称失败！');
-                        console.info(strErro);
-                    }
-                })
-            },
-            getPeriodicalCollection: function () {
-                Periodical.getPeriodicalSeries('get', '期刊收录数据库', function getPeriodicalSeriesListener(success, obj, strErro) {
-                    if (success) {
-                        vm.collection = obj;
-                    } else {
-                        console.info('获取期刊收录数据库失败！');
-                        console.info(strErro);
-                    }
-                })
-            },
             search: function () {
                 vm.getPostTypeFruit();
-            },
-            changeType: function () {
-                vm.req.岗位名称 = $('.screen-box .postName').val();
-                vm.search();
             },
             submit: function () {
                 if (event.keyCode == 13) {
@@ -289,10 +300,6 @@ $(function () {
         });
         vm.getPostTypeFruit();
         vm.getMajorLevelFruit();
-        vm.$watch('onReady', function () {
-            vm.getDictionaryList();
-            vm.getPeriodicalCollection();
-        })
         avalon.scan(document.body);
     });
     $('.form-year').datetimepicker({

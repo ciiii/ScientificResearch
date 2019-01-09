@@ -9,8 +9,8 @@ namespace ScientificResearch.Models
 {
     public class 论文成果统计Filter
     {
-        public DateTime? Begin论文Online日期 { get; set; }
-        public DateTime? End论文Online日期 { get; set; }
+        public DateTime? Begin论文正式出版日期 { get; set; }
+        public DateTime? End论文正式出版日期 { get; set; }
     }
 
     public class 获奖成果统计Filter

@@ -262,7 +262,7 @@
                             var xhr = new XMLHttpRequest();
                             xhr.open("post", me.editor.getOpt('imageUrl') + "?type=ajax", true);
                             xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-
+                            xhr.setRequestHeader('Authorization', JSON.parse(sessionStorage.Authorization));
                             //模拟数据
                             var fd = new FormData();
                             fd.append(me.editor.getOpt('imageFieldName'), f);

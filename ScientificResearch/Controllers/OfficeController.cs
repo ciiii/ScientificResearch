@@ -10,7 +10,7 @@ using ScientificResearch.Models;
 using MyLib;
 using Microsoft.Extensions.Configuration;
 using System.Data;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace ScientificResearch.Controllers
 {
@@ -114,6 +114,7 @@ namespace ScientificResearch.Controllers
             return filesNameList;
         }
 
+        [AllowAnonymous]
         [HttpPost]
         async public Task<object> 上传通知公告图片()
         {

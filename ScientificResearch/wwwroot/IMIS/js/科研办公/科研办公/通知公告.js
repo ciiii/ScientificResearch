@@ -31,6 +31,7 @@ $(function () {
             loaded: false,
             allchecked: false,
             postName: '',
+            noticeType:[],
             query: function () {
                 vm.loaded = false;
                 $.support.cors = true;
@@ -79,6 +80,17 @@ $(function () {
                 });
 
             },
+            getNoticeType: function () {
+                Dictionary.getDictionaryList('get', '通知类型', function getDictionaryListListener(success, obj, strErro) {
+                    if (success) {
+                        vm.noticeType = obj;
+
+                    } else {
+                        console.info('获取通知类型失败！');
+                        console.info(strErro);
+                    }
+                })
+            },
             search: function () {
                 vm.req.Index = 1;
                 vm.req.Like发送人姓名 = vm.name;
@@ -113,9 +125,9 @@ $(function () {
             details: function (id) {
                 sessionStorage.noticeId = JSON.stringify(id);
             },
-            getStateClass: function (state) {
+            getStateReadClass: function (state) {
                 switch (state) {
-                    case 1:
+                    case 0:
                         return 'not-received';
                 }
             },
