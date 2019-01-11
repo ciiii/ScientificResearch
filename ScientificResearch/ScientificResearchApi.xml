@@ -4,6 +4,14 @@
         <name>ScientificResearch</name>
     </assembly>
     <members>
+        <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementBaseController">
+            <summary>
+            2019-1-9
+            为所有教学管理的控制器加一个分组,加一个路由的area前缀;
+            应该用area区分不同的服务;方便以后用微服务分开;
+            但是目前models还无法分开;
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Business.AccessBusiness">
             <summary>
             登录|注销|获取个人权限|个人信息等
@@ -1193,6 +1201,14 @@
             <param name="idList"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.ToStringIdWithSpacer(System.Collections.Generic.IEnumerable{System.Int32},System.String)">
+            <summary>
+            根据idlist得到一个用逗号分隔的字符串,count=0则返回"0",其中每一项都是数字;
+            </summary>
+            <param name="idList"></param>
+            <param name="Spacer"></param>
+            <returns></returns>
+        </member>
         <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.GetModelByIdSpAsync``1(System.Data.IDbConnection,System.Int32)">
             <summary>
             通过主键获得对象,或者null
@@ -1282,6 +1298,17 @@
             <summary>
             执行一个sp,返回多个list,需要自己再去解析,
             sp如果没有参数,则不输入model
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="cnn"></param>
+            <param name="model"></param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.Merge``1(System.Data.IDbConnection,``0,System.Data.IDbTransaction)">
+            <summary>
+            按约定SP_xxx_增改的命名执行一个merge
+            注意其中的参数名也是约定
             </summary>
             <typeparam name="T"></typeparam>
             <param name="cnn"></param>
@@ -1659,6 +1686,41 @@
         <member name="T:ScientificResearch.Models.所有成果统计Filter">
             <summary>
             比如"年度"这个条件
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.OAuthAccessTokenResult">
+            <summary>
+            获取OAuth AccessToken的结果
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.OAuthAccessTokenResult.access_token">
+            <summary>
+            接口调用凭证
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.OAuthAccessTokenResult.expires_in">
+            <summary>
+            access_token接口调用凭证超时时间，单位（秒）
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.OAuthAccessTokenResult.refresh_token">
+            <summary>
+            用户刷新access_token
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.OAuthAccessTokenResult.openid">
+            <summary>
+            授权用户唯一标识
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.OAuthAccessTokenResult.scope">
+            <summary>
+            用户授权的作用域，使用逗号（,）分隔
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.OAuthAccessTokenResult.unionid">
+            <summary>
+            只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段。详见：获取用户个人信息（UnionID机制）
             </summary>
         </member>
         <member name="T:ScientificResearch.Models.完成步骤`1">

@@ -17,12 +17,16 @@ $(function () {
                     async: {
                         enable: true,
                         url: getUrl,
+                        type: 'get',
                         contentType: 'application/json',
                         autoParam: [],
                         dataType: 'json',
-                        type: 'get',
+                        beforeSend: function (request) {
+                            request.setRequestHeader('Authorization', JSON.parse(sessionStorage.Authorization));
+                        },
                         dataFilter: filter
                     },
+
                     view: {
                         expandSpeed: "",
                         addHoverDom: addHoverDom,
@@ -103,7 +107,7 @@ $(function () {
                         return false;
                     } else {
                         var arr = newName.split('【');
-                        var name = arr[0].substring(0, arr[0].length).replace(/\s/g,"");
+                        var name = arr[0].substring(0, arr[0].length).replace(/\s/g, "");
                         var code = arr[1].substring(3, arr[1].length - 1);
 
                         var data = {
@@ -115,7 +119,7 @@ $(function () {
                             排序: treeNode.排序,
                             备注: treeNode.备注
                         }
-                       vm.editIndustryCode(data);
+                        vm.editIndustryCode(data);
                     }
                 }
 

@@ -17,10 +17,13 @@ $(function () {
                     async: {
                         enable: true,
                         url: getUrl,
+                        type: 'get',
                         contentType: 'application/json',
                         autoParam: [],
                         dataType: 'json',
-                        type: 'get',
+                        beforeSend: function (request) {
+                            request.setRequestHeader('Authorization', JSON.parse(sessionStorage.Authorization));
+                        },
                         dataFilter: filter
                     },
                     view: {

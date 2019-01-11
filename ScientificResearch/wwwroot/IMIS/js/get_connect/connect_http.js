@@ -69,6 +69,8 @@ var Connect_Http = {
         if (sessionStorage.Authorization) {
             Authorization = JSON.parse(sessionStorage.Authorization);
         }
+        console.info('44444');
+        console.info(Authorization);
         xhr.setRequestHeader('Authorization', Authorization);
         data = JSON.stringify(data);
 

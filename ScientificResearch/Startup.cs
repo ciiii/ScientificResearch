@@ -194,6 +194,7 @@ namespace ScientificResearch
 
                 option.SwaggerDoc("ScientificResearch", new Info { Title = "科研管理系统-API", Version = "ScientificResearch-v1" });
                 option.SwaggerDoc("test", new Info { Title = "测试-API", Version = "test-v1" });
+                option.SwaggerDoc("TeachingManagement", new Info { Title = "教学管理-API", Version = "TeachingManagement-v1" });
 
                 option.DocInclusionPredicate((docName, apiDesc) => {
                     if (!apiDesc.TryGetMethodInfo(out MethodInfo methodInfo)) return false;
@@ -374,6 +375,7 @@ namespace ScientificResearch
             {
                 c.SwaggerEndpoint("/swagger/ScientificResearch/swagger.json", "ScientificResearch-v1");
                 c.SwaggerEndpoint("/swagger/test/swagger.json", "test-v1");
+                c.SwaggerEndpoint("/swagger/TeachingManagement/swagger.json", "TeachingManagement-v1");
             });
         }
     }

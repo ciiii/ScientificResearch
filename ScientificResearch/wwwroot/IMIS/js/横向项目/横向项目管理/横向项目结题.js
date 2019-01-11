@@ -3,7 +3,7 @@ $(function () {
     window.vm = null;
     var userInfo = JSON.parse(localStorage.info).data;
     var departmentTree;
-    parentRefresh();
+    // parentRefresh();
     avalon.ready(function () {
         window.vm = avalon.define({
             $id: 'root',

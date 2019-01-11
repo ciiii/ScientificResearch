@@ -20,9 +20,9 @@ using System.Net.Http;
 
 namespace ScientificResearch.Controllers
 {
-    [Produces("application/json")]
-    [Consumes("application/json", "multipart/form-data")]//此处为新增
-    [Route("[controller]/[action]")]
+    //[Produces("application/json")]
+    //[Consumes("application/json", "multipart/form-data")]//此处为新增
+    //[Route("[controller]/[action]")]
     [ApiExplorerSettings(GroupName ="test")]
     public class TestController : BaseController
     {
@@ -260,5 +260,7 @@ namespace ScientificResearch.Controllers
 
             return Content(responseString, "text/html");
         }
+
+
     }
 }

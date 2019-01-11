@@ -34,6 +34,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\TeachingManagement\Data\" />
+    <Folder Include="Areas\TeachingManagement\Models\" />
+    <Folder Include="Areas\TeachingManagement\Views\" />
     <Folder Include="Models\Table\" />
     <Folder Include="Models\View\" />
     <Folder Include="wwwroot\upload\下载中心\" />

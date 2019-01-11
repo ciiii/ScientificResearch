@@ -960,3 +960,8 @@ function isFormData(funFormData, funAjaxFileUpload) {
         funAjaxFileUpload();
     }
 }
+function setHeader(xhr) {
+    var Authorization = JSON.parse(sessionStorage.Authorization);
+    xhr.setRequestHeader('Authorization', Authorization);
+
+}

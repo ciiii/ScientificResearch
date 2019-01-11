@@ -436,6 +436,9 @@ $(function () {
                     contentType: false,
                     data: data,
                     dataType: 'text',
+                    beforeSend : function(request) {
+                        request.setRequestHeader('Authorization', JSON.parse(sessionStorage.Authorization));
+                    },
                     success: function (e) {
                         e = JSON.parse(e);
                         if (e.error) {
@@ -469,6 +472,9 @@ $(function () {
                     contentType: false,
                     data: data,
                     dataType: 'text',
+                    beforeSend : function(request) {
+                        request.setRequestHeader('Authorization', JSON.parse(sessionStorage.Authorization));
+                    },
                     success: function (e) {
                         e = JSON.parse(e);
                         if (e.error) {

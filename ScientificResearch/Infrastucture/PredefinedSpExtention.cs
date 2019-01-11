@@ -51,6 +51,8 @@ namespace ScientificResearch.Infrastucture
         /// </summary>
         private const string PredefindedKeyFields = "编号";
 
+        private static string PrdefindeSpMergeName<T>() { return $"SP_{typeof(T).Name}_增改"; }
+
         /// <summary>
         /// 把IEnumerable int类型的编号列表,转为PredefindedKeyFieldsList列表,后者可以转为一个dataTable,是只有一个字段 编号 的表
         /// </summary>
@@ -62,6 +64,17 @@ namespace ScientificResearch.Infrastucture
             {
                 编号 = i
             });
+        }
+
+        /// <summary>
+        /// 根据idlist得到一个用逗号分隔的字符串,count=0则返回"0",其中每一项都是数字;
+        /// </summary>
+        /// <param name="idList"></param>
+        /// <param name="Spacer"></param>
+        /// <returns></returns>
+        public static string ToStringIdWithSpacer(this IEnumerable<int> idList, string Spacer = ",")
+        {
+            return idList.Count() == 0 ? "0" : string.Join(Spacer, idList);
         }
 
         #region 画蛇添足的
@@ -290,7 +303,35 @@ namespace ScientificResearch.Infrastucture
             return cnn.QueryMultipleAsync(typeof(T).Name, model, transaction, commandType: CommandType.StoredProcedure);
         }
 
+        /// <summary>
+        /// 按约定SP_xxx_增改的命名执行一个merge
+        /// 注意其中的参数名也是约定
+        /// 注意他返回的是同类型T,而不是编号的int
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="cnn"></param>
+        /// <param name="model"></param>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
+        async public static Task<T> Merge<T>(this IDbConnection cnn, T model, IDbTransaction transaction = null) where T : new()
+        {
+            var result = await cnn.QueryAsync<T>(PrdefindeSpMergeName<T>(), new
+            {
+                tt = model.ToDataTable()
+            }, transaction, commandType: CommandType.StoredProcedure);
 
+            return result.SingleOrDefault();
+        }
+
+        async public static Task<IEnumerable<T>> Merge<T>(this IDbConnection cnn, IEnumerable<T> model, IDbTransaction transaction = null) where T : new()
+        {
+            var result = await cnn.QueryAsync<T>(PrdefindeSpMergeName<T>(), new
+            {
+                tt = model.ToDataTable()
+            }, transaction, commandType: CommandType.StoredProcedure);
+
+            return result;
+        }
         #region 根据sp中对删除和启禁用的命名约定,调用相应的sp的方法,已废弃,直接用上面的几个"dapper原生的操作sp的方法"+"映射而来的sp类"结合而得到的调用sp的方法
         ///// <summary>
         ///// 增改一个表.单个对象.其中sp名称和tt的名称是按约定从表名构成的;

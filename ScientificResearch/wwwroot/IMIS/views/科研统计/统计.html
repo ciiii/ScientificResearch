@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>数据统计</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="/IMIS/libs/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/IMIS/libs/bootstrap/css/bootstrap-datetimepicker.min.css"/>
+    <link rel="stylesheet" href="/IMIS/libs/bootstrap/css/bootstrap-multiselect.css"/>
+    <link rel="stylesheet" href="/IMIS/libs/mCustomScrollbar/jquery.mCustomScrollbar.min.css"/>
+    <link rel="stylesheet" href="/IMIS/libs/ztree/metroStyle/metroStyle.css"/>
+    <link rel="stylesheet" href="/IMIS/libs/iconfont/iconfont.css"/>
+    <link rel="stylesheet" href="/IMIS/css/child_pages.css"/>
+    <!--[if lt IE 9]>
+    <script src="/IMIS/libs/html5shiv.js"></script>
+    <script src="/IMIS/libs/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+    <script src="/IMIS/libs/jquery-1.11.1.min.js"></script>
+    <script src="/IMIS/libs/jquery.placeholder.min.js"></script>
+    <script src="/IMIS/libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/IMIS/libs/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/IMIS/libs/bootstrap/js/bootstrap-multiselect.js"></script>
+    <script src="/IMIS/libs/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="/IMIS/libs/ztree/jquery.ztree.all.js"></script>
+    <script src="/IMIS/libs/avalon.min.js"></script>
+    <script src="/IMIS/libs/Echarts/echarts.common.min.js"></script>
+    <script src="/IMIS/libs/Echarts/macarons.js"></script>
+
+    <script src="/IMIS/js/pager.js"></script>
+    <script src="/IMIS/js/main.js"></script>
+    <script src="/IMIS/js/get_connect/code.js"></script>
+    <script src="/IMIS/js/get_connect/connect_http.js"></script>
+    <script src="/IMIS/js/get_connect/return_data.js"></script>
+    <script>
+        document.write(' <script src="/IMIS/js/科研统计/统计.js?time=' + new Date().getTime() + '"></s' + 'cript>');
+    </script>
+</head>
+<body ms-controller="root" class="ms-controller">
+<div class="page-statistics page-common page-paper">
+    <div class="main">
+        <div class="col-md-2 module">
+            <div class="box min-box">
+                <div class="content">
+                    <p class="sum">275篇</p>
+                    <p class="title">核心期刊发文排名</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 module">
+            <div class="box min-box">
+                <div class="content">
+                    <p class="sum">310篇</p>
+                    <p class="title">SCI发文排名</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 module">
+            <div class="box min-box">
+                <div class="content">
+                    <p class="sum">512篇</p>
+                    <p class="title">第一作者发文排名</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 module">
+            <div class="box min-box">
+                <div class="content">
+                    <p class="sum">37篇</p>
+                    <p class="title">基金论文发文排名</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 module">
+            <div class="box min-box">
+                <div class="content">
+                    <p class="sum">94个</p>
+                    <p class="title">在研项目</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 module">
+            <div class="box min-box">
+                <div class="content">
+                    <p class="sum">1729万</p>
+                    <p class="title">项目金额排名</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 module">
+            <div class="box">
+                <div class="box-header">
+                    <h3>历年SCI、核心期刊发文趋势</h3>
+                    <a class="more bs-tooltip" data-toggle="tooltip" data-placement="bottom" title="更多"
+                       href="task_message.html">
+                        <img src="/Invite_bids/images/more.png" alt="更多" title="更多"/>
+                    </a>
+                </div>
+                <div class="content">
+                    <div id="chartOone" style="height: 400px"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 module">
+            <div class="notice box">
+                <div class="box-header">
+                    <h3>历年科研项目趋势</h3>
+                    <a class="more bs-tooltip" data-toggle="tooltip" data-placement="bottom" title="更多"
+                       href="notice_message.html">
+                        <img src="/Invite_bids/images/more.png" alt="更多"/>
+                    </a>
+                </div>
+                <div class="content">
+                    <div id="chartTwo" style="height: 400px"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 module">
+            <div class="regulation box">
+                <div class="box-header">
+                    <h3>XXX趋势</h3>
+                    <a class="more bs-tooltip" data-toggle="tooltip" data-placement="bottom" title="更多"
+                       href="task_warning.html">
+                        <img src="/Invite_bids/images/more.png" alt="更多"/>
+                    </a>
+                </div>
+                <div class="content">
+                    <div id="chartThree" style="height: 400px"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 module">
+            <div class="regulation box">
+                <div class="box-header">
+                    <h3>在研项目统计</h3>
+                    <a class="more bs-tooltip" data-toggle="tooltip" data-placement="bottom" title="更多"
+                       href="task_warning.html">
+                        <img src="/Invite_bids/images/more.png" alt="更多"/>
+                    </a>
+                </div>
+                <div class="content">
+                    <div id="chartFour" style="height: 400px"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 module">
+            <div class="statistics box">
+                <div class="box-header">
+                    <h3>项目经费统计</h3>
+                    <a class="more bs-tooltip" data-toggle="tooltip" data-placement="bottom" title="更多"
+                       href="data_statistics.html">
+                        <img src="/Invite_bids/images/more.png" alt="更多"/>
+                    </a>
+                </div>
+                <div class="content">
+                    <div id="chartFive" style="height: 400px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade modal-details" tabindex="-1" role="dialog"
+         aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg"></div>
+    </div>
+</div>
+</body>
+</html>

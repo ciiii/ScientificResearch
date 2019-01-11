@@ -19,6 +19,9 @@ $(function () {
                     contentType: false,
                     data: data,
                     dataType: 'text',
+                    beforeSend : function(request) {
+                        request.setRequestHeader('Authorization', JSON.parse(sessionStorage.Authorization));
+                    },
                     success: function (e) {
                         if (e) {
                             e = JSON.parse(e);
