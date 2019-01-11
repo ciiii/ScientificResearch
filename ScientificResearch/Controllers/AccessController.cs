@@ -36,6 +36,7 @@ namespace ScientificResearch.Controllers
 
         /// <summary>
         /// 登录,返回登录人所具有的权限
+        /// TODO:废除,改用Manage里面的login+这里的获取权限接口;
         /// </summary>
         /// <param name="model">其中dbKey请先填"ScientificResearch_Model"</param>
         /// <returns></returns>
@@ -46,12 +47,7 @@ namespace ScientificResearch.Controllers
         {
             //var IP = Request.Host.Host;
             var IP = HttpContext.Connection.RemoteIpAddress.ToString();
-            //return await MyAccessBusiness.Login(model,IP);
 
-            //var where = SqlWhereMapper.toWhere(new LoginInfoFilter() { 工号 = model.工号 });
-            //model.DbKey = "ScientificResearch_Model";
-
-            //var dbWhenLogin = new SqlConnection(config.GetValue<string>("connectionString:ScientificResearch").Replace("{0}", model.DbKey));
             var dbWhenLogin = new SqlConnection(DbConnectionStringLack.Replace("{0}", model.DbKey));
             var result = await dbWhenLogin.QueryMultipleSpAsync(
                new sp_登录()
@@ -139,6 +135,25 @@ namespace ScientificResearch.Controllers
                 access_token = new JwtSecurityTokenHandler().WriteToken(token),
                 token_type = "Bearer"
             };
+        }
+
+        /// <summary>
+        /// 获取科研系统pc端的功能菜单;
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        async public Task<object> 获取权限菜单()
+        {
+            var permission = await Db.GetListSpAsync<权限>($"tfn_人员的权限('{CurrentUser.工号}')", orderStr: "排序");
+            //处理一下中文
+            foreach (var item in permission)
+            {
+                item.路径 = string.Join("?", (item.路径 ?? "").Split("?").Select(j => Uri.EscapeUriString(j)));
+            }
+
+            var rPermission = RecursivePermission(permission, 0);
+
+            return rPermission;
         }
 
         /// <summary>

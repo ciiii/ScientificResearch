@@ -66,7 +66,7 @@ namespace ScientificResearch.Infrastucture
         /// 登录时可以用这个临时生成一个连接;
         /// </summary>
         public string DbConnectionStringLack =>
-            Config.GetValue<string>(Env.IsDevelopment() ? "connectionString:ScientificResearch_Development" : "connectionString:ScientificResearch_Release");
+            Config.GetValue<string>("connectionString:ScientificResearch");
 
         /// <summary>
         /// 指定连接的库为当前登录人的库,字串可用于事务,也可用于下面的db
@@ -76,6 +76,7 @@ namespace ScientificResearch.Infrastucture
 
         /// <summary>
         /// 获取当前登录者的数据库链接;可能在login方法中另做一个
+        /// 也可以这么写: public IDbConnection Db => new SqlConnection(DbConnectionString);
         /// </summary>
         public IDbConnection Db
         {
@@ -84,6 +85,11 @@ namespace ScientificResearch.Infrastucture
                 return new SqlConnection(DbConnectionString);
             }
         }
+
+        /// <summary>
+        /// 主库
+        /// </summary>
+        public SqlConnection Db_Manage => new SqlConnection(Config.GetValue<string>("connectionString:ScientificResearch_Manage"));
 
         ///// <summary>
         ///// redis服务的db对象 

@@ -3,6 +3,7 @@ $(function () {
     var TwoIndex;
     window.mUserInfo = JSON.parse(localStorage.info).data;
     window.mUserId = mUserInfo.人员.编号;
+    console.info(mUserInfo);
     avalon.config({debug: false});
     window.vm = null;
     avalon.ready(function () {

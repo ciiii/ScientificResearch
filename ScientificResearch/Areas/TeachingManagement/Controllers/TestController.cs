@@ -5,15 +5,27 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ScientificResearch.Infrastucture;
 using ScientificResearch.Models;
 
 namespace ScientificResearch.Areas.TeachingManagement.Controllers
 {
     public class TestController : TeachingManagementBaseController
     {
+        /// <summary>
+        /// Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyLlp5PlkI0iOiLnrqHnkIblkZgiLCLlt6Xlj7ciOiIwMDAxIiwi57yW5Y-3IjoiMiIsIumDqOmXqOe8luWPtyI6IjEwMDI0Iiwi6YOo6Zeo5ZCN56ewIjoi5L-h5oGv5aSEIiwiRGJLZXkiOiJTY2llbnRpZmljUmVzZWFyY2hfVGVzdCIsImlzcyI6Im1lZDEwMC5jb20iLCJhdWQiOiJtZWQxMDAuY29tIn0.W9E3C7qtbq1mi8lLoflyVvhOeQmLgR_AFucEAbSer9U
+        /// </summary>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet]
         async public Task<object> Index() => await Task.FromResult<string>("OK");
+
+        [AllowAnonymous]
+        [HttpPost]
+        public object testUpload(Microsoft.AspNetCore.Http.IFormFileCollection files)
+        {
+            return files;
+        }
 
         [AllowAnonymous]
         [HttpGet]
@@ -61,5 +73,9 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
                 return Content("发生错误：" + ex.ToString());
             }
         }
+
+        [HttpPost]
+        async public Task<object> 测试merge人员OpenId([FromBody]人员OpenId model) =>
+            await Db.Merge(model);
     }
 }

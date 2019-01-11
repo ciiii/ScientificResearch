@@ -44,8 +44,8 @@ $(function () {
             },
             clickBtnReturn: function () {
                 $('.modal-add').modal('hide');
-                // vm.query();
-                // vm.getUserNoticeMustReadList();();
+                vm.query();
+                vm.getUserNoticeMustReadList();
             },
         });
         $('.nav-tabs a').on('click', function (e) {

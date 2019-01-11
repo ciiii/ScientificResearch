@@ -34,9 +34,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\TeachingManagement\Data\" />
+    <Folder Include="Areas\Manage\Data\" />
+    <Folder Include="Areas\Manage\Views\" />
     <Folder Include="Areas\TeachingManagement\Models\" />
-    <Folder Include="Areas\TeachingManagement\Views\" />
     <Folder Include="Models\Table\" />
     <Folder Include="Models\View\" />
     <Folder Include="wwwroot\upload\下载中心\" />
@@ -74,7 +74,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="1.50.4" />
+    <PackageReference Include="Dapper" Version="1.50.5" />
     <PackageReference Include="EPPlus" Version="4.5.1" />
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />

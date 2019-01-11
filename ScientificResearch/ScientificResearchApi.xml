@@ -4,6 +4,51 @@
         <name>ScientificResearch</name>
     </assembly>
     <members>
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.getOpenId(System.String)">
+            <summary>
+            根据code取openid,接着取该openid绑定的用户信息;
+            OAuthScope.snsapi_base方式回调
+            </summary>
+            <param name="code"></param>
+            <param name="state"></param>
+            <param name="returnUrl">用户最初尝试进入的页面</param>
+            <returns>openid</returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.BindOpenId(ScientificResearch.Models.LoginInfo)">
+            <summary>
+            绑定openid和用户信息
+            </summary>
+            <param name="model">其中dbKey请先填"ScientificResearch_Test"</param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.LoginWithOpenId(System.String)">
+            <summary>
+            使用OpenId登录
+            </summary>
+            <param name="model">其中dbKey请先填"ScientificResearch_Test"</param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.Login(ScientificResearch.Models.LoginInfo)">
+            <summary>
+            使用用户名密码登录,此时不需要提供code
+            </summary>
+            <param name="model">其中dbKey请先填"ScientificResearch_Test"</param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.login(ScientificResearch.Models.LoginInfo)">
+            <summary>
+            除了"使用登录名密码登录"要用,"绑定openid到用户"也要用,因为后者其实也有一个"使用登录名密码登录"的过程;
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.getJwt(ScientificResearch.Models.CurrentUser)">
+            <summary>
+            根据用户信息获取jwt字串,并返回"openid登录""用户名密码登录""绑定openid到用户"的一样的返回信息
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
         <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementBaseController">
             <summary>
             2019-1-9
@@ -12,1308 +57,10 @@
             但是目前models还无法分开;
             </summary>
         </member>
-        <member name="T:ScientificResearch.Business.AccessBusiness">
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TestController.Index">
             <summary>
-            登录|注销|获取个人权限|个人信息等
+            Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyLlp5PlkI0iOiLnrqHnkIblkZgiLCLlt6Xlj7ciOiIwMDAxIiwi57yW5Y-3IjoiMiIsIumDqOmXqOe8luWPtyI6IjEwMDI0Iiwi6YOo6Zeo5ZCN56ewIjoi5L-h5oGv5aSEIiwiRGJLZXkiOiJTY2llbnRpZmljUmVzZWFyY2hfVGVzdCIsImlzcyI6Im1lZDEwMC5jb20iLCJhdWQiOiJtZWQxMDAuY29tIn0.W9E3C7qtbq1mi8lLoflyVvhOeQmLgR_AFucEAbSer9U
             </summary>
-        </member>
-        <member name="M:ScientificResearch.Business.AccessBusiness.#ctor(Microsoft.AspNetCore.Http.HttpContext)">
-            <summary>
-            构造
-            </summary>
-            <param name="httpContext"></param>
-        </member>
-        <member name="M:ScientificResearch.Business.AccessBusiness.Login(ScientificResearch.Models.LoginInfo,System.String)">
-            <summary>
-            login
-            </summary>
-            <param name="model"></param>
-            <param name="IP"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Business.AccessBusiness.RecursivePermission(System.Collections.Generic.IEnumerable{ScientificResearch.Models.权限},System.Int32)">
-            <summary>
-            权限分层次
-            </summary>
-            <param name="permission"></param>
-            <param name="topId"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Business.AccessBusiness.Logout">
-            <summary>
-            logout
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="T:ScientificResearch.Business.BaseInfoBusiness">
-            <summary>
-            基础信息维护
-            </summary>
-        </member>
-        <member name="M:ScientificResearch.Business.BaseInfoBusiness.#ctor(Microsoft.AspNetCore.Http.HttpContext)">
-            <summary>
-            构造
-            </summary>
-            <param name="httpContext"></param>
-        </member>
-        <member name="T:ScientificResearch.Business.WorkFlowBusiness">
-            <summary>
-            工作流静态方法
-            事务要是能挂载到db下就好了
-            事务要是能动态构成就更好了
-            </summary>
-        </member>
-        <member name="M:ScientificResearch.Business.WorkFlowBusiness.#ctor(System.String)">
-            <summary>
-            构造
-            </summary>
-            <param name="dbConnectionString"></param>
-        </member>
-        <member name="M:ScientificResearch.Business.WorkFlowBusiness.发起流程``1(System.Int32,``0,System.Int32,System.Boolean,System.Nullable{System.Int32})">
-            <summary>
-            执行一个将返回新建项目编号的sp,同时生成一个流程,再根据这个流程返回的步骤编号完成第一个步骤;
-            如果不完成第一个步骤,其实就相当于暂存;
-            </summary>
-            <param name="流程模板编号"></param>
-            <param name="model"></param>
-            <param name="操作人编号"></param>
-            <param name="isHold"></param>
-            <param name="发起人编号">不是有项目发起人发起的流程时,需要填写一下发起人,比如纵向立项登记时</param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Business.WorkFlowBusiness.完成步骤(ScientificResearch.Models.完成步骤,System.Int32)">
-            <summary>
-            没有附加动作的完成步骤
-            </summary>
-            <param name="model"></param>
-            <param name="操作人编号"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Business.WorkFlowBusiness.完成步骤``1(ScientificResearch.Models.完成步骤,System.Int32,``0,System.Boolean,System.Nullable{System.Int32})">
-            <summary>
-            完成一个步骤
-            针对不需要附加动作的步骤操作,T随便输个object=null,sql那里=null或者不输就行了
-            可以把sql,param包成一个对象,再放到list里面,也就是可以多个附加动作;
-            </summary>
-            <param name="step"></param>
-            <param name="操作人编号"></param>
-            <param name="model"></param>
-            <param name="isHold"></param>
-            <param name="AdditionalActionsWhenState">当前操作状态值=多少时,才执行附加动作,默认null</param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Business.WorkFlowBusiness.专家评审(ScientificResearch.Models.完成步骤{System.Collections.Generic.IEnumerable{ScientificResearch.Models.专家评分}},System.Int32)">
-            <summary>
-            附加数据携带的是流程模板编号
-            这个放在这里供各个不同流程模板编号的调用,不同于"分配步骤指定人"可以统一提供一个接口
-            DOTO:这个应该放到ProjectBusiness里面去
-            </summary>
-            <param name="model"></param>
-            <param name="流程模板编号"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Business.WorkFlowBusiness.获取某流程的步骤(System.Int32,System.Int32)">
-            <summary>
-            获取某流程的步骤
-            </summary>
-            <param name="cnn"></param>
-            <param name="流程模板编号"></param>
-            <param name="项目编号"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.AcademicActivitiesController.发起一个主办讲座流程(ScientificResearch.Models.主办讲座)">
-            <summary>
-            发起一个主办讲座流程
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.AcademicActivitiesController.完善主办讲座申请资料(ScientificResearch.Models.完成步骤{ScientificResearch.Models.主办讲座})">
-            <summary>
-            完善主办讲座申请资料
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.AcademicActivitiesController.上传主讲人简历">
-            <summary>
-            上传主讲人简历,返回上传成功后生成的文件相对url
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.AcademicActivitiesController.分页获取主办讲座(ScientificResearch.Models.Paging,ScientificResearch.Models.主办讲座Filter)">
-            <summary>
-            分页获取主办讲座
-            </summary>
-            <param name="paging"></param>
-            <param name="filter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.AcademicActivitiesController.分页获取可反馈的主办讲座(ScientificResearch.Models.Paging,ScientificResearch.Models.主办讲座Filter)">
-            <summary>
-            暂时没用
-            分页获取可反馈的主办讲座,此讲座满足条件:
-            1 主办人是当前登录人;
-            2 还没有被反馈过;
-            </summary>
-            <param name="paging"></param>
-            <param name="filter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.AcademicActivitiesController.发起一个讲座反馈流程(ScientificResearch.Models.讲座反馈)">
-            <summary>
-            发起一个讲座反馈流程
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.AcademicActivitiesController.完善讲座反馈申请资料(ScientificResearch.Models.完成步骤{ScientificResearch.Models.讲座反馈})">
-            <summary>
-            被打回来以后,完善讲座反馈申请资料
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.AcademicActivitiesController.上传讲座附件">
-            <summary>
-            上传讲座附件,注意:模型里面的讲稿文件其实就是主办讲座里面的主讲人简历,
-            座椅讲座反馈里面的讲稿文件完全用不上了;
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.AcademicActivitiesController.发起一个参加会议流程(ScientificResearch.Models.参加会议申请增改)">
-            <summary>
-            发起一个参加会议流程
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.AcademicActivitiesController.完善参加会议申请资料(ScientificResearch.Models.完成步骤{ScientificResearch.Models.参加会议申请增改})">
-            <summary>
-            完善参加会议申请资料
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.AcademicActivitiesController.分页获取可反馈的参加会议(ScientificResearch.Models.Paging,ScientificResearch.Models.参加会议Filter)">
-            <summary>
-            暂时不同
-            分页获取可反馈的参加会议,供添加参加会议反馈时选择某个参加会议;
-            </summary>
-            <param name="paging"></param>
-            <param name="filter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.AcademicActivitiesController.完善参加会议反馈申请资料(ScientificResearch.Models.完成步骤{ScientificResearch.Models.参加会议反馈})">
-            <summary>
-            不幸被打回来重填.
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="T:ScientificResearch.Controllers.AccessController">
-            <summary>
-            登录|注销|获取权限等相关接口
-            </summary>
-        </member>
-        <member name="M:ScientificResearch.Controllers.AccessController.Login(ScientificResearch.Models.LoginInfo)">
-            <summary>
-            登录,返回登录人所具有的权限
-            </summary>
-            <param name="model">其中dbKey请先填"ScientificResearch_Model"</param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.AccessController.RecursivePermission(System.Collections.Generic.IEnumerable{ScientificResearch.Models.权限},System.Int32)">
-            <summary>
-            权限分层次
-            </summary>
-            <param name="permission"></param>
-            <param name="topId"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.AccessController.Logout">
-            <summary>
-            注销当前登录
-            TODO:用了jwt,这个好像没啥用了
-            </summary>
-        </member>
-        <member name="M:ScientificResearch.Controllers.AccessController.ChangePassword(ScientificResearch.Models.ChangePassword)">
-            <summary>
-            修改密码
-            </summary>
-            <param name="oldPassword"></param>
-            <param name="newPassword"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.AccessController.获取登录日志(ScientificResearch.Models.Paging,ScientificResearch.Models.登录日志Filter)">
-            <summary>
-            分页获取登录日志
-            </summary>
-            <param name="paging"></param>
-            <param name="filter"></param>
-            <returns></returns>
-        </member>
-        <member name="T:ScientificResearch.Controllers.BaseInfoController">
-            <summary>
-            基础信息维护的接口
-            </summary>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.获取某类字典(System.String)">
-            <summary>
-            根据分类名称,获取某类字典,包括一个层次的和两个层次的字典数据,具体有哪些见基本信息整理文档.xlsx
-            </summary>
-            <param name="分类"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.分页获取某类字典(ScientificResearch.Models.Paging,ScientificResearch.Models.字典Filter)">
-            <summary>
-            分页获取某类字典
-            </summary>
-            <param name="paging"></param>
-            <param name="filter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.新增字典(ScientificResearch.Models.字典)">
-            <summary>
-            新增一个字典数据
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.修改字典(ScientificResearch.Models.字典)">
-            <summary>
-            修改一个字典数据
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.删除字典(System.Collections.Generic.IEnumerable{System.Int32})">
-            <summary>
-            删除一个字典数据
-            </summary>
-            <param name="编号列表"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.获取部门列表(ScientificResearch.Models.部门Filter)">
-            <summary>
-            获取全部部门,维护部门时用
-            </summary>
-            <param name="filter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.获取启用的部门列表(ScientificResearch.Models.部门Filter)">
-            <summary>
-            获取启用的部门列表,使用部门时用
-            </summary>
-            <param name="filter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.增改部门(ScientificResearch.Models.部门)">
-            <summary>
-            新增部门
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.启用部门(System.Int32)">
-            <summary>
-            启用某部门
-            </summary>
-            <param name="编号"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.禁用部门(System.Int32)">
-            <summary>
-            禁用某部门
-            </summary>
-            <param name="编号"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.获取国民行业代码(ScientificResearch.Models.国民行业代码Filter)">
-            <summary>
-            获取国民行业代码,父级编号必须输入,以便一层一层的获取
-            </summary>
-            <param name="filter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.新增国民行业代码(ScientificResearch.Models.国民行业代码)">
-            <summary>
-            新增国民行业代码
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.修改国民行业代码(ScientificResearch.Models.国民行业代码)">
-            <summary>
-            修改国民行业代码
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.删除国民行业代码(System.Collections.Generic.IEnumerable{System.Int32})">
-            <summary>
-            删除国民行业代码,传入的是要删除的编号列表
-            </summary>
-            <param name="编号列表"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.获取合同买方性质(ScientificResearch.Models.合同买方性质Filter)">
-            <summary>
-            获取合同买方性质,父级编号必须输入,以便一层一层的获取
-            </summary>
-            <param name="filter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.新增合同买方性质(ScientificResearch.Models.合同买方性质)">
-            <summary>
-            新增合同买方性质
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.修改合同买方性质(ScientificResearch.Models.合同买方性质)">
-            <summary>
-            修改合同买方性质
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.删除合同买方性质(System.Collections.Generic.IEnumerable{System.Int32})">
-            <summary>
-            删除合同买方性质,传入的是要删除的编号列表
-            </summary>
-            <param name="编号列表"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.获取技术领域(ScientificResearch.Models.技术领域Filter)">
-            <summary>
-            获取技术领域,父级编号必须输入,以便一层一层的获取
-            </summary>
-            <param name="filter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.新增技术领域(ScientificResearch.Models.技术领域)">
-            <summary>
-            新增技术领域
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.修改技术领域(ScientificResearch.Models.技术领域)">
-            <summary>
-            修改技术领域
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.删除技术领域(System.Collections.Generic.IEnumerable{System.Int32})">
-            <summary>
-            删除技术领域,传入的是要删除的编号列表
-            </summary>
-            <param name="编号列表"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.获取学科(ScientificResearch.Models.学科Filter)">
-            <summary>
-            获取学科,父级编号必须输入,以便一层一层的获取
-            </summary>
-            <param name="filter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.新增学科(ScientificResearch.Models.学科)">
-            <summary>
-            新增学科
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.修改学科(ScientificResearch.Models.学科)">
-            <summary>
-            修改学科
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.删除学科(System.Collections.Generic.IEnumerable{System.Int32})">
-            <summary>
-            删除学科,传入的是要删除的编号列表
-            </summary>
-            <param name="编号列表"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.获取区域(ScientificResearch.Models.区域Filter)">
-            <summary>
-            获取区域,父级编号必须输入,以便一层一层的获取
-            </summary>
-            <param name="filter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.新增区域(ScientificResearch.Models.区域)">
-            <summary>
-            新增区域
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.修改区域(ScientificResearch.Models.区域)">
-            <summary>
-            修改区域
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.删除区域(System.Collections.Generic.IEnumerable{System.Int32})">
-            <summary>
-            删除区域,传入的是要删除的编号列表
-            </summary>
-            <param name="编号列表"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.获取项目分类(ScientificResearch.Models.项目分类Filter)">
-            <summary>
-            获取项目分类,父级编号必须输入,以便一层一层的获取
-            </summary>
-            <param name="filter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.增改项目分类(ScientificResearch.Models.项目分类)">
-            <summary>
-            新增项目分类
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.删除项目分类(System.Collections.Generic.IEnumerable{System.Int32})">
-            <summary>
-            删除项目分类,传入的是要删除的编号列表
-            </summary>
-            <param name="编号列表"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.分页获取期刊(ScientificResearch.Models.Paging,ScientificResearch.Models.期刊Filter)">
-            <summary>
-            分页获取期刊
-            </summary>
-            <param name="paging"></param>
-            <param name="filter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.增改期刊(ScientificResearch.Models.期刊)">
-            <summary>
-            新增期刊
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.删除期刊(System.Collections.Generic.IEnumerable{System.Int32})">
-            <summary>
-            删除期刊
-            </summary>
-            <param name="编号列表"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.获取经费模版(ScientificResearch.Models.Paging,ScientificResearch.Models.经费模版Filter)">
-            <summary>
-            获取所有经费模版
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.增改经费模版(ScientificResearch.Models.经费模版)">
-            <summary>
-            增改经费模版
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.删除经费模版(System.Collections.Generic.IEnumerable{System.Int32})">
-            <summary>
-            删除经费模版,其下的类型和内容没有管
-            </summary>
-            <param name="编号列表"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.获取经费模版项目支出类型列表(ScientificResearch.Models.Paging,ScientificResearch.Models.经费模版项目支出类型Filter)">
-            <summary>
-            获取经费模版项目支出类型
-            </summary>
-            <param name="filter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.增改经费模版项目支出类型(ScientificResearch.Models.经费模版项目支出类型增改详情)">
-            <summary>
-            增改经费模版项目支出类型
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.BaseInfoController.删除经费模版项目支出类型(System.Collections.Generic.IEnumerable{System.Int32})">
-            <summary>
-            删除经费模版项目支出类型
-            </summary>
-            <param name="编号列表"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.ExpenseController.分页获取纵向项目经费合计报销列表(ScientificResearch.Models.Paging,ScientificResearch.Models.纵向项目立项Filter)">
-            <summary>
-            针对每个纵向项目,目前总的报销情况,一个项目一行
-            </summary>
-            <param name="paging"></param>
-            <param name="filter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.ExpenseController.获取某纵向项目经费报销列表(System.Int32)">
-            <summary>
-            针对某个纵向项目的多个报销;一个报销一行
-            </summary>
-            <param name="纵向项目立项编号"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.ExpenseController.分页获取所有报销列表(ScientificResearch.Models.Paging,ScientificResearch.Models.报销Filter)">
-            <summary>
-            根据报销编号搜索报销可以用这个
-            </summary>
-            <param name="paging"></param>
-            <param name="filter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.ExpenseController.获取某报销详情(System.Int32)">
-            <summary>
-            查看某个报销下具体每个项目的列表,一个报销下每个项目一行;
-            查看或修改某报销详情时用
-            </summary>
-            <param name="报销编号"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.ExpenseController.获取某纵向项目预算已报销详情(System.Int32)">
-            <summary>
-            针对某个纵向项目,查看其所有报销按支出类型+内容分类统计得到的汇总表;
-            只在新增纵向项目报销时候用
-            </summary>
-            <param name="纵向项目立项编号"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.ExpenseController.获取某横向项目预算已报销详情(System.Int32)">
-            <summary>
-            针对某个横向项目,查看其所有报销按支出类型+内容分类统计得到的汇总表;
-            只在新增横向项目报销时候用
-            </summary>
-            <param name="横向项目编号"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.ExpenseController.获取某参加会议预算已报销详情(System.Int32)">
-            <summary>
-            针对某个参加会议,查看其所有报销按支出类型+内容分类统计得到的汇总表
-            只在新增参加会议报销时候用
-            </summary>
-            <param name="参加会议编号"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.ExpenseController.新增纵向项目经费报销(ScientificResearch.Models.报销增改)">
-            <summary>
-            基本资料中的报销金额不用写,后台根据报销详情自己算
-            基本资料中的流程模板编号不用写,后台自取;
-            注意model.基本资料中的项目编号要提供好;
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.ExpenseController.新增参加会议报销(ScientificResearch.Models.报销增改)">
-            <summary>
-            没有预算,
-            .基本资料中的项目编号要提供,就是相应的参加会议的编号;
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.ExpenseController.完善有预算的经费报销(ScientificResearch.Models.完成步骤{ScientificResearch.Models.报销增改})">
-            <summary>
-            比如横纵项目经费报销
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.ExpenseController.完善没有预算的经费报销(ScientificResearch.Models.完成步骤{ScientificResearch.Models.报销增改})">
-            <summary>
-            比如参加会议的报销
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.FruitController.获取论文辅助数据">
-            <summary>
-            
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.FruitController.新增论文(ScientificResearch.Models.成果增改{ScientificResearch.Models.成果论文})">
-            <summary>
-            单独录入论文或认领,同时开启审核流程
-            批量导入的不会开启流程,只有在认领时才会
-            相关项目和作者项中的"成果类型"和"成果编号"不需要前台填写;
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.FruitController.导入整理后的公网论文数据(System.Collections.Generic.IEnumerable{ScientificResearch.Models.论文导入})">
-            <summary>
-            无论是知网还是万网,无论是xlsx还是endnote文件,最后都会整理为IEnumerable[论文导入]来此;
-            </summary>
-            <param name="result"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.FruitController.完善论文资料(ScientificResearch.Models.完成步骤{ScientificResearch.Models.成果增改{ScientificResearch.Models.成果论文}})">
-            <summary>
-            被打回,ps:认领人不能变了;
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.FruitController.审核所有可审核的论文">
-            <summary>
-            审核所有当前登录人可以审核的,处于"待科研管理员审核"的论文,返回处理的数量;
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.OfficeController.新增通知公告(ScientificResearch.Models.通知公告增改)">
-            <summary>
-            接收者类型:
-            0 所有人 该情况下, 接收者编号也 = 0;
-            10 -人员;
-            20 -部门;
-            30 -角色;
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.OfficeController.分页获取某人员可查看的通知公告(System.Int32,ScientificResearch.Models.Paging,ScientificResearch.Models.某人员可查看的通知公告Filter)">
-            <summary>
-            如果要获取必读且未读的通知公告,使用条件"是否必读=true 且 是否已接收=false"
-            </summary>
-            <param name="人员编号"></param>
-            <param name="paging"></param>
-            <param name="filter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.OfficeController.分页获取可查看的下载中心(ScientificResearch.Models.Paging,ScientificResearch.Models.下载中心Filter)">
-            <summary>
-            首页查看有下载中心时用
-            分页获取某人员可查看的下载中心,由于所有信息都包含了,所以没有获取详情的接口了
-            </summary>
-            <param name="人员编号"></param>
-            <param name="paging"></param>
-            <param name="filter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.OfficeController.分页获取下载中心(ScientificResearch.Models.Paging,ScientificResearch.Models.下载中心Filter)">
-            <summary>
-            管理下载中心时用
-            </summary>
-            <param name="paging"></param>
-            <param name="filter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.PeopleController.分页获取人员列表(ScientificResearch.Models.Paging,ScientificResearch.Models.人员Filter)">
-            <summary>
-            分页获取人员列表,人员管理时候用
-            </summary>
-            <param name="paging"></param>
-            <param name="filter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.PeopleController.分页获取启用的人员列表(ScientificResearch.Models.Paging,ScientificResearch.Models.人员Filter)">
-            <summary>
-            分页获取启用状态的人员列表,使用人员时候用
-            这个可能应该缩减一下返回的字段.
-            </summary>
-            <param name="paging"></param>
-            <param name="filter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.PeopleController.获取所有人员列表(ScientificResearch.Models.人员Filter)">
-            <summary>
-            获取所有人员列表,应该用不到
-            </summary>
-            <param name="filter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.PeopleController.增改人员(ScientificResearch.Models.人员)">
-            <summary>
-            增改人员
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.PeopleController.启用人员(System.Int32)">
-            <summary>
-            启用人员
-            </summary>
-            <param name="id"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.PeopleController.禁用人员(System.Int32)">
-            <summary>
-            禁用人员
-            </summary>
-            <param name="id"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.PeopleController.分页获取专家(ScientificResearch.Models.Paging,ScientificResearch.Models.人员Filter)">
-            <summary>
-            分页获取专家
-            </summary>
-            <param name="paging"></param>
-            <param name="filter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.PeopleController.从现有人员增加专家(System.Collections.Generic.IEnumerable{System.Int32})">
-            <summary>
-            从现有人员增加专家
-            </summary>
-            <param name="编号列表"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.PeopleController.新增专家(ScientificResearch.Models.人员)">
-            <summary>
-            新增专家
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="T:ScientificResearch.Controllers.PermissionController">
-            <summary>
-            权限管理接口
-            </summary>
-        </member>
-        <member name="M:ScientificResearch.Controllers.PermissionController.获取角色列表">
-            <summary>
-            获取角色列表
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.PermissionController.新增角色(ScientificResearch.Models.角色)">
-            <summary>
-            新增角色
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.PermissionController.修改角色(ScientificResearch.Models.角色)">
-            <summary>
-            修改角色
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.PermissionController.分页获取角色中的人员(System.Int32,ScientificResearch.Models.Paging,ScientificResearch.Models.人员Filter)">
-            <summary>
-            分页获取某个角色中的人员
-            </summary>
-            <param name="id"></param>
-            <param name="paging"></param>
-            <param name="filter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.PermissionController.分页获取角色中没有的人员(System.Int32,ScientificResearch.Models.Paging,ScientificResearch.Models.人员Filter)">
-            <summary>
-            分页获取角色中没有的人员
-            </summary>
-            <param name="id"></param>
-            <param name="paging"></param>
-            <param name="filter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.PermissionController.保存角色中的人员(ScientificResearch.Models.某角色中的人员)">
-            <summary>
-            保存角色中的人员,传入角色编号+属于该角色的人员编号列表;不存在于该列表的原有人员将被删除;
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.PermissionController.添加角色人员(ScientificResearch.Models.某角色中的人员)">
-            <summary>
-            向某角色添加人员
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.PermissionController.删除角色人员(ScientificResearch.Models.某角色中的人员)">
-            <summary>
-            从某角色里面删除人员
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.PermissionController.增删角色人员(ScientificResearch.Models.增删角色中的人员)">
-            <summary>
-            同时增删角色人员
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.PermissionController.获取角色的权限(System.Int32)">
-            <summary>
-            获取所有权限,指定角色拥有的权限为true
-            </summary>
-            <param name="角色编号"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.PermissionController.保存角色的权限(ScientificResearch.Models.某角色的权限)">
-            <summary>
-            保存角色的权限,传入角色编号+该角色拥有的权限编号列表,不存在于该列表的原有权限将被删除;
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.TestController.GetPropertyinfo会不会取到类的方法">
-            <summary>
-            结果是字段和方法都不会被取到;
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.WorkFlowController.审核步骤(ScientificResearch.Models.完成步骤)">
-            <summary>
-            审核等不需要附加动作的操作,可以直接调用这个接口;
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.WorkFlowController.终止步骤(ScientificResearch.Models.完成步骤)">
-            <summary>
-            其中状态值=-2而已
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.WorkFlowController.分配步骤指定人(ScientificResearch.Models.完成步骤{System.Collections.Generic.IEnumerable{System.Int32}})">
-            <summary>
-            附加数据为指定人的编号数组
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.WorkFlowController.获取某步骤的可用操作(System.Int32)">
-            <summary>
-            获取某步骤的可用操作
-            </summary>
-            <param name="步骤编号"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.WorkFlowController.分页获取办事流程列表(ScientificResearch.Models.Paging)">
-            <summary>
-            首页上查看"更多办事流程"时,列举出所有的办事流程
-            </summary>
-            <param name="paging"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.WorkFlowController.获取某办事流程步骤列表(System.Int32)">
-            <summary>
-            根据某个办事流程编号,获取该流程规定的步骤
-            </summary>
-            <param name="办事流程编号"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.XProjectController.新增横向项目申请(ScientificResearch.Models.横向项目申请增改)">
-            <summary>
-            注:横向项目经费预算中的配套经费设为0,没用
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.XProjectController.完善横向项目申请资料(ScientificResearch.Models.完成步骤{ScientificResearch.Models.横向项目申请增改})">
-            <summary>
-            注:横向项目经费预算中的配套经费设为0,没用
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.XProjectController.新增横向项目结题(ScientificResearch.Models.横向项目结题增改)">
-            <summary>
-            发起一个横向项目结题
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.YProjectController.新增科研项目申报(ScientificResearch.Models.纵向项目申报增改)">
-            <summary>
-            新增科研项目申报
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.YProjectController.专家评审(ScientificResearch.Models.完成步骤{System.Collections.Generic.IEnumerable{ScientificResearch.Models.专家评分}})">
-            <summary>
-            附加数据中的专家评分,只需要传其中的评分项和评分
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.YProjectController.获取纵向项目立项辅助数据">
-            <summary>
-            获取纵向项目立项辅助数据,申报立项也一样用
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.YProjectController.分页获取可立项的科研项目申报(ScientificResearch.Models.Paging,ScientificResearch.Models.纵向项目申报Filter)">
-            <summary>
-            分页获取可立项的科研项目申报
-            </summary>
-            <param name="paging"></param>
-            <param name="filter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.YProjectController.通过申报详情获取可用的纵向项目立项详情(System.Int32)">
-            <summary>
-            打开一个新增立项时,先通过已有的申报来获取可用的立项资料;
-            编号,分类,负责人不动,也不应有input可以去动;
-            </summary>
-            <param name="纵向项目申报编号"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.YProjectController.发起一个纵向项目立项流程(ScientificResearch.Models.纵向项目立项增改)">
-            <summary>
-            立项流程的发起人,或者应该叫"该流程对应的项目的负责人"
-            有一个步骤是需要这个人来确认资料的;
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.YProjectController.分页获取纵向项目立项(ScientificResearch.Models.Paging,ScientificResearch.Models.纵向项目立项Filter)">
-            <summary>
-            科研项目,人才培养,重点学科,这三个的都合并到一起了;
-            </summary>
-            <param name="paging"></param>
-            <param name="filter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.YProjectController.新增纵向项目中检(ScientificResearch.Models.发起纵向项目中检)">
-            <summary>
-            发起一个纵向项目中检
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.YProjectController.新增纵向项目变更(ScientificResearch.Models.纵向项目变更增改)">
-            <summary>
-            注意:前台在调用这个接口之前,要注意"纵向项目编号"和"编号"的赋值
-            "纵向项目编号"是打开新增页面之前就已知的;
-            "编号"这里=0;
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.YProjectController.审核并应用纵向项目变更(ScientificResearch.Models.完成步骤{System.Int32})">
-            <summary>
-            变更最后一步的审核,调这个接口而不是通用的审核接口;
-            此步骤仅当操作结果为通过时,交换被变更的立项资料和将变更的立项资料;
-            附加数据填写:纵向项目变更编号
-            </summary>
-            <param name="纵向项目变更编号"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.YProjectController.获取纵向项目变更详情(System.Int32)">
-            <summary>
-            获取纵向项目变更详情,包括变更前后的详情;
-            如果成功变更,则变更前=立项,变更后=变更
-             否则,则变更前=当前变更,变更后=立项;
-            </summary>
-            <param name="纵向项目立项编号"></param>
-            <param name="纵向项目变更编号"></param>
-            <param name="状态">当前流程的状态</param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Controllers.YProjectController.新增纵向项目结题(ScientificResearch.Models.发起纵向项目结题)">
-            <summary>
-            发起一个纵向项目结题;
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="T:ScientificResearch.Infrastucture.BaseBusiness">
-            <summary>
-            Business基类,用来将获取的当前请求的IServiceProvider对应的服务容器中的需要的服务
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Infrastucture.BaseBusiness.ServiceProvider">
-            <summary>
-            serviceProvider
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Infrastucture.BaseBusiness.Session">
-            <summary>
-            Session
-            </summary>
-        </member>
-        <member name="M:ScientificResearch.Infrastucture.BaseBusiness.#ctor(Microsoft.AspNetCore.Http.HttpContext)">
-            <summary>
-            构造
-            </summary>
-            <param name="httpContext"></param>
-        </member>
-        <member name="P:ScientificResearch.Infrastucture.BaseBusiness.config">
-            <summary>
-            配置
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Infrastucture.BaseBusiness.Log">
-            <summary>
-            日志
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Infrastucture.BaseBusiness.DbConnectionString">
-            <summary>
-            用于事务
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Infrastucture.BaseBusiness.Db">
-            <summary>
-            获取当前登录者的数据库链接;可能在login方法中另做一个
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Infrastucture.BaseBusiness.Env">
-            <summary>
-            网站服务器环境
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Infrastucture.BaseBusiness.currentUser">
-            <summary>
-            登录人的信息
-            </summary>
-        </member>
-        <member name="T:ScientificResearch.Infrastucture.BaseController">
-            <summary>
-            基础控制器
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Infrastucture.BaseController.MyWorkFlowBusiness">
-            <summary>
-            MyWorkFlowBusiness的实例不采用注入
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Infrastucture.BaseController.Config">
-            <summary>
-             配置,使用config.GetValue T来读取
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Infrastucture.BaseController.测试获取自定义的全局配置数据">
-            <summary>
-            测试获取自定义的全局配置数据
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Infrastucture.BaseController.Log">
-            <summary>
-            日志服务
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Infrastucture.BaseController.DbConnectionStringLack">
-            <summary>
-            原始的连接字串,具体连接哪个库还没有指定
-            登录时可以用这个临时生成一个连接;
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Infrastucture.BaseController.DbConnectionString">
-            <summary>
-            指定连接的库为当前登录人的库,字串可用于事务,也可用于下面的db
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Infrastucture.BaseController.Db">
-            <summary>
-            获取当前登录者的数据库链接;可能在login方法中另做一个
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Infrastucture.BaseController.Env">
-            <summary>
-            网站服务器环境
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Infrastucture.BaseController.CurrentUser">
-            <summary>
-            登录人的信息
-            </summary>
-        </member>
-        <member name="T:ScientificResearch.Infrastucture.AddHeaderWithFactoryAttribute">
-            <summary>
-            Filter with DI
-            </summary>
-        </member>
-        <member name="T:ScientificResearch.Infrastucture.MyAuthorizationFilter">
-            <summary>
-            认证过滤器
-            </summary>
-        </member>
-        <member name="T:ScientificResearch.Infrastucture.MyActionFilter">
-            <summary>
-            action过滤器
-            </summary>
-        </member>
-        <member name="T:ScientificResearch.Infrastucture.MyResultFilter">
-            <summary>
-            结果过滤器
-            前台需要的是{error=xxx,data=yyy}的格式,虽然很怪,满足前台的要求吧
-            </summary>
-        </member>
-        <member name="M:ScientificResearch.Infrastucture.MyResultFilter.OnResultExecuting(Microsoft.AspNetCore.Mvc.Filters.ResultExecutingContext)">
-            <summary>
-            如果action返回的是一个ObjectResult,则再次包装一下;
-            </summary>
-            <param name="context"></param>
-        </member>
-        <member name="T:ScientificResearch.Infrastucture.IsDateAttribute">
-            <summary>
-            目前这东西还没使用;
-            目前使用的是DateTime?这个类型(原本没有使用DateTIme是因为sqlwhere一个解析没有被修复)
-            这东西明显能做的事情更多
-            </summary>
-        </member>
-        <member name="T:ScientificResearch.Infrastucture.PredefindedKeyFields">
-            <summary>
-            预定义的主键,就是这个主键名称是固定的而已
-            </summary>
-        </member>
-        <member name="T:ScientificResearch.Infrastucture.PredefindedIdList`1">
-            <summary>
-            一个Id+一个T的列表的结构,很多sp用,对接口来说,就不需要自定义post的传入类了;
-            当然要转换为sp类还是手动来的好;
-            </summary>
-            <typeparam name="T"></typeparam>
-        </member>
-        <member name="T:ScientificResearch.Infrastucture.PredefindedModelList`2">
-            <summary>
-            类似上面那个
-            </summary>
-            <typeparam name="T"></typeparam>
-            <typeparam name="TList"></typeparam>
-        </member>
-        <member name="T:ScientificResearch.Infrastucture.PredefinedSpExtention">
-            <summary>
-            GetModelById
-            一些预定义的sp的dapper调用
-            </summary>
-        </member>
-        <member name="F:ScientificResearch.Infrastucture.PredefinedSpExtention.PredefindedKeyFields">
-            <summary>
-            预定义的主键,非要叫"编号"而不叫"Id"我有啥法
-            </summary>
-        </member>
-        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.ToPredefindedKeyFieldsList(System.Collections.Generic.IEnumerable{System.Int32})">
-            <summary>
-            把IEnumerable int类型的编号列表,转为PredefindedKeyFieldsList列表,后者可以转为一个dataTable,是只有一个字段 编号 的表
-            </summary>
-            <param name="idList"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.ToStringIdWithSpacer(System.Collections.Generic.IEnumerable{System.Int32},System.String)">
-            <summary>
-            根据idlist得到一个用逗号分隔的字符串,count=0则返回"0",其中每一项都是数字;
-            </summary>
-            <param name="idList"></param>
-            <param name="Spacer"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.GetModelByIdSpAsync``1(System.Data.IDbConnection,System.Int32)">
-            <summary>
-            通过主键获得对象,或者null
-            T为表映射而来的类
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="cnn"></param>
-            <param name="id"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.GetListSpAsync``2(System.Data.IDbConnection,``1,System.String,System.String,System.Boolean,System.String,System.String)">
-            <summary>
-            sp_GetList,带搜索条件的
-            T的作用有2:1默认用T的名称做TbName,2dapper返回类型的指定
-            </summary>
-            <typeparam name="T"></typeparam>
-            <typeparam name="TFilter"></typeparam>
-            <param name="cnn"></param>
-            <param name="filter"></param>
-            <param name="tbName"></param>
-            <param name="keyFields"></param>
-            <param name="orderType"></param>
-            <param name="orderStr"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.GetListSpAsync``1(System.Data.IDbConnection,System.String,System.String,System.Boolean,System.String)">
-            <summary>
-            没有搜索条件的单独传参数
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="cnn"></param>
-            <param name="tbName"></param>
-            <param name="keyFields"></param>
-            <param name="orderType"></param>
-            <param name="orderStr"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.GetPagingListSpAsync``2(System.Data.IDbConnection,ScientificResearch.Models.Paging,``1,System.String,System.String,System.String,System.Boolean)">
-            <summary>
-            有条件的分页获取
-            T的作用有2:1默认用T的名称做TbName,2dapper返回类型的指定
-            </summary>
-            <typeparam name="T"></typeparam>
-            <typeparam name="TFilter"></typeparam>
-            <param name="cnn"></param>
-            <param name="paging"></param>
-            <param name="filter"></param>
-            <param name="tbName"></param>
-            <param name="keyFields"></param>
-            <param name="orderStr"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.GetPagingListSpAsync``1(System.Data.IDbConnection,ScientificResearch.Models.Paging,System.String,System.String,System.String)">
-            <summary>
-            没有搜索条件的,返回分页数据
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="cnn"></param>
-            <param name="paging"></param>
-            <param name="tbName"></param>
-            <param name="keyFields"></param>
-            <param name="orderStr"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.ExecuteSpAsync``1(System.Data.IDbConnection,``0,System.Data.IDbTransaction)">
-            <summary>
-            异步执行一个sp
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="cnn"></param>
-            <param name="model">sp映射而来的类对象,不能为null...</param>
-            <param name="transaction"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.QuerySpAsync``2(System.Data.IDbConnection,``0,System.Data.IDbTransaction)">
-            <summary>
-            执行一个sp,返回指定类型的list,sp如果没有参数,则不输入model
-            </summary>
-            <typeparam name="T"></typeparam>
-            <typeparam name="TOut"></typeparam>
-            <param name="cnn"></param>
-            <param name="model"></param>
-            <param name="transaction"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.QueryMultipleSpAsync``1(System.Data.IDbConnection,``0,System.Data.IDbTransaction)">
-            <summary>
-            执行一个sp,返回多个list,需要自己再去解析,
-            sp如果没有参数,则不输入model
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="cnn"></param>
-            <param name="model"></param>
-            <param name="transaction"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.Merge``1(System.Data.IDbConnection,``0,System.Data.IDbTransaction)">
-            <summary>
-            按约定SP_xxx_增改的命名执行一个merge
-            注意其中的参数名也是约定
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="cnn"></param>
-            <param name="model"></param>
-            <param name="transaction"></param>
             <returns></returns>
         </member>
         <member name="P:ScientificResearch.Models.参加会议申请增改.经费预算列表">
@@ -1344,6 +91,11 @@
         <member name="P:ScientificResearch.Models.LoginInfo.DbKey">
             <summary>
             哪个db
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.LoginInfo.Code">
+            <summary>
+            微信获取openid的code
             </summary>
         </member>
         <member name="T:ScientificResearch.Models.LoginInfoFilter">
@@ -2146,6 +898,16 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_主办讲座_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_人员OpenId_增改">
+            <summary>
+            sp_人员OpenId_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_人员OpenId_增改.tt">
             <summary>
             
             </summary>
@@ -3540,6 +2302,31 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.人员OpenId">
+            <summary>
+            人员OpenId[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.人员OpenId.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.人员OpenId.OpenId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.人员OpenId.DbKey">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.人员OpenId.人员编号">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.人员角色">
             <summary>
             人员角色[类]
@@ -3641,6 +2428,71 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.区域.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.医院">
+            <summary>
+            医院[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.医院.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.医院.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.医院.代码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.医院.联系人">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.医院.联系电话">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.医院.地址">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.医院.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.医院服务">
+            <summary>
+            医院服务[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.医院服务.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.医院服务.医院编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.医院服务.服务编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.医院服务.链接地址">
             <summary>
             
             </summary>
@@ -4871,6 +3723,51 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.报销详情.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.新闻">
+            <summary>
+            新闻[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.新闻.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.新闻.标题">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.新闻.内容">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.新闻.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.服务">
+            <summary>
+            服务[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.服务.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.服务.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.服务.备注">
             <summary>
             
             </summary>
@@ -13780,35 +12677,1341 @@
             
             </summary>
         </member>
-        <member name="T:ScientificResearch.Startup">
+        <member name="T:ScientificResearch.Business.AccessBusiness">
             <summary>
-            
+            登录|注销|获取个人权限|个人信息等
             </summary>
         </member>
-        <member name="M:ScientificResearch.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:ScientificResearch.Business.AccessBusiness.#ctor(Microsoft.AspNetCore.Http.HttpContext)">
             <summary>
-            
+            构造
             </summary>
-            <param name="configuration"></param>
+            <param name="httpContext"></param>
         </member>
-        <member name="P:ScientificResearch.Startup.Configuration">
+        <member name="M:ScientificResearch.Business.AccessBusiness.Login(ScientificResearch.Models.LoginInfo,System.String)">
             <summary>
-            
+            login
+            </summary>
+            <param name="model"></param>
+            <param name="IP"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Business.AccessBusiness.RecursivePermission(System.Collections.Generic.IEnumerable{ScientificResearch.Models.权限},System.Int32)">
+            <summary>
+            权限分层次
+            </summary>
+            <param name="permission"></param>
+            <param name="topId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Business.AccessBusiness.Logout">
+            <summary>
+            logout
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ScientificResearch.Business.BaseInfoBusiness">
+            <summary>
+            基础信息维护
             </summary>
         </member>
-        <member name="M:ScientificResearch.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:ScientificResearch.Business.BaseInfoBusiness.#ctor(Microsoft.AspNetCore.Http.HttpContext)">
             <summary>
-            
+            构造
             </summary>
-            <param name="services"></param>
+            <param name="httpContext"></param>
         </member>
-        <member name="M:ScientificResearch.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IHostingEnvironment,log4net.ILog)">
+        <member name="T:ScientificResearch.Business.WorkFlowBusiness">
+            <summary>
+            工作流静态方法
+            事务要是能挂载到db下就好了
+            事务要是能动态构成就更好了
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Business.WorkFlowBusiness.#ctor(System.String)">
+            <summary>
+            构造
+            </summary>
+            <param name="dbConnectionString"></param>
+        </member>
+        <member name="M:ScientificResearch.Business.WorkFlowBusiness.发起流程``1(System.Int32,``0,System.Int32,System.Boolean,System.Nullable{System.Int32})">
+            <summary>
+            执行一个将返回新建项目编号的sp,同时生成一个流程,再根据这个流程返回的步骤编号完成第一个步骤;
+            如果不完成第一个步骤,其实就相当于暂存;
+            </summary>
+            <param name="流程模板编号"></param>
+            <param name="model"></param>
+            <param name="操作人编号"></param>
+            <param name="isHold"></param>
+            <param name="发起人编号">不是有项目发起人发起的流程时,需要填写一下发起人,比如纵向立项登记时</param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Business.WorkFlowBusiness.完成步骤(ScientificResearch.Models.完成步骤,System.Int32)">
+            <summary>
+            没有附加动作的完成步骤
+            </summary>
+            <param name="model"></param>
+            <param name="操作人编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Business.WorkFlowBusiness.完成步骤``1(ScientificResearch.Models.完成步骤,System.Int32,``0,System.Boolean,System.Nullable{System.Int32})">
+            <summary>
+            完成一个步骤
+            针对不需要附加动作的步骤操作,T随便输个object=null,sql那里=null或者不输就行了
+            可以把sql,param包成一个对象,再放到list里面,也就是可以多个附加动作;
+            </summary>
+            <param name="step"></param>
+            <param name="操作人编号"></param>
+            <param name="model"></param>
+            <param name="isHold"></param>
+            <param name="AdditionalActionsWhenState">当前操作状态值=多少时,才执行附加动作,默认null</param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Business.WorkFlowBusiness.专家评审(ScientificResearch.Models.完成步骤{System.Collections.Generic.IEnumerable{ScientificResearch.Models.专家评分}},System.Int32)">
+            <summary>
+            附加数据携带的是流程模板编号
+            这个放在这里供各个不同流程模板编号的调用,不同于"分配步骤指定人"可以统一提供一个接口
+            DOTO:这个应该放到ProjectBusiness里面去
+            </summary>
+            <param name="model"></param>
+            <param name="流程模板编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Business.WorkFlowBusiness.获取某流程的步骤(System.Int32,System.Int32)">
+            <summary>
+            获取某流程的步骤
+            </summary>
+            <param name="cnn"></param>
+            <param name="流程模板编号"></param>
+            <param name="项目编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.AcademicActivitiesController.发起一个主办讲座流程(ScientificResearch.Models.主办讲座)">
+            <summary>
+            发起一个主办讲座流程
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.AcademicActivitiesController.完善主办讲座申请资料(ScientificResearch.Models.完成步骤{ScientificResearch.Models.主办讲座})">
+            <summary>
+            完善主办讲座申请资料
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.AcademicActivitiesController.上传主讲人简历">
+            <summary>
+            上传主讲人简历,返回上传成功后生成的文件相对url
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.AcademicActivitiesController.分页获取主办讲座(ScientificResearch.Models.Paging,ScientificResearch.Models.主办讲座Filter)">
+            <summary>
+            分页获取主办讲座
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.AcademicActivitiesController.分页获取可反馈的主办讲座(ScientificResearch.Models.Paging,ScientificResearch.Models.主办讲座Filter)">
+            <summary>
+            暂时没用
+            分页获取可反馈的主办讲座,此讲座满足条件:
+            1 主办人是当前登录人;
+            2 还没有被反馈过;
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.AcademicActivitiesController.发起一个讲座反馈流程(ScientificResearch.Models.讲座反馈)">
+            <summary>
+            发起一个讲座反馈流程
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.AcademicActivitiesController.完善讲座反馈申请资料(ScientificResearch.Models.完成步骤{ScientificResearch.Models.讲座反馈})">
+            <summary>
+            被打回来以后,完善讲座反馈申请资料
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.AcademicActivitiesController.上传讲座附件">
+            <summary>
+            上传讲座附件,注意:模型里面的讲稿文件其实就是主办讲座里面的主讲人简历,
+            座椅讲座反馈里面的讲稿文件完全用不上了;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.AcademicActivitiesController.发起一个参加会议流程(ScientificResearch.Models.参加会议申请增改)">
+            <summary>
+            发起一个参加会议流程
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.AcademicActivitiesController.完善参加会议申请资料(ScientificResearch.Models.完成步骤{ScientificResearch.Models.参加会议申请增改})">
+            <summary>
+            完善参加会议申请资料
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.AcademicActivitiesController.分页获取可反馈的参加会议(ScientificResearch.Models.Paging,ScientificResearch.Models.参加会议Filter)">
+            <summary>
+            暂时不同
+            分页获取可反馈的参加会议,供添加参加会议反馈时选择某个参加会议;
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.AcademicActivitiesController.完善参加会议反馈申请资料(ScientificResearch.Models.完成步骤{ScientificResearch.Models.参加会议反馈})">
+            <summary>
+            不幸被打回来重填.
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ScientificResearch.Controllers.AccessController">
+            <summary>
+            登录|注销|获取权限等相关接口
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Controllers.AccessController.Login(ScientificResearch.Models.LoginInfo)">
+            <summary>
+            登录,返回登录人所具有的权限
+            TODO:废除,改用Manage里面的login+这里的获取权限接口;
+            </summary>
+            <param name="model">其中dbKey请先填"ScientificResearch_Model"</param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.AccessController.获取权限菜单">
+            <summary>
+            获取科研系统pc端的功能菜单;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.AccessController.RecursivePermission(System.Collections.Generic.IEnumerable{ScientificResearch.Models.权限},System.Int32)">
+            <summary>
+            权限分层次
+            </summary>
+            <param name="permission"></param>
+            <param name="topId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.AccessController.Logout">
+            <summary>
+            注销当前登录
+            TODO:用了jwt,这个好像没啥用了
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Controllers.AccessController.ChangePassword(ScientificResearch.Models.ChangePassword)">
+            <summary>
+            修改密码
+            </summary>
+            <param name="oldPassword"></param>
+            <param name="newPassword"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.AccessController.获取登录日志(ScientificResearch.Models.Paging,ScientificResearch.Models.登录日志Filter)">
+            <summary>
+            分页获取登录日志
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ScientificResearch.Controllers.BaseInfoController">
+            <summary>
+            基础信息维护的接口
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.获取某类字典(System.String)">
+            <summary>
+            根据分类名称,获取某类字典,包括一个层次的和两个层次的字典数据,具体有哪些见基本信息整理文档.xlsx
+            </summary>
+            <param name="分类"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.分页获取某类字典(ScientificResearch.Models.Paging,ScientificResearch.Models.字典Filter)">
+            <summary>
+            分页获取某类字典
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.新增字典(ScientificResearch.Models.字典)">
+            <summary>
+            新增一个字典数据
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.修改字典(ScientificResearch.Models.字典)">
+            <summary>
+            修改一个字典数据
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.删除字典(System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            删除一个字典数据
+            </summary>
+            <param name="编号列表"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.获取部门列表(ScientificResearch.Models.部门Filter)">
+            <summary>
+            获取全部部门,维护部门时用
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.获取启用的部门列表(ScientificResearch.Models.部门Filter)">
+            <summary>
+            获取启用的部门列表,使用部门时用
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.增改部门(ScientificResearch.Models.部门)">
+            <summary>
+            新增部门
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.启用部门(System.Int32)">
+            <summary>
+            启用某部门
+            </summary>
+            <param name="编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.禁用部门(System.Int32)">
+            <summary>
+            禁用某部门
+            </summary>
+            <param name="编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.获取国民行业代码(ScientificResearch.Models.国民行业代码Filter)">
+            <summary>
+            获取国民行业代码,父级编号必须输入,以便一层一层的获取
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.新增国民行业代码(ScientificResearch.Models.国民行业代码)">
+            <summary>
+            新增国民行业代码
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.修改国民行业代码(ScientificResearch.Models.国民行业代码)">
+            <summary>
+            修改国民行业代码
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.删除国民行业代码(System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            删除国民行业代码,传入的是要删除的编号列表
+            </summary>
+            <param name="编号列表"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.获取合同买方性质(ScientificResearch.Models.合同买方性质Filter)">
+            <summary>
+            获取合同买方性质,父级编号必须输入,以便一层一层的获取
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.新增合同买方性质(ScientificResearch.Models.合同买方性质)">
+            <summary>
+            新增合同买方性质
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.修改合同买方性质(ScientificResearch.Models.合同买方性质)">
+            <summary>
+            修改合同买方性质
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.删除合同买方性质(System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            删除合同买方性质,传入的是要删除的编号列表
+            </summary>
+            <param name="编号列表"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.获取技术领域(ScientificResearch.Models.技术领域Filter)">
+            <summary>
+            获取技术领域,父级编号必须输入,以便一层一层的获取
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.新增技术领域(ScientificResearch.Models.技术领域)">
+            <summary>
+            新增技术领域
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.修改技术领域(ScientificResearch.Models.技术领域)">
+            <summary>
+            修改技术领域
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.删除技术领域(System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            删除技术领域,传入的是要删除的编号列表
+            </summary>
+            <param name="编号列表"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.获取学科(ScientificResearch.Models.学科Filter)">
+            <summary>
+            获取学科,父级编号必须输入,以便一层一层的获取
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.新增学科(ScientificResearch.Models.学科)">
+            <summary>
+            新增学科
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.修改学科(ScientificResearch.Models.学科)">
+            <summary>
+            修改学科
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.删除学科(System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            删除学科,传入的是要删除的编号列表
+            </summary>
+            <param name="编号列表"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.获取区域(ScientificResearch.Models.区域Filter)">
+            <summary>
+            获取区域,父级编号必须输入,以便一层一层的获取
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.新增区域(ScientificResearch.Models.区域)">
+            <summary>
+            新增区域
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.修改区域(ScientificResearch.Models.区域)">
+            <summary>
+            修改区域
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.删除区域(System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            删除区域,传入的是要删除的编号列表
+            </summary>
+            <param name="编号列表"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.获取项目分类(ScientificResearch.Models.项目分类Filter)">
+            <summary>
+            获取项目分类,父级编号必须输入,以便一层一层的获取
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.增改项目分类(ScientificResearch.Models.项目分类)">
+            <summary>
+            新增项目分类
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.删除项目分类(System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            删除项目分类,传入的是要删除的编号列表
+            </summary>
+            <param name="编号列表"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.分页获取期刊(ScientificResearch.Models.Paging,ScientificResearch.Models.期刊Filter)">
+            <summary>
+            分页获取期刊
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.增改期刊(ScientificResearch.Models.期刊)">
+            <summary>
+            新增期刊
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.删除期刊(System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            删除期刊
+            </summary>
+            <param name="编号列表"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.获取经费模版(ScientificResearch.Models.Paging,ScientificResearch.Models.经费模版Filter)">
+            <summary>
+            获取所有经费模版
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.增改经费模版(ScientificResearch.Models.经费模版)">
+            <summary>
+            增改经费模版
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.删除经费模版(System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            删除经费模版,其下的类型和内容没有管
+            </summary>
+            <param name="编号列表"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.获取经费模版项目支出类型列表(ScientificResearch.Models.Paging,ScientificResearch.Models.经费模版项目支出类型Filter)">
+            <summary>
+            获取经费模版项目支出类型
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.增改经费模版项目支出类型(ScientificResearch.Models.经费模版项目支出类型增改详情)">
+            <summary>
+            增改经费模版项目支出类型
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.BaseInfoController.删除经费模版项目支出类型(System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            删除经费模版项目支出类型
+            </summary>
+            <param name="编号列表"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.ExpenseController.分页获取纵向项目经费合计报销列表(ScientificResearch.Models.Paging,ScientificResearch.Models.纵向项目立项Filter)">
+            <summary>
+            针对每个纵向项目,目前总的报销情况,一个项目一行
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.ExpenseController.获取某纵向项目经费报销列表(System.Int32)">
+            <summary>
+            针对某个纵向项目的多个报销;一个报销一行
+            </summary>
+            <param name="纵向项目立项编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.ExpenseController.分页获取所有报销列表(ScientificResearch.Models.Paging,ScientificResearch.Models.报销Filter)">
+            <summary>
+            根据报销编号搜索报销可以用这个
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.ExpenseController.获取某报销详情(System.Int32)">
+            <summary>
+            查看某个报销下具体每个项目的列表,一个报销下每个项目一行;
+            查看或修改某报销详情时用
+            </summary>
+            <param name="报销编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.ExpenseController.获取某纵向项目预算已报销详情(System.Int32)">
+            <summary>
+            针对某个纵向项目,查看其所有报销按支出类型+内容分类统计得到的汇总表;
+            只在新增纵向项目报销时候用
+            </summary>
+            <param name="纵向项目立项编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.ExpenseController.获取某横向项目预算已报销详情(System.Int32)">
+            <summary>
+            针对某个横向项目,查看其所有报销按支出类型+内容分类统计得到的汇总表;
+            只在新增横向项目报销时候用
+            </summary>
+            <param name="横向项目编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.ExpenseController.获取某参加会议预算已报销详情(System.Int32)">
+            <summary>
+            针对某个参加会议,查看其所有报销按支出类型+内容分类统计得到的汇总表
+            只在新增参加会议报销时候用
+            </summary>
+            <param name="参加会议编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.ExpenseController.新增纵向项目经费报销(ScientificResearch.Models.报销增改)">
+            <summary>
+            基本资料中的报销金额不用写,后台根据报销详情自己算
+            基本资料中的流程模板编号不用写,后台自取;
+            注意model.基本资料中的项目编号要提供好;
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.ExpenseController.新增参加会议报销(ScientificResearch.Models.报销增改)">
+            <summary>
+            没有预算,
+            .基本资料中的项目编号要提供,就是相应的参加会议的编号;
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.ExpenseController.完善有预算的经费报销(ScientificResearch.Models.完成步骤{ScientificResearch.Models.报销增改})">
+            <summary>
+            比如横纵项目经费报销
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.ExpenseController.完善没有预算的经费报销(ScientificResearch.Models.完成步骤{ScientificResearch.Models.报销增改})">
+            <summary>
+            比如参加会议的报销
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.FruitController.获取论文辅助数据">
             <summary>
             
             </summary>
-            <param name="app"></param>
-            <param name="env"></param>
-            <param name="log"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.FruitController.新增论文(ScientificResearch.Models.成果增改{ScientificResearch.Models.成果论文})">
+            <summary>
+            单独录入论文或认领,同时开启审核流程
+            批量导入的不会开启流程,只有在认领时才会
+            相关项目和作者项中的"成果类型"和"成果编号"不需要前台填写;
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.FruitController.导入整理后的公网论文数据(System.Collections.Generic.IEnumerable{ScientificResearch.Models.论文导入})">
+            <summary>
+            无论是知网还是万网,无论是xlsx还是endnote文件,最后都会整理为IEnumerable[论文导入]来此;
+            </summary>
+            <param name="result"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.FruitController.完善论文资料(ScientificResearch.Models.完成步骤{ScientificResearch.Models.成果增改{ScientificResearch.Models.成果论文}})">
+            <summary>
+            被打回,ps:认领人不能变了;
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.FruitController.审核所有可审核的论文">
+            <summary>
+            审核所有当前登录人可以审核的,处于"待科研管理员审核"的论文,返回处理的数量;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.OfficeController.新增通知公告(ScientificResearch.Models.通知公告增改)">
+            <summary>
+            接收者类型:
+            0 所有人 该情况下, 接收者编号也 = 0;
+            10 -人员;
+            20 -部门;
+            30 -角色;
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.OfficeController.分页获取某人员可查看的通知公告(System.Int32,ScientificResearch.Models.Paging,ScientificResearch.Models.某人员可查看的通知公告Filter)">
+            <summary>
+            如果要获取必读且未读的通知公告,使用条件"是否必读=true 且 是否已接收=false"
+            </summary>
+            <param name="人员编号"></param>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.OfficeController.分页获取可查看的下载中心(ScientificResearch.Models.Paging,ScientificResearch.Models.下载中心Filter)">
+            <summary>
+            首页查看有下载中心时用
+            分页获取某人员可查看的下载中心,由于所有信息都包含了,所以没有获取详情的接口了
+            </summary>
+            <param name="人员编号"></param>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.OfficeController.分页获取下载中心(ScientificResearch.Models.Paging,ScientificResearch.Models.下载中心Filter)">
+            <summary>
+            管理下载中心时用
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.PeopleController.分页获取人员列表(ScientificResearch.Models.Paging,ScientificResearch.Models.人员Filter)">
+            <summary>
+            分页获取人员列表,人员管理时候用
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.PeopleController.分页获取启用的人员列表(ScientificResearch.Models.Paging,ScientificResearch.Models.人员Filter)">
+            <summary>
+            分页获取启用状态的人员列表,使用人员时候用
+            这个可能应该缩减一下返回的字段.
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.PeopleController.获取所有人员列表(ScientificResearch.Models.人员Filter)">
+            <summary>
+            获取所有人员列表,应该用不到
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.PeopleController.增改人员(ScientificResearch.Models.人员)">
+            <summary>
+            增改人员
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.PeopleController.启用人员(System.Int32)">
+            <summary>
+            启用人员
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.PeopleController.禁用人员(System.Int32)">
+            <summary>
+            禁用人员
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.PeopleController.分页获取专家(ScientificResearch.Models.Paging,ScientificResearch.Models.人员Filter)">
+            <summary>
+            分页获取专家
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.PeopleController.从现有人员增加专家(System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            从现有人员增加专家
+            </summary>
+            <param name="编号列表"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.PeopleController.新增专家(ScientificResearch.Models.人员)">
+            <summary>
+            新增专家
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ScientificResearch.Controllers.PermissionController">
+            <summary>
+            权限管理接口
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Controllers.PermissionController.获取角色列表">
+            <summary>
+            获取角色列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.PermissionController.新增角色(ScientificResearch.Models.角色)">
+            <summary>
+            新增角色
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.PermissionController.修改角色(ScientificResearch.Models.角色)">
+            <summary>
+            修改角色
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.PermissionController.分页获取角色中的人员(System.Int32,ScientificResearch.Models.Paging,ScientificResearch.Models.人员Filter)">
+            <summary>
+            分页获取某个角色中的人员
+            </summary>
+            <param name="id"></param>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.PermissionController.分页获取角色中没有的人员(System.Int32,ScientificResearch.Models.Paging,ScientificResearch.Models.人员Filter)">
+            <summary>
+            分页获取角色中没有的人员
+            </summary>
+            <param name="id"></param>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.PermissionController.保存角色中的人员(ScientificResearch.Models.某角色中的人员)">
+            <summary>
+            保存角色中的人员,传入角色编号+属于该角色的人员编号列表;不存在于该列表的原有人员将被删除;
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.PermissionController.添加角色人员(ScientificResearch.Models.某角色中的人员)">
+            <summary>
+            向某角色添加人员
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.PermissionController.删除角色人员(ScientificResearch.Models.某角色中的人员)">
+            <summary>
+            从某角色里面删除人员
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.PermissionController.增删角色人员(ScientificResearch.Models.增删角色中的人员)">
+            <summary>
+            同时增删角色人员
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.PermissionController.获取角色的权限(System.Int32)">
+            <summary>
+            获取所有权限,指定角色拥有的权限为true
+            </summary>
+            <param name="角色编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.PermissionController.保存角色的权限(ScientificResearch.Models.某角色的权限)">
+            <summary>
+            保存角色的权限,传入角色编号+该角色拥有的权限编号列表,不存在于该列表的原有权限将被删除;
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.TestController.GetPropertyinfo会不会取到类的方法">
+            <summary>
+            结果是字段和方法都不会被取到;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.WorkFlowController.审核步骤(ScientificResearch.Models.完成步骤)">
+            <summary>
+            审核等不需要附加动作的操作,可以直接调用这个接口;
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.WorkFlowController.终止步骤(ScientificResearch.Models.完成步骤)">
+            <summary>
+            其中状态值=-2而已
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.WorkFlowController.分配步骤指定人(ScientificResearch.Models.完成步骤{System.Collections.Generic.IEnumerable{System.Int32}})">
+            <summary>
+            附加数据为指定人的编号数组
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.WorkFlowController.获取某步骤的可用操作(System.Int32)">
+            <summary>
+            获取某步骤的可用操作
+            </summary>
+            <param name="步骤编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.WorkFlowController.分页获取办事流程列表(ScientificResearch.Models.Paging)">
+            <summary>
+            首页上查看"更多办事流程"时,列举出所有的办事流程
+            </summary>
+            <param name="paging"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.WorkFlowController.获取某办事流程步骤列表(System.Int32)">
+            <summary>
+            根据某个办事流程编号,获取该流程规定的步骤
+            </summary>
+            <param name="办事流程编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.XProjectController.新增横向项目申请(ScientificResearch.Models.横向项目申请增改)">
+            <summary>
+            注:横向项目经费预算中的配套经费设为0,没用
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.XProjectController.完善横向项目申请资料(ScientificResearch.Models.完成步骤{ScientificResearch.Models.横向项目申请增改})">
+            <summary>
+            注:横向项目经费预算中的配套经费设为0,没用
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.XProjectController.新增横向项目结题(ScientificResearch.Models.横向项目结题增改)">
+            <summary>
+            发起一个横向项目结题
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.YProjectController.新增科研项目申报(ScientificResearch.Models.纵向项目申报增改)">
+            <summary>
+            新增科研项目申报
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.YProjectController.专家评审(ScientificResearch.Models.完成步骤{System.Collections.Generic.IEnumerable{ScientificResearch.Models.专家评分}})">
+            <summary>
+            附加数据中的专家评分,只需要传其中的评分项和评分
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.YProjectController.获取纵向项目立项辅助数据">
+            <summary>
+            获取纵向项目立项辅助数据,申报立项也一样用
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.YProjectController.分页获取可立项的科研项目申报(ScientificResearch.Models.Paging,ScientificResearch.Models.纵向项目申报Filter)">
+            <summary>
+            分页获取可立项的科研项目申报
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.YProjectController.通过申报详情获取可用的纵向项目立项详情(System.Int32)">
+            <summary>
+            打开一个新增立项时,先通过已有的申报来获取可用的立项资料;
+            编号,分类,负责人不动,也不应有input可以去动;
+            </summary>
+            <param name="纵向项目申报编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.YProjectController.发起一个纵向项目立项流程(ScientificResearch.Models.纵向项目立项增改)">
+            <summary>
+            立项流程的发起人,或者应该叫"该流程对应的项目的负责人"
+            有一个步骤是需要这个人来确认资料的;
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.YProjectController.分页获取纵向项目立项(ScientificResearch.Models.Paging,ScientificResearch.Models.纵向项目立项Filter)">
+            <summary>
+            科研项目,人才培养,重点学科,这三个的都合并到一起了;
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.YProjectController.新增纵向项目中检(ScientificResearch.Models.发起纵向项目中检)">
+            <summary>
+            发起一个纵向项目中检
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.YProjectController.新增纵向项目变更(ScientificResearch.Models.纵向项目变更增改)">
+            <summary>
+            注意:前台在调用这个接口之前,要注意"纵向项目编号"和"编号"的赋值
+            "纵向项目编号"是打开新增页面之前就已知的;
+            "编号"这里=0;
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.YProjectController.审核并应用纵向项目变更(ScientificResearch.Models.完成步骤{System.Int32})">
+            <summary>
+            变更最后一步的审核,调这个接口而不是通用的审核接口;
+            此步骤仅当操作结果为通过时,交换被变更的立项资料和将变更的立项资料;
+            附加数据填写:纵向项目变更编号
+            </summary>
+            <param name="纵向项目变更编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.YProjectController.获取纵向项目变更详情(System.Int32)">
+            <summary>
+            获取纵向项目变更详情,包括变更前后的详情;
+            如果成功变更,则变更前=立项,变更后=变更
+             否则,则变更前=当前变更,变更后=立项;
+            </summary>
+            <param name="纵向项目立项编号"></param>
+            <param name="纵向项目变更编号"></param>
+            <param name="状态">当前流程的状态</param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.YProjectController.新增纵向项目结题(ScientificResearch.Models.发起纵向项目结题)">
+            <summary>
+            发起一个纵向项目结题;
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ScientificResearch.Infrastucture.BaseBusiness">
+            <summary>
+            Business基类,用来将获取的当前请求的IServiceProvider对应的服务容器中的需要的服务
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Infrastucture.BaseBusiness.ServiceProvider">
+            <summary>
+            serviceProvider
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Infrastucture.BaseBusiness.Session">
+            <summary>
+            Session
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Infrastucture.BaseBusiness.#ctor(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            构造
+            </summary>
+            <param name="httpContext"></param>
+        </member>
+        <member name="P:ScientificResearch.Infrastucture.BaseBusiness.config">
+            <summary>
+            配置
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Infrastucture.BaseBusiness.Log">
+            <summary>
+            日志
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Infrastucture.BaseBusiness.DbConnectionString">
+            <summary>
+            用于事务
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Infrastucture.BaseBusiness.Db">
+            <summary>
+            获取当前登录者的数据库链接;可能在login方法中另做一个
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Infrastucture.BaseBusiness.Env">
+            <summary>
+            网站服务器环境
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Infrastucture.BaseBusiness.currentUser">
+            <summary>
+            登录人的信息
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Infrastucture.BaseController">
+            <summary>
+            基础控制器
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Infrastucture.BaseController.MyWorkFlowBusiness">
+            <summary>
+            MyWorkFlowBusiness的实例不采用注入
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Infrastucture.BaseController.Config">
+            <summary>
+             配置,使用config.GetValue T来读取
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Infrastucture.BaseController.测试获取自定义的全局配置数据">
+            <summary>
+            测试获取自定义的全局配置数据
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Infrastucture.BaseController.Log">
+            <summary>
+            日志服务
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Infrastucture.BaseController.DbConnectionStringLack">
+            <summary>
+            原始的连接字串,具体连接哪个库还没有指定
+            登录时可以用这个临时生成一个连接;
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Infrastucture.BaseController.DbConnectionString">
+            <summary>
+            指定连接的库为当前登录人的库,字串可用于事务,也可用于下面的db
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Infrastucture.BaseController.Db">
+            <summary>
+            获取当前登录者的数据库链接;可能在login方法中另做一个
+            也可以这么写: public IDbConnection Db => new SqlConnection(DbConnectionString);
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Infrastucture.BaseController.Db_Manage">
+            <summary>
+            主库
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Infrastucture.BaseController.Env">
+            <summary>
+            网站服务器环境
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Infrastucture.BaseController.CurrentUser">
+            <summary>
+            登录人的信息
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Infrastucture.AddHeaderWithFactoryAttribute">
+            <summary>
+            Filter with DI
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Infrastucture.AddHeaderWithFactoryAttribute.InternalAddHeaderFilter">
+            <summary>
+            在结果返回时添加头;
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Infrastucture.MyAuthorizationFilter">
+            <summary>
+            认证过滤器
+            2019-1-11 用了jwt之后,这玩意儿就没啥用了;
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Infrastucture.MyActionFilter">
+            <summary>
+            action过滤器
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Infrastucture.MyResultFilter">
+            <summary>
+            结果过滤器
+            前台需要的是{error=xxx,data=yyy}的格式,虽然很怪,满足前台的要求吧
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Infrastucture.MyResultFilter.OnResultExecuting(Microsoft.AspNetCore.Mvc.Filters.ResultExecutingContext)">
+            <summary>
+            如果action返回的是一个ObjectResult,则再次包装一下;
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="T:ScientificResearch.Infrastucture.SwaggerFileUploadFilter">
+            <summary>
+            swagger文件过滤器
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Infrastucture.SwaggerFileUploadFilter.Apply(Swashbuckle.AspNetCore.Swagger.Operation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+            swagger过滤器（此处的Apply会被swagger的每个接口都调用生成文档说明，所以在此处可以对每一个接口进行过滤操作）
+            </summary>
+            <param name="operation"></param>
+            <param name="context"></param>
+        </member>
+        <member name="T:ScientificResearch.Infrastucture.IsDateAttribute">
+            <summary>
+            目前这东西还没使用;
+            目前使用的是DateTime?这个类型(原本没有使用DateTIme是因为sqlwhere一个解析没有被修复)
+            这东西明显能做的事情更多
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Infrastucture.PredefindedKeyFields">
+            <summary>
+            预定义的主键,就是这个主键名称是固定的而已
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Infrastucture.PredefindedIdList`1">
+            <summary>
+            一个Id+一个T的列表的结构,很多sp用,对接口来说,就不需要自定义post的传入类了;
+            当然要转换为sp类还是手动来的好;
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:ScientificResearch.Infrastucture.PredefindedModelList`2">
+            <summary>
+            类似上面那个
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TList"></typeparam>
+        </member>
+        <member name="T:ScientificResearch.Infrastucture.PredefinedSpExtention">
+            <summary>
+            GetModelById
+            一些预定义的sp的dapper调用
+            </summary>
+        </member>
+        <member name="F:ScientificResearch.Infrastucture.PredefinedSpExtention.PredefindedKeyFields">
+            <summary>
+            预定义的主键,非要叫"编号"而不叫"Id"我有啥法
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.ToPredefindedKeyFieldsList(System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            把IEnumerable int类型的编号列表,转为PredefindedKeyFieldsList列表,后者可以转为一个dataTable,是只有一个字段 编号 的表
+            </summary>
+            <param name="idList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.ToStringIdWithSpacer(System.Collections.Generic.IEnumerable{System.Int32},System.String)">
+            <summary>
+            根据idlist得到一个用逗号分隔的字符串,count=0则返回"0",其中每一项都是数字;
+            </summary>
+            <param name="idList"></param>
+            <param name="Spacer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.GetModelByIdSpAsync``1(System.Data.IDbConnection,System.Int32)">
+            <summary>
+            通过主键获得对象,或者null
+            T为表映射而来的类
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="cnn"></param>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.GetListSpAsync``2(System.Data.IDbConnection,``1,System.String,System.String,System.Boolean,System.String,System.String)">
+            <summary>
+            sp_GetList,带搜索条件的
+            T的作用有2:1默认用T的名称做TbName,2dapper返回类型的指定
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TFilter"></typeparam>
+            <param name="cnn"></param>
+            <param name="filter"></param>
+            <param name="tbName"></param>
+            <param name="keyFields"></param>
+            <param name="orderType"></param>
+            <param name="orderStr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.GetListSpAsync``1(System.Data.IDbConnection,System.String,System.String,System.Boolean,System.String)">
+            <summary>
+            没有搜索条件的单独传参数
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="cnn"></param>
+            <param name="tbName"></param>
+            <param name="keyFields"></param>
+            <param name="orderType"></param>
+            <param name="orderStr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.GetPagingListSpAsync``2(System.Data.IDbConnection,ScientificResearch.Models.Paging,``1,System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            有条件的分页获取
+            T的作用有2:1默认用T的名称做TbName,2dapper返回类型的指定
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TFilter"></typeparam>
+            <param name="cnn"></param>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <param name="tbName"></param>
+            <param name="keyFields"></param>
+            <param name="orderStr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.GetPagingListSpAsync``1(System.Data.IDbConnection,ScientificResearch.Models.Paging,System.String,System.String,System.String)">
+            <summary>
+            没有搜索条件的,返回分页数据
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="cnn"></param>
+            <param name="paging"></param>
+            <param name="tbName"></param>
+            <param name="keyFields"></param>
+            <param name="orderStr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.ExecuteSpAsync``1(System.Data.IDbConnection,``0,System.Data.IDbTransaction)">
+            <summary>
+            异步执行一个sp
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="cnn"></param>
+            <param name="model">sp映射而来的类对象,不能为null...</param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.QuerySpAsync``2(System.Data.IDbConnection,``0,System.Data.IDbTransaction)">
+            <summary>
+            执行一个sp,返回指定类型的list,sp如果没有参数,则不输入model
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TOut"></typeparam>
+            <param name="cnn"></param>
+            <param name="model"></param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.QueryMultipleSpAsync``1(System.Data.IDbConnection,``0,System.Data.IDbTransaction)">
+            <summary>
+            执行一个sp,返回多个list,需要自己再去解析,
+            sp如果没有参数,则不输入model
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="cnn"></param>
+            <param name="model"></param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.Merge``1(System.Data.IDbConnection,``0,System.Data.IDbTransaction)">
+            <summary>
+            按约定SP_xxx_增改的命名执行一个merge
+            注意其中的参数名也是约定
+            注意他返回的是同类型T,而不是编号的int
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="cnn"></param>
+            <param name="model"></param>
+            <param name="transaction"></param>
+            <returns></returns>
         </member>
         <member name="M:MyLib.MyDynamic.ConvertToDynamic(System.Object)">
             <summary>

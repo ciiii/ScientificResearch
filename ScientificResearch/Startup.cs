@@ -32,30 +32,16 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace ScientificResearch
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public class Startup
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="configuration"></param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
             #region 对于配置文件,废弃的18-4-2之前方法;
@@ -71,9 +57,10 @@ namespace ScientificResearch
             //services.AddSingleton<IConfigurationRoot>(configRoot);
             #endregion
 
-            //测试一个全局配置数据的使用
+            #region 测试一个全局配置数据的使用
             //services.AddSingleton<Models.系统角色组编号>(configRoot.GetSection("系统角色组编号").Get<Models.系统角色组编号>());
             //services.AddSingleton<Models.系统角色组编号>(JsonConvert.DeserializeObject < Models.系统角色组编号 >(configRoot.GetSection("系统角色组编号").Value));
+            #endregion
 
             //log4net
             services.AddSingleton<ILog>(p =>
@@ -83,7 +70,7 @@ namespace ScientificResearch
                 return LogManager.GetLogger(repository.Name, repository.Name);
             });
 
-            //test jwt 1/4
+            //jwt 1/4 对jwt的解析做配置
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -115,7 +102,7 @@ namespace ScientificResearch
             //Compression
             services.AddResponseCompression();
 
-
+            #region 暂时没用的ResponseCaching + redis + DataProtection + 注入的sqlserver连接 + session等
             //Microsoft.AspNetCore.ResponseCaching,没啥用
             //services.AddResponseCaching();
 
@@ -139,21 +126,26 @@ namespace ScientificResearch
 
             //Session;befor mvc
             //services.AddSession(sessioOptions => sessioOptions.Cookie.Name = "x");
-            services.AddSession();
-
+            //services.AddSession();
 
             //services.Configure<Microsoft.Extensions.WebEncoders.WebEncoderOptions>(options =>
             //{
             //    options.TextEncoderSettings = new System.Text.Encodings.Web.TextEncoderSettings(System.Text.Unicode.UnicodeRanges.All);
             //});
 
+            //sql,如果是动态指定数据库,那么每种数据库链接指定不同的login页面,在login时指定用户关联到哪个数据库并保存在session里面.然后每一次请求时,读取指定的key来建立db的连接;2018-5-7 换成了在访问时动态切换数据库
+            //services.AddTransient<IDbConnection>(p => new SqlConnection(Configuration.GetValue<string>("connectionString:ScientificResearch")));
+            #endregion
+
             //mvc
             services.AddMvc(option =>
             {
                 //自定义的过滤器
-                option.Filters.Add(new MyAuthorizationFilter());
+                //option.Filters.Add(new MyAuthorizationFilter());  //用了jwt这玩意儿就没啥用了;
                 option.Filters.Add(new MyActionFilter());
                 option.Filters.Add(new MyResultFilter());
+
+                #region 不好删又暂时没想起来是什么意思的几个东西
                 //如果 Accept 头中包含 /，那么 Header 将被忽略，除非 MvcOptions 的 RespectBrowserAcceptHeader 设置为 true。
                 //                与其它 API 客户端不同，Web 浏览器一般都会在请求中包含 Accept 头，其中使用通配符（wildcards）。默认情况下，当框架检测到请求来自浏览器，它就会忽略 Accept 头并返回应用程序配置的默认格式（如果没有另行安排，则默认为 JSON 格式）。这样一来，当使用不同的浏览器消费 API 时提供一致的体验。
                 //如果你希望你的应用程序优先考虑浏览器的 Accept 头，你可以在 MVC 的配置中进行相关配置，具体来讲是在 Startup.cs 的 ConfigureServices 方法中将 RespectBrowserAcceptHeader 设置为 true。
@@ -166,6 +158,7 @@ namespace ScientificResearch
                 //option.OutputFormatters.RemoveType<TextOutputFormatter>();
                 //option.OutputFormatters.RemoveType<HttpNoContentOutputFormatter>();
                 //option.OutputFormatters.Add(new StringOutputFormatter());
+                #endregion
             }).AddJsonOptions(option =>
             {
                 //返回的时间类型的格式
@@ -178,6 +171,8 @@ namespace ScientificResearch
             //swagger
             services.AddSwaggerGen(option =>
             {
+                option.OperationFilter<SwaggerFileUploadFilter>();//增加文件过滤处理
+
                 var security = new Dictionary<string, IEnumerable<string>> { { "Bearer", new string[] { } }, };
                 option.AddSecurityRequirement(security);//添加一个必须的全局安全信息，和AddSecurityDefinition方法指定的方案名称要一致，这里是Bearer。
 
@@ -195,8 +190,10 @@ namespace ScientificResearch
                 option.SwaggerDoc("ScientificResearch", new Info { Title = "科研管理系统-API", Version = "ScientificResearch-v1" });
                 option.SwaggerDoc("test", new Info { Title = "测试-API", Version = "test-v1" });
                 option.SwaggerDoc("TeachingManagement", new Info { Title = "教学管理-API", Version = "TeachingManagement-v1" });
+                option.SwaggerDoc("Manage", new Info { Title = "主库-API", Version = "Manage-v1" });
 
-                option.DocInclusionPredicate((docName, apiDesc) => {
+                option.DocInclusionPredicate((docName, apiDesc) =>
+                {
                     if (!apiDesc.TryGetMethodInfo(out MethodInfo methodInfo)) return false;
                     var versions = methodInfo.DeclaringType
                                              .GetCustomAttributes(true)
@@ -213,21 +210,13 @@ namespace ScientificResearch
                 option.IncludeXmlComments(filePath);
             });
 
-
-            //sql,如果是动态指定数据库,那么每种数据库链接指定不同的login页面,在login时指定用户关联到哪个数据库并保存在session里面.然后每一次请求时,读取指定的key来建立db的连接;2018-5-7 换成了在访问时动态切换数据库
-            //services.AddTransient<IDbConnection>(p => new SqlConnection(Configuration.GetValue<string>("connectionString:ScientificResearch")));
-
+            #region hangfire
             ////hangfire 先用redis,sql以后再说
             //services.AddHangfire(c => c.UseRedisStorage(services.BuildServiceProvider().GetService<IConfigurationRoot>().GetSection("redisConnectionString").Value));
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="app"></param>
-        /// <param name="env"></param>
-        /// <param name="log"></param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILog log)
         {
             #region 每个请求都log一下
@@ -301,18 +290,20 @@ namespace ScientificResearch
                 }
             });
 
+            #region hangfire
             ////hangfire
             //app.UseHangfireServer();
             //app.UseHangfireDashboard();
+            #endregion
 
-            //在mvc之前Microsoft.AspNetCore.UseResponseCompression
+            //在mvc之前
             app.UseResponseCompression();
+
             //Microsoft.AspNetCore.ResponseCaching
             //app.UseResponseCaching();
 
             //web api应用默认用的wwwroot根目录作为静态文件目根录,
             var staticfile = new StaticFileOptions();
-
             //设置扩展文件名mime映射
             var provider = new FileExtensionContentTypeProvider();
             //provider.Mappings.Add(".log", "text/plain");//手动设置对应MIME
@@ -321,10 +312,11 @@ namespace ScientificResearch
             staticfile.ContentTypeProvider = provider;
             app.UseStaticFiles(staticfile);
 
+            #region Session
             //注意顺序 UseSession必须在UseMvc之前;有了session,mvc才能用
             //使用了distributedRedisCache以后,这个就是设置了redis对于session的过期时间了 
-            app.UseSession(new SessionOptions() { IdleTimeout = TimeSpan.FromDays(1) });
-            //app.UseSession(new SessionOptions() { IdleTimeout = TimeSpan.FromMinutes(30) });
+            //app.UseSession(new SessionOptions() { IdleTimeout = TimeSpan.FromDays(1) });
+            #endregion
 
             //2018/1/29为了让不能设置content-type的XDomainRequest的content-type为json
             app.Use(async (context, next) =>
@@ -335,6 +327,7 @@ namespace ScientificResearch
                 await next();
             });
 
+            #region cors
             //cors自己写,2018-7-10,将前台结合到了本工程,没用跨域了;
             //app.Use(async (context, next) =>
             //{
@@ -360,15 +353,17 @@ namespace ScientificResearch
             //        await next();
             //    }
             //});
+            #endregion
 
-            //test jwt 2/4
+            //test jwt 2/4 在管道应用jwt验证
             app.UseAuthentication();
 
-            //注意顺序:3 抓异常写好之后(里面都有个try{await next}),再是mvc的中间件
+            //mvc 注意顺序:3 抓异常写好之后(里面都有个try{await next}),再是mvc的中间件
             app.UseMvc();
 
             //经由Swagger
-            app.UseSwagger(c=> {
+            app.UseSwagger(c =>
+            {
                 c.RouteTemplate = "swagger/{documentName}/swagger.json";
             });
             app.UseSwaggerUI(c =>
@@ -376,6 +371,7 @@ namespace ScientificResearch
                 c.SwaggerEndpoint("/swagger/ScientificResearch/swagger.json", "ScientificResearch-v1");
                 c.SwaggerEndpoint("/swagger/test/swagger.json", "test-v1");
                 c.SwaggerEndpoint("/swagger/TeachingManagement/swagger.json", "TeachingManagement-v1");
+                c.SwaggerEndpoint("/swagger/Manage/swagger.json", "Manage-v1");
             });
         }
     }

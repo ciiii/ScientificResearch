@@ -28,6 +28,9 @@ namespace ScientificResearch.Infrastucture
             return new InternalAddHeaderFilter();
         }
 
+        /// <summary>
+        /// 在结果返回时添加头;
+        /// </summary>
         private class InternalAddHeaderFilter : IResultFilter
         {
             public void OnResultExecuting(ResultExecutingContext context)
@@ -41,8 +44,10 @@ namespace ScientificResearch.Infrastucture
             }
         }
     }
+
     /// <summary>
     /// 认证过滤器
+    /// 2019-1-11 用了jwt之后,这玩意儿就没啥用了;
     /// </summary>
     public class MyAuthorizationFilter : IAuthorizationFilter
     {
@@ -103,7 +108,6 @@ namespace ScientificResearch.Infrastucture
             }
         }
     }
-
 
     /// <summary>
     /// 结果过滤器

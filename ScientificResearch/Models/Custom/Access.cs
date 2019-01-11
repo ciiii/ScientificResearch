@@ -23,6 +23,11 @@ namespace ScientificResearch.Models
         /// </summary>
         public string DbKey { get; set; }
 
+        /// <summary>
+        /// 微信获取openid的code
+        /// </summary>
+        public string Code { get; set; }
+
         //public string IP { get; set; }
     }
 
