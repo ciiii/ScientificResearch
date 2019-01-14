@@ -4,7 +4,7 @@
         <name>ScientificResearch</name>
     </assembly>
     <members>
-        <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.getOpenId(System.String)">
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.GetOpenId(System.String)">
             <summary>
             根据code取openid,接着取该openid绑定的用户信息;
             OAuthScope.snsapi_base方式回调
@@ -14,7 +14,7 @@
             <param name="returnUrl">用户最初尝试进入的页面</param>
             <returns>openid</returns>
         </member>
-        <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.BindOpenId(ScientificResearch.Models.LoginInfo)">
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.BindOpenId(ScientificResearch.Models.LoginInfoWithCode)">
             <summary>
             绑定openid和用户信息
             </summary>
@@ -30,9 +30,16 @@
         </member>
         <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.Login(ScientificResearch.Models.LoginInfo)">
             <summary>
-            使用用户名密码登录,此时不需要提供code
+            使用用户名密码登录分库,此时不需要提供code
             </summary>
             <param name="model">其中dbKey请先填"ScientificResearch_Test"</param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.LoginManage(ScientificResearch.Models.LoginInfo)">
+            <summary>
+            我们自己人登录管理总库的接口,DbKey为ScientificResearch_Manage
+            </summary>
+            <param name="model"></param>
             <returns></returns>
         </member>
         <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.login(ScientificResearch.Models.LoginInfo)">
@@ -47,6 +54,32 @@
             根据用户信息获取jwt字串,并返回"openid登录""用户名密码登录""绑定openid到用户"的一样的返回信息
             </summary>
             <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ScientificResearch.Areas.Manage.Controllers.NewsController">
+            <summary>
+            总库的新闻管理,这个应该是云中漫步自己的新闻,针对所有受众
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.NewsController.分页获取总库新闻(ScientificResearch.Models.Paging)">
+            <summary>
+            分页获取总库新闻
+            </summary>
+            <param name="paging"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.NewsController.增改总库新闻(ScientificResearch.Models.新闻)">
+            <summary>
+            增改总库新闻,老规矩.编号=0为新增;
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.NewsController.删除总库新闻(System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            删除总库新闻;
+            </summary>
+            <param name="编号列表"></param>
             <returns></returns>
         </member>
         <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementBaseController">
@@ -93,7 +126,7 @@
             哪个db
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.LoginInfo.Code">
+        <member name="P:ScientificResearch.Models.LoginInfoWithCode.Code">
             <summary>
             微信获取openid的code
             </summary>
@@ -1288,6 +1321,16 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_按部门统计成果.字段显示名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_新闻_增改">
+            <summary>
+            sp_新闻_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_新闻_增改.tt">
             <summary>
             
             </summary>
@@ -14013,6 +14056,17 @@
             <param name="transaction"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.Delete``1(System.Data.IDbConnection,System.Collections.Generic.IEnumerable{System.Int32},System.Data.IDbTransaction)">
+            <summary>
+            按约定SP_xxx_删的命名执行一个delete
+            注意其中的参数名也是约定
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="cnn"></param>
+            <param name="list"></param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
         <member name="M:MyLib.MyDynamic.ConvertToDynamic(System.Object)">
             <summary>
             转成可以扩充的对象
@@ -14089,6 +14143,43 @@
             <param name="obj"></param>
             <param name="fieldName"></param>
             <param name="value"></param>
+        </member>
+        <member name="M:MyLib.MyObject.Compare``1(``0,``0)">
+            <summary>
+            比较两个对象的属性值和字段值是否全部相等
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="obj1"></param>
+            <param name="obj2"></param>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MyLib.MyObject.CompareProperties``1(``0,``0,System.Type)">
+            <summary>
+            判断两个相同引用类型的对象的属性值是否相等
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="obj1">对象1</param>
+            <param name="obj2">对象2</param>
+            <param name="type">按type类型中的属性进行比较</param>
+            <returns></returns>
+        </member>
+        <member name="M:MyLib.MyObject.CompareFields``1(``0,``0,System.Type)">
+            <summary>
+            判断两个相同引用类型的对象的字段值是否相等
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="obj1">对象1</param>
+            <param name="obj2">对象2</param>
+            <param name="type">按type类型中的字段进行比较</param>
+            <returns></returns>
+        </member>
+        <member name="M:MyLib.MyObject.IsCanCompare(System.Type)">
+            <summary>
+            该类型是否可直接进行值的比较
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
         </member>
         <member name="M:MyLib.MyPath.Combine(System.String[])">
             <summary>

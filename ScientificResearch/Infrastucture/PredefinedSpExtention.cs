@@ -52,6 +52,7 @@ namespace ScientificResearch.Infrastucture
         private const string PredefindedKeyFields = "编号";
 
         private static string PrdefindeSpMergeName<T>() { return $"SP_{typeof(T).Name}_增改"; }
+        private static string PrdefindeSpDeleteName<T>() { return $"SP_{typeof(T).Name}_删"; }
 
         /// <summary>
         /// 把IEnumerable int类型的编号列表,转为PredefindedKeyFieldsList列表,后者可以转为一个dataTable,是只有一个字段 编号 的表
@@ -332,6 +333,24 @@ namespace ScientificResearch.Infrastucture
 
             return result;
         }
+
+        /// <summary>
+        /// 按约定SP_xxx_删的命名执行一个delete
+        /// 注意其中的参数名也是约定
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="cnn"></param>
+        /// <param name="list"></param>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
+        async public static Task Delete<T>(this IDbConnection cnn, IEnumerable<int> list, IDbTransaction transaction = null) where T : new()
+        {
+            var result = await cnn.QueryAsync<T>(PrdefindeSpDeleteName<T>(), new
+            {
+                tt_编号 =list.ToPredefindedKeyFieldsList().ToDataTable()
+            }, transaction, commandType: CommandType.StoredProcedure);
+        }
+        
         #region 根据sp中对删除和启禁用的命名约定,调用相应的sp的方法,已废弃,直接用上面的几个"dapper原生的操作sp的方法"+"映射而来的sp类"结合而得到的调用sp的方法
         ///// <summary>
         ///// 增改一个表.单个对象.其中sp名称和tt的名称是按约定从表名构成的;

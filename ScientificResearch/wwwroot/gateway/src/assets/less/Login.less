@@ -1,0 +1,203 @@
+@import "../less/variable";
+
+.page-login {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff url("../images/bg.jpg") no-repeat center bottom;
+  background-size: 100% 85%;
+
+  .login-top {
+    height: 60px;
+    line-height: 60px;
+    background: #fff;
+    overflow: hidden;
+    padding: 0 360px;
+    border-bottom: 1px solid @border;
+
+    .left {
+      float: left;
+      overflow: hidden;
+
+      img {
+        width: auto;
+        height: 38px;
+        margin-top: 13px;
+        float: left;
+
+      }
+
+      span {
+        float: left;
+      }
+    }
+
+    .right {
+      float: right;
+
+      img {
+        width: 30px;
+        height: 34px;
+        float: left;
+        margin-top: 5px;
+      }
+
+      span {
+        float: left;
+      }
+    }
+
+    span {
+      font-size: 18px;
+      margin-left: 5px;
+    }
+  }
+
+  .content {
+    position: absolute;
+    right: 15%;
+    top: 15%;
+
+    .title {
+      text-align: center;
+
+      img {
+        width: 39px;
+        height: 44px;
+      }
+
+      span {
+        font-size: 24px;
+        font-weight: bold;
+        padding-top: 5px;
+        margin-left: 5px;
+        color: #fff;
+      }
+    }
+
+    .ruleForm {
+      width: 400px;
+      height: 400px;
+      border: 1px solid @loginColor;
+      background: #fff;
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+      animation: main-move 0.6s;
+      -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#1b1b1b')";
+    }
+
+    .el-form-item {
+      position: relative;
+      text-align: center;
+
+      img {
+        position: absolute;
+        left: 55px;
+        top: 10px;
+        z-index: 9;
+      }
+
+      .el-button {
+        width: 320px;
+        background: @loginColor;
+        border-color: @loginColor;
+
+        &:hover {
+          background: #60C48F;
+        }
+      }
+    }
+    .password {
+      margin-bottom: 5px;
+    }
+
+    .remember {
+      text-align: left;
+      margin-left: 45px;
+    }
+
+    .el-form-item__error {
+      left: 50px;
+    }
+
+    .el-input {
+      width: 320px;
+
+    }
+
+    .form-title {
+      margin: 80px 0 30px 0;
+      text-align: center;
+      font-size: 24px;
+      color: @loginColor;
+      font-weight: normal;
+    }
+
+    .login-tip {
+      color: #0cdc0c;
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 10px;
+      position: absolute;
+      top: 290px;
+      left: 0;
+      width: 100%;
+    }
+
+    .el-checkbox-group {
+      height: 30px;
+    }
+
+    .el-checkbox {
+      height: 30px;
+    }
+
+    .btn-login {
+      margin: 20px auto 0 7px;
+    }
+
+    .help-center {
+      font-size: 14px;
+      color: #666;
+      margin-top: 95px;
+      text-align: center;
+      display: block;
+    }
+
+    .support {
+      font-size: 14px;
+      color: #666;
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    .login-tip-show {
+      .login-tip {
+        display: block;
+      }
+
+      .btn-login {
+        margin-top: 10px;
+      }
+    }
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1366px) {
+  .page-login {
+    .content {
+      .ruleForm {
+        height: 360px;
+      }
+
+      .form-title {
+        margin: 50px 0 20px 0;
+      }
+
+      .support {
+        margin-top: 30px;
+      }
+    }
+  }
+}

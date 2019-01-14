@@ -187,10 +187,10 @@ namespace ScientificResearch
                 option.IgnoreObsoleteActions();
                 option.IgnoreObsoleteProperties();
 
-                option.SwaggerDoc("ScientificResearch", new Info { Title = "科研管理系统-API", Version = "ScientificResearch-v1" });
-                option.SwaggerDoc("test", new Info { Title = "测试-API", Version = "test-v1" });
-                option.SwaggerDoc("TeachingManagement", new Info { Title = "教学管理-API", Version = "TeachingManagement-v1" });
-                option.SwaggerDoc("Manage", new Info { Title = "主库-API", Version = "Manage-v1" });
+                option.SwaggerDoc("ScientificResearch", new Info { Title = "科研管理系统-API", Version = "ScientificResearch" });
+                option.SwaggerDoc("test", new Info { Title = "测试-API", Version = "test" });
+                option.SwaggerDoc("TeachingManagement", new Info { Title = "教学管理-API", Version = "TeachingManagement" });
+                option.SwaggerDoc("Manage", new Info { Title = "主库-API", Version = "Manage" });
 
                 option.DocInclusionPredicate((docName, apiDesc) =>
                 {
@@ -329,30 +329,30 @@ namespace ScientificResearch
 
             #region cors
             //cors自己写,2018-7-10,将前台结合到了本工程,没用跨域了;
-            //app.Use(async (context, next) =>
-            //{
+            app.Use(async (context, next) =>
+            {
 
-            //    //2018/1/29为了让不能设置content-type的XDomainRequest的content-type为json
-            //    if (string.IsNullOrWhiteSpace(context.Request.ContentType)
-            //        || context.Request.ContentType == "context.Request.ContentType")
-            //        context.Request.ContentType = "application/json";
+                //2018/1/29为了让不能设置content-type的XDomainRequest的content-type为json
+                if (string.IsNullOrWhiteSpace(context.Request.ContentType)
+                    || context.Request.ContentType == "context.Request.ContentType")
+                    context.Request.ContentType = "application/json";
 
-            //    context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
-            //    context.Response.Headers.Add("Access-Control-Allow-Headers", "content-type,*");
-            //    context.Response.Headers.Add("Access-Control-Allow-Methods", "PUT,GET,POST,OPTIONS");
-            //    //context.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
+                context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+                context.Response.Headers.Add("Access-Control-Allow-Headers", "content-type,*");
+                context.Response.Headers.Add("Access-Control-Allow-Methods", "PUT,GET,POST,OPTIONS");
+                //context.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
 
-            //    //Request.Headers.AllKeys.Contains("Origin") &&
-            //    if (context.Request.Method == "OPTIONS")
-            //    {
-            //        context.Response.StatusCode = 202;
-            //        await context.Response.WriteAsync("OK");
-            //    }
-            //    else
-            //    {
-            //        await next();
-            //    }
-            //});
+                //Request.Headers.AllKeys.Contains("Origin") &&
+                if (context.Request.Method == "OPTIONS")
+                {
+                    context.Response.StatusCode = 202;
+                    await context.Response.WriteAsync("OK");
+                }
+                else
+                {
+                    await next();
+                }
+            });
             #endregion
 
             //test jwt 2/4 在管道应用jwt验证
@@ -368,10 +368,10 @@ namespace ScientificResearch
             });
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/ScientificResearch/swagger.json", "ScientificResearch-v1");
-                c.SwaggerEndpoint("/swagger/test/swagger.json", "test-v1");
-                c.SwaggerEndpoint("/swagger/TeachingManagement/swagger.json", "TeachingManagement-v1");
-                c.SwaggerEndpoint("/swagger/Manage/swagger.json", "Manage-v1");
+                c.SwaggerEndpoint("/swagger/ScientificResearch/swagger.json", "ScientificResearch");
+                c.SwaggerEndpoint("/swagger/test/swagger.json", "test");
+                c.SwaggerEndpoint("/swagger/TeachingManagement/swagger.json", "TeachingManagement");
+                c.SwaggerEndpoint("/swagger/Manage/swagger.json", "Manage");
             });
         }
     }

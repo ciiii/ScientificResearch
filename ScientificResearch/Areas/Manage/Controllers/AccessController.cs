@@ -27,7 +27,7 @@ namespace ScientificResearch.Areas.Manage.Controllers
         /// <param name="state"></param>
         /// <param name="returnUrl">用户最初尝试进入的页面</param>
         /// <returns>openid</returns>
-        async private Task<string> getOpenId(string code)
+        async private Task<string> GetOpenId(string code)
         {
             if (string.IsNullOrEmpty(code))
             {
@@ -73,16 +73,16 @@ namespace ScientificResearch.Areas.Manage.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]
-        async public Task<LoginReturn> BindOpenId([FromBody]LoginInfo model)
+        async public Task<LoginReturn> BindOpenId([FromBody]LoginInfoWithCode model)
         {
             //验证用户,并记录为一次登录
             var result = await login(model);
 
             //获取openid
-            var openId = await getOpenId(model.Code);
+            var openId = await GetOpenId(model.Code);
 
             //绑定openid到用户
-            var 绑定关系 = new 人员OpenId() { OpenId = openId,DbKey=model.DbKey, 人员编号 = result.人员.编号 };
+            var 绑定关系 = new 人员OpenId() { OpenId = openId, DbKey = model.DbKey, 人员编号 = result.人员.编号 };
 
             //var dbWhenLogin = new SqlConnection(DbConnectionStringLack.Replace("{0}", model.DbKey));
             //注意是管理库;
@@ -102,7 +102,7 @@ namespace ScientificResearch.Areas.Manage.Controllers
         async public Task<LoginReturn> LoginWithOpenId([FromBody]string Code)
         {
             //获取openid
-            var openId = await getOpenId(Code);
+            var openId = await GetOpenId(Code);
 
             //从主库获取该openid对应的dbkey和人员编号;
             var 绑定信息 = (await Db_Manage.GetListSpAsync<人员OpenId, 人员OpenIdFilter>(new 人员OpenIdFilter() { OpenId = openId })).FirstOrDefault();
@@ -111,7 +111,7 @@ namespace ScientificResearch.Areas.Manage.Controllers
 
             //到相对应的从库取用户信息并转为CurrentUser
             var dbWhenLogin = new SqlConnection(DbConnectionStringLack.Replace("{0}", 绑定信息.DbKey));
-            var user =await dbWhenLogin.GetModelByIdSpAsync<v1_人员_带部门名>(绑定信息.人员编号);
+            var user = await dbWhenLogin.GetModelByIdSpAsync<v1_人员_带部门名>(绑定信息.人员编号);
             var currentUser = Tool.ModelToModel<CurrentUser, v1_人员_带部门名>(user);
             //
             currentUser.DbKey = 绑定信息.DbKey;
@@ -122,7 +122,7 @@ namespace ScientificResearch.Areas.Manage.Controllers
         }
 
         /// <summary>
-        /// 使用用户名密码登录,此时不需要提供code
+        /// 使用用户名密码登录分库,此时不需要提供code
         /// </summary>
         /// <param name="model">其中dbKey请先填"ScientificResearch_Test"</param>
         /// <returns></returns>
@@ -132,6 +132,22 @@ namespace ScientificResearch.Areas.Manage.Controllers
         async public Task<LoginReturn> Login([FromBody]LoginInfo model)
         {
             return await login(model);
+        }
+
+        /// <summary>
+        /// 我们自己人登录管理总库的接口,DbKey为ScientificResearch_Manage
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpPost]
+        async public Task<LoginReturn> LoginManage([FromBody]LoginInfo model)
+        {
+            var loginSetting = Config.GetSection("总库登录").Get<LoginInfo>();
+            if (!MyObject.Compare(model, loginSetting)) throw new Exception("登录信息错误");
+
+            var user = Tool.ModelToModel<CurrentUser, LoginInfo>(loginSetting);
+            return await Task.FromResult(getJwt(user));
         }
 
         /// <summary>
@@ -154,7 +170,7 @@ namespace ScientificResearch.Areas.Manage.Controllers
 
             await 记录登录日志(dbWhenLogin, user);
 
-            return getJwt( user);
+            return getJwt(user);
         }
 
         /// <summary>
@@ -167,11 +183,12 @@ namespace ScientificResearch.Areas.Manage.Controllers
             //jwt 3/4 这个可以做个toClaims方法;反射某对象每个属性,放到一个claim
             var claims = new[] {
                         //加入用户的名称
-                        new Claim(nameof( user.姓名),user.姓名),
-                        new Claim(nameof( user.工号),user.工号),
+                        //这里的new Claim的第二个构造参数还不能为null
+                        new Claim(nameof( user.姓名),user.姓名??""),
+                        new Claim(nameof( user.工号),user.工号??""),
                         new Claim(nameof( user.编号),user.编号.ToString()),
                         new Claim(nameof( user.部门编号),user.部门编号.ToString()),
-                        new Claim(nameof( user.部门名称),user.部门名称),
+                        new Claim(nameof( user.部门名称),user.部门名称??""),
                         new Claim(nameof( user.DbKey),user.DbKey),
 
                         #region 默认的一些设置

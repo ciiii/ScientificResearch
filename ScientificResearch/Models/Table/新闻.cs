@@ -30,7 +30,7 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        [Required(ErrorMessage ="请提供[建立时间]")]
+        [Obsolete]
 		public DateTime? 建立时间 { get; set; }
         
         
