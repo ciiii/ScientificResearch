@@ -47,6 +47,11 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        [Required(ErrorMessage ="请提供[是否启用]")]
+		public bool 是否启用 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
         [MaxLength(2000,ErrorMessage ="备注不能超过[1000]字")]
 		public string 备注 { get; set; }
         

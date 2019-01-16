@@ -135,7 +135,7 @@ namespace ScientificResearch.Areas.Manage.Controllers
         }
 
         /// <summary>
-        /// 我们自己人登录管理总库的接口,DbKey为ScientificResearch_Manage
+        /// 我们自己人登录管理总库的接口,DbKey为ScientificResearch_Manage 
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
@@ -238,6 +238,12 @@ namespace ScientificResearch.Areas.Manage.Controllers
             };
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dbWhenLogin"></param>
+        /// <param name="user"></param>
+        /// <returns></returns>
         private async Task 记录登录日志(SqlConnection dbWhenLogin, CurrentUser user)
         {
             //var IP = Request.Host.Host;

@@ -1,4 +1,4 @@
-# srp
+# scientific-research
 
 ## Project setup
 ```

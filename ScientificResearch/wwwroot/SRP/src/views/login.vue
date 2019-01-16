@@ -1,60 +1,85 @@
 <template>
-    <section>
-        <div>考试教育网</div>
-        <a class="btn">登录</a>
-    </section>
+  <section>
+    <img src="../assets/logo.png" alt="logo" class="img">
+    <form action>
+      <div class="input">
+        <input type="text" placeholder="医院">
+        <input type="text" placeholder="用户名">
+        <input type="text" placeholder="密码">
+      </div>
+      <div class="btn" @click="onLogin">
+        <span>登 录</span>
+      </div>
+    </form>
+  </section>
 </template>
 <script>
-// import { getBaseCallback } from '../api/api.js'
 export default {
-    name:'login',
-    data() {
-        return {
-            
-        }
-    },
-    mounted() {},
-    methods: {
-        getUrlKey(name){//获取url 参数
-            return decodeURIComponent((new RegExp('[?|&]'+name+'='+'([^&;]+?)(&|#|;|$)').exec(location.href)||[,""])[1].replace(/\+/g,'%20'))||null;
-        },
-        getCodeApi(state){//获取code  
-            console.log(state,"state") 
-            // 授权后重定向的回调链接地址
-            // let urlNow=encodeURIComponent(window.location.href);
-            let urlNow = 'https://www.baidu.com'
-            console.log(urlNow,"urlNow")
-            // if(false){
-                let scope='snsapi_base';    //snsapi_userinfo   //静默授权 用户无感知
-                let appid='wx5e45aca8fcb270f1';
-                let url=`https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${urlNow}&response_type=code&scope=${scope}&state=${state}#wechat_redirect`;
-                window.location.replace(url);
-            // }
-        },
-    },
-    created(){
-        let code = this.getUrlKey("code");
-        console.log(code,"code123")
-        if(code){
-            // console.log(code,"55555")
-            //调用接口获取openId   参考文档https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
-            getBaseCallback(code).then(res=>{
-                console.log(code,"code")
-                console.log(res,'res')
-                let openId = res.openId;
-                // window.location.replace("/#/index");
-            }).catch(res=>{
-                // window.location.replace("/#/index");
-            })
-        }else{
-            this.getCodeApi("123");
-        }
+  name: "login",
+  data() {
+    return {
+        code:null,
+        工号:null,
+        密码:null,
+        DbKey:'ScientificResearch_Test'
+    };
+  },
+  methods: {
+    onLogin() {
+    //   const { 工号, 密码 } = this;
+    //   const data = {
+    //     code:this.code,
+    //     工号:this.工号,
+    //     密码:this.密码,
+    //     DbKey:this.DbKey
+    //   };
+
+    //   this.$api.BindOpenId(data).then(res => {
+    //       console.log(res,"res")
+    //       // 登录成功
+    //       if (res.token) {
+    //         // 储存 token
+    //         localStorage.token = res.token;
+    //       }
+    //     })
+    //     .catch(error => {
+    //         console.log(error)
+    //       // 登录失败
+    //       // 验证后端返回的错误字段，如果匹配，提示用户
+    //       // axios 配置里必须要 return Promise.reject(error.response.data) 才能拿到错误字段
+    //       if (error.xxx == "xxx") {
+    //         alert("用户名或密码错误！");
+    //       }
+    //     });
     }
-}
+  }
+};
 </script>
 <style scoped>
-    .btn{
-        color: #41B883;
-        font-size: 18px;
-    }
+.img {
+  width: 18rem;
+  height: 18rem;
+  margin-top: 5rem;
+}
+
+.input > input {
+  display: block;
+  margin: 0 auto;
+  padding: 0.6rem 0.5rem;
+  margin-top: 0.5rem;
+  border: none;
+  border-bottom: 1px solid #57d4ce;
+  width: 18rem;
+  outline-style: none;
+  font-size: 1.2rem;
+}
+.btn {
+  margin: auto;
+  margin-top: 3rem;
+  padding: 0.8rem 0.5rem;
+  border-radius: 2rem;
+  background-color: #57d4ce;
+  color: #fff;
+  width: 18rem;
+}
 </style>

@@ -37,7 +37,7 @@
         </member>
         <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.LoginManage(ScientificResearch.Models.LoginInfo)">
             <summary>
-            我们自己人登录管理总库的接口,DbKey为ScientificResearch_Manage
+            我们自己人登录管理总库的接口,DbKey为ScientificResearch_Manage 
             </summary>
             <param name="model"></param>
             <returns></returns>
@@ -53,6 +53,14 @@
             <summary>
             根据用户信息获取jwt字串,并返回"openid登录""用户名密码登录""绑定openid到用户"的一样的返回信息
             </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.记录登录日志(System.Data.SqlClient.SqlConnection,ScientificResearch.Models.CurrentUser)">
+            <summary>
+            
+            </summary>
+            <param name="dbWhenLogin"></param>
             <param name="user"></param>
             <returns></returns>
         </member>
@@ -82,6 +90,52 @@
             <param name="编号列表"></param>
             <returns></returns>
         </member>
+        <member name="T:ScientificResearch.Areas.Manage.Controllers.ServiceController">
+            <summary>
+            医院和服务的管理都在这里面
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.ServiceController.获取服务列表">
+            <summary>
+            获取服务列表,包括了禁用的,管理时用
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.ServiceController.获取可用的服务列表">
+            <summary>
+            获取可用的服务列表,使用这些服务时用,仅仅包括启用的服务
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.ServiceController.获取医院列表">
+            <summary>
+            获取医院列表,包括了禁用的,管理时用
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.ServiceController.获取可用的医院列表">
+            <summary>
+            获取可用的医院列表,使用这些医院时用,仅仅包括启用的医院;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.ServiceController.获取医院服务(ScientificResearch.Models.医院服务Filter)">
+            <summary>
+            获取哪些医院订购了哪些服务的信息,
+            目前使用的场景是:获取某医院的服务信息,
+            注意:没有订购的服务不会出现,但是已订购却因为医院被禁用或者服务被禁用的情况,该医院服务是禁用的
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.ServiceController.增改医院服务(ScientificResearch.Models.医院服务)">
+            <summary>
+            为某医院订购某些服务,也包括修改服务的地址;
+            即使是同一个服务,针对不同的医院,其地址也很可能不同.
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
         <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementBaseController">
             <summary>
             2019-1-9
@@ -95,6 +149,68 @@
             Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyLlp5PlkI0iOiLnrqHnkIblkZgiLCLlt6Xlj7ciOiIwMDAxIiwi57yW5Y-3IjoiMiIsIumDqOmXqOe8luWPtyI6IjEwMDI0Iiwi6YOo6Zeo5ZCN56ewIjoi5L-h5oGv5aSEIiwiRGJLZXkiOiJTY2llbnRpZmljUmVzZWFyY2hfVGVzdCIsImlzcyI6Im1lZDEwMC5jb20iLCJhdWQiOiJtZWQxMDAuY29tIn0.W9E3C7qtbq1mi8lLoflyVvhOeQmLgR_AFucEAbSer9U
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Models.RestoreModelDb.GetSql(System.String,Microsoft.AspNetCore.Hosting.IHostingEnvironment)">
+            <summary>
+            获取根据模板数据库备份文件恢复一个新的库的脚本;
+            </summary>
+            <param name="dbName"></param>
+            <param name="Env"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Models.RestoreModelDb.CopyLoginHtmlForScientificResearch(System.String,System.String,Microsoft.AspNetCore.Hosting.IHostingEnvironment)">
+            <summary>
+            科研的根据登录模板html文件,以及数据库名,简写,生成一个独立的登录文件
+            如果还有别的系统,这个要再来一遍;
+            </summary>
+            <param name="dbName"></param>
+            <param name="code"></param>
+            <param name="Env"></param>
+        </member>
+        <member name="T:ScientificResearch.Models.医院">
+            <summary>
+            医院[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.医院.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.医院.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.医院.代码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.医院.联系人">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.医院.联系电话">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.医院.地址">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.医院.是否启用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.医院.备注">
+            <summary>
+            
+            </summary>
         </member>
         <member name="P:ScientificResearch.Models.参加会议申请增改.经费预算列表">
             <summary>
@@ -1030,6 +1146,41 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.sp_医院_启禁">
+            <summary>
+            sp_医院_启禁[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_医院_启禁.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_医院_启禁.是否启用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_医院_增改">
+            <summary>
+            sp_医院_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_医院_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_医院服务_增改">
+            <summary>
+            sp_医院服务_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_医院服务_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_参加会议_增改">
             <summary>
             sp_参加会议_增改[类]
@@ -1325,12 +1476,47 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.sp_新闻_删">
+            <summary>
+            sp_新闻_删[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_新闻_删.tt_编号">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_新闻_增改">
             <summary>
             sp_新闻_增改[类]
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_新闻_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_服务_启禁">
+            <summary>
+            sp_服务_启禁[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_服务_启禁.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_服务_启禁.是否启用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_服务_增改">
+            <summary>
+            sp_服务_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_服务_增改.tt">
             <summary>
             
             </summary>
@@ -2471,46 +2657,6 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.区域.备注">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="T:ScientificResearch.Models.医院">
-            <summary>
-            医院[类]
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.医院.编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.医院.名称">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.医院.代码">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.医院.联系人">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.医院.联系电话">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.医院.地址">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.医院.备注">
             <summary>
             
             </summary>
@@ -3806,6 +3952,11 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.服务.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.服务.是否启用">
             <summary>
             
             </summary>
@@ -12720,6 +12871,116 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.V_医院_启用">
+            <summary>
+            V_医院_启用[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V_医院_启用.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V_医院_启用.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V_医院_启用.代码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V_医院_启用.联系人">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V_医院_启用.联系电话">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V_医院_启用.地址">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V_医院_启用.是否启用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V_医院_启用.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.V_医院服务">
+            <summary>
+            V_医院服务[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V_医院服务.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V_医院服务.医院编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V_医院服务.医院名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V_医院服务.服务编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V_医院服务.服务名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V_医院服务.链接地址">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V_医院服务.是否启用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.V_服务_启用">
+            <summary>
+            V_服务_启用[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V_服务_启用.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V_服务_启用.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V_服务_启用.是否启用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V_服务_启用.备注">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Business.AccessBusiness">
             <summary>
             登录|注销|获取个人权限|个人信息等
@@ -14064,6 +14325,26 @@
             <typeparam name="T"></typeparam>
             <param name="cnn"></param>
             <param name="list"></param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.Enable``1(System.Data.IDbConnection,System.Int32,System.Data.IDbTransaction)">
+            <summary>
+            按约定SP_xxx_启禁的命名执行一个enable
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="cnn"></param>
+            <param name="id"></param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.Disable``1(System.Data.IDbConnection,System.Int32,System.Data.IDbTransaction)">
+            <summary>
+            按约定SP_xxx_启禁的命名执行一个disable
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="cnn"></param>
+            <param name="id"></param>
             <param name="transaction"></param>
             <returns></returns>
         </member>
