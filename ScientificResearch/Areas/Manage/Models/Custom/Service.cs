@@ -3,11 +3,26 @@ using ScientificResearch.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using ScientificResearch.Infrastucture;
+using MyLib;
 
 namespace ScientificResearch.Models
 {
+    public partial class 医院服务
+    {
+        async public static Task Merge(IDbConnection Db, int 医院编号, IEnumerable<医院服务> list)
+        {
+            await Db.ExecuteSpAsync(new sp_医院服务_增改()
+            {
+                医院编号 = 医院编号,
+                tt = list.ToDataTable()
+            });
+        }
+    }
+
     public class 医院服务Filter
     {
         public int? 医院编号 { get; set; }
@@ -16,7 +31,8 @@ namespace ScientificResearch.Models
     }
 
     [ModelMetadataType(typeof(医院MD))]
-    public partial class 医院 { }
+    public partial class 医院
+    {    }
 
     public class 医院MD
     {

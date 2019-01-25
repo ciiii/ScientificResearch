@@ -1,16 +1,25 @@
 <template>
   <section>
     <img src="../assets/logo.png" alt="logo" class="img">
-    <form action>
+    <form action="/" onsubmit="return false">
       <div class="input">
-        <input type="text" placeholder="医院">
-        <input type="text" placeholder="用户名">
-        <input type="text" placeholder="密码">
+        <input type="text" placeholder="医院" v-model="DbKey" @click="hospital">
+        <input type="text" placeholder="工号" v-model="工号" :maxlength="max" :minlength="min">
+        <input type="password" placeholder="密码" v-model="密码" :maxlength="max" :minlength="min">
       </div>
-      <div class="btn" @click="onLogin">
+      <div class="btn" @click="bind">
         <span>登 录</span>
       </div>
     </form>
+    <van-popup v-model="show" position="bottom" overlay close-on-click-overlay>
+      <van-picker
+        show-toolbar
+        title="医院列表"
+        :columns="columns"
+        @cancel="onCancel"
+        @confirm="onConfirm"
+      />
+    </van-popup>
   </section>
 </template>
 <script>
@@ -18,68 +27,133 @@ export default {
   name: "login",
   data() {
     return {
-        code:null,
-        工号:null,
-        密码:null,
-        DbKey:'ScientificResearch_Test'
+      max:20,
+      min:3,
+      code: null,
+      工号: null,
+      密码: null,
+      DbKey: null,
+      columns: [],
+      show: false
     };
   },
+  created(){
+    document.title = '科研管理系统 - 登录'
+  },
+  mounted() {},
   methods: {
-    onLogin() {
-    //   const { 工号, 密码 } = this;
-    //   const data = {
-    //     code:this.code,
-    //     工号:this.工号,
-    //     密码:this.密码,
-    //     DbKey:this.DbKey
-    //   };
+    getUrlKey(name) {
+      //获取url 参数
+      return (decodeURIComponent((new RegExp("[?|&]" + name + "=" + "([^&;]+?)(&|#|;|$)").exec(location.href) || [, ""])[1].replace(/\+/g, "%20")) || null);
+    },
+    getCodeApi(urlInit,state) {
+      //获取code
+      // 授权后重定向的回调链接地址
 
-    //   this.$api.BindOpenId(data).then(res => {
-    //       console.log(res,"res")
-    //       // 登录成功
-    //       if (res.token) {
-    //         // 储存 token
-    //         localStorage.token = res.token;
-    //       }
-    //     })
-    //     .catch(error => {
-    //         console.log(error)
-    //       // 登录失败
-    //       // 验证后端返回的错误字段，如果匹配，提示用户
-    //       // axios 配置里必须要 return Promise.reject(error.response.data) 才能拿到错误字段
-    //       if (error.xxx == "xxx") {
-    //         alert("用户名或密码错误！");
-    //       }
-    //     });
+      // let urlNow = encodeURIComponent(window.location.href);
+      let urlNow = encodeURIComponent(urlInit);
+      // let urlNow = encodeURIComponent('http://192.168.0.99:63739/Manage/Access/BindOpenId')
+      console.log(urlNow, "urlNowlogin");
+      // if (false) {
+        let scope = "snsapi_base";  //静默授权 用户无感知
+        let appid = "wx5e45aca8fcb270f1";
+        let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${urlNow}&response_type=code&scope=${scope}&state=${state}#wechat_redirect`;
+        // console.log(url,"123")
+        // window.location.replace(url);
+        return url;
+        
+      // }
+    },
+    bind() {
+      if(this.工号 == null || this.密码 == null ){
+        this.$notify('工号 密码 不能为空！');
+        return;
+      }else if(this.工号.length < 4 ){
+        console.log(this.工号,"this.工号")
+        this.$notify('工号长度不能少于【4】位');
+        return;
+      }else if(this.密码 == null ){
+        this.$notify('密码长度不能少于【3】位');
+        return;
+      }else if(this.密码.length < 3 ){
+        console.log(this.密码.length,"this.密码")
+        this.$notify('密码长度不能少于【3】位');
+        return;
+      }
+      this.code = this.getUrlKey("code");
+      // console.log(this.code,"onlogin code","3333333333")
+      if (this.code) {
+        this.$api.BindOpenId(this.code,this.工号,this.密码,this.DbKey).then(res => {
+          console.log(res, "res000");
+          // 登录成功
+          if (res.data) {
+            // 储存 token
+            console.log(res.data,"data....")
+            // localStorage.token = JSON.stringify(res.data)
+            localStorage.personnel = JSON.stringify(res.data.人员)
+
+            let token_type = res.data.token_type
+            let access_token = res.data.access_token
+            localStorage.token = `${token_type} ${access_token}`
+
+            console.log(localStorage.token,"localStorage.token``````````")
+            this.$router.push('/')
+          }else{
+            this.$notify(res.error);
+          }
+        })
+      } else {
+        // this.getCodeApi("123");
+        this.$notify('登录失败，请绑定！');
+      }
+  },
+
+    // 获取医院列表
+    hospital() {
+      this.$api.getHospitalList().then(res => {
+          this.columns = res.data;
+          this.show = true;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    onConfirm(value, index) {
+      this.DbKey = value;
+      this.show = false;
+    },
+    onCancel() {
+      this.show = false;
     }
   }
 };
 </script>
 <style scoped>
 .img {
-  width: 18rem;
-  height: 18rem;
-  margin-top: 5rem;
+  width: 180px;
+  height: 180px;
+  margin-top: 50px;
 }
 
 .input > input {
   display: block;
   margin: 0 auto;
-  padding: 0.6rem 0.5rem;
-  margin-top: 0.5rem;
+  padding: 6px 5px;
+  margin-top: 5px;
   border: none;
   border-bottom: 1px solid #57d4ce;
-  width: 18rem;
+  width: 180px;
   outline-style: none;
-  font-size: 1.2rem;
+  font-size: 14px;
 }
 .btn {
   margin: auto;
-  margin-top: 3rem;
-  padding: 0.8rem 0.5rem;
-  border-radius: 2rem;
+  margin-top: 30px;
+  padding: 8px 5px;
+  border-radius: 20px;
   background-color: #57d4ce;
   color: #fff;
-  width: 18rem;
+  width: 180px;
+  font-size: 16px;
 }
 </style>

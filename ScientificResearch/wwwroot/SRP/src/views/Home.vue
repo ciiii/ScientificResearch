@@ -1,17 +1,21 @@
 <template>
   <div class="home">
-    <Index/>
+    
+    <!-- <Index/> -->
+    <!-- <Login/> -->
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Index from './index'
+// import Index from './index'
+// import Login from './login'
 
 export default {
   name: 'home',
   components: {
-    Index
+    // Index,
+    // Login
   }
 }
 </script>

@@ -29,7 +29,7 @@
 
 </head>
 <body onload="loadTopWindow()">
-<div class="page-login" style="background: url('IMIS/images/bg.jpg') no-repeat;">
+<div class="page-login" style="background: url('IMIS/images/bg-test.jpg') no-repeat;">
     <div class="content">
         <form class="form-login login" role="form" method="post">
             <h2 class="form-signin-heading">
@@ -138,7 +138,6 @@
             if (evt.keyCode == 13) {
                 var userId = $('#userId').val();
                 var password = $('#password').val();
-                remember(userId, password);
                 login(userId, password);
             }
         });
@@ -146,22 +145,21 @@
         $('.btn-login').on("click", function () {
             userId = $('#userId').val();
             password = $('#password').val();
-            remember(userId, password);
             login(userId, password);
         });
 
         $('.remember').on('change', function () {
-            if (!this.checked) {
+            if (!this.checked&& localStorage.ImisLoginInfo) {
                 localStorage.removeItem('ImisLoginInfo');
             }
         });
 
-        function remember(userId, password) {
+        function remember(userId, password, dbKey) {
             if ($('.remember').is(':checked')) {
                 var loginInfo = {
                     userId: userId,
                     password: password,
-                    dbKey: "成都第四人民医院"
+                    dbKey: dbKey
                 }
                 localStorage.ImisLoginInfo = JSON.stringify(loginInfo);
             }
@@ -186,8 +184,9 @@
                             data: obj,
                             time: curTime,
                             url: '/' + url + '.html',
-                            dbKey: '成都第四人民医院'
+                            dbKey: obj.人员.DbKey
                         }));
+                        remember(userId, password, obj.人员.DbKey);
                         sessionStorage.mUserId = obj.人员.编号;
                         sessionStorage.Authorization = JSON.stringify(obj.token_type + ' ' + obj.access_token);
                         tip = '登录成功！';

@@ -14,6 +14,10 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+		public int 医院编号 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
 		public DataTable tt { get; set; }
         
           

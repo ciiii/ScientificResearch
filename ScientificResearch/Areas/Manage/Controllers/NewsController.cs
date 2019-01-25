@@ -47,5 +47,15 @@ namespace ScientificResearch.Areas.Manage.Controllers
         async public Task 删除总库新闻([FromBody]IEnumerable<int> 编号列表) =>
             await Db_Manage.Delete<新闻>(编号列表);
 
+        [HttpPost]
+        async public Task<object> 上传总库新闻图片()
+        {
+            var filesNameList = await UploadFile.Upload(
+                Request.Form.Files,
+                Env.WebRootPath,
+                "upload/总库/新闻图片",
+                Config.GetValue<int>("uploadFileMaxSize"));
+            return filesNameList;
+        }
     }
 }

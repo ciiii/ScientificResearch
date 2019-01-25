@@ -1,6 +1,6 @@
 module.exports = {
     // 基本路径
-    baseUrl: process.env.NODE_ENV === 'production' ?
+    publicPath: process.env.NODE_ENV === 'production' ?
         '/dist/' : '/',
     lintOnSave: false, // 在保存时校验格式
     productionSourceMap: false, // 生产环境是否生成 SourceMap

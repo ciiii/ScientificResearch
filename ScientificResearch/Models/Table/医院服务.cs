@@ -30,9 +30,15 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        [Required(ErrorMessage ="请提供[链接地址]")]
-        [MaxLength(500,ErrorMessage ="链接地址不能超过[250]字")]
-		public string 链接地址 { get; set; }
+        [Required(ErrorMessage ="请提供[电脑链接地址]")]
+        [MaxLength(500,ErrorMessage ="电脑链接地址不能超过[250]字")]
+		public string 电脑链接地址 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        [Required(ErrorMessage ="请提供[手机链接地址]")]
+        [MaxLength(500,ErrorMessage ="手机链接地址不能超过[250]字")]
+		public string 手机链接地址 { get; set; }
         
         
         #endregion

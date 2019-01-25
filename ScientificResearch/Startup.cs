@@ -165,6 +165,7 @@ namespace ScientificResearch
                 option.SerializerSettings.DateFormatString = "yyyy'-'MM'-'dd' 'HH':'mm':'ss";
                 //DefaultContractResolver 是默认的序列化,开头是大写就是大写
                 //CamelCasePropertyNamesContractResolver 这个是开头小写的驼峰命名法
+                //option.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 option.SerializerSettings.ContractResolver = new DefaultContractResolver();
             });
 

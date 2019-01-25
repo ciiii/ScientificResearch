@@ -21,7 +21,7 @@
             <param name="model">其中dbKey请先填"ScientificResearch_Test"</param>
             <returns></returns>
         </member>
-        <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.LoginWithOpenId(System.String)">
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.LoginWithOpenId(ScientificResearch.Models.Code)">
             <summary>
             使用OpenId登录
             </summary>
@@ -119,6 +119,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.ServiceController.获取可用的医院名称列表">
+            <summary>
+            获取可用的医院名称列表,以供微信绑定时选取医院名称作为dbkey用;当然pc端也可以用,只不过现在是给每个医院提供了一个写死了dbkey的登录页面而已;
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:ScientificResearch.Areas.Manage.Controllers.ServiceController.获取医院服务(ScientificResearch.Models.医院服务Filter)">
             <summary>
             获取哪些医院订购了哪些服务的信息,
@@ -128,12 +134,19 @@
             <param name="filter"></param>
             <returns></returns>
         </member>
-        <member name="M:ScientificResearch.Areas.Manage.Controllers.ServiceController.增改医院服务(ScientificResearch.Models.医院服务)">
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.ServiceController.获取某医院购买的服务(System.String)">
+            <summary>
+            这个是入口页面用,包括pc端和手机端,不需要登录;
+            </summary>
+            <param name="医院名称"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.ServiceController.增改医院服务(ScientificResearch.Infrastucture.PredefindedIdList{ScientificResearch.Models.医院服务})">
             <summary>
             为某医院订购某些服务,也包括修改服务的地址;
             即使是同一个服务,针对不同的医院,其地址也很可能不同.
             </summary>
-            <param name="model"></param>
+            <param name="model">id为医院编号,list为最终保留的医院服务列表</param>
             <returns></returns>
         </member>
         <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementBaseController">
@@ -166,6 +179,36 @@
             <param name="dbName"></param>
             <param name="code"></param>
             <param name="Env"></param>
+        </member>
+        <member name="T:ScientificResearch.Models.医院服务">
+            <summary>
+            医院服务[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.医院服务.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.医院服务.医院编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.医院服务.服务编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.医院服务.电脑链接地址">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.医院服务.手机链接地址">
+            <summary>
+            
+            </summary>
         </member>
         <member name="T:ScientificResearch.Models.医院">
             <summary>
@@ -1171,9 +1214,24 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.sp_医院服务_删">
+            <summary>
+            sp_医院服务_删[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_医院服务_删.tt_编号">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_医院服务_增改">
             <summary>
             sp_医院服务_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_医院服务_增改.医院编号">
+            <summary>
+            
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_医院服务_增改.tt">
@@ -2657,31 +2715,6 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.区域.备注">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="T:ScientificResearch.Models.医院服务">
-            <summary>
-            医院服务[类]
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.医院服务.编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.医院服务.医院编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.医院服务.服务编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.医院服务.链接地址">
             <summary>
             
             </summary>
@@ -12871,6 +12904,41 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.VTFN某医院购买的服务">
+            <summary>
+            VTFN某医院购买的服务[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VTFN某医院购买的服务.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VTFN某医院购买的服务.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VTFN某医院购买的服务.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VTFN某医院购买的服务.电脑链接地址">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VTFN某医院购买的服务.手机链接地址">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VTFN某医院购买的服务.是否启用">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.V_医院_启用">
             <summary>
             V_医院_启用[类]
@@ -12946,7 +13014,12 @@
             
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.V_医院服务.链接地址">
+        <member name="P:ScientificResearch.Models.V_医院服务.电脑链接地址">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V_医院服务.手机链接地址">
             <summary>
             
             </summary>

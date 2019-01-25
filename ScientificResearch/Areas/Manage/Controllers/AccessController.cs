@@ -99,16 +99,21 @@ namespace ScientificResearch.Areas.Manage.Controllers
         //jwt 6/4
         [AllowAnonymous]
         [HttpPost]
-        async public Task<LoginReturn> LoginWithOpenId([FromBody]string Code)
+        async public Task<object> LoginWithOpenId([FromBody]Code code)
         {
             //获取openid
-            var openId = await GetOpenId(Code);
+            var openId = await GetOpenId(code.Value);
 
             //从主库获取该openid对应的dbkey和人员编号;
             var 绑定信息 = (await Db_Manage.GetListSpAsync<人员OpenId, 人员OpenIdFilter>(new 人员OpenIdFilter() { OpenId = openId })).FirstOrDefault();
 
-            if (绑定信息 == null) throw new Exception("没有绑定用户");
-
+            if (绑定信息 == null)
+            {
+                //return Redirect("http://192.168.0.157:8080/#/login");
+                HttpContext.Response.StatusCode = 401;
+                return Content("没有绑定用户！");
+            }
+             
             //到相对应的从库取用户信息并转为CurrentUser
             var dbWhenLogin = new SqlConnection(DbConnectionStringLack.Replace("{0}", 绑定信息.DbKey));
             var user = await dbWhenLogin.GetModelByIdSpAsync<v1_人员_带部门名>(绑定信息.人员编号);

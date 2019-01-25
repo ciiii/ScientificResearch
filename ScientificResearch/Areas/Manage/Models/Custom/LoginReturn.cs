@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace ScientificResearch.Models
 {
+    public class Code
+    {
+        public string Value { get; set; }
+    }
     public class LoginReturn
     {
         public CurrentUser 人员 { get; set; }

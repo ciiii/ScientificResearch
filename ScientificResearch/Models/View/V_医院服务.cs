@@ -35,7 +35,11 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        public string 链接地址 { get; set; }
+        public string 电脑链接地址 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public string 手机链接地址 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
