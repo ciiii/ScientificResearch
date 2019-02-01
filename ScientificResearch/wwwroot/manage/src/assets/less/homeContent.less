@@ -1,0 +1,238 @@
+@import "Variable";
+
+.homeContent {
+  background: #fff;
+
+  .mian {
+    h4.title {
+      margin-top: 0;
+    }
+
+    .card-box {
+      margin-bottom: 20px;
+      position: relative;
+
+      .icon {
+        width: 90px;
+        height: 90px;
+        line-height: 90px;
+        border-radius: 50%;
+        background: @colorActive;
+        margin: 15px auto 20px;
+        font-size: 40px;
+        color: #fff;
+        font-weight: bold;
+        text-align: center;
+      }
+    }
+
+    .el-card {
+      height: 350px;
+      position: relative;
+      .card-img {
+        padding: 10px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        border: 1px solid @border;
+
+        img {
+          width: 100%;
+        }
+      }
+
+      .item-content {
+        .name {
+          display: -webkit-box;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          word-break: break-all;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+          margin-bottom: 10px;
+          font-size: 16px;
+          font-weight: bold;
+        }
+
+        .switch {
+          position: absolute;
+          right: 50%;
+          margin-right: -46px;
+          bottom: 20px;
+        }
+
+        .content {
+          color: #999;
+          //text-indent: 2em;
+          line-height: 24px;
+          text-align: justify;
+          display: -webkit-box !important;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          word-break: break-all;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 4;
+          padding: 10px 10px;
+        }
+      }
+    }
+
+    .item-header {
+      border-bottom: 1px solid #f7f7f7;
+      color: #444;
+      display: block;
+      padding: 10px;
+      position: relative;
+      background: #ECEFF4;
+      height: 40px;
+
+      h5 {
+        font-size: 16px;
+        margin-top: 0;
+        margin-bottom: 0;
+
+        i {
+          font-size: 18px;
+          margin-right: 5px;
+          color: @colorActive;
+        }
+      }
+
+      .more {
+        position: absolute;
+        right: 0;
+        top: 10px;
+        display: inline-block;
+        padding: 0 10px;
+      }
+    }
+
+    .list {
+      li {
+        margin-bottom: 8px;
+        height: 30px;
+        line-height: 30px;
+
+        a {
+          position: relative;
+          border-bottom: 1px solid #f2f1f1;
+          overflow: hidden;
+          display: block;
+        }
+
+        i {
+          margin-right: 5px;
+        }
+
+        .not-received {
+          .title {
+            color: @color;
+            font-weight: bold;
+          }
+
+          .btn-icon {
+            color: #f58220;
+          }
+        }
+
+        .btn-icon {
+          color: #ccc;
+          margin-right: 5px;
+          float: left;
+        }
+
+        .time {
+          position: absolute;
+          right: 0;
+          text-align: right;
+
+          i {
+            margin-left: 10px;
+          }
+        }
+
+      }
+
+      li:hover {
+        color: @colorActive;
+      }
+    }
+
+    .box {
+      margin: 20px auto !important;
+    }
+
+    .items {
+      margin: 0 !important;
+      padding: 40px 0;
+      min-height: 350px;
+
+      .bg-purple {
+        padding: 15px;
+        min-height: 272px;
+        max-height: 440px;
+        overflow: hidden;
+      }
+
+      .list {
+        padding-top: 10px;
+
+        .name {
+          display: inline-block;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          float: left;
+          font-size: 13px;
+          width: 75%;
+
+        }
+      }
+    }
+
+    .news-items, .items {
+      .item .bg-purple {
+        box-shadow: 1px 5px 10px rgba(0, 0, 0, 0.2);
+        background: #fff;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+      }
+    }
+
+    .services-items {
+      background: #f3f3f3;
+
+    }
+
+    .news-items {
+      //background: #f3f3f3;
+
+    }
+
+    .items-bg {
+      background: #fff;
+      padding-top: 20px;
+
+      .el-tabs__content {
+        min-height: 300px;
+      }
+
+      .tab-one {
+        color: #f58220;
+      }
+
+      .tab-two {
+        color: #f58220;
+      }
+
+      .tab-three {
+        color: #f58220;
+      }
+
+      .tab-four {
+        color: #f58220;
+      }
+    }
+  }
+
+
+}

@@ -97,13 +97,22 @@ namespace ScientificResearch.Areas.Manage.Controllers
         async public Task<object> 获取医院服务(医院服务Filter filter) => await Db.GetListSpAsync<V_医院服务, 医院服务Filter>(filter);
 
         /// <summary>
+        /// 获取医院服务登录信息
+        /// 给抓取端使用,获取某医院某服务数据接口登录信息;比如三医院的知网服务的登录名密码;
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        async public Task<object> GetLoginInfoOfService() => await Db_Manage.GetListSpAsync<V_医院服务_带账号>();
+
+        /// <summary>
         /// 这个是入口页面用,包括pc端和手机端,不需要登录;
         /// </summary>
         /// <param name="医院名称"></param>
         /// <returns></returns>
         [AllowAnonymous]
         [HttpGet]
-        async public Task<object> 获取某医院购买的服务(string 医院名称) => await Db_Manage.GetListSpAsync<VTFN某医院购买的服务>($"TFN某医院购买的服务('{医院名称}')",orderType:true);
+        async public Task<object> 获取某医院购买的服务(string 医院名称) =>
+            await Db_Manage.GetListSpAsync<VTFN某医院购买的服务>($"TFN某医院购买的服务('{医院名称}')", orderType: true);
 
         /// <summary>
         /// 为某医院订购某些服务,也包括修改服务的地址;

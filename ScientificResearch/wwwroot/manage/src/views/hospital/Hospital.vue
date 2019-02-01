@@ -2,8 +2,8 @@
     <div class="hospital page-common">
         <div class="main wrapper">
             <h4 class="title" ref="title">医院 Hospital</h4>
-            <el-button type="primary" class="btn-add" @click="btnAdd"><i
-                    class="el-icon-circle-plus-outline"></i> 添加医院
+            <el-button type="primary" class="btn-add" @click="btnAdd">
+                <i class="el-icon-circle-plus-outline"></i> 添加医院
             </el-button>
             <el-table class="tableone" border :data="tableData" stripe
                       :header-cell-style="{'text-align':'center'}">
@@ -37,18 +37,18 @@
         </div>
         <el-dialog :title="title" :visible.sync="isAddDialog" width="30%" v-if='isAddDialog'>
             <div v-if="!isService">
-                <AddHospital ref="child" @myEvent="getMyEvent" :data="item" :isAdd="isAdd"></AddHospital>
+                <AddHospital ref="child" @myEvent="getMyEvent" :item="item" :isAdd="isAdd"></AddHospital>
             </div>
             <div v-else>
-                <HospitalService ref="child" @myEvent="getMyEvent" :data="item"></HospitalService>
+                <HospitalService ref="child" @myEvent="getMyEvent" :item="item" ></HospitalService>
             </div>
         </el-dialog>
     </div>
 </template>
 <script>
-    import {Hospital} from "@/assets/js/connect/ReturnData";
-    import AddHospital from "@/views/hospital/AddHospital";
-    import HospitalService from "@/views/hospital/HospitalService";
+    import {URL_HOSPITAL} from "@/assets/js/connect/ConSysUrl";
+    import AddHospital from "@/components/hospital/AddHospital";
+    import HospitalService from "@/components/hospital/HospitalService";
 
     export default {
         name: 'Hospital',
@@ -72,11 +72,7 @@
         },
         methods: {
             getHospital: async function () {
-                Hospital.getHospitalAll('get', '', (success, strErro, obj) => {
-                    if (success) {
-                        this.tableData = obj.data;
-                    }
-                })
+                this.tableData = await this.$http.myGet(URL_HOSPITAL.GET_HOSPITAL_ALL, '');
             },
             getMyEvent(val) {
                 this.getHospital();
@@ -106,25 +102,15 @@
                 let data = {
                     编号: el.编号
                 }
-                Hospital.disableHospital('post', data, (success, strErro, obj) => {
-                    if (success) {
-                        this.$message.success('禁用成功！');
-                    } else {
-                        el.是否启用 = !el.是否启用;
-                    }
-                })
+                await this.$http.myPost(URL_HOSPITAL.POST_DISABLE_HOSPITA, data);
+                this.$message.success('禁用成功！');
             },
             enableHospital: async function (el) {
                 let data = {
                     编号: el.编号
                 }
-                Hospital.enableHospital('post', data, (success, strErro, obj) => {
-                    if (success) {
-                        this.$message.success('启用成功！');
-                    } else {
-                        el.是否启用 = !el.是否启用;
-                    }
-                })
+                await this.$http.myPost(URL_HOSPITAL.POST_ENABLE_HOSPITA, data);
+                this.$message.success('启用成功！');
             },
             switchChange(el) {
                 let title = '启用';

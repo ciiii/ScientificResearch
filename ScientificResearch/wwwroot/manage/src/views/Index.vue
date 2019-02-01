@@ -6,13 +6,12 @@
                     <div class="logo">
                         <router-link to="/home">LOGO 总库管理系统</router-link>
                     </div>
-                    <el-menu class="el-menu-demo " mode="horizontal" @select="handleSelect"
-                             :default-active="activIndex"
-                             unique-opened router>
-                        <el-menu-item index="home">首页</el-menu-item>
-                        <el-menu-item index="hospital">医院</el-menu-item>
-                        <el-menu-item index="service">服务</el-menu-item>
-                        <el-menu-item index="news">新闻</el-menu-item>
+                    <el-menu class="el-menu-demo" :default-active="activIndex" mode="horizontal"
+                             @select="handleSelect" :router="true">
+                        <el-menu-item index="/homeContent">首页</el-menu-item>
+                        <el-menu-item index="/hospital">医院</el-menu-item>
+                        <el-menu-item index="/service">服务</el-menu-item>
+                        <el-menu-item index="/news">新闻</el-menu-item>
                     </el-menu>
                 </div>
                 <div class="right">
@@ -32,7 +31,7 @@
         name: 'index',
         data() {
             return {
-                activIndex: 'home',
+                activIndex: '/homeContent',
                 myUserInfo: {},
             }
         },
@@ -44,20 +43,16 @@
                     localStorage.removeItem('myUserInfo');
                     sessionStorage.removeItem('Authorization');
                     this.$router.push({path: '/'});
-                }).catch(() => {
-                });
+                })
             },
-            handleSelect(key, keyPath) {
-                this.activIndex = keyPath;
-                console.log(key, keyPath);
+            handleSelect(index, path) {
+                this.activIndex = index;
             }
         },
         created() {
             if (localStorage.myUserInfo) {
                 this.myUserInfo = JSON.parse(localStorage.getItem('myUserInfo'));
             }
-
-            this.$router.replace('/home');
         }
     }
 </script>

@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ScientificResearch.Areas.Manage.Controllers
 {
+    [AllowAnonymous]
     public class AccessController : ManageBaseController
     {
         /// <summary>
@@ -27,7 +28,7 @@ namespace ScientificResearch.Areas.Manage.Controllers
         /// <param name="state"></param>
         /// <param name="returnUrl">用户最初尝试进入的页面</param>
         /// <returns>openid</returns>
-        async private Task<string> GetOpenId(string code)
+        async private Task<string> getOpenId(string code)
         {
             if (string.IsNullOrEmpty(code))
             {
@@ -71,7 +72,6 @@ namespace ScientificResearch.Areas.Manage.Controllers
         /// </summary>
         /// <param name="model">其中dbKey请先填"ScientificResearch_Test"</param>
         /// <returns></returns>
-        [AllowAnonymous]
         [HttpPost]
         async public Task<LoginReturn> BindOpenId([FromBody]LoginInfoWithCode model)
         {
@@ -79,7 +79,7 @@ namespace ScientificResearch.Areas.Manage.Controllers
             var result = await login(model);
 
             //获取openid
-            var openId = await GetOpenId(model.Code);
+            var openId = await getOpenId(model.Code);
 
             //绑定openid到用户
             var 绑定关系 = new 人员OpenId() { OpenId = openId, DbKey = model.DbKey, 人员编号 = result.人员.编号 };
@@ -97,12 +97,11 @@ namespace ScientificResearch.Areas.Manage.Controllers
         /// <param name="model">其中dbKey请先填"ScientificResearch_Test"</param>
         /// <returns></returns>
         //jwt 6/4
-        [AllowAnonymous]
         [HttpPost]
         async public Task<object> LoginWithOpenId([FromBody]Code code)
         {
             //获取openid
-            var openId = await GetOpenId(code.Value);
+            var openId = await getOpenId(code.Value);
 
             //从主库获取该openid对应的dbkey和人员编号;
             var 绑定信息 = (await Db_Manage.GetListSpAsync<人员OpenId, 人员OpenIdFilter>(new 人员OpenIdFilter() { OpenId = openId })).FirstOrDefault();
@@ -113,7 +112,7 @@ namespace ScientificResearch.Areas.Manage.Controllers
                 HttpContext.Response.StatusCode = 401;
                 return Content("没有绑定用户！");
             }
-             
+
             //到相对应的从库取用户信息并转为CurrentUser
             var dbWhenLogin = new SqlConnection(DbConnectionStringLack.Replace("{0}", 绑定信息.DbKey));
             var user = await dbWhenLogin.GetModelByIdSpAsync<v1_人员_带部门名>(绑定信息.人员编号);
@@ -132,7 +131,6 @@ namespace ScientificResearch.Areas.Manage.Controllers
         /// <param name="model">其中dbKey请先填"ScientificResearch_Test"</param>
         /// <returns></returns>
         //jwt 6/4
-        [AllowAnonymous]
         [HttpPost]
         async public Task<LoginReturn> Login([FromBody]LoginInfo model)
         {
@@ -144,11 +142,11 @@ namespace ScientificResearch.Areas.Manage.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [AllowAnonymous]
         [HttpPost]
         async public Task<LoginReturn> LoginManage([FromBody]LoginInfo model)
         {
             var loginSetting = Config.GetSection("总库登录").Get<LoginInfo>();
+            //这里登录用户名叫"工号"只是为了复用LoginInfo类而已;
             if (!MyObject.Compare(model, loginSetting)) throw new Exception("登录信息错误");
 
             var user = Tool.ModelToModel<CurrentUser, LoginInfo>(loginSetting);

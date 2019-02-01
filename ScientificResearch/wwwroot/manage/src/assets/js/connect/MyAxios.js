@@ -1,4 +1,11 @@
+import Vue from 'vue';
 import axios from 'axios';
+import router from '@/router';
+import {Message, Notification} from 'element-ui'
+import {HTTP_URL_HOST} from "@/assets/js/connect/ConSysUrl";
+import {getUrl} from "@/assets/js/Common";
+
+Vue.use(router);
 // import baseUrl from './setBaseUrl'
 // axios.defaults.withCredentials = true;
 // axios.defaults.baseURL = baseUrl;
@@ -7,38 +14,48 @@ import axios from 'axios';
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
-const HTTP_URL_HOST = 'http://192.168.0.99:63739';
 
-axios.$http = {
-    /**
-     * @param url  接口地址,也就是除了ip+host和项目名剩下的地址 类似于/Module/AddModule
-     * @param method 请求方式 GET POST
-     * @param params 携带参数
-     * @param resultListener  回调方法
-     */
-    getDatas(url, method, params, resultListener) {
-        if (sessionStorage.Authorization) {
-            axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('Authorization');
-        }
-        let postUrl = HTTP_URL_HOST + url;
-        if (method == null || method.toLowerCase() == 'get') {
-            let thisParams = {
-                params: params
-            }
-            axios.get(postUrl, thisParams).then(response => {
-                resultListener(true, null, response.data);
-            }).catch(function (error) {
-                resultListener(false, error, null);
-            })
-        } else if (method.toLowerCase() == 'post') {
-            axios.post(postUrl, params).then(function (response) {
-                resultListener(true, null, response.data);
-            }).catch(function (error) {
-                resultListener(false, error, null);
-            })
-        } else {
-            resultListener(false, '请求方式错误！', null);
-        }
-    },
-}
+//  响应拦截
+axios.interceptors.response.use(response => {
+    if (response.data.error) {
+        Notification.error({
+            title: '错误',
+            message: response.data.error
+        });
+        return Promise.reject(response.data.error);
+    }
+    if (response.status == 401) {
+        Message.error({
+            message: '登录信息已过期，请重新登录！'
+        });
+        // this.$router.push({path: '/'});
+        router.replace({
+            path: '/',
+        })
+        return Promise.reject('登录信息已过期，请重新登录！');
+    }
+    return response;
+
+}, function (error) {
+    Notification.error({
+        title: '错误',
+        message: error
+    });
+    return Promise.reject(error)
+});
+
+
+axios.myGet = async (url, data) => {
+    if (sessionStorage.Authorization) {
+        axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('Authorization');
+    }
+    return await axios.get(getUrl(HTTP_URL_HOST + url), {params: data}).then(response => response.data.data)
+};
+
+axios.myPost = async (url, data) => {
+    if (sessionStorage.Authorization) {
+        axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('Authorization');
+    }
+    return await axios.post(getUrl(HTTP_URL_HOST + url), data).then(response => response.data.data);
+};
 export default axios;

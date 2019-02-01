@@ -39,6 +39,16 @@ namespace ScientificResearch.Models
         [Required(ErrorMessage ="请提供[手机链接地址]")]
         [MaxLength(500,ErrorMessage ="手机链接地址不能超过[250]字")]
 		public string 手机链接地址 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        [MaxLength(50,ErrorMessage ="登录账号不能超过[25]字")]
+		public string 登录账号 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        [MaxLength(50,ErrorMessage ="登录密码不能超过[25]字")]
+		public string 登录密码 { get; set; }
         
         
         #endregion

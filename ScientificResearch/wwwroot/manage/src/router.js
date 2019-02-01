@@ -1,13 +1,12 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Index from './views/Index.vue';
-import Home from './views/Home.vue';
+import HomeContent from './views/HomeContent.vue';
 import Login from './views/Login.vue';
 import News from './views/news/News.vue';
-import NewsDetails from './views/news/NewsDetails.vue';
+import NewsDetails from './components/news/NewsDetails.vue';
 import NotFoundView from './views/404/404.vue';
 import Service from './views/service/Service.vue';
-import About from './views/About.vue';
 import IeUnderTen from './views/IeUnderTen.vue';
 import Hospital from './views/hospital/Hospital.vue';
 
@@ -19,62 +18,37 @@ export default new Router({
             path: '/',
             name: 'login',
             component: Login,
-            meta:{ title: '总库登录' },
+            meta: {title: '总库登录'},
         },
         {
             path: '/index',
             name: 'index',
             component: Index,
+            meta: {requireAuth: true}, //添加该字段，表示这个路由是需要登录的
             children: [
                 {
-                    path: '/home',
-                    name: 'home',
-                    component: Home,
-                    meta: { title: '首页' },
+                    path: '/homeContent',
+                    name: 'homeContent',
+                    component: HomeContent,
+                    meta: {title: '首页', requireAuth: true},
                 },
                 {
                     path: '/news',
                     name: 'news',
                     component: News,
-                    children: [
-                        {
-                            path: '/newsDetails',
-                            name: 'newsDetails',
-                            component: NewsDetails,
-                        }
-                    ],
-                    meta:{ title: '新闻' },
+                    meta: {title: '新闻', requireAuth: true},
                 },
                 {
                     path: '/hospital',
                     name: 'hospital',
                     component: Hospital,
-                    children: [
-                        {
-                            path: '/newsDetails',
-                            name: 'newsDetails',
-                            component: NewsDetails,
-                        }
-                    ],
-                    meta: { title: '医院' },
+                    meta: {title: '医院', requireAuth: true},
                 },
                 {
                     path: '/service',
                     name: 'service',
                     component: Service,
-                    children: [
-                        {
-                            path: '/newsDetails',
-                            name: 'newsDetails',
-                            component: NewsDetails,
-                        }
-                    ],
-                    meta: { title: '服务' },
-                },
-                {
-                    path: '/about',
-                    name: 'about',
-                    component: About
+                    meta: {title: '服务', requireAuth: true},
                 },
                 {
                     path: '/ieUnderTen',
@@ -82,9 +56,6 @@ export default new Router({
                     component: IeUnderTen
                 },
             ],
-            meta: {
-                requireAuth: true   //添加该字段，表示这个路由是需要登录的
-            },
         },
         {path: '*', component: NotFoundView}
     ]

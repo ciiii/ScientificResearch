@@ -11,8 +11,12 @@
                                  align="center"></el-table-column>
                 <el-table-column prop="名称" label="名称"></el-table-column>
                 <el-table-column prop="编号" label="编号" align="center" width="100"></el-table-column>
-                <el-table-column prop="备注" label="备注"></el-table-column>
-                <el-table-column label="是否启用" property="是否启用" align="center">
+                <el-table-column prop="备注" label="说明">
+                    <template slot-scope="scope">
+                        <p class="explain">{{scope.row.备注}}</p>
+                    </template>
+                </el-table-column>
+                <el-table-column label="是否启用" property="是否启用" align="center" width="150">
                     <template slot-scope="scope">
                         <el-switch class="switch"
                                    style="display: block"
@@ -27,24 +31,33 @@
                 <el-table-column label="操作" align="center" width="100">
                     <template slot-scope="scope">
                         <el-button type="text" size="small" @click="btnEdit(scope.row)">编辑</el-button>
+                        <el-button type="text" size="small" @click="btnDetails(scope.row)">详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
         </div>
-        <el-dialog :title="title" :visible.sync="isAddDialog" width="30%"  v-if='isAddDialog'>
-            <AddService ref="child" @myEvent="getMyEvent" :data="item" :isAddDialog="isAddDialog"
-                         :isAdd="isAdd"></AddService>
+        <el-dialog :title="title" :visible.sync="isAddDialog" width="30%" v-if='isAddDialog'>
+            <div v-if="isDetails">
+                <ServiceDetails ref="child" @myEvent="closeDialog" :item="item"></ServiceDetails>
+            </div>
+            <div v-else>
+                <AddService ref="child" @myEvent="getMyEvent" :item="item" :isAddDialog="isAddDialog"
+                            :isAdd="isAdd"></AddService>
+            </div>
+
         </el-dialog>
     </div>
 </template>
 <script>
-    import {Service} from "@/assets/js/connect/ReturnData";
-    import AddService from "@/views/service/AddService"
+    import {URL_SERVICE} from "@/assets/js/connect/ConSysUrl";
+    import AddService from "@/components/service/AddService"
+    import ServiceDetails from "@/components/service/ServiceDetails"
 
     export default {
         name: 'Service',
         components: {
             AddService,
+            ServiceDetails
         },
         data() {
             return {
@@ -53,35 +66,41 @@
                 title: '添加服务',
                 isAdd: true,
                 isAddDialog: false,
+                isDetails: false,
                 item: {}
             }
         },
-
         mounted() {
             this.getService();
         },
-
         methods: {
             getService: async function () {
-                Service.getServiceList('get', '', (success, strErro, obj) => {
-                    if (success) {
-                        this.tableData = obj.data;
-                        this.total = obj.data.length;
-                    }
-                });
+                this.tableData = await this.$http.myGet(URL_SERVICE.GET_SERVICE_ALL, '');
+                this.total = this.tableData.length;
             },
             getMyEvent(val) {
                 this.getService();
+                this.closeDialog(val);
+            },
+            closeDialog(val) {
                 this.isAddDialog = val;
             },
             btnAdd() {
                 this.title = '添加服务';
                 this.isAdd = true;
                 this.isAddDialog = true;
+                this.isDetails = false;
             },
             btnEdit(data) {
                 this.title = '修改服务';
                 this.isAdd = false;
+                this.item = data;
+                this.isAddDialog = true;
+                this.isDetails = false;
+            },
+            btnDetails(data) {
+                this.title = '服务详情';
+                this.isDetails = true;
                 this.item = data;
                 this.isAddDialog = true;
             },
@@ -89,25 +108,15 @@
                 let data = {
                     编号: el.编号
                 }
-                Service.disableService('post', data, (success, strErro, obj) => {
-                    if (success) {
-                        this.$message.success('禁用成功！');
-                    } else {
-                        el.是否启用 = !el.是否启用;
-                    }
-                })
+                await this.$http.myPost(URL_SERVICE.POST_DISABLE_SERVICE, data);
+                this.$message.success('禁用成功！');
             },
             enableService: async function (el) {
                 let data = {
                     编号: el.编号
                 }
-                Service.enableService('post', data, (success, strErro, obj) => {
-                    if (success) {
-                        this.$message.success('启用成功！');
-                    } else {
-                        el.是否启用 = !el.是否启用;
-                    }
-                })
+                await this.$http.myPost(URL_SERVICE.POST_ENABLE_SERVICE, data);
+                this.$message.success('启用成功！');
             },
             switchChange(el) {
                 let title = '启用';
@@ -139,5 +148,15 @@
 <style lang="less" type='text/less' scoped>
     .el-switch {
         height: 23px;
+    }
+
+    .el-table td p {
+        display: -webkit-box !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: break-all;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        margin: 0;
     }
 </style>

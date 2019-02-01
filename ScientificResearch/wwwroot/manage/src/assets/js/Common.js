@@ -1,30 +1,50 @@
-let myCommon = {
-    //时间格式化
-    formatDate: function (date, fmt) {
-        if (/(y+)/.test(fmt)) {
-            fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length))
+import Vue from 'vue'
+//时间格式化
+export function formatDate(date, fmt) {
+    if (/(y+)/.test(fmt)) {
+        fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length))
+    }
+    let o = {
+        'M+': date.getMonth() + 1,
+        'd+': date.getDate(),
+        'h+': date.getHours(),
+        'm+': date.getMinutes(),
+        's+': date.getSeconds()
+    }
+    for (let k in o) {
+        if (new RegExp(`(${k})`).test(fmt)) {
+            let str = o[k] + ''
+            fmt = fmt.replace(RegExp.$1, RegExp.$1.length === 1 ? str : padLeftZero(str))
         }
-        let o = {
-            'M+': date.getMonth() + 1,
-            'd+': date.getDate(),
-            'h+': date.getHours(),
-            'm+': date.getMinutes(),
-            's+': date.getSeconds()
-        }
-        for (let k in o) {
-            if (new RegExp(`(${k})`).test(fmt)) {
-                let str = o[k] + ''
-                fmt = fmt.replace(RegExp.$1, RegExp.$1.length === 1 ? str : myCommon.padLeftZero(str))
-            }
-        }
-        return fmt
-    },
-    padLeftZero: function (str) {
-        return ('00' + str).substr(str.length)
-    },
+    }
+    return fmt
 }
-export default myCommon;
 
+function padLeftZero(str) {
+    return ('00' + str).substr(str.length)
+}
+
+Vue.filter('dataFormat', function (value, fmt) {
+    let getDate = new Date(value);
+    let o = {
+        'M+': getDate.getMonth() + 1,
+        'd+': getDate.getDate(),
+        'h+': getDate.getHours(),
+        'm+': getDate.getMinutes(),
+        's+': getDate.getSeconds(),
+        'q+': Math.floor((getDate.getMonth() + 3) / 3),
+        'S': getDate.getMilliseconds()
+    };
+    if (/(y+)/.test(fmt)) {
+        fmt = fmt.replace(RegExp.$1, (getDate.getFullYear() + '').substr(4 - RegExp.$1.length))
+    }
+    for (let k in o) {
+        if (new RegExp('(' + k + ')').test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
+        }
+    }
+    return fmt;
+});
 // 防抖
 export function _debounce(fn, delay) {
 
@@ -42,6 +62,7 @@ export function _debounce(fn, delay) {
         }, newDelay);
     };
 }
+
 // 节流
 export function _throttle(fn, interval) {
     let last;
@@ -62,5 +83,19 @@ export function _throttle(fn, interval) {
             fn.apply(th, args);
         }
     }
+}
+
+//两个对象属性匹配
+export function matchingProperty(objA, objB) {
+    for (let i in objA) {
+        if (objB[i] != 'undefined') {
+            objA[i] = objB[i];
+        }
+    }
+    return objA
+}
+
+export function getUrl(url){
+    return decodeURI(encodeURI(encodeURI(url)))
 }
 

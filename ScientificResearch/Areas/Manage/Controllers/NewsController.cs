@@ -26,8 +26,8 @@ namespace ScientificResearch.Areas.Manage.Controllers
         /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
-        async public Task<PagingResult<新闻>> 分页获取总库新闻(Paging paging) =>
-            await Db_Manage.GetPagingListSpAsync<新闻>(paging);
+        async public Task<PagingResult<新闻>> 分页获取总库新闻(Paging paging, 总库新闻Filter filter) =>
+            await Db_Manage.GetPagingListSpAsync<新闻, 总库新闻Filter>(paging, filter);
 
         /// <summary>
         /// 增改总库新闻,老规矩.编号=0为新增;

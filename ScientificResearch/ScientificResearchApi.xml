@@ -4,7 +4,7 @@
         <name>ScientificResearch</name>
     </assembly>
     <members>
-        <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.GetOpenId(System.String)">
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.getOpenId(System.String)">
             <summary>
             根据code取openid,接着取该openid绑定的用户信息;
             OAuthScope.snsapi_base方式回调
@@ -69,7 +69,7 @@
             总库的新闻管理,这个应该是云中漫步自己的新闻,针对所有受众
             </summary>
         </member>
-        <member name="M:ScientificResearch.Areas.Manage.Controllers.NewsController.分页获取总库新闻(ScientificResearch.Models.Paging)">
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.NewsController.分页获取总库新闻(ScientificResearch.Models.Paging,ScientificResearch.Models.总库新闻Filter)">
             <summary>
             分页获取总库新闻
             </summary>
@@ -132,6 +132,13 @@
             注意:没有订购的服务不会出现,但是已订购却因为医院被禁用或者服务被禁用的情况,该医院服务是禁用的
             </summary>
             <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.ServiceController.GetLoginInfoOfService">
+            <summary>
+            获取医院服务登录信息
+            给抓取端使用,获取某医院某服务数据接口登录信息;比如三医院的知网服务的登录名密码;
+            </summary>
             <returns></returns>
         </member>
         <member name="M:ScientificResearch.Areas.Manage.Controllers.ServiceController.获取某医院购买的服务(System.String)">
@@ -206,6 +213,16 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.医院服务.手机链接地址">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.医院服务.登录账号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.医院服务.登录密码">
             <summary>
             
             </summary>
@@ -13025,6 +13042,36 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.V_医院服务.是否启用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.V_医院服务_带账号">
+            <summary>
+            V_医院服务_带账号[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V_医院服务_带账号.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V_医院服务_带账号.医院名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V_医院服务_带账号.服务名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V_医院服务_带账号.登录账号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V_医院服务_带账号.登录密码">
             <summary>
             
             </summary>

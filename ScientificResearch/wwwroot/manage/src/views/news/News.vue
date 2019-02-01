@@ -2,37 +2,48 @@
     <div class="page-news page-common">
         <div class="main wrapper">
             <h4 class="title">新闻 News</h4>
-            <el-button type="primary" class="btn-add"><i class="el-icon-circle-plus-outline"></i> 添加新闻</el-button>
             <div class="screen-box">
+                <el-button type="primary" class="btn-add" @click="btnAdd">
+                    <i class="el-icon-circle-plus-outline"></i> 添加新闻
+                </el-button>
                 <el-form ref="form" :model="req" :inline="true" class="demo-form-inline">
-                    <el-form-item label="新闻名称">
-                        <el-input v-model="req.name"></el-input>
+                    <el-form-item>
+                        <el-input v-model="req.Like标题" placeholder="请输入标题" @keyup.enter.native="search">
+                            <i slot="prefix" class="el-input__icon el-icon-search"></i>
+                        </el-input>
                     </el-form-item>
-                    <el-form-item label="新闻类型">
-                        <el-select v-model="req.type" placeholder="请选择活动区域">
-                            <el-option label="类型一" value="shanghai"></el-option>
-                            <el-option label="类型一" value="beijing"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="建立时间">
-                        <el-col :span="11">
-                            <el-date-picker type="date" placeholder="选择开始日期" v-model="req.beginTime"
-                                            style="width: 100%;"></el-date-picker>
-                        </el-col>
-                        <el-col class="line" :span="1">-</el-col>
-                        <el-col :span="11">
-                            <el-time-picker type="date" placeholder="选择结束日期" v-model="req.endTime"
-                                            style="width: 100%;"></el-time-picker>
-                        </el-col>
-                    </el-form-item>
+                    <!--<el-form-item label="建立时间">-->
+                    <!--<el-date-picker type="date" placeholder="选择开始日期" v-model="req.beginTime"></el-date-picker>-->
+                    <!--至-->
+                    <!--<el-date-picker type="date" placeholder="选择结束日期" v-model="req.endTime"></el-date-picker>-->
+                    <!--</el-form-item>-->
+                    <el-button plain @click="search">查询</el-button>
                 </el-form>
             </div>
             <el-table class="tableone" border :data="tableData" stripe :header-cell-style="{'text-align':'center'}">
                 <el-table-column label="序号" type="index" show-overflow-tooltip width="50"
                                  align="center"></el-table-column>
-                <el-table-column prop="标题" label="标题"></el-table-column>
-                <el-table-column prop="内容" label="内容" align="center"></el-table-column>
+                <el-table-column label="标题">
+                    <template slot-scope="scope">
+                        <a href="javascript:;" @click="btnDetails(scope.row)" v-text="scope.row.标题"></a>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="建立时间" label="建立时间" align="center"></el-table-column>
+                <el-table-column label="操作" align="center" width="200">
+                    <template slot-scope="scope">
+                        <el-tooltip content="查看详情" placement="bottom" effect="light">
+                            <el-button icon="el-icon-search" circle @click="btnDetails(scope.row)"></el-button>
+                        </el-tooltip>
+                        <el-tooltip content="编辑" placement="bottom" effect="light">
+                            <el-button type="primary" icon="el-icon-edit" circle
+                                       @click="btnEdit(scope.row)"></el-button>
+                        </el-tooltip>
+                        <el-tooltip content="删除" placement="bottom" effect="light">
+                            <el-button type="danger" icon="el-icon-delete" circle
+                                       @click="btnDel(scope.row)"></el-button>
+                        </el-tooltip>
+                    </template>
+                </el-table-column>
             </el-table>
             <div class="block paging">
                 <el-pagination
@@ -45,42 +56,99 @@
                 </el-pagination>
             </div>
         </div>
+        <el-dialog class="big-dialog" :title="title" :visible.sync="isAddDialog" v-if='isAddDialog'>
+            <div v-if="isDetails">
+                <NewsDetails ref="child" @myEvent="closeDialog" :item="item"></NewsDetails>
+            </div>
+            <div v-else>
+                <AddNews ref="child" @myEvent="getMyEvent" :item="item" :isAddDialog="isAddDialog"
+                         :isAdd="isAdd"></AddNews>
+            </div>
+        </el-dialog>
     </div>
 </template>
 <script>
-    import {News} from "@/assets/js/connect/ReturnData";
+    import {URL_NEWS} from "@/assets/js/connect/ConSysUrl";
+    import AddNews from "@/components/news/AddNews"
+    import NewsDetails from "@/components/news/NewsDetails"
 
     export default {
         name: 'news',
+        components: {
+            AddNews,
+            NewsDetails
+        },
         data() {
             return {
                 req: {
                     Index: 1,
                     Size: 20,
                     OrderType: false,
-                    name: '',
-                    type: '',
-                    beginTime: '',
-                    endTime: '',
+                    Like标题: '',
                 },
                 tableData: [],
-                total: 0
+                total: 0,
+                title: '添加新闻',
+                isAdd: true,
+                isAddDialog: false,
+                item: {},
+                isDetails: false,
             }
         },
-
         mounted() {
             this.getNews();
         },
-
         methods: {
-            getNews(){
-                News.getPagingNewsList('get', this.req, (success, strErro, obj) => {
-                    if (success) {
-                        obj = obj.data;
-                        this.tableData = obj.list;
-                        this.total = obj.total;
-                    }
-                });
+            search: async function () {
+                this.req.Index = 1;
+                await this.getNews();
+            },
+            getNews: async function () {
+                let data = await this.$http.myGet(URL_NEWS.GET_PANGING_NEWS, this.req);
+                this.tableData = data.list;
+                this.total = data.total;
+            },
+            getMyEvent(val) {
+                this.getNews();
+                this.closeDialog(val);
+            },
+            closeDialog(val) {
+                this.isAddDialog = val;
+            },
+            btnAdd() {
+                this.title = '添加新闻';
+                this.isAdd = true;
+                this.isAddDialog = true;
+                this.isDetails = false;
+
+            },
+            btnEdit(data) {
+                this.title = '修改新闻';
+                this.isAdd = false;
+                this.item = data;
+                this.isAddDialog = true;
+                this.isDetails = false;
+            },
+            btnDetails(data) {
+                this.title = '新闻详情';
+                this.isDetails = true;
+                this.item = data;
+                this.isAddDialog = true;
+            },
+            btnDel(data) {
+                this.$confirm('您确定要【删除】此新闻吗', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.deleteNews(data);
+                })
+            },
+            deleteNews: async function (el) {
+                let data = [el.编号];
+                await this.$http.myPost(URL_NEWS.POST_DELETE_NEWS, data);
+                this.$message.success('删除成功！');
+                this.getNews();
             },
             handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);
@@ -89,7 +157,6 @@
                 console.log(`当前页: ${val}`);
                 this.req.Index = val;
                 this.getNews();
-                // this.total = total;
 
             },
         }

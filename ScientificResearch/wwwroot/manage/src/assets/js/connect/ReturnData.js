@@ -5,8 +5,6 @@ const User = {
     userLogin(type, options, userLoginListener) {
         Axios.$http.getDatas(URL_USER.POST_LOGIN, type, options, userLoginListener);
     },
-
-
 }
 
 const Service = {
@@ -25,7 +23,6 @@ const Service = {
     enableService(type, options, enableServiceListener) {
         Axios.$http.getDatas(URL_SERVICE.POST_ENABLE_SERVICE, type, options, enableServiceListener);
     },
-
 }
 
 const News = {
@@ -38,8 +35,6 @@ const News = {
     deleteNews(type, options, deleteNewsListener) {
         Axios.$http.getDatas(URL_NEWS.POST_DELETE_NEWS, type, options, deleteNewsListener);
     },
-
-
 }
 
 const Hospital = {
@@ -64,7 +59,6 @@ const Hospital = {
     addOrEditHospitalService(type, options, addOrEditHospitalServiceListener) {
         Axios.$http.getDatas(URL_HOSPITAL.POST_ADD_OR_EDIT_HOSPITAL_SERVICE, type, options, addOrEditHospitalServiceListener);
     },
-
 }
 
 export {
@@ -72,5 +66,4 @@ export {
     Service,
     News,
     Hospital
-
 };

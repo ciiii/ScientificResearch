@@ -139,7 +139,7 @@ namespace ScientificResearch.Infrastucture
         {
             get
             {
-                var currentUser =new CurrentUser();
+                    var currentUser =new CurrentUser();
 
                 currentUser.SetValueByPropertyName(
                     nameof(currentUser.姓名),

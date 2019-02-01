@@ -28,12 +28,12 @@
                     </el-button>
                 </el-form-item>
             </el-form>
-            <p class="support">技术支持：四川数域创意科技有限公司</p>
+            <p class="support">技术支持：上海路炳通信息技术有限公司</p>
         </div>
     </div>
 </template>
 <script>
-    import {User} from "../assets/js/connect/ReturnData";
+    import {URL_USER} from "@/assets/js/connect/ConSysUrl";
 
     export default {
         name: 'LoginPage',
@@ -80,9 +80,9 @@
                     return false;
                 }
             },
-            isLogin: async function () {
+            isLogin: function () {
                 if (this.account.userId != '' && this.account.password != '') {
-                    await this.dataPost();
+                    this.dataPost();
                     if (this.checked) {
                         this.setlocalStorage(this.account);
                     } else {
@@ -100,21 +100,15 @@
                     密码: this.account.password,
                     dbKey: 'ScientificResearch_Manage'
                 }
-                User.userLogin('post', postData, (success, strErro, obj) => {
-                    if (success) {
-                        this.$message.success('登录成功！');
-                        obj = obj.data;
-                        localStorage.setItem('myUserInfo', JSON.stringify(obj));
-                        sessionStorage.setItem('Authorization', obj.token_type + ' ' + obj.access_token);
-                        this.$store.commit('myUserInfo', obj);
-                        this.$router.push({path: '/index'});
-                    } else {
-                    }
-                });
+                let data = await this.$http.myPost(URL_USER.POST_LOGIN, postData);
+                this.$message.success('登录成功！');
+                localStorage.setItem('myUserInfo', JSON.stringify(data));
+                sessionStorage.setItem('Authorization', data.token_type + ' ' + data.access_token);
+                this.$store.commit('myUserInfo', data);
 
+                this.$router.push({path: '/homeContent'});
 
                 // this.$store.commit('isLogin', true);
-
                 // this.$store.commit('authorization', data.token_type + ' ' + data.access_token);
             },
             rememberPassword() {
