@@ -36,7 +36,7 @@
                 </el-table-column>
             </el-table>
         </div>
-        <el-dialog :title="title" :visible.sync="isAddDialog" width="30%" v-if='isAddDialog'>
+        <el-dialog :title="title" :visible.sync="isAddDialog" width="30%" v-if='isAddDialog' :close-on-click-modal="false">
             <div v-if="isDetails">
                 <ServiceDetails ref="child" @myEvent="closeDialog" :item="item"></ServiceDetails>
             </div>

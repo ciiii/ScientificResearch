@@ -11,12 +11,10 @@ export default new Vuex.Store({
     mutations: {
         myUserInfo(state, data) {
             state.myUserInfo = data;
-            localStorage.setItem('myUserInfo', JSON.stringify(data));
         },
         isLogin(state, data) {
             state.isLogin = data;
 
-            localStorage.setItem('isLogin',JSON.stringify(data));
 
         }
     },

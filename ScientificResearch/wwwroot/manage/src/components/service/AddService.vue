@@ -2,7 +2,7 @@
     <div class="addService">
         <el-form ref="form" :model="form" :rules="rules" label-width="100px" size="small">
             <el-form-item label="服务名称" prop="名称">
-                <el-input v-model="form.名称"></el-input>
+                <el-input v-model="form.名称" maxLength="200"></el-input>
             </el-form-item>
             <el-form-item label="是否启用" prop="是否启用">
                 <template slot-scope="scope">
@@ -17,7 +17,7 @@
                 </template>
             </el-form-item>
             <el-form-item label="说明" prop="备注">
-                <el-input v-model="form.备注" type="textarea" :rows="5"></el-input>
+                <el-input v-model="form.备注" type="textarea" :rows="5" maxLength="2000"></el-input>
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -30,6 +30,7 @@
 <script>
     import {validateChineseEnglish} from "../../assets/js/Validate";
     import {URL_SERVICE} from "../../assets/js/connect/ConSysUrl";
+    import {_debounce} from "@/assets/js/Common";
 
     export default {
         name: "AddService",
@@ -61,11 +62,22 @@
             switchChange(el) {
                 console.info(el);
             },
-            confirmHandler: async function () {
+            confirmHandler: _debounce(function () {
+                this.$refs.form.validate((valid) => {
+                    if (valid) {
+                        this.AddOrEdit();
+                    } else {
+                        this.$message.error('信息有误！');
+                        return false;
+                    }
+                });
+            }, 300),
+            AddOrEdit: async function () {
                 await this.$http.myPost(URL_SERVICE.POST_ADD_OR_EDIT_SERVICE, this.form);
                 this.$message.success('提交成功！');
                 this.$emit('myEvent', false);
-            }
+            },
+
         }
     }
 </script>

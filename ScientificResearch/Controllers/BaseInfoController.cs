@@ -16,7 +16,7 @@ namespace ScientificResearch.Controllers
     /// <summary>
     /// 基础信息维护的接口
     /// </summary>
-    public class BaseInfoController : BaseController
+    public class BaseInfoController : ScientificResearchBaseController
     {
         #region 字典
         /// <summary>

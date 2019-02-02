@@ -4,7 +4,6 @@ import Index from './views/Index.vue';
 import HomeContent from './views/HomeContent.vue';
 import Login from './views/Login.vue';
 import News from './views/news/News.vue';
-import NewsDetails from './components/news/NewsDetails.vue';
 import NotFoundView from './views/404/404.vue';
 import Service from './views/service/Service.vue';
 import IeUnderTen from './views/IeUnderTen.vue';

@@ -15,7 +15,7 @@ using System.Data;
 
 namespace ScientificResearch.Controllers
 {
-    public class XProjectController : BaseController
+    public class XProjectController : ScientificResearchBaseController
     {
         #region 横向项目申请
         public int 横向项目申请流程模板编号

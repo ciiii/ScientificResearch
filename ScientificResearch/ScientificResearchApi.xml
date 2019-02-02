@@ -49,7 +49,7 @@
             <param name="model"></param>
             <returns></returns>
         </member>
-        <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.getJwt(ScientificResearch.Models.CurrentUser)">
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.getJwt``1(``0,System.String)">
             <summary>
             根据用户信息获取jwt字串,并返回"openid登录""用户名密码登录""绑定openid到用户"的一样的返回信息
             </summary>
@@ -170,6 +170,11 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:ScientificResearch.Models.CurrentUserOfManage">
+            <summary>
+            当前总库登录人的信息
+            </summary>
+        </member>
         <member name="M:ScientificResearch.Models.RestoreModelDb.GetSql(System.String,Microsoft.AspNetCore.Hosting.IHostingEnvironment)">
             <summary>
             获取根据模板数据库备份文件恢复一个新的库的脚本;
@@ -272,6 +277,11 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.CurrentUserOfTeachingManagement">
+            <summary>
+            当前教学管理的医院方登录人的信息
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.参加会议申请增改.经费预算列表">
             <summary>
             对参加会议来说,批准经费和配套经费不用管,=0就是了,当然要用也无所谓;
@@ -324,7 +334,7 @@
         </member>
         <member name="T:ScientificResearch.Models.CurrentUser">
             <summary>
-            当前登录人的信息
+            当前科研的登录人的信息
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.期刊Filter.LikeAllName">
@@ -13041,6 +13051,16 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.V_医院服务.登录账号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V_医院服务.登录密码">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.V_医院服务.是否启用">
             <summary>
             
@@ -14175,61 +14195,63 @@
             登录人的信息
             </summary>
         </member>
-        <member name="T:ScientificResearch.Infrastucture.BaseController">
+        <member name="T:ScientificResearch.Infrastucture.BaseController`1">
             <summary>
             基础控制器
             </summary>
         </member>
-        <member name="P:ScientificResearch.Infrastucture.BaseController.MyWorkFlowBusiness">
+        <member name="P:ScientificResearch.Infrastucture.BaseController`1.MyWorkFlowBusiness">
             <summary>
             MyWorkFlowBusiness的实例不采用注入
             </summary>
         </member>
-        <member name="P:ScientificResearch.Infrastucture.BaseController.Config">
+        <member name="P:ScientificResearch.Infrastucture.BaseController`1.Config">
             <summary>
              配置,使用config.GetValue T来读取
             </summary>
         </member>
-        <member name="P:ScientificResearch.Infrastucture.BaseController.测试获取自定义的全局配置数据">
+        <member name="P:ScientificResearch.Infrastucture.BaseController`1.测试获取自定义的全局配置数据">
             <summary>
             测试获取自定义的全局配置数据
             </summary>
         </member>
-        <member name="P:ScientificResearch.Infrastucture.BaseController.Log">
+        <member name="P:ScientificResearch.Infrastucture.BaseController`1.Log">
             <summary>
             日志服务
             </summary>
         </member>
-        <member name="P:ScientificResearch.Infrastucture.BaseController.DbConnectionStringLack">
+        <member name="P:ScientificResearch.Infrastucture.BaseController`1.DbConnectionStringLack">
             <summary>
             原始的连接字串,具体连接哪个库还没有指定
             登录时可以用这个临时生成一个连接;
             </summary>
         </member>
-        <member name="P:ScientificResearch.Infrastucture.BaseController.DbConnectionString">
+        <member name="P:ScientificResearch.Infrastucture.BaseController`1.DbConnectionString">
             <summary>
             指定连接的库为当前登录人的库,字串可用于事务,也可用于下面的db
             </summary>
         </member>
-        <member name="P:ScientificResearch.Infrastucture.BaseController.Db">
+        <member name="P:ScientificResearch.Infrastucture.BaseController`1.Db">
             <summary>
             获取当前登录者的数据库链接;可能在login方法中另做一个
             也可以这么写: public IDbConnection Db => new SqlConnection(DbConnectionString);
             </summary>
         </member>
-        <member name="P:ScientificResearch.Infrastucture.BaseController.Db_Manage">
+        <member name="P:ScientificResearch.Infrastucture.BaseController`1.Db_Manage">
             <summary>
             主库
             </summary>
         </member>
-        <member name="P:ScientificResearch.Infrastucture.BaseController.Env">
+        <member name="P:ScientificResearch.Infrastucture.BaseController`1.Env">
             <summary>
             网站服务器环境
             </summary>
         </member>
-        <member name="P:ScientificResearch.Infrastucture.BaseController.CurrentUser">
+        <member name="P:ScientificResearch.Infrastucture.BaseController`1.CurrentUser">
             <summary>
-            登录人的信息
+            登录人信息
+            根据T来取User.Claims里面对应的数据
+            如果找到了,就取第一个匹配的claim的value
             </summary>
         </member>
         <member name="T:ScientificResearch.Infrastucture.AddHeaderWithFactoryAttribute">

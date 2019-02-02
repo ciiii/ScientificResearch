@@ -10,9 +10,10 @@ namespace ScientificResearch.Models
     {
         public string Value { get; set; }
     }
-    public class LoginReturn
+    public class LoginReturn<T>
     {
-        public CurrentUser 人员 { get; set; }
+        public T 人员 { get; set; }
+        //public CurrentUser 人员 { get; set; }
         public string access_token { get; set; }
         public string token_type { get; set; }
     }
@@ -22,12 +23,11 @@ namespace ScientificResearch.Models
         public string OpenId { get; set; }
     }
 
-    ///// <summary>
-    ///// 当前总库登录人的信息
-    ///// </summary>
-    //public class CurrentUserOfManage
-    //{
-    //    public string 工号 { get; set; }
-    //    public string DbKey { get; set; }
-    //}
+    /// <summary>
+    /// 当前总库登录人的信息
+    /// </summary>
+    public class CurrentUserOfManage:CurrentUserBase
+    {
+        public string 工号 { get; set; }
+    }
 }

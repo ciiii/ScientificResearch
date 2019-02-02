@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ScientificResearch.Controllers
 {
-    public class OfficeController : BaseController
+    public class OfficeController : ScientificResearchBaseController
     {
         /// <summary>
         /// 接收者类型:

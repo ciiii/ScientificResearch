@@ -103,8 +103,6 @@ textarea {
   }
 
   .screen-box {
-    margin-bottom: 10px;
-
     .el-button {
       i {
         font-size: 16px;
@@ -133,10 +131,13 @@ textarea {
   }
 
   .el-dialog {
+    width: 570px !important;
+
     form.el-form {
       max-height: 500px;
       overflow-y: auto;
-      span{
+
+      span {
         font-size: 13px;
         line-height: 24px;
       }
@@ -144,6 +145,8 @@ textarea {
   }
 
   .big-dialog {
+    width: 760px !important;
+
     form.el-form, .content-box {
       min-height: 400px;
       overflow-y: auto;
@@ -202,7 +205,7 @@ textarea {
 @media (min-width: 992px) and (max-width: 1366px) {
   .page-common {
     .el-dialog {
-      width: 570px !important;
+      width: 500px !important;
       margin-top: 3% !important;
 
       form.el-form {
@@ -212,7 +215,7 @@ textarea {
 
     .big-dialog {
       .el-dialog {
-        width: 760px !important;
+        width: 700px !important;
 
         .edit_container {
           .ql-container.ql-snow {

@@ -1,7 +1,7 @@
 <template>
     <div class="addHospital">
         <el-form ref="form" :model="form" :rules="rules" label-width="100px" size="small">
-            <el-form-item label="医院名称" prop="名称">
+            <el-form-item label="医院名称" prop="名称" maxLength="200">
                 <el-input v-model="form.名称"></el-input>
             </el-form-item>
             <el-form-item label="代码(简称)" prop="代码">
@@ -52,6 +52,7 @@
 <script>
     import {validateNumberLetter, validateChineseEnglish} from "../../assets/js/Validate";
     import {URL_HOSPITAL} from "../../assets/js/connect/ConSysUrl";
+    import {_debounce} from "@/assets/js/Common";
 
     export default {
         name: "AddHospital",
@@ -87,7 +88,17 @@
             cancelHandler() {
                 this.$emit('myEvent', false);
             },
-            confirmHandler: async function () {
+            confirmHandler: _debounce(function () {
+                this.$refs.form.validate((valid) => {
+                    if (valid) {
+                        this.AddOrEdit();
+                    } else {
+                        this.$message.error('信息有误！');
+                        return false;
+                    }
+                });
+            },300),
+            AddOrEdit: async function () {
                 await this.$http.myPost(URL_HOSPITAL.POST_ADD_OR_EDIT_HOSPITA, this.form);
                 this.$message.success('提交成功！');
                 this.$emit('myEvent', false);

@@ -1,4 +1,5 @@
 import Vue from 'vue'
+
 //时间格式化
 export function formatDate(date, fmt) {
     if (/(y+)/.test(fmt)) {
@@ -45,9 +46,9 @@ Vue.filter('dataFormat', function (value, fmt) {
     }
     return fmt;
 });
+
 // 防抖
 export function _debounce(fn, delay) {
-
     let newDelay = delay || 200;
     let timer;
     return function () {
@@ -88,14 +89,26 @@ export function _throttle(fn, interval) {
 //两个对象属性匹配
 export function matchingProperty(objA, objB) {
     for (let i in objA) {
-        if (objB[i] != 'undefined') {
+        if (objB[i] && objB[i] != 'undefined') {
             objA[i] = objB[i];
         }
     }
     return objA
 }
 
-export function getUrl(url){
+
+//url 中文参数乱码
+export function getUrl(url) {
     return decodeURI(encodeURI(encodeURI(url)))
 }
 
+//只能输入中文、字母、数字格式，不能有特殊字符
+export function chineseEnglishNumber(e) {
+    e.target.value = e.target.value.replace(/[^\w\u4E00-\u9FA5]/g, ''); //清除"字母、数字"以外的字符
+}
+
+
+//过滤特殊字符
+export function clearSpecialChar(e) {
+    e.target.value = e.target.value.replace(/[^[0-9a-zA-Z\-]/g, ''); //清除"字母、数字"以外的字符
+}

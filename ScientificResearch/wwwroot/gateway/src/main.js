@@ -3,42 +3,41 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import ElementUI from 'element-ui';
+import {Message,Notification} from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
-import Echarts from 'echarts';
-import Axios from './assets/js/MyAxios.js';
-import Code from './assets/js/Code.js';
-import MyCommon from './assets/js/Common.js';
+import 'babel-polyfill';
+import VueWechatTitle from 'vue-wechat-title';
+import Axios from './assets/js/connect/MyAxios.js';
 import './assets/libs/iconfont/iconfont.css';
 
-Axios.interceptors.response.use(function (response) {
-    if (response.data.error) {
-        this.$message.error({
-            message: response.data.error
-        });
-        return
-    }
-    return response;
-}, function (error) {
-    myApp.$notify.error({
-        title: '错误',
-        message: error
-    });
-});
-Vue.directive('title', {
-    inserted: function (el, binding) {
-        document.title = binding.value;
-    }
-});
+Vue.use(VueWechatTitle);
 
 Vue.prototype.$http = Axios;
-Vue.prototype.$code = Code;
-Vue.prototype.$myCommon = MyCommon;
-Vue.prototype.$echarts = Echarts;
+Vue.prototype.Message = Message;
+Vue.prototype.Notification = Notification;
 
 Vue.config.productionTip = false
 let myApp = Vue.use(ElementUI);
+
+
 new Vue({
     router,
     store,
     render: h => h(App)
 }).$mount('#app')
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requireAuth)) {
+        if (sessionStorage.getItem('Authorization')) {
+            next();
+        } else {
+            Vue.prototype.$message.error('登录信息已过期,请登重新登录！')
+            next({
+                path: '/login',
+                query: {redirect: to.fullPath}
+            })
+        }
+    } else {
+        next();
+    }
+})

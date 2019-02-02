@@ -15,7 +15,7 @@ using System.Data;
 
 namespace ScientificResearch.Controllers
 {
-    public class ExpenseController : BaseController
+    public class ExpenseController : ScientificResearchBaseController
     {
         public int 报销流程模板编号
         {

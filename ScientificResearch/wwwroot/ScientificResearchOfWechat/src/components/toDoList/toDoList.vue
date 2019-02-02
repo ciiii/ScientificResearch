@@ -68,7 +68,6 @@ export default {
         }
         // 加载状态结束
         this.loading = false;
-
         // 数据全部加载完成
         if (this.list.length >= 0) {
           this.finished = true;

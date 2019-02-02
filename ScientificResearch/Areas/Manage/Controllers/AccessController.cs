@@ -73,7 +73,7 @@ namespace ScientificResearch.Areas.Manage.Controllers
         /// <param name="model">其中dbKey请先填"ScientificResearch_Test"</param>
         /// <returns></returns>
         [HttpPost]
-        async public Task<LoginReturn> BindOpenId([FromBody]LoginInfoWithCode model)
+        async public Task<LoginReturn<CurrentUser>> BindOpenId([FromBody]LoginInfoWithCode model)
         {
             //验证用户,并记录为一次登录
             var result = await login(model);
@@ -122,7 +122,7 @@ namespace ScientificResearch.Areas.Manage.Controllers
 
             await 记录登录日志(dbWhenLogin, currentUser);
 
-            return getJwt(currentUser);
+            return getJwt(currentUser, Config.GetValue<string>("Roles:ScientificResearchUser"));
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace ScientificResearch.Areas.Manage.Controllers
         /// <returns></returns>
         //jwt 6/4
         [HttpPost]
-        async public Task<LoginReturn> Login([FromBody]LoginInfo model)
+        async public Task<LoginReturn<CurrentUser>> Login([FromBody]LoginInfo model)
         {
             return await login(model);
         }
@@ -143,14 +143,14 @@ namespace ScientificResearch.Areas.Manage.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        async public Task<LoginReturn> LoginManage([FromBody]LoginInfo model)
+        async public Task<LoginReturn<CurrentUserOfManage>> LoginManage([FromBody]LoginInfo model)
         {
             var loginSetting = Config.GetSection("总库登录").Get<LoginInfo>();
             //这里登录用户名叫"工号"只是为了复用LoginInfo类而已;
             if (!MyObject.Compare(model, loginSetting)) throw new Exception("登录信息错误");
 
-            var user = Tool.ModelToModel<CurrentUser, LoginInfo>(loginSetting);
-            return await Task.FromResult(getJwt(user));
+            var user = Tool.ModelToModel<CurrentUserOfManage, LoginInfo>(loginSetting);
+            return await Task.FromResult(getJwt(user, Config.GetValue<string>("Roles:ManageUser")));
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace ScientificResearch.Areas.Manage.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        private async Task<LoginReturn> login(LoginInfo model)
+        private async Task<LoginReturn<CurrentUser>> login(LoginInfo model)
         {
             var dbWhenLogin = new SqlConnection(DbConnectionStringLack.Replace("{0}", model.DbKey));
             var result = await dbWhenLogin.QueryMultipleSpAsync(
@@ -173,7 +173,7 @@ namespace ScientificResearch.Areas.Manage.Controllers
 
             await 记录登录日志(dbWhenLogin, user);
 
-            return getJwt(user);
+            return getJwt(user, Config.GetValue<string>("Roles:ScientificResearchUser"));
         }
 
         /// <summary>
@@ -181,40 +181,52 @@ namespace ScientificResearch.Areas.Manage.Controllers
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        private LoginReturn getJwt(CurrentUser user)
+        private LoginReturn<T> getJwt<T>(T user, string role = "")
+        //private LoginReturn getJwt(CurrentUser user)
         {
             //jwt 3/4 这个可以做个toClaims方法;反射某对象每个属性,放到一个claim
-            var claims = new[] {
-                        //加入用户的名称
-                        //这里的new Claim的第二个构造参数还不能为null
-                        new Claim(nameof( user.姓名),user.姓名??""),
-                        new Claim(nameof( user.工号),user.工号??""),
-                        new Claim(nameof( user.编号),user.编号.ToString()),
-                        new Claim(nameof( user.部门编号),user.部门编号.ToString()),
-                        new Claim(nameof( user.部门名称),user.部门名称??""),
-                        new Claim(nameof( user.DbKey),user.DbKey),
+            //var claims = new[] {
+            //            //加入用户的名称
+            //            //这里的new Claim的第二个构造参数还不能为null
+            //            new Claim(nameof( user.姓名),user.姓名??""),
+            //            new Claim(nameof( user.工号),user.工号??""),
+            //            new Claim(nameof( user.编号),user.编号.ToString()),
+            //            new Claim(nameof( user.部门编号),user.部门编号.ToString()),
+            //            new Claim(nameof( user.部门名称),user.部门名称??""),
+            //            new Claim(nameof( user.DbKey),user.DbKey),
 
-                        #region 默认的一些设置
-		                //下边为Claim的默认配置
-                        //new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                        //new Claim(JwtRegisteredClaimNames.Iat, $"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}"),
-                        //new Claim(JwtRegisteredClaimNames.Nbf,$"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}") ,
-                        ////这个就是过期时间，目前是过期100秒，可自定义，注意JWT有自己的缓冲过期时间
-                        //new Claim (JwtRegisteredClaimNames.Exp,$"{new DateTimeOffset(DateTime.Now.AddSeconds(100)).ToUnixTimeSeconds()}"),
-                        //new Claim(JwtRegisteredClaimNames.Iss,"Blog.Core"),
-                        //new Claim(JwtRegisteredClaimNames.Aud,"wr"),
-                        ////这个Role是官方UseAuthentication要要验证的Role，我们就不用手动设置Role这个属性了
-                        //new Claim(ClaimTypes.Role,tokenModel.Role),
+            //            #region 默认的一些设置
+            //      //下边为Claim的默认配置
+            //            //new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            //            //new Claim(JwtRegisteredClaimNames.Iat, $"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}"),
+            //            //new Claim(JwtRegisteredClaimNames.Nbf,$"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}") ,
+            //            ////这个就是过期时间，目前是过期100秒，可自定义，注意JWT有自己的缓冲过期时间
+            //            //new Claim (JwtRegisteredClaimNames.Exp,$"{new DateTimeOffset(DateTime.Now.AddSeconds(100)).ToUnixTimeSeconds()}"),
+            //            //new Claim(JwtRegisteredClaimNames.Iss,"Blog.Core"),
+            //            //new Claim(JwtRegisteredClaimNames.Aud,"wr"),
+            //            ////这个Role是官方UseAuthentication要要验证的Role，我们就不用手动设置Role这个属性了
+            //            //new Claim(ClaimTypes.Role,tokenModel.Role),
 
-                        //iss ： jwt签发者
-                        //sub：jwt所面向的用户
-                        //aud：接收jwt的一方
-                        //exp：jwt的过期时间，这个过期时间必须要大于签发时间
-                        //nbf：定义在什么时间之前，该jwt都是不可用的.
-                        //iat ：jwt的签发时间
-                        //jti  ：jwt的唯一身份标识，主要用来作为一次性token,从而回避重放攻击 
-	                    #endregion
-                    };
+            //            //iss ： jwt签发者
+            //            //sub：jwt所面向的用户
+            //            //aud：接收jwt的一方
+            //            //exp：jwt的过期时间，这个过期时间必须要大于签发时间
+            //            //nbf：定义在什么时间之前，该jwt都是不可用的.
+            //            //iat ：jwt的签发时间
+            //            //jti  ：jwt的唯一身份标识，主要用来作为一次性token,从而回避重放攻击 
+            //         #endregion
+            //        };
+
+            var claims = new List<Claim>();
+            var propertys = typeof(T).GetProperties();
+            for (int i = 0; i < propertys.Count(); i++)
+            {
+                var p = propertys[i];
+                var v = user.GetValueByPropertyName(p.Name) ?? "";
+                claims.Add(new Claim(p.Name, v.ToString()));
+            }
+
+            claims.Add(new Claim(ClaimTypes.Role, role));
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Config["JWT:SecurityKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -233,7 +245,7 @@ namespace ScientificResearch.Areas.Manage.Controllers
             //HttpContext.Session.Set<CurrentUser>("user", user);
 
 
-            return new LoginReturn
+            return new LoginReturn<T>
             {
                 人员 = user,
                 access_token = new JwtSecurityTokenHandler().WriteToken(token),

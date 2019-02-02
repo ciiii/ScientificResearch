@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace ScientificResearch.Controllers
 {
-    public class PeopleController : BaseController
+    public class PeopleController : ScientificResearchBaseController
     {
         private int 专家角色组编号
         {

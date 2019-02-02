@@ -70,10 +70,15 @@ namespace ScientificResearch.Models
         public string End登录时间 { get; set; }
     }
 
+    public class CurrentUserBase
+    {
+        public string DbKey { get; set; }
+    }
+
     /// <summary>
-    /// 当前登录人的信息
+    /// 当前科研的登录人的信息
     /// </summary>
-    public class CurrentUser
+    public class CurrentUser: CurrentUserBase
     {
         public int 编号 { get; set; }
         public string 工号 { get; set; }
@@ -83,6 +88,5 @@ namespace ScientificResearch.Models
         //属于哪个公司,key决定是哪个db链接
         public int 部门编号 { get; set; }
         public string 部门名称 { get; set; }
-        public string DbKey { get; set; }
     }
 }

@@ -12,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace ScientificResearch.Controllers
 {
-    public class AcademicActivitiesController : BaseController
+    public class AcademicActivitiesController : ScientificResearchBaseController
     {
         public int 主办讲座流程模板编号
         {

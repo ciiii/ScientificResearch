@@ -15,7 +15,7 @@ using System.Data;
 
 namespace ScientificResearch.Controllers
 {
-    public class YProjectController : BaseController
+    public class YProjectController : ScientificResearchBaseController
     {
         public enum 纵向项目分类
         {

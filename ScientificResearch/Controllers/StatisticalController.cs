@@ -10,7 +10,7 @@ using ScientificResearch.Models;
 
 namespace ScientificResearch.Controllers
 {
-    public class StatisticalController : BaseController
+    public class StatisticalController : ScientificResearchBaseController
     {
         [HttpGet]
         async public Task<object> 获取论文成果统计(论文成果统计Filter filter)

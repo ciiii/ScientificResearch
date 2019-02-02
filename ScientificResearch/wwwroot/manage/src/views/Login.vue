@@ -19,8 +19,8 @@
                               @keyup.enter.native="isLogin"></el-input>
                 </el-form-item>
                 <el-form-item class="remember">
-                    <el-checkbox-group>
-                        <el-checkbox @change="rememberPassword" v-model="checked">记住密码</el-checkbox>
+                    <el-checkbox-group v-model="checked">
+                        <el-checkbox label="记住密码" name="type"></el-checkbox>
                     </el-checkbox-group>
                 </el-form-item>
                 <el-form-item>
@@ -34,6 +34,7 @@
 </template>
 <script>
     import {URL_USER} from "@/assets/js/connect/ConSysUrl";
+    import {_debounce} from "@/assets/js/Common";
 
     export default {
         name: 'LoginPage',
@@ -56,11 +57,6 @@
                 isDownload: false
             }
         },
-        computed: {
-            user() {
-                return this.$store.state.myUserInfo
-            }
-        },
         mounted() {
             this.getlocalStorage();
             this.IeVersion();
@@ -80,20 +76,16 @@
                     return false;
                 }
             },
-            isLogin: function () {
-                if (this.account.userId != '' && this.account.password != '') {
-                    this.dataPost();
-                    if (this.checked) {
-                        this.setlocalStorage(this.account);
+            isLogin: _debounce(function () {
+                this.$refs.ruleForm.validate((valid) => {
+                    if (valid) {
+                        (this.dataPost(), 2000);
                     } else {
-                        localStorage.removeItem('myLoginInfo');
+                        this.$message.error('信息有误！');
+                        return false;
                     }
-                } else {
-                    this.$message.error({
-                        message: '错误，账号或密码不能为空！'
-                    });
-                }
-            },
+                });
+            }, 300),
             dataPost: async function () {
                 let postData = {
                     工号: this.account.userId,
@@ -102,26 +94,21 @@
                 }
                 let data = await this.$http.myPost(URL_USER.POST_LOGIN, postData);
                 this.$message.success('登录成功！');
+
                 localStorage.setItem('myUserInfo', JSON.stringify(data));
                 sessionStorage.setItem('Authorization', data.token_type + ' ' + data.access_token);
-                this.$store.commit('myUserInfo', data);
 
+                if (this.checked) {
+                    localStorage.setItem('myLoginInfo', JSON.stringify(this.account));
+                } else {
+                    localStorage.removeItem('myLoginInfo');
+                }
                 this.$router.push({path: '/homeContent'});
 
                 // this.$store.commit('isLogin', true);
                 // this.$store.commit('authorization', data.token_type + ' ' + data.access_token);
             },
-            rememberPassword() {
-                if (this.checked) {
-                    this.setlocalStorage(this.account);
-                } else {
-                    localStorage.removeItem('myLoginInfo');
-                }
-            },
-            setlocalStorage(account) {
-                localStorage.getItem('myLoginInfo', account);
-            },
-            getlocalStorage: function () {
+            getlocalStorage() {
                 if (localStorage.myLoginInfo) {
                     let loginInfo = JSON.parse(localStorage.getItem('myLoginInfo'));
                     this.account.userId = loginInfo.userId;

@@ -86,12 +86,12 @@
                 </div>
             </el-row>
         </div>
-        <el-dialog :title="title" :visible.sync="isAddDialog" width="30%" v-if='isAddDialog'>
+        <el-dialog :title="title" :visible.sync="isAddDialog" width="30%" v-if='isAddDialog' :close-on-click-modal="false">
             <div v-if="isService">
                 <HospitalService ref="child" @myEvent="getMyEvent" :item="item"></HospitalService>
             </div>
         </el-dialog>
-        <el-dialog class="big-dialog" :title="title" :visible.sync="isDetailsDialog" v-if='isDetailsDialog'>
+        <el-dialog class="big-dialog" :title="title" :visible.sync="isDetailsDialog" v-if='isDetailsDialog' :close-on-click-modal="false">
             <NewsDetails ref="child" @myEvent="getMyEvent" :item="item"></NewsDetails>
         </el-dialog>
     </div>
@@ -99,7 +99,7 @@
 <script>
     import {URL_SERVICE, URL_NEWS, URL_HOSPITAL} from "@/assets/js/connect/ConSysUrl";
     import HospitalService from "@/components/hospital/HospitalService";
-    import NewsDetails from "@/components/news/NewsDetails"
+    import NewsDetails from "@/components/news/NewsDetails";
 
     export default {
         name: 'Home',

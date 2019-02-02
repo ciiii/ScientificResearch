@@ -56,7 +56,7 @@
                 </el-pagination>
             </div>
         </div>
-        <el-dialog class="big-dialog" :title="title" :visible.sync="isAddDialog" v-if='isAddDialog'>
+        <el-dialog class="big-dialog" :title="title" :visible.sync="isAddDialog" v-if='isAddDialog' :close-on-click-modal="false">
             <div v-if="isDetails">
                 <NewsDetails ref="child" @myEvent="closeDialog" :item="item"></NewsDetails>
             </div>
@@ -82,7 +82,7 @@
             return {
                 req: {
                     Index: 1,
-                    Size: 20,
+                    Size: 16,
                     OrderType: false,
                     Like标题: '',
                 },
@@ -154,7 +154,6 @@
                 console.log(`每页 ${val} 条`);
             },
             handleCurrentChange(val) {
-                console.log(`当前页: ${val}`);
                 this.req.Index = val;
                 this.getNews();
 

@@ -15,7 +15,7 @@ using System.Data;
 
 namespace ScientificResearch.Controllers
 {
-    public class IncomingController : BaseController
+    public class IncomingController : ScientificResearchBaseController
     {
         //public int 项目经费到账流程模板编号
         //{

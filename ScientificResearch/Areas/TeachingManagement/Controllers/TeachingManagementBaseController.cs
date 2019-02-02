@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ScientificResearch.Infrastucture;
+using ScientificResearch.Models;
 
 namespace ScientificResearch.Areas.TeachingManagement.Controllers
 {
@@ -16,8 +18,8 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
     /// </summary>
     [Route("TeachingManagement/[controller]/[action]")]
     [ApiExplorerSettings(GroupName = "TeachingManagement")]
-    public class TeachingManagementBaseController : BaseController
+    [Authorize(Roles = "ScientificResearchUser")]
+    public class TeachingManagementBaseController : BaseController<CurrentUserOfTeachingManagement>
     {
-
     }
 }

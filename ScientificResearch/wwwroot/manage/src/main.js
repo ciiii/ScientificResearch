@@ -6,7 +6,7 @@ import ElementUI from 'element-ui';
 import {Message,Notification} from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 import 'babel-polyfill';
-import VueWechatTitle from 'vue-wechat-title'
+import VueWechatTitle from 'vue-wechat-title';
 import Axios from './assets/js/connect/MyAxios.js';
 import './assets/libs/iconfont/iconfont.css';
 

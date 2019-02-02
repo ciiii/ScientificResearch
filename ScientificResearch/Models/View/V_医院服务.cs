@@ -43,6 +43,14 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        public string 登录账号 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public string 登录密码 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
         public bool? 是否启用 { get; set; }
         
           

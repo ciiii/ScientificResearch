@@ -26,8 +26,8 @@ namespace ScientificResearch.Infrastucture
     //[Route("[area]/[controller]/[action]")] 
     [Route("[controller]/[action]")]
     // jwt 5/4
-    [Authorize] 
-    public class BaseController : Controller
+    [Authorize]
+    public class BaseController<T> : Controller where T : CurrentUserBase, new()
     {
         /// <summary>
         /// MyWorkFlowBusiness的实例不采用注入
@@ -102,9 +102,9 @@ namespace ScientificResearch.Infrastucture
         /// </summary>
         protected IHostingEnvironment Env => HttpContext.RequestServices.GetService<IHostingEnvironment>();
 
-        /// <summary>
-        /// 登录人的信息
-        /// </summary>
+        ///// <summary>
+        ///// 登录人的信息
+        ///// </summary>
         //protected CurrentUser CurrentUser
         //{
         //    get
@@ -134,46 +134,76 @@ namespace ScientificResearch.Infrastucture
         //        return currentUser;
         //    }
         //}
+
         //jwt 4/4
-        protected CurrentUser CurrentUser
+        //protected CurrentUser CurrentUser
+        //{
+        //    get
+        //    {
+        //            var currentUser =new CurrentUser();
+
+        //        currentUser.SetValueByPropertyName(
+        //            nameof(currentUser.姓名),
+        //            User.Claims.Where(i => i.Type == nameof(currentUser.姓名)).SingleOrDefault().Value
+        //        );
+
+        //        currentUser.SetValueByPropertyName(
+        //            nameof(currentUser.工号),
+        //            User.Claims.Where(i => i.Type == nameof(currentUser.工号)).SingleOrDefault().Value
+        //        );
+
+        //        currentUser.SetValueByPropertyName(
+        //            nameof(currentUser.编号),
+        //            User.Claims.Where(i => i.Type == nameof(currentUser.编号)).SingleOrDefault().Value
+        //        );
+
+        //        currentUser.SetValueByPropertyName(
+        //            nameof(currentUser.部门编号),
+        //            User.Claims.Where(i => i.Type == nameof(currentUser.部门编号)).SingleOrDefault().Value
+        //        );
+
+        //        currentUser.SetValueByPropertyName(
+        //            nameof(currentUser.部门名称),
+        //            User.Claims.Where(i => i.Type == nameof(currentUser.部门名称)).SingleOrDefault().Value
+        //        );
+
+        //        currentUser.SetValueByPropertyName(
+        //            nameof(currentUser.DbKey),
+        //            User.Claims.Where(i => i.Type == nameof(currentUser.DbKey)).SingleOrDefault().Value
+        //        );
+
+        //        return currentUser;
+        //    }
+        //}
+
+        /// <summary>
+        /// 登录人信息
+        /// 根据T来取User.Claims里面对应的数据
+        /// 如果找到了,就取第一个匹配的claim的value
+        /// </summary>
+        protected T CurrentUser
         {
             get
             {
-                    var currentUser =new CurrentUser();
+                var currentUser = new T();
 
-                currentUser.SetValueByPropertyName(
-                    nameof(currentUser.姓名),
-                    User.Claims.Where(i => i.Type == nameof(currentUser.姓名)).SingleOrDefault().Value
-                );
-
-                currentUser.SetValueByPropertyName(
-                    nameof(currentUser.工号),
-                    User.Claims.Where(i => i.Type == nameof(currentUser.工号)).SingleOrDefault().Value
-                );
-
-                currentUser.SetValueByPropertyName(
-                    nameof(currentUser.编号),
-                    User.Claims.Where(i => i.Type == nameof(currentUser.编号)).SingleOrDefault().Value
-                );
-
-                currentUser.SetValueByPropertyName(
-                    nameof(currentUser.部门编号),
-                    User.Claims.Where(i => i.Type == nameof(currentUser.部门编号)).SingleOrDefault().Value
-                );
-
-                currentUser.SetValueByPropertyName(
-                    nameof(currentUser.部门名称),
-                    User.Claims.Where(i => i.Type == nameof(currentUser.部门名称)).SingleOrDefault().Value
-                );
-
-                currentUser.SetValueByPropertyName(
-                    nameof(currentUser.DbKey),
-                    User.Claims.Where(i => i.Type == nameof(currentUser.DbKey)).SingleOrDefault().Value
-                );
+                var propertys = typeof(T).GetProperties();
+                for (int i = 0; i < propertys.Count(); i++)
+                {
+                    var p = propertys[i];
+                    var v = User.Claims.Where(j => j.Type == p.Name).FirstOrDefault();
+                    if (v != null)
+                    {
+                        currentUser.SetValueByPropertyName(
+                            p.Name, v.Value
+                        );
+                    }
+                }
 
                 return currentUser;
             }
         }
     }
+
 }
 

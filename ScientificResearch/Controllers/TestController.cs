@@ -24,7 +24,7 @@ namespace ScientificResearch.Controllers
     //[Consumes("application/json", "multipart/form-data")]//此处为新增
     //[Route("[controller]/[action]")]
     [ApiExplorerSettings(GroupName ="test")]
-    public class TestController : BaseController
+    public class TestController : ScientificResearchBaseController
     {
         [HttpGet]
         public object GetJObejctString()

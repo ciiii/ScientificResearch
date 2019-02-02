@@ -24,37 +24,37 @@ namespace ScientificResearch.Areas.Manage.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        async public Task<object> 获取服务列表() => await Db.GetListSpAsync<服务>();
+        async public Task<object> 获取服务列表() => await Db_Manage.GetListSpAsync<服务>();
 
         /// <summary>
         /// 获取可用的服务列表,使用这些服务时用,仅仅包括启用的服务
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        async public Task<object> 获取可用的服务列表() => await Db.GetListSpAsync<V_服务_启用>();
+        async public Task<object> 获取可用的服务列表() => await Db_Manage.GetListSpAsync<V_服务_启用>();
 
         [HttpPost]
-        async public Task<object> 增改服务([FromBody] 服务 model) => await Db.Merge(model);
+        async public Task<object> 增改服务([FromBody] 服务 model) => await Db_Manage.Merge(model);
 
         [HttpPost]
-        async public Task 启用服务([FromBody] PredefindedKeyFields 服务编号) => await Db.Enable<服务>(服务编号.编号);
+        async public Task 启用服务([FromBody] PredefindedKeyFields 服务编号) => await Db_Manage.Enable<服务>(服务编号.编号);
 
         [HttpPost]
-        async public Task 禁用服务([FromBody] PredefindedKeyFields 服务编号) => await Db.Disable<服务>(服务编号.编号);
+        async public Task 禁用服务([FromBody] PredefindedKeyFields 服务编号) => await Db_Manage.Disable<服务>(服务编号.编号);
 
         /// <summary>
         /// 获取医院列表,包括了禁用的,管理时用
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        async public Task<object> 获取医院列表() => await Db.GetListSpAsync<医院>();
+        async public Task<object> 获取医院列表() => await Db_Manage.GetListSpAsync<医院>();
 
         /// <summary>
         /// 获取可用的医院列表,使用这些医院时用,仅仅包括启用的医院;
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        async public Task<object> 获取可用的医院列表() => await Db.GetListSpAsync<V_医院_启用>();
+        async public Task<object> 获取可用的医院列表() => await Db_Manage.GetListSpAsync<V_医院_启用>();
 
         /// <summary>
         /// 获取可用的医院名称列表,以供微信绑定时选取医院名称作为dbkey用;当然pc端也可以用,只不过现在是给每个医院提供了一个写死了dbkey的登录页面而已;
@@ -71,7 +71,7 @@ namespace ScientificResearch.Areas.Manage.Controllers
         [HttpPost]
         async public Task<object> 增改医院([FromBody] 医院 model)
         {
-            var result = await Db.Merge(model);
+            var result = await Db_Manage.Merge(model);
             if (model.编号 == 0)
             {
                 await Db.ExecuteAsync(RestoreModelDb.GetSql(model.名称, Env));
@@ -81,10 +81,10 @@ namespace ScientificResearch.Areas.Manage.Controllers
         }
 
         [HttpPost]
-        async public Task 启用医院([FromBody] PredefindedKeyFields 医院编号) => await Db.Enable<医院>(医院编号.编号);
+        async public Task 启用医院([FromBody] PredefindedKeyFields 医院编号) => await Db_Manage.Enable<医院>(医院编号.编号);
 
         [HttpPost]
-        async public Task 禁用医院([FromBody] PredefindedKeyFields 医院编号) => await Db.Disable<医院>(医院编号.编号);
+        async public Task 禁用医院([FromBody] PredefindedKeyFields 医院编号) => await Db_Manage.Disable<医院>(医院编号.编号);
 
         /// <summary>
         /// 获取哪些医院订购了哪些服务的信息,
@@ -94,7 +94,8 @@ namespace ScientificResearch.Areas.Manage.Controllers
         /// <param name="filter"></param>
         /// <returns></returns>
         [HttpGet]
-        async public Task<object> 获取医院服务(医院服务Filter filter) => await Db.GetListSpAsync<V_医院服务, 医院服务Filter>(filter);
+        async public Task<object> 获取医院服务(医院服务Filter filter) =>
+            await Db_Manage.GetListSpAsync<V_医院服务, 医院服务Filter>(filter);
 
         /// <summary>
         /// 获取医院服务登录信息
@@ -124,7 +125,7 @@ namespace ScientificResearch.Areas.Manage.Controllers
         async public Task 增改医院服务([FromBody]PredefindedIdList<医院服务> data)
         {
             //return await Db.Merge(list);
-            await 医院服务.Merge(Db, data.Id, data.List);
+            await 医院服务.Merge(Db_Manage, data.Id, data.List);
         }
 
         /// <summary>

@@ -37,6 +37,16 @@ const http = {
             size
         })
     },
+
+    /**
+     * 分页获取总库新闻
+     */
+    getNewsList(index, size) {
+        return get("/Manage/News/分页获取总库新闻", {
+            index,
+            size
+        })
+    }
 };
 
 export default http;

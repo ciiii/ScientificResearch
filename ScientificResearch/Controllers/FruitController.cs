@@ -16,7 +16,7 @@ using System.Text;
 
 namespace ScientificResearch.Controllers
 {
-    public class FruitController : BaseController
+    public class FruitController : ScientificResearchBaseController
     {
         public int 纵向项目立项流程模板编号
         {

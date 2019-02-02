@@ -7,12 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 using MyLib;
 using ScientificResearch.Infrastucture;
 using ScientificResearch.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ScientificResearch.Areas.Manage.Controllers
 {
     [Route("Manage/[controller]/[action]")]
     [ApiExplorerSettings(GroupName = "Manage")]
-    public class ManageBaseController : BaseController
+    [Authorize(Roles = "ManageUser")]
+    public class ManageBaseController : BaseController<CurrentUserOfManage>
     {
         //new protected CurrentUserOfManage CurrentUser
         //{

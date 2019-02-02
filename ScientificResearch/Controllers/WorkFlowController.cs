@@ -13,7 +13,7 @@ using System.Data;
 
 namespace ScientificResearch.Controllers
 {
-    public class WorkFlowController : BaseController
+    public class WorkFlowController : ScientificResearchBaseController
     {
         /// <summary>
         /// 审核等不需要附加动作的操作,可以直接调用这个接口;

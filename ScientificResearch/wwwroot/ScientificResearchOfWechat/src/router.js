@@ -27,6 +27,12 @@ export default new Router({
             name: "backlog",
             component: () =>
                 import ("./views/backlog/backlog.vue")
+        },
+        {
+            path: "/newsContent",
+            name: "newsContent",
+            component: () =>
+                import ("./views/newsContent/newsContent.vue")
         }
     ]
 });

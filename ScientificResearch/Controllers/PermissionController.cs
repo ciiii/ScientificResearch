@@ -13,7 +13,7 @@ namespace ScientificResearch.Controllers
     /// <summary>
     /// 权限管理接口
     /// </summary>
-    public class PermissionController : BaseController
+    public class PermissionController : ScientificResearchBaseController
     {
         /// <summary>
         /// 获取角色列表

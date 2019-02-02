@@ -38,7 +38,6 @@
   <ItemGroup>
     <Folder Include="Areas\Manage\Data\" />
     <Folder Include="Areas\Manage\Views\" />
-    <Folder Include="Areas\TeachingManagement\Models\" />
     <Folder Include="Models\Table\" />
     <Folder Include="Models\View\" />
     <Folder Include="wwwroot\upload\下载中心\" />

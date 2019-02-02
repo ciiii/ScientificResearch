@@ -21,7 +21,7 @@ namespace ScientificResearch.Controllers
     /// <summary>
     /// 登录|注销|获取权限等相关接口
     /// </summary>
-    public class AccessController : BaseController
+    public class AccessController : ScientificResearchBaseController
     {
         /// <summary>
         /// 要用到的业务
@@ -68,6 +68,7 @@ namespace ScientificResearch.Controllers
                         new Claim(nameof( user.部门编号),user.部门编号.ToString()),
                         new Claim(nameof( user.部门名称),user.部门名称),
                         new Claim(nameof( user.DbKey),user.DbKey),
+                        new Claim(ClaimTypes.Role, Config.GetValue<string>("Roles:ScientificResearchUser"))
 
                         #region 默认的一些设置
 		                //下边为Claim的默认配置
