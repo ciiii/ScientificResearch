@@ -7,7 +7,7 @@ $(function () {
             clickSubmit: function () {
                 var data = new FormData();
                 data.append('file', $("#input-file").get(0).files[0]);
-                $('.loading').show();
+                $('.submit-wrapper .loading').show();
                 addVm.fileUpload(data);
             },
             fileUpload: function (data) {
@@ -26,7 +26,7 @@ $(function () {
                         if (e.error) {
                             icon = 'icon-shibai1';
                             popover(icon, ' 上传失败：' + e.error);
-                            setTimeout("$('.popover').remove()", 2000);
+                            setTimeout("$('.popover').remove()", 4000);
                         } else {
                             icon = 'icon-chenggong1';
                             popover(icon, ' 上传成功!');
@@ -35,11 +35,11 @@ $(function () {
                             }, 1000);
                             addVm.clickBtnReturn();
                         }
-                        $('.loading').hide();
+                        $('.submit-wrapper .loading').hide();
                         vm.query();
                     }, error: function (e) {
                         e = JSON.parse(e);
-                        $('.loading').hide();
+                        $('.submit-wrapper .loading').hide();
                         $.oaNotify.error('上传失败：' + e.error);
                     }
                 });

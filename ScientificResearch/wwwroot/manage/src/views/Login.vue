@@ -58,11 +58,13 @@
             }
         },
         mounted() {
-            this.getlocalStorage();
+            console.info('11111111');
             this.IeVersion();
+            this.getlocalStorage();
         },
         methods: {
             IeVersion: function () {
+                console.info('2222222');
                 let userAgent = navigator.userAgent;
                 let isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1;
                 if (isIE) {
@@ -70,6 +72,7 @@
                     reIE.test(userAgent);
                     let fIEVersion = parseFloat(RegExp["$1"]);
                     if (fIEVersion < 10) {
+                        console.info('<10');
                         this.$router.push({path: '/IeUnderTen'});
                     }
                 } else {
@@ -103,7 +106,7 @@
                 } else {
                     localStorage.removeItem('myLoginInfo');
                 }
-                this.$router.push({path: '/homeContent'});
+                this.$router.push({path: '/index'});
 
                 // this.$store.commit('isLogin', true);
                 // this.$store.commit('authorization', data.token_type + ' ' + data.access_token);

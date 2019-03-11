@@ -288,8 +288,10 @@ namespace ScientificResearch.Controllers
                     }
                     else
                     {
+                        //2019-2-11 有时候endnote文档里面有错误数据,比如%N 期号来个"S2"就无法转为数字.这个错误跳过去
                         new论文.SetValueByPropertyName(proName,
                             item.Where(i => i.Substring(1, 1).Equals(keyInProp)).FirstOrDefault()?.Substring(3));
+
                     }
                 }
                 #endregion
@@ -331,7 +333,17 @@ namespace ScientificResearch.Controllers
                 //new论文.刊物名称 = item.Where(i => i.Substring(1, 1) == endnote与论文字段对应关系["刊物名称"]).FirstOrDefault().Substring(3);
                 #endregion
 
-                listOf论文.Add(new论文);
+                //if(listOf论文.Count() == 97)
+                //{
+                //    Console.Write(1);
+
+                //}
+
+                //这里对标题去个重
+                if (!listOf论文.Any(i => i.论文标题 == new论文.论文标题))
+                {
+                    listOf论文.Add(new论文);
+                }
             }
             //return listOf论文.ToDataTable<论文导入>();
             await 导入整理后的公网论文数据(listOf论文);

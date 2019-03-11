@@ -2,6 +2,7 @@ $(function () {
     window.addVm = null;
     var xueShuDetails;
     var userInfo = vm.userInfo;
+    console.info(userInfo);
     var templateId;
     avalon.ready(function () {
         window.addVm = avalon.define({
@@ -56,6 +57,7 @@ $(function () {
                     addVm.getMeetingDetails(xueShuDetails.id);
                 } else {
                     addVm.title = '添加会议';
+                    console.info(addVm.info);
                     addVm.getSubjectOne();
                     addVm.getMeetingType();
                     addVm.getTemplateList();

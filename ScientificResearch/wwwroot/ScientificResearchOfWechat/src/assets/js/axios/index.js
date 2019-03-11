@@ -7,7 +7,7 @@ axios.defaults.timeout = 5000; // 响应时间
 axios.defaults.headers.post["Content-Type"] =
     "application/x-www-form-urlencoded;charset=UTF-8"; // 配置请求头
 axios.defaults.baseURL = "/api"; // 配置接口地址
-// axios.defaults.baseURL = 'http://192.168.0.99:63739' // 配置接口地址
+// axios.defaults.baseURL = 'http://132.232.14.244/swagger' // 配置接口地址
 
 //自动给同一个vue项目的所有请求添加请求头
 axios.interceptors.request.use(config => {
@@ -23,10 +23,10 @@ axios.interceptors.response.use(
     res => {
         console.log(res, "rrrrr")
             //对响应数据做些事
-            // if (!res.data.success) {
-            //     alert(res.data.error);
-            //     return Promise.reject(res, '333');
-            // }
+        if (res.status != 200 || res.statusText != "OK") {
+            // alert(res.data.error);
+            return Promise.reject(res, '333');
+        }
         return res;
     },
     error => {

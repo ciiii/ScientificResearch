@@ -9,6 +9,16 @@ import 'babel-polyfill';
 import VueWechatTitle from 'vue-wechat-title';
 import Axios from './assets/js/connect/MyAxios.js';
 import './assets/libs/iconfont/iconfont.css';
+import './assets/less/Quill.less';
+
+
+/*import tinymce from 'vue-tinymce-editor'
+Vue.component('tinymce', tinymce);
+// import tinymce from './components/TinymceVue'
+// export default tinymce;
+// export { tinymce }*/
+
+
 
 Vue.use(VueWechatTitle);
 
@@ -23,7 +33,7 @@ let myApp = Vue.use(ElementUI);
 new Vue({
     router,
     store,
-    render: h => h(App)
+    render: h => h(App),
 }).$mount('#app')
 
 router.beforeEach((to, from, next) => {

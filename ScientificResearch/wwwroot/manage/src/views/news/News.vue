@@ -17,7 +17,7 @@
                     <!--至-->
                     <!--<el-date-picker type="date" placeholder="选择结束日期" v-model="req.endTime"></el-date-picker>-->
                     <!--</el-form-item>-->
-                    <el-button plain @click="search">查询</el-button>
+                    <el-button plain @click="search" >查询</el-button>
                 </el-form>
             </div>
             <el-table class="tableone" border :data="tableData" stripe :header-cell-style="{'text-align':'center'}">
@@ -31,8 +31,8 @@
                 <el-table-column prop="建立时间" label="建立时间" align="center"></el-table-column>
                 <el-table-column label="操作" align="center" width="200">
                     <template slot-scope="scope">
-                        <el-tooltip content="查看详情" placement="bottom" effect="light">
-                            <el-button icon="el-icon-search" circle @click="btnDetails(scope.row)"></el-button>
+                        <el-tooltip content="详情" placement="bottom" effect="light">
+                            <el-button icon="el-icon-tickets" circle @click="btnDetails(scope.row)"></el-button>
                         </el-tooltip>
                         <el-tooltip content="编辑" placement="bottom" effect="light">
                             <el-button type="primary" icon="el-icon-edit" circle

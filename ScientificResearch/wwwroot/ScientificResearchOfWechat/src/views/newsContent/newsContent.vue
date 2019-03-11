@@ -17,7 +17,7 @@ export default {
       size: 15,
       total: 0,
       list: [],
-      active:0
+      active: 0
     };
   },
   created() {
@@ -38,4 +38,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+/deep/ p {
+font-size: 16px;
+}
 </style>

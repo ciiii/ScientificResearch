@@ -9,7 +9,8 @@
               <i class="icon iconfont icon-tongzhi1"></i>
               <span>通知公告</span>
             </span>
-            <span @click="more">更多
+            <span @click="more">
+              更多
               <i class="icon iconfont icon-you"></i>
             </span>
           </div>
@@ -44,12 +45,11 @@
         </div>
       </van-pull-refresh>
     </section>
-    <div class="footer"></div>
     <navFooter/>
   </div>
 </template>
 <script>
-import search from "@/components/search/search";
+import search from "@/components/index/search";
 import toDoList from "@/components/toDoList/toDoList";
 import navFooter from "@/../src/components/footer/footer";
 export default {
@@ -60,7 +60,7 @@ export default {
   },
   data() {
     return {
-      isLoading: false,
+      isLoading: false
     };
   },
   mounted() {},
@@ -72,7 +72,6 @@ export default {
         this.$refs.toDoList.getBacklog();
         this.$toast("刷新成功");
         this.isLoading = false;
-
       }, 500);
     },
     getUrlKey(name) {
@@ -99,12 +98,12 @@ export default {
     },
 
     more() {
-      this.$router.push("/backlog");
+      // this.$router.push("/backlog");
       console.log("更多通知");
     }
   },
   created() {
-    document.title = "科研管理系统 - 主页";
+    document.title = "科研管理 - 主页";
     if (!localStorage.token) {
       let code = this.getUrlKey("code");
       if (code) {
@@ -177,10 +176,5 @@ section {
 }
 .icon-you {
   font-size: 12px;
-}
-.footer {
-  height: 55px;
-  width: 100%;
-  bottom: 0;
 }
 </style>

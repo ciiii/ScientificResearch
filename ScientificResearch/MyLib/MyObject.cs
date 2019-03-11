@@ -51,6 +51,7 @@ namespace MyLib
 
         /// <summary>
         /// 利用反射根据对象和属性名为对应的属性赋值
+        /// 注意,自定义类型的属性,非Nullable类型的泛型,不能用这个方法赋值;
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="obj"></param>
@@ -64,24 +65,33 @@ namespace MyLib
 
                 if (p.PropertyType.ToString().IndexOf("System.") > -1)
                 {
-                    if (!p.PropertyType.IsGenericType)
-                    //非泛型
+                    try
                     {
-                        p.SetValue(obj, Convert.ChangeType(value, p.PropertyType), null);
-                    }
-                    else
-                    //泛型,系统自带的泛型nullable<>,List<>等
-                    {
-                        //Nullable<>
-                        if (p.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                        if (!p.PropertyType.IsGenericType)
+                        //非泛型
                         {
-                            //这里可以try catch一下
-                            p.SetValue(obj, value == null ? null : Convert.ChangeType(value, Nullable.GetUnderlyingType(p.PropertyType)), null);
+                            p.SetValue(obj, Convert.ChangeType(value, p.PropertyType), null);
                         }
                         else
+                        //泛型,系统自带的泛型nullable<>,List<>等
                         {
-                            //非Nullable的泛型
+                            //Nullable<>
+                            if (p.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                            {
+                                //这里可以try catch一下
+                                p.SetValue(obj, value == null ? null : Convert.ChangeType(value, Nullable.GetUnderlyingType(p.PropertyType)), null);
+                            }
+                            else
+                            {
+                                //非Nullable的泛型
+                            }
                         }
+                    }
+                    catch (Exception e)
+                    {
+                        //这里可以忽略错误,主要是两个Convert.ChangeType可能引发的错误
+                        Console.Write(e.Message);
+                        //throw;
                     }
                 }
                 else
@@ -110,7 +120,7 @@ namespace MyLib
         {
             Type type = typeof(T);
             return CompareProperties(obj1, obj2, type) && CompareFields(obj1, obj2, type);
-        }   
+        }
 
         //public static bool Compare(object obj1, object obj2)
         //{

@@ -38,7 +38,7 @@ namespace ScientificResearch.Controllers
         /// 登录,返回登录人所具有的权限
         /// TODO:废除,改用Manage里面的login+这里的获取权限接口;
         /// </summary>
-        /// <param name="model">其中dbKey请先填"ScientificResearch_Model"</param>
+        /// <param name="model">其中dbKey请先填"ScientificResearch_Test"</param>
         /// <returns></returns>
         //jwt 6/4
         [AllowAnonymous]

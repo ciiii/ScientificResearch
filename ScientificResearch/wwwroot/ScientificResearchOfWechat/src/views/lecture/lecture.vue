@@ -1,0 +1,1 @@
+c:\Users\Administrator\scientific-research\src\views\lecture\lecture.vue

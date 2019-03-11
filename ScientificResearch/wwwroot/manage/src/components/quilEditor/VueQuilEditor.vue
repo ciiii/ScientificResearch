@@ -13,7 +13,8 @@
 </template>
 
 <script>
-    import {quillEditor} from "vue-quill-editor"; //调用编辑器
+    import {Quill,quillEditor} from "vue-quill-editor"; //调用编辑器
+    import {addQuillTitle} from "../../assets/js/QuillTitle";
     import 'quill/dist/quill.core.css';
     import 'quill/dist/quill.snow.css';
     import 'quill/dist/quill.bubble.css';
@@ -30,15 +31,26 @@
         [{'indent': '-1'}, {'indent': '+1'}],          // outdent/indent
         [{'direction': 'rtl'}],                         // text direction
 
-        [{'size': ['small', false, 'large', 'huge']}],  // custom dropdown
+        [{'size': ['12px', '14px', '16px', '18px', '20px']}],  // custom dropdown
         [{'header': [1, 2, 3, 4, 5, 6, false]}],
 
         [{'color': []}, {'background': []}],          // dropdown with defaults from theme
-        [{'font': []}],
+        [{'font': ['SimSun', 'SimHei', 'Microsoft-YaHei', 'KaiTi', 'FangSong', 'Arial', 'Times-New-Roman', 'sans-serif']}],
         [{'align': []}],
         ['link', 'image', 'video'],
         ['clean']                                         // remove formatting button
     ]
+    // 自定义字体大小
+    let Size = Quill.import('attributors/style/size');
+    Size.whitelist = ['12px', '14px', '16px', '18px', '20px'];
+    Quill.register(Size, true);
+
+    // 自定义字体类型
+    let fonts = ['SimSun', 'SimHei', 'Microsoft-YaHei', 'KaiTi', 'FangSong', 'Arial', 'Times-New-Roman', 'sans-serif']
+    let Font = Quill.import('formats/font')
+    Font.whitelist = fonts // 将字体加入到白名单
+    Quill.register(Font, true)
+
     export default {
         components: {
             quillEditor,
@@ -66,9 +78,12 @@
                                 }
                             }
                         }
-                    }
+                    },
                 }
             }
+        },
+        mounted(){
+            addQuillTitle();
         },
         methods: {
             onEditorChange({editor, html, text}) {// 内容改变事件

@@ -1,7 +1,7 @@
 <template>
     <div class="page-news page-common">
         <div class="main wrapper">
-            <h4 class="title">新闻 News</h4>
+            <h4 class="title">云中漫步 News</h4>
             <div class="screen-box">
                 <el-form ref="form" :model="req" :inline="true" class="demo-form-inline">
                     <el-form-item>
@@ -9,7 +9,7 @@
                             <i slot="prefix" class="el-input__icon el-icon-search"></i>
                         </el-input>
                     </el-form-item>
-                    <el-button plain @click="search">查询</el-button>
+                    <el-button  type="success" @click="search" size="medium">查询</el-button>
                 </el-form>
             </div>
             <el-table class="tableone" border :data="tableData" stripe :header-cell-style="{'text-align':'center'}">
@@ -17,14 +17,14 @@
                                  align="center"></el-table-column>
                 <el-table-column label="标题">
                     <template slot-scope="scope">
-                        <a href="javascript:;" @click="btnDetails(scope.row)" v-text="scope.row.标题"></a>
+                        <a href="javascript:;" class="a-title" @click="btnDetails(scope.row)" v-text="scope.row.标题"></a>
                     </template>
                 </el-table-column>
                 <el-table-column prop="建立时间" label="建立时间" align="center"></el-table-column>
-                <el-table-column label="操作" align="center" width="200">
+                <el-table-column label="操作" align="center" width="80">
                     <template slot-scope="scope">
                         <el-tooltip content="查看详情" placement="bottom" effect="light">
-                            <el-button icon="el-icon-search" circle @click="btnDetails(scope.row)"></el-button>
+                            <el-button icon="el-icon-tickets" class="btn-details" circle @click="btnDetails(scope.row)"></el-button>
                         </el-tooltip>
                     </template>
                 </el-table-column>
@@ -40,8 +40,8 @@
                 </el-pagination>
             </div>
         </div>
-        <el-dialog class="big-dialog" :title="title" :visible.sync="isAddDialog" v-if='isAddDialog'>
-            <NewsDetails ref="child" @myEvent="closeDialog" :item="item"></NewsDetails>
+        <el-dialog class="big-dialog" title="新闻详情" :visible.sync="isDetailsDialog" v-if='isDetailsDialog'>
+            <NewsDetails ref="child" @myEvent="getMyEvent" :item="item" :isShow="isShow"></NewsDetails>
         </el-dialog>
     </div>
 </template>
@@ -65,7 +65,8 @@
                 tableData: [],
                 total: 0,
                 title: '新闻详情',
-                isAddDialog: false,
+                isDetailsDialog: false,
+                isShow: false,
                 item: {},
             }
         },
@@ -83,16 +84,12 @@
                 this.total = data.total;
             },
             getMyEvent(val) {
-                this.getNews();
-                this.closeDialog(val);
+                this.isDetailsDialog = val;
             },
-            closeDialog(val) {
-                this.isAddDialog = val;
-            },
-            btnDetails(data) {
-                this.isDetails = true;
-                this.item = data;
-                this.isAddDialog = true;
+            btnDetails(item) {
+                this.isShow = true;
+                this.item = item;
+                this.isDetailsDialog = true;
             },
             handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);
@@ -112,15 +109,18 @@
             .line{
                 text-align: center;
             }
+            .a-title{
+                display: block;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
         }
         .screen-box{
             position: relative;
             .btn-add{
                 left: 0;
                 top: 0;
-            }
-            .el-form{
-                margin-left: 130px;
             }
         }
     }

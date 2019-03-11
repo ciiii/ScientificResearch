@@ -4,44 +4,7 @@
       <search/>
       <swipe/>
       <div class="listBox">
-        <ul>
-          <li>
-            <router-link :to="{ path: '' }">
-              <img src="../assets/images/iocn/1.png" alt>
-              <p>知网</p>
-            </router-link>
-          </li>
-          <li>
-            <img src="../assets/images/iocn/15.png" alt>
-            <p>泉方</p>
-          </li>
-          <li>
-            <router-link :to="{ path: '/index' }">
-              <img src="../assets/images/iocn/17.png" alt>
-              <p>科研</p>
-            </router-link>
-          </li>
-          <li>
-            <img src="../assets/images/iocn/3.png" alt>
-            <p>教学</p>
-          </li>
-          <li>
-            <img src="../assets/images/iocn/5.png" alt>
-            <p>备选</p>
-          </li>
-          <li>
-            <img src="../assets/images/iocn/6.png" alt>
-            <p>备选</p>
-          </li>
-          <li>
-            <img src="../assets/images/iocn/8.png" alt>
-            <p>备选</p>
-          </li>
-          <li>
-            <img src="../assets/images/iocn/9.png" alt>
-            <p>备选</p>
-          </li>
-        </ul>
+        <iocnList/>
       </div>
       <van-list
         offset:300
@@ -50,9 +13,9 @@
         finished-text="别拉了,已经到底了···"
         @load="onLoad"
       >
-        <div class="A_News_box" v-for="item in 2" :key="item">
+        <div class="A_News_box">
           <div class="newsTitle">
-            <h3>A 新闻展示</h3>
+            <h3>总库新闻</h3>
             <span>
               更多
               <i class="icon iconfont icon-you"></i>
@@ -73,18 +36,45 @@
             </div>
           </div>
         </div>
+
+        <div v-show="isShow" class="A_News_box">
+          <div class="newsTitle">
+            <h3>科研新闻</h3>
+            <span>
+              更多
+              <i class="icon iconfont icon-you"></i>
+            </span>
+          </div>
+          <div class="A_News" v-for="(item, key) in list" :key="key" @click="newsContent">
+            <ul>
+              <li>
+                <p>{{item.标题}}</p>
+              </li>
+              <li>
+                <span>精选</span>
+                {{item.建立时间}}
+              </li>
+            </ul>
+            <div>
+              <img src="../assets/images/logo.png" alt>
+            </div>
+          </div>
+        </div>
+
       </van-list>
     </div>
   </van-pull-refresh>
 </template>
 <script>
-import search from "@/components/search/search";
-import swipe from "@/components/swipe/swipe";
+import search from "@/components/index/search";
+import swipe from "@/components/index/swipe";
+import iocnList from "@/components/index/iocnList"
 export default {
   name: "home",
   components: {
     search,
-    swipe
+    swipe,
+    iocnList
   },
   data() {
     return {
@@ -94,7 +84,8 @@ export default {
       list: [],
       index: 1,
       size: 15,
-      total: 0
+      total: 0,
+      isShow:false
     };
   },
   created() {
@@ -109,6 +100,9 @@ export default {
         console.log(res, "res````111111");
         this.list = res.data.list;
         this.total = res.data.total;
+        if( res.data.list != null){
+          this.isShow = true;
+        }
       });
     },
     newsContent() {
@@ -127,11 +121,14 @@ export default {
     onLoad() {
       setTimeout(() => {
         // 加载状态结束
-        this.loading = false;
+        // this.loading = false;
         if (this.list.length >= this.total) {
-          this.finished = true;
+          // 加载状态结束
+          this.loading = false;
+          // this.finished = true;
         }
-      }, 500);
+        this.finished = true;
+      }, 2000);
     }
   }
 };
@@ -146,23 +143,27 @@ export default {
   background-color: @ContentColor;
   margin-top: 20px;
   ul {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 8px;
-    li {
-      width: 25%;
-      padding: 10px 0;
-      img {
-        width: 40px;
-        height: 40px;
-      }
-      p {
-        margin: 0;
-        font-size: 14px;
-        color: #000;
-      }
+  display: flex;
+  flex-wrap: wrap;
+  padding: 8px;
+  li {
+    width: 25%;
+    padding: 10px 0;
+    img {
+      width: 40px;
+      height: 40px;
+    }
+    p {
+      margin: 0;
+      font-size: 14px;
+      color: #000;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      //   width:80px;
     }
   }
+}
 }
 .A_News_box {
   margin-top: 10px;
@@ -194,6 +195,7 @@ export default {
     display: flex;
     margin: 10px 0;
     ul {
+      width: 90%;
       li:nth-child(1) {
         height: 40px;
         overflow: hidden;
@@ -221,7 +223,6 @@ export default {
       }
     }
     div {
-      width: 60px;
       height: 60px;
       padding: 8px;
       img {

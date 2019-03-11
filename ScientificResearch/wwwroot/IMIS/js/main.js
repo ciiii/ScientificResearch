@@ -566,6 +566,13 @@ function getUrl(url) {
     return decodeURI(encodeURI(encodeURI(url)));
 }
 
+//获取文件名，也不要参数
+function getHtmlDocName(url) {
+    var urlArr = url.split('?');
+    var k = urlArr[0], arr = k.split('/');
+    return arr[arr.length - 1];
+}
+
 //文件上传前处理
 function fileChange(oneself, inputUpload) {
     var format;

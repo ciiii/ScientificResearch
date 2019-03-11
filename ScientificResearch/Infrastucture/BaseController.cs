@@ -102,6 +102,7 @@ namespace ScientificResearch.Infrastucture
         /// </summary>
         protected IHostingEnvironment Env => HttpContext.RequestServices.GetService<IHostingEnvironment>();
 
+        #region 以前的CurrentUser的写法
         ///// <summary>
         ///// 登录人的信息
         ///// </summary>
@@ -175,6 +176,7 @@ namespace ScientificResearch.Infrastucture
         //        return currentUser;
         //    }
         //}
+        #endregion
 
         /// <summary>
         /// 登录人信息

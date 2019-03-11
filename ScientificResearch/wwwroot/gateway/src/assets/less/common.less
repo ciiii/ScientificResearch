@@ -50,6 +50,7 @@ input:focus, a:focus, button:focus {
 .wrapper {
   width: 1200px;
   margin: 0 auto;
+  overflow: hidden;
 }
 
 #app {
@@ -64,6 +65,12 @@ input:focus, a:focus, button:focus {
   text-align: right;
   padding-top: 10px !important;
   color: #666 !important;
+  li.active{
+    background: @colorActive;
+    &:hover {
+      background: #0BBB57;
+    }
+  }
 }
 
 .tableone th {
@@ -93,7 +100,16 @@ input:focus, a:focus, button:focus {
   .screen-box {
     margin-bottom: 10px;
 
+    .btn-search{
+      background: @colorActive;
+      color: #fff;
+      &:hover {
+        background: #0BBB57;
+      }
+    }
+
     .el-button {
+
       i {
         font-size: 16px;
       }
@@ -157,16 +173,18 @@ input:focus, a:focus, button:focus {
         max-height: 500px;
         overflow-y: auto;
 
+
         h4.title {
           font-size: 18px;
           font-weight: bold;
           margin: 10px 0 15px;
         }
 
-        .tiem {
+        .time {
           color: #999;
           font-size: 12px;
           text-align: center;
+          margin-bottom: 20px;
         }
       }
 
@@ -181,6 +199,26 @@ input:focus, a:focus, button:focus {
 
         img {
           margin: 10px 0;
+          max-width: 100%;
+        }
+        .file-list{
+          border-top: 1px dashed @border;
+          padding-top: 20px;
+          label{
+            font-weight: bold;
+            font-size: 13px;
+          }
+          ul{
+            margin-top: 10px;
+          }
+          li{
+            margin-bottom: 5px;
+          }
+          a{
+            color: #389af0;
+            display: block;
+            font-size: 12px;
+          }
         }
       }
     }

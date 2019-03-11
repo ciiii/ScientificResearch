@@ -13330,7 +13330,7 @@
             登录,返回登录人所具有的权限
             TODO:废除,改用Manage里面的login+这里的获取权限接口;
             </summary>
-            <param name="model">其中dbKey请先填"ScientificResearch_Model"</param>
+            <param name="model">其中dbKey请先填"ScientificResearch_Test"</param>
             <returns></returns>
         </member>
         <member name="M:ScientificResearch.Controllers.AccessController.获取权限菜单">
@@ -14561,6 +14561,7 @@
         <member name="M:MyLib.MyObject.SetValueByPropertyName(System.Object,System.String,System.Object)">
             <summary>
             利用反射根据对象和属性名为对应的属性赋值
+            注意,自定义类型的属性,非Nullable类型的泛型,不能用这个方法赋值;
             </summary>
             <typeparam name="T"></typeparam>
             <param name="obj"></param>

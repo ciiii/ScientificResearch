@@ -181,9 +181,10 @@ namespace ScientificResearch.Areas.Manage.Controllers
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        private LoginReturn<T> getJwt<T>(T user, string role = "")
         //private LoginReturn getJwt(CurrentUser user)
+        private LoginReturn<T> getJwt<T>(T user, string role = "")
         {
+            #region 
             //jwt 3/4 这个可以做个toClaims方法;反射某对象每个属性,放到一个claim
             //var claims = new[] {
             //            //加入用户的名称
@@ -216,6 +217,7 @@ namespace ScientificResearch.Areas.Manage.Controllers
             //            //jti  ：jwt的唯一身份标识，主要用来作为一次性token,从而回避重放攻击 
             //         #endregion
             //        };
+            #endregion
 
             var claims = new List<Claim>();
             var propertys = typeof(T).GetProperties();

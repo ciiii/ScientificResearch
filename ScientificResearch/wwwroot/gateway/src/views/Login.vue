@@ -1,14 +1,27 @@
 <template>
     <div class="page-login">
         <div class="login-top">
-            <div class="left">
-                <!--<img class="logo2" src="../assets/images/logo3.png" alt="数据库门户入口网站">-->
-                <span>LOGO 数据库门户入口网站</span>
+            <div class="wrapper">
+                <div class="left">
+                    <!--<img class="logo2" src="../assets/images/logo3.png" alt="数据库门户入口网站">-->
+                    <span>LOGO 数据库门户入口网站</span>
+                </div>
             </div>
         </div>
         <div class="content">
             <el-form :model="account" :rules="rules" ref="ruleForm" class="ruleForm">
                 <h3 class="form-title">账号密码登录</h3>
+                <el-form-item prop="dbKey">
+                    <img src="../assets/images/login-hospital.png"/>
+                    <el-select v-model="account.dbKey" placeholder="请选择医院">
+                        <el-option
+                                v-for="item in hospitaList"
+                                :key="item"
+                                :label="item"
+                                :value="item">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
                 <el-form-item prop="userId">
                     <img src="../assets/images/login-user.png"/>
                     <el-input v-model="account.userId" type="text" placeholder="用户名"></el-input>
@@ -33,7 +46,7 @@
     </div>
 </template>
 <script>
-    import {URL_USER} from "../assets/js/connect/ConSysUrl";
+    import {URL_USER, URL_HOSPITAL} from "../assets/js/connect/ConSysUrl";
     import {_debounce} from "@/assets/js/Common";
 
     export default {
@@ -41,17 +54,22 @@
         data() {
             return {
                 logining: false,
+                hospitaList: [],
                 account: {
                     userId: '',
-                    password: ''
+                    password: '',
+                    dbKey: ''
                 },
                 checked: false,
                 rules: {  //表单验证
                     userId: [
-                        {required: true, message: '请输入账号', trigger: 'blur'}
+                        {required: true, message: '请输入账号！', trigger: 'blur'}
                     ],
                     password: [
-                        {required: true, message: '请输入密码', trigger: 'blur'}
+                        {required: true, message: '请输入密码！', trigger: 'blur'}
+                    ],
+                    dbKey: [
+                        {required: true, message: '请输选择医院！', trigger: 'blur'}
                     ]
                 },
                 isDownload: false
@@ -59,6 +77,7 @@
         },
         mounted() {
             this.getlocalStorage();
+            this.getHospita();
         },
         methods: {
             isLogin: _debounce(function () {
@@ -70,12 +89,15 @@
                         return false;
                     }
                 });
-            },300),
+            }, 300),
+            getHospita: async function () {
+                this.hospitaList = await this.$http.myGet(URL_HOSPITAL.GET_ENABLE_HOSPITA, '');
+            },
             dataPost: async function () {
                 let postData = {
                     工号: this.account.userId,
                     密码: this.account.password,
-                    dbKey: 'ScientificResearch_Test'
+                    dbKey: this.account.dbKey
                 }
                 let data = await this.$http.myPost(URL_USER.POST_LOGIN, postData);
                 this.$message.success('登录成功！');
@@ -88,7 +110,9 @@
                 } else {
                     localStorage.removeItem('myLoginInfo');
                 }
-                this.$router.push({path: '/'});
+                console.info('logolgo');
+                console.info(localStorage.myUserInfo);
+                this.$router.replace({path: '/'});
 
                 // this.$store.commit('isLogin', true);
                 // this.$store.commit('authorization', data.token_type + ' ' + data.access_token);
@@ -98,6 +122,7 @@
                     let loginInfo = JSON.parse(localStorage.getItem('myLoginInfo'));
                     this.account.userId = loginInfo.userId;
                     this.account.password = loginInfo.password;
+                    this.account.dbKey = loginInfo.dbKey;
                     this.checked = true;
                 }
             },

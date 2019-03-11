@@ -45,47 +45,48 @@ $(function () {
             navList: [
                 {
                     title: '主办讲座',
-                    url: '../学术活动/申请学术讲座/主办讲座.html',
+                    url: '学术活动/申请学术讲座/主办讲座.html',
                     icon: '活动.png'
                 },
                 {
                     title: '获奖管理',
-                    url: '../成果管理/获奖/获奖管理.html',
+                    url: '成果管理/获奖/获奖管理.html',
                     icon: '获奖.png'
                 },
                 {
                     title: '参会管理',
-                    url: '../学术活动/参加学术会议/参会信息管理.html',
+                    url: '学术活动/参加学术会议/参会信息管理.html',
                     icon: '会议.png'
                 },
                 {
                     title: '专利管理',
-                    url: '../成果管理/专利/专利管理.html',
+                    url: '成果管理/专利/专利管理.html',
                     icon: '专利.png'
                 },
                 {
                     title: '横向项目',
-                    url: '../横向项目/横向项目管理/横向项目列表.html',
+                    url: '横向项目/横向项目管理/横向项目列表.html',
                     icon: '项目.png'
                 },
                 {
                     title: '纵向项目',
-                    url: '../纵向项目/项目立项/纵向项目立项列表.html',
+                    url: '纵向项目/项目立项/纵向项目立项列表.html',
                     icon: '项目2.png'
                 },
                 {
                     title: '组织架构',
-                    url: '../组织架构/部门人员信息维护.html',
+                    url: '组织架构/部门人员信息维护.html',
                     icon: '医院负责人.png'
                 },
                 {
                     title: '角色管理',
-                    url: '../系统管理/权限管理/角色管理.html',
+                    url: '系统管理/权限管理/角色管理.html',
                     icon: '设置.png'
                 }
             ],
             newNavList: [],
             onload: function () {
+                console.info('onload')
                 for (var i = 0; i < vm.navList.length; i++) {
                     vm.match(mUserInfo.权限, vm.newNavList, vm.navList[i]);
                 }
@@ -95,7 +96,7 @@ $(function () {
                     var url = arrA[j].菜单;
                     var arr = arrA[j].子级菜单;
                     if (url && url.路径 != '') {
-                        if (decodeURI(url.路径) == obj.url) {
+                        if (getHtmlDocName(decodeURI(url.路径)) == getHtmlDocName(obj.url)) {
                             arrB.push(obj);
                         }
                     }

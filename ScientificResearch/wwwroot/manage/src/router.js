@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Index from './views/Index.vue';
-import HomeContent from './views/HomeContent.vue';
+import Home from './views/Home.vue';
 import Login from './views/Login.vue';
 import News from './views/news/News.vue';
 import NotFoundView from './views/404/404.vue';
@@ -26,9 +26,9 @@ export default new Router({
             meta: {requireAuth: true}, //添加该字段，表示这个路由是需要登录的
             children: [
                 {
-                    path: '/homeContent',
-                    name: 'homeContent',
-                    component: HomeContent,
+                    path: '/home',
+                    name: 'home',
+                    component: Home,
                     meta: {title: '首页', requireAuth: true},
                 },
                 {

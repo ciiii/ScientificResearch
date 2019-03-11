@@ -2,7 +2,8 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import Login from './views/Login.vue';
-import News from './views/News.vue';
+import News from './views/News';
+// import IMISNews from './views/IMISNews.vue';
 import IeUnderTen from './views/IeUnderTen.vue';
 import NotFoundView from './views/404/404.vue';
 
@@ -22,6 +23,12 @@ export default new Router({
                     component: News,
                     meta: {title: '新闻', requireAuth: true},
                 },
+                /*{
+                    path: '/IMISNews',
+                    name: 'IMISNews',
+                    component: IMISNews,
+                    meta: {title: '科研新闻', requireAuth: true},
+                },*/
                 {
                     path: '/ieUnderTen',
                     name: 'ieUnderTen',
