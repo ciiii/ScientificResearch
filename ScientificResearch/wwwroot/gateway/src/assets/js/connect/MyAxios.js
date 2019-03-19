@@ -42,8 +42,8 @@ axios.interceptors.response.use(response => {
 });
 
 function setHeaders() {
-    if (sessionStorage.Authorization) {
-        axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('Authorization');
+    if (localStorage.Authorization) {
+        axios.defaults.headers.common['Authorization'] = JSON.parse(localStorage.Authorization);
     }
 }
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="home page-common">
+    <div class="index page-common">
         <IEunder10 v-if="isDownload"/>
         <div v-else>
             <div class="top">
@@ -7,7 +7,7 @@
                     <div class="left">
                         <!--<img class="logo2" src="../assets/images/logo3.png" alt="数据库门户入口网站">-->
                         <router-link to="/">
-                            <span>LOGO 数据库门户入口网站</span>
+                            <span>LOGO 门户入口网站</span>
                         </router-link>
                     </div>
                     <div class="right">
@@ -18,12 +18,6 @@
                             {{name}} |
                             <a href="javascript:;" @click="logOut"> 退出</a>
                         </template>
-                        <router-link to="/IMISNews">
-                            <a href="javascript:;">| 科研 </a>
-                        </router-link>
-                        <router-link to="/news">
-                            <a href="javascript:;">| 新闻 </a>
-                        </router-link>
                     </div>
                 </div>
             </div>
@@ -93,13 +87,19 @@
     @import '../assets/less/Common';
 </style>
 <style lang="less" type='text/less' scoped>
-    .home {
+    .index {
         .top {
+            width: 100%;
             height: 60px;
             line-height: 60px;
             background: #fff;
             overflow: hidden;
             border-bottom: 1px solid #eee;
+            position: fixed;
+            left: 0;
+            top:0;
+            background: #fff;
+            z-index: 99;
 
             .left {
                 float: left;
@@ -134,6 +134,11 @@
                     float: left;
                 }
             }
+        }
+        .el-main{
+            margin-top: 60px;
+            padding: 0 0 40px;
+            overflow: hidden;
         }
 
     }

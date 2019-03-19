@@ -26,6 +26,11 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        [MaxLength(200,ErrorMessage ="Logo不能超过[100]字")]
+		public string Logo { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
         [Required(ErrorMessage ="请提供[是否启用]")]
 		public bool 是否启用 { get; set; }
         /// <summary>

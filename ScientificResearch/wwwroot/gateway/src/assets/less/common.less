@@ -4,11 +4,6 @@
   box-sizing: border-box;
 }
 
-html, body {
-  width: 100%;
-  height: 100%;
-}
-
 body {
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   color: #333;
@@ -29,7 +24,7 @@ a:focus {
 }
 
 a:hover {
-  color: @navColor;
+  color:@colorActive;
   text-decoration: none;
 }
 
@@ -50,11 +45,6 @@ input:focus, a:focus, button:focus {
 .wrapper {
   width: 1200px;
   margin: 0 auto;
-  overflow: hidden;
-}
-
-#app {
-  height: 100%;
 }
 
 .is-active, .el-tabs__item:hover {
@@ -65,10 +55,12 @@ input:focus, a:focus, button:focus {
   text-align: right;
   padding-top: 10px !important;
   color: #666 !important;
-  li.active{
-    background: @colorActive;
+
+  li.active {
+    background: @colorActive !important;
+
     &:hover {
-      background: #0BBB57;
+      background: #0BBB57 !important;
     }
   }
 }
@@ -78,8 +70,6 @@ input:focus, a:focus, button:focus {
 }
 
 .page-common {
-  height: 100%;
-
   .main {
     position: relative;
   }
@@ -100,9 +90,10 @@ input:focus, a:focus, button:focus {
   .screen-box {
     margin-bottom: 10px;
 
-    .btn-search{
+    .btn-search {
       background: @colorActive;
       color: #fff;
+
       &:hover {
         background: #0BBB57;
       }
@@ -140,7 +131,8 @@ input:focus, a:focus, button:focus {
     form.el-form {
       max-height: 500px;
       overflow-y: auto;
-      span{
+
+      span {
         font-size: 13px;
         line-height: 24px;
       }
@@ -172,19 +164,20 @@ input:focus, a:focus, button:focus {
         position: relative;
         max-height: 500px;
         overflow-y: auto;
-
+        padding: 0 10px;
 
         h4.title {
-          font-size: 18px;
+          font-size: 20px;
           font-weight: bold;
           margin: 10px 0 15px;
+          color: #333;
         }
 
         .time {
           color: #999;
           font-size: 12px;
           text-align: center;
-          margin-bottom: 20px;
+          margin-bottom: 25px;
         }
       }
 
@@ -195,26 +188,32 @@ input:focus, a:focus, button:focus {
           line-height: 24px;
           margin-bottom: 10px;
           font-size: 12px;
+          text-align: justify;
         }
 
         img {
           margin: 10px 0;
           max-width: 100%;
         }
-        .file-list{
+
+        .file-list {
           border-top: 1px dashed @border;
           padding-top: 20px;
-          label{
+
+          label {
             font-weight: bold;
             font-size: 13px;
           }
-          ul{
+
+          ul {
             margin-top: 10px;
           }
-          li{
+
+          li {
             margin-bottom: 5px;
           }
-          a{
+
+          a {
             color: #389af0;
             display: block;
             font-size: 12px;

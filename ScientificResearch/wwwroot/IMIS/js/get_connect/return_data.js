@@ -115,9 +115,23 @@ var User = {
             }
         });
     },
-
-
 }
+
+//角色
+var Menu = {
+    getMenuPermissions: function (type, getMenuPermissionsListener) {
+        var url = Code.URL_GET_MENU_PERMISSIONS;
+
+        Connect_Http.httpDatas(type, url, '', function getBackListener(success, obj, strErro) {
+            if (success) {
+                getMenuPermissionsListener(true, obj.data, '')
+            } else {
+                getMenuPermissionsListener(false, '', strErro)
+            }
+        });
+    },
+}
+
 
 //角色
 var Role = {

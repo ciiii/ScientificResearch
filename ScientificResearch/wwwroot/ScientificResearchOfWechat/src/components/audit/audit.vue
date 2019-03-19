@@ -11,28 +11,98 @@
         :autosize="maxHeight"
       />
       <div class="btn">
-        <van-button type="primary" size="small">通过</van-button>
-        <van-button type="warning" size="small">不通过</van-button>
-        <van-button type="danger" size="small">终止</van-button>
+        <van-button type="primary" size="small" @click="pass">通过</van-button>
+        <van-button type="warning" size="small" @click="fail">不通过</van-button>
+        <van-button type="danger" size="small" @click="termination">终止</van-button>
       </div>
     </van-cell-group>
   </van-panel>
 </template>
 <script>
 export default {
-  props:['show'],
+  props: ["message"],
   data() {
     return {
       value: "",
       maxHeight: {
         maxHeight: 90
+      },
+      state: {
+        pass: 1,
+        fail: -1,
+        termination: -2
       }
     };
   },
   mounted() {},
   methods: {
-    back(){
-      console.log(this.show,"ddd") 
+    back() {
+      this.$emit("getMessage");
+      this.value = "";
+    },
+    pass() {
+      // console.log(this.message, "通过");
+      var para = {
+        步骤编号: this.message.步骤编号,
+        状态值: this.state.pass,
+        备注: this.value
+      };
+      this.$http.auditStep(para).then(res => {
+        if (res.status != 200 || res.statusText != "OK") {
+          this.$toast({
+            duration: 1500,
+            message: res.error
+          });
+        } else {
+          this.$toast.success({
+            duration: 1500,
+            message: "操作成功！"
+          });
+        }
+      });
+      this.back();
+    },
+    fail() {
+      var para = {
+        步骤编号: this.message.步骤编号,
+        状态值: this.state.fail,
+        备注: this.value
+      };
+      this.$http.auditStep(para).then(res => {
+        if (res.status != 200 || res.statusText != "OK") {
+          this.$toast({
+            duration: 1500,
+            message: res.error
+          });
+        } else {
+          this.$toast.success({
+            duration: 1500,
+            message: "操作成功！"
+          });
+        }
+      });
+      this.back();
+    },
+    termination() {
+      var para = {
+        步骤编号: this.message.步骤编号,
+        状态值: this.state.termination,
+        备注: this.value
+      };
+      this.$http.auditStep(para).then(res => {
+        if (res.status != 200 || res.statusText != "OK") {
+          this.$toast({
+            duration: 1500,
+            message: res.error
+          });
+        } else {
+          this.$toast.success({
+            duration: 1500,
+            message: "操作成功！"
+          });
+        }
+      });
+      this.back();
     }
   }
 };

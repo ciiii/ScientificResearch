@@ -22,17 +22,23 @@ export default new Router({
             component: () =>
                 import ("./views/backlog/backlog.vue")
         },
-        { // 学习
-            path: "/learning",
-            name: "learning",
-            component: () =>
-                import ("./views/learning/learning.vue")
-        },
         { // 我的
             path: "/personal",
             name: "personal",
             component: () =>
                 import ("./views/personal/personal.vue")
+        },
+        { // 修改密码
+            path: "/changePWD",
+            name: "changePWD",
+            component: () =>
+                import ("./views/personal/changePWD.vue")
+        },
+        { // 修改账户
+            path: "/accountChange",
+            name: "accountChange",
+            component: () =>
+                import ("./views/personal/accountChange.vue")
         },
         { // 登录
             path: "/login",
@@ -40,53 +46,65 @@ export default new Router({
             component: () =>
                 import ("./views/login.vue")
         },
-        { // 新闻详情
-            path: "/newsContent",
-            name: "newsContent",
+        { // 总库更多新闻列表
+            path: "/ZKMoreList",
+            name: "ZKMoreList",
             component: () =>
-                import ("./views/newsContent/newsContent.vue")
+                import ("./views/newsContent/ZKNews/ZKMoreList.vue")
         },
-        // { // 我的待办详情
-        //     path: "/toDoDetails",
-        //     name: "toDoDetails",
-        //     component: () =>
-        //         import ("./components/toDoDetails/toDoDetails.vue")
-        // },
+        { // 总库新闻详情
+            path: "/ZKNewsDetails",
+            name: "ZKNewsDetails",
+            component: () =>
+                import ("./views/newsContent/ZKNews/ZKNewsDetails.vue")
+        },
+        { // 科研更多新闻列表
+            path: "/KYMoreList",
+            name: "KYMoreList",
+            component: () =>
+                import ("./views/newsContent/KYNews/KYMoreList.vue")
+        },
+        { // 科研新闻详情
+            path: "/KYNewsDetails",
+            name: "KYNewsDetails",
+            component: () =>
+                import ("./views/newsContent/KYNews/KYNewsDetails.vue")
+        },
         { // 主办讲座列表
             path: "/lectureList",
             name: "lectureList",
             component: () =>
-                import ("./views/lecture/lectureList.vue")
+                import ("./views/activity/lecture/lectureList.vue")
         },
         { // 讲座反馈列表
             path: "/feedbackList",
             name: "feedbackList",
             component: () =>
-                import ("./views/feedbackList/feedbackList.vue")
+                import ("./views/activity/lecture/feedbackList.vue")
         },
         { // 参会信息列表
             path: "/meetingInformation",
             name: "meetingInformation",
             component: () =>
-                import ("./views/meetingInformation/meetingInformation.vue")
+                import ("./views/activity/meetingInformation/meetingInformation.vue")
         }, ,
         { // 参会反馈列表
             path: "/meetingFeedbackList",
             name: "meetingFeedbackList",
             component: () =>
-                import ("./views/meetingInformation/meetingFeedbackList.vue")
+                import ("./views/activity/meetingInformation/meetingFeedbackList.vue")
         },
         { // 参会经费报销列表
             path: "/expenseList",
             name: "expenseList",
             component: () =>
-                import ("./views/meetingInformation/expenseList.vue")
+                import ("./views/activity/meetingInformation/expenseList.vue")
         },
         { // 某参加会议报销列表
             path: "/someExpenseList",
             name: "someExpenseList",
             component: () =>
-                import ("./views/meetingInformation/someExpenseList.vue")
+                import ("./views/activity/meetingInformation/someExpenseList.vue")
         },
         { // 导入认领
             path: "/paperClaim",
@@ -148,11 +166,36 @@ export default new Router({
             component: () =>
                 import ("./views/backlog/achievementAll/achievementAll.vue")
         },
-        { // 审核
-            path: "/audit",
-            name: "audit",
+        { // 纵向项目申报详情
+            path: "/YDeclarationDetails",
+            name: "YDeclarationDetails",
             component: () =>
-                import ("./views/audit/audit.vue")
-        }
+                import ("./views/YProjectDeclaration/YDeclarationDetails.vue")
+        },
+        { // 纵向项目中检详情
+            path: "/YProcessInspectionDetails",
+            name: "YProcessInspectionDetails",
+            component: () =>
+                import ("./views/YProjectDeclaration/YProcessInspectionDetails.vue")
+        },
+        { // 纵向项目经费到账
+            path: "/YFundsToTheAccount",
+            name: "YFundsToTheAccount",
+            component: () =>
+                import ("./views/YProjectDeclaration/YFundsToTheAccount.vue")
+        },
+        { // 横向项目详情
+            path: "/XDetails",
+            name: "XDetails",
+            component: () =>
+                import ("./views/XProjectDeclaration/XDetails.vue")
+        },
+        { // 横向项目经费到账
+            path: "/XFundsToTheAccount",
+            name: "XFundsToTheAccount",
+            component: () =>
+                import ("./views/XProjectDeclaration/XFundsToTheAccount.vue")
+        },
+
     ]
 });

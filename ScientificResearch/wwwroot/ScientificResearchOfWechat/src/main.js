@@ -35,8 +35,8 @@ import {
     CollapseItem,
     SubmitBar,
     Checkbox,
-} from 'vant';
 
+} from 'vant';
 Vue.use(Icon);
 Vue.use(Field);
 Vue.use(Popup);

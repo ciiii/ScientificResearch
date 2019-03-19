@@ -23,6 +23,10 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        public string Logo { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
         public string 备注 { get; set; }
         /// <summary>
 		/// 

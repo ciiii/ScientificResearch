@@ -116,7 +116,7 @@
           <span :style="{'color':(item.状态说明 == flag ? '#31BD5D' : '#FF976A')}">{{item.状态说明}}</span>
           <span>
             <i class="icon iconfont icon-shijian1"></i>
-            {{item.执行时间}}
+            {{startTimeB(item.执行时间)}}
           </span>
         </li>
         <li>备注：{{item.备注}}</li>
@@ -166,6 +166,13 @@ export default {
         return item.slice(0, 10);
       } else {
         return;
+      }
+    },
+    startTimeB(item) {
+      if (item === null) {
+        return "待定";
+      } else {
+        return item;
       }
     },
     //转换金额格式

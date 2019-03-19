@@ -4,9 +4,7 @@
       <van-tab title="论文信息">
         <ul class="servicel">
           <h4>基本信息</h4>
-          <li>论文标题：
-            <p>{{this.detailslList.论文标题}}</p>
-          </li>
+          <li>论文标题：{{this.detailslList.论文标题}}</li>
           <li>论文Online日期：{{startTime(this.detailslList.论文Online日期)}}</li>
           <li>正式出版日期：{{startTime(this.detailslList.论文正式出版日期)}}</li>
           <li>
@@ -115,7 +113,7 @@
             <span :style="{'color':(item.状态说明 == flag ? '#31BD5D' : '#FF976A')}">{{item.状态说明}}</span>
             <span>
               <i class="icon iconfont icon-shijian1"></i>
-              {{item.执行时间}}
+              {{startTimeB(item.执行时间)}}
             </span>
           </li>
           <li>备注：{{item.备注}}</li>
@@ -126,8 +124,7 @@
   </section>
 </template>
 <script>
-import { NumFormat } from "@/assets/js/common/filter.js";
-import { Interception } from "@/assets/js/common/filter.js";
+import { NumFormat, Interception } from "@/assets/js/common/filter.js";
 export default {
   data() {
     return {
@@ -167,6 +164,13 @@ export default {
         return;
       }
     },
+    startTimeB(item) {
+      if (item === null) {
+        return "待定";
+      } else {
+        return item;
+      }
+    },
     //转换金额格式
     NumFormat(item) {
       return NumFormat(item);
@@ -203,22 +207,15 @@ export default {
       background-color: #e7e7e7;
     }
     li {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
       padding: 5px 0;
-      display: flex;
-      p {
-        font-size: 14px;
-        margin: 0;
-        width: 79%;
-        justify-content: space-between;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-      }
       span {
+        display: inline-block;
         width: 50%;
-        justify-content: space-between;
       }
       i {
         color: rgb(6, 167, 6);

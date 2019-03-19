@@ -16,9 +16,7 @@
                     <el-select v-model="account.dbKey" placeholder="请选择医院">
                         <el-option
                                 v-for="item in hospitaList"
-                                :key="item"
-                                :label="item"
-                                :value="item">
+                                :key="item" :label="item" :value="item">
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -103,8 +101,8 @@
                 this.$message.success('登录成功！');
 
                 localStorage.setItem('myUserInfo', JSON.stringify(data));
-                sessionStorage.setItem('Authorization', data.token_type + ' ' + data.access_token);
-
+                localStorage.setItem('Authorization', JSON.stringify(data.token_type + ' ' + data.access_token));
+                localStorage.setItem('loginUrl',this.getHtmlDocName());
                 if (this.checked) {
                     localStorage.setItem('myLoginInfo', JSON.stringify(this.account));
                 } else {
@@ -112,10 +110,17 @@
                 }
                 console.info('logolgo');
                 console.info(localStorage.myUserInfo);
-                this.$router.replace({path: '/'});
+                this.$router.push({path: '/'});
 
                 // this.$store.commit('isLogin', true);
                 // this.$store.commit('authorization', data.token_type + ' ' + data.access_token);
+            },
+            //获取html文件名
+            getHtmlDocName() {
+                let str = window.location.href;
+                str = str.substring(str.lastIndexOf("/") + 1);
+                str = str.substring(0, str.lastIndexOf("."));
+                return str;
             },
             getlocalStorage() {
                 if (localStorage.myLoginInfo) {

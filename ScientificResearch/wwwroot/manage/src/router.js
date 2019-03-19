@@ -24,6 +24,7 @@ export default new Router({
             name: 'index',
             component: Index,
             meta: {requireAuth: true}, //添加该字段，表示这个路由是需要登录的
+            redirect: 'home',
             children: [
                 {
                     path: '/home',

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <textarea :id='id' v-model='content'></textarea>
+        <textarea :id='Id' v-model='content'></textarea>
     </div>
 </template>
 <script>
@@ -12,156 +12,148 @@
     export default {
         name: "Tinymce",
         props: {
-            id: {
-                type: String,
-                required: true
-            },
-            htmlClass: {default: '', type: String},
-            value: {default: ''},
-            plugins: {
-                default: function () {
-                    return [
-                        'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-                        'searchreplace wordcount visualblocks visualchars code fullscreen',
-                        'insertdatetime media nonbreaking save table contextmenu directionality',
-                        'template paste textcolor colorpicker textpattern imagetools toc help emoticons hr codesample'
-                    ];
-                }, type: Array
-            },
-            toolbar1: {
-                default: 'formatselect | bold italic  strikethrough  forecolor backcolor | link image | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
+            value: {
+                default: '',
                 type: String
             },
-            toolbar2: {default: '', type: String},
-            other_options: {
-                default: function () {
-                    return {};
-                }, type: Object
+            config: {
+                type: Object,
+                default: () => {
+                    return {
+                        theme: 'modern',
+                        height: 300
+                    }
+                }
             },
-            readonly: {default: false, type: Boolean}
+            url: {
+                default: '',
+                type: String
+            },
+            accept: {
+                default: 'image/jpeg, image/png',
+                type: String
+            },
+            maxSize: {
+                default: 2097152,
+                type: Number
+            },
+            withCredentials: {
+                default: false,
+                type: Boolean
+            }
         },
 
         data() {
+            const Id = Date.now()
             return {
+                Id: Id,
+                Editor: null,
                 content: '',
-                editor: null,
-                cTinyMce: null,
-                checkerTimeout: null,
-                isTyping: false
+                DefaultConfig: {
+                    height: 300,
+                    theme: 'modern',
+                    menubar: false,
+                    toolbar: `styleselect | fontselect | formatselect | fontsizeselect | forecolor backcolor | bold italic underline strikethrough | image  media | table | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | preview removeformat  hr | paste code  link | undo redo | fullscreen `,
+                    plugins: `paste importcss image code table advlist fullscreen link media lists textcolor colorpicker hr preview`,
+                    forced_root_block: 'p',
+                    force_p_newlines: true,
+                    importcss_append: true,
+
+                    // CONFIG: ContentStyle 这块很重要， 在最后呈现的页面也要写入这个基本样式保证前后一致， `table`和`img`的问题基本就靠这个来填坑了
+                    content_style: `
+    *                         { padding:0; margin:0; }
+    html, body                { height:100%; }
+    img                       { max-width:100%; display:block;height:auto; }
+    a                         { text-decoration: none; }
+    iframe                    { width: 100%; }
+    p                         { line-height:1.6; margin: 0px; }
+    table                     { word-wrap:break-word; word-break:break-all; max-width:100%; border:none; border-color:#999; }
+    .mce-object-iframe        { width:100%; box-sizing:border-box; margin:0; padding:0; }
+    ul,ol                     { list-style-position:inside; }
+  `,
+
+                    insert_button_items: 'image link | inserttable',
+
+                    // CONFIG: Paste
+                    paste_retain_style_properties: 'all',
+                    paste_word_valid_elements: '*[*]',        // word需要它
+                    paste_data_images: true,                  // 粘贴的同时能把内容里的图片自动上传，非常强力的功能
+                    paste_convert_word_fake_lists: false,     // 插入word文档需要该属性
+                    paste_webkit_styles: 'all',
+                    paste_merge_formats: true,
+                    nonbreaking_force_tab: false,
+                    paste_auto_cleanup_on_paste: false,
+
+                    // CONFIG: Font
+                    fontsize_formats: '10px 11px 12px 14px 16px 18px 20px 24px',
+
+                    // CONFIG: StyleSelect
+                    style_formats: [
+                        {
+                            title: '首行缩进',
+                            block: 'p',
+                            styles: {'text-indent': '2em'}
+                        },
+                        {
+                            title: '行高',
+                            items: [
+                                {title: '1', styles: {'line-height': '1'}, inline: 'span'},
+                                {title: '1.5', styles: {'line-height': '1.5'}, inline: 'span'},
+                                {title: '2', styles: {'line-height': '2'}, inline: 'span'},
+                                {title: '2.5', styles: {'line-height': '2.5'}, inline: 'span'},
+                                {title: '3', styles: {'line-height': '3'}, inline: 'span'}
+                            ]
+                        }
+                    ],
+
+                    // FontSelect
+                    font_formats: `
+                                微软雅黑=微软雅黑;
+                                宋体=宋体;
+                                黑体=黑体;
+                                仿宋=仿宋;
+                                楷体=楷体;
+                                隶书=隶书;
+                                幼圆=幼圆;
+                                Andale Mono=andale mono,times;
+                                Arial=arial, helvetica,
+                                sans-serif;
+                                Arial Black=arial black, avant garde;
+                                Book Antiqua=book antiqua,palatino;
+                                Comic Sans MS=comic sans ms,sans-serif;
+                                Courier New=courier new,courier;
+                                Georgia=georgia,palatino;
+                                Helvetica=helvetica;
+                                Impact=impact,chicago;
+                                Symbol=symbol;
+                                Tahoma=tahoma,arial,helvetica,sans-serif;
+                                Terminal=terminal,monaco;
+                                Times New Roman=times new roman,times;
+                                Trebuchet MS=trebuchet ms,geneva;
+                                Verdana=verdana,geneva;
+                                Webdings=webdings;
+                                Wingdings=wingdings,zapf dingbats`,
+
+                    // Tab
+                    tabfocus_elements: ':prev,:next',
+                    object_resizing: true,
+
+                    // Image
+                    imagetools_toolbar: 'rotateleft rotateright | flipv fliph | editimage imageoptions'
+                },
             }
         },
         mounted() {
             this.content = this.value;
-            console.info('this.value');
-            console.info(this.value);
             this.init();
         },
         beforeDestroy() {
             // 销毁tinymce
             this.$emit('on-destroy')
-            window.tinymce.remove(`#${this.id}`)
-        },
-        watch: {
-            value: function (newValue) {
-                if (!this.isTyping) {
-                    if (this.editor !== null)
-                        this.editor.setContent(newValue);
-                    else
-                        this.content = newValue;
-                }
-            },
-            readonly(value) {
-                if (value) {
-                    this.editor.setMode('readonly');
-                } else {
-                    this.editor.setMode('design');
-                }
-            }
+            window.tinymce.remove(`#${this.Id}`)
         },
         methods: {
             init() {
-                let _this=this;
-                let options = {
-                    selector: '#' + this.id,
-                    skin: false,
-                    toolbar1: this.toolbar1,
-                    toolbar2: this.toolbar2,
-                    plugins: this.plugins,
-                    height: 300,
-                    images_upload_handler: async function (blobInfo, success, failure) {
-                        if (blobInfo.blob().size > _this.maxSize) {
-                            failure('文件体积过大！')
-                        }
-
-                        if (_this.accept.indexOf(blobInfo.blob().type) > 0) {
-                            const formData = new FormData();
-                            formData.append('upfile', blobInfo.blob(), blobInfo.filename())
-                            let url = await _this.$http.myPost(URL_NEWS.POST_UPLOAD_NEWS_IMG, formData);
-                            _this.$message.success('上传成功！');
-                        } else {
-                            failure('图片格式错误！')
-                        }
-                    },
-                    setup: (editor) => {
-                        // 抛出 'on-ready' 事件钩子
-                        editor.on(
-                            'init', () => {
-                                self.loading = false
-                                self.$emit('on-ready')
-                                editor.setContent(self.value)
-                            }
-                        )
-                        // 抛出 'input' 事件钩子，同步value数据
-                        editor.on(
-                            'input change undo redo', () => {
-                                self.$emit('input', editor.getContent())
-                            }
-                        )
-                    },
-                    init_instance_callback: this.initEditor
-                };
-                tinymce.init(this.concatAssciativeArrays(options, this.other_options));
-            },
-            initEditor(editor) {
-                this.editor = editor;
-                editor.on('KeyUp', (e) => {
-                    this.submitNewContent();
-                });
-                editor.on('Change', (e) => {
-                    if (this.editor.getContent() !== this.value) {
-                        this.submitNewContent();
-                    }
-                    this.$emit('editorChange', e);
-                });
-                editor.on('init', (e) => {
-                    editor.setContent(this.content);
-                    this.$emit('input', this.content);
-                });
-                if (this.readonly) {
-                    this.editor.setMode('readonly');
-                } else {
-                    this.editor.setMode('design');
-                }
-                this.$emit('editorInit', editor);
-            },
-            concatAssciativeArrays(array1, array2) {
-                if (array2.length === 0) return array1;
-                if (array1.length === 0) return array2;
-                let dest = [];
-                for (let key in array1) dest[key] = array1[key];
-                for (let key in array2) dest[key] = array2[key];
-                return dest;
-            },
-            submitNewContent() {
-                this.isTyping = true;
-                if (this.checkerTimeout !== null)
-                    clearTimeout(this.checkerTimeout);
-                this.checkerTimeout = setTimeout(() => {
-                    this.isTyping = false;
-                }, 300);
-                this.$emit('input', this.editor.getContent());
-            },
-            /*init () {
                 const self = this
 
                 this.Editor = tinymce.init({
@@ -171,48 +163,43 @@
                     // 图片上传
                     images_upload_handler: async function (blobInfo, success, failure) {
                         if (blobInfo.blob().size > self.maxSize) {
-                            failure('文件体积过大！')
+                            return failure('文件体积过大！')
                         }
 
                         if (self.accept.indexOf(blobInfo.blob().type) >= 0) {
                             const formData = new FormData();
                             formData.append('upfile', blobInfo.blob(), blobInfo.filename())
-                            let url = await this.$http.myPost(URL_NEWS.POST_UPLOAD_NEWS_IMG, formData);
-                            this.$message.success('上传成功！');
+                            let data = await self.$http.myPost(URL_NEWS.POST_UPLOAD_NEWS_IMG, formData);
+                            success(HTTP_URL_HOST+data[0]);
                         } else {
-                            failure('图片格式错误！')
+                            return failure('图片格式错误！')
                         }
                     },
 
                     // prop内传入的的config
-                   ...this.config,
+                    ...this.config,
 
                     // 挂载的DOM对象
-                    selector: `#${this.id}`,
+                    selector: `#${this.Id}`,
                     setup: (editor) => {
                         // 抛出 'on-ready' 事件钩子
-                        editor.on(
-                            'init', () => {
+                        editor.on('init', () => {
                                 self.loading = false
                                 self.$emit('on-ready')
                                 editor.setContent(self.value)
                             }
                         )
                         // 抛出 'input' 事件钩子，同步value数据
-                        editor.on(
-                            'input change undo redo', () => {
+                        editor.on('input change undo redo', () => {
                                 self.$emit('input', editor.getContent())
                             }
                         )
                     }
                 })
-            }*/
+            },
+            getContent(){
+               return tinymce.activeEditor.getContent();
+            }
         }
     }
 </script>
-
-<style type="text/less">
-    .mce-tinymce {
-        box-sizing: border-box;
-    }
-</style>

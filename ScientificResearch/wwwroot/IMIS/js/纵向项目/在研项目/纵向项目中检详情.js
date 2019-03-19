@@ -36,8 +36,8 @@ $(function () {
                             if (obj.项目中检信息.中检资料路径 != '' && obj.项目中检信息.中检资料路径 != null) {
                                 vm.otherFile = obj.项目中检信息.中检资料路径.split(',');
                             }
-                            vm.fundsA = obj.项目中检信息.批准经费;
-                            vm.fundsB = obj.项目中检信息.配套经费;
+                            vm.fundsA = obj.立项基本信息.批准经费;
+                            vm.fundsB = obj.立项基本信息.配套经费;
                         }
 
                     } else {

@@ -112,3 +112,4 @@ export function chineseEnglishNumber(e) {
 export function clearSpecialChar(e) {
     e.target.value = e.target.value.replace(/[^[0-9a-zA-Z\-]/g, ''); //清除"字母、数字"以外的字符
 }
+

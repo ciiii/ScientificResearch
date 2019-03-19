@@ -179,7 +179,7 @@
                     if (success) {
                         var curTime = new Date().getTime();
                         var url = getHtmlDocName();
-                        localStorage.setItem('info', JSON.stringify({
+                        sessionStorage.setItem('info', JSON.stringify({
                             data: obj,
                             time: curTime,
                             url: '/' + url + '.html',

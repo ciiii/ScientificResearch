@@ -82,7 +82,7 @@
           <span :style="{'color':(item.状态说明 == state ? '#31BD5D' : '#FF976A')}">{{item.状态说明}}</span>
           <span>
             <i class="icon iconfont icon-shijian1"></i>
-            {{item.执行时间}}
+            {{startTimeB(item.执行时间)}}
           </span>
         </li>
         <li>备注：{{item.备注}}</li>
@@ -118,7 +118,7 @@ export default {
         获奖编号: this.$route.params.item
       };
       this.$http.getResultsDetails(para).then(res => {
-        console.log(res, "sss");
+        // console.log(res, "sss");
         this.detailslList = res.data.获奖详情;
         this.relatedProjects = res.data.成果项目;
         this.authorInformation = res.data.成果作者;
@@ -132,6 +132,13 @@ export default {
         return item.slice(0, 10);
       } else {
         return;
+      }
+    },
+    startTimeB(item) {
+      if (item === null) {
+        return "待定";
+      } else {
+        return item;
       }
     },
     // 截取字符串

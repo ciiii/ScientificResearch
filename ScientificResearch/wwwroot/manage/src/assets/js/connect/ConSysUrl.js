@@ -20,6 +20,9 @@ const URL_NEWS = {
     //上传总库新闻图片
     POST_UPLOAD_NEWS_IMG: '/Manage/News/上传总库新闻图片',
 
+    //上传总库Logo图片
+    POST_UPLOAD_LOGO_IMG: '/Manage/News/上传总库Logo图片',
+
 
 }
 

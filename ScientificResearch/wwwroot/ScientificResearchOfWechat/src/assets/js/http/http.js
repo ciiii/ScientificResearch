@@ -33,7 +33,6 @@ const http = {
     getServiceList(code) {
         return get("/Manage/Service/获取某医院购买的服务", code)
     },
-
     /**
      * 获取待办流程
      */
@@ -46,11 +45,20 @@ const http = {
     /**
      * 分页获取总库新闻
      */
-    getNewsList(index, size) {
-        return get("/Manage/News/分页获取总库新闻", {
-            index,
-            size
-        })
+    getNewsList(para) {
+        return get("/Manage/News/分页获取总库新闻", para)
+    },
+    /**
+     * 分页获取某人员可查看的通知公告
+     */
+    getToViewNewsList(para) {
+        return get("/Office/分页获取某人员可查看的通知公告", para)
+    },
+    /**
+     * 获取通知公告详情
+     */
+    getKYNewsDetails(para) {
+        return get("/Office/获取通知公告详情", para)
     },
     /**
      * 分页获取主办讲座列表
@@ -211,6 +219,60 @@ const http = {
             index,
             size
         })
+    },
+    /**
+     * 审核步骤
+     */
+    auditStep(para) {
+        return post("/WorkFlow/审核步骤", para);
+    },
+    /**
+     * 获取纵向项目申报详情
+     */
+    getYDeclarationDetails(code) {
+        return get("/YProject/获取纵向项目申报详情", code)
+    },
+    /**
+     * 获取纵向项目中检详情
+     */
+    getYProcessInspectionDetails(code) {
+        return get("/YProject/获取纵向项目中检详情", code)
+    },
+    /**
+     * 获取纵向项目到账详情
+     */
+    getYFundsToTheAccountDetails(code) {
+        return get("/Incoming/获取纵向项目到账详情", code)
+    },
+    /**
+     * 获取横向项目详情
+     */
+    getXDetails(code) {
+        return get("/XProject/获取横向项目详情", code)
+    },
+    /**
+     * 获取横向项目到账详情
+     */
+    getXFundsToTheAccountDetails(code) {
+        return get("/Incoming/获取横向项目到账详情", code)
+    },
+    /**
+     * 修改密码
+     */
+    ChangePassword(para) {
+        return post("/Access/ChangePassword", para);
+    },
+    /**
+     * 修改账户
+     */
+    ChangeAccount(para) {
+        return post("/People/增改人员", para);
+    },
+    /**
+     * 获取某人员详情
+     */
+    getSomePersonnelDetails(code) {
+        return get("/People/获取某人员详情", code)
     },
 };
 

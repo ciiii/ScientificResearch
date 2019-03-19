@@ -47,6 +47,7 @@
     <Folder Include="wwwroot\upload\学术活动\会议反馈文件\" />
     <Folder Include="wwwroot\upload\学术活动\参会相关文件\" />
     <Folder Include="wwwroot\upload\学术活动\讲座附件\" />
+    <Folder Include="wwwroot\upload\总库\Logo\" />
     <Folder Include="wwwroot\upload\总库\新闻图片\" />
     <Folder Include="wwwroot\upload\成果\专利\相关文件\" />
     <Folder Include="wwwroot\upload\成果\获奖\相关文件\" />

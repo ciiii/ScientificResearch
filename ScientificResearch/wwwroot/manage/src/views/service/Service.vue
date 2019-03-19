@@ -9,7 +9,15 @@
             <el-table class="tableone" border :data="tableData" stripe :header-cell-style="{'text-align':'center'}">
                 <el-table-column label="序号" type="index" show-overflow-tooltip width="50"
                                  align="center"></el-table-column>
-                <el-table-column prop="名称" label="名称"></el-table-column>
+                <el-table-column prop="名称" label="名称">
+                    <template slot-scope="scope">
+                        <span class="logo-img">
+                            <img v-if="scope.row.Logo" :src="scope.row.Logo" alt="logo">
+                            <img v-else src="../../assets/images/service-logo.jpg" alt="logo">
+                        </span>
+                        <span class="title">{{scope.row.名称}}</span>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="编号" label="编号" align="center" width="100"></el-table-column>
                 <el-table-column prop="备注" label="说明">
                     <template slot-scope="scope">
@@ -36,7 +44,8 @@
                 </el-table-column>
             </el-table>
         </div>
-        <el-dialog :title="title" :visible.sync="isAddDialog" width="30%" v-if='isAddDialog' :close-on-click-modal="false">
+        <el-dialog :title="title" :visible.sync="isAddDialog" width="30%" v-if='isAddDialog'
+                   :close-on-click-modal="false">
             <div v-if="isDetails">
                 <ServiceDetails ref="child" @myEvent="closeDialog" :item="item"></ServiceDetails>
             </div>
@@ -44,7 +53,6 @@
                 <AddService ref="child" @myEvent="getMyEvent" :item="item" :isAddDialog="isAddDialog"
                             :isAdd="isAdd"></AddService>
             </div>
-
         </el-dialog>
     </div>
 </template>
@@ -150,13 +158,25 @@
         height: 23px;
     }
 
-    .el-table td p {
-        display: -webkit-box !important;
+    .el-table td {
         overflow: hidden;
-        text-overflow: ellipsis;
-        word-break: break-all;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 3;
-        margin: 0;
+        p {
+            display: -webkit-box !important;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            word-break: break-all;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            margin: 0;
+        }
+
+        .title {
+            display: -webkit-box !important;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            word-break: break-all;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+        }
     }
 </style>

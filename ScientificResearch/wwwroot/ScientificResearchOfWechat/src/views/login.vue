@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="box">
     <img src="../assets/images/logo.png" alt="logo图片" class="img">
     <form action="/" onsubmit="return false">
       <div class="input">
@@ -146,6 +146,10 @@ export default {
 };
 </script>
 <style scoped>
+.box{
+  padding-bottom: 50px;
+  background-color: #fff;
+}
 .img {
   width: 180px;
   height: 180px;

@@ -1,6 +1,10 @@
 <template>
     <div class="page-news page-common">
         <div class="main wrapper">
+                <el-breadcrumb separator="/" class="nav">
+                    <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+                    <el-breadcrumb-item>科研新闻</el-breadcrumb-item>
+                </el-breadcrumb>
             <h4 class="title">科研新闻 News</h4>
             <div class="screen-box">
                 <el-form ref="form" :model="req" :inline="true" class="demo-form-inline">
@@ -12,7 +16,7 @@
                     <el-form-item>
                         <el-input v-model="req.Like发送人姓名" placeholder="请输入发送人" @keyup.enter.native="search"></el-input>
                     </el-form-item>
-                    <el-button  class="btn-search" @click="search">查询</el-button>
+                    <el-button class="btn-search" @click="search">查询</el-button>
                 </el-form>
             </div>
             <el-table class="tableone" border :data="tableData" stripe :header-cell-style="{'text-align':'center'}">
@@ -28,7 +32,8 @@
                 <el-table-column label="操作" align="center" width="80">
                     <template slot-scope="scope">
                         <el-tooltip content="查看详情" placement="bottom" effect="light">
-                            <el-button icon="el-icon-tickets" class="btn-details" circle @click="btnDetails(scope.row)"></el-button>
+                            <el-button icon="el-icon-tickets" class="btn-details" circle
+                                       @click="btnDetails(scope.row)"></el-button>
                         </el-tooltip>
                     </template>
                 </el-table-column>
@@ -62,7 +67,7 @@
             return {
                 req: {
                     Index: 1,
-                    Size: 20,
+                    Size: 16,
                     OrderType: false,
                     Like通知名称: '',
                     Like发送人姓名: '',

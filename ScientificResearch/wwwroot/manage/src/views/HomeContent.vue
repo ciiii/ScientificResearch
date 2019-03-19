@@ -115,7 +115,7 @@
                 hospitalList: [],
                 req: {
                     Index: 1,
-                    Size: 10,
+                    Size: 6,
                     OrderType: false
                 },
                 item: {},

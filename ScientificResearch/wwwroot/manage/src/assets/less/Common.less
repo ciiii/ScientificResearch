@@ -43,6 +43,10 @@ input:focus, a:focus, button:focus {
   outline: none !important;
 }
 
+textarea {
+  resize: none;
+}
+
 .wrapper {
   width: 1200px;
   margin: 0 auto;
@@ -82,6 +86,10 @@ textarea {
   resize: none !important;
 }
 
+.mce-tinymce {
+  box-sizing: border-box !important;
+}
+
 .page-common {
   height: 100%;
 
@@ -114,6 +122,18 @@ textarea {
     .el-button.is-circle {
       padding: 8px;
     }
+
+    .logo-img {
+      display: inline-block;
+      width: 22px;
+      height: 22px;
+      float: left;
+      margin-right: 8px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
   }
 
   .paging {
@@ -145,7 +165,9 @@ textarea {
   }
 
   .big-dialog {
-    width: 760px !important;
+    .el-dialog {
+      width: 50% !important;
+    }
 
     form.el-form, .content-box {
       min-height: 400px;
@@ -196,6 +218,7 @@ textarea {
 
         img {
           margin: 10px 0;
+          max-width: 100%;
         }
       }
     }
@@ -215,8 +238,6 @@ textarea {
 
     .big-dialog {
       .el-dialog {
-        width: 700px !important;
-
         .edit_container {
           .ql-container.ql-snow {
             min-height: 250px !important;

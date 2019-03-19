@@ -1,7 +1,7 @@
 <template>
   <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" class="box">
     <div class="title">
-      <i class="icon iconfont icon-huiyi"></i>论文未认领列表
+      <i class="icon iconfont icon-lunwentimu"></i>论文未认领列表
     </div>
     <div class="backContentBox" v-for="(item, key) in lectureList" :key="key">
       <ul class="backContentTop" @click="goDetails(item.编号)">
@@ -16,7 +16,8 @@
         <li>正式出版日期：{{startTime(item.论文正式出版日期)}}</li>
         <li>
           <span>第一作者:{{item.第一作者}}</span>
-          <span class="auditBtn" @click="goMeetingsList">论文认领</span>
+          <!-- 暂时不做 -->
+          <!-- <span class="auditBtn" @click="goMeetingsList">论文认领</span> -->
         </li>
       </ul>
     </div>
@@ -56,9 +57,10 @@ export default {
         }
       });
     },
-    goMeetingsList() {
-      console.log("lt-ie9");
-    },
+    // 论文认领 暂时不做
+    // goMeetingsList() {
+    //   console.log("lt-ie9");
+    // },
     // 截取时间
     startTime(item) {
       if (item != null) {
@@ -91,7 +93,7 @@ export default {
   background-color: #f5f3fb;
   .title {
     font-size: 14px;
-    padding: 10px 0;
+    padding: 10px;
     background-color: #fff;
     i {
       font-weight: 800;

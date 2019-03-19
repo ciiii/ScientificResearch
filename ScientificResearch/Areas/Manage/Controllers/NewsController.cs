@@ -57,5 +57,16 @@ namespace ScientificResearch.Areas.Manage.Controllers
                 Config.GetValue<int>("uploadFileMaxSize"));
             return filesNameList;
         }
+
+        [HttpPost]
+        async public Task<object> 上传总库Logo图片()
+        {
+            var filesNameList = await UploadFile.Upload(
+                Request.Form.Files,
+                Env.WebRootPath,
+                "upload/总库/Logo",
+                Config.GetValue<int>("uploadFileMaxSize"));
+            return filesNameList;
+        }
     }
 }

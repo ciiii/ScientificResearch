@@ -8,7 +8,7 @@
                     </div>
                     <el-menu class="el-menu-demo" :default-active="activIndex" mode="horizontal"
                              @select="handleSelect" :router="true">
-                        <el-menu-item index="/home">首页</el-menu-item>
+                        <el-menu-item index="/index">首页</el-menu-item>
                         <el-menu-item index="/hospital">医院</el-menu-item>
                         <el-menu-item index="/service">服务</el-menu-item>
                         <el-menu-item index="/news">新闻</el-menu-item>
@@ -31,7 +31,7 @@
         name: 'index',
         data() {
             return {
-                activIndex: '/home',
+                activIndex: '/index',
                 myUserInfo: {},
             }
         },

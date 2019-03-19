@@ -2,65 +2,60 @@
   <div class="backlog">
     <div class="box">
       <div class="title">
-        <i class="icon iconfont icon-gonghuijingfeibaoxiao"></i>论文
+        <i class="icon iconfont icon-lunwentimu"></i>论文
       </div>
       <van-cell-group>
-        <van-cell title="导入认领" icon="location-o" is-link to="/paperClaim"></van-cell>
-        <van-cell title="论文管理" icon="location-o" is-link to="/paperManagement"></van-cell>
+        <van-cell title="导入认领" icon="award-o" is-link to="/paperClaim"></van-cell>
+        <van-cell title="论文管理" icon="label-o" is-link to="/paperManagement"></van-cell>
       </van-cell-group>
     </div>
     <div class="box">
       <div class="title">
-        <i class="icon iconfont icon-gonghuijingfeibaoxiao"></i>著作
+        <i class="icon iconfont icon-shouquanicon"></i>著作
       </div>
       <van-cell-group>
-        <van-cell title="著作管理" icon="location-o" is-link to="/workManagement"></van-cell>
+        <van-cell title="著作管理" icon="bookmark-o" is-link to="/workManagement"></van-cell>
       </van-cell-group>
     </div>
     <div class="box">
       <div class="title">
-        <i class="icon iconfont icon-gonghuijingfeibaoxiao"></i>专利
+        <i class="icon iconfont icon-zhuanli"></i>专利
       </div>
       <van-cell-group>
-        <van-cell title="专利管理" icon="location-o" is-link to="/patentManagement"></van-cell>
+        <van-cell title="专利管理" icon="records" is-link to="/patentManagement"></van-cell>
       </van-cell-group>
     </div>
     <div class="box">
       <div class="title">
-        <i class="icon iconfont icon-gonghuijingfeibaoxiao"></i>获奖
+        <i class="icon iconfont icon-gerenhuojiang"></i>获奖
       </div>
       <van-cell-group>
-        <van-cell title="获奖管理" icon="location-o" is-link to="/resultsManagement"></van-cell>
+        <van-cell title="获奖管理" icon="flower-o" is-link to="/resultsManagement"></van-cell>
       </van-cell-group>
     </div>
     <div class="box">
       <div class="title">
-        <i class="icon iconfont icon-gonghuijingfeibaoxiao"></i>成果总览
+        <i class="icon iconfont icon-overview"></i>成果总览
       </div>
       <van-cell-group>
-        <van-cell title="成果总览" icon="location-o" is-link to="/achievementAll"></van-cell>
+        <van-cell title="成果总览" icon="apps-o" is-link to="/achievementAll"></van-cell>
       </van-cell-group>
     </div>
     <navFooter/>
   </div>
 </template>
 <script>
-import navFooter from "@/../src/components/footer/footer";
+import navFooter from "@/components/footer/footer";
 export default {
   components: {
     navFooter
   },
   data() {
-    return {
-      loading: false,
-      finished: false
-    };
+    return {};
   },
   created() {
     document.title = "科研管理 - 成果";
-  },
-  mounted() {},
-  methods: {}
+  }
 };
 </script>
 <style lang="less" scoped>
@@ -74,8 +69,7 @@ export default {
       padding: 8px;
       background-color: #fff;
       i {
-        font-weight: 800;
-        color: #d4237a;
+        color: #1296db;
         margin-right: 5px;
       }
     }

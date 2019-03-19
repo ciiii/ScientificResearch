@@ -21,7 +21,7 @@ export default {
   padding: 5px;
   text-align: center;
   position: fixed;
-  bottom: 20px;
+  bottom: 80px;
   right: 20px;
   border-radius: 20px;
   background-color: rgba(28, 134, 238, 0.5);

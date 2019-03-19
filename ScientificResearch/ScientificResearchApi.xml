@@ -4016,6 +4016,11 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.服务.Logo">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.服务.是否启用">
             <summary>
             
@@ -12946,6 +12951,11 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.VTFN某医院购买的服务.Logo">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.VTFN某医院购买的服务.备注">
             <summary>
             
@@ -13107,6 +13117,11 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.V_服务_启用.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V_服务_启用.Logo">
             <summary>
             
             </summary>

@@ -12,12 +12,8 @@ import './assets/libs/iconfont/iconfont.css';
 import './assets/less/Quill.less';
 
 
-/*import tinymce from 'vue-tinymce-editor'
+import tinymce from 'vue-tinymce-editor'
 Vue.component('tinymce', tinymce);
-// import tinymce from './components/TinymceVue'
-// export default tinymce;
-// export { tinymce }*/
-
 
 
 Vue.use(VueWechatTitle);

@@ -6,6 +6,9 @@ var Code = {
     //用户登录
     URL_POST_LOGIN: getApiHost + '/Access/Login',
 
+    //获取权限菜单
+    URL_GET_MENU_PERMISSIONS: getApiHost + '/Access/获取权限菜单',
+
     //修改密码
     URL_POST_CHANGE_PASSWORD: getApiHost + '/Access/ChangePassword',
 

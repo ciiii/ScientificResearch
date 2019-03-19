@@ -1,7 +1,7 @@
 <template>
   <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" class="box">
     <div class="title">
-      <i class="icon iconfont icon-huiyi"></i>获奖管理
+      <i class="icon iconfont icon-gerenhuojiang"></i>获奖管理
     </div>
     <div class="backContentBox" v-for="(item, key) in lectureList" :key="key">
       <ul class="backContentTop" @click="goDetails(item.编号)">
@@ -20,13 +20,23 @@
         <li>获奖日期：{{startTime(item.获奖日期)}}</li>
         <li>年度：{{item.年度}}</li>
         <li class="contentSpan">审核进度：{{item.步骤名称}} - {{item.步骤状态说明}}</li>
-        <li :style="{'color':(item.审核进度 == flag ? '#31BD5D' : '#FF976A')}">当前步骤：{{item.审核进度}}</li>
+        <li>
+          <span :style="{'color':(item.审核进度 == flag ? '#31BD5D' : '#FF976A')}">当前步骤：{{item.审核进度}}</span>
+          <span @click="audit(item)" v-show="isShow">审核</span>
+        </li>
       </ul>
     </div>
+    <van-popup v-model="show" class="popup">
+      <Audit :message="message" @getMessage="getMessage"></Audit>
+    </van-popup>
   </van-list>
 </template>
 <script>
+import Audit from "@/components/audit/audit";
 export default {
+  components: {
+    Audit
+  },
   data() {
     return {
       lectureList: [],
@@ -34,7 +44,10 @@ export default {
       size: 5,
       loading: false,
       finished: false,
-      flag: "已完成-审核通过"
+      flag: "已完成-审核通过",
+      show: false,
+      isShow: false,
+      message: ""
     };
   },
   created() {
@@ -44,10 +57,19 @@ export default {
     this.getPaper();
   },
   methods: {
+    // 子组件方法
+    getMessage() {
+      this.show = false;
+    },
     getPaper() {
       this.$http.getResultsAllList(this.index, this.size).then(res => {
         console.log(res);
         this.lectureList = res.data.list;
+        this.lectureList.forEach((item, index) => {
+          if (item.步骤状态说明 === "待审核") {
+            this.isShow = true;
+          }
+        });
       });
     },
     // 查看详情
@@ -59,6 +81,10 @@ export default {
           item: item
         }
       });
+    },
+    audit(item) {
+      this.message = item;
+      this.show = true;
     },
     onLoad() {
       // 异步更新数据
@@ -92,7 +118,7 @@ export default {
   background-color: #f5f3fb;
   .title {
     font-size: 14px;
-    padding: 10px 0;
+    padding: 10px;
     background-color: #fff;
     i {
       font-weight: 800;
@@ -138,6 +164,9 @@ export default {
         color: #ff976a;
       }
     }
+  }
+  .popup {
+    width: 85%;
   }
 }
 </style>

@@ -1,0 +1,1 @@
+c:\Users\Administrator\scientific-research\src\views\XProjectDeclaration\XDeclarationDetails.vue

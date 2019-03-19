@@ -58,21 +58,19 @@
             }
         },
         mounted() {
-            console.info('11111111');
             this.IeVersion();
             this.getlocalStorage();
         },
         methods: {
             IeVersion: function () {
-                console.info('2222222');
                 let userAgent = navigator.userAgent;
                 let isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1;
                 if (isIE) {
                     let reIE = new RegExp("MSIE (\\d+\\.\\d+);");
                     reIE.test(userAgent);
                     let fIEVersion = parseFloat(RegExp["$1"]);
+
                     if (fIEVersion < 10) {
-                        console.info('<10');
                         this.$router.push({path: '/IeUnderTen'});
                     }
                 } else {

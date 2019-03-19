@@ -1,17 +1,49 @@
-.page-news{
-    .main{
-      .line{
-        text-align: center;
+@import "Variable";
+
+.page-news {
+  .main {
+    overflow: hidden;
+    .nav {
+      background:#d9f9e3;
+      padding: 15px 30px 15px 15px;
+      margin-top: 10px;
+      display: inline-block;
+      border-radius: 15px 1px;
+      float: right;
+    }
+
+    .title {
+      margin-top: 25px;
+    }
+
+    .line {
+      text-align: center;
+    }
+
+    .screen-box {
+      position: relative;
+
+      .btn-add {
+        left: 0;
+        top: 0;
+      }
+
+      .el-form-item {
+        margin-bottom: 10px;
       }
     }
-  .screen-box{
-    position: relative;
-    .btn-add{
-      left: 0;
-      top: 0;
-    }
-    .el-form{
-      margin-left: 130px;
+
+    tr {
+      .btn-details {
+        color: #409EFF;
+      }
+
+      .a-title {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
     }
   }
 }

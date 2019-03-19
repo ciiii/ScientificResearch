@@ -1,9 +1,9 @@
 <template>
-    <div class="home">
-        <div class="mian" :gutter="24">
+    <div class="homeContent">
+        <div class="mian">
             <el-row :gutter="24" class="items news-items">
                 <div class="wrapper">
-                    <el-col class="item" span="12">
+                    <el-col class="item" :span="12">
                         <div class="grid-content bg-purple">
                             <div class="item-header">
                                 <h5><i class="icon iconfont icon-yiyuan"></i> 医院列表</h5>
@@ -16,9 +16,8 @@
                             <ul class="list">
                                 <li v-for="el in hospitalList" :key="el.编号">
                                     <a href="javascript:;">
-                                            <span class="btn-icon"><i
-                                                    class="icon iconfont icon-yuandianxiao"></i></span>
-                                        <span class="name">{{el.名称}}</span>
+                                            <span class="btn-icon"><i class="icon iconfont icon-yuandianxiao"></i></span>
+                                        <span class="name" @click="btnService(el)">{{el.名称}}</span>
                                         <span class="time">
                                             <template>
                                                 <el-switch class="switch"
@@ -26,7 +25,7 @@
                                                            v-model="el.是否启用"
                                                            active-color="#13ce66"
                                                            inactive-color="#ff4949"
-                                                           @change="hospitalChange(el.是否启用)"
+                                                           @change="hospitalChange(el)"
                                                            active-text="启用">
                                                 </el-switch>
                                             </template>
@@ -36,7 +35,7 @@
                             </ul>
                         </div>
                     </el-col>
-                    <el-col class="item" span="12">
+                    <el-col class="item" :span="12">
                         <div class="grid-content bg-purple">
                             <div class="item-header">
                                 <h5><i class="icon iconfont icon-quanbuxinwen"></i> 总库新闻</h5>
@@ -48,12 +47,15 @@
                             </div>
                             <ul class="list">
                                 <li v-for="el in newsList" :key="el.编号">
-                                    <a href="javascript:;">
-                                            <span class="btn-icon"><i
-                                                    class="icon iconfont icon-yuandianxiao"></i></span>
+                                    <a href="javascript:;" @click="btnDetails(el)">
+                                        <span class="btn-icon">
+                                            <i class="icon iconfont icon-yuandianxiao"></i>
+                                        </span>
                                         <span class="name">{{el.标题}}</span>
-                                        <span class="time">{{el.建立时间|dataFormat('yyyy-mm-hh')}}<i
-                                                class="icon iconfont icon-right"></i></span></a>
+                                        <span class="time">
+                                            {{el.建立时间|dataFormat('yyyy-mm-hh')}}<i class="icon iconfont icon-right"></i>
+                                        </span>
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -64,7 +66,7 @@
                 <div class="wrapper">
                     <h4 class="title">服务列表 Services</h4>
                     <el-col :span="6" v-for="el in serviceList" :key="el.编号" class="card-box">
-                        <el-card :body-style="{ padding: '10px' }">
+                        <el-card>
                             <div class="icon">{{el.名称.slice(0,1)}}</div>
                             <div class="item-content">
                                 <span align="center" class="name">{{el.名称}}</span>
@@ -83,47 +85,28 @@
                     </el-col>
                 </div>
             </el-row>
-            <!-- <el-row :gutter="24" class="items hospital-items">
-                 <div class="wrapper">
-                     <h4 class="title">医院列表 Hospital</h4>
-                     <el-table class="tableone" border :data="tableData" stripe
-                               :header-cell-style="{'text-align':'center'}">
-                         <el-table-column label="序号" type="index" show-overflow-tooltip width="50"
-                                          align="center"></el-table-column>
-                         <el-table-column prop="名称" label="名称"></el-table-column>
-                         <el-table-column prop="代码" label="代码" align="center"></el-table-column>
-                         <el-table-column prop="联系人" label="联系人" align="center"></el-table-column>
-                         <el-table-column prop="联系电话" label="联系电话" align="center"></el-table-column>
-                         <el-table-column prop="地址" label="地址" align="center"></el-table-column>
-                         <el-table-column label="是否启用" property="是否启用" align="center">
-                             <template slot-scope="scope">
-                                 <el-switch class="switch"
-                                            style="display: block"
-                                            v-model="scope.row.是否启用"
-                                            active-color="#13ce66"
-                                            inactive-color="#ff4949"
-                                            @change="switchChange(scope.row.是否启用)"
-                                            active-text="启用">
-                                 </el-switch>
-                             </template>
-                         </el-table-column>
-                         <el-table-column label="操作" align="center" width="100">
-                             <template slot-scope="scope">
-                                 <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-                             </template>
-                         </el-table-column>
-                     </el-table>
-                 </div>
-             </el-row>-->
-
         </div>
+        <el-dialog :title="title" :visible.sync="isAddDialog" width="30%" v-if='isAddDialog' :close-on-click-modal="false">
+            <div v-if="isService">
+                <HospitalService ref="child" @myEvent="getMyEvent" :item="item"></HospitalService>
+            </div>
+        </el-dialog>
+        <el-dialog class="big-dialog" :title="title" :visible.sync="isDetailsDialog" v-if='isDetailsDialog' :close-on-click-modal="false">
+            <NewsDetails ref="child" @myEvent="getMyEvent" :item="item"></NewsDetails>
+        </el-dialog>
     </div>
 </template>
 <script>
-    import {Service, News, Hospital} from "@/assets/js/connect/ReturnData";
+    import {URL_SERVICE, URL_NEWS, URL_HOSPITAL} from "@/assets/js/connect/ConSysUrl";
+    import HospitalService from "@/components/hospital/HospitalService";
+    import NewsDetails from "@/components/news/NewsDetails";
 
     export default {
         name: 'Home',
+        components: {
+            HospitalService,
+            NewsDetails
+        },
         data() {
             return {
                 isOpen: true,
@@ -134,7 +117,12 @@
                     Index: 1,
                     Size: 10,
                     OrderType: false
-                }
+                },
+                item: {},
+                isService: false,
+                isAddDialog: false,
+                title: '',
+                isDetailsDialog: false
             }
         },
         mounted() {
@@ -151,7 +139,6 @@
                     title = '禁用';
                 }
                 this.enableDisableService(title, el);
-
             },
             hospitalChange(el) {
                 let title;
@@ -163,17 +150,18 @@
                 this.enableDisableHospital(title, el);
 
             },
-            handleClick(aaa) {
-                console.info('aaa');
-                console.info(aaa);
+            btnService(data) {
+                this.title = '服务订购';
+                this.isService = true;
+                this.item = data;
+                this.isAddDialog = true;
+            },
+            getMyEvent(val) {
+                this.getHospital();
+                this.isAddDialog = val;
             },
             getService: async function () {
-                Service.getServiceList('get', '', (success, strErro, obj) => {
-                    if (success) {
-                        this.serviceList = obj.data;
-
-                    }
-                })
+                this.serviceList = await this.$http.myGet(URL_SERVICE.GET_SERVICE_ALL, '');
             },
             enableDisableService(title, el) {
                 this.$confirm('您确定要【' + title + '】此服务吗', '提示', {
@@ -194,39 +182,23 @@
                 let data = {
                     编号: el.编号
                 }
-                Service.disableService('post', data, (success, strErro, obj) => {
-                    if (success) {
-                        this.$message.success('禁用成功！');
-                    } else {
-                        el.是否启用 = !el.是否启用;
-                    }
-                })
+                await this.$http.myPost(URL_SERVICE.POST_DISABLE_SERVICE, data);
+                this.$message.success('禁用成功！');
             },
             enableService: async function (el) {
                 let data = {
                     编号: el.编号
                 }
-                Service.enableService('post', data, (success, strErro, obj) => {
-                    if (success) {
-                        this.$message.success('启用成功！');
-                    } else {
-                        el.是否启用 = !el.是否启用;
-                    }
-                })
+                await this.$http.myPost(URL_SERVICE.POST_ENABLE_SERVICE, data);
+                this.$message.success('启用成功！');
             },
             getNews: async function () {
-                News.getPagingNewsList('get', this.req, (success, strErro, obj) => {
-                    if (success) {
-                        this.newsList = obj.data.list;
-                    }
-                })
+                let data = await this.$http.myGet(URL_NEWS.GET_PANGING_NEWS, this.req);
+                this.newsList = data.list;
             },
             getHospital: async function () {
-                Hospital.getHospitalAll('get', '', (success, strErro, obj) => {
-                    if (success) {
-                        this.hospitalList = obj.data;
-                    }
-                })
+                let data = await this.$http.myGet(URL_HOSPITAL.GET_HOSPITAL_ALL, '');
+                this.hospitalList = data;
             },
             enableDisableHospital(title, el) {
                 this.$confirm('您确定要【' + title + '】此医院吗', '提示', {
@@ -244,34 +216,27 @@
                 });
             },
             disableHospital: async function (el) {
-                let data = {
+                let postData = {
                     编号: el.编号
                 }
-                Hospital.disableHospital('post', data, (success, strErro, obj) => {
-                    if (success) {
-                        this.$message.success('禁用成功！');
-                    } else {
-                        el.是否启用 = !el.是否启用;
-                    }
-                })
+                await this.$http.myPost(URL_HOSPITAL.POST_DISABLE_HOSPITA, postData);
+                this.$message.success('禁用成功！');
             },
             enableHospital: async function (el) {
                 let data = {
                     编号: el.编号
                 }
-                Hospital.enableHospital('post', data, (success, strErro, obj) => {
-                    if (success) {
-                        this.$message.success('启用成功！');
-                    } else {
-                        el.是否启用 = !el.是否启用;
-                    }
-                })
+                await this.$http.myPost(URL_HOSPITAL.POST_ENABLE_HOSPITA, data);
+                this.$message.success('启用成功！');
             },
-            LogOut() {
-                localStorage.removeItem('myUserInfo');
-                sessionStorage.removeItem('Authorization');
-                this.$router.push({path: '/login'});
+            btnDetails(data) {
+                this.title = '新闻详情';
+                this.item = data;
+                this.isDetailsDialog = true;
             },
+            closeDialog(val) {
+                this.isDetailsDialog = val;
+            }
         }
     }
 </script>
@@ -287,5 +252,5 @@
     }
 </style>
 <style lang="less" type='text/less' scoped>
-    @import '../assets/less/Home';
+    @import '../assets/less/homeContent';
 </style>

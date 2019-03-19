@@ -31,6 +31,7 @@ axios.interceptors.response.use(
     },
     error => {
         if (error.response.status === 401) {
+
             // 401 说明 token 验证失败
             // 可以直接跳转到登录页面，重新登录获取 token
             location.href = getCodeApi("http://192.168.0.157:8080/#/login", '123');

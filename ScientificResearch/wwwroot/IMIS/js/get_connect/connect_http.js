@@ -66,8 +66,8 @@ var Connect_Http = {
         xhr.open(type, decodeURI(url), true);
         xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
         var Authorization = '';
-        if (sessionStorage.Authorization) {
-            Authorization = JSON.parse(sessionStorage.Authorization);
+        if (localStorage.Authorization) {
+            Authorization = JSON.parse(localStorage.Authorization);
         }
         xhr.setRequestHeader('Authorization', Authorization);
         data = JSON.stringify(data);

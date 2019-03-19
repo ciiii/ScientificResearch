@@ -19,6 +19,9 @@
             <el-form-item label="说明" prop="备注">
                 <el-input v-model="form.备注" type="textarea" :rows="5" maxLength="2000"></el-input>
             </el-form-item>
+            <el-form-item label="图标" prop="logo">
+                <UploadImg v-model="form.Logo" @myEvent="myEvent" :logo="this.item.Logo" ref="img"></UploadImg>
+            </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="cancelHandler">取 消</el-button>
@@ -28,26 +31,32 @@
 </template>
 
 <script>
-    import {validateChineseEnglish} from "../../assets/js/Validate";
-    import {URL_SERVICE} from "../../assets/js/connect/ConSysUrl";
+    import {validateChineseEnglish} from "@/assets/js/Validate";
+    import {URL_SERVICE} from "@/assets/js/connect/ConSysUrl";
     import {_debounce} from "@/assets/js/Common";
+    import UploadImg from '@/components/UploadImg';
 
     export default {
         name: "AddService",
         props: ['item', 'isAddDialog', 'isAdd', 'getService'],
+        components: {
+            UploadImg
+        },
         data() {
             return {
                 form: {
                     编号: 0,
                     名称: '',
                     是否启用: true,
-                    备注: ''
+                    备注: '',
+                    Logo: ''
                 },
                 rules: {  //表单验证
                     名称: [
                         {required: true, message: '名称只能为中文或英文！', trigger: 'blur', validator: validateChineseEnglish}
                     ],
-                }
+                },
+                Logo: ''
             }
         },
         mounted() {
@@ -73,10 +82,14 @@
                 });
             }, 300),
             AddOrEdit: async function () {
+                this.form.Logo = this.Logo;
                 await this.$http.myPost(URL_SERVICE.POST_ADD_OR_EDIT_SERVICE, this.form);
                 this.$message.success('提交成功！');
                 this.$emit('myEvent', false);
             },
+            myEvent(imageUrl) {
+                this.Logo = imageUrl;
+            }
 
         }
     }

@@ -2,48 +2,55 @@
   <div>
     <search/>
     <section>
-      <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-        <div class="backlogBox">
-          <div class="backlog">
+      <!-- <van-pull-refresh v-model="isLoading" @refresh="onRefresh"> -->
+      <div class="backlogBox">
+        <div class="backlog">
+          <span>
+            <i class="icon iconfont icon-tongzhi1"></i>
+            <span>通知公告</span>
+          </span>
+          <span @click="more">
+            更多
+            <i class="icon iconfont icon-you"></i>
+          </span>
+        </div>
+        <van-swipe :autoplay="3000" vertical :show-indicators="false" class="backlogContent">
+          <van-swipe-item v-for="(item,key) in KYList" :key="key">
             <span>
-              <i class="icon iconfont icon-tongzhi1"></i>
-              <span>通知公告</span>
+              <i class="iocn iconfont icon-tongzhi"></i>
+              {{item.通知名称}}
             </span>
-            <span @click="more">
-              更多
-              <i class="icon iconfont icon-you"></i>
-            </span>
-          </div>
-          <van-notice-bar text="足协杯战线连续第2年上演广州德比战，上赛季半决赛上恒大以两回合5-3的总比分淘汰富力。" left-icon="volume-o"/>
+          </van-swipe-item>
+        </van-swipe>
+      </div>
+      <div class="box">
+        <div>
+          <h3>第一作者</h3>
+          <span>10</span>
         </div>
-        <div class="box">
-          <div>
-            <h3>第一作者</h3>
-            <span>10</span>
-          </div>
-          <div>
-            <h3>横项</h3>
-            <span>15</span>
-          </div>
-          <div>
-            <h3>纵项</h3>
-            <span>17</span>
-          </div>
-          <div>
-            <h3>费用</h3>
-            <span>3728元</span>
-          </div>
+        <div>
+          <h3>横项</h3>
+          <span>15</span>
         </div>
-        <div class="backlogBox">
-          <div class="backlog">
-            <span>
-              <i class="icon iconfont icon-liti"></i>
-              <span>我的待办</span>
-            </span>
-          </div>
-          <toDoList ref="toDoList"/>
+        <div>
+          <h3>纵项</h3>
+          <span>17</span>
         </div>
-      </van-pull-refresh>
+        <div>
+          <h3>费用</h3>
+          <span>3728元</span>
+        </div>
+      </div>
+      <div class="backlogBox">
+        <div class="backlog">
+          <span>
+            <i class="icon iconfont icon-liti"></i>
+            <span>我的待办</span>
+          </span>
+        </div>
+        <toDoList ref="toDoList"/>
+      </div>
+      <!-- </van-pull-refresh> -->
     </section>
     <navFooter/>
   </div>
@@ -51,7 +58,7 @@
 <script>
 import search from "@/components/index/search";
 import toDoList from "@/components/toDoList/toDoList";
-import navFooter from "@/../src/components/footer/footer";
+import navFooter from "@/components/footer/footer";
 export default {
   components: {
     search,
@@ -60,10 +67,25 @@ export default {
   },
   data() {
     return {
-      isLoading: false
+      isLoading: false,
+      index: 1,
+      size: 15,
+      KYList: []
     };
   },
-  mounted() {},
+  mounted() {
+    var code = JSON.parse(localStorage.getItem("personnel"));
+    var para = {
+      人员编号: code.编号,
+      index: this.index,
+      size: this.size
+    };
+    this.$http.getToViewNewsList(para).then(res => {
+      res.data.list.forEach((item, index) => {
+        this.KYList.push(item);
+      });
+    });
+  },
   //https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5e45aca8fcb270f1&redirect_uri=http%3A%2F%2F192.168.0.157%3A8080%2F%23%2Flogin&response_type=code&scope=snsapi_base&state=undefined&connect_redirect=1#wechat_redirect
   //https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5e45aca8fcb270f1&redirect_uri=http%3A%2F%2F192.168.0.157%3A8080%2F%23&response_type=code&scope=snsapi_base&state=undefined&connect_redirect=1#wechat_redirect
   methods: {
@@ -98,8 +120,7 @@ export default {
     },
 
     more() {
-      // this.$router.push("/backlog");
-      console.log("更多通知");
+      this.$router.push("/KYMoreList");
     }
   },
   created() {
@@ -167,6 +188,25 @@ section {
 }
 .backlog > span {
   padding: 5px 0;
+}
+.backlogContent {
+  height: 32px;
+  font-size: 14px;
+  text-align: left;
+  background-color: #fffbe8;
+}
+.backlogContent span {
+  padding: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  color: #ed6a0c;
+  border-bottom: 1px solid #fff;
+}
+.backlogContent i {
+  padding-right: 5px;
 }
 .icon-liti,
 .icon-tongzhi1 {

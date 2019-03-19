@@ -1,7 +1,7 @@
 <template>
   <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" class="box">
     <div class="title">
-      <i class="icon iconfont icon-huiyi"></i>成果总览
+      <i class="icon iconfont icon-overview"></i>成果总览
     </div>
     <div class="backContentBox" v-for="(item, key) in lectureList" :key="key">
       <ul class="backContentTop" @click="goDetails(item,item.成果编号)">
@@ -64,9 +64,6 @@ export default {
         }
       }
     },
-    goMeetingsList() {
-      console.log("lt-ie9");
-    },
     // 截取时间
     startTime(item) {
       if (item != null) {
@@ -107,7 +104,7 @@ export default {
   background-color: #f5f3fb;
   .title {
     font-size: 14px;
-    padding: 10px 0;
+    padding: 10px;
     background-color: #fff;
     i {
       font-weight: 800;

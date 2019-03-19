@@ -1,11 +1,17 @@
 $(function () {
     var ParentIndex;
     var TwoIndex;
+    window.vm = null;
+    if (localStorage.Authorization == null) {
+        var authorization = JSON.parse(sessionStorage.Authorization);
+        localStorage.setItem('Authorization', JSON.stringify(authorization));
+    } else {
+        getMenuPermissions();
+    }
     window.mUserInfo = JSON.parse(localStorage.info).data;
     window.mUserId = mUserInfo.人员.编号;
-    console.info(mUserInfo);
     avalon.config({debug: false});
-    window.vm = null;
+
     avalon.ready(function () {
         window.vm = avalon.define({
             $id: 'root',
@@ -28,7 +34,6 @@ $(function () {
                     vm.hospital = JSON.parse(localStorage.info).dbKey;
                     window.mUserInfo = JSON.parse(localStorage.info).data;
                     var loginUrl = JSON.parse(localStorage.info).url;
-                    // get('info', 1000 * 60 * 20)//过期时间为20分钟
                     vm.loginUrl = loginUrl;
                     vm.newUrl = loginUrl.slice(7, 11);
                     vm.userInfo = mUserInfo.人员;
@@ -209,6 +214,30 @@ $(function () {
             sessionStorage.removeItem('userInfo');
             location.href = vm.getUrl(vm.loginUrl);
         }
+    }
+
+    function getMenuPermissions() {
+        Menu.getMenuPermissions('get', '', function getMenuPermissionsListener(success, obj, strErro) {
+            if (success) {
+                var curTime = new Date().getTime();
+                var url = localStorage.getItem('loginUrl');
+                localStorage.setItem('info', JSON.stringify({
+                    data: {
+                        人员: JSON.parse(localStorage.myUserInfo).人员,
+                        权限: obj
+                    },
+                    time: curTime,
+                    url: '/' + url + '.html',
+                    dbKey: JSON.parse(localStorage.myUserInfo).人员.DbKey
+                }));
+                sessionStorage.mUserId = obj.人员.编号;
+                console.info(localStorage.getItem('info'));
+                console.info('3333333-------');
+            } else {
+                console.info('获取菜单权限失败！');
+                console.info(strErro);
+            }
+        });
     }
 
     $('.bs-tooltip').tooltip();

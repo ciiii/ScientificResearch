@@ -1,7 +1,11 @@
 <template>
     <div class="page-news page-common">
         <div class="main wrapper">
-            <h4 class="title">云中漫步 News</h4>
+            <el-breadcrumb separator="/" class="nav">
+                <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+                <el-breadcrumb-item>爱医生新闻</el-breadcrumb-item>
+            </el-breadcrumb>
+            <h4 class="title">爱医生新闻 News</h4>
             <div class="screen-box">
                 <el-form ref="form" :model="req" :inline="true" class="demo-form-inline">
                     <el-form-item>
@@ -9,7 +13,7 @@
                             <i slot="prefix" class="el-input__icon el-icon-search"></i>
                         </el-input>
                     </el-form-item>
-                    <el-button  type="success" @click="search" size="medium">查询</el-button>
+                    <el-button class="btn-search" @click="search">查询</el-button>
                 </el-form>
             </div>
             <el-table class="tableone" border :data="tableData" stripe :header-cell-style="{'text-align':'center'}">
@@ -24,7 +28,8 @@
                 <el-table-column label="操作" align="center" width="80">
                     <template slot-scope="scope">
                         <el-tooltip content="查看详情" placement="bottom" effect="light">
-                            <el-button icon="el-icon-tickets" class="btn-details" circle @click="btnDetails(scope.row)"></el-button>
+                            <el-button icon="el-icon-tickets" class="btn-details" circle
+                                       @click="btnDetails(scope.row)"></el-button>
                         </el-tooltip>
                     </template>
                 </el-table-column>
@@ -58,7 +63,7 @@
             return {
                 req: {
                     Index: 1,
-                    Size: 20,
+                    Size: 16,
                     OrderType: false,
                     Like标题: '',
                 },
@@ -104,24 +109,5 @@
     }
 </script>
 <style lang="less" type='text/less' scoped>
-    .page-news{
-        .main{
-            .line{
-                text-align: center;
-            }
-            .a-title{
-                display: block;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-            }
-        }
-        .screen-box{
-            position: relative;
-            .btn-add{
-                left: 0;
-                top: 0;
-            }
-        }
-    }
+    @import "../assets/less/News";
 </style>

@@ -5,7 +5,6 @@
     </div>
     <div class="backContentBox" v-for="(item, key) in detailsList" :key="key">
       <ul class="backContentTop" @click="goDetails(item.编号)">
-        <!-- <van-checkbox :name="item"></van-checkbox> -->
         <li>{{item.论文标题}}</li>
         <li>
           <i class="icon iconfont icon-you"></i>
@@ -21,16 +20,13 @@
         <li>正式出版日期：{{startTime(item.论文正式出版日期)}}</li>
         <li>
           <span>认领人：{{item.认领人姓名}}</span>
-          <span @click="audit">审核</span>
+          <span @click="audit(item)" v-show="isShow">审核</span>
         </li>
       </ul>
     </div>
-    <van-popup v-model="show"  message='show' class="popup">
-      <Audit></Audit>
+    <van-popup v-model="show" class="popup">
+      <Audit :message="message" @getMessage="getMessage"></Audit>
     </van-popup>
-    <!-- <van-submit-bar button-text="全部通过" @submit="onSubmit">
-      <van-checkbox v-model="checked">全选</van-checkbox>
-    </van-submit-bar>-->
   </van-list>
 </template>
 <script>
@@ -47,8 +43,9 @@ export default {
       finished: false,
       detailsList: [],
       flag: "已完成-审核通过",
-      // checked: true,
-      show: false
+      show: false,
+      isShow: true,
+      message: ""
     };
   },
   created() {
@@ -58,10 +55,18 @@ export default {
     this.getPaperAll();
   },
   methods: {
+    // 子组件方法
+    getMessage() {
+      this.show = false;
+    },
     getPaperAll() {
       this.$http.getPaperAllList(this.index, this.size).then(res => {
-        console.log(res, "aaaaa");
         this.detailsList = res.data.list;
+        this.detailsList.forEach((item, index) => {
+          if (item.步骤状态说明 === "待审核") {
+            this.isShow = true;
+          }
+        });
       });
     },
     goDetails(item) {
@@ -73,14 +78,10 @@ export default {
         }
       });
     },
-    audit() {
-      // this.$router.push('/audit')
+    audit(item) {
+      this.message = item;
       this.show = true;
     },
-
-    // onSubmit() {
-    //   console.log("1122");
-    // },
     onLoad() {
       console.log("121");
     },
@@ -100,7 +101,7 @@ export default {
   background-color: #f5f3fb;
   .title {
     font-size: 14px;
-    padding: 10px 0;
+    padding: 10px;
     background-color: #fff;
     i {
       font-weight: 800;

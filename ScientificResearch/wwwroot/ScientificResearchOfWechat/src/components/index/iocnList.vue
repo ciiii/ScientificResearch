@@ -1,15 +1,13 @@
 <template>
   <ul>
-    <!-- <router-link :to="item.手机链接地址" v-for="(item,index) in iocnList" :key="index" tag="li">
-      <img :src="item.path">
-      <p>{{item.名称}}</p>
-    </router-link>-->
     <li v-for="(item,index) in iocnList" :key="index">
-      <a :href="item.手机链接地址" @click="path(item.手机链接地址)">
-        <img :src="item.path">
+      <a @click="path(item)">
+        <!-- <a @click="path(a)"> -->
+        <img :src="item.Logo" :alt="item.名称">
         <p>{{item.名称}}</p>
       </a>
     </li>
+    <!-- <img :src="item.path"> -->
   </ul>
 </template>
 <script>
@@ -17,15 +15,19 @@ export default {
   data() {
     return {
       iocnList: [],
-      imgList: {
-        中国知网: require("../../assets/images/iocn/1.png"),
-        万方医学网: require("../../assets/images/iocn/15.png"),
-        科研系统: require("../../assets/images/iocn/17.png"),
-        第一个测试服务: require("../../assets/images/iocn/3.png"),
-        测试服务22: require("../../assets/images/iocn/5.png"),
-        测试在是的: require("../../assets/images/iocn/6.png"),
-        default: require("../../assets/images/iocn/9.png")
+      a: {
+        手机链接地址: "https://www.baidu.com/s?ie=utf-8",
+        编号: 2013
       }
+      // imgList: {
+      //   中国知网: require("../../assets/images/iocn/1.png"),
+      //   万方医学网: require("../../assets/images/iocn/15.png"),
+      //   科研系统: require("../../assets/images/iocn/17.png"),
+      //   第一个测试服务: require("../../assets/images/iocn/3.png"),
+      //   测试服务22: require("../../assets/images/iocn/5.png"),
+      //   测试在是的: require("../../assets/images/iocn/6.png"),
+      //   default: require("../../assets/images/iocn/9.png")
+      // }
     };
   },
   mounted() {
@@ -39,25 +41,32 @@ export default {
         医院名称: name
       };
       this.$http.getServiceList(para).then(res => {
-        console.log(res, "2222");
+        // console.log(res, "2222");
         this.iocnList = res.data;
-        this.iocnList.forEach((item, index) => {
-          for (let path in this.imgList) {
-            if (path == item.名称) {
-              item.path = this.imgList[path];
-              break;
-            }
-            item.path = this.imgList.default;
-          }
-        });
+        // this.iocnList.forEach((item, index) => {
+        //   for (let path in this.imgList) {
+        //     if (path == item.名称) {
+        //       item.path = this.imgList[path];
+        //       break;
+        //     }
+        //     item.path = this.imgList.default;
+        //   }
+        // });
       });
     },
     path(item) {
-      if (item === null) {
+      if (item.手机链接地址 === null) {
         this.$toast.fail({
-          duration:1000,
+          duration: 1000,
           message: "请先购买服务!"
         });
+      } else {
+        var path = item.手机链接地址;
+        if (path.indexOf("?") != -1) {
+          this.$router.push(`/${path}&accountId=${item.编号}`);
+        } else {
+          this.$router.push(`/${path}?accountId=${item.编号}`);
+        }
       }
     }
   }
