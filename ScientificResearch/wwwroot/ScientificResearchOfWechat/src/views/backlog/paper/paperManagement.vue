@@ -19,11 +19,11 @@
           <span>{{item.影响因子}}</span>
         </li>
         <li>
-          <span>审核进度：</span>
+          <span>当前步骤：</span>
           <span id="contentSpan">{{item.步骤名称}} - {{item.步骤状态说明}}</span>
         </li>
         <li>
-          <span>当前步骤：</span>
+          <span>审核进度：</span>
           <span :style="{'color':(item.审核进度 == flag ? '#31BD5D' : '#FF976A')}">{{item.审核进度}}</span>
         </li>
         <li>

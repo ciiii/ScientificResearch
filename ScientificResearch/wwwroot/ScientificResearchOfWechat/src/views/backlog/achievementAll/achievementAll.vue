@@ -6,15 +6,10 @@
     <div class="backContentBox" v-for="(item, key) in lectureList" :key="key">
       <ul class="backContentTop" @click="goDetails(item,item.成果编号)">
         <li>{{item.成果名称}}</li>
-        <li>
-          <i class="icon iconfont icon-you"></i>
-        </li>
-      </ul>
-      <ul>
-        <li>成果类型：{{item.成果类型}}</li>
-        <li>发起人：{{item.发起人姓名}}</li>
-        <li>发起人部门：{{item.发起人部门名称}}</li>
-        <li>年度：{{item.年度}}</li>
+        <li><span>成果类型：</span><span>{{item.成果类型}}</span></li>
+        <li><span>发起人：</span><span>{{item.发起人姓名}}</span></li>
+        <li><span>发起人部门：</span><span>{{item.发起人部门名称}}</span></li>
+        <li><span>年度：</span><span>{{item.年度}}</span></li>
       </ul>
     </div>
     <ReturnBtn/>
@@ -114,109 +109,51 @@ export default {
     }
   }
   .backContentBox {
+    font-size: 14px;
     padding: 8px 15px;
     border: 1px dashed #ccc;
     background-color: #fff;
-    box-shadow: 6px 6px 6px #888888;
+    box-shadow: 6px 6px 6px #ccc;
     margin-bottom: 20px;
     .backContentTop {
-      display: flex;
-      font-weight: 800;
-      li:nth-child(1) {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-        flex-grow: 1;
-      }
-    }
-    ul {
-      font-size: 14px;
-      .contentLi {
-        color: #07c160;
-      }
       li {
-        display: flex;
         padding: 4px 0;
-        span:nth-child(2) {
-          text-align: right;
-        }
-        .auditBtn {
-          font-size: 12px;
-          text-align: right;
-          padding: 5px 12px;
-          background-color: #07c160;
-          border-radius: 5px;
-          color: #fff;
-        }
         span:nth-child(1) {
-          flex-grow: 1;
-          i {
-            color: rgb(6, 167, 6);
-          }
+          color: #888;
+        }
+        span:nth-child(2) {
+          color: #5a5a5a;
+        }
+        #contentSpan {
+          color: #ff976a;
         }
       }
-    }
-  }
-  .popup {
-    width: 100%;
-    height: 100%;
-    transform: none;
-    top: 0;
-    left: 0;
-    background-color: #f5f3fb;
-    .zanwu {
-      display: flex;
-      img {
-        margin: 0 auto;
-      }
-    }
-    .van-tab__pane {
-      padding: 10px;
-    }
-    .audit,
-    .servicel {
-      font-size: 14px;
-      padding: 10px;
-      margin-bottom: 20px;
-      border-bottom: 2px solid #ccc;
-      background-color: #fff;
-      h4 {
-        margin: 5px 0;
-        padding: 5px;
+      li:nth-child(1) {
+        font-weight: 800;
+        margin: 10px 0;
         color: #1296db;
-        background-color: #e7e7e7;
-      }
-      li {
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
-        padding: 5px 0;
-        display: flex;
-        span {
-          width: 50%;
-          justify-content: space-between;
-        }
-        i {
-          color: rgb(6, 167, 6);
-        }
+      }
+      li:nth-child(2) {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
       }
     }
-    .backtrack {
-      font-size: 14px;
+    .audit {
+      display: inline-block;
+      width: 26px;
+      font-size: 12px;
+      padding: 5px 12px;
+      background-color: #07c160;
+      border-radius: 5px;
       color: #fff;
-      width: 60px;
-      height: 20px;
-      padding: 5px;
-      text-align: center;
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      border-radius: 20px;
-      background-color: rgba(28, 134, 238, 0.5);
     }
   }
 }

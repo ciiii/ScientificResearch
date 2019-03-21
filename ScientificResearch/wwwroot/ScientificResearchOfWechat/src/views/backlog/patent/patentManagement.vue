@@ -7,21 +7,36 @@
       <ul class="backContentTop" @click="goDetails(item.编号)">
         <li>{{item.专利名称}}</li>
         <li>
-          <i class="icon iconfont icon-you"></i>
+          <span>审核进度：</span>
+          <span :style="{'color':(item.审核进度 == flag ? '#31BD5D' : '#FF976A')}">{{item.审核进度}}</span>
         </li>
-      </ul>
-      <ul>
-        <li>专利权人：{{item.专利权人名称}}</li>
-        <li>专利类型：{{item.专利类型}}</li>
-        <li>是否授权：{{conversionState(item.是否授权)}}</li>
-        <li>年度：{{item.年度}}</li>
-        <li>第一发明人：{{item.第一发明人}}</li>
-        <li class="contentSpan">审核进度：{{item.步骤名称}} - {{item.步骤状态说明}}</li>
         <li>
-          <span :style="{'color':(item.审核进度 == flag ? '#31BD5D' : '#FF976A')}">当前步骤：{{item.审核进度}}</span>
-          <span @click="audit(item)" v-show="isShow">审核</span>
+          <span>专利权人：</span>
+          <span>{{item.专利权人名称}}</span>
         </li>
+        <li>
+          <span>专利类型：</span>
+          <span>{{item.专利类型}}</span>
+        </li>
+        <li>
+          <span>是否授权：</span>
+          <span>{{conversionState(item.是否授权)}}</span>
+        </li>
+        <li>
+          <span>年度：</span>
+          <span>{{item.年度}}</span>
+        </li>
+        <li>
+          <span>第一发明人：</span>
+          <span>{{item.第一发明人}}</span>
+        </li>
+        <li>
+          <span>当前步骤：</span>
+          <span id="contentSpan">{{item.步骤名称}} - {{item.步骤状态说明}}</span>
+        </li>
+        
       </ul>
+      <span class="audit" @click="audit(item)" v-show="isShow">审核</span>
     </div>
     <van-popup v-model="show" class="popup">
       <Audit :message="message" @getMessage="getMessage"></Audit>
@@ -120,42 +135,48 @@ export default {
     }
   }
   .backContentBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 14px;
     padding: 8px 15px;
     border: 1px dashed #ccc;
     background-color: #fff;
-    box-shadow: 6px 6px 6px #888888;
+    box-shadow: 6px 6px 6px #ccc;
     margin-bottom: 20px;
     .backContentTop {
-      display: flex;
-      font-weight: 800;
+      padding: 4px 0;
+      li {
+        padding: 4px 0;
+        span:nth-child(1) {
+          color: #888;
+        }
+        span:nth-child(2) {
+          color: #5a5a5a;
+        }
+        #contentSpan {
+          color: #ff976a;
+        }
+      }
       li:nth-child(1) {
+        font-weight: 800;
+        margin: 10px 0;
+        color: #1296db;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
-        flex-grow: 1;
       }
     }
-    ul {
-      font-size: 14px;
-      li {
-        display: flex;
-        padding: 4px 0;
-        span:nth-child(1) {
-          flex-grow: 1;
-        }
-        span:nth-child(2) {
-          font-size: 12px;
-          padding: 5px 12px;
-          background-color: #07c160;
-          border-radius: 5px;
-          color: #fff;
-        }
-      }
-      .contentSpan {
-        color: #ff976a;
-      }
+    .audit {
+      display: inline-block;
+      width: 26px;
+      font-size: 12px;
+      padding: 5px 12px;
+      background-color: #07c160;
+      border-radius: 5px;
+      color: #fff;
     }
   }
   .popup {

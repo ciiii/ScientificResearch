@@ -4,29 +4,38 @@
       <i class="icon iconfont icon-shouquanicon"></i>著作管理
     </div>
     <div class="backContentBox" v-for="(item, key) in lectureList" :key="key">
-      <!-- <ul class="backContentTop" @click="goDetails(item.编号)">
-        <li>{{item.著作名称}}</li>
-        <li>
-          <i class="icon iconfont icon-you"></i>
-        </li>
-      </ul>-->
-      <!-- <div > -->
       <ul class="backContentTop" @click="goDetails(item.编号)">
         <li>{{item.著作名称}}</li>
-        <li>出版社名称：{{item.出版社名称}}</li>
-        <li>著作类型：{{item.著作类型}}</li>
-        <li>主编：{{item.主编}}</li>
-        <li>年度：{{item.年度}}</li>
-        <li class="contentSpan">审核进度：{{item.步骤名称}} - {{item.步骤状态说明}}</li>
-        <li :style="{'color':(item.审核进度 == flag ? '#31BD5D' : '#FF976A')}">当前步骤：{{item.审核进度}}</li>
         <li>
-          <span>出版日期:{{startTime(item.著作出版日期)}}</span>
+          <span>出版社名称：</span>
+          <span>{{item.出版社名称}}</span>
+        </li>
+        <li>
+          <span>著作类型：</span>
+          <span>{{item.著作类型}}</span>
+        </li>
+        <li>
+          <span>主编：</span>
+          <span>{{item.主编}}</span>
+        </li>
+        <li>
+          <span>年度：</span>
+          <span>{{item.年度}}</span>
+        </li>
+        <li>
+          <span>当前步骤：</span>
+          <span id="contentSpan">{{item.步骤名称}} - {{item.步骤状态说明}}</span>
+        </li>
+        <li>
+          <span>审核进度：</span>
+          <span :style="{'color':(item.审核进度 == flag ? '#31BD5D' : '#FF976A')}">{{item.审核进度}}</span>
+        </li>
+        <li>
+          <span>出版日期：</span>
+          <span>{{startTime(item.著作出版日期)}}</span>
         </li>
       </ul>
-      <!-- <div class="audit"> -->
       <span class="audit" @click="audit(item)" v-show="isShow">审核</span>
-      <!-- </div> -->
-      <!-- </div> -->
     </div>
     <van-popup v-model="show" class="popup">
       <Audit :message="message" @getMessage="getMessage"></Audit>
@@ -49,7 +58,7 @@ export default {
       finished: false,
       flag: "已完成-审核通过",
       show: false,
-      isShow: true,
+      isShow: false,
       message: ""
     };
   },
@@ -140,10 +149,38 @@ export default {
     border: 1px dashed #ccc;
     font-size: 14px;
     background-color: #fff;
-    box-shadow: 6px 6px 6px #888888;
+    box-shadow: 6px 6px 6px #ccc;
     margin-bottom: 20px;
     .backContentTop {
-      padding: 4px 0;
+      li {
+        padding: 4px 0;
+        span:nth-child(1) {
+          color: #888;
+        }
+        span:nth-child(2) {
+          color: #5a5a5a;
+        }
+        #contentSpan {
+          color: #ff976a;
+        }
+      }
+      li:nth-child(1) {
+        font-weight: 800;
+        margin: 10px 0;
+        color: #1296db;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+      }
+      li:nth-child(2) {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+      }
     }
     .audit {
       display: inline-block;
@@ -154,38 +191,6 @@ export default {
       border-radius: 5px;
       color: #fff;
     }
-    // .backContentTop {
-    //   display: flex;
-    //   font-weight: 800;
-    //   li:nth-child(1) {
-    //     overflow: hidden;
-    //     text-overflow: ellipsis;
-    //     display: -webkit-box;
-    //     -webkit-line-clamp: 1;
-    //     -webkit-box-orient: vertical;
-    //     flex-grow: 1;
-    //   }
-    // }
-    // ul {
-    //   font-size: 14px;
-    //   li {
-    //     display: flex;
-    //     padding: 4px 0;
-    //     span:nth-child(1) {
-    //       flex-grow: 1;
-    //     }
-    //     span:nth-child(2) {
-    //       font-size: 12px;
-    //       padding: 5px 12px;
-    //       background-color: #07c160;
-    //       border-radius: 5px;
-    //       color: #fff;
-    //     }
-    //   }
-    //   .contentSpan {
-    //     color: #ff976a;
-    //   }
-    // }
   }
   .popup {
     width: 85%;

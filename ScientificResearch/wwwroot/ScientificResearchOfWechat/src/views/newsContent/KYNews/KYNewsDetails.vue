@@ -19,21 +19,57 @@
       <van-tab title="基本信息">
         <h3>基本信息</h3>
         <ul class="servicel">
-          <li >通知名称：{{this.detailslList.通知名称}}</li>
-          <li>通知类型：{{this.detailslList.通知类型}}</li>
-          <li>发布人：{{this.detailslList.发送人姓名}}</li>
-          <li>部门：{{this.detailslList.发送人部门名称}}</li>
-          <li>接收人数：{{this.detailslList.接收人数}}</li>
-          <li>已接收人数：{{this.detailslList.已接收人数}}</li>
-          <li>是否必读：{{conversionState(this.detailslList.是否必读)}}</li>
-          <li>发布时间：{{startTime(this.detailslList.建立时间)}}</li>
-          <li>关闭时间：{{startTime(this.detailslList.关闭时间)}}</li>
-          <li>状态：{{conversionStateB(this.detailslList.是否启用)}}</li>
+          <li class="title">
+            <span>通知名称：</span>
+            <p>{{this.detailslList.通知名称}}</p>
+          </li>
+          <li>
+            <span>通知类型：</span>
+            <span>{{this.detailslList.通知类型}}</span>
+          </li>
+          <li>
+            <span>发布人：</span>
+            <span>{{this.detailslList.发送人姓名}}</span>
+          </li>
+          <li>
+            <span>部门：</span>
+            <span>{{this.detailslList.发送人部门名称}}</span>
+          </li>
+          <li>
+            <span>接收人数：</span>
+            <span>{{this.detailslList.接收人数}}</span>
+          </li>
+          <li>
+            <span>已接收人数：</span>
+            <span>{{this.detailslList.已接收人数}}</span>
+          </li>
+          <li>
+            <span>是否必读：</span>
+            <span>{{conversionState(this.detailslList.是否必读)}}</span>
+          </li>
+          <li>
+            <span>发布时间：</span>
+            <span>{{startTime(this.detailslList.建立时间)}}</span>
+          </li>
+          <li>
+            <span>关闭时间：</span>
+            <span>{{startTime(this.detailslList.关闭时间)}}</span>
+          </li>
+          <li>
+            <span>状态：</span>
+            <span>{{conversionStateB(this.detailslList.是否启用)}}</span>
+          </li>
         </ul>
         <h3>接受条件</h3>
         <ul class="servicel" v-for="(item,key) in relatedProjects" :key="key">
-          <li>接收者类型：{{item.接收者类型名称}}</li>
-          <li>接收者：{{item.接收者名称}}</li>
+          <li>
+            <span>接收者类型：</span>
+            <span>{{item.接收者类型名称}}</span>
+          </li>
+          <li>
+            <span>接收者：</span>
+            <span>{{item.接收者名称}}</span>
+          </li>
         </ul>
       </van-tab>
       <ReturnBtn/>
@@ -63,7 +99,7 @@ export default {
         编号: this.$route.params.item
       };
       this.$http.getKYNewsDetails(para).then(res => {
-        console.log(res,"dddff")
+        console.log(res, "dddff");
         this.detailslList = res.data.通知公告;
         this.relatedProjects = res.data.接收条件;
       });
@@ -84,7 +120,7 @@ export default {
     },
     conversionStateB(item) {
       return item == true ? "正常" : item == false ? "未启用" : " ";
-    },
+    }
   }
 };
 </script>
@@ -108,6 +144,27 @@ export default {
     margin-bottom: 20px;
     border-bottom: 2px solid #ccc;
     background-color: #fff;
+    li {
+      padding: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #f2f2f2;
+      p {
+        width: 78%;
+        color: #5a5a5a;
+        margin: 0;
+      }
+      span:nth-child(1) {
+        color: #888;
+      }
+      span:nth-child(2) {
+        color: #5a5a5a;
+      }
+    }
+    .title span{
+      display: flex;
+      align-items: center; 
+    }
     /deep/ img {
       max-width: 100%;
       height: auto;

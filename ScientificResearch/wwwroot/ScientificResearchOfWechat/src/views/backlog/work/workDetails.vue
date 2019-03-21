@@ -3,62 +3,128 @@
     <van-tab title="著作信息">
       <ul class="servicel">
         <h4>基本信息</h4>
-        <li>著作名称：
-          <p>{{this.detailslList.著作名称}}</p>
-        </li>
-        <li>出版社名称：{{this.detailslList.出版社名称}}</li>
-        <li>出版日期：{{startTime(this.detailslList.著作出版日期)}}</li>
         <li>
-          <span>著作形式：{{this.detailslList.著作形式}}</span>
-          <span>年度：{{this.detailslList.年度}}</span>
-        </li>
-        <li>奖励情况：{{this.detailslList.奖励情况}}</li>
-        <li>出版地：{{this.detailslList.出版地}}</li>
-        <li>出版社级别：{{this.detailslList.出版社级别}}</li>
-        <li>
-          <span>ISBN号：{{this.detailslList.ISBN号}}</span>
-          <span>著作字数：{{this.detailslList.著作字数}}</span>
+          <span>著作名称</span>
+          <span>
+            <p>{{this.detailslList.著作名称}}</p>
+          </span>
         </li>
         <li>
-          <span>著作类型：{{this.detailslList.著作类型}}</span>
-          <span>语种：{{this.detailslList.语种}}</span>
+          <span>出版社名称</span>
+          <span>{{this.detailslList.出版社名称}}</span>
         </li>
         <li>
-          <span>是否译为外文：{{conversionState(this.detailslList.是否译为外文)}}</span>
-          <span>学科门类：{{this.detailslList.学科门类}}</span>
+          <span>出版日期</span>
+          <span>{{startTime(this.detailslList.著作出版日期)}}</span>
         </li>
         <li>
-          <span>一级学科：{{this.detailslList.一级学科}}</span>
-          <span>二级学科：{{this.detailslList.二级学科}}</span>
+          <span>著作形式</span>
+          <span>{{this.detailslList.著作形式}}</span>
         </li>
         <li>
-          <span>三级学科：{{this.detailslList.三级学科}}</span>
-          <span>作者人数：{{this.detailslList.作者人数}}</span>
+          <span>年度</span>
+          <span>{{this.detailslList.年度}}</span>
         </li>
-        <li>发行价(元)：￥{{NumFormat(this.detailslList.发行价)}}</li>
+        <li>
+          <span>奖励情况</span>
+          <span>{{this.detailslList.奖励情况}}</span>
+        </li>
+        <li>
+          <span>出版地</span>
+          <span>{{this.detailslList.出版地}}</span>
+        </li>
+        <li>
+          <span>出版社级别</span>
+          <span>{{this.detailslList.出版社级别}}</span>
+        </li>
+        <li>
+          <span>ISBN号</span>
+          <span>{{this.detailslList.ISBN号}}</span>
+        </li>
+        <li>
+          <span>著作字数</span>
+          <span>{{this.detailslList.著作字数}}</span>
+        </li>
+        <li>
+          <span>著作类型</span>
+          <span>{{this.detailslList.著作类型}}</span>
+        </li>
+        <li>
+          <span>语种</span>
+          <span>{{this.detailslList.语种}}</span>
+        </li>
+        <li>
+          <span>是否译为外文</span>
+          <span>{{conversionState(this.detailslList.是否译为外文)}}</span>
+        </li>
+        <li>
+          <span>学科门类</span>
+          <span>{{this.detailslList.学科门类}}</span>
+        </li>
+        <li>
+          <span>一级学科</span>
+          <span>{{this.detailslList.一级学科}}</span>
+        </li>
+        <li>
+          <span>二级学科</span>
+          <span>{{this.detailslList.二级学科}}</span>
+        </li>
+        <li>
+          <span>三级学科</span>
+          <span>{{this.detailslList.三级学科}}</span>
+        </li>
+        <li>
+          <span>作者人数</span>
+          <span>{{this.detailslList.作者人数}}</span>
+        </li>
+        <li>
+          <span>发行价(元)</span>
+          <span>{{NumFormat(this.detailslList.发行价)}}</span>
+        </li>
       </ul>
     </van-tab>
     <van-tab title="相关项目">
       <div v-if="relatedProjects.length == 0" class="zanwu">
-        <img src="../../../assets/images/nothing-3.png" alt>
+        <img src="@/assets/images/nothing-3.png" alt>
       </div>
       <ul class="servicel" v-else v-for="(item,key) in relatedProjects" :key="key">
         <h4>相关项目</h4>
-        <li>项目名称：{{item.项目名称}}</li>
-        <li>项目编号：{{item.项目编号}}</li>
-        <li>项目类型名称：{{item.项目类型名称}}</li>
+        <li>
+          <span>项目名称</span>
+          <span>{{item.项目名称}}</span>
+        </li>
+        <li>
+          <span>项目编号</span>
+          <span>{{item.项目编号}}</span>
+        </li>
+        <li>
+          <span>项目类型名称</span>
+          <span>{{item.项目类型名称}}</span>
+        </li>
       </ul>
     </van-tab>
     <van-tab title="作者信息">
       <div v-if="authorInformation.length == 0" class="zanwu">
-        <img src="../../../assets/images/nothing-3.png" alt>
+        <img src="@/assets/images/nothing-3.png" alt>
       </div>
       <ul class="servicel" v-else v-for="(item,key) in authorInformation" :key="key">
         <h4>相关项目</h4>
-        <li>作者姓名：{{item.姓名}}</li>
-        <li>部门名称：{{item.部门名称}}</li>
-        <li>作者级别：{{item.作者级别}}</li>
-        <li>工作量占比(%)：{{item.工作量占比}}</li>
+        <li>
+          <span>作者姓名</span>
+          <span>{{item.姓名}}</span>
+        </li>
+        <li>
+          <span>部门名称</span>
+          <span>{{item.部门名称}}</span>
+        </li>
+        <li>
+          <span>作者级别</span>
+          <span>{{item.作者级别}}</span>
+        </li>
+        <li>
+          <span>工作量占比(%)</span>
+          <span>{{item.工作量占比}}</span>
+        </li>
       </ul>
     </van-tab>
     <van-tab title="相关文件">
@@ -107,19 +173,32 @@
     </van-tab>
     <van-tab title="审核记录">
       <div v-if="auditRecords.length == 0" class="zanwu">
-        <img src="../../../assets/images/nothing-3.png" alt>
+        <img src="@/assets/images/nothing-3.png" alt>
       </div>
       <ul v-for="(item,key) in auditRecords" :key="key" v-else class="audit">
-        <li>步骤名称：{{item.名称}}</li>
-        <li>处理人：{{item.姓名}}</li>
+        <li>
+          <span>步骤名称</span>
+          <span>{{item.名称}}</span>
+        </li>
+        <li>
+          <span>处理人</span>
+          <span>{{item.姓名}}</span>
+        </li>
         <li class="state">
+          <span>状态</span>
           <span :style="{'color':(item.状态说明 == flag ? '#31BD5D' : '#FF976A')}">{{item.状态说明}}</span>
+        </li>
+        <li>
+          <span>执行时间</span>
           <span>
             <i class="icon iconfont icon-shijian1"></i>
             {{startTimeB(item.执行时间)}}
           </span>
         </li>
-        <li>备注：{{item.备注}}</li>
+        <li>
+          <span>备注</span>
+          <span>{{item.备注}}</span>
+        </li>
       </ul>
     </van-tab>
     <ReturnBtn/>
@@ -136,7 +215,7 @@ export default {
       authorInformation: [],
       auditRecords: [],
       active: 0,
-      flag: "已完成-审核通过"
+      flag: "审核通过"
     };
   },
   created() {
@@ -217,22 +296,24 @@ export default {
       background-color: #e7e7e7;
     }
     li {
-      padding: 5px 0;
+      padding: 10px 0;
       display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #f2f2f2;
       p {
         font-size: 14px;
         margin: 0;
-        width: 79%;
-        justify-content: space-between;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
       }
-      span {
-        width: 50%;
-        justify-content: space-between;
+      span:nth-child(1) {
+        color: #888;
+      }
+      span:nth-child(2) {
+        color: #5a5a5a;
       }
       i {
         color: rgb(6, 167, 6);

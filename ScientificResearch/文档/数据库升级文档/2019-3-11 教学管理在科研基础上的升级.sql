@@ -2339,7 +2339,7 @@ GO
 ALTER TABLE [dbo].[教学专业科室] ADD  CONSTRAINT [DF_教学专业科室_最低管床数量]  DEFAULT ((0)) FOR [最低管床数量];
 GO
 
-ALTER TABLE [dbo].[教学专业科室] ADD  CONSTRAINT [DF_教学专业科室_全程管理数量]  DEFAULT ((0)) FOR [全程管理数量];
+ALTER TABLE [dbo].[教学专业科室] ADD  CONSTRAINT [DF_教学专业科室_全程管理数量]  DEFAULT ((0)) FOR [最低全程管理数量];
 GO
 
 
@@ -2487,8 +2487,8 @@ CREATE TABLE [dbo].[教学专业科室要求]
     (
       [编号] [INT] IDENTITY(1, 1)
                  NOT NULL ,
-      [教学科室编号] [INT] NOT NULL ,
-      [项目名称] [NVARCHAR](50) NOT NULL ,
+      [教学专业科室编号] [INT] NOT NULL ,
+      [项目名称] [NVARCHAR](500) NOT NULL ,
       [说明] [NVARCHAR](200) NULL ,
       [最低评分要求] [INT] NOT NULL ,
       [备注] [NVARCHAR](500) NULL ,

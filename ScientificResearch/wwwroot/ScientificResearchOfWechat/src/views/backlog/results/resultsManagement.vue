@@ -7,24 +7,47 @@
       <ul class="backContentTop" @click="goDetails(item.编号)">
         <li>{{item.获奖名称}}</li>
         <li>
-          <i class="icon iconfont icon-you"></i>
+          <span>获奖级别：</span>
+          <span>{{item.获奖级别}}</span>
         </li>
-      </ul>
-      <ul>
-        <li>获奖级别：{{item.获奖级别}}</li>
-        <li>获奖类别：{{item.获奖类别}}</li>
-        <li>获奖等级：{{item.获奖等级}}</li>
-        <li>颁奖单位：{{item.颁奖单位}}</li>
-        <li>第一发明人：{{item.第一发明人}}</li>
-        <li>第一完成人：{{item.第一完成人}}</li>
-        <li>获奖日期：{{startTime(item.获奖日期)}}</li>
-        <li>年度：{{item.年度}}</li>
-        <li class="contentSpan">审核进度：{{item.步骤名称}} - {{item.步骤状态说明}}</li>
         <li>
-          <span :style="{'color':(item.审核进度 == flag ? '#31BD5D' : '#FF976A')}">当前步骤：{{item.审核进度}}</span>
-          <span @click="audit(item)" v-show="isShow">审核</span>
+          <span>获奖类别：</span>
+          <span>{{item.获奖类别}}</span>
+        </li>
+        <li>
+          <span>获奖等级：</span>
+          <span>{{item.获奖等级}}</span>
+        </li>
+        <li>
+          <span>颁奖单位：</span>
+          <span>{{item.颁奖单位}}</span>
+        </li>
+        <li>
+          <span>第一发明人：</span>
+          <span>{{item.第一发明人}}</span>
+        </li>
+        <li>
+          <span>第一完成人：</span>
+          <span>{{item.第一完成人}}</span>
+        </li>
+        <li>
+          <span>获奖日期：</span>
+          <span>{{startTime(item.获奖日期)}}</span>
+        </li>
+        <li>
+          <span>年度：</span>
+          <span>{{item.年度}}</span>
+        </li>
+        <li>
+          <span>当前步骤：</span>
+          <span id="contentSpan">{{item.步骤名称}} - {{item.步骤状态说明}}</span>
+        </li>
+        <li>
+          <span>审核进度：</span>
+          <span :style="{'color':(item.审核进度 == flag ? '#31BD5D' : '#FF976A')}">{{item.审核进度}}</span>
         </li>
       </ul>
+      <span class="audit" @click="audit(item)" v-show="isShow">审核</span>
     </div>
     <van-popup v-model="show" class="popup">
       <Audit :message="message" @getMessage="getMessage"></Audit>
@@ -128,42 +151,47 @@ export default {
     }
   }
   .backContentBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
     padding: 8px 15px;
     border: 1px dashed #ccc;
     background-color: #fff;
-    box-shadow: 6px 6px 6px #888888;
+    box-shadow: 6px 6px 6px #ccc;
     margin-bottom: 20px;
     .backContentTop {
-      display: flex;
-      font-weight: 800;
+      font-size: 14px;
+      li {
+        padding: 4px 0;
+        span:nth-child(1) {
+          color: #888;
+        }
+        span:nth-child(2) {
+          color: #5a5a5a;
+        }
+        #contentSpan {
+          color: #ff976a;
+        }
+      }
       li:nth-child(1) {
+        font-weight: 800;
+        color: #1296db;
+        margin: 10px 0;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
-        flex-grow: 1;
       }
     }
-    ul {
-      font-size: 14px;
-      li {
-        display: flex;
-        padding: 4px 0;
-        span:nth-child(1) {
-          flex-grow: 1;
-        }
-        span:nth-child(2) {
-          font-size: 12px;
-          padding: 5px 12px;
-          background-color: #07c160;
-          border-radius: 5px;
-          color: #fff;
-        }
-      }
-      .contentSpan {
-        color: #ff976a;
-      }
+    .audit {
+      display: inline-block;
+      width: 26px;
+      font-size: 12px;
+      padding: 5px 12px;
+      background-color: #07c160;
+      border-radius: 5px;
+      color: #fff;
     }
   }
   .popup {

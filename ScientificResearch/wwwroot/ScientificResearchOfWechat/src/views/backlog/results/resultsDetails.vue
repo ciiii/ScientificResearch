@@ -3,39 +3,108 @@
     <van-tab title="基本信息">
       <ul class="servicel">
         <h4>基本信息</h4>
-        <li>获奖名称：
-          <p>{{this.detailslList.获奖名称}}</p>
+        <li>
+          <span>获奖名称</span>
+          <span>
+            <p>{{this.detailslList.获奖名称}}</p>
+          </span>
         </li>
-        <li>获奖类别：{{this.detailslList.获奖类别}}</li>
-        <li>获奖级别：{{this.detailslList.获奖级别}}</li>
-        <li>获奖日期：{{startTime(this.detailslList.获奖日期)}}</li>
-        <li>获奖等级：{{this.detailslList.获奖等级}}</li>
-        <li>奖励情况：{{this.detailslList.奖励情况}}</li>
-        <li>联系人：{{this.detailslList.联系人}}</li>
-        <li>联系人手机：{{this.detailslList.联系人手机}}</li>
-        <li>项目开始时间：{{startTime(this.detailslList.项目开始时间)}}</li>
-        <li>项目结束时间：{{startTime(this.detailslList.项目结束时间)}}</li>
-        <li>应用开始时间：{{startTime(this.detailslList.应用开始时间)}}</li>
-        <li>应用结束时间：{{startTime(this.detailslList.应用结束时间)}}</li>
-        <li>年度：{{this.detailslList.年度}}</li>
-        <li>批文时间：{{startTime(this.detailslList.批文时间)}}</li>
-        <li>颁奖单位：{{this.detailslList.颁奖单位}}</li>
-        <li>完成人数：{{this.detailslList.完成人数}} 人</li>
-        <li>获奖证书编号：{{this.detailslList.获奖证书编号}}</li>
-        <li>获奖摘要：{{this.detailslList.获奖摘要}}</li>
-        <li>备注：{{this.detailslList.备注}}</li>
+        <li>
+          <span>获奖类别</span>
+          <span>{{this.detailslList.获奖类别}}</span>
+        </li>
+        <li>
+          <span>获奖级别</span>
+          <span>{{this.detailslList.获奖级别}}</span>
+        </li>
+        <li>
+          <span>获奖日期</span>
+          <span>{{startTime(this.detailslList.获奖日期)}}</span>
+        </li>
+        <li>
+          <span>获奖等级</span>
+          <span>{{this.detailslList.获奖等级}}</span>
+        </li>
+        <li>
+          <span>奖励情况</span>
+          <span>{{this.detailslList.奖励情况}}</span>
+        </li>
+        <li>
+          <span>联系人</span>
+          <span>{{this.detailslList.联系人}}</span>
+        </li>
+        <li>
+          <span>联系人手机</span>
+          <span>{{this.detailslList.联系人手机}}</span>
+        </li>
+        <li>
+          <span>项目开始时间</span>
+          <span>{{startTime(this.detailslList.项目开始时间)}}</span>
+        </li>
+        <li>
+          <span>项目结束时间</span>
+          <span>{{startTime(this.detailslList.项目结束时间)}}</span>
+        </li>
+        <li>
+          <span>应用开始时间</span>
+          <span>{{startTime(this.detailslList.应用开始时间)}}</span>
+        </li>
+        <li>
+          <span>应用结束时间</span>
+          <span>{{startTime(this.detailslList.应用结束时间)}}</span>
+        </li>
+        <li>
+          <span>年度</span>
+          <span>{{this.detailslList.年度}}</span>
+        </li>
+        <li>
+          <span>批文时间</span>
+          <span>{{startTime(this.detailslList.批文时间)}}</span>
+        </li>
+        <li>
+          <span>颁奖单位</span>
+          <span>{{this.detailslList.颁奖单位}}</span>
+        </li>
+        <li>
+          <span>完成人数</span>
+          <span>{{this.detailslList.完成人数}} 人</span>
+        </li>
+        <li>
+          <span>获奖证书编号</span>
+          <span>{{this.detailslList.获奖证书编号}}</span>
+        </li>
+        <li>
+          <span>获奖摘要</span>
+          <span>{{this.detailslList.获奖摘要}}</span>
+        </li>
+        <li>
+          <span>备注</span>
+          <span>{{this.detailslList.备注}}</span>
+        </li>
       </ul>
     </van-tab>
     <van-tab title="完成人信息">
       <div v-if="authorInformation.length == 0" class="zanwu">
-        <img src="../../../assets/images/nothing-3.png" alt>
+        <img src="@/assets/images/nothing-3.png" alt>
       </div>
       <ul class="servicel" v-else v-for="(item,key) in authorInformation" :key="key">
         <h4>相关项目</h4>
-        <li>完成人姓名：{{item.姓名}}</li>
-        <li>部门名称：{{item.部门名称}}</li>
-        <li>完成人排序：{{item.作者级别}}</li>
-        <li>工作量占比(%)：{{item.工作量占比}}</li>
+        <li>
+          <span>完成人姓名</span>
+          <span>{{item.姓名}}</span>
+        </li>
+        <li>
+          <span>部门名称</span>
+          <span>{{item.部门名称}}</span>
+        </li>
+        <li>
+          <span>完成人排序</span>
+          <span>{{item.作者级别}}</span>
+        </li>
+        <li>
+          <span>工作量占比(%)</span>
+          <span>{{item.工作量占比}}</span>
+        </li>
       </ul>
     </van-tab>
     <van-tab title="相关文件">
@@ -62,30 +131,52 @@
     </van-tab>
     <van-tab title="相关项目">
       <div v-if="relatedProjects.length == 0" class="zanwu">
-        <img src="../../../assets/images/nothing-3.png" alt>
+        <img src="@/assets/images/nothing-3.png" alt>
       </div>
       <ul class="servicel" v-else v-for="(item,key) in relatedProjects" :key="key">
         <h4>相关项目</h4>
-        <li>项目名称：{{item.项目名称}}</li>
-        <li>项目编号：{{item.项目编号}}</li>
-        <li>项目类型名称：{{item.项目类型名称}}</li>
+        <li>
+          <span>项目名称</span>
+          <span>{{item.项目名称}}</span>
+        </li>
+        <li>
+          <span>项目编号</span>
+          <span>{{item.项目编号}}</span>
+        </li>
+        <li>
+          <span>项目类型名称</span>
+          <span>{{item.项目类型名称}}</span>
+        </li>
       </ul>
     </van-tab>
     <van-tab title="审核记录">
       <div v-if="auditRecords.length == 0" class="zanwu">
-        <img src="../../../assets/images/nothing-3.png" alt>
+        <img src="@/assets/images/nothing-3.png" alt>
       </div>
       <ul v-for="(item,key) in auditRecords" :key="key" v-else class="audit">
-        <li>步骤名称：{{item.名称}}</li>
-        <li>处理人：{{item.姓名}}</li>
-        <li class="state">
+        <li>
+          <span>步骤名称</span>
+          <span>{{item.名称}}</span>
+        </li>
+        <li>
+          <span>处理人</span>
+          <span>{{item.姓名}}</span>
+        </li>
+        <li>
+          <span>状态</span>
           <span :style="{'color':(item.状态说明 == state ? '#31BD5D' : '#FF976A')}">{{item.状态说明}}</span>
+        </li>
+        <li>
+          <span>执行时间</span>
           <span>
             <i class="icon iconfont icon-shijian1"></i>
             {{startTimeB(item.执行时间)}}
           </span>
         </li>
-        <li>备注：{{item.备注}}</li>
+        <li>
+          <span>备注</span>
+          <span>{{item.备注}}</span>
+        </li>
       </ul>
     </van-tab>
     <ReturnBtn/>
@@ -174,22 +265,24 @@ export default {
       background-color: #e7e7e7;
     }
     li {
-      padding: 5px 0;
+      padding: 10px 0;
       display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #f2f2f2;
       p {
         font-size: 14px;
         margin: 0;
-        width: 79%;
-        justify-content: space-between;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
       }
-      span {
-        width: 50%;
-        justify-content: space-between;
+      span:nth-child(1) {
+        color: #888;
+      }
+      span:nth-child(2) {
+        color: #5a5a5a;
       }
       i {
         color: rgb(6, 167, 6);

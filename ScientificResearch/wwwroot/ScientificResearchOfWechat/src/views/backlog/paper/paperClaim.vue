@@ -19,7 +19,7 @@
           <span>{{startTime(item.论文正式出版日期)}}</span>
         </li>
         <li>
-          <span>第一作者</span>
+          <span>第一作者：</span>
           <span>{{item.第一作者}}</span>
         </li>
       </ul>

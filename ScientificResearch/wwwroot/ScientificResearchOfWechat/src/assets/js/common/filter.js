@@ -1,5 +1,5 @@
 export function NumFormat(value) {
-    if (!value) return '0.00';
+    if (!value) return "￥" + '0.00';
     var intPart = Number(value) | 0; //获取整数部分
     var intPartFormat = intPart.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,'); //将整数部分逢三一断
     var floatPart = ".00"; //预定义小数部分
