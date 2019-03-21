@@ -7,26 +7,46 @@
       <ul class="backContentTop" @click="goDetails(item.编号)">
         <li>{{item.论文标题}}</li>
         <li>
-          <i class="icon iconfont icon-you"></i>
+          <span>刊物名称：</span>
+          <span>{{item.刊物名称}}</span>
         </li>
-      </ul>
-      <ul>
-        <li>刊物名称：{{item.刊物名称}}</li>
-        <li>第一作者：{{item.第一作者}}</li>
-        <li>影响因子:{{item.影响因子}}</li>
-        <li class="contentSpan">审核进度：{{item.步骤名称}} - {{item.步骤状态说明}}</li>
-        <li :style="{'color':(item.审核进度 == flag ? '#31BD5D' : '#FF976A')}">当前步骤：{{item.审核进度}}</li>
-        <li>Online日期：{{startTime(item.论文Online日期)}}</li>
-        <li>正式出版日期：{{startTime(item.论文正式出版日期)}}</li>
         <li>
-          <span>认领人：{{item.认领人姓名}}</span>
-          <span @click="audit(item)" v-show="isShow">审核</span>
+          <span>第一作者：</span>
+          <span>{{item.第一作者}}</span>
+        </li>
+        <li>
+          <span>影响因子</span>
+          <span>{{item.影响因子}}</span>
+        </li>
+        <li>
+          <span>审核进度：</span>
+          <span id="contentSpan">{{item.步骤名称}} - {{item.步骤状态说明}}</span>
+        </li>
+        <li>
+          <span>当前步骤：</span>
+          <span :style="{'color':(item.审核进度 == flag ? '#31BD5D' : '#FF976A')}">{{item.审核进度}}</span>
+        </li>
+        <li>
+          <span>Online日期：</span>
+          <span>{{startTime(item.论文Online日期)}}</span>
+        </li>
+        <li>
+          <span>正式出版日期：</span>
+          <span>{{startTime(item.论文正式出版日期)}}</span>
+        </li>
+        <li>
+          <span>认领人：</span>
+          <span>{{item.认领人姓名}}</span>
         </li>
       </ul>
+      <div class="audit">
+        <span @click="audit(item)" v-show="isShow">审核</span>
+      </div>
     </div>
     <van-popup v-model="show" class="popup">
       <Audit :message="message" @getMessage="getMessage"></Audit>
     </van-popup>
+    <ReturnBtn/>
   </van-list>
 </template>
 <script>
@@ -44,7 +64,7 @@ export default {
       detailsList: [],
       flag: "已完成-审核通过",
       show: false,
-      isShow: true,
+      isShow: false,
       message: ""
     };
   },
@@ -110,46 +130,58 @@ export default {
     }
   }
   .backContentBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
     padding: 10px 15px;
+    font-size: 14px;
     border: 1px dashed #ccc;
     background-color: #fff;
-    box-shadow: 6px 6px 6px #888888;
+    box-shadow: 6px 6px 6px #ccc;
     margin-bottom: 20px;
     .backContentTop {
-      display: flex;
-      font-weight: 800;
+      li {
+        font-size: 14px;
+        padding: 4px 0;
+        span:nth-child(1) {
+          color: #888;
+        }
+        span:nth-child(2) {
+          color: #5a5a5a;
+        }
+      }
       li:nth-child(1) {
+        margin: 10px 0;
+        font-weight: 800;
+        color: #1296db;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
-        flex-grow: 1;
       }
-    }
-    ul {
-      font-size: 14px;
-      li {
-        display: flex;
-        padding: 4px 0;
-        span:nth-child(1) {
-          flex-grow: 1;
-        }
-        span:nth-child(2) {
-          font-size: 12px;
-          padding: 5px 12px;
-          background-color: #07c160;
-          border-radius: 5px;
-          color: #fff;
-        }
+      li:nth-child(2) {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
       }
-      .contentSpan {
+      #contentSpan {
         color: #ff976a;
       }
     }
-  }
-  .van-checkbox {
-    padding-left: 10px;
+    .audit {
+      span {
+        display: inline-block;
+        width: 32px;
+        font-size: 14px;
+        padding: 8px 16px;
+        background-color: #07c160;
+        border-radius: 5px;
+        color: #fff;
+      }
+    }
   }
   .popup {
     width: 85%;

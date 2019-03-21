@@ -111,8 +111,9 @@ export default {
 .box {
   i {
     position: absolute;
-    top: 25px;
+    top: 18px;
     right: 20px;
+    font-size: 20px;
   }
   padding: 10px 0;
   .btn {

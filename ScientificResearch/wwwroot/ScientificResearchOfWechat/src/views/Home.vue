@@ -21,7 +21,6 @@
             </li>
             <li>
               <i class="icon iconfont icon-tongzhi"></i>
-              <!-- <span>精选</span> -->
               {{startTime(item.建立时间)}}
             </li>
           </ul>

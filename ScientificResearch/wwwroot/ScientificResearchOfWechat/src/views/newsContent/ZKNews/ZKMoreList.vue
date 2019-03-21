@@ -7,7 +7,6 @@
       </li>
       <li>
         <i class="icon iconfont icon-tongzhi"></i>
-        <!-- <span>精选</span> -->
         {{startTime(item.建立时间)}}
       </li>
     </ul>
@@ -30,7 +29,7 @@ export default {
     document.title = "总库新闻列表";
   },
   mounted() {
-      this.getPrimaryNews();
+    this.getPrimaryNews();
   },
   methods: {
     getPrimaryNews() {
@@ -61,7 +60,7 @@ export default {
       });
     },
     onLoad() {
-    //   console.log("下拉刷新！");
+      //   console.log("下拉刷新！");
       this.loading = false;
       //   let postInfoUp = {
       //     data: {
@@ -74,13 +73,13 @@ export default {
       //   this.getPrimaryNews(postInfoUp);
     },
     newsDetails(item) {
-        this.$router.push({
-            path:'/ZKNewsDetails',
-            name:'ZKNewsDetails',
-            params:{
-                item
-            }
-        })
+      this.$router.push({
+        path: "/ZKNewsDetails",
+        name: "ZKNewsDetails",
+        params: {
+          item
+        }
+      });
     },
     // 截取时间
     startTime(item) {

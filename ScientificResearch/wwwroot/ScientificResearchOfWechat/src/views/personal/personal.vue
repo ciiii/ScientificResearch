@@ -2,15 +2,16 @@
   <div>
     <div class="box">
       <div class="content" @click="toAccountChange">
-        <img src="../../assets/images/6b9321ffgw.jpg" alt="头像">
-        <p>这里是显示用户名的</p>
+        <img src="@/assets/images/6b9321ffgw.jpg" alt="头像">
+        <p>{{this.list.姓名}} -<small>（{{this.list.工号}}）</small></p>
+        <span>{{this.list.部门名称}}</span>
       </div>
       <div class="account">
         <van-cell title="账户修改" icon="manager-o" is-link to="/accountChange"/>
         <van-cell title="密码修改" icon="closed-eye" is-link to="/changePWD"/>
       </div>
       <div class="account">
-        <van-cell title="参加会议次数" icon="bar-chart-o" value="12" to='/'/>
+        <van-cell title="参加会议次数" icon="bar-chart-o" value="12"/>
       </div>
       <div class="account">
         <van-cell title="我的项目数" icon="apps-o" value="10"/>
@@ -21,18 +22,22 @@
   </div>
 </template>
 <script>
-import navFooter from "@/../src/components/footer/footer";
+import navFooter from "@/components/footer/footer";
 export default {
   components: {
     navFooter
   },
   data() {
-    return {};
+    return {
+      list:[],
+    };
   },
   created() {
     document.title = "科研管理 - 个人中心";
   },
-  mounted() {},
+  mounted() {
+    this.list = JSON.parse(localStorage.getItem("personnel"));
+  },
   methods: {
     toAccountChange() {
       this.$router.push("/accountChange");
@@ -44,7 +49,7 @@ export default {
 .box {
   background-color: #f5f3fb;
   .content {
-    padding: 35px 0;
+    padding: 25px 0 35px 0;
     margin: 0 auto;
     margin-bottom: 10px;
     background-color: #01b4fe;
@@ -57,6 +62,10 @@ export default {
       margin: 0;
       font-size: 14px;
       color: #fff;
+    }
+    span{
+      font-size: 14px;
+      color: #f5f3fb;
     }
   }
   .account {

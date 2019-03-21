@@ -19,7 +19,7 @@
       <van-tab title="基本信息">
         <h3>基本信息</h3>
         <ul class="servicel">
-          <li>通知名称：{{this.detailslList.通知名称}}</li>
+          <li >通知名称：{{this.detailslList.通知名称}}</li>
           <li>通知类型：{{this.detailslList.通知类型}}</li>
           <li>发布人：{{this.detailslList.发送人姓名}}</li>
           <li>部门：{{this.detailslList.发送人部门名称}}</li>
@@ -63,6 +63,7 @@ export default {
         编号: this.$route.params.item
       };
       this.$http.getKYNewsDetails(para).then(res => {
+        console.log(res,"dddff")
         this.detailslList = res.data.通知公告;
         this.relatedProjects = res.data.接收条件;
       });

@@ -9,12 +9,12 @@ export function NumFormat(value) {
     if (value2Array.length == 2) {
         floatPart = value2Array[1].toString(); //拿到小数部分
         if (floatPart.length == 1) { //补0,实际上用不着
-            return intPartFormat + "." + floatPart + '0' + ' 元';
+            return "￥" + intPartFormat + "." + floatPart + '0' + ' 元';
         } else {
-            return intPartFormat + "." + floatPart + ' 元';
+            return "￥" + intPartFormat + "." + floatPart + ' 元';
         }
     } else {
-        return intPartFormat + floatPart + ' 元';
+        return "￥" + intPartFormat + floatPart + ' 元';
     }
 }
 

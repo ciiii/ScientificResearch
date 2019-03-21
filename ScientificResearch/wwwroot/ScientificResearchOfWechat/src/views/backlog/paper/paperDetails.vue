@@ -4,57 +4,131 @@
       <van-tab title="论文信息">
         <ul class="servicel">
           <h4>基本信息</h4>
-          <li>论文标题：{{this.detailslList.论文标题}}</li>
-          <li>论文Online日期：{{startTime(this.detailslList.论文Online日期)}}</li>
-          <li>正式出版日期：{{startTime(this.detailslList.论文正式出版日期)}}</li>
-          <li>
-            <span>他引次数：{{this.detailslList.他引次数}}</span>
-            <span>年度：{{this.detailslList.年度}}</span>
-          </li>
-          <li>收稿日期：{{startTime(this.detailslList.收稿日期)}}</li>
-          <li>版面费(元)：{{NumFormat(this.detailslList.版面费)}}</li>
-          <li>超额版面费(元)：{{NumFormat(this.detailslList.超额版面费)}}</li>
-          <li>超额费用来源：{{this.detailslList.超额费用来源}}</li>
-          <li>奖励情况：{{this.detailslList.奖励情况}}</li>
-          <li>论文字数：{{this.detailslList.论文字数}}</li>
-          <li>
-            <span>计划来源：{{this.detailslList.计划来源}}</span>
-            <span>论文版面：{{this.detailslList.论文版面}}</span>
+          <li class="title">
+            <span>论文标题</span>
+            <p>{{this.detailslList.论文标题}}</p>
           </li>
           <li>
-            <span>学科门类：{{this.detailslList.学科门类}}</span>
-            <span>一级学科：{{this.detailslList.一级学科}}</span>
+            <span>论文Online日期</span>
+            <span>{{startTime(this.detailslList.论文Online日期)}}</span>
           </li>
           <li>
-            <span>二级学科：{{this.detailslList.二级学科}}</span>
-            <span>三级学科：{{this.detailslList.三级学科}}</span>
+            <span>正式出版日期</span>
+            <span>{{startTime(this.detailslList.论文正式出版日期)}}</span>
           </li>
           <li>
-            <span>作者人数：{{this.detailslList.作者人数}}</span>
-            <span>通讯作者：{{this.detailslList.通讯作者}}</span>
+            <span>他引次数</span>
+            <span>{{this.detailslList.他引次数}}</span>
           </li>
           <li>
-            <span>文献类型：{{this.detailslList.文献类型}}</span>
+            <span>年度</span>
+            <span>{{this.detailslList.年度}}</span>
+          </li>
+          <li>
+            <span>收稿日期</span>
+            <span>{{startTime(this.detailslList.收稿日期)}}</span>
+          </li>
+          <li>
+            <span>版面费(元)</span>
+            <span>{{NumFormat(this.detailslList.版面费)}}</span>
+          </li>
+          <li>
+            <span>超额版面费(元)</span>
+            <span>{{NumFormat(this.detailslList.超额版面费)}}</span>
+          </li>
+          <li>
+            <span>超额费用来源</span>
+            <span>{{this.detailslList.超额费用来源}}</span>
+          </li>
+          <li>
+            <span>奖励情况</span>
+            <span>{{this.detailslList.奖励情况}}</span>
+          </li>
+          <li>
+            <span>论文字数</span>
+            <span>{{this.detailslList.论文字数}}</span>
+          </li>
+          <li>
+            <span>计划来源</span>
+            <span>{{this.detailslList.计划来源}}</span>
+          </li>
+          <li>
+            <span>论文版面</span>
+            <span>{{this.detailslList.论文版面}}</span>
+          </li>
+          <li>
+            <span>学科门类</span>
+            <span>{{this.detailslList.学科门类}}</span>
+          </li>
+          <li>
+            <span>一级学科</span>
+            <span>{{this.detailslList.一级学科}}</span>
+          </li>
+          <li>
+            <span>二级学科</span>
+            <span>{{this.detailslList.二级学科}}</span>
+          </li>
+          <li>
+            <span>三级学科</span>
+            <span>{{this.detailslList.三级学科}}</span>
+          </li>
+          <li>
+            <span>作者人数</span>
+            <span>{{this.detailslList.作者人数}}</span>
+          </li>
+          <li>
+            <span>通讯作者</span>
+            <span>{{this.detailslList.通讯作者}}</span>
+          </li>
+          <li>
+            <span>文献类型</span>
+            <span>{{this.detailslList.文献类型}}</span>
           </li>
         </ul>
       </van-tab>
       <van-tab title="刊物信息">
         <ul class="servicel">
           <h4>刊物信息</h4>
-          <li>刊物名称：{{this.detailslList.刊物名称}}</li>
-          <li>影响因子：{{this.detailslList.影响因子}}</li>
-          <li>特征因子分值：{{this.detailslList.特征因子分值}}</li>
-          <li>主办单位：{{this.detailslList.主办单位}}</li>
-          <li>编目名称：{{this.detailslList.编目名称}}</li>
           <li>
-            <span>CN号:{{this.detailslList.CN号}}</span>
-            <span>ISSN号:{{this.detailslList.ISSN号}}</span>
+            <span>刊物名称</span>
+            <span>{{this.detailslList.刊物名称}}</span>
           </li>
           <li>
-            <span>卷号：{{this.detailslList.卷号}}</span>
-            <span>期号：{{this.detailslList.期号}}</span>
+            <span>影响因子</span>
+            <span>{{this.detailslList.影响因子}}</span>
           </li>
-          <li>页码范围：{{this.detailslList.页码范围起}} ~ {{this.detailslList.页码范围止}}</li>
+          <li>
+            <span>特征因子分值</span>
+            <span>{{this.detailslList.特征因子分值}}</span>
+          </li>
+          <li>
+            <span>主办单位</span>
+            <span>{{this.detailslList.主办单位}}</span>
+          </li>
+          <li>
+            <span>编目名称</span>
+            <span>{{this.detailslList.编目名称}}</span>
+          </li>
+          <li>
+            <span>CN号</span>
+            <span>{{this.detailslList.CN号}}</span>
+          </li>
+          <li>
+            <span>ISSN号</span>
+            <span>{{this.detailslList.ISSN号}}</span>
+          </li>
+          <li>
+            <span>卷号</span>
+            <span>{{this.detailslList.卷号}}</span>
+          </li>
+          <li>
+            <span>期号</span>
+            <span>{{this.detailslList.期号}}</span>
+          </li>
+          <li>
+            <span>页码范围</span>
+            <span>{{this.detailslList.页码范围起}} ~ {{this.detailslList.页码范围止}}</span>
+          </li>
         </ul>
       </van-tab>
       <van-tab title="相关项目">
@@ -63,9 +137,18 @@
         </div>
         <ul class="servicel" v-else v-for="(item,key) in relatedProjects" :key="key">
           <h4>相关项目</h4>
-          <li>项目名称：{{item.项目名称}}</li>
-          <li>项目编号：{{item.项目编号}}</li>
-          <li>项目类型名称：{{item.项目类型名称}}</li>
+          <li>
+            <span>项目名称</span>
+            <span>{{item.项目名称}}</span>
+          </li>
+          <li>
+            <span>项目编号</span>
+            <span>{{item.项目编号}}</span>
+          </li>
+          <li>
+            <span>项目类型名称</span>
+            <span>{{item.项目类型名称}}</span>
+          </li>
         </ul>
       </van-tab>
       <van-tab title="作者信息">
@@ -74,10 +157,22 @@
         </div>
         <ul class="servicel" v-else v-for="(item,key) in authorInformation" :key="key">
           <h4>相关项目</h4>
-          <li>作者姓名：{{item.姓名}}</li>
-          <li>部门名称：{{item.部门名称}}</li>
-          <li>作者级别：{{item.作者级别}}</li>
-          <li>工作量占比(%)：{{item.工作量占比}}</li>
+          <li>
+            <span>作者姓名</span>
+            <span>{{item.姓名}}</span>
+          </li>
+          <li>
+            <span>部门名称</span>
+            <span>{{item.部门名称}}</span>
+          </li>
+          <li>
+            <span>作者级别</span>
+            <span>{{item.作者级别}}</span>
+          </li>
+          <li>
+            <span>工作量占比(%)</span>
+            <span>{{item.工作量占比}}</span>
+          </li>
         </ul>
       </van-tab>
       <van-tab title="相关文件">
@@ -107,16 +202,29 @@
           <img src="../../../assets/images/nothing-3.png" alt>
         </div>
         <ul v-for="(item,key) in auditRecords" :key="key" v-else class="audit">
-          <li>步骤名称：{{item.名称}}</li>
-          <li>处理人：{{item.姓名}}</li>
+          <li>
+            <span>步骤名称</span>
+            <span>{{item.名称}}</span>
+          </li>
+          <li>
+            <span>处理人</span>
+            <span>{{item.姓名}}</span>
+          </li>
           <li class="state">
+            <span>状态</span>
             <span :style="{'color':(item.状态说明 == flag ? '#31BD5D' : '#FF976A')}">{{item.状态说明}}</span>
+          </li>
+          <li>
+            <span>执行时间</span>
             <span>
               <i class="icon iconfont icon-shijian1"></i>
               {{startTimeB(item.执行时间)}}
             </span>
           </li>
-          <li>备注：{{item.备注}}</li>
+          <li>
+            <span>备注</span>
+            <span>{{item.备注}}</span>
+          </li>
         </ul>
       </van-tab>
       <ReturnBtn/>
@@ -207,19 +315,28 @@ export default {
       background-color: #e7e7e7;
     }
     li {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-      padding: 5px 0;
-      span {
-        display: inline-block;
-        width: 50%;
+      padding: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #f2f2f2;
+      p {
+        width: 80%;
+        color: #5a5a5a;
+        margin: 0;
+      }
+      span:nth-child(1) {
+        color: #888;
+      }
+      span:nth-child(2) {
+        color: #5a5a5a;
       }
       i {
         color: rgb(6, 167, 6);
       }
+    }
+    .title span{
+      display: flex;
+      align-items: center; 
     }
   }
 }

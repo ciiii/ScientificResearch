@@ -4,23 +4,31 @@
       <i class="icon iconfont icon-lunwentimu"></i>论文未认领列表
     </div>
     <div class="backContentBox" v-for="(item, key) in lectureList" :key="key">
-      <ul class="backContentTop" @click="goDetails(item.编号)">
+      <ul class="bacnButtom" @click="goDetails(item.编号)">
         <li>{{item.论文标题}}</li>
         <li>
-          <i class="icon iconfont icon-you"></i>
+          <span>刊物名称：</span>
+          <span>{{item.刊物名称}}</span>
         </li>
-      </ul>
-      <ul>
-        <li>刊物名称：{{item.刊物名称}}</li>
-        <li>在线日期：{{startTime(item.论文Online日期)}}</li>
-        <li>正式出版日期：{{startTime(item.论文正式出版日期)}}</li>
         <li>
-          <span>第一作者:{{item.第一作者}}</span>
-          <!-- 暂时不做 -->
-          <!-- <span class="auditBtn" @click="goMeetingsList">论文认领</span> -->
+          <span>在线日期：</span>
+          <span>{{startTime(item.论文Online日期)}}</span>
+        </li>
+        <li>
+          <span>正式出版日期：</span>
+          <span>{{startTime(item.论文正式出版日期)}}</span>
+        </li>
+        <li>
+          <span>第一作者</span>
+          <span>{{item.第一作者}}</span>
         </li>
       </ul>
+      <div class="audit">
+        <!-- 暂时不做 -->
+        <!-- <span @click="goMeetingsList">论文认领</span> -->
+      </div>
     </div>
+    <ReturnBtn/>
   </van-list>
 </template>
 <script>
@@ -102,48 +110,52 @@ export default {
     }
   }
   .backContentBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
     padding: 8px 15px;
     border: 1px dashed #ccc;
     background-color: #fff;
-    box-shadow: 6px 6px 6px #888888;
+    box-shadow: 6px 6px 6px #ccc;
     margin-bottom: 20px;
-    .backContentTop {
-      display: flex;
-      font-weight: 800;
+    .bacnButtom {
+      font-size: 14px;
+      li {
+        padding: 4px 0;
+        span:nth-child(1) {
+          color: #888;
+        }
+        span:nth-child(2) {
+          color: #5a5a5a;
+        }
+      }
       li:nth-child(1) {
+        font-weight: 800;
+        color: #1296db;
+        margin: 10px 0;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
-        flex-grow: 1;
+      }
+      li:nth-chlid(2) {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
       }
     }
-    ul {
-      font-size: 14px;
-      .contentLi {
-        color: #07c160;
-      }
-      li {
-        display: flex;
-        padding: 4px 0;
-        span:nth-child(2) {
-          text-align: right;
-        }
-        .auditBtn {
-          font-size: 12px;
-          text-align: right;
-          padding: 5px 12px;
-          background-color: #07c160;
-          border-radius: 5px;
-          color: #fff;
-        }
-        span:nth-child(1) {
-          flex-grow: 1;
-          i {
-            color: rgb(6, 167, 6);
-          }
-        }
+    .audit {
+      span {
+        display: inline-block;
+        width: 48px;
+        font-size: 12px;
+        padding: 5px 12px;
+        background-color: #07c160;
+        border-radius: 5px;
+        color: #fff;
       }
     }
   }

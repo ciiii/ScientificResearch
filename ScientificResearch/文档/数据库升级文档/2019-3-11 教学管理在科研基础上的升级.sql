@@ -2158,43 +2158,42 @@ ON  [PRIMARY];
 
 GO
 
-/****** Object:  Table [dbo].[教学活动]    Script Date: 2019/3/18 17:23:43 ******/
-DROP TABLE [dbo].[教学活动];
+--
+
+/****** Object:  Table [dbo].[教学活动]    Script Date: 2019/3/20 15:00:39 ******/
+DROP TABLE [dbo].[教学活动]
 GO
 
-/****** Object:  Table [dbo].[教学活动]    Script Date: 2019/3/18 17:23:43 ******/
-SET ANSI_NULLS ON;
+/****** Object:  Table [dbo].[教学活动]    Script Date: 2019/3/20 15:00:39 ******/
+SET ANSI_NULLS ON
 GO
 
-SET QUOTED_IDENTIFIER ON;
+SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE TABLE [dbo].[教学活动]
-    (
-      [编码] [INT] IDENTITY(1, 1)
-                 NOT NULL ,
-      [活动主题] [NVARCHAR](200) NOT NULL ,
-      [活动开始时间] [DATETIME] NOT NULL ,
-      [活动结束时间] [DATETIME] NOT NULL ,
-      [活动地点] [NVARCHAR](200) NOT NULL ,
-      [教学活动类型编号] [INT] NOT NULL ,
-      [主讲人编号] [INT] NULL ,
-      [主讲人姓名] [NVARCHAR](50) NULL ,
-      [主讲人职称] [NVARCHAR](50) NULL ,
-      [活动内容] [NVARCHAR](2000) NULL ,
-      [教学病例] [NVARCHAR](200) NULL ,
-      [患者姓名] [NVARCHAR](50) NULL ,
-      [患者ID] [NVARCHAR](50) NULL ,
-      [主要诊断] [NVARCHAR](500) NULL ,
-      [备注] [NVARCHAR](500) NULL ,
-      CONSTRAINT [PK_教学活动] PRIMARY KEY CLUSTERED ( [编码] ASC )
-        WITH ( PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,
-               IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON,
-               ALLOW_PAGE_LOCKS = ON ) ON [PRIMARY]
-    )
-ON  [PRIMARY];
+CREATE TABLE [dbo].[教学活动](
+	[编码] [INT] IDENTITY(1,1) NOT NULL,
+	[活动主题] [NVARCHAR](200) NOT NULL,
+	[活动开始时间] [DATETIME] NOT NULL,
+	[活动结束时间] [DATETIME] NOT NULL,
+	[活动地点] [NVARCHAR](200) NOT NULL,
+	[教学活动类型编号] [INT] NOT NULL,
+	[主讲人编号] [INT] NULL,
+	[主讲人姓名] [NVARCHAR](50) NULL,
+	[主讲人职称] [NVARCHAR](50) NULL,
+	[活动内容] [NVARCHAR](2000) NULL,
+	[教学病例] [NVARCHAR](200) NULL,
+	[病人编号] [INT] NULL,
+	[备注] [NVARCHAR](500) NULL,
+ CONSTRAINT [PK_教学活动] PRIMARY KEY CLUSTERED 
+(
+	[编码] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
 
 GO
+
+--
 
 /****** Object:  Table [dbo].[教学活动可参与者]    Script Date: 2019/3/18 16:47:22 ******/
 DROP TABLE [dbo].[教学活动可参与者];
@@ -2223,5 +2222,1029 @@ CREATE TABLE [dbo].[教学活动可参与者]
 ON  [PRIMARY];
 
 GO
+
+/****** Object:  Table [dbo].[教学评分等级]    Script Date: 2019/3/19 14:56:32 ******/
+DROP TABLE [dbo].[教学评分等级];
+GO
+
+/****** Object:  Table [dbo].[教学评分等级]    Script Date: 2019/3/19 14:56:32 ******/
+SET ANSI_NULLS ON;
+GO
+
+SET QUOTED_IDENTIFIER ON;
+GO
+
+CREATE TABLE [dbo].[教学评分等级]
+    (
+      [编号] [INT] IDENTITY(1, 1)
+                 NOT NULL ,
+      [分类名称] [NVARCHAR](50) NOT NULL ,
+      [等级名称] [NVARCHAR](50) NOT NULL ,
+      [最小分值] [INT] NOT NULL ,
+      [最大分值] [INT] NOT NULL ,
+      [备注] [NVARCHAR](500) NULL ,
+      CONSTRAINT [PK_教学评分等级] PRIMARY KEY CLUSTERED ( [编号] ASC )
+        WITH ( PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,
+               IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON,
+               ALLOW_PAGE_LOCKS = ON ) ON [PRIMARY]
+    )
+ON  [PRIMARY];
+
+GO
+
+
+EXEC sys.sp_dropextendedproperty @name = N'MS_Description',
+    @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'TABLE',
+    @level1name = N'教学专业', @level2type = N'COLUMN', @level2name = N'最低培训时长';
+
+GO
+
+/****** Object:  Table [dbo].[教学专业]    Script Date: 2019/3/19 14:57:01 ******/
+DROP TABLE [dbo].[教学专业];
+GO
+
+/****** Object:  Table [dbo].[教学专业]    Script Date: 2019/3/19 14:57:01 ******/
+SET ANSI_NULLS ON;
+GO
+
+SET QUOTED_IDENTIFIER ON;
+GO
+
+CREATE TABLE [dbo].[教学专业]
+    (
+      [编号] [INT] IDENTITY(1, 1)
+                 NOT NULL ,
+      [名称] [NVARCHAR](50) NOT NULL ,
+      [年份] [INT] NOT NULL ,
+      [是否国家标准] [BIT] NOT NULL ,
+      [标准代码] [NVARCHAR](50) NULL ,
+      [最低培训时长] [INT] NULL ,
+      [学习要求及目标] [NVARCHAR](MAX) NULL ,
+      [备注] [NVARCHAR](500) NULL ,
+      CONSTRAINT [PK_教学专业] PRIMARY KEY CLUSTERED ( [编号] ASC )
+        WITH ( PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,
+               IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON,
+               ALLOW_PAGE_LOCKS = ON ) ON [PRIMARY]
+    )
+ON  [PRIMARY] TEXTIMAGE_ON [PRIMARY];
+
+GO
+
+EXEC sys.sp_addextendedproperty @name = N'MS_Description',
+    @value = N'单位是周?,前台显示可以做别的格式.', @level0type = N'SCHEMA',
+    @level0name = N'dbo', @level1type = N'TABLE', @level1name = N'教学专业',
+    @level2type = N'COLUMN', @level2name = N'最低培训时长';
+GO
+
+
+
+ALTER TABLE [dbo].[教学专业科室] DROP CONSTRAINT [DF_教学专业科室_全程管理数量];
+GO
+
+ALTER TABLE [dbo].[教学专业科室] DROP CONSTRAINT [DF_教学专业科室_最低管床数量];
+GO
+
+/****** Object:  Table [dbo].[教学专业科室]    Script Date: 2019/3/19 14:58:02 ******/
+DROP TABLE [dbo].[教学专业科室];
+GO
+
+/****** Object:  Table [dbo].[教学专业科室]    Script Date: 2019/3/19 14:58:02 ******/
+SET ANSI_NULLS ON;
+GO
+
+SET QUOTED_IDENTIFIER ON;
+GO
+
+CREATE TABLE [dbo].[教学专业科室]
+    (
+      [编号] [INT] IDENTITY(1, 1)
+                 NOT NULL ,
+      [教学专业编号] [INT] NOT NULL ,
+      [排序值] [INT] NOT NULL ,
+      [科室名称] [NVARCHAR](50) NOT NULL ,
+      [最低培训时长] [INT] NOT NULL ,
+      [最低管床数量] [INT] NOT NULL ,
+      [最低全程管理数量] [INT] NOT NULL ,
+      [科室要求] [NVARCHAR](MAX) NULL ,
+      [备注] [NVARCHAR](500) NULL ,
+      CONSTRAINT [PK_教学专业科室] PRIMARY KEY CLUSTERED ( [编号] ASC )
+        WITH ( PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,
+               IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON,
+               ALLOW_PAGE_LOCKS = ON ) ON [PRIMARY]
+    )
+ON  [PRIMARY] TEXTIMAGE_ON [PRIMARY];
+
+GO
+
+ALTER TABLE [dbo].[教学专业科室] ADD  CONSTRAINT [DF_教学专业科室_最低管床数量]  DEFAULT ((0)) FOR [最低管床数量];
+GO
+
+ALTER TABLE [dbo].[教学专业科室] ADD  CONSTRAINT [DF_教学专业科室_全程管理数量]  DEFAULT ((0)) FOR [全程管理数量];
+GO
+
+
+
+ALTER TABLE [dbo].[教学专业科室任务] DROP CONSTRAINT [DF_教学专业科室任务_数量要求];
+GO
+
+ALTER TABLE [dbo].[教学专业科室任务] DROP CONSTRAINT [DF_教学专业科室任务_最低评分要求];
+GO
+
+ALTER TABLE [dbo].[教学专业科室任务] DROP CONSTRAINT [DF_教学专业科室任务_是否医技];
+GO
+
+ALTER TABLE [dbo].[教学专业科室任务] DROP CONSTRAINT [DF_Table_1_是否];
+GO
+
+ALTER TABLE [dbo].[教学专业科室任务] DROP CONSTRAINT [DF_教学专业科室任务_是否门诊];
+GO
+
+/****** Object:  Table [dbo].[教学专业科室任务]    Script Date: 2019/3/19 15:38:48 ******/
+DROP TABLE [dbo].[教学专业科室任务];
+GO
+
+/****** Object:  Table [dbo].[教学专业科室任务]    Script Date: 2019/3/19 15:38:48 ******/
+SET ANSI_NULLS ON;
+GO
+
+SET QUOTED_IDENTIFIER ON;
+GO
+
+CREATE TABLE [dbo].[教学专业科室任务]
+    (
+      [编号] [INT] IDENTITY(1, 1)
+                 NOT NULL ,
+      [教学专业科室编号] [INT] NOT NULL ,
+      [项目名称] [NVARCHAR](50) NOT NULL ,
+      [任务类型编号] [INT] NOT NULL ,
+      [是否门诊] [BIT] NOT NULL ,
+      [是否病房] [BIT] NOT NULL ,
+      [是否医技] [BIT] NOT NULL ,
+      [最低评分要求] [INT] NOT NULL ,
+      [数量要求] [INT] NOT NULL ,
+      [备注] [NVARCHAR](500) NULL ,
+      CONSTRAINT [PK_教学专业科室任务] PRIMARY KEY CLUSTERED ( [编号] ASC )
+        WITH ( PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,
+               IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON,
+               ALLOW_PAGE_LOCKS = ON ) ON [PRIMARY]
+    )
+ON  [PRIMARY];
+
+GO
+
+ALTER TABLE [dbo].[教学专业科室任务] ADD  CONSTRAINT [DF_教学专业科室任务_是否门诊]  DEFAULT ((0)) FOR [是否门诊];
+GO
+
+ALTER TABLE [dbo].[教学专业科室任务] ADD  CONSTRAINT [DF_Table_1_是否]  DEFAULT ((0)) FOR [是否病房];
+GO
+
+ALTER TABLE [dbo].[教学专业科室任务] ADD  CONSTRAINT [DF_教学专业科室任务_是否医技]  DEFAULT ((0)) FOR [是否医技];
+GO
+
+ALTER TABLE [dbo].[教学专业科室任务] ADD  CONSTRAINT [DF_教学专业科室任务_最低评分要求]  DEFAULT ((0)) FOR [最低评分要求];
+GO
+
+ALTER TABLE [dbo].[教学专业科室任务] ADD  CONSTRAINT [DF_教学专业科室任务_数量要求]  DEFAULT ((0)) FOR [数量要求];
+GO
+
+--
+/****** Object:  Table [dbo].[教学本院策略]    Script Date: 2019/3/19 15:40:26 ******/
+DROP TABLE [dbo].[教学本院策略];
+GO
+
+/****** Object:  Table [dbo].[教学本院策略]    Script Date: 2019/3/19 15:40:26 ******/
+SET ANSI_NULLS ON;
+GO
+
+SET QUOTED_IDENTIFIER ON;
+GO
+
+CREATE TABLE [dbo].[教学本院策略]
+    (
+      [编号] [INT] IDENTITY(1, 1)
+                 NOT NULL ,
+      [名称] [NVARCHAR](50) NOT NULL ,
+      [教学专业编号] [INT] NOT NULL ,
+      [专业基地管理员编号] [INT] NULL ,
+      [建立日期] [DATETIME] NOT NULL ,
+      [备注] [NVARCHAR](500) NULL ,
+      CONSTRAINT [PK_教学专业本院策略] PRIMARY KEY CLUSTERED ( [编号] ASC )
+        WITH ( PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,
+               IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON,
+               ALLOW_PAGE_LOCKS = ON ) ON [PRIMARY]
+    )
+ON  [PRIMARY];
+
+GO
+
+--
+
+
+
+
+
+
+
+
+
+/****** Object:  Table [dbo].[教学专业科室任务类型]    Script Date: 2019/3/19 14:58:47 ******/
+DROP TABLE [dbo].[教学专业科室任务类型];
+GO
+
+/****** Object:  Table [dbo].[教学专业科室任务类型]    Script Date: 2019/3/19 14:58:47 ******/
+SET ANSI_NULLS ON;
+GO
+
+SET QUOTED_IDENTIFIER ON;
+GO
+
+CREATE TABLE [dbo].[教学专业科室任务类型]
+    (
+      [编号] [INT] NOT NULL ,
+      [名称] [NVARCHAR](50) NOT NULL ,
+      [备注] [NVARCHAR](500) NULL ,
+      CONSTRAINT [PK_教学专业科室任务类型] PRIMARY KEY CLUSTERED ( [编号] ASC )
+        WITH ( PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,
+               IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON,
+               ALLOW_PAGE_LOCKS = ON ) ON [PRIMARY]
+    )
+ON  [PRIMARY];
+
+GO
+
+/****** Object:  Table [dbo].[教学专业科室要求]    Script Date: 2019/3/19 14:59:02 ******/
+DROP TABLE [dbo].[教学专业科室要求];
+GO
+
+/****** Object:  Table [dbo].[教学专业科室要求]    Script Date: 2019/3/19 14:59:02 ******/
+SET ANSI_NULLS ON;
+GO
+
+SET QUOTED_IDENTIFIER ON;
+GO
+
+CREATE TABLE [dbo].[教学专业科室要求]
+    (
+      [编号] [INT] IDENTITY(1, 1)
+                 NOT NULL ,
+      [教学科室编号] [INT] NOT NULL ,
+      [项目名称] [NVARCHAR](50) NOT NULL ,
+      [说明] [NVARCHAR](200) NULL ,
+      [最低评分要求] [INT] NOT NULL ,
+      [备注] [NVARCHAR](500) NULL ,
+      CONSTRAINT [PK_教学专业科室要求] PRIMARY KEY CLUSTERED ( [编号] ASC )
+        WITH ( PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,
+               IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON,
+               ALLOW_PAGE_LOCKS = ON ) ON [PRIMARY]
+    )
+ON  [PRIMARY];
+
+GO
+
+
+
+--
+
+
+ALTER TABLE [dbo].[教学本院科室] DROP CONSTRAINT [DF_教学本院科室_最低全程管理数量];
+GO
+
+ALTER TABLE [dbo].[教学本院科室] DROP CONSTRAINT [DF_Table_1_管床要求];
+GO
+
+ALTER TABLE [dbo].[教学本院科室] DROP CONSTRAINT [DF_教学本院科室_培训时长];
+GO
+
+ALTER TABLE [dbo].[教学本院科室] DROP CONSTRAINT [DF_教学本院科室_是否必选];
+GO
+
+ALTER TABLE [dbo].[教学本院科室] DROP CONSTRAINT [DF_教学本院科室_排序值];
+GO
+
+/****** Object:  Table [dbo].[教学本院科室]    Script Date: 2019/3/19 15:40:50 ******/
+DROP TABLE [dbo].[教学本院科室];
+GO
+
+/****** Object:  Table [dbo].[教学本院科室]    Script Date: 2019/3/19 15:40:50 ******/
+SET ANSI_NULLS ON;
+GO
+
+SET QUOTED_IDENTIFIER ON;
+GO
+
+CREATE TABLE [dbo].[教学本院科室]
+    (
+      [编号] [INT] IDENTITY(1, 1)
+                 NOT NULL ,
+      [教学专业本院策略编号] [INT] NOT NULL ,
+      [排序值] [INT] NOT NULL ,
+      [教学专业科室编号] [INT] NOT NULL ,
+      [本院科室编号] [INT] NOT NULL ,
+      [是否必选] [BIT] NOT NULL ,
+      [培训时长] [INT] NOT NULL ,
+      [最低管床数量] [INT] NOT NULL ,
+      [最低全程管理数量] [INT] NULL ,
+      [备注] [NVARCHAR](500) NULL ,
+      CONSTRAINT [PK_教学本院科室] PRIMARY KEY CLUSTERED ( [编号] ASC )
+        WITH ( PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,
+               IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON,
+               ALLOW_PAGE_LOCKS = ON ) ON [PRIMARY]
+    )
+ON  [PRIMARY];
+
+GO
+
+ALTER TABLE [dbo].[教学本院科室] ADD  CONSTRAINT [DF_教学本院科室_排序值]  DEFAULT ((1)) FOR [排序值];
+GO
+
+ALTER TABLE [dbo].[教学本院科室] ADD  CONSTRAINT [DF_教学本院科室_是否必选]  DEFAULT ((1)) FOR [是否必选];
+GO
+
+ALTER TABLE [dbo].[教学本院科室] ADD  CONSTRAINT [DF_教学本院科室_培训时长]  DEFAULT ((1)) FOR [培训时长];
+GO
+
+ALTER TABLE [dbo].[教学本院科室] ADD  CONSTRAINT [DF_Table_1_管床要求]  DEFAULT ((0)) FOR [最低管床数量];
+GO
+
+ALTER TABLE [dbo].[教学本院科室] ADD  CONSTRAINT [DF_教学本院科室_最低全程管理数量]  DEFAULT ((0)) FOR [最低全程管理数量];
+GO
+
+---
+
+
+
+ALTER TABLE [dbo].[教学本院科室任务] DROP CONSTRAINT [DF_教学本院科室任务_数量要求];
+GO
+
+ALTER TABLE [dbo].[教学本院科室任务] DROP CONSTRAINT [DF_教学本院科室任务_最低评分要求];
+GO
+
+ALTER TABLE [dbo].[教学本院科室任务] DROP CONSTRAINT [DF_教学本院科室任务_是否医技];
+GO
+
+ALTER TABLE [dbo].[教学本院科室任务] DROP CONSTRAINT [DF_教学本院科室任务_是否病房];
+GO
+
+ALTER TABLE [dbo].[教学本院科室任务] DROP CONSTRAINT [DF_教学本院科室任务_是否门诊];
+GO
+
+/****** Object:  Table [dbo].[教学本院科室任务]    Script Date: 2019/3/19 15:41:11 ******/
+DROP TABLE [dbo].[教学本院科室任务];
+GO
+
+/****** Object:  Table [dbo].[教学本院科室任务]    Script Date: 2019/3/19 15:41:11 ******/
+SET ANSI_NULLS ON;
+GO
+
+SET QUOTED_IDENTIFIER ON;
+GO
+
+CREATE TABLE [dbo].[教学本院科室任务]
+    (
+      [编号] [INT] IDENTITY(1, 1)
+                 NOT NULL ,
+      [教学本院科室编号] [INT] NOT NULL ,
+      [项目名称] [NVARCHAR](50) NOT NULL ,
+      [任务类型编号] [INT] NOT NULL ,
+      [是否门诊] [BIT] NOT NULL ,
+      [是否病房] [BIT] NOT NULL ,
+      [是否医技] [BIT] NOT NULL ,
+      [最低评分要求] [INT] NOT NULL ,
+      [数量要求] [INT] NOT NULL ,
+      [备注] [NVARCHAR](500) NULL ,
+      CONSTRAINT [PK_教学本院科室任务] PRIMARY KEY CLUSTERED ( [编号] ASC )
+        WITH ( PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,
+               IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON,
+               ALLOW_PAGE_LOCKS = ON ) ON [PRIMARY]
+    )
+ON  [PRIMARY];
+
+GO
+
+ALTER TABLE [dbo].[教学本院科室任务] ADD  CONSTRAINT [DF_教学本院科室任务_是否门诊]  DEFAULT ((0)) FOR [是否门诊];
+GO
+
+ALTER TABLE [dbo].[教学本院科室任务] ADD  CONSTRAINT [DF_教学本院科室任务_是否病房]  DEFAULT ((0)) FOR [是否病房];
+GO
+
+ALTER TABLE [dbo].[教学本院科室任务] ADD  CONSTRAINT [DF_教学本院科室任务_是否医技]  DEFAULT ((0)) FOR [是否医技];
+GO
+
+ALTER TABLE [dbo].[教学本院科室任务] ADD  CONSTRAINT [DF_教学本院科室任务_最低评分要求]  DEFAULT ((0)) FOR [最低评分要求];
+GO
+
+ALTER TABLE [dbo].[教学本院科室任务] ADD  CONSTRAINT [DF_教学本院科室任务_数量要求]  DEFAULT ((0)) FOR [数量要求];
+GO
+
+
+
+ALTER TABLE [dbo].[教学本院科室任务] DROP CONSTRAINT [DF_教学本院科室任务_数量要求];
+GO
+
+ALTER TABLE [dbo].[教学本院科室任务] DROP CONSTRAINT [DF_教学本院科室任务_最低评分要求];
+GO
+
+ALTER TABLE [dbo].[教学本院科室任务] DROP CONSTRAINT [DF_教学本院科室任务_是否医技];
+GO
+
+ALTER TABLE [dbo].[教学本院科室任务] DROP CONSTRAINT [DF_教学本院科室任务_是否病房];
+GO
+
+ALTER TABLE [dbo].[教学本院科室任务] DROP CONSTRAINT [DF_教学本院科室任务_是否门诊];
+GO
+
+/****** Object:  Table [dbo].[教学本院科室任务]    Script Date: 2019/3/19 15:41:11 ******/
+DROP TABLE [dbo].[教学本院科室任务];
+GO
+
+/****** Object:  Table [dbo].[教学本院科室任务]    Script Date: 2019/3/19 15:41:11 ******/
+SET ANSI_NULLS ON;
+GO
+
+SET QUOTED_IDENTIFIER ON;
+GO
+
+CREATE TABLE [dbo].[教学本院科室任务]
+    (
+      [编号] [INT] IDENTITY(1, 1)
+                 NOT NULL ,
+      [教学本院科室编号] [INT] NOT NULL ,
+      [项目名称] [NVARCHAR](50) NOT NULL ,
+      [任务类型编号] [INT] NOT NULL ,
+      [是否门诊] [BIT] NOT NULL ,
+      [是否病房] [BIT] NOT NULL ,
+      [是否医技] [BIT] NOT NULL ,
+      [最低评分要求] [INT] NOT NULL ,
+      [数量要求] [INT] NOT NULL ,
+      [备注] [NVARCHAR](500) NULL ,
+      CONSTRAINT [PK_教学本院科室任务] PRIMARY KEY CLUSTERED ( [编号] ASC )
+        WITH ( PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,
+               IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON,
+               ALLOW_PAGE_LOCKS = ON ) ON [PRIMARY]
+    )
+ON  [PRIMARY];
+
+GO
+
+ALTER TABLE [dbo].[教学本院科室任务] ADD  CONSTRAINT [DF_教学本院科室任务_是否门诊]  DEFAULT ((0)) FOR [是否门诊];
+GO
+
+ALTER TABLE [dbo].[教学本院科室任务] ADD  CONSTRAINT [DF_教学本院科室任务_是否病房]  DEFAULT ((0)) FOR [是否病房];
+GO
+
+ALTER TABLE [dbo].[教学本院科室任务] ADD  CONSTRAINT [DF_教学本院科室任务_是否医技]  DEFAULT ((0)) FOR [是否医技];
+GO
+
+ALTER TABLE [dbo].[教学本院科室任务] ADD  CONSTRAINT [DF_教学本院科室任务_最低评分要求]  DEFAULT ((0)) FOR [最低评分要求];
+GO
+
+ALTER TABLE [dbo].[教学本院科室任务] ADD  CONSTRAINT [DF_教学本院科室任务_数量要求]  DEFAULT ((0)) FOR [数量要求];
+GO
+
+
+--
+
+
+/****** Object:  Table [dbo].[教学学员培训]    Script Date: 2019/3/19 16:57:50 ******/
+DROP TABLE [dbo].[教学学员培训]
+GO
+
+/****** Object:  Table [dbo].[教学学员培训]    Script Date: 2019/3/19 16:57:50 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[教学学员培训](
+	[编号] [INT] NOT NULL,
+	[报到时间] [DATETIME] NULL,
+	[教学本院策略编号] [INT] NULL,
+	[计划开始培训日期] [DATE] NULL,
+	[计划结束培训日期] [DATE] NULL,
+	[实际开始培训日期] [DATE] NULL,
+	[实际结束培训日期] [DATE] NULL,
+	[退培日期] [DATE] NULL,
+	[结业日期] [DATE] NULL,
+	[证书] [NVARCHAR](200) NULL,
+	[建立时间] [DATETIME] NOT NULL,
+	[备注] [NVARCHAR](500) NULL,
+ CONSTRAINT [PK_教学学员培训] PRIMARY KEY CLUSTERED 
+(
+	[编号] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+--
+
+ALTER TABLE [dbo].[教学结业申请] DROP CONSTRAINT [DF_教学结业申请_是否通过审核]
+GO
+
+/****** Object:  Table [dbo].[教学结业申请]    Script Date: 2019/3/20 17:02:25 ******/
+DROP TABLE [dbo].[教学结业申请]
+GO
+
+/****** Object:  Table [dbo].[教学结业申请]    Script Date: 2019/3/20 17:02:25 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[教学结业申请](
+	[编号] [INT] IDENTITY(1,1) NOT NULL,
+	[学员编号] [INT] NOT NULL,
+	[说明] [NVARCHAR](500) NULL,
+	[申请结业日期] [DATE] NOT NULL,
+	[建立时间] [DATETIME] NOT NULL,
+	[备注] [NVARCHAR](500) NULL,
+	[是否通过审核] [BIT] NOT NULL,
+ CONSTRAINT [PK_教学结业申请] PRIMARY KEY CLUSTERED 
+(
+	[编号] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[教学结业申请] ADD  CONSTRAINT [DF_教学结业申请_是否通过审核]  DEFAULT ((0)) FOR [是否通过审核]
+GO
+
+
+GO
+
+---
+
+ALTER TABLE [dbo].[教学退培申请] DROP CONSTRAINT [DF_教学退培申请_是否通过审核]
+GO
+
+/****** Object:  Table [dbo].[教学退培申请]    Script Date: 2019/3/20 16:58:49 ******/
+DROP TABLE [dbo].[教学退培申请]
+GO
+
+/****** Object:  Table [dbo].[教学退培申请]    Script Date: 2019/3/20 16:58:49 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[教学退培申请](
+	[编号] [INT] IDENTITY(1,1) NOT NULL,
+	[学员编号] [INT] NOT NULL,
+	[说明] [NVARCHAR](500) NULL,
+	[申请退培日期] [DATE] NOT NULL,
+	[建立时间] [DATETIME] NOT NULL,
+	[备注] [NVARCHAR](500) NULL,
+	[是否通过审核] [BIT] NOT NULL,
+ CONSTRAINT [PK_教学退培申请] PRIMARY KEY CLUSTERED 
+(
+	[编号] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[教学退培申请] ADD  CONSTRAINT [DF_教学退培申请_是否通过审核]  DEFAULT ((0)) FOR [是否通过审核]
+GO
+
+--
+
+/****** Object:  Table [dbo].[教学医疗差错及事故记录]    Script Date: 2019/3/20 14:32:02 ******/
+DROP TABLE [dbo].[教学医疗差错及事故记录]
+GO
+
+/****** Object:  Table [dbo].[教学医疗差错及事故记录]    Script Date: 2019/3/20 14:32:02 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[教学医疗差错及事故记录](
+	[编号] [INT] IDENTITY(1,1) NOT NULL,
+	[教学轮转编号] [INT] NOT NULL,
+	[处理日期] [DATE] NOT NULL,
+	[处理类别] [NVARCHAR](50) NOT NULL,
+	[处理原因] [NVARCHAR](500) NOT NULL,
+	[处理意见] [NVARCHAR](500) NOT NULL,
+	[附件] [NVARCHAR](200) NULL,
+	[备注] [NVARCHAR](500) NULL,
+ CONSTRAINT [PK_教学医疗差错及事故记录] PRIMARY KEY CLUSTERED 
+(
+	[编号] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+--
+
+/****** Object:  Table [dbo].[教学考试成绩]    Script Date: 2019/3/20 14:32:41 ******/
+DROP TABLE [dbo].[教学考试成绩]
+GO
+
+/****** Object:  Table [dbo].[教学考试成绩]    Script Date: 2019/3/20 14:32:41 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[教学考试成绩](
+	[编号] [INT] IDENTITY(1,1) NOT NULL,
+	[教学轮转编号] [INT] NOT NULL,
+	[考试类型] [NVARCHAR](50) NOT NULL,
+	[成绩] [INT] NOT NULL,
+	[建立人] [INT] NOT NULL,
+	[建立时间] [DATETIME] NOT NULL,
+	[备注] [NVARCHAR](500) NULL,
+ CONSTRAINT [PK_教学考试成绩] PRIMARY KEY CLUSTERED 
+(
+	[编号] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+--
+/****** Object:  Table [dbo].[教学请假申请]    Script Date: 2019/3/20 17:00:19 ******/
+DROP TABLE [dbo].[教学请假申请]
+GO
+
+/****** Object:  Table [dbo].[教学请假申请]    Script Date: 2019/3/20 17:00:19 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[教学请假申请](
+	[编号] [INT] IDENTITY(1,1) NOT NULL,
+	[教学轮转编号] [INT] NOT NULL,
+	[请假开始日期] [DATE] NOT NULL,
+	[请假天数] [INT] NOT NULL,
+	[请假事由] [NVARCHAR](500) NOT NULL,
+	[轮转延期开始日期] [DATE] NULL,
+	[轮转延期结束日期] [DATE] NULL,
+	[建立人] [INT] NOT NULL,
+	[建立时间] [DATETIME] NOT NULL,
+	[备注] [NVARCHAR](500) NULL,
+	[是否通过审核] [BIT] NOT NULL,
+ CONSTRAINT [PK_教学请假申请] PRIMARY KEY CLUSTERED 
+(
+	[编号] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+--
+
+/****** Object:  Table [dbo].[教学出勤类型]    Script Date: 2019/3/20 14:33:46 ******/
+DROP TABLE [dbo].[教学出勤类型]
+GO
+
+/****** Object:  Table [dbo].[教学出勤类型]    Script Date: 2019/3/20 14:33:46 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[教学出勤类型](
+	[编号] [INT] NOT NULL,
+	[名称] [NVARCHAR](50) NOT NULL,
+	[备注] [NVARCHAR](500) NULL,
+ CONSTRAINT [PK_教学出勤类型] PRIMARY KEY CLUSTERED 
+(
+	[编号] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+--
+
+/****** Object:  Table [dbo].[教学出勤情况]    Script Date: 2019/3/20 14:34:19 ******/
+DROP TABLE [dbo].[教学出勤情况]
+GO
+
+/****** Object:  Table [dbo].[教学出勤情况]    Script Date: 2019/3/20 14:34:19 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[教学出勤情况](
+	[编号] [INT] IDENTITY(1,1) NOT NULL,
+	[教学轮转编号] [INT] NOT NULL,
+	[考勤日期] [DATE] NOT NULL,
+	[教学出勤类型编号] [INT] NOT NULL,
+	[说明] [NVARCHAR](500) NULL,
+	[建立人] [INT] NOT NULL,
+	[建立时间] [DATETIME] NOT NULL,
+	[备注] [NVARCHAR](500) NULL,
+ CONSTRAINT [PK_教学出勤情况] PRIMARY KEY CLUSTERED 
+(
+	[编号] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+--
+
+/****** Object:  Table [dbo].[Id]    Script Date: 2019/3/20 14:34:46 ******/
+DROP TABLE [dbo].[Id]
+GO
+
+/****** Object:  Table [dbo].[Id]    Script Date: 2019/3/20 14:34:46 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Id](
+	[Id] [INT] NOT NULL,
+ CONSTRAINT [PK_Id] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+--
+
+/****** Object:  Table [dbo].[教学补轮转]    Script Date: 2019/3/20 14:35:15 ******/
+DROP TABLE [dbo].[教学补轮转]
+GO
+
+/****** Object:  Table [dbo].[教学补轮转]    Script Date: 2019/3/20 14:35:15 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[教学补轮转](
+	[编号] [INT] IDENTITY(1,1) NOT NULL,
+	[教学轮转编号] [INT] NOT NULL,
+	[说明] [NVARCHAR](500) NULL,
+	[开始日期] [DATE] NOT NULL,
+	[结束日期] [DATE] NOT NULL,
+	[建立人] [INT] NOT NULL,
+	[建立时间] [DATETIME] NOT NULL,
+	[备注] [NVARCHAR](500) NULL,
+ CONSTRAINT [PK_教学补轮转] PRIMARY KEY CLUSTERED 
+(
+	[编号] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+--
+/****** Object:  Table [dbo].[教学出科申请]    Script Date: 2019/3/20 17:01:10 ******/
+DROP TABLE [dbo].[教学出科申请]
+GO
+
+/****** Object:  Table [dbo].[教学出科申请]    Script Date: 2019/3/20 17:01:10 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[教学出科申请](
+	[编号] [INT] IDENTITY(1,1) NOT NULL,
+	[教学轮转编号] [INT] NOT NULL,
+	[申请出科日期] [DATE] NOT NULL,
+	[出科小结] [NVARCHAR](500) NULL,
+	[建立时间] [DATETIME] NOT NULL,
+	[备注] [NVARCHAR](500) NULL,
+	[是否通过审核] [BIT] NOT NULL,
+ CONSTRAINT [PK_教学出科申请] PRIMARY KEY CLUSTERED 
+(
+	[编号] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+--
+
+ALTER TABLE [dbo].[教学轮转] DROP CONSTRAINT [DF_教学轮转_最低全程管理数量]
+GO
+
+ALTER TABLE [dbo].[教学轮转] DROP CONSTRAINT [DF_教学轮转_最低管床数量]
+GO
+
+/****** Object:  Table [dbo].[教学轮转]    Script Date: 2019/3/20 14:36:05 ******/
+DROP TABLE [dbo].[教学轮转]
+GO
+
+/****** Object:  Table [dbo].[教学轮转]    Script Date: 2019/3/20 14:36:05 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[教学轮转](
+	[编号] [INT] IDENTITY(1,1) NOT NULL,
+	[学员编号] [INT] NOT NULL,
+	[计划入科日期] [DATE] NOT NULL,
+	[计划出科日期] [DATE] NOT NULL,
+	[实际入科日期] [DATE] NULL,
+	[实际出科日期] [DATE] NULL,
+	[本院科室编号] [INT] NOT NULL,
+	[带教老师编号] [INT] NOT NULL,
+	[最低管床数量] [INT] NOT NULL,
+	[最低全程管理数量] [INT] NOT NULL,
+	[备注] [NVARCHAR](500) NULL,
+ CONSTRAINT [PK_教学轮转] PRIMARY KEY CLUSTERED 
+(
+	[编号] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[教学轮转] ADD  CONSTRAINT [DF_教学轮转_最低管床数量]  DEFAULT ((0)) FOR [最低管床数量]
+GO
+
+ALTER TABLE [dbo].[教学轮转] ADD  CONSTRAINT [DF_教学轮转_最低全程管理数量]  DEFAULT ((0)) FOR [最低全程管理数量]
+GO
+
+--
+/****** Object:  Table [dbo].[教学病人]    Script Date: 2019/3/20 15:13:42 ******/
+DROP TABLE [dbo].[教学病人]
+GO
+
+/****** Object:  Table [dbo].[教学病人]    Script Date: 2019/3/20 15:13:42 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[教学病人](
+	[编号] [INT] IDENTITY(1,1) NOT NULL,
+	[姓名] [NVARCHAR](50) NOT NULL,
+	[性别] [NVARCHAR](10) NULL,
+	[出生日期] [DATE] NULL,
+	[住院号] [NVARCHAR](50) NULL,
+	[住院床号] [NVARCHAR](50) NULL,
+	[主要诊断] [NVARCHAR](500) NULL,
+	[次要诊断] [NVARCHAR](500) NULL,
+	[入院日期] [DATE] NULL,
+	[出院日期] [DATE] NULL,
+	[备注] [NVARCHAR](500) NULL,
+ CONSTRAINT [PK_教学病人] PRIMARY KEY CLUSTERED 
+(
+	[编号] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+--
+
+
+ALTER TABLE [dbo].[教学管床病人] DROP CONSTRAINT [DF_教学管床病人_是否全程陪护]
+GO
+
+/****** Object:  Table [dbo].[教学管床病人]    Script Date: 2019/3/20 15:14:10 ******/
+DROP TABLE [dbo].[教学管床病人]
+GO
+
+/****** Object:  Table [dbo].[教学管床病人]    Script Date: 2019/3/20 15:14:10 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[教学管床病人](
+	[编号] [INT] IDENTITY(1,1) NOT NULL,
+	[教学轮转编号] [INT] NOT NULL,
+	[病人编号] [INT] NOT NULL,
+	[是否全程陪护] [BIT] NOT NULL,
+	[备注] [NVARCHAR](500) NULL,
+ CONSTRAINT [PK_教学管床病人] PRIMARY KEY CLUSTERED 
+(
+	[编号] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[教学管床病人] ADD  CONSTRAINT [DF_教学管床病人_是否全程陪护]  DEFAULT ((0)) FOR [是否全程陪护]
+GO
+--
+
+
+ALTER TABLE [dbo].[教学轮转任务] DROP CONSTRAINT [DF_教学轮转任务_数量要求]
+GO
+
+ALTER TABLE [dbo].[教学轮转任务] DROP CONSTRAINT [DF_教学轮转任务_最低评分要求]
+GO
+
+ALTER TABLE [dbo].[教学轮转任务] DROP CONSTRAINT [DF_教学轮转任务_是否医技]
+GO
+
+ALTER TABLE [dbo].[教学轮转任务] DROP CONSTRAINT [DF_教学轮转任务_是否病房]
+GO
+
+ALTER TABLE [dbo].[教学轮转任务] DROP CONSTRAINT [DF_教学轮转任务_是否门诊]
+GO
+
+/****** Object:  Table [dbo].[教学轮转任务]    Script Date: 2019/3/20 16:39:53 ******/
+DROP TABLE [dbo].[教学轮转任务]
+GO
+
+/****** Object:  Table [dbo].[教学轮转任务]    Script Date: 2019/3/20 16:39:53 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[教学轮转任务](
+	[编号] [INT] NOT NULL,
+	[教学轮转编号] [INT] NOT NULL,
+	[项目名称] [NVARCHAR](50) NOT NULL,
+	[任务类型编号] [INT] NOT NULL,
+	[是否门诊] [BIT] NOT NULL,
+	[是否病房] [BIT] NOT NULL,
+	[是否医技] [BIT] NOT NULL,
+	[最低评分要求] [INT] NOT NULL,
+	[数量要求] [INT] NOT NULL,
+	[备注] [NVARCHAR](500) NULL
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[教学轮转任务] ADD  CONSTRAINT [DF_教学轮转任务_是否门诊]  DEFAULT ((0)) FOR [是否门诊]
+GO
+
+ALTER TABLE [dbo].[教学轮转任务] ADD  CONSTRAINT [DF_教学轮转任务_是否病房]  DEFAULT ((0)) FOR [是否病房]
+GO
+
+ALTER TABLE [dbo].[教学轮转任务] ADD  CONSTRAINT [DF_教学轮转任务_是否医技]  DEFAULT ((0)) FOR [是否医技]
+GO
+
+ALTER TABLE [dbo].[教学轮转任务] ADD  CONSTRAINT [DF_教学轮转任务_最低评分要求]  DEFAULT ((0)) FOR [最低评分要求]
+GO
+
+ALTER TABLE [dbo].[教学轮转任务] ADD  CONSTRAINT [DF_教学轮转任务_数量要求]  DEFAULT ((0)) FOR [数量要求]
+GO
+--
+
+ALTER TABLE [dbo].[教学病例] DROP CONSTRAINT [DF_教学病例_是否通过审核]
+GO
+
+/****** Object:  Table [dbo].[教学病例]    Script Date: 2019/3/20 16:42:32 ******/
+DROP TABLE [dbo].[教学病例]
+GO
+
+/****** Object:  Table [dbo].[教学病例]    Script Date: 2019/3/20 16:42:32 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[教学病例](
+	[编号] [INT] IDENTITY(1,1) NOT NULL,
+	[教学轮转任务编号] [INT] NOT NULL,
+	[文献类型] [NVARCHAR](50) NULL,
+	[病例类型] [NVARCHAR](50) NULL,
+	[病人编号] [INT] NULL,
+	[病例内容] [NVARCHAR](2000) NULL,
+	[附件] [NVARCHAR](200) NULL,
+	[建立时间] [DATETIME] NOT NULL,
+	[备注] [NVARCHAR](500) NULL,
+	[是否通过审核] [BIT] NOT NULL,
+ CONSTRAINT [PK_教学病例] PRIMARY KEY CLUSTERED 
+(
+	[编号] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[教学病例] ADD  CONSTRAINT [DF_教学病例_是否通过审核]  DEFAULT ((0)) FOR [是否通过审核]
+GO
+
+--
+
+
+
 
 

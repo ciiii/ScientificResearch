@@ -92,9 +92,10 @@
         </van-tab>
       </van-tabs>
       <div class="backtrack" @click="backtrack">
-        <i class="icon iconfont icon-fanhui"></i> 返回
+        <i class="icon iconfont icon-fanhui1"></i> 返回
       </div>
     </van-popup>
+    <ReturnBtn/>
   </van-list>
 </template>
 <script>

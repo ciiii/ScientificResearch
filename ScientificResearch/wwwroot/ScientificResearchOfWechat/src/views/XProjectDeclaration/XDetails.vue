@@ -4,26 +4,80 @@
       <van-tab title="基本信息">
         <ul class="servicel">
           <h4>合同基本信息</h4>
-          <li>合同名称：
-            <p>{{this.detailslList.合同名称}}</p>
+          <li>
+            <span>合同名称</span>
+            <span>
+              <p>{{this.detailslList.合同名称}}</p>
+            </span>
           </li>
-          <li>合同编号：{{this.detailslList.合同编号}}</li>
-          <li>项目分类：{{this.detailslList.项目分类}}</li>
-          <li>项目类型：{{this.detailslList.项目类型}}</li>
-          <li>建立时间：{{startTime(this.detailslList.建立时间)}}</li>
-          <li>是否为第一承建单位：{{conversionState(this.detailslList.是否为第一承建单位)}}</li>
-          <li>项目负责人：{{this.detailslList.项目负责人姓名}}</li>
-          <li>项目归属部门：{{this.detailslList.项目归属部门}}</li>
-          <li>单位名称：{{this.detailslList.单位名称}}</li>
-          <li>邮政编码：{{this.detailslList.邮政编码}}</li>
-          <li>法定代表人：{{this.detailslList.法定代表人}}</li>
-          <li>经费本编号：{{this.detailslList.经费本编号}}</li>
-          <li>联系人：{{this.detailslList.联系人}}</li>
-          <li>联系人电话：{{this.detailslList.联系人电话}}</li>
-          <li>通讯地址：{{this.detailslList.通讯地址}}</li>
-          <li>档案编号：{{this.detailslList.档案编号}}</li>
-          <li>财务简称：{{this.detailslList.财务简称}}</li>
-          <li>课题来源：{{this.detailslList.课题来源}}</li>
+          <li>
+            <span>合同编号</span>
+            <span>{{this.detailslList.合同编号}}</span>
+          </li>
+          <li>
+            <span>项目分类</span>
+            <span>{{this.detailslList.项目分类}}</span>
+          </li>
+          <li>
+            <span>项目类型</span>
+            <span>{{this.detailslList.项目类型}}</span>
+          </li>
+          <li>
+            <span>建立时间</span>
+            <span>{{startTime(this.detailslList.建立时间)}}</span>
+          </li>
+          <li>
+            <span>是否为第一承建单位</span>
+            <span>{{conversionState(this.detailslList.是否为第一承建单位)}}</span>
+          </li>
+          <li>
+            <span>项目负责人</span>
+            <span>{{this.detailslList.项目负责人姓名}}</span>
+          </li>
+          <li>
+            <span>项目归属部门</span>
+            <span>{{this.detailslList.项目归属部门}}</span>
+          </li>
+          <li>
+            <span>单位名称</span>
+            <span>{{this.detailslList.单位名称}}</span>
+          </li>
+          <li>
+            <span>邮政编码</span>
+            <span>{{this.detailslList.邮政编码}}</span>
+          </li>
+          <li>
+            <span>法定代表人</span>
+            <span>{{this.detailslList.法定代表人}}</span>
+          </li>
+          <li>
+            <span>经费本编号</span>
+            <span>{{this.detailslList.经费本编号}}</span>
+          </li>
+          <li>
+            <span>联系人</span>
+            <span>{{this.detailslList.联系人}}</span>
+          </li>
+          <li>
+            <span>联系人电话</span>
+            <span>{{this.detailslList.联系人电话}}</span>
+          </li>
+          <li>
+            <span>通讯地址</span>
+            <span>{{this.detailslList.通讯地址}}</span>
+          </li>
+          <li>
+            <span>档案编号</span>
+            <span>{{this.detailslList.档案编号}}</span>
+          </li>
+          <li>
+            <span>财务简称</span>
+            <span>{{this.detailslList.财务简称}}</span>
+          </li>
+          <li>
+            <span>课题来源</span>
+            <span>{{this.detailslList.课题来源}}</span>
+          </li>
           <h4>合同文件</h4>
           <li>合同文件：</li>
           <li>
@@ -35,44 +89,135 @@
         <ul class="servicel">
           <h4>合作方信息</h4>
           <li>
-            <span>类型：{{this.detailslList.合作方关系}}</span>
-            <span>类型：{{this.detailslList.合作方契约关系}}</span>
+            <span>类型</span>
+            <span>{{this.detailslList.合作方关系}}</span>
           </li>
-          <li>名称：{{this.detailslList.合作方单位名称}}</li>
-          <li>法定代表人：{{this.detailslList.合作方法定代表人}}</li>
-          <li>项目类型：{{this.detailslList.项目类型}}</li>
-          <li>单位联系人：{{this.detailslList.合作方单位联系人}}</li>
-          <li>联系电话：{{this.detailslList.合作方联系电话}}</li>
-          <li>邮箱：{{this.detailslList.合作方邮箱}}</li>
-          <li>邮政编码：{{this.detailslList.合作方邮政编码}}</li>
-          <li>合作方所在行政区域：{{this.detailslList.合作方所在省}} {{this.detailslList.合作方所在市}} {{this.detailslList.合作方所在地区}}</li>
-          <li>法人代码：{{this.detailslList.合作方法人或组织机构代码}}</li>
+          <li>
+            <span>类型</span>
+            <span>{{this.detailslList.合作方契约关系}}</span>
+          </li>
+          <li>
+            <span>名称</span>
+            <span>{{this.detailslList.合作方单位名称}}</span>
+          </li>
+          <li>
+            <span>法定代表人</span>
+            <span>{{this.detailslList.合作方法定代表人}}</span>
+          </li>
+          <li>
+            <span>项目类型</span>
+            <span>{{this.detailslList.项目类型}}</span>
+          </li>
+          <li>
+            <span>单位联系人</span>
+            <span>{{this.detailslList.合作方单位联系人}}</span>
+          </li>
+          <li>
+            <span>联系电话</span>
+            <span>{{this.detailslList.合作方联系电话}}</span>
+          </li>
+          <li>
+            <span>邮箱</span>
+            <span>{{this.detailslList.合作方邮箱}}</span>
+          </li>
+          <li>
+            <span>邮政编码</span>
+            <span>{{this.detailslList.合作方邮政编码}}</span>
+          </li>
+          <li>
+            <span>合作方所在行政区域</span>
+            <span>{{this.detailslList.合作方所在省}} {{this.detailslList.合作方所在市}} {{this.detailslList.合作方所在地区}}</span>
+          </li>
+          <li>
+            <span>法人代码</span>
+            <span>{{this.detailslList.合作方法人或组织机构代码}}</span>
+          </li>
         </ul>
       </van-tab>
       <van-tab title="合同信息">
         <ul class="servicel">
           <h4>合同详情信息</h4>
-          <li>合同金额：￥{{NumFormat(this.detailslList.合同金额)}}</li>
-          <li>签订时间：{{startTime(this.detailslList.签订时间)}}</li>
-          <li>付款方式：{{this.detailslList.付款方式}}</li>
-          <li>合作方式：{{this.detailslList.合作方式}}</li>
-          <li>合同开始时间：{{startTime(this.detailslList.合同开始时间)}}</li>
-          <li>合同结束时间：{{startTime(this.detailslList.合同结束时间)}}</li>
-          <li>研究类型：{{this.detailslList.研究类型}}</li>
-          <li>技术领域：{{this.detailslList.技术领域}}</li>
-          <li>合同类型：{{this.detailslList.合同类型}}</li>
-          <li>技术合同类型：{{this.detailslList.技术合同类型}}</li>
-          <li>是否申请技术合同认定：{{conversionState(this.detailslList.是否申请技术合同认定)}}</li>
-          <li>备注：{{this.detailslList.备注}}</li>
+          <li>
+            <span>合同金额</span>
+            <span>{{NumFormat(this.detailslList.合同金额)}}</span>
+          </li>
+          <li>
+            <span>签订时间</span>
+            <span>{{startTime(this.detailslList.签订时间)}}</span>
+          </li>
+          <li>
+            <span>付款方式</span>
+            <span>{{this.detailslList.付款方式}}</span>
+          </li>
+          <li>
+            <span>合作方式</span>
+            <span>{{this.detailslList.合作方式}}</span>
+          </li>
+          <li>
+            <span>合同开始时间</span>
+            <span>{{startTime(this.detailslList.合同开始时间)}}</span>
+          </li>
+          <li>
+            <span>合同结束时间</span>
+            <span>{{startTime(this.detailslList.合同结束时间)}}</span>
+          </li>
+          <li>
+            <span>研究类型</span>
+            <span>{{this.detailslList.研究类型}}</span>
+          </li>
+          <li>
+            <span>技术领域</span>
+            <span>{{this.detailslList.技术领域}}</span>
+          </li>
+          <li>
+            <span>合同类型</span>
+            <span>{{this.detailslList.合同类型}}</span>
+          </li>
+          <li>
+            <span>技术合同类型</span>
+            <span>{{this.detailslList.技术合同类型}}</span>
+          </li>
+          <li>
+            <span>是否申请技术合同认定</span>
+            <span>{{conversionState(this.detailslList.是否申请技术合同认定)}}</span>
+          </li>
+          <li>
+            <span>备注</span>
+            <span>{{this.detailslList.备注}}</span>
+          </li>
           <h4>技术合同认定登记信息</h4>
-          <li>合同技术交易额：￥{{NumFormat(this.detailslList.合同技术交易额)}}</li>
-          <li>知识产权：{{this.detailslList.知识产权}}</li>
-          <li>计划来源：{{this.detailslList.计划来源}}</li>
-          <li>合作方所属国民经济行业：{{this.detailslList.合作方所属国民经济行业}}</li>
-          <li>技术服务的国民经济行业：{{this.detailslList.技术服务的国民经济行业}}</li>
-          <li>合同的社会经济目标：{{this.detailslList.合同的社会经济目标}}</li>
-          <li>合作方性质：{{this.detailslList.合作方性质}}</li>
-          <li>是否高新性质：{{conversionState(this.detailslList.是否高新性质)}}</li>
+          <li>
+            <span>合同技术交易额</span>
+            <span>{{NumFormat(this.detailslList.合同技术交易额)}}</span>
+          </li>
+          <li>
+            <span>知识产权</span>
+            <span>{{this.detailslList.知识产权}}</span>
+          </li>
+          <li>
+            <span>计划来源</span>
+            <span>{{this.detailslList.计划来源}}</span>
+          </li>
+          <li>
+            <span>合作方所属国民经济行业</span>
+            <span>{{this.detailslList.合作方所属国民经济行业}}</span>
+          </li>
+          <li>
+            <span>技术服务的国民经济行业</span>
+            <span>{{this.detailslList.技术服务的国民经济行业}}</span>
+          </li>
+          <li>
+            <span>合同的社会经济目标</span>
+            <span>{{this.detailslList.合同的社会经济目标}}</span>
+          </li>
+          <li>
+            <span>合作方性质</span>
+            <span>{{this.detailslList.合作方性质}}</span>
+          </li>
+          <li>
+            <span>是否高新性质</span>
+            <span>{{conversionState(this.detailslList.是否高新性质)}}</span>
+          </li>
           <h4>合同认定登记承诺书</h4>
           <li>登记承诺书：</li>
           <li>
@@ -90,36 +235,81 @@
           <span>{{NumFormat(this.total)}}</span>
         </div>
         <ul class="servicel" v-for="(item,key) in authorInformation" :key="key">
-          <li>项目支出类型：{{item.项目支出类型}}</li>
-          <li>预算科目：{{item.财务科目}}</li>
-          <li>预算金额（元）：{{item.批准经费}}</li>
-          <li>编制依据：{{item.编制依据}}</li>
+          <li>
+            <span>项目支出类型</span>
+            <span>{{item.项目支出类型}}</span>
+          </li>
+          <li>
+            <span>预算科目</span>
+            <span>{{item.财务科目}}</span>
+          </li>
+          <li>
+            <span>预算金额（元）</span>
+            <span>{{NumFormat(item.批准经费)}}</span>
+          </li>
+          <li>
+            <span>编制依据</span>
+            <span>{{item.编制依据}}</span>
+          </li>
         </ul>
       </van-tab>
       <van-tab title="参与人信息">
         <ul class="servicel" v-for="(item,key) in relatedProjects" :key="key">
           <h4>参与人信息</h4>
-          <li>参与人姓名：{{item.姓名}}</li>
-          <li>部门名称：{{item.部门名称}}</li>
-          <li>工作量占比(%)：{{item.工作量占比}}</li>
-          <li>建立时间：{{startTime(item.建立时间)}}</li>
-          <li>备注：{{item.备注}}</li>
+          <li>
+            <span>参与人姓名</span>
+            <span>{{item.姓名}}</span>
+          </li>
+          <li>
+            <span>部门名称</span>
+            <span>{{item.部门名称}}</span>
+          </li>
+          <li>
+            <span>工作量占比(%)</span>
+            <span>{{item.工作量占比}}</span>
+          </li>
+          <li>
+            <span>建立时间</span>
+            <span>{{startTime(item.建立时间)}}</span>
+          </li>
+          <li>
+            <span>备注</span>
+            <span>{{item.备注}}</span>
+          </li>
         </ul>
       </van-tab>
       <van-tab title="审核记录">
         <h3>审核记录</h3>
         <ul v-for="(item,key) in auditRecords" :key="key" class="audit">
-          <li>步骤名称：{{item.名称}}</li>
-          <li>处理人：{{item.姓名}}</li>
-          <li>部门名称：{{item.部门名称}}</li>
+          <li>
+            <span>步骤名称</span>
+            <span>{{item.名称}}</span>
+          </li>
+          <li>
+            <span>处理人</span>
+            <span>{{item.姓名}}</span>
+          </li>
+          <li>
+            <span>部门名称</span>
+            <span>{{item.部门名称}}</span>
+          </li>
           <li class="state">
+            <span>状态</span>
             <span :style="{'color':(item.状态说明 == flag ? '#31BD5D' : '#FF976A')}">{{item.状态说明}}</span>
+          </li>
+          <li>
+            <span>执行时间</span>
             <span>
-              <i class="icon iconfont icon-shijian1" v-show="condition"></i>
-              {{startTime(item.执行时间)}}
+              <span>
+                <i class="icon iconfont icon-shijian1" v-show="condition"></i>
+                {{startTime(item.执行时间)}}
+              </span>
             </span>
           </li>
-          <li>备注：{{item.备注}}</li>
+          <li>
+            <span>备注</span>
+            <span>{{item.备注}}</span>
+          </li>
         </ul>
       </van-tab>
       <ReturnBtn/>
@@ -208,8 +398,9 @@ export default {
     background-color: #f5f5f5;
     padding-left: 10px;
     span {
-      font-size: 16px;
+      font-size: 14px;
       font-weight: bold;
+      color: #1162b5;
       vertical-align: middle;
     }
     span:nth-child(2) {
@@ -230,22 +421,25 @@ export default {
       background-color: #e7e7e7;
     }
     li {
-      padding: 5px 0;
+      padding: 10px 0;
       display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #f2f2f2;
       p {
         font-size: 14px;
+        color: #5a5a5a;
         margin: 0;
-        width: 79%;
-        justify-content: space-between;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
       }
-      span {
-        width: 50%;
-        justify-content: space-between;
+      span:nth-child(1) {
+        color: #888;
+      }
+      span:nth-child(2) {
+        color: #5a5a5a;
       }
       i {
         color: rgb(6, 167, 6);

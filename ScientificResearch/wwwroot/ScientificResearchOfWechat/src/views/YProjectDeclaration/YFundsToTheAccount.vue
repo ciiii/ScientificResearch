@@ -4,12 +4,31 @@
       <van-tab title="到账信息">
         <ul class="servicel">
           <h4>到账信息</h4>
-          <li>拨款单位：{{this.detailslList.拨款单位}}</li>
-          <li>到账金额：{{NumFormat(this.detailslList.到账金额)}}</li>
-          <li>到账日期：{{startTime(this.detailslList.到账日期)}}</li>
-          <li>到账单位：{{this.detailslList.到账单位}}</li>
-          <li>经办人：{{this.detailslList.经办人姓名}}</li>
-          <li>备注：{{this.detailslList.备注}}</li>
+          <li>
+            <span>拨款单位</span>
+            <span>{{this.detailslList.拨款单位}}</span>
+          </li>
+          <li>
+            <span>到账金额</span>
+            <span>{{NumFormat(this.detailslList.到账金额)}}</span>
+          </li>
+          <li>
+            <span>到账日期</span>
+            <span>{{startTime(this.detailslList.到账日期)}}</span>
+          </li>
+          <li>
+            <span>到账单位</span>
+            <span>{{this.detailslList.到账单位}}</span>
+          </li>
+          <li>
+            <span>经办人</span>
+            <span>{{this.detailslList.经办人姓名}}</span>
+          </li>
+          <li>
+            <span>备注</span>
+            <span>{{this.detailslList.备注}}</span>
+          </li>
+
           <h4>到账凭证</h4>
           <li>附件：</li>
           <li>
@@ -20,38 +39,102 @@
       <van-tab title="基本信息">
         <ul class="servicel">
           <h4>项目基本信息</h4>
-          <li>项目中文名称：{{this.relatedProjects.项目中文名称}}</li>
-          <li>项目分类：{{this.relatedProjects.分类名称}}</li>
-          <li>项目类型：{{this.relatedProjects.项目类型}}</li>
-          <li>项目级别：{{this.relatedProjects.项目级别}}</li>
-          <li>项目来源单位：{{this.relatedProjects.项目来源单位}}</li>
-          <li>项目类别：{{this.relatedProjects.项目类别}}</li>
-          <li>项目负责人：{{this.relatedProjects.负责人姓名}}</li>
-          <li>所属部门：{{this.relatedProjects.负责人部门名称}}</li>
-          <li>项目经费：{{NumFormat(this.relatedProjects.批准经费)}}</li>
-          <li>配套经费：{{NumFormat(this.relatedProjects.配套经费)}}</li>
-          <li>项目总经费：{{NumFormat(this.relatedProjects.经费)}}</li>
-          <li>未到账经费：{{NumFormat(this.relatedProjects.未到经费)}}</li>
-          <li>待审核到账：{{NumFormat(this.relatedProjects.待审核到账)}}</li>
-          <li>已审核到账：{{NumFormat(this.relatedProjects.已审核到账)}}</li>
-          <li>开始时间：{{startTime(this.relatedProjects.计划开始日期)}}</li>
-          <li>结束时间：{{startTime(this.relatedProjects.计划完成日期)}}</li>
+          <li>
+            <span>项目中文名称</span>
+            <p>{{this.relatedProjects.项目中文名称}}</p>
+          </li>
+          <li>
+            <span>项目分类</span>
+            <span>{{this.relatedProjects.分类名称}}</span>
+          </li>
+          <li>
+            <span>项目类型</span>
+            <span>{{this.relatedProjects.项目类型}}</span>
+          </li>
+          <li>
+            <span>项目级别</span>
+            <span>{{this.relatedProjects.项目级别}}</span>
+          </li>
+          <li>
+            <span>项目来源单位</span>
+            <span>{{this.relatedProjects.项目来源单位}}</span>
+          </li>
+          <li>
+            <span>项目类别</span>
+            <span>{{this.relatedProjects.项目类别}}</span>
+          </li>
+          <li>
+            <span>项目负责人</span>
+            <span>{{this.relatedProjects.负责人姓名}}</span>
+          </li>
+          <li>
+            <span>所属部门</span>
+            <span>{{this.relatedProjects.负责人部门名称}}</span>
+          </li>
+          <li>
+            <span>项目经费</span>
+            <span>{{NumFormat(this.relatedProjects.批准经费)}}</span>
+          </li>
+          <li>
+            <span>配套经费</span>
+            <span>{{NumFormat(this.relatedProjects.配套经费)}}</span>
+          </li>
+          <li>
+            <span>项目总经费</span>
+            <span>{{NumFormat(this.relatedProjects.经费)}}</span>
+          </li>
+          <li>
+            <span>未到账经费</span>
+            <span>{{NumFormat(this.relatedProjects.未到经费)}}</span>
+          </li>
+          <li>
+            <span>待审核到账</span>
+            <span>{{NumFormat(this.relatedProjects.待审核到账)}}</span>
+          </li>
+          <li>
+            <span>已审核到账</span>
+            <span>{{NumFormat(this.relatedProjects.已审核到账)}}</span>
+          </li>
+          <li>
+            <span>开始时间</span>
+            <span>{{startTime(this.relatedProjects.计划开始日期)}}</span>
+          </li>
+          <li>
+            <span>结束时间</span>
+            <span>{{startTime(this.relatedProjects.计划完成日期)}}</span>
+          </li>
         </ul>
       </van-tab>
       <van-tab title="审核记录">
         <h3>审核记录</h3>
         <ul v-for="(item,key) in auditRecords" :key="key" class="audit">
-          <li>步骤名称：{{item.名称}}</li>
-          <li>处理人：{{item.姓名}}</li>
-          <li>处理人部门：{{item.部门名称}}</li>
+          <li>
+            <span>步骤名称</span>
+            <span>{{item.名称}}</span>
+          </li>
+          <li>
+            <span>处理人</span>
+            <span>{{item.姓名}}</span>
+          </li>
+          <li>
+            <span>处理人部门</span>
+            <span>{{item.部门名称}}</span>
+          </li>
           <li class="state">
+            <span>状态</span>
             <span :style="{'color':(item.状态说明 == flag ? '#FF976A' : '#31BD5D')}">{{item.状态说明}}</span>
+          </li>
+          <li>
+            <span>执行时间</span>
             <span>
               <i class="icon iconfont icon-shijian1"></i>
               {{startTimeB(item.执行时间)}}
             </span>
           </li>
-          <li>备注：{{item.备注}}</li>
+          <li>
+            <span>备注</span>
+            <span>{{item.备注}}</span>
+          </li>
         </ul>
       </van-tab>
       <ReturnBtn/>
@@ -146,17 +229,25 @@ export default {
       background-color: #e7e7e7;
     }
     li {
-      justify-content: space-between;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-      padding: 5px 0;
       display: flex;
-      span {
-        width: 50%;
-        justify-content: space-between;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #f2f2f2;
+      p {
+        font-size: 14px;
+        color: #5a5a5a;
+        margin: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+      }
+      span:nth-child(1) {
+        color: #888;
+      }
+      span:nth-child(2) {
+        color: #5a5a5a;
       }
       i {
         color: rgb(6, 167, 6);

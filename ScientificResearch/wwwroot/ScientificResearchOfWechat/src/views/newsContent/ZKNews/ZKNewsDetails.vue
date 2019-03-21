@@ -1,6 +1,9 @@
 <template>
   <div class="box">
-    <div v-for="(item,key) in list" :key="key" v-html="item" :class="{active:active==key}"></div>
+    <!-- <div v-for="(item,key) in list" :key="key" v-html="item" :class="{active:active==key}"></div> -->
+    <div class="title" v-html="this.list.标题" :class="{active:active==this.list.标题}"></div>
+    <div class="content" v-html="this.list.内容" :class="{active:active==this.list.内容}"></div>
+    <div class="time" v-html="this.list.建立时间" :class="{active:active==this.list.建立时间}"></div>
     <ReturnBtn/>
   </div>
 </template>
@@ -21,6 +24,7 @@ export default {
   methods: {
     getDetails() {
       this.list = this.$route.params.item;
+      console.log(this.list, "4455");
     }
   }
 };
@@ -28,6 +32,18 @@ export default {
 <style lang="less" scoped>
 .box {
   padding: 10px 20px;
+  .title {
+    font-size: 18px;
+    
+  }
+  .content,
+  .time {
+    font-family:"Arial,微软雅黑";
+    color: rgb(51, 51, 51);
+    letter-spacing: 0;
+    font-size: 16px;
+    line-height: 25px;
+  }
 }
 /deep/ img {
   max-width: 100%;

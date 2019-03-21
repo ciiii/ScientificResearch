@@ -112,7 +112,7 @@ export default {
 
 <style lang="less" scoped>
 .footnav {
-  height: 65px;
+  height: 50px;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -136,14 +136,14 @@ export default {
 }
 .footnav .txt {
   color: #ababab;
-  font-size: 14px;
+  font-size: 12px;
   &.active {
     color: #1296db;
   }
 }
 .footnav .index {
-  width: 30px;
-  height: 30px;
+  width: 18px;
+  height: 18px;
   background: url(../../assets/images/footerIocn/index_active.png) center
     no-repeat / contain;
 }
@@ -152,8 +152,8 @@ export default {
     no-repeat / contain;
 }
 .footnav .backlog {
-  width: 30px;
-  height: 30px;
+  width: 18px;
+  height: 18px;
   background: url(../../assets/images/footerIocn/backlog_active.png) center
     no-repeat / contain;
 }
@@ -162,8 +162,8 @@ export default {
     no-repeat / contain;
 }
 .footnav .release {
-  width: 30px;
-  height: 30px;
+  width: 18px;
+  height: 18px;
   background: url(../../assets/images/footerIocn/activity_default.png) center
     no-repeat / contain;
 }
@@ -172,8 +172,8 @@ export default {
     no-repeat / contain;
 }
 .footnav .personal {
-  width: 30px;
-  height: 30px;
+  width: 18px;
+  height: 18px;
   background: url(../../assets/images/footerIocn/personal_active.png) center
     no-repeat / contain;
 }
@@ -203,11 +203,10 @@ export default {
   //点击活动出现的弹框
   .pop_out {
     width: 150px;
-    // height: 100px;
     background: rgba(0, 0, 0, 0.8);
     position: absolute;
     z-index: 50;
-    bottom: 66px;
+    bottom: 55px;
     left: -10px;
     margin-left: 170px;
     border-radius: 20px;

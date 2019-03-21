@@ -25,22 +25,43 @@
       </div>
       <div class="box">
         <div>
-          <h3>第一作者</h3>
-          <span>10</span>
+          <div class="boxI">
+            <i class="iocn iconfont icon-diyiming"></i>
+          </div>
+          <div class="boxContent">
+            <p>第一作者</p>
+            <span>10</span>
+          </div>
         </div>
         <div>
-          <h3>横项</h3>
-          <span>15</span>
+          <div class="boxI">
+            <i class="iocn iconfont icon-xiangmu1"></i>
+          </div>
+          <div class="boxContent">
+            <p>横项</p>
+            <span>15</span>
+          </div>
         </div>
         <div>
-          <h3>纵项</h3>
-          <span>17</span>
+          <div class="boxI">
+            <i class="iocn iconfont icon-xiangmu"></i>
+          </div>
+          <div class="boxContent">
+            <p>纵项</p>
+            <span>17</span>
+          </div>
         </div>
         <div>
-          <h3>费用</h3>
-          <span>3728元</span>
+          <div class="boxI">
+            <i class="iocn iconfont icon-feiyong"></i>
+          </div>
+          <div class="boxContentX">
+            <p>费用</p>
+            <span>3728元</span>
+          </div>
         </div>
       </div>
+
       <div class="backlogBox">
         <div class="backlog">
           <span>
@@ -145,68 +166,86 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style lang="less" scoped>
 section {
   background-color: #f4f8fb;
-}
-.box {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 8px;
-  background-color: #fff;
-}
-.box > div {
-  width: 75px;
-  height: 75px;
-  border: 4px solid #d9dada;
-  border-radius: 50%;
-  color: #224b8f;
-  background-color: #eaefef;
-  font-size: 12px;
-}
-.box > div > h3 {
-  margin-top: 20px;
-  margin-bottom: 0;
-}
-.detailsBtn {
-  margin-left: 10px;
-}
-.backlogBox {
-  padding: 10px;
-  background-color: #fff;
-  margin: 10px 0;
-}
-.backlogBox > h3 {
-  margin: 0;
-  font-size: 18px;
-}
-.backlog {
-  display: flex;
-  justify-content: space-between;
-  font-size: 14px;
-  margin-bottom: 10px;
-}
-.backlog > span {
-  padding: 5px 0;
-}
-.backlogContent {
-  height: 32px;
-  font-size: 14px;
-  text-align: left;
-  background-color: #fffbe8;
-}
-.backlogContent span {
-  padding: 5px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  color: #ed6a0c;
-  border-bottom: 1px solid #fff;
-}
-.backlogContent i {
-  padding-right: 5px;
+  .backlogBox {
+    padding: 10px;
+    background-color: #fff;
+    margin: 10px 0;
+    .backlog {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      margin-bottom: 10px;
+      span {
+        padding: 5px 0;
+      }
+    }
+    .backlogContent {
+      height: 32px;
+      font-size: 14px;
+      text-align: left;
+      background-color: #fffbe8;
+      span {
+        padding: 5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        color: #ed6a0c;
+        border-bottom: 1px solid #fff;
+        i {
+          padding-right: 5px;
+        }
+      }
+    }
+  }
+  .box {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 8px;
+    background-color: #fff;
+    div {
+      display: flex;
+      font-size: 12px;
+      .boxI {
+        line-height: 5;
+      }
+      .boxContent {
+        flex-direction: column;
+        padding: 0 10px;
+        margin: 10px 0;
+        border-right: 1px solid #ccc;
+        p {
+          font-size: 14px;
+          color: #a3a3a3;
+          margin: 5px;
+        }
+        span {
+          font-size: 16px;
+          color: #303030;
+          font-weight: bold;
+        }
+      }
+      .boxContentX {
+        border: none;
+        flex-direction: column;
+        margin: 10px 5px;
+        p {
+          font-size: 14px;
+          color: #a3a3a3;
+          margin: 5px;
+        }
+        span {
+          font-size: 16px;
+          color: #303030;
+          font-weight: bold;
+        }
+      }
+    }
+  }
 }
 .icon-liti,
 .icon-tongzhi1 {
@@ -216,5 +255,17 @@ section {
 }
 .icon-you {
   font-size: 12px;
+}
+.icon-diyiming {
+  color: #ffaa15;
+}
+.icon-xiangmu1 {
+  color: #04a1e2;
+}
+.icon-xiangmu {
+  color: #a67feb;
+}
+.icon-feiyong {
+  color: #00d6cf;
 }
 </style>

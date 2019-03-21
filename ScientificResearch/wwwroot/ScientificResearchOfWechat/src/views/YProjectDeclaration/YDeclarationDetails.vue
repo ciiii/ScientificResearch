@@ -4,30 +4,78 @@
       <van-tab title="基本信息">
         <ul class="servicel">
           <h4>申报基本信息</h4>
-          <li>项目名称：
+          <li>
+            <span>项目名称</span>
             <p>{{this.detailslList.项目名称}}</p>
           </li>
-          <li>申报人：{{this.detailslList.姓名}}</li>
-          <li>成果归属部门：{{this.detailslList.部门名称}}</li>
           <li>
-            <span>学科门类：{{this.detailslList.学科门类}}</span>
-            <span>学科类型：{{this.detailslList.学科类型}}</span>
+            <span>申报人</span>
+            <span>{{this.detailslList.姓名}}</span>
           </li>
           <li>
-            <span>项目类型：{{this.detailslList.项目类型}}</span>
-            <span>项目级别：{{this.detailslList.项目级别}}</span>
+            <span>成果归属部门</span>
+            <span>{{this.detailslList.部门名称}}</span>
           </li>
-          <li>项目来源单位：{{this.detailslList.项目来源单位}}</li>
-          <li>申报时间：{{startTime(this.detailslList.申报时间)}}</li>
-          <li>申请经费：{{NumFormat(this.detailslList.申请经费)}}</li>
-          <li>申报年度：{{this.detailslList.申报年度}}</li>
-          <li>计划开始日期：{{startTime(this.detailslList.计划开始日期)}}</li>
-          <li>计划完成日期：{{startTime(this.detailslList.计划完成日期)}}</li>
-          <li>项目等级：{{this.detailslList.项目等级}}</li>
-          <li>伦理批文编号：{{this.detailslList.伦理批文编号}}</li>
-          <li>是否委托外单位进行实验或实验分析：{{this.detailslList.是否委托外单位进行实验或实验分析}}</li>
-          <li>实验委托检测内容：{{this.detailslList.实验委托检测内容}}</li>
-          <li>项目摘要：{{this.detailslList.项目摘要}}</li>
+          <li>
+            <span>学科门类</span>
+            <span>{{this.detailslList.学科门类}}</span>
+          </li>
+          <li>
+            <span>学科类型</span>
+            <span>{{this.detailslList.学科类型}}</span>
+          </li>
+          <li>
+            <span>项目类型</span>
+            <span>{{this.detailslList.项目类型}}</span>
+          </li>
+          <li>
+            <span>项目级别</span>
+            <span>{{this.detailslList.项目级别}}</span>
+          </li>
+          <li>
+            <span>项目来源单位</span>
+            <span>{{this.detailslList.项目来源单位}}</span>
+          </li>
+          <li>
+            <span>申报时间</span>
+            <span>{{startTime(this.detailslList.申报时间)}}</span>
+          </li>
+          <li>
+            <span>申请经费</span>
+            <span>{{NumFormat(this.detailslList.申请经费)}}</span>
+          </li>
+          <li>
+            <span>申报年度</span>
+            <span>{{this.detailslList.申报年度}}</span>
+          </li>
+          <li>
+            <span>计划开始日期</span>
+            <span>{{startTime(this.detailslList.计划开始日期)}}</span>
+          </li>
+          <li>
+            <span>计划完成日期</span>
+            <span>{{startTime(this.detailslList.计划完成日期)}}</span>
+          </li>
+          <li>
+            <span>项目等级</span>
+            <span>{{this.detailslList.项目等级}}</span>
+          </li>
+          <li>
+            <span>伦理批文编号</span>
+            <span>{{this.detailslList.伦理批文编号}}</span>
+          </li>
+          <li>
+            <span>是否委托外单位进行实验或实验分析</span>
+            <span>{{conversionState(this.detailslList.是否委托外单位进行实验或实验分析)}}</span>
+          </li>
+          <li>
+            <span>实验委托检测内容</span>
+            <span>{{this.detailslList.实验委托检测内容}}</span>
+          </li>
+          <li>
+            <span>项目摘要</span>
+            <span>{{this.detailslList.项目摘要}}</span>
+          </li>
         </ul>
       </van-tab>
       <van-tab title="参与人信息">
@@ -35,9 +83,18 @@
           <img src="@/assets/images/nothing-3.png" alt>
         </div>
         <ul class="servicel" v-else v-for="(item,key) in authorInformation" :key="key">
-          <li>参与人姓名：{{item.姓名}}</li>
-          <li>部门名称：{{item.部门名称}}</li>
-          <li>工作量占比(%)：{{item.工作量占比}}</li>
+          <li>
+            <span>参与人姓名</span>
+            <span>{{item.姓名}}</span>
+          </li>
+          <li>
+            <span>部门名称</span>
+            <span>{{item.部门名称}}</span>
+          </li>
+          <li>
+            <span>工作量占比(%)</span>
+            <span>{{item.工作量占比}}</span>
+          </li>
         </ul>
       </van-tab>
       <van-tab title="相关文件">
@@ -60,12 +117,30 @@
           <img src="@/assets/images/nothing-3.png" alt>
         </div>
         <ul class="servicel" v-else v-for="(item,key) in relatedProjects" :key="key">
-          <li>专家姓名：{{item.专家姓名}}</li>
-          <li>部门：{{item.专家部门名称}}</li>
-          <li>评分类型：{{item.评分项}}</li>
-          <li>评分：{{item.评分}}</li>
-          <li>评审时间：{{startTime(item.建立时间)}}</li>
-          <li>专家推荐意见：{{item.备注}}</li>
+          <li>
+            <span>专家姓名</span>
+            <span>{{item.专家姓名}}</span>
+          </li>
+          <li>
+            <span>部门</span>
+            <span>{{item.专家部门名称}}</span>
+          </li>
+          <li>
+            <span>评分类型</span>
+            <span>{{item.评分项}}</span>
+          </li>
+          <li>
+            <span>评分</span>
+            <span>{{item.评分}}</span>
+          </li>
+          <li>
+            <span>评审时间</span>
+            <span>{{startTime(item.建立时间)}}</span>
+          </li>
+          <li>
+            <span>专家推荐意见</span>
+            <span>{{item.备注}}</span>
+          </li>
         </ul>
       </van-tab>
       <van-tab title="审核记录">
@@ -74,17 +149,33 @@
           <img src="@/assets/images/nothing-3.png" alt>
         </div>
         <ul v-for="(item,key) in auditRecords" :key="key" v-else class="audit">
-          <li>步骤名称：{{item.名称}}</li>
-          <li>处理人：{{item.姓名}}</li>
-          <li>部门名称：{{item.部门名称}}</li>
+          <li>
+            <span>步骤名称</span>
+            <span>{{item.名称}}</span>
+          </li>
+          <li>
+            <span>处理人</span>
+            <span>{{item.姓名}}</span>
+          </li>
+          <li>
+            <span>部门名称</span>
+            <span>{{item.部门名称}}</span>
+          </li>
           <li class="state">
+            <span>状态</span>
             <span :style="{'color':(item.状态说明 == flag ? '#31BD5D' : '#FF976A')}">{{item.状态说明}}</span>
+          </li>
+          <li>
+            <span>执行时间</span>
             <span>
               <i class="icon iconfont icon-shijian1"></i>
               {{startTimeB(item.执行时间)}}
             </span>
           </li>
-          <li>备注：{{item.备注}}</li>
+          <li>
+            <span>备注</span>
+            <span>{{item.备注}}</span>
+          </li>
         </ul>
       </van-tab>
       <ReturnBtn/>
@@ -144,6 +235,9 @@ export default {
     },
     Interception(item) {
       return Interception(item);
+    },
+    conversionState(item) {
+      return item == true ? "是" : item == false ? "否" : " ";
     }
   }
 };
@@ -181,23 +275,32 @@ export default {
       background-color: #e7e7e7;
     }
     li {
-      padding: 5px 0;
+      padding: 10px 0;
       display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #f2f2f2;
       p {
         font-size: 14px;
+        color: #5a5a5a;
         margin: 0;
-        width: 79%;
-        justify-content: space-between;
+        // width: 79%;
+        // justify-content: space-between;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
       }
-      span {
-        width: 50%;
-        justify-content: space-between;
+      span:nth-child(1) {
+        color: #888;
       }
+      span:nth-child(2) {
+        color: #5a5a5a;
+      }
+      // span {
+      // width: 50%;
+      // justify-content: space-between;
+      // }
       i {
         color: rgb(6, 167, 6);
       }

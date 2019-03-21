@@ -36,7 +36,13 @@
       <div class="input">
         <i class="iocn iconfont icon-asterisks-1-copy"></i>
         <table>新密码</table>
-        <input type="password" placeholder="20位非纯数字或纯英文" v-model="pwd_2" prop="pwd_2" @blur="pwd_B">
+        <input
+          type="password"
+          placeholder="支持6-20位非纯数字或纯英文"
+          v-model="pwd_2"
+          prop="pwd_2"
+          @blur="pwd_B"
+        >
       </div>
       <!-- <van-field
         v-model="pwd_3"
@@ -163,22 +169,22 @@ export default {
   .input {
     display: flex;
     border-bottom: 1px solid #ebedf0;
-    width: 100%;
     i {
       font-size: 6px;
       color: #f44;
-      line-height: 7;
+      line-height: 5;
       padding: 0 5px;
     }
     table {
       font-size: 14px;
-      padding: 10px;
+      padding: 10px 0;
     }
     input {
       padding: 10px;
       border: none;
       outline-style: none;
       font-size: 14px;
+      width: 65%;
     }
   }
 }

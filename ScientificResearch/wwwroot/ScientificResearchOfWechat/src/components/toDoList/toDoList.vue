@@ -1,26 +1,38 @@
 <template>
   <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
     <div class="backContentBox" v-for="(item, key) in list" :key="key">
-      <ul class="backContentTop" @click="goDetails(item,item.项目编号)">
-        <li>{{item.流程名称}}</li>
-        <li>
-          <i class="icon iconfont icon-you"></i>
-        </li>
-      </ul>
-      <ul>
-        <li>项目名称：{{item.项目名称}}</li>
-        <li>步骤名称：{{item.步骤名称}}</li>
-        <li>发起人姓名：{{item.发起人姓名}}</li>
-        <li>
-          <i class="currentState">{{item.状态名称}}</i>
-          <i class="stepState">{{item.步骤状态说明}}</i>
-        </li>
-        <li class="contentSpan">当前步骤：{{item.步骤名称}} - {{item.步骤状态说明}}</li>
-        <li>
-          <span>创建时间：{{startTime(item.流程创建时间)}}</span>
+      <div class="bacnButtom">
+        <ul @click="goDetails(item,item.项目编号)">
+          <li>{{item.流程名称}}</li>
+          <li>
+            <span>项目名称：</span>
+            <span>{{item.项目名称}}</span>
+          </li>
+          <li>
+            <span>步骤名称：</span>
+            <span>{{item.步骤名称}}</span>
+          </li>
+          <li>
+            <span>发起人姓名：</span>
+            <span>{{item.发起人姓名}}</span>
+          </li>
+          <li>
+            <i class="currentState">{{item.状态名称}}</i>
+            <i class="stepState">{{item.步骤状态说明}}</i>
+          </li>
+          <li class="contentSpan">
+            <span>当前步骤：</span>
+            <span>{{item.步骤名称}} - {{item.步骤状态说明}}</span>
+          </li>
+          <li>
+            <span>创建时间：</span>
+            <span>{{startTime(item.流程创建时间)}}</span>
+          </li>
+        </ul>
+        <div class="audit">
           <span @click="audit(item)" v-show="isShow">审核</span>
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
     <van-popup v-model="show" class="popup">
       <Audit :message="message" @getMessage="getMessage"></Audit>
@@ -53,7 +65,7 @@ export default {
         纵向项目经费到账: "YFundsToTheAccount",
 
         横向项目: "XDetails",
-        横向项目经费到账:"XFundsToTheAccount"
+        横向项目经费到账: "XFundsToTheAccount"
       }
     };
   },
@@ -99,7 +111,6 @@ export default {
       }
     },
     audit(item) {
-      console.log(item, "dd");
       this.message = item;
       this.show = true;
     },
@@ -132,51 +143,61 @@ export default {
   padding: 10px 15px;
   border: 1px dashed #ccc;
   background-color: #fff;
-  box-shadow: 6px 6px 6px #888888;
+  box-shadow: 6px 6px 6px #ccc;
   margin-bottom: 20px;
-  .backContentTop {
+  .bacnButtom {
     display: flex;
-    font-weight: 800;
+    justify-content: space-between;
+    align-items: flex-end;
+    li {
+      display: flex;
+      font-size: 14px;
+      padding: 4px 0;
+      span:nth-child(1) {
+        color: #888;
+      }
+      span:nth-child(2) {
+        color: #5a5a5a;
+      }
+      .stepState,
+      .currentState {
+        padding: 4px;
+        color: #07c160;
+        border-radius: 4px;
+        font-size: 12px;
+        border: 1px solid #07c160;
+        font-style: normal;
+      }
+      .currentState {
+        margin-right: 10px;
+        color: #ed1941;
+        border: 1px solid #ed1941;
+      }
+    }
     li:nth-child(1) {
+      font-weight: 800;
+      color: #1296db;
+    }
+    li:nth-child(2) {
       overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;
       -webkit-line-clamp: 1;
       -webkit-box-orient: vertical;
-      flex-grow: 1;
     }
-  }
-  ul {
-    font-size: 14px;
-    li {
-      display: flex;
-      padding: 4px 0;
-      span:nth-child(1) {
-        flex-grow: 1;
-      }
-      span:nth-child(2) {
-        font-size: 12px;
-        padding: 5px 12px;
+    .contentSpan {
+      color: #ff976a;
+    }
+    .audit {
+      span {
+        display: inline-block;
+        width: 32px;
+        font-size: 14px;
+        padding: 8px 16px;
         background-color: #07c160;
         border-radius: 5px;
         color: #fff;
       }
-    }
-    .stepState,
-    .currentState {
-      padding: 4px;
-      color: #fff;
-      border-radius: 4px;
-      font-size: 12px;
-      background-color: #ff976a;
-      font-style: normal;
-    }
-    .currentState {
-      margin-right: 10px;
-      background-color: #ed1941;
-    }
-    .contentSpan {
-      color: #ff976a;
     }
   }
 }
