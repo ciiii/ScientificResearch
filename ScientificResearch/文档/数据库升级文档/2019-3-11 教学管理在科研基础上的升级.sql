@@ -1968,9 +1968,8 @@ GO
 
 CREATE TABLE [dbo].[教学360评价分类]
     (
-      [编号] [INT] IDENTITY(1, 1)
-                 NOT NULL ,
-      [教学360评价方向编号] [INT] NOT NULL ,
+      [编号] [INT] NOT NULL ,
+      [目标类型] [INT] NOT NULL ,
       [名称] [NVARCHAR](200) NOT NULL ,
       [备注] [NVARCHAR](500) NULL ,
       CONSTRAINT [PK_教学360评价分类] PRIMARY KEY CLUSTERED ( [编号] ASC )

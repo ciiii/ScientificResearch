@@ -1,1 +1,0 @@
-c:\Users\Administrator\scientific-research\src\views\activity\lectureList.vue

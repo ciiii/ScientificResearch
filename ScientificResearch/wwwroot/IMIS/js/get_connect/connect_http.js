@@ -66,7 +66,7 @@ var Connect_Http = {
         xhr.open(type, decodeURI(url), true);
         xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
         var Authorization = '';
-        if (localStorage.Authorization) {
+        if (localStorage.Authorization && localStorage.Authorization != 'undefined') {
             Authorization = JSON.parse(localStorage.Authorization);
         }
         xhr.setRequestHeader('Authorization', Authorization);
@@ -97,7 +97,7 @@ var Connect_Http = {
             data: data,
             dataType: 'json',
             contentType: 'application/json',
-            beforeSend : function(request) {
+            beforeSend: function (request) {
                 request.setRequestHeader('Authorization', JSON.parse(sessionStorage.Authorization));
             },
             success: function (e) {

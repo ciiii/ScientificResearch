@@ -2,11 +2,11 @@ $(function () {
     var ParentIndex;
     var TwoIndex;
     window.vm = null;
-    if (localStorage.Authorization == null) {
+    if (localStorage.Authorization && localStorage.Authorization != 'undefined') {
+        getMenuPermissions();
+    } else {
         var authorization = JSON.parse(sessionStorage.Authorization);
         localStorage.setItem('Authorization', JSON.stringify(authorization));
-    } else {
-        getMenuPermissions();
     }
     window.mUserInfo = JSON.parse(localStorage.info).data;
     window.mUserId = mUserInfo.人员.编号;
