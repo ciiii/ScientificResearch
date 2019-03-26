@@ -7,6 +7,8 @@ import 'amfe-flexible';
 import './assets/iconfont/iconfont.css';
 import ReturnBtn from './components/popup/index'
 Vue.use(ReturnBtn)
+import ReturnTop from './components/returnTop/index'
+Vue.use(ReturnTop)
 
 Vue.config.productionTip = false
 
@@ -59,6 +61,10 @@ Vue.use(SubmitBar);
 Vue.use(Checkbox);
 
 Vue.prototype.$http = http
+    // 跳转后返回顶部
+router.afterEach((to, from, next) => {
+    window.scrollTo(0, 0)
+})
 
 new Vue({
     router,

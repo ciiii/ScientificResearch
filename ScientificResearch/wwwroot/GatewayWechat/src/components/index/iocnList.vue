@@ -2,6 +2,7 @@
   <ul>
     <li v-for="(item,index) in iocnList" :key="index">
       <a @click="path(item)">
+        <!-- <a @click="path(a)"> -->
         <img :src="item.Logo" :alt="item.名称">
         <p>{{item.名称}}</p>
       </a>
@@ -14,6 +15,10 @@ export default {
   data() {
     return {
       iocnList: [],
+      a: {
+        手机链接地址: "https://www.baidu.com/s?ie=utf-8",
+        编号: 2013
+      }
       // imgList: {
       //   中国知网: require("../../assets/images/iocn/1.png"),
       //   万方医学网: require("../../assets/images/iocn/15.png"),

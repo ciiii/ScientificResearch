@@ -173,7 +173,8 @@ namespace ScientificResearch.Areas.Manage.Controllers
 
             await 记录登录日志(dbWhenLogin, user);
 
-            return getJwt(user, Config.GetValue<string>("Roles:ScientificResearchUser"));
+            return getJwt(user, Config.GetValue<string>("Roles:UserFromManage"));
+            //return getJwt(user, Config.GetValue<string>("Roles:ScientificResearchUser"));
         }
 
         /// <summary>

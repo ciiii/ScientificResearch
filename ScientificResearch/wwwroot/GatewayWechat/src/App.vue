@@ -5,7 +5,7 @@
 </template>
 
 <style lang="scss">
-@import url("//at.alicdn.com/t/font_1026868_fcrbtbn0k9d.css");
+@import url("//at.alicdn.com/t/font_1026868_7bfey6pxx7m.css");
 html {
   height: 100%;
   background-color: #f5f3fb;

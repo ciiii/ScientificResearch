@@ -16,6 +16,12 @@ export default new Router({
             component: () =>
                 import ("./views/index.vue")
         },
+        { // 空页面
+            path: "/alternative",
+            name: "alternative",
+            component: () =>
+                import ("./views/alternative.vue")
+        },
         { // 待办
             path: "/backlog",
             name: "backlog",

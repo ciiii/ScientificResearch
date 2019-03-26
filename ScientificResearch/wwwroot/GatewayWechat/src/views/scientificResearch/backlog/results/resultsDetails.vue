@@ -179,6 +179,7 @@
         </li>
       </ul>
     </van-tab>
+    <ReturnTop/>
     <ReturnBtn/>
   </van-tabs>
 </template>

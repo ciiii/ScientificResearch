@@ -66,6 +66,10 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+// .van-list {
+//   background-color: #fff !important;
+//   padding-bottom: 150px;
+// }
 h3 {
   text-align: left;
   font-size: 14px;

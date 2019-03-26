@@ -13,7 +13,7 @@ namespace ScientificResearch.Controllers
 {
     //[Route("ScientificResearch/[controller]/[action]")]
     //[ApiExplorerSettings(GroupName = "ScientificResearch")]
-    [Authorize(Roles = "ScientificResearchUser")]
+    [Authorize(Roles = "ScientificResearchUser,UserFromManage")]
     public class ScientificResearchBaseController : BaseController<CurrentUser>
     {
 

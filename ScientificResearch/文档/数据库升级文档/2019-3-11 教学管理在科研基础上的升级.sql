@@ -1644,18 +1644,18 @@ ON  [PRIMARY];
 
 GO
 
-
+--
 EXEC sys.sp_dropextendedproperty @name = N'MS_Description',
     @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'TABLE',
     @level1name = N'教学权限', @level2type = N'COLUMN', @level2name = N'是否菜单';
 
 GO
 
-EXEC sys.sp_dropextendedproperty @name = N'MS_Description',
-    @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'TABLE',
-    @level1name = N'教学权限', @level2type = N'COLUMN', @level2name = N'全编号';
+--EXEC sys.sp_dropextendedproperty @name = N'MS_Description',
+--    @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'TABLE',
+--    @level1name = N'教学权限', @level2type = N'COLUMN', @level2name = N'全编号';
 
-GO
+--GO
 
 ALTER TABLE [dbo].[教学权限] DROP CONSTRAINT [DF_教学权限_是否菜单];
 GO
@@ -1675,13 +1675,14 @@ CREATE TABLE [dbo].[教学权限]
     (
       [编号] [INT] NOT NULL ,
       [上级编号] [INT] NOT NULL ,
-      [全编号] [NVARCHAR](50) NOT NULL ,
+      --[全编号] [NVARCHAR](50) NOT NULL ,
       [深度] [INT] NOT NULL ,
       [排序值] [INT] NOT NULL ,
       [名称] [NVARCHAR](50) NOT NULL ,
       [PC端组件名] [NVARCHAR](100) NULL ,
       [移动端组件名] [NVARCHAR](100) NULL ,
       [是否菜单] [BIT] NOT NULL ,
+	  图标 NVARCHAR(50) NULL,
       [备注] [NVARCHAR](500) NULL ,
       CONSTRAINT [PK_教学权限] PRIMARY KEY CLUSTERED ( [编号] ASC )
         WITH ( PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,
@@ -1695,11 +1696,11 @@ GO
 ALTER TABLE [dbo].[教学权限] ADD  CONSTRAINT [DF_教学权限_是否菜单]  DEFAULT ((1)) FOR [是否菜单];
 GO
 
-EXEC sys.sp_addextendedproperty @name = N'MS_Description',
-    @value = N'暂时以2位来补全编号,并拼接位全编号', @level0type = N'SCHEMA',
-    @level0name = N'dbo', @level1type = N'TABLE', @level1name = N'教学权限',
-    @level2type = N'COLUMN', @level2name = N'全编号';
-GO
+--EXEC sys.sp_addextendedproperty @name = N'MS_Description',
+--    @value = N'暂时以2位来补全编号,并拼接位全编号', @level0type = N'SCHEMA',
+--    @level0name = N'dbo', @level1type = N'TABLE', @level1name = N'教学权限',
+--    @level2type = N'COLUMN', @level2name = N'全编号';
+--GO
 
 EXEC sys.sp_addextendedproperty @name = N'MS_Description',
     @value = N'不是菜单就是按钮之类的;', @level0type = N'SCHEMA', @level0name = N'dbo',
@@ -1707,7 +1708,7 @@ EXEC sys.sp_addextendedproperty @name = N'MS_Description',
     @level2name = N'是否菜单';
 GO
 
-
+--
 
 /****** Object:  Table [dbo].[教学带教老师]    Script Date: 2019/3/14 14:56:20 ******/
 DROP TABLE [dbo].[教学带教老师];
@@ -3242,7 +3243,33 @@ ALTER TABLE [dbo].[教学病例] ADD  CONSTRAINT [DF_教学病例_是否通过审核]  DEFAULT
 GO
 
 --
+/****** Object:  Table [dbo].[教学更换带教老师]    Script Date: 2019/3/25 15:32:30 ******/
+DROP TABLE [dbo].[教学更换带教老师]
+GO
 
+/****** Object:  Table [dbo].[教学更换带教老师]    Script Date: 2019/3/25 15:32:30 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[教学更换带教老师](
+	[编号] [INT] IDENTITY(1,1) NOT NULL,
+	[教学轮转编号] [INT] NOT NULL,
+	[原带教老师编号] [INT] NOT NULL,
+	[新带教老师编号] [INT] NOT NULL,
+	[建立人] [INT] NOT NULL,
+	[建立时间] [DATETIME] NOT NULL,
+	[备注] [NVARCHAR](500) NULL,
+ CONSTRAINT [PK_教学更换带教老师] PRIMARY KEY CLUSTERED 
+(
+	[编号] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+--
 
 
 

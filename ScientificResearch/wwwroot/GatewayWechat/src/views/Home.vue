@@ -33,12 +33,7 @@
               <i class="icon iconfont icon-you"></i>
             </span>
           </div>
-          <ul
-            class="A_News"
-            v-for="(item, key) in KYList"
-            :key="key"
-            @click="KYNewsDetails(item.编号)"
-          >
+          <ul class="A_News" v-for="(item, key) in KYList" :key="key" @click="KYNewsDetails(item.编号)">
             <li>
               <p>{{item.通知名称}}</p>
             </li>

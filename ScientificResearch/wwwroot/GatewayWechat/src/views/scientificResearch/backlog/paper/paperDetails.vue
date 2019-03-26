@@ -192,10 +192,9 @@
           </li>
           <h4>其他相关文件</h4>
           <li>其他相关文件：</li>
-          <!-- <li>
+          <li>
             <a :href="this.detailslList.其他相关文件路径">{{Interception(this.detailslList.其他相关文件路径)}}</a>
-          </li> -->
-          <li>{{a.her}}</li>
+          </li>
         </ul>
       </van-tab>
       <van-tab title="审核记录">
@@ -228,13 +227,13 @@
           </li>
         </ul>
       </van-tab>
+      <ReturnTop/>
       <ReturnBtn/>
     </van-tabs>
   </section>
 </template>
 <script>
 import { NumFormat, Interception } from "@/assets/js/common/filter.js";
-import { showPDF } from "../../../../components/PDF/pdf";
 export default {
   data() {
     return {
@@ -243,11 +242,7 @@ export default {
       relatedProjects: [],
       authorInformation: [],
       auditRecords: [],
-      flag: "审核通过",
-      a: {
-        her:
-          "http://192.168.0.22:20001/Lib/FileMgrController/DownLoadFile?fileName=WF_PeriodicalPaper_zhtnb201407007.pdf"
-      }
+      flag: "审核通过"
     };
   },
   created() {
@@ -257,9 +252,6 @@ export default {
     this.goDetails();
   },
   methods: {
-    showPDF(){
-      console.log("ggg")
-    },
     // 查看详情
     goDetails() {
       var para = {
@@ -344,9 +336,9 @@ export default {
         color: rgb(6, 167, 6);
       }
     }
-    .title span {
+    .title span{
       display: flex;
-      align-items: center;
+      align-items: center; 
     }
   }
 }
