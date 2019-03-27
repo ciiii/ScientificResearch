@@ -54,6 +54,13 @@ export default {
   },
   created() {
     document.title = "登录";
+    this.code = this.getUrlKey("code");
+    if (!this.code) {
+      console.log(this.code,"code")
+       this.getCodeApi("123");
+    } else {
+      // this.getCodeApi("123");
+    }
   },
   mounted() {},
   methods: {
@@ -67,22 +74,32 @@ export default {
         ) || null
       );
     },
-    getCodeApi(urlInit, state) {
-      console.log(urlInit, state,"wwee")
+    getCodeApi(state) {
       //获取code
       // 授权后重定向的回调链接地址
-
-      // let urlNow = encodeURIComponent(window.location.href);
-      let urlNow = encodeURIComponent(urlInit);
-      // let urlNow = encodeURIComponent('http://192.168.0.99:63739/Manage/Access/BindOpenId')
-
-      let scope = "snsapi_base"; //静默授权 用户无感知
+      let urlNow = encodeURIComponent(window.location.href);
+      let scope = "snsapi_base"; //snsapi_userinfo   //静默授权 用户无感知
       let appid = "wx5e45aca8fcb270f1";
       let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${urlNow}&response_type=code&scope=${scope}&state=${state}#wechat_redirect`;
-      // console.log(url,"123")
-      // window.location.replace(url);
-      return url;
+      window.location.replace(url);
     },
+    // getCodeApi(urlInit, state) {
+    //   console.log(urlInit, state,"wwee")
+    //   //获取code
+    //   // 授权后重定向的回调链接地址
+
+    //   // let urlNow = encodeURIComponent(window.location.href);
+    //   let urlNow = encodeURIComponent(urlInit);
+    //   // let urlNow = encodeURIComponent('http://192.168.0.99:63739/Manage/Access/BindOpenId')
+
+    //   let scope = "snsapi_base"; //静默授权 用户无感知
+    //   let appid = "wx5e45aca8fcb270f1";
+    //   let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${urlNow}&response_type=code&scope=${scope}&state=${state}#wechat_redirect`;
+    //   // console.log(url,"123")
+    //   // window.location.replace(url);
+    //   return url;
+    // },
+
     // 登录 防抖
     bind: _debounce(function() {
       if (this.工号 == null || this.密码 == null) {
@@ -98,7 +115,7 @@ export default {
         this.$notify("密码长度不能少于【3】位");
         return;
       } else {
-        this.code = this.getUrlKey("code");
+        // this.code = this.getUrlKey("code");
         if (this.code) {
           this.$http
             .BindOpenId(this.code, this.工号, this.密码, this.DbKey)
@@ -147,7 +164,7 @@ export default {
 };
 </script>
 <style scoped>
-.box{
+.box {
   padding-bottom: 50px;
   background-color: #fff;
 }

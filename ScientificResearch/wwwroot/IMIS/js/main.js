@@ -751,7 +751,7 @@ avalon.config({debug: false});
 String.prototype.format = function (args) {
     var result = this;
     if (arguments.length > 0) {
-        if (arguments.length == 1 && typeof(args) == "object") {
+        if (arguments.length == 1 && typeof (args) == "object") {
             for (var key in args) {
                 if (args[key] != undefined) {
                     var reg = new RegExp("({" + key + "})", "g");
@@ -933,11 +933,15 @@ function isOverdue() {
     var url;
     if (localStorage.getItem('info') == null) {
         alert('登录信息已过期，请重新登录！');
-        url = $('#loginUrl', parent.document).val();
+        if (localStorage.getItem('gatewayUrl')) {
+            url = localStorage.getItem('gatewayUrl');
+        } else {
+            url = $('#loginUrl', parent.document).val();
+        }
         if (url != '') {
             parent.location.href = url;
         }
-    }else{
+    } else {
         var mUserInfo = JSON.parse(localStorage.info);
         parentRefresh(mUserInfo);
     }
@@ -946,13 +950,13 @@ function isOverdue() {
 
 //父级页面刷新
 function parentRefresh(mUserInfo) {
-    if(sessionStorage.mUserId){
+    if (sessionStorage.mUserId) {
         var userId = JSON.parse(sessionStorage.mUserId);
         if (userId != mUserInfo.data.人员.编号) {
             parent.location.reload();
             sessionStorage.mUserId = mUserInfo.data.人员.编号;
         }
-    }else{
+    } else {
         parent.location.href = mUserInfo.url;
     }
 }
@@ -967,6 +971,7 @@ function isFormData(funFormData, funAjaxFileUpload) {
         funAjaxFileUpload();
     }
 }
+
 function setHeader(xhr) {
     var Authorization = JSON.parse(sessionStorage.Authorization);
     xhr.setRequestHeader('Authorization', Authorization);

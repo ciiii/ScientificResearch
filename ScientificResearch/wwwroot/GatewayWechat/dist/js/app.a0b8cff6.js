@@ -1,1 +1,0 @@
-e:\scientific-research\dist\js\app.a0b8cff6.js

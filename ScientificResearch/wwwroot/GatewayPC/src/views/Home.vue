@@ -31,7 +31,8 @@
                             <div class="item-header">
                                 <h5><i class="icon iconfont icon-shu2"></i> 文献数据库</h5>
                                 <el-tooltip class="more item" effect="dark" content="更多" placement="top-start">
-                                    <a href="javascript:;" @click="moreService"><i class="icon iconfont icon-gengduo"></i></a>
+                                    <a href="javascript:;" @click="moreService"><i
+                                            class="icon iconfont icon-gengduo"></i></a>
                                 </el-tooltip>
                             </div>
                             <ul class="list">
@@ -39,7 +40,8 @@
                                     <a :href="el.电脑链接地址?el.电脑链接地址:'javascript:;'" @click="clickUrl(el)" target="_blank">
                                         <span class="btn-icon"><i class="icon iconfont icon-yuandianxiao"></i></span>
                                         <img class="img-logo" v-if="el.Logo" :src="el.Logo" alt="服务logo" height="20"/>
-                                        <img class="img-logo" v-else src="../assets/images/service-logo.jpg" alt="服务logo" height="20"/>
+                                        <img class="img-logo" v-else src="../assets/images/service-logo.jpg"
+                                             alt="服务logo" height="20"/>
                                         <span class="title">{{el.名称}}</span>
                                         <span class="time"><i class="icon iconfont icon-right"></i></span>
                                     </a>
@@ -51,7 +53,8 @@
                         <div class="grid-content bg-purple">
                             <div class="item-header">
                                 <h5><i class="icon iconfont icon-yingwenyuyan"></i> 外文资源</h5>
-                                <el-tooltip class="more item" effect="dark" content="更多" placement="top-start" v-if="englishResources.length>7">
+                                <el-tooltip class="more item" effect="dark" content="更多" placement="top-start"
+                                            v-if="englishResources.length>7">
                                     <a href="javascript:;"><i class="icon iconfont icon-gengduo"></i></a>
                                 </el-tooltip>
                             </div>
@@ -70,7 +73,8 @@
                         <div class="grid-content bg-purple">
                             <div class="item-header">
                                 <h5><i class="icon iconfont icon-gengduoneirong"></i> 其他资源</h5>
-                                <el-tooltip class="more item" effect="dark" content="更多" placement="top-start" v-if="otherResources.length>7">
+                                <el-tooltip class="more item" effect="dark" content="更多" placement="top-start"
+                                            v-if="otherResources.length>7">
                                     <a href="javascript:;"><i class="icon iconfont icon-gengduo"></i></a>
                                 </el-tooltip>
                             </div>
@@ -105,7 +109,8 @@
                                     <a href="javascript:;" @click="btnDetails(el)">
                                         <span class="time">{{el.建立时间}}</span>
                                         <div class="content">
-                                            <span class="btn-icon"><i class="icon iconfont icon-yuandianxiao"></i></span>
+                                            <span class="btn-icon"><i
+                                                    class="icon iconfont icon-yuandianxiao"></i></span>
                                             <span class="title">{{el.标题}} </span>
                                         </div>
                                     </a>
@@ -116,12 +121,13 @@
                             </div>
                         </div>
                     </el-col>
-                    <el-col :span="8" class="item">
+                    <el-col :span="8" class="item" v-if="IMISNewsTotal">
                         <div class="grid-content bg-purple">
                             <div class="item-header">
                                 <h5><i class="icon iconfont icon-quanbuxinwen"></i> 科研新闻</h5>
                                 <el-tooltip class="more item" effect="dark" content="更多" placement="top-start">
-                                    <a v-if="IMISNewsTotal>6" class="more" href="javascript:;" @click="moreNews('IMISNews')">
+                                    <a v-if="IMISNewsTotal>6" class="more" href="javascript:;"
+                                       @click="moreNews('IMISNews')">
                                         更多<i class="el-icon-d-arrow-right"></i>
                                     </a>
                                 </el-tooltip>
@@ -131,7 +137,8 @@
                                     <a href="javascript:;" @click="btnIMISDetails(el)">
                                         <span class="time">{{el.建立时间}}</span>
                                         <div class="content">
-                                            <span class="btn-icon"><i class="icon iconfont icon-yuandianxiao"></i></span>
+                                            <span class="btn-icon"><i
+                                                    class="icon iconfont icon-yuandianxiao"></i></span>
                                             <span class="title">【{{el.通知类型}}】{{el.通知名称}} </span>
                                         </div>
                                     </a>
@@ -147,7 +154,8 @@
                             <div class="item-header">
                                 <h5><i class="icon iconfont icon-quanbuxinwen"></i> 其他新闻</h5>
                                 <el-tooltip class="more item" effect="dark" content="更多" placement="top-start">
-                                    <a v-if="otherTotal>6" class="more" href="javascript:;" @click="moreNews('otherNews')">
+                                    <a v-if="otherTotal>6" class="more" href="javascript:;"
+                                       @click="moreNews('otherNews')">
                                         更多<i class="el-icon-d-arrow-right"></i>
                                     </a>
                                 </el-tooltip>
@@ -157,7 +165,8 @@
                                     <a href="javascript:;" @click="btnOtherDetails(el)">
                                         <span class="time">{{el.建立时间}}</span>
                                         <div class="content">
-                                            <span class="btn-icon"><i class="icon iconfont icon-yuandianxiao"></i></span>
+                                            <span class="btn-icon"><i
+                                                    class="icon iconfont icon-yuandianxiao"></i></span>
                                             <span class="title">{{el.标题}} </span>
                                         </div>
                                     </a>
@@ -215,17 +224,17 @@
                 isLogin: false,
                 isShow: false,
                 activeName: 'tab-one',
-                otherTotal:2,
-                otherNews:[
+                otherTotal: 2,
+                otherNews: [
                     {
-                        编号:1,
-                        建立时间:'2019-03-14 15:58:27',
-                        标题:'测试公告新闻，测试测试新闻'
+                        编号: 1,
+                        建立时间: '2019-03-14 15:58:27',
+                        标题: '测试公告新闻，测试测试新闻'
                     },
                     {
-                        编号:0,
-                        建立时间:'2019-03-13 10:12:52',
-                        标题:'测试新闻，测试其他新闻'
+                        编号: 0,
+                        建立时间: '2019-03-13 10:12:52',
+                        标题: '测试新闻，测试其他新闻'
                     }
                 ],
                 englishResources: [
@@ -258,7 +267,7 @@
                         url: 'http://archive.nstl.gov.cn/Archives/'
                     },
                 ],
-                otherResources:[
+                otherResources: [
                     {
                         name: '生物医学中心开放获取期刊',
                         url: 'https://www.biomedcentral.com/'
@@ -310,6 +319,8 @@
                 if (localStorage.myUserInfo) {
                     if (!el.电脑链接地址) {
                         this.$message.warning('您没有订购该服务！');
+                    } else {
+                        localStorage.setItem('gatewayUrl', window.location.href);
                     }
                 } else {
                     this.$message.error('请先登录！');
@@ -372,7 +383,7 @@
                 this.isDetailsDialog = true;
                 this.getIMISNewsDetails(item.编号)
             },
-            btnOtherDetails(item){
+            btnOtherDetails(item) {
 
             },
             moreNews(name) {

@@ -78,7 +78,7 @@
             logOut() {
                 localStorage.removeItem('myUserInfo');
                 sessionStorage.removeItem('Authorization');
-                this.$router.replace({path: '/login'});
+                this.$router.go(0);
             },
         },
     }

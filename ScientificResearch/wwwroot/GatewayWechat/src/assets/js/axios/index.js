@@ -29,16 +29,16 @@ axios.interceptors.response.use(
         return res;
     },
     error => {
-        if (error.response.status === 401) {
-            // 401 说明 token 验证失败
-            // 可以直接跳转到登录页面，重新登录获取 token
-            location.href = getCodeApi("http://192.168.0.157:8080/#/login", '123');
-        } else if (error.response.status === 500) {
-            // 服务器错误
-            return Promise.reject(error.response.data);
-        }
-        // 返回 response 里的错误信息
-        return Promise.reject(error.response.data);
+        // if (error.response.status === 401) {
+        //     // 401 说明 token 验证失败
+        //     // 可以直接跳转到登录页面，重新登录获取 token
+        //     location.href = getCodeApi("http://192.168.0.157:8080/#/login", '123');
+        // } else if (error.response.status === 500) {
+        //     // 服务器错误
+        //     return Promise.reject(error.response.data);
+        // }
+        // // 返回 response 里的错误信息
+        // return Promise.reject(error.response.data);
     }
 );
 

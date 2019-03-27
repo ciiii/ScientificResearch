@@ -2,7 +2,9 @@ $(function () {
     var ParentIndex;
     var TwoIndex;
     window.vm = null;
+    window.loginType = false;
     if (localStorage.Authorization && localStorage.Authorization != 'undefined') {
+        window.loginType = true;
         getMenuPermissions();
     } else {
         var authorization = JSON.parse(sessionStorage.Authorization);

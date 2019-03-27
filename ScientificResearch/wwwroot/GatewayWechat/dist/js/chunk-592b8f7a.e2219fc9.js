@@ -1,1 +1,0 @@
-e:\scientific-research\dist\js\chunk-592b8f7a.e2219fc9.js

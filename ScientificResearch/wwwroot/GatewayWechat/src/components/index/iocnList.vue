@@ -20,24 +20,67 @@ export default {
     this.getServiceName();
   },
   methods: {
+    getUrlKey(name) {
+      //获取url 参数
+      return (
+        decodeURIComponent(
+          (new RegExp("[?|&]" + name + "=" + "([^&;]+?)(&|#|;|$)").exec(
+            location.href
+          ) || [, ""])[1].replace(/\+/g, "%20")
+        ) || null
+      );
+    },
+    getCodeApi(state) {
+      //获取code
+      console.log(state, "state");
+      // 授权后重定向的回调链接地址
+      let urlNow = encodeURIComponent(window.location.href);
+      let scope = "snsapi_base"; //snsapi_userinfo   //静默授权 用户无感知
+      let appid = "wx5e45aca8fcb270f1";
+      let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${urlNow}&response_type=code&scope=${scope}&state=${state}#wechat_redirect`;
+      window.location.replace(url);
+    },
     getServiceName() {
       var personnel = localStorage.getItem("personnel");
-      // var personnel = JSON.parse(localStorage.getItem("personnel"));
       if (personnel === null) {
-        
-        console.log("456456");
-        // this.$http.LoginWithOpenId(code).then(res => {
-        //   console.log(res, "sss");
-        // });
+        // console.log(personnel, "zczc");
+        let code = this.getUrlKey("code");
+        if (code) {
+          this.$http.LoginWithOpenId(code).then(res => {
+            console.log(res, "sss");
+            if (res !== undefined) {
+              localStorage.personnel = JSON.stringify(res.data.人员);
+              localStorage.token = `${res.data.token_type} ${
+                res.data.access_token
+              }`;
+              var name = res.data.人员.DbKey;
+              var para = {
+                医院名称: name
+              };
+              this.$http.getServiceList(para).then(res => {
+                this.iocnList = res.data;
+              });
+            } else {
+              var para = {
+                医院名称: ""
+              };
+              this.$http.getServiceList(para).then(res => {
+                this.iocnList = res.data;
+              });
+            }
+          });
+        } else {
+          this.getCodeApi("123");
+        }
+      } else {
+        var personnel = JSON.parse(localStorage.getItem("personnel"));
+        var para = {
+          医院名称: personnel.DbKey
+        };
+        this.$http.getServiceList(para).then(res => {
+          this.iocnList = res.data;
+        });
       }
-      // var name = personnel.DbKey;
-      // var para = {
-      //   医院名称: name
-      // };
-      // this.$http.getServiceList(para).then(res => {
-      //   // console.log(res, "2222");
-      //   this.iocnList = res.data;
-      // });
     },
     path(item) {
       if (item.手机链接地址 === null) {

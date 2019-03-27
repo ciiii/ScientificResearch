@@ -108,12 +108,7 @@
                 } else {
                     localStorage.removeItem('myLoginInfo');
                 }
-                console.info('logolgo');
-                console.info(localStorage.myUserInfo);
                 this.$router.push({path: '/'});
-
-                // this.$store.commit('isLogin', true);
-                // this.$store.commit('authorization', data.token_type + ' ' + data.access_token);
             },
             //获取html文件名
             getHtmlDocName() {
