@@ -1,6 +1,7 @@
 <template>
   <div @click="backTop" v-show="isShow">
-    <i class="icon iconfont icon-huidingbu"></i>
+    <i class="icon iconfont icon-xiaohuojian"></i>
+    <p>返回顶部</p>
   </div>
 </template>
 <script>
@@ -51,11 +52,11 @@ export default {
 </script>
 <style lang="less" scoped>
 div {
-  line-height: 1.6;
+  line-height: 1.3;
   font-size: 14px;
   color: #fff;
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   padding: 6px;
   text-align: center;
   position: fixed;
@@ -63,5 +64,9 @@ div {
   right: 40px;
   border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.5);
+  p{
+    margin: 0;
+    font-size: 8px;
+  }
 }
 </style>

@@ -568,6 +568,14 @@ VALUES  ( 1 , 0 ,1 ,1 , N'教学办公' , N'' ,N'' , 1 ,N'' ,N''),
 
 GO
 
+--教学角色权限
+TRUNCATE TABLE dbo.教学角色权限;
+
+INSERT dbo.教学角色权限
+        ( 教学角色编号, 教学权限编号 )
+SELECT 1,编号 FROM dbo.教学权限;
+
+--
 
 
 

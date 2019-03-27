@@ -8,12 +8,10 @@ import {getUrl} from "@/assets/js/Common";
 Vue.use(router);
 // import baseUrl from './setBaseUrl'
 // axios.defaults.withCredentials = true;
-// axios.defaults.baseURL = baseUrl;
-// axios.defaults.baseURL = 'https://api.example.com';
+// axios.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded;charset=UTF-8"; // 配置请求头
+// axios.defaults.baseURL = "/api";
 
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
-// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-
 
 //  响应拦截
 axios.interceptors.response.use(response => {

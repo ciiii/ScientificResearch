@@ -68,6 +68,7 @@ export default {
       );
     },
     getCodeApi(urlInit, state) {
+      console.log(urlInit, state,"wwee")
       //获取code
       // 授权后重定向的回调链接地址
 

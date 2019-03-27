@@ -13,7 +13,7 @@ namespace ScientificResearch.Areas.Manage.Controllers
 {
     [Route("Manage/[controller]/[action]")]
     [ApiExplorerSettings(GroupName = "Manage")]
-    [Authorize(Roles = "ManageUser")]
+    [Authorize(Roles = "ManageAdmin")]
     public class ManageBaseController : BaseController<CurrentUserOfManage>
     {
         //new protected CurrentUserOfManage CurrentUser

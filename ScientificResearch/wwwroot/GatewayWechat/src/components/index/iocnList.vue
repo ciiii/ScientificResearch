@@ -2,57 +2,42 @@
   <ul>
     <li v-for="(item,index) in iocnList" :key="index">
       <a @click="path(item)">
-        <!-- <a @click="path(a)"> -->
         <img :src="item.Logo" :alt="item.名称">
         <p>{{item.名称}}</p>
       </a>
     </li>
-    <!-- <img :src="item.path"> -->
   </ul>
 </template>
 <script>
 export default {
   data() {
     return {
-      iocnList: [],
-      a: {
-        手机链接地址: "https://www.baidu.com/s?ie=utf-8",
-        编号: 2013
-      }
-      // imgList: {
-      //   中国知网: require("../../assets/images/iocn/1.png"),
-      //   万方医学网: require("../../assets/images/iocn/15.png"),
-      //   科研系统: require("../../assets/images/iocn/17.png"),
-      //   第一个测试服务: require("../../assets/images/iocn/3.png"),
-      //   测试服务22: require("../../assets/images/iocn/5.png"),
-      //   测试在是的: require("../../assets/images/iocn/6.png"),
-      //   default: require("../../assets/images/iocn/9.png")
-      // }
+      iocnList: []
     };
   },
+  created() {},
   mounted() {
     this.getServiceName();
   },
   methods: {
     getServiceName() {
-      var personnel = JSON.parse(localStorage.getItem("personnel"));
-      var name = personnel.DbKey;
-      var para = {
-        医院名称: name
-      };
-      this.$http.getServiceList(para).then(res => {
-        // console.log(res, "2222");
-        this.iocnList = res.data;
-        // this.iocnList.forEach((item, index) => {
-        //   for (let path in this.imgList) {
-        //     if (path == item.名称) {
-        //       item.path = this.imgList[path];
-        //       break;
-        //     }
-        //     item.path = this.imgList.default;
-        //   }
+      var personnel = localStorage.getItem("personnel");
+      // var personnel = JSON.parse(localStorage.getItem("personnel"));
+      if (personnel === null) {
+        
+        console.log("456456");
+        // this.$http.LoginWithOpenId(code).then(res => {
+        //   console.log(res, "sss");
         // });
-      });
+      }
+      // var name = personnel.DbKey;
+      // var para = {
+      //   医院名称: name
+      // };
+      // this.$http.getServiceList(para).then(res => {
+      //   // console.log(res, "2222");
+      //   this.iocnList = res.data;
+      // });
     },
     path(item) {
       if (item.手机链接地址 === null) {

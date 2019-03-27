@@ -5,9 +5,9 @@
 </template>
 <script>
     import {HTTP_URL_HOST, URL_NEWS} from "@/assets/js/connect/ConSysUrl";
-    import tinymce from 'tinymce/tinymce';
-    import 'tinymce/themes/modern/theme';
-    import 'tinymce/langs/zh_CN';
+    import tinymce from '../../../public/tinymce/tinymce';
+    import '../../../public/tinymce/themes/modern/theme';
+    import '../../../public/tinymce/langs/zh_CN';
 
     export default {
         name: "Tinymce",

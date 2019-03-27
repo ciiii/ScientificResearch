@@ -984,7 +984,7 @@ CREATE TABLE [dbo].[StepAssignedPerson]
       [Id] [INT] IDENTITY(1, 1)
                  NOT NULL ,
       [StepId] [INT] NOT NULL ,
-      [StepAssignedPersonType] [NVARCHAR](50) NOT NULL ,
+      [StepAssignedPersonType] [NVARCHAR](50)  NULL ,
       [StepAssignedPersonId] [INT] NOT NULL ,
       CONSTRAINT [PK_STEPASSIGNEDEMPLOYEE] PRIMARY KEY CLUSTERED ( [Id] ASC )
         WITH ( PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,
@@ -1411,7 +1411,7 @@ AS --SPGetNextTemplateId 2,1
                                              NextStepTemplateId,
                                              ' as NextStepTemplateId,', Sort,
                                              ' as Sort FROM ',
-                                             @sourecTableName, ' WHERE Id =',
+                                             @sourecTableName, ' WHERE 编号 =',
                                              @sourceId, ' AND ',
                                              whereCondition)
                 FROM    cte;
@@ -1419,8 +1419,8 @@ AS --SPGetNextTemplateId 2,1
             SELECT  @sql = 'WITH cte AS(' + STUFF(@sql, 1, 11, '')
                     + ')SELECT TOP 1 @result = NextStepTemplateId FROM cte ORDER BY cte.Sort ';
 			--xml for path 会处理<>为特殊符号
-            SET @sql = REPLACE(@sql, '&gt;', '>');
-            SET @sql = REPLACE(@sql, '&lt;', '<');
+            SET @sql = REPLACE(@sql, 'gt;', '>');
+            SET @sql = REPLACE(@sql, 'lt;', '<');
 
             PRINT @sql;
 
@@ -1451,7 +1451,7 @@ CREATE TABLE [dbo].[StepTemplateAssignedPerson]
       [Id] [INT] IDENTITY(1, 1)
                  NOT NULL ,
       [StepTemplateId] [INT] NOT NULL ,
-      [StepAssignedPersonType] [NVARCHAR](50) NOT NULL ,
+      [StepAssignedPersonType] [NVARCHAR](50) NULL ,
       [StepAssignedPersonId] [INT] NOT NULL ,
       [Remark] [NVARCHAR](500) NULL ,
       CONSTRAINT [PK_StepTemplateAssignedPerson] PRIMARY KEY CLUSTERED
@@ -1521,7 +1521,7 @@ AS --当此步骤状态为0才能操作;
 --1 更新此步骤状态
     UPDATE  dbo.Step
     SET     State = @State ,
-            @OperatorType = @OperatorType ,
+            OperatorType = @OperatorType ,
             OperatorId = @OperatorId ,
             OperatorDatetime = GETDATE() ,
             Remark = @Remark
@@ -2160,11 +2160,11 @@ GO
 
 --
 
-/****** Object:  Table [dbo].[教学活动]    Script Date: 2019/3/20 15:00:39 ******/
+/****** Object:  Table [dbo].[教学活动]    Script Date: 2019/3/26 16:33:38 ******/
 DROP TABLE [dbo].[教学活动]
 GO
 
-/****** Object:  Table [dbo].[教学活动]    Script Date: 2019/3/20 15:00:39 ******/
+/****** Object:  Table [dbo].[教学活动]    Script Date: 2019/3/26 16:33:38 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -2184,6 +2184,8 @@ CREATE TABLE [dbo].[教学活动](
 	[活动内容] [NVARCHAR](2000) NULL,
 	[教学病例] [NVARCHAR](200) NULL,
 	[病人编号] [INT] NULL,
+	[建立人] [INT] NOT NULL,
+	[建立时间] [DATETIME] NOT NULL,
 	[备注] [NVARCHAR](500) NULL,
  CONSTRAINT [PK_教学活动] PRIMARY KEY CLUSTERED 
 (
@@ -2193,35 +2195,71 @@ CREATE TABLE [dbo].[教学活动](
 
 GO
 
+
 --
 
-/****** Object:  Table [dbo].[教学活动可参与者]    Script Date: 2019/3/18 16:47:22 ******/
-DROP TABLE [dbo].[教学活动可参与者];
+/****** Object:  Table [dbo].[教学活动可参与者]    Script Date: 2019/3/26 16:35:30 ******/
+DROP TABLE [dbo].[教学活动可参与者]
 GO
 
-/****** Object:  Table [dbo].[教学活动可参与者]    Script Date: 2019/3/18 16:47:22 ******/
-SET ANSI_NULLS ON;
+/****** Object:  Table [dbo].[教学活动可参与者]    Script Date: 2019/3/26 16:35:30 ******/
+SET ANSI_NULLS ON
 GO
 
-SET QUOTED_IDENTIFIER ON;
+SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE TABLE [dbo].[教学活动可参与者]
-    (
-      [编号] [INT] IDENTITY(1, 1)
-                 NOT NULL ,
-      [教学活动编号] [INT] NOT NULL ,
-      [接受者类型] [INT] NOT NULL ,
-      [接受者编号] [INT] NOT NULL ,
-      [备注] [NVARCHAR](500) NULL ,
-      CONSTRAINT [PK_教学活动可参与者] PRIMARY KEY CLUSTERED ( [编号] ASC )
-        WITH ( PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,
-               IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON,
-               ALLOW_PAGE_LOCKS = ON ) ON [PRIMARY]
-    )
-ON  [PRIMARY];
+CREATE TABLE [dbo].[教学活动可参与者](
+	[编号] [INT] IDENTITY(1,1) NOT NULL,
+	[教学活动编号] [INT] NOT NULL,
+	[学员编号] [INT] NOT NULL,
+	[备注] [NVARCHAR](500) NULL,
+ CONSTRAINT [PK_教学活动可参与者] PRIMARY KEY CLUSTERED 
+(
+	[编号] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
 
 GO
+
+--
+
+ALTER TABLE [dbo].[教学活动反馈] DROP CONSTRAINT [DF_教学活动反馈_是否通过反馈]
+GO
+
+/****** Object:  Table [dbo].[教学活动反馈]    Script Date: 2019/3/26 17:32:14 ******/
+DROP TABLE [dbo].[教学活动反馈]
+GO
+
+/****** Object:  Table [dbo].[教学活动反馈]    Script Date: 2019/3/26 17:32:14 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[教学活动反馈](
+	[编号] [INT] IDENTITY(1,1) NOT NULL,
+	[教学活动编号] [INT] NOT NULL,
+	[学员编号] [INT] NOT NULL,
+	[反馈内容] [NVARCHAR](2000) NOT NULL,
+	[附件] [NVARCHAR](200) NULL,
+	[是否通过反馈] [BIT] NULL,
+	[建立时间] [DATETIME] NOT NULL,
+	[备注] [NVARCHAR](500) NULL,
+ CONSTRAINT [PK_教学活动反馈] PRIMARY KEY CLUSTERED 
+(
+	[编号] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[教学活动反馈] ADD  CONSTRAINT [DF_教学活动反馈_是否通过反馈]  DEFAULT ((0)) FOR [是否通过反馈]
+GO
+
+
+--
 
 /****** Object:  Table [dbo].[教学评分等级]    Script Date: 2019/3/19 14:56:32 ******/
 DROP TABLE [dbo].[教学评分等级];

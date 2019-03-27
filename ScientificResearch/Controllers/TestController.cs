@@ -17,6 +17,8 @@ using MyLib;
 using System.Web;
 using System.Text;
 using System.Net.Http;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ScientificResearch.Controllers
 {
@@ -24,12 +26,18 @@ namespace ScientificResearch.Controllers
     //[Consumes("application/json", "multipart/form-data")]//此处为新增
     //[Route("[controller]/[action]")]
     [ApiExplorerSettings(GroupName ="test")]
+    [AllowAnonymous]
     public class TestController : ScientificResearchBaseController
     {
         [HttpGet]
         public object GetJObejctString()
         {
-            return new TestBusiness().TestJObject();
+            JObject staff = JObject.Parse(JsonConvert.SerializeObject(new { age = 1,name="liyang" }));
+
+            var x = staff["age"];
+            var y = x.ToString();
+            return staff;
+
         }
 
         [HttpGet]

@@ -6,8 +6,7 @@ import router from "@/router";
 axios.defaults.timeout = 5000; // 响应时间
 axios.defaults.headers.post["Content-Type"] =
     "application/x-www-form-urlencoded;charset=UTF-8"; // 配置请求头
-axios.defaults.baseURL = "/api"; // 配置接口地址
-// axios.defaults.baseURL = 'http://132.232.14.244/swagger' // 配置接口地址
+// axios.defaults.baseURL = "/api"; // 配置接口地址
 
 //自动给同一个vue项目的所有请求添加请求头
 axios.interceptors.request.use(config => {
@@ -44,6 +43,7 @@ axios.interceptors.response.use(
 );
 
 let getCodeApi = function(urlInit, state) {
+    console.log(urlInit, state, "xxcc")
     let urlNow = encodeURIComponent(urlInit);
     let scope = "snsapi_base"; //静默授权 用户无感知
     let appid = "wx5e45aca8fcb270f1";

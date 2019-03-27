@@ -1,4 +1,4 @@
-const HTTP_URL_HOST = 'http://192.168.0.99:63739';
+const HTTP_URL_HOST = '';
 
 const URL_USER = {
 

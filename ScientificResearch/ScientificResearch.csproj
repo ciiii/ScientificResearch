@@ -12,12 +12,28 @@
 
   <ItemGroup>
     <Compile Remove="log4net\**" />
+    <Compile Remove="wwwroot\GatewayPC\public\**" />
+    <Compile Remove="wwwroot\GatewayPC\src\**" />
+    <Compile Remove="wwwroot\GatewayWechat\public\**" />
+    <Compile Remove="wwwroot\GatewayWechat\src\**" />
     <Compile Remove="wwwroot\IMIS\libs\umeditor\net\**" />
     <Content Remove="log4net\**" />
+    <Content Remove="wwwroot\GatewayPC\public\**" />
+    <Content Remove="wwwroot\GatewayPC\src\**" />
+    <Content Remove="wwwroot\GatewayWechat\public\**" />
+    <Content Remove="wwwroot\GatewayWechat\src\**" />
     <Content Remove="wwwroot\IMIS\libs\umeditor\net\**" />
     <EmbeddedResource Remove="log4net\**" />
+    <EmbeddedResource Remove="wwwroot\GatewayPC\public\**" />
+    <EmbeddedResource Remove="wwwroot\GatewayPC\src\**" />
+    <EmbeddedResource Remove="wwwroot\GatewayWechat\public\**" />
+    <EmbeddedResource Remove="wwwroot\GatewayWechat\src\**" />
     <EmbeddedResource Remove="wwwroot\IMIS\libs\umeditor\net\**" />
     <None Remove="log4net\**" />
+    <None Remove="wwwroot\GatewayPC\public\**" />
+    <None Remove="wwwroot\GatewayPC\src\**" />
+    <None Remove="wwwroot\GatewayWechat\public\**" />
+    <None Remove="wwwroot\GatewayWechat\src\**" />
     <None Remove="wwwroot\IMIS\libs\umeditor\net\**" />
   </ItemGroup>
 
@@ -26,6 +42,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\GatewayPC\.gitignore" />
+    <Content Remove="wwwroot\GatewayPC\babel.config.js" />
+    <Content Remove="wwwroot\GatewayPC\package-lock.json" />
+    <Content Remove="wwwroot\GatewayPC\package.json" />
+    <Content Remove="wwwroot\GatewayPC\README.md" />
+    <Content Remove="wwwroot\GatewayPC\vue.config.js" />
+    <Content Remove="wwwroot\GatewayWechat\.browserslistrc" />
+    <Content Remove="wwwroot\GatewayWechat\2230625_03.6eadb917.png" />
+    <Content Remove="wwwroot\GatewayWechat\babel.config.js" />
+    <Content Remove="wwwroot\GatewayWechat\index.html" />
+    <Content Remove="wwwroot\GatewayWechat\package-lock.json" />
+    <Content Remove="wwwroot\GatewayWechat\package.json" />
+    <Content Remove="wwwroot\GatewayWechat\postcss.config.js" />
+    <Content Remove="wwwroot\GatewayWechat\README.md" />
+    <Content Remove="wwwroot\GatewayWechat\vue.config.js" />
+    <Content Remove="wwwroot\GatewayWechat\yarn.lock" />
     <Content Remove="wwwroot\IMIS\views\login.html" />
     <Content Remove="wwwroot\云中漫步总库管理后台前端.code-workspace" />
     <Content Remove="wwwroot\云中漫步科研手机微信前端.code-workspace" />
@@ -33,6 +65,7 @@
 
   <ItemGroup>
     <None Remove="ScientificResearch-log-工作区.code-workspace" />
+    <None Remove="ScientificResearch_log_vscode_工作区.code-workspace" />
   </ItemGroup>
 
   <ItemGroup>

@@ -18,7 +18,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
     /// </summary>
     [Route("TeachingManagement/[controller]/[action]")]
     [ApiExplorerSettings(GroupName = "TeachingManagement")]
-    [Authorize(Roles = "ScientificResearchUser")]
+    [Authorize(Roles = "ScientificResearchUser,UserFromManage")]
     public class TeachingManagementBaseController : BaseController<CurrentUserOfTeachingManagement>
     {
     }
