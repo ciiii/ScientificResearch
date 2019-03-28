@@ -7,15 +7,18 @@ axios.defaults.timeout = 5000; // 响应时间
 axios.defaults.headers.post["Content-Type"] =
     "application/x-www-form-urlencoded;charset=UTF-8"; // 配置请求头
 // axios.defaults.baseURL = "/api"; // 配置接口地址
+const api = 'http://192.168.0.99:63739'
 
 //自动给同一个vue项目的所有请求添加请求头
-axios.interceptors.request.use(config => {
-    let token = localStorage.getItem('token');
-    if (token) {
-        config.headers['Authorization'] = token;
-    }
-    return config;
-})
+// axios.interceptors.request.use(config => {
+//     let token = localStorage.getItem('token');
+//     if (token) {
+//         config.headers['Authorization'] = token;
+//     }
+//     return config;
+// })
+axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+
 
 //返回状态判断(添加响应拦截器)
 axios.interceptors.response.use(
@@ -52,7 +55,7 @@ let getCodeApi = function(urlInit, state) {
 
 export async function get(url, params) {
     try {
-        let res = await axios.get(url, { params })
+        let res = await axios.get((api + url), { params })
         res = res.data
         return new Promise((resolve) => {
             resolve(res)
@@ -64,7 +67,7 @@ export async function get(url, params) {
 
 export async function post(url, params) {
     try {
-        let res = await axios.post(url, params)
+        let res = await axios.post((api + url), params)
         res = res.data
         return new Promise((resolve) => {
             resolve(res)

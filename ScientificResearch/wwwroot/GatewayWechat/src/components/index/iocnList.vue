@@ -32,7 +32,6 @@ export default {
     },
     getCodeApi(state) {
       //获取code
-      console.log(state, "state");
       // 授权后重定向的回调链接地址
       let urlNow = encodeURIComponent(window.location.href);
       let scope = "snsapi_base"; //snsapi_userinfo   //静默授权 用户无感知
@@ -43,11 +42,9 @@ export default {
     getServiceName() {
       var personnel = localStorage.getItem("personnel");
       if (personnel === null) {
-        // console.log(personnel, "zczc");
         let code = this.getUrlKey("code");
         if (code) {
           this.$http.LoginWithOpenId(code).then(res => {
-            console.log(res, "sss");
             if (res !== undefined) {
               localStorage.personnel = JSON.stringify(res.data.人员);
               localStorage.token = `${res.data.token_type} ${
@@ -58,8 +55,10 @@ export default {
                 医院名称: name
               };
               this.$http.getServiceList(para).then(res => {
+                // console.log(res,"服务列表！")
                 this.iocnList = res.data;
               });
+              this.$emit('getKYNews');
             } else {
               var para = {
                 医院名称: ""
@@ -80,6 +79,7 @@ export default {
         this.$http.getServiceList(para).then(res => {
           this.iocnList = res.data;
         });
+        this.$emit('getKYNews');
       }
     },
     path(item) {
@@ -119,7 +119,6 @@ ul {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      //   width:80px;
     }
   }
 }

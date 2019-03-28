@@ -56,11 +56,9 @@ export default {
     document.title = "登录";
     this.code = this.getUrlKey("code");
     if (!this.code) {
-      console.log(this.code,"code")
+      // console.log(this.code,"code")
        this.getCodeApi("123");
-    } else {
-      // this.getCodeApi("123");
-    }
+    } 
   },
   mounted() {},
   methods: {

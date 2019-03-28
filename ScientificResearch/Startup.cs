@@ -339,7 +339,7 @@ namespace ScientificResearch
                     context.Request.ContentType = "application/json";
 
                 context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
-                context.Response.Headers.Add("Access-Control-Allow-Headers", "content-type,*");
+                context.Response.Headers.Add("Access-Control-Allow-Headers", "content-type,Authorization,* ");
                 context.Response.Headers.Add("Access-Control-Allow-Methods", "PUT,GET,POST,OPTIONS");
                 //context.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
 

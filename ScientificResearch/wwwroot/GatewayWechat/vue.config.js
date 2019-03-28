@@ -34,16 +34,19 @@ module.exports = {
     //     before: app => {}
     // },
     devServer: {
-        open: process.platform === 'darwin',
-        host: '0.0.0.0',
+        // open: process.platform === 'darwin',
+        // host: '0.0.0.0',
         port: 8080,
-        https: false,
-        hotOnly: false,
-        proxy: 'http://192.168.0.99:63739',
-        before: app => {},
+        // https: false,
+        // hotOnly: false,
+        // proxy: null,
+        // before: app => {},
     },
     // 第三方插件配置
     pluginOptions: {
-        // ...
+        'style-resources-loader': {
+            preProcessor: 'less',
+            patterns: []
+        }
     }
 };

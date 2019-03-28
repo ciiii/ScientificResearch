@@ -1,0 +1,77 @@
+@background: #007633;
+@color: #323233;
+@navColor: #45b97c;
+@colorActive: #099646;
+@loginColor: #45b97c;
+@tr-color: #eaf4fb;
+@border: #F3F4F6;
+@loginBg: #d3eae3;
+
+
+body {
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  color: #333;
+  font-size: 12px;
+}
+
+a {
+  text-decoration: none;
+  color: #333;
+}
+
+a:focus {
+  color: #333;
+  text-decoration: none;
+}
+
+a:hover {
+  color: @colorActive;
+  text-decoration: none;
+}
+
+.keyword {
+  margin-top: 15px;
+  margin-bottom: 0;
+  text-align: left;
+
+  span {
+    padding: 3px 6px;
+    border: 1px solid @loginColor;
+    margin-bottom: 10px;
+    display: inline-block;
+    border-radius: 4px;
+    margin-right: 6px;
+    color: @loginColor;
+  }
+}
+
+.van-button--primary {
+  background: @loginColor;
+  border-color: @loginColor;
+
+}
+
+.back-btn-box {
+  position: fixed;
+  bottom: 50px;
+  right: 10px;
+
+  span {
+    width: 30px;
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.2);
+    padding: 5px;
+    border: 1px solid @border;
+    margin-top: 10px;
+    i {
+      color: #999;
+      font-size: 22px;
+    }
+
+  }
+}

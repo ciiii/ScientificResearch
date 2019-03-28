@@ -5,7 +5,7 @@
       <div class="section">
         <swipe/>
         <div class="listBox">
-          <iocnList/>
+          <iocnList @getKYNews="getKYNews"/>
         </div>
         <div class="A_News_box">
           <div class="newsTitle">
@@ -33,7 +33,12 @@
               <i class="icon iconfont icon-you"></i>
             </span>
           </div>
-          <ul class="A_News" v-for="(item, key) in KYList" :key="key" @click="KYNewsDetails(item.编号)">
+          <ul
+            class="A_News"
+            v-for="(item, key) in KYList"
+            :key="key"
+            @click="KYNewsDetails(item.编号)"
+          >
             <li>
               <p>{{item.通知名称}}</p>
             </li>
@@ -70,7 +75,7 @@ export default {
       size: 3,
       total: 0,
       KYList: [],
-      isShow: true
+      isShow: false
     };
   },
   created() {
@@ -80,26 +85,6 @@ export default {
     this.getPrimaryNews();
   },
   methods: {
-    getUrlKey(name) {
-      //获取url 参数
-      return (
-        decodeURIComponent(
-          (new RegExp("[?|&]" + name + "=" + "([^&;]+?)(&|#|;|$)").exec(
-            location.href
-          ) || [, ""])[1].replace(/\+/g, "%20")
-        ) || null
-      );
-    },
-    getCodeApi(state) {
-      //获取code
-      console.log(state, "state");
-      // 授权后重定向的回调链接地址
-      let urlNow = encodeURIComponent(window.location.href);
-      let scope = "snsapi_base"; //snsapi_userinfo   //静默授权 用户无感知
-      let appid = "wx5e45aca8fcb270f1";
-      let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${urlNow}&response_type=code&scope=${scope}&state=${state}#wechat_redirect`;
-      window.location.replace(url);
-    },
     getPrimaryNews() {
       var para = {
         index: this.index,
@@ -110,18 +95,33 @@ export default {
         this.list = res.data.list;
         this.total = res.data.total;
       });
+      // var code = JSON.parse(localStorage.getItem("personnel"));
+      // if (code !== null) {
+      //   var code = JSON.parse(localStorage.getItem("personnel"));
+      //   var para = {
+      //     人员编号: code.编号,
+      //     index: this.index,
+      //     size: this.size
+      //   };
+      //   this.$http.getToViewNewsList(para).then(res => {
+      //     this.KYList = res.data.list;
+      //     this.isShow = true;
+      //   });
+      // }
+    },
+    getKYNews() {
       var code = JSON.parse(localStorage.getItem("personnel"));
-      console.log(code,"huoqu")
       var para = {
         人员编号: code.编号,
         index: this.index,
         size: this.size
       };
       this.$http.getToViewNewsList(para).then(res => {
-        console.log(res,"ky")
         this.KYList = res.data.list;
+        this.isShow = true;
       });
     },
+
     ZKNewsDetails(item) {
       this.$router.push({
         path: "/ZKNewsDetails",

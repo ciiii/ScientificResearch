@@ -10,6 +10,55 @@ export default new Router({
             component: () =>
                 import ("./views/Home.vue")
         },
+        {
+            path: '/wanFangSearch',
+            name: 'wanFangSearch',
+            component: () =>
+                import ('./views/gateway/wanFang/wanFangSearch.vue'),
+            meta: { title: '万方检索' },
+        },
+        {
+            path: '/wanFangList',
+            name: 'wanFangList',
+            component: () =>
+                import ('./views/gateway/wanFang/wanFangList.vue'),
+            meta: { title: '万方医学' },
+        },
+        {
+            path: '/wanFangDetails',
+            name: 'wanFangDetails',
+            component: () =>
+                import ('./components/gateway/wanFang/wanFangDetails.vue'),
+            meta: { title: '文章详情' },
+        },
+        // {
+        //     path: '/pdfViewer',
+        //     name: 'pdfViewer',
+        //     component: () =>
+        //         import ('./views/pdfViewer.vue'),
+        //     meta: { title: '文件预览' },
+        // },
+        {
+            path: '/zhiWangSearch',
+            name: 'zhiWangSearch',
+            component: () =>
+                import ('./views/gateway/zhiWang/zhiWangSearch.vue'),
+            meta: { title: '知网检索' },
+        },
+        {
+            path: '/zhiWangList',
+            name: 'zhiWangList',
+            component: () =>
+                import ('./views/gateway/zhiWang/zhiWangList.vue'),
+            meta: { title: '知网数据' },
+        },
+        {
+            path: '/zhiWangDetails',
+            name: 'zhiWangDetails',
+            component: () =>
+                import ('./components/gateway/zhiWang/zhiWangDetails.vue'),
+            meta: { title: '文章详情' },
+        },
         { //主页
             path: "/index",
             name: "index",
@@ -203,5 +252,15 @@ export default new Router({
                 import ("./views/scientificResearch/XProjectDeclaration/XFundsToTheAccount.vue")
         },
 
-    ]
+    ],
+    scrollBehavior(to, from, savedPosition) {
+        if (savedPosition) {
+            return savedPosition
+        } else {
+            if (from.meta.keepAlive) {
+                from.meta.savedPosition = document.body.scrollTop
+            }
+            return { x: 0, y: to.meta.savedPosition || 0 }
+        }
+    }
 });
