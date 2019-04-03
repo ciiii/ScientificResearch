@@ -196,9 +196,6 @@ export default {
       flag: "审核通过"
     };
   },
-  created() {
-    document.title = "纵向申报详情";
-  },
   mounted() {
     this.goDetails();
   },

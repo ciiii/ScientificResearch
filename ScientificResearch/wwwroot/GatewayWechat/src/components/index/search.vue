@@ -1,21 +1,29 @@
 <template>
   <div>
     <img src="@/assets/images/iocn/homeLogo.jpg" alt="科研logo">
-    <span @click="toLogin">登 录</span>
+    <span @click="toLogin" v-if='!personnel'>登 录</span>
   </div>
 </template>
 <script>
 export default {
   data() {
-    return {};
+    return {
+      personnel: JSON.parse(localStorage.getItem("personnel"))
+    };
   },
+  computed: {
+    // 计算属性的 getter
+    // condition: function () {
+    //   // `this` 指向 vm 实例
+    //   return this.personnel != null;
+    // }
+  },
+  created() {},
+  mounted() {},
   methods: {
     toLogin() {
-      var personnel = JSON.parse(localStorage.getItem("personnel"));
-      if (personnel === null) {
-        this.$router.push("/login");
-      } else {
-        this.$toast("您已登录过了耶！");
+      if (this.personnel === null) {
+        this.$router.push("/guidance");
       }
     }
   }

@@ -245,9 +245,6 @@ export default {
       flag: "审核通过"
     };
   },
-  created() {
-    document.title = "论文详情";
-  },
   mounted() {
     this.goDetails();
   },
@@ -325,6 +322,7 @@ export default {
         width: 80%;
         color: #5a5a5a;
         margin: 0;
+        text-align: right;
       }
       span:nth-child(1) {
         color: #888;

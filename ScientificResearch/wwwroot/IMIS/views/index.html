@@ -23,11 +23,12 @@
     <script src="/IMIS/libs/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript" src="/IMIS/libs/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
     <script type="text/javascript" src="/IMIS/libs/avalon.min.js"></script>
-    <script type="text/javascript" src="/IMIS/js/main.js"></script>
-    <script type="text/javascript" src="/IMIS/js/pager.js"></script>
     <script type="text/javascript" src="/IMIS/js/get_connect/code.js"></script>
     <script type="text/javascript" src="/IMIS/js/get_connect/connect_http.js"></script>
     <script type="text/javascript" src="/IMIS/js/get_connect/return_data.js"></script>
+    <script type="text/javascript" src="/IMIS/js/menu.js"></script>
+    <script type="text/javascript" src="/IMIS/js/main.js"></script>
+    <script type="text/javascript" src="/IMIS/js/pager.js"></script>
     <script>
         document.write(' <script type="text/javascript" src="/IMIS/js/index.js?time=' + new Date().getTime() + '"></s' + 'cript>');
     </script>
@@ -60,22 +61,22 @@
                     <span class="title">首页</span>
                 </a>
             </li>
-            <li class="parent-li" ms-for="($index,el) in @jurisdiction" ms-on-mouseenter="@hoverLi($index,el)">
+            <li class="parent-li" ms-for="($index,el) in @jurisdiction" ms-on-mouseenter="@hoverLi($index,el)" ms-if="@jurisdiction">
                 <a ms-attr="{'href':el.菜单.路径==''?'javascript:;':el.菜单.路径}"
                    ms-on-click="@ClickLiParent($index,el)">
                     <i ms-attr="{'class':'icon iconfont '+el.菜单.图标}"></i>
                     <span class="title">{{el.菜单.名称}}</span>
-                    <i ms-if="el.子级菜单.length>0" class="icon iconfont icon-right icon-shouqi icon-xiala"></i>
+                    <i ms-if="@el.子级菜单.length>0" class="icon iconfont icon-right icon-shouqi icon-xiala"></i>
                 </a>
-                <ul class="treeview-menu" ms-if="el.子级菜单.length>0">
+                <ul class="treeview-menu">
                     <li ms-for="($index,aa) in @el.子级菜单">
                         <a ms-attr="{'href':aa.菜单.路径==''?'javascript:;':aa.菜单.路径}"
                            ms-on-click="@ClickLiTwo($index,aa)">
                             <i ms-attr="{'class':'icon iconfont '+aa.菜单.图标}"></i>
                             <span class="title">{{aa.菜单.名称}}</span>
-                            <i ms-if="aa.子级菜单.length>0" class="icon iconfont icon-right icon-shouqi icon-xiala"></i>
+                            <i ms-if="@el.子级菜单.length>0" class="icon iconfont icon-right icon-shouqi icon-xiala"></i>
                         </a>
-                        <ul class="treeview-menu-sub" ms-if="aa.子级菜单.length>0">
+                        <ul class="treeview-menu-sub">
                             <li ms-for="($index,bb) in @aa.子级菜单">
                                 <a ms-attr="{'href':bb.菜单.路径==''?'javascript:;':bb.菜单.路径}"
                                    ms-on-click="@ClickLiThree($index,bb)">
@@ -150,7 +151,7 @@
     </div>
     <div class="subpage">
         <div class="tab-content">
-            <iframe id="subpage" scrolling="auto" frameborder="0" ms-attr="{'src':@getUrl('首页/首页内容.html')}"></iframe>
+            <iframe id="subpage" name="subpage" scrolling="auto" frameborder="0" ms-attr="{'src':@getUrl('首页/首页内容.html')}"></iframe>
         </div>
     </div>
 </div>

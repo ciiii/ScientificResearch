@@ -3,10 +3,10 @@
         <div class="banners">
             <el-carousel indicator-position="outside">
                 <el-carousel-item>
-                    <img src="../assets/images/banner.jpg" alt="">
+                    <img src="@/assets/images/banner.jpg" alt="">
                 </el-carousel-item>
                 <el-carousel-item>
-                    <img src="../assets/images/banner2.jpg" alt="">
+                    <img src="@/assets/images/banner2.jpg" alt="">
                 </el-carousel-item>
             </el-carousel>
             <div class="search-box">

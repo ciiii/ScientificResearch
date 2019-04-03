@@ -41,14 +41,15 @@ export default {
       this.value = "";
     },
     pass() {
-      // console.log(this.message, "通过");
+      console.log(this.message, "通过");
       var para = {
         步骤编号: this.message.步骤编号,
         状态值: this.state.pass,
         备注: this.value
       };
       this.$http.auditStep(para).then(res => {
-        if (res.status != 200 || res.statusText != "OK") {
+        console.log(res, "1111111111111122222222");
+        if (res.error) {
           this.$toast({
             duration: 1500,
             message: res.error
@@ -58,6 +59,7 @@ export default {
             duration: 1500,
             message: "操作成功！"
           });
+          this.$emit("getBacklog");
         }
       });
       this.back();
@@ -69,7 +71,7 @@ export default {
         备注: this.value
       };
       this.$http.auditStep(para).then(res => {
-        if (res.status != 200 || res.statusText != "OK") {
+        if (res.error) {
           this.$toast({
             duration: 1500,
             message: res.error
@@ -79,6 +81,7 @@ export default {
             duration: 1500,
             message: "操作成功！"
           });
+          this.$emit("getBacklog");
         }
       });
       this.back();
@@ -90,7 +93,7 @@ export default {
         备注: this.value
       };
       this.$http.auditStep(para).then(res => {
-        if (res.status != 200 || res.statusText != "OK") {
+        if (res.error) {
           this.$toast({
             duration: 1500,
             message: res.error
@@ -100,6 +103,7 @@ export default {
             duration: 1500,
             message: "操作成功！"
           });
+          this.$emit("getBacklog");
         }
       });
       this.back();

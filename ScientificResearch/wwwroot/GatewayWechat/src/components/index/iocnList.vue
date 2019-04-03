@@ -1,12 +1,14 @@
 <template>
-  <ul>
-    <li v-for="(item,index) in iocnList" :key="index">
-      <a @click="path(item)">
-        <img :src="item.Logo" :alt="item.名称">
-        <p>{{item.名称}}</p>
-      </a>
-    </li>
-  </ul>
+  <div>
+    <ul>
+      <li v-for="(item,index) in iocnList" :key="index">
+        <a @click="path(item)">
+          <img :src="item.Logo" :alt="item.名称">
+          <p>{{item.名称}}</p>
+        </a>
+      </li>
+    </ul>
+  </div>
 </template>
 <script>
 export default {
@@ -36,7 +38,8 @@ export default {
       let urlNow = encodeURIComponent(window.location.href);
       let scope = "snsapi_base"; //snsapi_userinfo   //静默授权 用户无感知
       let appid = "wx5e45aca8fcb270f1";
-      let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${urlNow}&response_type=code&scope=${scope}&state=${state}#wechat_redirect`;
+      // let appid = "wxfcbe1c0c36e2f97c";
+      let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${urlNow}&response_type=code&scope=${scope}&state=${state}&connect_redirect=1#wechat_redirect`;
       window.location.replace(url);
     },
     getServiceName() {
@@ -45,20 +48,22 @@ export default {
         let code = this.getUrlKey("code");
         if (code) {
           this.$http.LoginWithOpenId(code).then(res => {
+            console.log(res, "111");
             if (res !== undefined) {
               localStorage.personnel = JSON.stringify(res.data.人员);
               localStorage.token = `${res.data.token_type} ${
                 res.data.access_token
               }`;
+              this.$emit("getPersonnel");
               var name = res.data.人员.DbKey;
               var para = {
                 医院名称: name
               };
               this.$http.getServiceList(para).then(res => {
-                // console.log(res,"服务列表！")
                 this.iocnList = res.data;
+                this.$emit("getKYNews");
               });
-              this.$emit('getKYNews');
+              return;
             } else {
               var para = {
                 医院名称: ""
@@ -66,6 +71,7 @@ export default {
               this.$http.getServiceList(para).then(res => {
                 this.iocnList = res.data;
               });
+              return;
             }
           });
         } else {
@@ -79,9 +85,12 @@ export default {
         this.$http.getServiceList(para).then(res => {
           this.iocnList = res.data;
         });
-        this.$emit('getKYNews');
+        this.$emit("getPersonnel");
+        this.$emit("getKYNews");
+        return;
       }
     },
+
     path(item) {
       if (item.手机链接地址 === null) {
         this.$toast.fail({
@@ -89,12 +98,12 @@ export default {
           message: "请先购买服务!"
         });
       } else {
-        var path = item.手机链接地址;
-        if (path.indexOf("?") != -1) {
-          this.$router.push(`/${path}&accountId=${item.编号}`);
-        } else {
-          this.$router.push(`/${path}?accountId=${item.编号}`);
-        }
+        this.$router.push({
+          path: item.手机链接地址,
+          query: {
+            accountId: item.编号
+          }
+        });
       }
     }
   }

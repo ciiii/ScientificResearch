@@ -4,7 +4,8 @@
             <img src="@/assets/images/logo_wanfang.png" alt="">
         </div>
         <van-cell-group>
-            <van-field v-model="req.q" required clearable label="关键词" placeholder="请输入" @keyup.enter.native="retrieval"/>
+            <van-field v-model="req.q" required clearable label="关键词" placeholder="请输入"
+                       @keyup.enter.native="retrieval"/>
             <van-field
                     v-model="req.中图分类_f" clearable label="中图分类" placeholder="请选择"
                     @click="clickTitle(0)" readonly
@@ -25,35 +26,27 @@
         <van-popup v-model="showClassify" position="bottom">
             <div class="tab-con">
                 <h2 class="van-doc-demo-block__title">中图分类</h2>
-                <van-radio-group v-model="classify">
+                <van-radio-group v-model="req.中图分类_f">
                     <van-cell-group>
-                        <van-cell :title="el.value" clickable @click="classify = el.key"
+                        <van-cell :title="el.key" clickable @click="clickClassify(el)"
                                   v-for="el in configs.中图分类_f" :key="el.key">
-                            <van-radio :name="el.key"/>
+                            <van-radio :name="el.value"/>
                         </van-cell>
                     </van-cell-group>
                 </van-radio-group>
-                <div class="btn-box">
-                    <van-button type="warning" size="large" @click="resetClassify">重置</van-button>
-                    <van-button type="primary" size="large" @click="confirmClassify">确定</van-button>
-                </div>
             </div>
         </van-popup>
         <van-popup v-model="showType" position="bottom">
             <div class="tab-con">
                 <h2 class="van-doc-demo-block__title">资源类型</h2>
-                <van-radio-group v-model="resourceType">
+                <van-radio-group v-model="req.资源类型_f">
                     <van-cell-group>
-                        <van-cell :title="el.value" clickable @click="resourceType = el.key"
+                        <van-cell :title="el.key" clickable @click="clickResourceType(el)"
                                   v-for="el in configs.资源类型_f" :key="el.key">
-                            <van-radio :name="el.key"/>
+                            <van-radio :name="el.value"/>
                         </van-cell>
                     </van-cell-group>
                 </van-radio-group>
-                <div class="btn-box">
-                    <van-button type="warning" size="large" @click="resetResourceType">重置</van-button>
-                    <van-button type="primary" size="large" @click="confirmResourceType">确定</van-button>
-                </div>
             </div>
         </van-popup>
         <div class="retrieval-box">
@@ -70,13 +63,13 @@
         data() {
             return {
                 req: {
-                    q: '肿瘤',
+                    q: '',
                     资源类型_f: '',
                     中图分类_f: '',
                     出版时间_f: '',
                     sort: '',
-                    p: '1',
-                    n: '20',
+                    p: 1,
+                    n: 20,
                     accountId: 2003
                 },
                 reqConfigs: {
@@ -87,11 +80,8 @@
                 showClassify: false,
                 showType: false,
                 date: new Date().getFullYear(),
-                classify: '',
-                resourceType: '',
                 starTime: '',
                 endTime: '',
-
             }
         },
         mounted: function () {
@@ -112,19 +102,13 @@
                         break;
                 }
             },
-            confirmClassify() {
-                this.req.中图分类_f = this.classify;
+            clickClassify(el) {
+                this.req.中图分类_f = el.key;
                 this.showClassify = false;
             },
-            resetClassify() {
-                this.classify = '';
-            },
-            confirmResourceType() {
-                this.req.资源类型_f = this.resourceType;
+            clickResourceType(el) {
+                this.req.资源类型_f = el.key;
                 this.showType = false;
-            },
-            resetResourceType() {
-                this.resourceType = '';
             },
             getDataConfigs: async function () {
                 this.configs = await this.$myHttp.myGet(URL_WAN_FANG.GET_DATA_CONFIGS, this.reqConfigs);
@@ -144,6 +128,9 @@
     .WF-search {
         .van-overlay {
             top: 0 !important;
+        }
+        .van-cell__title {
+            text-align: left !important;
         }
     }
 

@@ -333,9 +333,6 @@ export default {
       state: "待审核"
     };
   },
-  created() {
-    document.title = "横向项目详情";
-  },
   mounted() {
     this.goDetails();
   },

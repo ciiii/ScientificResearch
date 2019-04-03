@@ -44,9 +44,6 @@ export default {
       list: []
     };
   },
-  created() {
-    document.title = "个人资料";
-  },
   computed: {
     disabled() {
       if (this.list.姓名 && this.list.身份证 && this.list.工号 != "") {

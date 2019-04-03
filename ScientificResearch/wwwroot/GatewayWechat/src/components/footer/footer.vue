@@ -214,7 +214,7 @@ export default {
   transition: all 0.5s;
 }
 .empty {
-  margin-bottom: 60px;
+  height: 30px;
 }
 .pop_out_box {
   position: fixed;
@@ -246,7 +246,6 @@ export default {
     }
     li {
       display: flex;
-      // justify-content: center;
       padding: 0 15px;
       align-items: center;
       height: 50px;

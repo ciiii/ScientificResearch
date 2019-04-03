@@ -1,0 +1,1 @@
+e:\scientific-research\dist\js\app.b6e48002.js

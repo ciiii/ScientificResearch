@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import axios from 'axios'
 import http from './assets/js/http/http'
 import 'amfe-flexible';
 import 'lib-flexible'
@@ -45,6 +44,7 @@ import {
     NavBar,
     RadioGroup,
     Radio,
+    Dialog
 
 } from 'vant';
 Vue.use(Icon);
@@ -69,8 +69,9 @@ Vue.use(Checkbox).use(CheckboxGroup);
 Vue.use(NavBar);
 Vue.use(RadioGroup);
 Vue.use(Radio);
-Vue.use(VueWechatTitle);
+Vue.use(Dialog);
 
+Vue.use(VueWechatTitle);
 Vue.prototype.$http = http;
 Vue.prototype.$myHttp = Axios;
 // 跳转后返回顶部

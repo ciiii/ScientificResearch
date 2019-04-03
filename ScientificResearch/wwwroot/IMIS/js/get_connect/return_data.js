@@ -1092,7 +1092,6 @@ var WorkFlow = {
 var Notice = {
     getUserNoticeList: function (type, options, getUserNoticeListListener) {
         var url = Code.URL_GET_PAGING_USER_NOTICE_LIST;
-
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
             if (success) {
                 getUserNoticeListListener(true, obj.data, '')

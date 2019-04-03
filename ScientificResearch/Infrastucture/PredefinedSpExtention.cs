@@ -4,6 +4,7 @@ using ScientificResearch.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using static Dapper.SqlMapper;
@@ -482,5 +483,31 @@ namespace ScientificResearch.Infrastucture
         //        commandType: CommandType.StoredProcedure);
         //}
         #endregion
+
+
+        async public static Task<TOut> ExecuteTransaction<TOut>(string dbConnectionString, Func<SqlConnection,SqlTransaction, Task<TOut>> myTran)
+        {
+            using (var dbForTransaction = new SqlConnection(dbConnectionString))
+            {
+                dbForTransaction.Open();
+                using (var transaction = dbForTransaction.BeginTransaction())
+                {
+                    try
+                    {
+
+                        var result = await myTran(dbForTransaction,transaction);
+
+                        transaction.Commit();
+
+                        return result;
+                    }
+                    catch (Exception e)
+                    {
+                        transaction.Rollback();
+                        throw e;
+                    }
+                }
+            }
+        }
     }
 }

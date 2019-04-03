@@ -68,9 +68,6 @@ export default {
       message: ""
     };
   },
-  created() {
-    document.title = "论文管理";
-  },
   mounted() {
     this.getPaperAll();
   },

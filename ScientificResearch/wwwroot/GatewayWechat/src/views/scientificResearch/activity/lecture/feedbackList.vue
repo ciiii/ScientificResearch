@@ -207,9 +207,6 @@ export default {
       flag1: "已完成-审核通过",
     };
   },
-  created() {
-    document.title = "讲座反馈列表";
-  },
   mounted() {
     this.getFeedback();
   },

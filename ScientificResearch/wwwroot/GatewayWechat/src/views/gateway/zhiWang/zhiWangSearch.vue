@@ -24,7 +24,8 @@
                         @click-label="clickTitle(1)" @keyup.enter.native="retrieval"
                 />
             </div>
-            <van-field v-model="req.authorGroup" clearable label="作者单位" placeholder="请输入" @keyup.enter.native="retrieval"/>
+            <van-field v-model="req.authorGroup" clearable label="作者单位" placeholder="请输入"
+                       @keyup.enter.native="retrieval"/>
             <div class="item">
                 <span class="title">发表时间</span>
                 <div class="time-box">
@@ -62,7 +63,7 @@
         <van-popup v-model="showType" position="bottom">
             <div class="tab-con">
                 <h2 class="van-doc-demo-block__title">检索类型</h2>
-                <van-radio-group v-model="newType">
+                <van-radio-group v-model="req.searchType">
                     <van-cell-group>
                         <van-cell :title="el.key" clickable @click="clickType(el)"
                                   v-for="el in configs.检索类型" :key="el.key">
@@ -70,16 +71,12 @@
                         </van-cell>
                     </van-cell-group>
                 </van-radio-group>
-                <div class="btn-box">
-                    <van-button type="info" plain size="large" @click="resetType">返回</van-button>
-                    <van-button type="primary" size="large" @click="confirmType">确定</van-button>
-                </div>
             </div>
         </van-popup>
         <van-popup v-model="showAuthor" position="bottom">
             <div class="tab-con">
                 <h2 class="van-doc-demo-block__title">作者类型</h2>
-                <van-radio-group v-model="newAuthor">
+                <van-radio-group v-model="req.authorType">
                     <van-cell-group>
                         <van-cell :title="el.key" clickable @click="clickAuthor(el)"
                                   v-for="el in configs.作者类型" :key="el.value">
@@ -87,10 +84,6 @@
                         </van-cell>
                     </van-cell-group>
                 </van-radio-group>
-                <div class="btn-box">
-                    <van-button type="info" plain size="large" @click="resetAuthor">返回</van-button>
-                    <van-button type="primary" size="large" @click="confirmAuthor">确定</van-button>
-                </div>
             </div>
         </van-popup>
         <van-popup v-model="showTime" position="bottom">
@@ -113,7 +106,7 @@
         <van-popup v-model="showSourceRearchType" position="bottom">
             <div class="tab-con">
                 <h2 class="van-doc-demo-block__title">来源期刊检索类型</h2>
-                <van-radio-group v-model="newSourceRearchType">
+                <van-radio-group v-model="req.sourceRearchType">
                     <van-cell-group>
                         <van-cell :title="el.key" clickable @click="clickSourceRearchType(el)"
                                   v-for="el in searchLiset" :key="el.key">
@@ -121,16 +114,12 @@
                         </van-cell>
                     </van-cell-group>
                 </van-radio-group>
-                <div class="btn-box">
-                    <van-button type="info" plain size="large" @click="resetSourceRearchType">返回</van-button>
-                    <van-button type="primary" size="large" @click="confirmSourceRearchType">确定</van-button>
-                </div>
             </div>
         </van-popup>
         <van-popup v-model="showSupportFundType" position="bottom">
             <div class="tab-con">
                 <h2 class="van-doc-demo-block__title">支持基金检索类型</h2>
-                <van-radio-group v-model="newSupportFundType">
+                <van-radio-group v-model="req.supportFundType">
                     <van-cell-group>
                         <van-cell :title="el.key" clickable @click="clickSupportFundType(el)"
                                   v-for="el in searchLiset" :key="el.key">
@@ -138,15 +127,11 @@
                         </van-cell>
                     </van-cell-group>
                 </van-radio-group>
-                <div class="btn-box">
-                    <van-button type="info" plain size="large" @click="resetSupportFundType">返回</van-button>
-                    <van-button type="primary" size="large" @click="confirmSupportFundType">确定</van-button>
-                </div>
             </div>
         </van-popup>
         <van-popup v-model="showSourceType" position="bottom">
             <div class="tab-con">
-                <h2 class="van-doc-demo-block__title">来源类别</h2>
+                <h2 class="van-doc-demo-block__title">来源类别(多选)</h2>
                 <van-checkbox-group v-model="newSourceType">
                     <van-cell-group>
                         <van-cell
@@ -222,15 +207,11 @@
                     },
                 ],
                 type: '主题',
-                newType: 'SU$%=|',
                 author: '作者',
-                newAuthor: 'AU',
                 time: '',
                 newTime: '',
                 sourceRearchType: '模糊',
-                newSourceRearchType: '%',
                 supportFundType: '模糊',
-                newSupportFundType: '%',
                 sourceType: '',
                 newSourceType: [],
                 item: {}
@@ -267,29 +248,13 @@
                 }
             },
             clickType(el) {
-                this.item = el;
-                this.newType = el.value;
-            },
-            confirmType() {
-                this.type = this.item.key;
-                this.req.searchType = this.item.value;
-                this.showType = false;
-            },
-            resetType() {
-                this.newType = '';
+                this.type = el.key;
+                this.req.searchType = el.value;
                 this.showType = false;
             },
             clickAuthor(el) {
-                this.item = el;
-                this.newAuthor = el.value;
-            },
-            confirmAuthor() {
-                this.author = this.item.key;
-                this.req.authorType = this.newAuthor;
-                this.showAuthor = false;
-            },
-            resetAuthor() {
-                this.newAuthor = '';
+                this.author = el.key;
+                this.req.authorType = el.value;
                 this.showAuthor = false;
             },
             clickTime(el) {
@@ -308,29 +273,13 @@
                 this.showTime = false;
             },
             clickSourceRearchType(el) {
-                this.item = el;
-                this.newSourceRearchType = el.value;
-            },
-            confirmSourceRearchType() {
-                this.sourceRearchType = this.item.key;
-                this.req.sourceRearchType = this.item.value;
-                this.showSourceRearchType = false;
-            },
-            resetSourceRearchType() {
-                this.newSourceRearchType = '';
+                this.sourceRearchType = el.key;
+                this.req.sourceRearchType = el.value;
                 this.showSourceRearchType = false;
             },
             clickSupportFundType(el) {
-                this.item = el;
-                this.newSupportFundType = el.value;
-            },
-            confirmSupportFundType() {
-                this.supportFundType = this.item.key;
-                this.req.supportFundType = this.item.value;
-                this.showSupportFundType = false;
-            },
-            resetSupportFundType() {
-                this.newSupportFundType = '';
+                this.supportFundType = el.key;
+                this.req.supportFundType = el.value;;
                 this.showSupportFundType = false;
             },
             confirmSourceType() {
@@ -371,6 +320,9 @@
     .WF-search {
         .van-overlay {
             top: 0 !important;
+        }
+        .van-cell__title {
+            text-align: left !important;
         }
     }
 

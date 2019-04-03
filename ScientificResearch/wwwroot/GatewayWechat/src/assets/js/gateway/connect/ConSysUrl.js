@@ -1,7 +1,7 @@
+const HTTP_URL_HOST = 'http://oa.meinolf.net.cn:20003';
 // const HTTP_URL_HOST = 'http://192.168.0.72:20003';
-const HTTP_URL_HOST = 'http://192.168.0.22:20001';
-const URL_WAN_FANG_DOWNLOAD_FILE = '/Lib/FileMgrController/DownLoadFile?fileName=';
-const URL_ZHI_WANG_DOWNLOAD_FILE = '/Lib/ZWController/DownZwFile';
+// const HTTP_URL_HOST = 'http://192.168.0.22:20001';
+const URL_DOWNLOAD_FILE = HTTP_URL_HOST + '/Lib/FileMgrController/DownLoadFile';
 
 const URL_WAN_FANG = {
 
@@ -16,6 +16,9 @@ const URL_WAN_FANG = {
 
     //获取文章下载地址
     GET_ARTICLE_DOWNURL: '/Lib/WFController/GetWfDataDownUrl',
+
+    //下载文件
+    GET_DOWNURL_FILE: HTTP_URL_HOST +'/Lib/WFController/DownWfFile',
 
 }
 
@@ -39,16 +42,15 @@ const URL_ZHI_WANG = {
     //获取文章下载地址
     GET_ARTICLE_DOWNURL: '/Lib/ZWController/GetZwDataDownUrl',
 
-    //获取文章下载地址
-    ARTICLE_DOWNURL: '/Lib/ZWController/DownZwFile',
+    //下载文件
+    GET_DOWNURL_FILE: HTTP_URL_HOST + '/Lib/ZWController/DownZwFile',
 
 }
 
 
 export {
     HTTP_URL_HOST,
-    URL_WAN_FANG_DOWNLOAD_FILE,
-    URL_ZHI_WANG_DOWNLOAD_FILE,
+    URL_DOWNLOAD_FILE,
     URL_WAN_FANG,
     URL_ZHI_WANG,
 

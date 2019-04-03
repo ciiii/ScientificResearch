@@ -24,9 +24,10 @@
                           loading-text="加载中..."
                           @load="onLoad">
                     <ul>
-                        <li v-for="item in list.listDatas" :key="item.id" @click="clickTitle(item)">
+                        <li v-for="item in list" :key="item.id" @click="clickTitle(item)">
                             <p class="title">{{item.title}}</p>
-                            <p class="author">【作者】{{item.authors}}</p>
+                            <!--<p class="author">【作者】{{item.authors}}</p>-->
+                            <p class="keyword"><span v-for="el in item.authors" :key="el">{{el}}</span></p>
                             <p class="author">【发表时间】{{item.publishDate}}</p>
                             <p class="source" v-if="item.source">【来源】{{item.source}}</p>
                             <p class="author" v-if="item.downCount">【下载】{{item.downCount}}</p>
@@ -84,6 +85,7 @@
                 },
                 isScreen: false,
                 list: [],
+                newList: [],
                 isLoading: false,
                 loading: false,
                 finished: false,
@@ -95,13 +97,11 @@
                 item: {},
                 isShowBtn: false,
                 searchType: 0
-
             }
         },
         mounted: function () {
             this.configs = JSON.parse(sessionStorage.getItem('ZWConfigs'));
             this.req = JSON.parse(sessionStorage.getItem('ZWSearch'));
-            console.info(this.configs);
 
             this.reqPanging.accountId = this.req.accountId;
             this.reqScreen.accountId = this.req.accountId;
@@ -114,67 +114,91 @@
                         this.getList();
                         break;
                     case 1:
+                        this.getScreenList();
+                        break;
+                    case 2:
                         this.getPangingList();
                         break;
-                    case 2:
-                        this.getScreenList();
                 }
-
             },
             clickTab(index, title) {
-                console.info('title')
-                console.info(title);
-                console.info(index);
                 switch (index) {
                     case 0:
-                        this.reqScreen.sortUrl = this.list.sortRelateUrl;
+                        this.reqScreen.sortUrl = this.newList.sortRelateUrl;
                         break;
                     case 1:
-                        this.reqScreen.sortUrl = this.list.sortPublicDateUrl;
+                        this.reqScreen.sortUrl = this.newList.sortPublicDateUrl;
                         break;
                     case 2:
-                        this.reqScreen.sortUrl = this.list.sortByUseTimesUrl;
+                        this.reqScreen.sortUrl = this.newList.sortByUseTimesUrl;
                         break;
                     case 3:
-                        this.reqScreen.sortUrl = this.list.sortByDownTimesUrl;
+                        this.reqScreen.sortUrl = this.newList.sortByDownTimesUrl;
                         break;
                 }
-                this.searchType = 2;
+                this.searchType = 1;
                 this.onSearch();
             },
             onSearch: _debounce(function () {
+                this.list = [];
                 this.getScreenList();
             }, 300),
             getList: async function () {
-                let data = await this.$myHttp.myGet(URL_ZHI_WANG.GET_ARTICLE_LIST, this.req);
-                this.finished = true;
-                this.list = data;
-                this.reqPanging.pageUrl = data.nextPageUrl;
+                this.newList = await this.$myHttp.myGet(URL_ZHI_WANG.GET_ARTICLE_LIST, this.req);
+                if (this.newList && this.newList.listDatas != []) {
+                    this.newList.listDatas.forEach(function (item) {
+                        if (item.authors && item.authors != "") {
+                            item.authors = item.authors.split(' ');
+                        }
+                    })
+                    this.list = this.newList.listDatas;
+                    this.reqPanging.pageUrl = this.newList.nextPageUrl;
+                }
+                this.searchType = 2;
+                this.isFinished();
                 this.isLoading = false;
                 this.loading = false;
             },
             getScreenList: async function () {
-                let data = await this.$myHttp.myGet(URL_ZHI_WANG.GET_SCREEN_LIST, this.reqScreen);
-                this.finished = true;
-                this.list = data;
-                this.reqPanging.pageUrl = data.nextPageUrl;
+                this.newList = await this.$myHttp.myGet(URL_ZHI_WANG.GET_SCREEN_LIST, this.reqScreen);
+                if (this.newList && this.newList.listDatas != []) {
+                    this.newList.listDatas.forEach(function (item) {
+                        if (item.authors && item.authors != "") {
+                            item.authors = item.authors.split(' ');
+                        }
+                    })
+                }
+                this.list = this.newList.listDatas;
+                this.reqPanging.pageUrl = this.newList.nextPageUrl;
+                this.isScreen = false;
+                this.searchType = 2;
+                this.isFinished();
                 this.isLoading = false;
                 this.loading = false;
-                this.isScreen = false;
             },
             getPangingList: async function () {
-                let data = await this.$myHttp.myGet(URL_ZHI_WANG.GET_PANGING_LIST, this.reqPanging);
-                if (data && data != []) {
-                    this.req.reqPanging.pageUrl = data.nextPageUrl;
-                    if (data.length < this.req.p) {
+                this.newList = await this.$myHttp.myGet(URL_ZHI_WANG.GET_PANGING_LIST, this.reqPanging);
+                if (this.newList && this.newList.listDatas != []) {
+                    this.reqPanging.pageUrl = this.newList.nextPageUrl;
+                    this.newList.listDatas.forEach(function (item) {
+                        if (item.authors && item.authors != "") {
+                            item.authors = item.authors.split(' ');
+                        }
+                    })
+                    this.list = this.list.concat(this.newList.listDatas);
+                    if (this.newList.listDatas.length < 20) {
                         this.finished = true;
                     }
                 } else {
                     this.finished = true;
                 }
-                this.list = this.list.concat(data);
                 this.isLoading = false;
                 this.loading = false;
+            },
+            isFinished() {
+                if (!this.newList.listDatas || this.newList.listDatas.length < 20) {
+                    this.finished = true;
+                }
             },
             onRefresh() {
                 setTimeout(() => {
@@ -220,4 +244,15 @@
 </style>
 <style type="text/less" scoped lang="less">
     @import "../../../assets/less/gateway/wanFangList";
+
+    .WF-list {
+        .content {
+            .keyword {
+                span {
+                    border-color: #409EFF ;
+                    color: #409EFF;
+                }
+            }
+        }
+    }
 </style>

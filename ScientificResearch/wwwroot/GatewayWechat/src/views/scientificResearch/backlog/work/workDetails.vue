@@ -218,9 +218,6 @@ export default {
       flag: "审核通过"
     };
   },
-  created() {
-    document.title = "著作详情";
-  },
   mounted() {
     this.goDetails();
   },

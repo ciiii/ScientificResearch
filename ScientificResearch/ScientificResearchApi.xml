@@ -156,6 +156,49 @@
             <param name="model">id为医院编号,list为最终保留的医院服务列表</param>
             <returns></returns>
         </member>
+        <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.AccessController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.AccessController.Login(ScientificResearch.Models.LoginInfo)">
+            <summary>
+            login 用manage里面的,这个作废了
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.AccessController.获取教学权限菜单">
+            <summary>
+            获取教学管理pc端的功能菜单;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.AccessController.RecursivePermission(System.Collections.Generic.IEnumerable{ScientificResearch.Models.教学权限},System.Int32)">
+            <summary>
+            权限分层次
+            </summary>
+            <param name="permission"></param>
+            <param name="topId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.AccessController.ChangePassword(ScientificResearch.Models.ChangePassword)">
+            <summary>
+            修改密码,这个也应该放到manage去 ;
+            </summary>
+            <param name="oldPassword"></param>
+            <param name="newPassword"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.AccessController.获取登录日志(ScientificResearch.Models.Paging,ScientificResearch.Models.登录日志Filter)">
+            <summary>
+            分页获取登录日志,这个也应该放到manage去;
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <!-- 对于成员“M:ScientificResearch.Areas.TeachingManagement.Controllers.BaseInfoController.增改教学科室(ScientificResearch.Models.教学科室)”忽略有格式错误的 XML 注释 -->
         <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementBaseController">
             <summary>
             2019-1-9
@@ -163,12 +206,6 @@
             应该用area区分不同的服务;方便以后用微服务分开;
             但是目前models还无法分开;
             </summary>
-        </member>
-        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TestController.Index">
-            <summary>
-            Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyLlp5PlkI0iOiLnrqHnkIblkZgiLCLlt6Xlj7ciOiIwMDAxIiwi57yW5Y-3IjoiMiIsIumDqOmXqOe8luWPtyI6IjEwMDI0Iiwi6YOo6Zeo5ZCN56ewIjoi5L-h5oGv5aSEIiwiRGJLZXkiOiJTY2llbnRpZmljUmVzZWFyY2hfVGVzdCIsImlzcyI6Im1lZDEwMC5jb20iLCJhdWQiOiJtZWQxMDAuY29tIn0.W9E3C7qtbq1mi8lLoflyVvhOeQmLgR_AFucEAbSer9U
-            </summary>
-            <returns></returns>
         </member>
         <member name="T:ScientificResearch.Models.CurrentUserOfManage">
             <summary>
@@ -921,6 +958,91 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.SPFlowInit">
+            <summary>
+            SPFlowInit[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.SPFlowInit.FlowTemplateId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.SPFlowInit.SourceId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.SPFlowInit.CreatorType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.SPFlowInit.CreatorId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.SPGetNextStepTemplateId">
+            <summary>
+            SPGetNextStepTemplateId[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.SPGetNextStepTemplateId.stepId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.SPGetNextStepTemplateId.state">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.SPGetNextStepTemplateId.result">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.SPStepDone">
+            <summary>
+            SPStepDone[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.SPStepDone.StepId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.SPStepDone.State">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.SPStepDone.OperatorType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.SPStepDone.OperatorId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.SPStepDone.Remark">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_Execsql">
+            <summary>
+            sp_Execsql[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_Execsql.sql">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_GetList">
             <summary>
             sp_GetList[类]
@@ -1557,6 +1679,406 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_按部门统计成果.字段显示名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学专业_增改">
+            <summary>
+            sp_教学专业_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学专业_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学专业科室_增改">
+            <summary>
+            sp_教学专业科室_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学专业科室_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学专业科室任务_增改">
+            <summary>
+            sp_教学专业科室任务_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学专业科室任务_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学专业科室任务类型_增改">
+            <summary>
+            sp_教学专业科室任务类型_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学专业科室任务类型_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学专业科室要求_增改">
+            <summary>
+            sp_教学专业科室要求_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学专业科室要求_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学人员角色_增改">
+            <summary>
+            sp_教学人员角色_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学人员角色_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学出勤情况_增改">
+            <summary>
+            sp_教学出勤情况_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学出勤情况_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学出勤类型_增改">
+            <summary>
+            sp_教学出勤类型_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学出勤类型_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学出科申请_增改">
+            <summary>
+            sp_教学出科申请_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学出科申请_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学医疗差错及事故记录_增改">
+            <summary>
+            sp_教学医疗差错及事故记录_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学医疗差错及事故记录_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学学员_删">
+            <summary>
+            sp_教学学员_删[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学学员_删.tt_编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学学员_增改">
+            <summary>
+            sp_教学学员_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学学员_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学学员培训_增改">
+            <summary>
+            sp_教学学员培训_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学学员培训_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学学员宿舍安排_增改">
+            <summary>
+            sp_教学学员宿舍安排_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学学员宿舍安排_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学学员类型_增改">
+            <summary>
+            sp_教学学员类型_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学学员类型_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学宿舍楼_增改">
+            <summary>
+            sp_教学宿舍楼_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学宿舍楼_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学带教老师_增改">
+            <summary>
+            sp_教学带教老师_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学带教老师_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学更换带教老师_增改">
+            <summary>
+            sp_教学更换带教老师_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学更换带教老师_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学本院科室_增改">
+            <summary>
+            sp_教学本院科室_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学本院科室_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学本院科室任务_增改">
+            <summary>
+            sp_教学本院科室任务_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学本院科室任务_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学本院策略_增改">
+            <summary>
+            sp_教学本院策略_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学本院策略_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学活动_增改">
+            <summary>
+            sp_教学活动_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学活动_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学活动反馈_增改">
+            <summary>
+            sp_教学活动反馈_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学活动反馈_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学活动可参与者_增改">
+            <summary>
+            sp_教学活动可参与者_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学活动可参与者_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学活动类型_增改">
+            <summary>
+            sp_教学活动类型_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学活动类型_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学活动评价_增改">
+            <summary>
+            sp_教学活动评价_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学活动评价_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学活动评价项目_增改">
+            <summary>
+            sp_教学活动评价项目_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学活动评价项目_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学病人_增改">
+            <summary>
+            sp_教学病人_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学病人_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学病例_增改">
+            <summary>
+            sp_教学病例_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学病例_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学科室_增改">
+            <summary>
+            sp_教学科室_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学科室_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学管床病人_增改">
+            <summary>
+            sp_教学管床病人_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学管床病人_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学结业申请_增改">
+            <summary>
+            sp_教学结业申请_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学结业申请_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学考试成绩_增改">
+            <summary>
+            sp_教学考试成绩_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学考试成绩_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学补轮转_增改">
+            <summary>
+            sp_教学补轮转_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学补轮转_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学角色权限_增改">
+            <summary>
+            sp_教学角色权限_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学角色权限_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学评分等级_增改">
+            <summary>
+            sp_教学评分等级_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学评分等级_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学请假申请_增改">
+            <summary>
+            sp_教学请假申请_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学请假申请_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学轮转_增改">
+            <summary>
+            sp_教学轮转_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学轮转_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学轮转任务_增改">
+            <summary>
+            sp_教学轮转任务_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学轮转任务_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学退培申请_增改">
+            <summary>
+            sp_教学退培申请_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学退培申请_增改.tt">
             <summary>
             
             </summary>
@@ -2204,6 +2726,331 @@
         <member name="P:ScientificResearch.Models.sp_项目经费到账_增改.tt">
             <summary>
             
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.Flow">
+            <summary>
+            Flow[流程      状态有: 0-未完成;1-已完成;-2 被终止;-3 已过期   保留-1是为了和步骤类型状态匹配,-1在步骤类型状态里面为退回到某一个类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.Flow.Id">
+            <summary>
+            自增编号
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.Flow.FlowTemplateId">
+            <summary>
+            流程模板编号,可以理解为sourceType
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.Flow.SourceId">
+            <summary>
+            相关工作对象的id
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.Flow.State">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.Flow.CreatorType">
+            <summary>
+            发起人类型
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.Flow.CreatorId">
+            <summary>
+            此流程的发起人编号
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.Flow.CreateDateTime">
+            <summary>
+            建立时间
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.Flow.Remark">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.FlowTemplate">
+            <summary>
+            FlowTemplate[流程模板      一个流程往往以一个为"工作的对象";   但是一个可以作为多个流程的"工作的对象"   例如:请假单      该流程模板的某流程,其详情页面的组件名称   固定一个参数是其"工作的对象"的Id   如:请假单详情?id=1类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.FlowTemplate.Id">
+            <summary>
+            编号
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.FlowTemplate.TableName">
+            <summary>
+            来源表名
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.FlowTemplate.Name">
+            <summary>
+            流程名称
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.FlowTemplate.ComponentName">
+            <summary>
+            组件名称
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.FlowTemplate.Remark">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.Id">
+            <summary>
+            Id[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.Id.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.Step">
+            <summary>
+            Step[步骤   状态:默认0,操作后由操作的状态值填写,具体对应stempTemplateState里面的State值      当前步骤的状态用了"步骤模板编号+状态编号+排序"来说明   虽然可以用"步骤模板状态"id来指定,但变换其状态来比较麻烦;类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.Step.Id">
+            <summary>
+            自增编号
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.Step.FlowId">
+            <summary>
+            流程编号
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.Step.StepTemplateId">
+            <summary>
+            步骤模板编号
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.Step.State">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.Step.OperatorType">
+            <summary>
+            操作人类型
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.Step.OperatorId">
+            <summary>
+            执行人编号
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.Step.OperatorDatetime">
+            <summary>
+            执行时间
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.Step.CreateDatetime">
+            <summary>
+            建立时间
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.Step.Remark">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.StepAssignedPerson">
+            <summary>
+            StepAssignedPerson[步骤指定人   这个已经是流程业务里面的数据了   不是流程模板,步骤模板里面的预定义类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepAssignedPerson.Id">
+            <summary>
+            自增编号
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepAssignedPerson.StepId">
+            <summary>
+            步骤编号
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepAssignedPerson.StepAssignedPersonType">
+            <summary>
+            指定人类型
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepAssignedPerson.StepAssignedPersonId">
+            <summary>
+            指定人编号
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.StepTemplate">
+            <summary>
+            StepTemplate[步骤模板   编号=流程模板编号的,为该流程模板的第一步骤   比如流程模板为100,那么步骤为100的就是该流程的第一步,   步骤模板的编号规则为:   100  -第一步   101 -做第二步,当然也可以是110大于100的就可以类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepTemplate.Id">
+            <summary>
+            编号
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepTemplate.FlowTemplateId">
+            <summary>
+            流程模板编号
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepTemplate.Name">
+            <summary>
+            步骤名称
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepTemplate.ViewComponentName">
+            <summary>
+            查看组件名称
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepTemplate.EditComponentName">
+            <summary>
+            编辑组件名称
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepTemplate.Style">
+            <summary>
+            样式
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepTemplate.Remark">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.StepTemplateAssignedPerson">
+            <summary>
+            StepTemplateAssignedPerson[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepTemplateAssignedPerson.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepTemplateAssignedPerson.StepTemplateId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepTemplateAssignedPerson.StepAssignedPersonType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepTemplateAssignedPerson.StepAssignedPersonId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepTemplateAssignedPerson.Remark">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.StepTemplateState">
+            <summary>
+            StepTemplateState[步骤模板中的某一步骤模板的状态   某个具体的步骤模板,可以有多种状态;   新生成一个步骤时,状态为0,比如提交一个请假到审核步骤,这个状态叫"待审核"   又比如审核步骤时,可以有"通过"和"不通过操作"      其中约定,1为进入下一步或者完成整个流程,-1为退回第一步,-2为终止整个流程;      主键:步骤模板编号+状态编号   编号:101(步骤模板编号) 1(状态编号) 则此状态为1011,   如果状态编号是-1,则整个编号为-      状态说明,如:   审核步骤中:   0:待审核   1:审核通过   -1:审核不通过类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepTemplateState.Id">
+            <summary>
+            编号
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepTemplateState.StepTemplateId">
+            <summary>
+            步骤模板编号
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepTemplateState.State">
+            <summary>
+            操作编号
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepTemplateState.Name">
+            <summary>
+            状态说明
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepTemplateState.Remark">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.StepTemplateStateChoice">
+            <summary>
+            StepTemplateStateChoice[一个审核步骤的通过选择有多种可能的走向;   state=0的没有下一步   最后一步也应该没有下一步   这个Sort其实就是不同的choice   编号: 步骤模板编号+状态编号+sort   10111这样的类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepTemplateStateChoice.Id">
+            <summary>
+            编号
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepTemplateStateChoice.Name">
+            <summary>
+            选择名称
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepTemplateStateChoice.StepTemplateStateId">
+            <summary>
+            步骤状态编号
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepTemplateStateChoice.NextStepTemplateId">
+            <summary>
+            下一步骤模板编号
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepTemplateStateChoice.Sort">
+            <summary>
+            排序
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepTemplateStateChoice.Remark">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.StepTemplateStateChoiceCondition">
+            <summary>
+            StepTemplateStateChoiceCondition[进入哪个步骤模板状态的准入条件      一个StepTemplateState 可能没有 StepTemplateStateConditions;          则示这个状态的转变,没有准入条件,      也可能一或多条;         则示这个状态的转变,有这样那样的准入条件         只有"相关数据"满足了所有这些准入条件,这个转变才是有效的;      总的来看:一个审核通过的后续步骤可能是多个,但他们的操作状态其实是一样的都是0->1;   那么在StepTemplateState里面选取哪个,就看着多个StepTemplateState各自对应的准入条件是否能被满足;   可能剩下一个或多个满足的StepTemplateState,那么取第一个中的NextStepTemplateId,      此为多入多出的关键;没有主键哈;   类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepTemplateStateChoiceCondition.StepTemplateStateChoiceId">
+            <summary>
+            步骤模板状态选择编号
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepTemplateStateChoiceCondition.PropName">
+            <summary>
+            属性名称
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepTemplateStateChoiceCondition.Operator">
+            <summary>
+            运算符
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepTemplateStateChoiceCondition.Value">
+            <summary>
+            预定义的值
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepTemplateStateChoiceCondition.Remark">
+            <summary>
+            备注
             </summary>
         </member>
         <member name="T:ScientificResearch.Models.专家评分">
@@ -3972,6 +4819,2031 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.报销详情.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学360评价">
+            <summary>
+            教学360评价[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学360评价.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学360评价.教学360评价方向编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学360评价.评价人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学360评价.被评价人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学360评价.评价内容">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学360评价.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学360评价分类">
+            <summary>
+            教学360评价分类[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学360评价分类.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学360评价分类.目标类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学360评价分类.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学360评价分类.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学360评价方向">
+            <summary>
+            教学360评价方向[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学360评价方向.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学360评价方向.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学360评价方向.来源类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学360评价方向.目标类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学360评价方向.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学360评价评分">
+            <summary>
+            教学360评价评分[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学360评价评分.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学360评价评分.教学360评价编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学360评价评分.教学360评价项目编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学360评价评分.评分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学360评价评分.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学360评价项目">
+            <summary>
+            教学360评价项目[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学360评价项目.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学360评价项目.教学360评价分类编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学360评价项目.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学360评价项目.标准分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学360评价项目.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学专业">
+            <summary>
+            教学专业[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业.年份">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业.是否国家标准">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业.标准代码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业.最低培训时长">
+            <summary>
+            单位是周?,前台显示可以做别的格式.
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业.学习要求及目标">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学专业科室">
+            <summary>
+            教学专业科室[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业科室.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业科室.教学专业编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业科室.排序值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业科室.科室名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业科室.最低培训时长">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业科室.最低管床数量">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业科室.最低全程管理数量">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业科室.科室要求">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业科室.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学专业科室任务">
+            <summary>
+            教学专业科室任务[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业科室任务.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业科室任务.教学专业科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业科室任务.项目名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业科室任务.任务类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业科室任务.是否门诊">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业科室任务.是否病房">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业科室任务.是否医技">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业科室任务.最低评分要求">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业科室任务.数量要求">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业科室任务.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学专业科室任务类型">
+            <summary>
+            教学专业科室任务类型[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业科室任务类型.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业科室任务类型.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业科室任务类型.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学专业科室要求">
+            <summary>
+            教学专业科室要求[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业科室要求.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业科室要求.教学专业科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业科室要求.项目名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业科室要求.说明">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业科室要求.最低评分要求">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学专业科室要求.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学人员角色">
+            <summary>
+            教学人员角色[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学人员角色.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学人员角色.教学角色编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学人员角色.人员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学出勤情况">
+            <summary>
+            教学出勤情况[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学出勤情况.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学出勤情况.教学轮转编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学出勤情况.考勤日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学出勤情况.教学出勤类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学出勤情况.说明">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学出勤情况.建立人">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学出勤情况.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学出勤情况.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学出勤类型">
+            <summary>
+            教学出勤类型[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学出勤类型.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学出勤类型.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学出勤类型.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学出科申请">
+            <summary>
+            教学出科申请[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学出科申请.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学出科申请.教学轮转编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学出科申请.申请出科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学出科申请.出科小结">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学出科申请.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学出科申请.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学出科申请.是否通过审核">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学医疗差错及事故记录">
+            <summary>
+            教学医疗差错及事故记录[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学医疗差错及事故记录.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学医疗差错及事故记录.教学轮转编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学医疗差错及事故记录.处理日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学医疗差错及事故记录.处理类别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学医疗差错及事故记录.处理原因">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学医疗差错及事故记录.处理意见">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学医疗差错及事故记录.附件">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学医疗差错及事故记录.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学学员">
+            <summary>
+            教学学员[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.来源学校编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.来源学生编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.学员类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.工号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.密码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.头像路径">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.性别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.民族">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.证件类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.证件号码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.出生日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.手机号码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.政治面貌">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.电子邮箱">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.QQ号码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.微信号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.家庭住址">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.取得执业证书日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.职业证书编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.取得医师资格证书日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.医师资格证书编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.最高学历">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.毕业年份">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.毕业学校">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.毕业专业">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.毕业证编码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.学位证编码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.学员培训年界">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.学员培训年限">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.是否应届生">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.专业编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.送培方式">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.工作单位">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.医疗卫生机构">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学学员培训">
+            <summary>
+            教学学员培训[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员培训.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员培训.报到时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员培训.教学本院策略编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员培训.计划开始培训日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员培训.计划结束培训日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员培训.实际开始培训日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员培训.实际结束培训日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员培训.退培日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员培训.结业日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员培训.证书">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员培训.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员培训.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学学员宿舍安排">
+            <summary>
+            教学学员宿舍安排[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员宿舍安排.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员宿舍安排.宿舍楼编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员宿舍安排.门禁卡卡号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员宿舍安排.门牌号及床号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员宿舍安排.职位">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员宿舍安排.水起数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员宿舍安排.电起数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员宿舍安排.气起数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员宿舍安排.滞纳金比例">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员宿舍安排.入住日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员宿舍安排.退出日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员宿舍安排.退出原因">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员宿舍安排.宿舍安排说明">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员宿舍安排.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员宿舍安排.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学学员类型">
+            <summary>
+            教学学员类型[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员类型.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员类型.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员类型.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学宿舍楼">
+            <summary>
+            教学宿舍楼[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学宿舍楼.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学宿舍楼.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学宿舍楼.层数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学宿舍楼.单元数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学宿舍楼.每单元每层户数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学宿舍楼.每户床数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学宿舍楼.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学带教老师">
+            <summary>
+            教学带教老师[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学带教老师.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学带教老师.教学科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学带教老师.带教老师编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学带教老师.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学更换带教老师">
+            <summary>
+            教学更换带教老师[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学更换带教老师.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学更换带教老师.教学轮转编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学更换带教老师.原带教老师编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学更换带教老师.新带教老师编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学更换带教老师.建立人">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学更换带教老师.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学更换带教老师.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学本院科室">
+            <summary>
+            教学本院科室[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学本院科室.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学本院科室.教学专业本院策略编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学本院科室.排序值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学本院科室.教学专业科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学本院科室.本院科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学本院科室.是否必选">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学本院科室.培训时长">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学本院科室.最低管床数量">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学本院科室.最低全程管理数量">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学本院科室.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学本院科室任务">
+            <summary>
+            教学本院科室任务[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学本院科室任务.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学本院科室任务.教学本院科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学本院科室任务.项目名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学本院科室任务.任务类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学本院科室任务.是否门诊">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学本院科室任务.是否病房">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学本院科室任务.是否医技">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学本院科室任务.最低评分要求">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学本院科室任务.数量要求">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学本院科室任务.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学本院策略">
+            <summary>
+            教学本院策略[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学本院策略.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学本院策略.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学本院策略.教学专业编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学本院策略.专业基地管理员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学本院策略.建立日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学本院策略.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学权限">
+            <summary>
+            教学权限[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学权限.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学权限.上级编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学权限.深度">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学权限.排序值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学权限.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学权限.PC端组件名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学权限.移动端组件名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学权限.是否菜单">
+            <summary>
+            不是菜单就是按钮之类的;
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学权限.图标">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学权限.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学活动">
+            <summary>
+            教学活动[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动.编码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动.活动主题">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动.活动开始时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动.活动结束时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动.活动地点">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动.教学活动类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动.主讲人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动.主讲人姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动.主讲人职称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动.活动内容">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动.教学病例">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动.病人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动.建立人">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学活动反馈">
+            <summary>
+            教学活动反馈[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动反馈.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动反馈.教学活动编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动反馈.学员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动反馈.反馈内容">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动反馈.附件">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动反馈.是否通过反馈">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动反馈.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动反馈.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学活动可参与者">
+            <summary>
+            教学活动可参与者[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动可参与者.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动可参与者.教学活动编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动可参与者.学员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动可参与者.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学活动类型">
+            <summary>
+            教学活动类型[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动类型.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动类型.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动类型.活动内容模板">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动类型.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学活动评价">
+            <summary>
+            教学活动评价[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动评价.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动评价.评价人类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动评价.评价人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动评价.教学活动编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动评价.教学活动评价项目编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动评价.评分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动评价.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学活动评价项目">
+            <summary>
+            教学活动评价项目[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动评价项目.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动评价项目.教学活动类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动评价项目.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动评价项目.标准分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动评价项目.说明">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动评价项目.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学病人">
+            <summary>
+            教学病人[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学病人.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学病人.姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学病人.性别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学病人.出生日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学病人.住院号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学病人.住院床号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学病人.主要诊断">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学病人.次要诊断">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学病人.入院日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学病人.出院日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学病人.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学病例">
+            <summary>
+            教学病例[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学病例.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学病例.教学轮转任务编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学病例.文献类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学病例.病例类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学病例.病人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学病例.病例内容">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学病例.附件">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学病例.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学病例.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学病例.是否通过审核">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学科室">
+            <summary>
+            教学科室[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学科室.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学科室.科室管理员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学科室.最大学员人数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学科室.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学管床病人">
+            <summary>
+            教学管床病人[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学管床病人.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学管床病人.教学轮转编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学管床病人.病人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学管床病人.是否全程陪护">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学管床病人.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学结业申请">
+            <summary>
+            教学结业申请[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学结业申请.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学结业申请.学员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学结业申请.说明">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学结业申请.申请结业日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学结业申请.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学结业申请.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学结业申请.是否通过审核">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学考试成绩">
+            <summary>
+            教学考试成绩[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学考试成绩.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学考试成绩.教学轮转编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学考试成绩.考试类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学考试成绩.成绩">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学考试成绩.建立人">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学考试成绩.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学考试成绩.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学补轮转">
+            <summary>
+            教学补轮转[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学补轮转.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学补轮转.教学轮转编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学补轮转.说明">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学补轮转.开始日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学补轮转.结束日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学补轮转.建立人">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学补轮转.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学补轮转.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学角色">
+            <summary>
+            教学角色[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学角色.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学角色.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学角色.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学角色权限">
+            <summary>
+            教学角色权限[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学角色权限.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学角色权限.教学角色编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学角色权限.教学权限编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学评分等级">
+            <summary>
+            教学评分等级[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学评分等级.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学评分等级.分类名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学评分等级.等级名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学评分等级.最小分值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学评分等级.最大分值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学评分等级.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学请假申请">
+            <summary>
+            教学请假申请[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学请假申请.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学请假申请.教学轮转编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学请假申请.请假开始日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学请假申请.请假天数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学请假申请.请假事由">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学请假申请.轮转延期开始日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学请假申请.轮转延期结束日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学请假申请.建立人">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学请假申请.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学请假申请.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学请假申请.是否通过审核">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学轮转">
+            <summary>
+            教学轮转[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转.学员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转.计划入科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转.计划出科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转.实际入科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转.实际出科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转.本院科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转.带教老师编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转.最低管床数量">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转.最低全程管理数量">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学轮转任务">
+            <summary>
+            教学轮转任务[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转任务.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转任务.教学轮转编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转任务.项目名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转任务.任务类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转任务.是否门诊">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转任务.是否病房">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转任务.是否医技">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转任务.最低评分要求">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转任务.数量要求">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转任务.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学退培申请">
+            <summary>
+            教学退培申请[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学退培申请.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学退培申请.学员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学退培申请.说明">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学退培申请.申请退培日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学退培申请.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学退培申请.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学退培申请.是否通过审核">
             <summary>
             
             </summary>
@@ -12936,6 +15808,216 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.VFlow">
+            <summary>
+            VFlow[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VFlow.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VFlow.FlowTemplateId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VFlow.FlowTemplateName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VFlow.FlowTemplateComponentName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VFlow.SourceId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VFlow.State">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VFlow.StateName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VFlow.CreatorType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VFlow.CreatorId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VFlow.CreatorInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VFlow.CreateDateTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VFlow.Remark">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VFlow.LastStepId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VFlow.LastStepTemplateId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VFlow.LastStepTemplateName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VFlow.LastViewStepComponentName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VFlow.LastEditStepComponentName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VFlow.LastStepTemplateStyle">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VFlow.LastStepState">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VFlow.LastStepStateName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VFlow.LastStepOperatorType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VFlow.LastStepOperatorId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VFlow.LastStepOpeartorInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VFlow.LastStepOperatorDatetime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.VStep">
+            <summary>
+            VStep[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VStep.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VStep.FlowTemplateId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VStep.FlowId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VStep.StepTemplateId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VStep.StepTemplateName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VStep.ViewComponentName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VStep.EditComponentName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VStep.Style">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VStep.State">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VStep.StateName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VStep.OperatorType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VStep.OperatorId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VStep.OpeartorInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VStep.OperatorDatetime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VStep.CreateDatetime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VStep.Remark">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.VTFN某医院购买的服务">
             <summary>
             VTFN某医院购买的服务[类]
@@ -14001,6 +17083,19 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Controllers.TestController.Index">
+            <summary>
+            Task.FromResult
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.TestController.testUpload(Microsoft.AspNetCore.Http.IFormFileCollection)">
+            <summary>
+            试试swagger里面上传文件
+            </summary>
+            <param name="files"></param>
+            <returns></returns>
+        </member>
         <member name="M:ScientificResearch.Controllers.WorkFlowController.审核步骤(ScientificResearch.Models.完成步骤)">
             <summary>
             审核等不需要附加动作的操作,可以直接调用这个接口;
@@ -14502,6 +17597,17 @@
             <typeparam name="T"></typeparam>
             <param name="cnn"></param>
             <param name="id"></param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.ExecuteTransaction``1(System.String,System.Func{System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction,System.Threading.Tasks.Task{``0}})">
+            <summary>
+            启禁某个表的某条记录,对应的sp名有特定约定;
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="cnn"></param>
+            <param name="id"></param>
+            <param name="state"></param>
             <param name="transaction"></param>
             <returns></returns>
         </member>

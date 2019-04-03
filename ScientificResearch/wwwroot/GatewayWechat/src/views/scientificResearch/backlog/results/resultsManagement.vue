@@ -74,9 +74,6 @@ export default {
       message: ""
     };
   },
-  created() {
-    document.title = "获奖管理";
-  },
   mounted() {
     this.getPaper();
   },

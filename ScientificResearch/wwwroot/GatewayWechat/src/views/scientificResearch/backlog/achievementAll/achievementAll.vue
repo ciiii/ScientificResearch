@@ -33,9 +33,6 @@ export default {
       }
     };
   },
-  created() {
-    document.title = "成果总览";
-  },
   mounted() {
     this.getPaper();
   },

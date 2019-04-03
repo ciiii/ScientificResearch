@@ -2,6 +2,10 @@
 
 .WF-list {
   position: relative;
+
+  .van-pull-refresh {
+    margin-top: 60px;
+  }
 }
 
 .van-popup {
@@ -10,12 +14,17 @@
 }
 
 .screen-box {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+
   .van-tabs__content {
     z-index: 2002;
     position: absolute;
     width: 100%;
   }
-
 
   .van-collapse {
     display: flex;
@@ -101,7 +110,8 @@
     }
   }
 }
-.van-pull-refresh__track{
+
+.van-pull-refresh__track {
   position: fixed;
 }
 

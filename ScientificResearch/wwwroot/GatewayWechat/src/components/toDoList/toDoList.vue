@@ -35,7 +35,7 @@
       </div>
     </div>
     <van-popup v-model="show" class="popup">
-      <Audit :message="message" @getMessage="getMessage"></Audit>
+      <Audit :message="message" @getMessage="getMessage" @getBacklog="getBacklog"></Audit>
     </van-popup>
   </van-list>
 </template>
@@ -47,8 +47,9 @@ export default {
   },
   data() {
     return {
-      index: 1,
-      size: 15,
+      index: 0,
+      size: 0,
+      total: 0,
       list: [],
       loading: false,
       finished: false,
@@ -65,36 +66,48 @@ export default {
         纵向项目经费到账: "YFundsToTheAccount",
 
         横向项目: "XDetails",
-        横向项目经费到账: "XFundsToTheAccount"
+        横向项目经费到账: "XFundsToTheAccount",
+        报销详情:"reimbursementDetails"
       }
     };
   },
   mounted() {
-    if (localStorage.token) {
-      this.getBacklog();
-    }
+    // if (localStorage.token) {
+    // this.getBacklog();
+    // }
   },
   methods: {
     // 子组件方法
     getMessage() {
       this.show = false;
     },
-    // 获取待办流程
+    // 获取待办列表
     getBacklog() {
-      this.$http
-        .getBacklogProcess(this.index, this.size)
-        .then(res => {
-          console.log(res, "获取待办流程");
-          this.list = res.data.list;
-          this.list.forEach((item, index) => {
-            if (item.步骤状态说明 === "待审核") {
-              this.isShow = true;
-            }
-          });
-        })
-        .catch(error => {
-          console.log(error);
+      let data = {
+        index: this.index + 1
+      };
+      this.$http.getBacklogProcess(data).then(res => {
+        console.log(res, "234");
+        this.total = res.data.total;
+        this.list = this.list.concat(res.data.list);
+        this.list.forEach((item, index) => {
+          if (item.步骤状态说明 === "待审核") {
+            this.isShow = true;
+          }
         });
+        this.loading = false;
+        this.index++;
+        if (this.index >= this.total) {
+          this.finished = true;
+        }
+      });
+    },
+    // 获取待办流程
+    onLoad() {
+      // 异步更新数据
+      setTimeout(() => {
+        this.getBacklog();
+      }, 500);
     },
     goDetails(item, code) {
       // console.log(item,code,"详情")
@@ -113,20 +126,6 @@ export default {
     audit(item) {
       this.message = item;
       this.show = true;
-    },
-    onLoad() {
-      // 异步更新数据
-      setTimeout(() => {
-        for (let i = 0; i < 0; i++) {
-          this.list.push(this.list.length + 1);
-        }
-        // 加载状态结束
-        this.loading = false;
-        // 数据全部加载完成
-        if (this.list.length >= 0) {
-          this.finished = true;
-        }
-      }, 500);
     },
     // 截取时间
     startTime(item) {

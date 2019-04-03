@@ -1,0 +1,1 @@
+e:\scientific-research\src\components\alternative.vue

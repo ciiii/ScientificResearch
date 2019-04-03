@@ -61,7 +61,6 @@
           </div>
         </div>
       </div>
-
       <div class="backlogBox">
         <div class="backlog">
           <span>
@@ -130,10 +129,7 @@ export default {
     getCodeApi(urlInit, state) {
       //获取code
       // 授权后重定向的回调链接地址
-      // let urlNow = encodeURIComponent(window.location.href);
       let urlNow = encodeURIComponent(urlInit);
-      // let urlNow = encodeURIComponent('http://192.168.0.99:63739/Manage/Access/LoginWithOpenId')
-
       let scope = "snsapi_base"; //静默授权 用户无感知
       let appid = "wx5e45aca8fcb270f1";
       let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${urlNow}&response_type=code&scope=${scope}&state=${state}#wechat_redirect`;
@@ -154,7 +150,6 @@ export default {
     }
   },
   created() {
-    document.title = "科研管理 - 主页";
     if (!localStorage.token) {
       let code = this.getUrlKey("code");
       if (code) {

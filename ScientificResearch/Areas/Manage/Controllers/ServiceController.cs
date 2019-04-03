@@ -11,6 +11,7 @@ using MyLib;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 using Microsoft.AspNetCore.Authorization;
+using System.Data.SqlClient;
 
 namespace ScientificResearch.Areas.Manage.Controllers
 {
@@ -48,6 +49,41 @@ namespace ScientificResearch.Areas.Manage.Controllers
         /// <returns></returns>
         [HttpGet]
         async public Task<object> 获取医院列表() => await Db_Manage.GetListSpAsync<医院>();
+
+        [HttpPost]
+        async public Task<object> ExecuteSqlForEachUserDb([FromBody]string strSql)
+        {
+            var list = await Db_Manage.GetListSpAsync<医院>();
+
+            var errList = new List<string>();
+
+            foreach (var item in list)
+            {
+                if (item.名称 != "测试李零零一") continue;
+
+                var sqlcon = new SqlConnection(DbConnectionStringLack.Replace("{0}", item.名称));
+
+                var arrSql = strSql.Split("GO");
+                var listSql = arrSql.ToList();
+
+                //await sqlcon.ExecuteAsync(strSql);
+                foreach (var itemSql in listSql)
+                {
+                    try
+                    {
+                        //await sqlcon.ExecuteSpAsync<sp_Execsql>(new sp_Execsql() { sql = itemSql });
+                        await sqlcon.ExecuteAsync(itemSql);
+                    }
+                    catch (Exception e)
+                    {
+                        errList.Add($"{ item.名称}: { e.Message}");
+                    }
+                }
+
+            }
+
+            return errList;
+        }
 
         /// <summary>
         /// 获取可用的医院列表,使用这些医院时用,仅仅包括启用的医院;

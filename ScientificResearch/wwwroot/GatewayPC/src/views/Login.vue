@@ -4,7 +4,7 @@
             <div class="wrapper">
                 <div class="left">
                     <!--<img class="logo2" src="../assets/images/logo3.png" alt="数据库门户入口网站">-->
-                    <span>LOGO 数据库门户入口网站</span>
+                    <span>爱医生图书馆</span>
                 </div>
             </div>
         </div>
@@ -102,7 +102,8 @@
 
                 localStorage.setItem('myUserInfo', JSON.stringify(data));
                 localStorage.setItem('Authorization', JSON.stringify(data.token_type + ' ' + data.access_token));
-                localStorage.setItem('loginUrl',this.getHtmlDocName());
+                localStorage.setItem('gatewayUrl',window.location.href);
+                console.info(JSON.parse(localStorage.getItem('myUserInfo')));
                 if (this.checked) {
                     localStorage.setItem('myLoginInfo', JSON.stringify(this.account));
                 } else {

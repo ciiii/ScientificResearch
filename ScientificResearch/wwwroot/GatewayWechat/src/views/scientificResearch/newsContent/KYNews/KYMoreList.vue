@@ -26,9 +26,6 @@ export default {
       total: null
     };
   },
-  created() {
-    document.title = "科研新闻列表";
-  },
   mounted() {
     this.getPrimaryNews();
   },

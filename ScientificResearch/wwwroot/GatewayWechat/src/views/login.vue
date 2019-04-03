@@ -3,7 +3,7 @@
     <img src="@/assets/images/logo.png" alt="logo图片" class="img">
     <form action="/" onsubmit="return false">
       <div class="input">
-        <input type="text" placeholder="医院" v-model="DbKey" @click="hospital">
+        <input type="text" placeholder="医院" v-model="DbKey" @click="hospital" readonly>
         <input
           type="text"
           placeholder="工号"
@@ -44,7 +44,6 @@ export default {
     return {
       max: 20,
       min: 3,
-      code: null,
       工号: null,
       密码: null,
       DbKey: null,
@@ -52,15 +51,17 @@ export default {
       show: false
     };
   },
-  created() {
-    document.title = "登录";
-    this.code = this.getUrlKey("code");
-    if (!this.code) {
-      // console.log(this.code,"code")
-       this.getCodeApi("123");
-    } 
+  mounted() {
+    // 获取医院列表
+    this.$http
+      .getHospitalList()
+      .then(res => {
+        this.columns = res.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
   },
-  mounted() {},
   methods: {
     getUrlKey(name) {
       //获取url 参数
@@ -72,32 +73,16 @@ export default {
         ) || null
       );
     },
-    getCodeApi(state) {
-      //获取code
-      // 授权后重定向的回调链接地址
-      let urlNow = encodeURIComponent(window.location.href);
-      let scope = "snsapi_base"; //snsapi_userinfo   //静默授权 用户无感知
-      let appid = "wx5e45aca8fcb270f1";
-      let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${urlNow}&response_type=code&scope=${scope}&state=${state}#wechat_redirect`;
-      window.location.replace(url);
-    },
-    // getCodeApi(urlInit, state) {
-    //   console.log(urlInit, state,"wwee")
+    // getCodeApi(toURL, state) {
     //   //获取code
     //   // 授权后重定向的回调链接地址
-
-    //   // let urlNow = encodeURIComponent(window.location.href);
-    //   let urlNow = encodeURIComponent(urlInit);
-    //   // let urlNow = encodeURIComponent('http://192.168.0.99:63739/Manage/Access/BindOpenId')
-
-    //   let scope = "snsapi_base"; //静默授权 用户无感知
+    //   let urlNow = encodeURIComponent(toURL);
+    //   let scope = "snsapi_base"; //snsapi_userinfo   //静默授权 用户无感知
     //   let appid = "wx5e45aca8fcb270f1";
-    //   let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${urlNow}&response_type=code&scope=${scope}&state=${state}#wechat_redirect`;
-    //   // console.log(url,"123")
-    //   // window.location.replace(url);
-    //   return url;
+    //   let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${urlNow}&response_type=code&scope=${scope}&state=${state}&connect_redirect=1#wechat_redirect`;
+    //   localStorage.flag = false;
+    //   window.location.replace(url);
     // },
-
     // 登录 防抖
     bind: _debounce(function() {
       if (this.工号 == null || this.密码 == null) {
@@ -113,43 +98,38 @@ export default {
         this.$notify("密码长度不能少于【3】位");
         return;
       } else {
-        // this.code = this.getUrlKey("code");
-        if (this.code) {
+        var code = this.getUrlKey("code");
+        console.log(code, "111111");
+        if (code) {
           this.$http
-            .BindOpenId(this.code, this.工号, this.密码, this.DbKey)
+            .BindOpenId(code, this.工号, this.密码, this.DbKey)
             .then(res => {
-              console.log(res, "res000");
+              console.log(res, "2323");
               // 登录成功
-              if (res.data) {
+              if (res !== undefined) {
+                console.log(res,"33333333")
                 // 储存 token
-                console.log(res.data, "data....");
                 localStorage.personnel = JSON.stringify(res.data.人员);
                 localStorage.token = `${res.data.token_type} ${
                   res.data.access_token
                 }`;
                 console.log(localStorage.token, "localStorage.token``````````");
                 this.$router.push("/");
+                localStorage.flag = false;
               } else {
-                this.$notify(res.error);
+                console.log("44444444")
+                this.$notify('登录信息错误！');
               }
             });
         } else {
-          this.$notify("登录失败，请绑定！");
+          this.$notify("登录信息有误！");
         }
       }
     }, 500),
 
-    // 获取医院列表
+    // 显示医院列表
     hospital() {
-      this.$http
-        .getHospitalList()
-        .then(res => {
-          this.columns = res.data;
-          this.show = true;
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      this.show = true;
     },
     onConfirm(value, index) {
       this.DbKey = value;
@@ -163,7 +143,8 @@ export default {
 </script>
 <style scoped>
 .box {
-  padding-bottom: 50px;
+  height: 100vh;
+  /* padding-bottom: 50px; */
   background-color: #fff;
 }
 .img {

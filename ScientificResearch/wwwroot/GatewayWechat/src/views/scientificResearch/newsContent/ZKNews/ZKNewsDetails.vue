@@ -14,9 +14,6 @@ export default {
       active: 1
     };
   },
-  created() {
-    document.title = "总库新闻详情";
-  },
   mounted() {
     this.getDetails();
   },
@@ -49,5 +46,8 @@ export default {
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 5px;
+}
+/deep/ p{
+  text-align: left;
 }
 </style>

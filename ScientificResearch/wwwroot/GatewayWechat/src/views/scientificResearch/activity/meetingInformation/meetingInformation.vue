@@ -165,9 +165,6 @@ export default {
       flag1: true
     };
   },
-  created() {
-    document.title = "参会信息";
-  },
   mounted() {
     this.getLecture();
   },

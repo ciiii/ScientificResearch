@@ -1,5 +1,6 @@
 import {get, post } from '../axios/index'
 
+
 // 接口方法
 const http = {
     /**
@@ -36,11 +37,8 @@ const http = {
     /**
      * 获取待办流程
      */
-    getBacklogProcess(index, size) {
-        return get("/Office/获取待办流程", {
-            index,
-            size
-        })
+    getBacklogProcess(para) {
+        return get("/Office/获取待办流程", para)
     },
     /**
      * 分页获取总库新闻

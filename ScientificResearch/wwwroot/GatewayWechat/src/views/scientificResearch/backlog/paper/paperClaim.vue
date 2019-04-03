@@ -42,9 +42,6 @@ export default {
       finished: false
     };
   },
-  created() {
-    document.title = "导入认领";
-  },
   mounted() {
     this.getPaper();
   },
@@ -113,7 +110,7 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    padding: 8px 15px;
+    padding: 10px 15px;
     border: 1px dashed #ccc;
     background-color: #fff;
     box-shadow: 6px 6px 6px #ccc;
@@ -130,9 +127,9 @@ export default {
         }
       }
       li:nth-child(1) {
+        margin: 10px 0;
         font-weight: 800;
         color: #1296db;
-        margin: 10px 0;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;

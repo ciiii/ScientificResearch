@@ -20,54 +20,54 @@
         <h3>基本信息</h3>
         <ul class="servicel">
           <li class="title">
-            <span>通知名称：</span>
+            <span>通知名称</span>
             <p>{{this.detailslList.通知名称}}</p>
           </li>
           <li>
-            <span>通知类型：</span>
+            <span>通知类型</span>
             <span>{{this.detailslList.通知类型}}</span>
           </li>
           <li>
-            <span>发布人：</span>
+            <span>发布人</span>
             <span>{{this.detailslList.发送人姓名}}</span>
           </li>
           <li>
-            <span>部门：</span>
+            <span>部门</span>
             <span>{{this.detailslList.发送人部门名称}}</span>
           </li>
           <li>
-            <span>接收人数：</span>
+            <span>接收人数</span>
             <span>{{this.detailslList.接收人数}}</span>
           </li>
           <li>
-            <span>已接收人数：</span>
+            <span>已接收人数</span>
             <span>{{this.detailslList.已接收人数}}</span>
           </li>
           <li>
-            <span>是否必读：</span>
+            <span>是否必读</span>
             <span>{{conversionState(this.detailslList.是否必读)}}</span>
           </li>
           <li>
-            <span>发布时间：</span>
+            <span>发布时间</span>
             <span>{{startTime(this.detailslList.建立时间)}}</span>
           </li>
           <li>
-            <span>关闭时间：</span>
+            <span>关闭时间</span>
             <span>{{startTime(this.detailslList.关闭时间)}}</span>
           </li>
           <li>
-            <span>状态：</span>
+            <span>状态</span>
             <span>{{conversionStateB(this.detailslList.是否启用)}}</span>
           </li>
         </ul>
         <h3>接受条件</h3>
         <ul class="servicel" v-for="(item,key) in relatedProjects" :key="key">
           <li>
-            <span>接收者类型：</span>
+            <span>接收者类型</span>
             <span>{{item.接收者类型名称}}</span>
           </li>
           <li>
-            <span>接收者：</span>
+            <span>接收者</span>
             <span>{{item.接收者名称}}</span>
           </li>
         </ul>
@@ -86,9 +86,6 @@ export default {
       detailslList: [],
       relatedProjects: []
     };
-  },
-  created() {
-    document.title = "科研新闻详情";
   },
   mounted() {
     this.goDetails();
@@ -155,6 +152,7 @@ export default {
         width: 78%;
         color: #5a5a5a;
         margin: 0;
+        text-align: right;
       }
       span:nth-child(1) {
         color: #888;

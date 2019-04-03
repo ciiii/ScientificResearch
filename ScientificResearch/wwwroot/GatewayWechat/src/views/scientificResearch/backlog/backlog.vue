@@ -53,9 +53,6 @@ export default {
   data() {
     return {};
   },
-  created() {
-    document.title = "科研管理 - 成果";
-  }
 };
 </script>
 <style lang="less" scoped>

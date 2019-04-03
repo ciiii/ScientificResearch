@@ -25,9 +25,6 @@ export default {
       total: null
     };
   },
-  created() {
-    document.title = "总库新闻列表";
-  },
   mounted() {
     this.getPrimaryNews();
   },

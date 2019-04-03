@@ -9,6 +9,7 @@ $(function () {
             });
         }
     });
+
 });
 
 //提示组件
@@ -945,18 +946,18 @@ function isOverdue() {
         var mUserInfo = JSON.parse(localStorage.info);
         parentRefresh(mUserInfo);
     }
-
 }
 
 //父级页面刷新
 function parentRefresh(mUserInfo) {
-    if (sessionStorage.mUserId) {
+    if (sessionStorage.mUserId && sessionStorage.mUserId != 'undefined') {
         var userId = JSON.parse(sessionStorage.mUserId);
         if (userId != mUserInfo.data.人员.编号) {
             parent.location.reload();
             sessionStorage.mUserId = mUserInfo.data.人员.编号;
         }
     } else {
+        console.info(4444)
         parent.location.href = mUserInfo.url;
     }
 }
@@ -964,10 +965,8 @@ function parentRefresh(mUserInfo) {
 //判断浏览器是否支持FormData属性
 function isFormData(funFormData, funAjaxFileUpload) {
     if (new FormData()) {
-        console.info(111);
         funFormData(data);
     } else {
-        console.info(222);
         funAjaxFileUpload();
     }
 }
@@ -977,3 +976,5 @@ function setHeader(xhr) {
     xhr.setRequestHeader('Authorization', Authorization);
 
 }
+
+

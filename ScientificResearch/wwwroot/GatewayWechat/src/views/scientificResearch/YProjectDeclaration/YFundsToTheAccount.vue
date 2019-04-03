@@ -154,9 +154,6 @@ export default {
       flag: "待审核"
     };
   },
-  created() {
-    document.title = "纵向项目经费到账";
-  },
   mounted() {
     this.goDetails();
   },

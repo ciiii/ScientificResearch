@@ -3,7 +3,10 @@
     <div class="box">
       <div class="content" @click="toAccountChange">
         <img src="@/assets/images/6b9321ffgw.jpg" alt="头像">
-        <p>{{this.list.姓名}} -<small>（{{this.list.工号}}）</small></p>
+        <p>
+          {{this.list.姓名}} -
+          <small>（{{this.list.工号}}）</small>
+        </p>
         <span>{{this.list.部门名称}}</span>
       </div>
       <div class="account">
@@ -17,6 +20,9 @@
         <van-cell title="我的项目数" icon="apps-o" value="10"/>
         <van-cell title="我的文章数" icon="notes-o" value="10"/>
       </div>
+      <div class="account" @click="outLogin">
+        <van-cell title="退出登录" icon="close"/>
+      </div>
     </div>
     <navFooter/>
   </div>
@@ -29,11 +35,8 @@ export default {
   },
   data() {
     return {
-      list:[],
+      list: []
     };
-  },
-  created() {
-    document.title = "科研管理 - 个人中心";
   },
   mounted() {
     this.list = JSON.parse(localStorage.getItem("personnel"));
@@ -41,6 +44,19 @@ export default {
   methods: {
     toAccountChange() {
       this.$router.push("/accountChange");
+    },
+    outLogin() {
+      this.$dialog
+        .confirm({
+          message: "确认退出吗？"
+        })
+        .then(() => {
+          localStorage.clear();
+          this.$router.push("/");
+        })
+        .catch(() => {
+          // on cancel
+        });
     }
   }
 };
@@ -63,7 +79,7 @@ export default {
       font-size: 14px;
       color: #fff;
     }
-    span{
+    span {
       font-size: 14px;
       color: #f5f3fb;
     }

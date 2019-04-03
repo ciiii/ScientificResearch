@@ -25,14 +25,14 @@ namespace ScientificResearch.Controllers
     //[Produces("application/json")]
     //[Consumes("application/json", "multipart/form-data")]//此处为新增
     //[Route("[controller]/[action]")]
-    [ApiExplorerSettings(GroupName ="test")]
+    [ApiExplorerSettings(GroupName = "test")]
     [AllowAnonymous]
     public class TestController : ScientificResearchBaseController
     {
         [HttpGet]
         public object GetJObejctString()
         {
-            JObject staff = JObject.Parse(JsonConvert.SerializeObject(new { age = 1,name="liyang" }));
+            JObject staff = JObject.Parse(JsonConvert.SerializeObject(new { age = 1, name = "liyang" }));
 
             var x = staff["age"];
             var y = x.ToString();
@@ -253,7 +253,6 @@ namespace ScientificResearch.Controllers
         //   return ("a", "b", "c");
         //}
 
-
         [HttpGet]
         async public Task<object> getBaidu()
         {
@@ -269,6 +268,81 @@ namespace ScientificResearch.Controllers
             return Content(responseString, "text/html");
         }
 
+        [HttpGet]
+        public object 返回纯字符串(string echostr)
+        {
+            return Content(echostr); //返回随机字符串则表示验证通过
+        }
 
+        /// <summary>
+        /// Task.FromResult
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet]
+        async public Task<object> Index() => await Task.FromResult<string>("OK");
+
+        /// <summary>
+        /// 试试swagger里面上传文件
+        /// </summary>
+        /// <param name="files"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpPost]
+        public object testUpload(Microsoft.AspNetCore.Http.IFormFileCollection files)
+        {
+            return files;
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        /// <summary>
+        /// 根据code取openid,接着取该openid绑定的用户信息;
+        /// OAuthScope.snsapi_base方式回调
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="state"></param>
+        /// <param name="returnUrl">用户最初尝试进入的页面</param>
+        /// <returns></returns>
+        async public Task<object> BaseCallback(string code, string state, string returnUrl)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(code))
+                {
+                    HttpContext.Response.StatusCode = 401;
+                    return Content("您拒绝了授权！");
+
+                }
+
+                var ApiMpHost = "https://api.weixin.qq.com";
+                var appId = "wx5e45aca8fcb270f1";
+                var appSecret = "581523b77f235c216243008e5742b1fc";
+                var grantType = "authorization_code";
+
+                //通过，用code换取access_token
+
+                var url = string.Format($"{ApiMpHost}/sns/oauth2/access_token?appid={appId}&secret={appSecret}&code={code}&grant_type={grantType}");
+
+                var result = await MyLib.MyHttpLib.MyGetAsync<OAuthAccessTokenResult>(url);
+
+                if (result.errcode != 0)
+                {
+                    return Content("错误：" + result.errmsg);
+                }
+
+                return result.openid;
+
+            }
+            catch (Exception ex)
+            {
+                HttpContext.Response.StatusCode = 401;
+                return Content("发生错误：" + ex.ToString());
+            }
+        }
+
+        [HttpPost]
+        async public Task<object> 测试merge人员OpenId([FromBody]人员OpenId model) =>
+            await Db.Merge(model);
     }
 }

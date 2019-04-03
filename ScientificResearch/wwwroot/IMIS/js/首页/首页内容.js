@@ -1,9 +1,5 @@
 $(function () {
     window.vm = null;
-    isOverdue();
-    window.mUserInfo = JSON.parse(localStorage.info).data;
-    window.mUserId = mUserInfo.人员.编号;
-    console.info(mUserInfo);
     avalon.ready(function () {
         window.vm = avalon.define({
             $id: 'root',
@@ -14,12 +10,12 @@ $(function () {
             },
             ScientificResearch: [],
             total: '',
-            userInfo: mUserInfo,
+            userInfo: '',
             notice: [],
             reqNotice: {
                 Index: 1,
                 Size: 5,
-                人员编号: mUserId,
+                人员编号: '',
                 OrderType: false
             },
             downFile: [],
@@ -86,10 +82,24 @@ $(function () {
             ],
             newNavList: [],
             onload: function () {
-                console.info('onload')
-                for (var i = 0; i < vm.navList.length; i++) {
-                    vm.match(mUserInfo.权限, vm.newNavList, vm.navList[i]);
-                }
+                getMenuPermissions(function (success) {
+                    if (success) {
+                        var info = JSON.parse(localStorage.info);
+                        window.mUserInfo = info.data;
+                        window.mUserId = info.data.人员.编号;
+                        vm.userInfo = mUserInfo;
+                        vm.reqNotice.人员编号 = mUserId;
+                        for (var i = 0; i < vm.navList.length; i++) {
+                            vm.match(mUserInfo.权限, vm.newNavList, vm.navList[i]);
+                        }
+                        vm.getUserNoticeList();
+                        vm.getEnableDownloadList();
+                        vm.query();
+                        vm.WorkFlowTotalList();
+                    } else {
+                        console.info('获取菜单权限失败！')
+                    }
+                });
             },
             match: function (arrA, arrB, obj) {
                 for (var j = 0; j < arrA.length; j++) {
@@ -104,6 +114,10 @@ $(function () {
                         vm.match(arr, arrB, obj);
                     }
                 }
+            }, getHtmlDocName: function (url) {
+                var urlArr = url.split('?');
+                var k = urlArr[0], arr = k.split('/');
+                return arr[arr.length - 1];
             },
             query: function () {
                 ScientificResearch.getScientificResearchUntreated('get', vm.req.$model, function getScientificResearchUntreatedListener(success, obj, strErro) {
@@ -332,10 +346,7 @@ $(function () {
             },
         });
         vm.onload();
-        vm.getUserNoticeList();
-        vm.getEnableDownloadList();
-        vm.query();
-        vm.WorkFlowTotalList();
+
         avalon.scan(document.body);
     });
     $('.main').mCustomScrollbar({

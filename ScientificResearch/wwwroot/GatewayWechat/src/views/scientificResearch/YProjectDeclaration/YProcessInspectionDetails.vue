@@ -290,9 +290,6 @@ export default {
       flag: "待审核"
     };
   },
-  created() {
-    document.title = "纵向项目中检详情";
-  },
   mounted() {
     this.goDetails();
   },

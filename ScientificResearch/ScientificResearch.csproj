@@ -10,6 +10,10 @@
     <NoWarn>1701;1702;1705;1591;1572;1573;1587;1711;</NoWarn>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>ScientificResearchApi.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="log4net\**" />
     <Compile Remove="wwwroot\GatewayPC\public\**" />
@@ -73,6 +77,7 @@
     <Folder Include="Areas\Manage\Views\" />
     <Folder Include="Models\Table\" />
     <Folder Include="Models\View\" />
+    <Folder Include="wwwroot\GatewayWechat\dist\pdf\build\" />
     <Folder Include="wwwroot\upload\下载中心\" />
     <Folder Include="wwwroot\upload\办公\通知公告图片\" />
     <Folder Include="wwwroot\upload\办公\通知公告文件\" />

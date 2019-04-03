@@ -197,9 +197,6 @@ export default {
       active: 0
     };
   },
-  created() {
-    document.title = "获奖详情";
-  },
   mounted() {
     this.goDetails();
   },

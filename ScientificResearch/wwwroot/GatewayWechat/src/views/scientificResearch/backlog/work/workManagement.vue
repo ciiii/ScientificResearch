@@ -62,9 +62,6 @@ export default {
       message: ""
     };
   },
-  created() {
-    document.title = "著作管理";
-  },
   mounted() {
     this.getPaper();
   },

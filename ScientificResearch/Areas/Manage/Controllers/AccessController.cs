@@ -20,6 +20,25 @@ namespace ScientificResearch.Areas.Manage.Controllers
     [AllowAnonymous]
     public class AccessController : ManageBaseController
     {
+        //[HttpGet]
+        //public object Get(string echostr)
+        //{
+        //    return Content( echostr); //返回随机字符串则表示验证通过
+        //}
+
+        //[HttpGet]
+        //async public Task<string> BaseCallback(string code, string state, string returnUrl)
+        //{
+        //    if (string.IsNullOrEmpty(code))
+        //    {
+        //        throw new Exception("没有code,用户拒绝了授权");
+        //    }
+        //    else
+        //    {
+        //        return code;
+        //    }
+        //}
+
         /// <summary>
         /// 根据code取openid,接着取该openid绑定的用户信息;
         /// OAuthScope.snsapi_base方式回调
@@ -37,11 +56,10 @@ namespace ScientificResearch.Areas.Manage.Controllers
                 throw new Exception("没有code,用户拒绝了授权");
             }
 
-            //TODO:这几个可以写到配置里面去;
-            var ApiMpHost = "https://api.weixin.qq.com";
-            var appId = "wx5e45aca8fcb270f1";
-            var appSecret = "581523b77f235c216243008e5742b1fc";
-            var grantType = "authorization_code";
+            var ApiMpHost = Config.GetValue<string>("WechatSetting:ApiMpHost");
+            var appId = Config.GetValue<string>("WechatSetting:appId"); 
+            var appSecret = Config.GetValue<string>("WechatSetting:appSecret");
+            var grantType = Config.GetValue<string>("WechatSetting:grantType");
 
             //通过，用code换取access_token
 

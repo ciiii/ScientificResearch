@@ -17,14 +17,14 @@ export default new Router({
             path: '/',
             name: 'index',
             component: Index,
-            meta: {title: '首页'},
+            meta: {title: '入口首页'},
             redirect: 'home',
             children: [
                 {
                     path: '/home',
                     name: 'home',
                     component: Home,
-                    meta: {title: '首页'},
+                    meta: {title: '入口首页'},
                 },
                 {
                     path: '/service',
@@ -36,7 +36,7 @@ export default new Router({
                     path: '/news',
                     name: 'news',
                     component: News,
-                    meta: {title: '新闻'},
+                    meta: {title: '爱医生新闻'},
                 },
                 {
                     path: '/IMISNews',

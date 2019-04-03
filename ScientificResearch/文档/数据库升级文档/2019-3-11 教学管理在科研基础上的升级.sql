@@ -3015,6 +3015,18 @@ CREATE TABLE [dbo].[Id](
 ) ON [PRIMARY]
 
 GO
+DECLARE @i INT = 0;
+WHILE (@i<=10000)
+BEGIN
+INSERT dbo.Id
+        ( Id )
+VALUES  ( @i  -- Id - int
+          )
+SELECT @i+=1;
+END
+
+GO
+
 
 --
 
@@ -3186,27 +3198,11 @@ ALTER TABLE [dbo].[教学管床病人] ADD  CONSTRAINT [DF_教学管床病人_是否全程陪护] 
 GO
 --
 
-
-ALTER TABLE [dbo].[教学轮转任务] DROP CONSTRAINT [DF_教学轮转任务_数量要求]
-GO
-
-ALTER TABLE [dbo].[教学轮转任务] DROP CONSTRAINT [DF_教学轮转任务_最低评分要求]
-GO
-
-ALTER TABLE [dbo].[教学轮转任务] DROP CONSTRAINT [DF_教学轮转任务_是否医技]
-GO
-
-ALTER TABLE [dbo].[教学轮转任务] DROP CONSTRAINT [DF_教学轮转任务_是否病房]
-GO
-
-ALTER TABLE [dbo].[教学轮转任务] DROP CONSTRAINT [DF_教学轮转任务_是否门诊]
-GO
-
-/****** Object:  Table [dbo].[教学轮转任务]    Script Date: 2019/3/20 16:39:53 ******/
+/****** Object:  Table [dbo].[教学轮转任务]    Script Date: 2019/4/2 14:45:12 ******/
 DROP TABLE [dbo].[教学轮转任务]
 GO
 
-/****** Object:  Table [dbo].[教学轮转任务]    Script Date: 2019/3/20 16:39:53 ******/
+/****** Object:  Table [dbo].[教学轮转任务]    Script Date: 2019/4/2 14:45:12 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -3214,7 +3210,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [dbo].[教学轮转任务](
-	[编号] [INT] NOT NULL,
+	[编号] [INT] IDENTITY(1,1) NOT NULL,
 	[教学轮转编号] [INT] NOT NULL,
 	[项目名称] [NVARCHAR](50) NOT NULL,
 	[任务类型编号] [INT] NOT NULL,
@@ -3223,7 +3219,11 @@ CREATE TABLE [dbo].[教学轮转任务](
 	[是否医技] [BIT] NOT NULL,
 	[最低评分要求] [INT] NOT NULL,
 	[数量要求] [INT] NOT NULL,
-	[备注] [NVARCHAR](500) NULL
+	[备注] [NVARCHAR](500) NULL,
+ CONSTRAINT [PK_教学轮转任务] PRIMARY KEY CLUSTERED 
+(
+	[编号] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
@@ -3242,6 +3242,7 @@ GO
 
 ALTER TABLE [dbo].[教学轮转任务] ADD  CONSTRAINT [DF_教学轮转任务_数量要求]  DEFAULT ((0)) FOR [数量要求]
 GO
+
 --
 
 ALTER TABLE [dbo].[教学病例] DROP CONSTRAINT [DF_教学病例_是否通过审核]

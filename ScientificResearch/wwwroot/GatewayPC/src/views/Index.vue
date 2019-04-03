@@ -7,7 +7,7 @@
                     <div class="left">
                         <!--<img class="logo2" src="../assets/images/logo3.png" alt="数据库门户入口网站">-->
                         <router-link to="/">
-                            <span>LOGO 门户入口网站</span>
+                            <span>爱医生图书馆</span>
                         </router-link>
                     </div>
                     <div class="right">

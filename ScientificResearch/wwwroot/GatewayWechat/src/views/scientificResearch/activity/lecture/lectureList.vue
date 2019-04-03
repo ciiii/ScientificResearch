@@ -162,9 +162,6 @@ export default {
       flag1: true
     };
   },
-  created() {
-    document.title = "主办讲座列表";
-  },
   mounted() {
     this.getLecture();
   },

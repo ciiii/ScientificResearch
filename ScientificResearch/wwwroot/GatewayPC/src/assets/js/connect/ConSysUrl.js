@@ -1,11 +1,9 @@
-const HTTP_URL_HOST = 'http://192.168.0.99:63739';
+const HTTP_URL_HOST = '';
 
 const URL_USER = {
 
     //用户登录
     POST_LOGIN:'/Manage/Access/Login',
-
-
 }
 const URL_NEWS = {
 

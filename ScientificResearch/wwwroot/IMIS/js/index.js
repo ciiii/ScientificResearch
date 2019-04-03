@@ -2,28 +2,17 @@ $(function () {
     var ParentIndex;
     var TwoIndex;
     window.vm = null;
-    window.loginType = false;
-    if (localStorage.Authorization && localStorage.Authorization != 'undefined') {
-        window.loginType = true;
-        getMenuPermissions();
-    } else {
-        var authorization = JSON.parse(sessionStorage.Authorization);
-        localStorage.setItem('Authorization', JSON.stringify(authorization));
-    }
-    window.mUserInfo = JSON.parse(localStorage.info).data;
-    window.mUserId = mUserInfo.人员.编号;
     avalon.config({debug: false});
-
     avalon.ready(function () {
         window.vm = avalon.define({
             $id: 'root',
             userInfo: '',
-            jurisdiction: '',
+            jurisdiction: [],
             loginUrl: '',
             newUrl: '',
             hospital: '',
             req: {
-                人员编号: mUserId,
+                人员编号: '',
                 Index: 1,
                 Size: 1,
                 OrderType: false,
@@ -32,16 +21,22 @@ $(function () {
             },
             total: '',
             onload: function () {
-                if (localStorage.getItem('info')) {
-                    vm.hospital = JSON.parse(localStorage.info).dbKey;
-                    window.mUserInfo = JSON.parse(localStorage.info).data;
-                    var loginUrl = JSON.parse(localStorage.info).url;
-                    vm.loginUrl = loginUrl;
-                    vm.newUrl = loginUrl.slice(7, 11);
-                    vm.userInfo = mUserInfo.人员;
-                    vm.jurisdiction = mUserInfo.权限;
-                    vm.getUserNoticeMustReadList();
-                }
+                getMenuPermissions(function (success) {
+                    if (success) {
+                        var info = JSON.parse(localStorage.info);
+                        window.mUserInfo = info.data;
+                        window.mUserId = info.data.人员.编号;
+                        vm.hospital = info.dbKey;
+                        vm.loginUrl = info.url;
+                        vm.newUrl = info.url.slice(7, 11);
+                        vm.jurisdiction = info.data.权限;
+                        vm.userInfo = info.data.人员;
+                        vm.req.人员编号 = mUserId;
+                        vm.getUserNoticeMustReadList();
+                    } else {
+                        console.info('获取菜单权限失败！')
+                    }
+                });
             },
             ClickLiParent: function (index, el) {
                 ParentIndex = index + 1;
@@ -127,6 +122,8 @@ $(function () {
                 Notice.getUserNoticeList('get', vm.req.$model, function getUserNoticeListListener(success, obj, strErro) {
                     if (success) {
                         vm.total = obj.total;
+                        console.info('obj');
+                        console.info(obj);
                         if (obj.total && obj.total > 0) {
                             $('.modal-choice').modal('show');
                             vm.changeUrlNew('首页/查看通知.html');
@@ -162,6 +159,7 @@ $(function () {
                 localStorage.removeItem('info');
                 sessionStorage.removeItem('userInfo');
                 sessionStorage.removeItem('Authorization');
+                sessionStorage.removeItem('myUserInfo');
                 location.href = vm.getUrl(vm.loginUrl);
             }
         });
@@ -180,6 +178,7 @@ $(function () {
         console.info(vm.loginUrl);
         avalon.scan(document.body);
     });
+
 
     //顶部菜单
     $('.sidebar-toggle').on('click', function () {
@@ -216,30 +215,6 @@ $(function () {
             sessionStorage.removeItem('userInfo');
             location.href = vm.getUrl(vm.loginUrl);
         }
-    }
-
-    function getMenuPermissions() {
-        Menu.getMenuPermissions('get', '', function getMenuPermissionsListener(success, obj, strErro) {
-            if (success) {
-                var curTime = new Date().getTime();
-                var url = localStorage.getItem('loginUrl');
-                localStorage.setItem('info', JSON.stringify({
-                    data: {
-                        人员: JSON.parse(localStorage.myUserInfo).人员,
-                        权限: obj
-                    },
-                    time: curTime,
-                    url: '/' + url + '.html',
-                    dbKey: JSON.parse(localStorage.myUserInfo).人员.DbKey
-                }));
-                sessionStorage.mUserId = obj.人员.编号;
-                console.info(localStorage.getItem('info'));
-                console.info('3333333-------');
-            } else {
-                console.info('获取菜单权限失败！');
-                console.info(strErro);
-            }
-        });
     }
 
     $('.bs-tooltip').tooltip();

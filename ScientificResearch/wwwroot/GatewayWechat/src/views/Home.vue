@@ -1,11 +1,15 @@
 <template>
   <div>
-    <search/>
+    <!-- <search/> -->
+    <div class="nav">
+      <img src="@/assets/images/iocn/homeLogo.jpg" alt="科研logo">
+      <span @click="toLogin" v-if="!personnel">登 录</span>
+    </div>
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
       <div class="section">
         <swipe/>
         <div class="listBox">
-          <iocnList @getKYNews="getKYNews"/>
+          <iocnList @getKYNews="getKYNews" @getPersonnel="getPersonnel"/>
         </div>
         <div class="A_News_box">
           <div class="newsTitle">
@@ -55,14 +59,14 @@
   </div>
 </template>
 <script>
-import search from "@/components/index/search";
+// import search from "@/components/index/search";
 import swipe from "@/components/index/swipe";
 import iocnList from "@/components/index/iocnList";
 import HomeFooter from "@/components/footer/homeFooter";
 export default {
   name: "home",
   components: {
-    search,
+    // search,
     swipe,
     iocnList,
     HomeFooter
@@ -75,16 +79,24 @@ export default {
       size: 3,
       total: 0,
       KYList: [],
-      isShow: false
+      isShow: false,
+      personnel: null
     };
-  },
-  created() {
-    document.title = "入口页面";
   },
   mounted() {
     this.getPrimaryNews();
   },
   methods: {
+    toLogin() {
+      if (this.personnel === null) {
+        console.log(this.personnel,"sssssssssddddd")
+        this.$router.push("/guidance");
+      }
+    },
+    getPersonnel(){
+      this.personnel = JSON.parse(localStorage.getItem("personnel"));
+      console.log(this.personnel,">>>>>")
+    },
     getPrimaryNews() {
       var para = {
         index: this.index,
@@ -95,19 +107,6 @@ export default {
         this.list = res.data.list;
         this.total = res.data.total;
       });
-      // var code = JSON.parse(localStorage.getItem("personnel"));
-      // if (code !== null) {
-      //   var code = JSON.parse(localStorage.getItem("personnel"));
-      //   var para = {
-      //     人员编号: code.编号,
-      //     index: this.index,
-      //     size: this.size
-      //   };
-      //   this.$http.getToViewNewsList(para).then(res => {
-      //     this.KYList = res.data.list;
-      //     this.isShow = true;
-      //   });
-      // }
     },
     getKYNews() {
       var code = JSON.parse(localStorage.getItem("personnel"));
@@ -117,6 +116,7 @@ export default {
         size: this.size
       };
       this.$http.getToViewNewsList(para).then(res => {
+        // console.log(res,"取科研新闻")
         this.KYList = res.data.list;
         this.isShow = true;
       });
@@ -166,6 +166,19 @@ export default {
 <style lang="less" scoped>
 @background-color: #f4f8fb;
 @ContentColor: #fff;
+.nav {
+  background-color: #fff;
+  img {
+    height: 50px;
+  }
+  span {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 16px;
+    color: #a3a3a3;
+  }
+}
 .section {
   background-color: @background-color;
 }

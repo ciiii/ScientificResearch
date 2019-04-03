@@ -8,7 +8,7 @@
                             <div class="item-header">
                                 <h5><i class="icon iconfont icon-yiyuan"></i> 医院列表</h5>
                                 <el-tooltip class="more item" effect="dark" content="更多" placement="top-start">
-                                    <router-link to="/service">
+                                    <router-link to="/hospital">
                                         <a href="javascript:;"><i class="icon iconfont icon-gengduo"></i></a>
                                     </router-link>
                                 </el-tooltip>

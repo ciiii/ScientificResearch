@@ -7,24 +7,20 @@
             </h4>
             <p class="name">{{item.authors}}</p>
         </div>
-        <div class="centent">
-            <p>{{details.abstracts}}</p>
-        </div>
+        <div class="centent"><p>{{details.abstracts}}</p></div>
         <div class="content-footer">
             <p v-if="introdution">【来源】：{{introdution[0]+introdution[1]}}</p>
             <p v-if="introdution">【被引】：{{introdution[2]}}</p>
             <p v-if="keyWord">【关键词】：{{keyWord}}</p>
-            <p v-if="item.tag" class="keyword">【标签】：<span v-for="el in item.tag" :key="el">{{el}}</span></p>
+            <p v-if="item.tag" class="keyword">
+                【标签】：<span v-for="el in item.tag" :key="el">{{el}}</span>
+            </p>
             <div class="btn-box" v-if="item.full">
-                <!-- <a href="javascript:;" @click="clickPreview" class="btn-preview">
-                     预览PDF
-                     <van-icon name="icon iconfont icon-browse"/>
-                 </a>-->
-                <a :href="downUrl" class="btn-preview">
+                <a href="javascript:;" class="btn-preview" @click="clickPreview">
                     预览PDF
                     <van-icon name="icon iconfont icon-browse"/>
                 </a>
-                <a :href="downUrl" id="btn-download" class="btn-download">
+                <a :href="downUrl" id="btn-download" class="btn-download" download="">
                     下载PDF
                     <van-icon name="icon iconfont icon-download"/>
                 </a>
@@ -34,7 +30,8 @@
 </template>
 
 <script>
-    import {HTTP_URL_HOST, URL_WAN_FANG_DOWNLOAD_FILE, URL_WAN_FANG} from "@/assets/js/gateway/connect/ConSysUrl";
+    import {URL_WAN_FANG, URL_DOWNLOAD_FILE} from "@/assets/js/gateway/connect/ConSysUrl";
+    import {UrlEncode} from "@/assets/js/gateway/Common";
     import {downloadFile} from "@/assets/js/gateway/FileSaver";
 
     export default {
@@ -58,7 +55,6 @@
             }
         },
         mounted() {
-            console.info(this.item);
             this.req.url = this.item.detailUrl;
             this.req.accountId = this.item.accountId;
             this.reqUrl.accountId = this.item.accountId;
@@ -73,30 +69,21 @@
                 let data = await this.$myHttp.myGet(URL_WAN_FANG.GET_ARTICLE_DETAILS, this.req);
                 this.reqUrl.url = data.downUrl;
                 if (data.downUrl) {
-                    this.downUrl = HTTP_URL_HOST + URL_WAN_FANG_DOWNLOAD_FILE + this.item.fileName;
+                    this.downUrl = URL_WAN_FANG.GET_DOWNURL_FILE + '?fileName=' + UrlEncode(data.fileName) + '&downUrl=' + UrlEncode(this.reqUrl.url) + '&accountId=' + this.item.accountId;
                 }
-                console.info('data.downUrl');
-                console.info(data.downUrl);
                 this.details = data;
-                // if (this.item.full) {
-                //     this.getWfDataDownUrl();
-                // }
             },
             clickPreview() {
-                sessionStorage.setItem('downUrl', JSON.stringify(this.downUrl));
-                console.info('this.downUrl44444');
-                console.info(this.downUrl);
-                window.open('../../../assets/libs/pdf/web/viewer.html?file=' + decodeURI(encodeURI(encodeURI(this.downUrl))))
-                // window.open('@/assets/libs/pdf/web/viewer.html?file=' + encodeURIComponent(this.downUrl))
+                window.open('pdf/web/viewer.html?file=' + encodeURIComponent(this.downUrl));
             },
-            clickDownload() {
-                this.getWfDataDownUrl();
-            },
-            getWfDataDownUrl: async function () {
+            getDownloadFile: async function () {
                 let url = await this.$myHttp.myGet(URL_WAN_FANG.GET_ARTICLE_DOWNURL, this.reqUrl);
                 if (url) {
-                    let newUrl = HTTP_URL_HOST + URL_WAN_FANG_DOWNLOAD_FILE + url;
-                    downloadFile(newUrl, this.item.fileName);
+
+                    let newUrl = URL_DOWNLOAD_FILE + '?fileName='+url;
+                    console.info(newUrl);
+                    window.location.href = newUrl;
+                    // downloadFile(newUrl, this.item.fileName);
                 }
             },
         }

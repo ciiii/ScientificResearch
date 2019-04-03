@@ -163,9 +163,6 @@ export default {
       finished: false
     };
   },
-  created() {
-    document.title = "参会经费报销管理";
-  },
   mounted() {
     this.getExpense();
   },

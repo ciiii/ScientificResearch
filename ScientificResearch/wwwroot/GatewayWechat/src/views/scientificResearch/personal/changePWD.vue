@@ -77,9 +77,6 @@ export default {
       stateC: false
     };
   },
-  created() {
-    document.title = "修改密码";
-  },
   computed: {
     disabled() {
       if (this.stateA && this.stateB && this.stateC === true) {

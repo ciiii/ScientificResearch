@@ -63,9 +63,6 @@ export default {
       message: ""
     };
   },
-  created() {
-    document.title = "专利管理";
-  },
   mounted() {
     this.getPaper();
   },

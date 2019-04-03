@@ -172,9 +172,6 @@ export default {
       flag1: "已完成-审核通过"
     };
   },
-  created() {
-    document.title = "参会反馈列表";
-  },
   mounted() {
     this.getFeedback();
   },
