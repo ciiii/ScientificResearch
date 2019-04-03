@@ -1709,31 +1709,30 @@ EXEC sys.sp_addextendedproperty @name = N'MS_Description',
 GO
 
 --
-
-/****** Object:  Table [dbo].[教学带教老师]    Script Date: 2019/3/14 14:56:20 ******/
-DROP TABLE [dbo].[教学带教老师];
+/****** Object:  Table [dbo].[教学带教老师]    Script Date: 2019/4/3 18:21:37 ******/
+DROP TABLE [dbo].[教学带教老师]
 GO
 
-/****** Object:  Table [dbo].[教学带教老师]    Script Date: 2019/3/14 14:56:20 ******/
-SET ANSI_NULLS ON;
+/****** Object:  Table [dbo].[教学带教老师]    Script Date: 2019/4/3 18:21:37 ******/
+SET ANSI_NULLS ON
 GO
 
-SET QUOTED_IDENTIFIER ON;
+SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE TABLE [dbo].[教学带教老师]
-    (
-      [编号] [INT] IDENTITY(1, 1)
-                 NOT NULL ,
-      [教学科室编号] [INT] NOT NULL ,
-      [带教老师编号] [INT] NOT NULL ,
-      [备注] [NVARCHAR](500) NULL ,
-      CONSTRAINT [PK_教学带教老师] PRIMARY KEY CLUSTERED ( [编号] ASC )
-        WITH ( PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,
-               IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON,
-               ALLOW_PAGE_LOCKS = ON ) ON [PRIMARY]
-    )
-ON  [PRIMARY];
+CREATE TABLE [dbo].[教学带教老师](
+	[教学科室编号] [INT] NOT NULL,
+	[带教老师编号] [INT] NOT NULL,
+	[备注] [NVARCHAR](500) NULL,
+ CONSTRAINT [PK_教学带教老师_1] PRIMARY KEY CLUSTERED 
+(
+	[教学科室编号] ASC,
+	[带教老师编号] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
 
 GO
 

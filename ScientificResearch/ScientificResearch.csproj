@@ -42,7 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\ValuesController.cs" />
+    <Compile Remove="Areas\ScientificResearch\Controllers\ValuesController.cs" />
   </ItemGroup>
 
   <ItemGroup>

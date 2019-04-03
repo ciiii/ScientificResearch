@@ -37,7 +37,7 @@ export default new Router({
         //     name: 'pdfViewer',
         //     component: () =>
         //         import ('./views/pdfViewer.vue'),
-        //     meta: { title: '文件预览' },
+        //     meta: { title: '文件预览'},
         // },
         {
             path: '/zhiWangSearch',

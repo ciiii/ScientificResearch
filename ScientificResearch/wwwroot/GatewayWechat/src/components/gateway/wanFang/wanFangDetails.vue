@@ -16,7 +16,7 @@
                 【标签】：<span v-for="el in item.tag" :key="el">{{el}}</span>
             </p>
             <div class="btn-box" v-if="item.full">
-                <a href="javascript:;" class="btn-preview" @click="clickPreview">
+                <a href="javascript:;" class="btn-preview" @click="getDownloadFile">
                     预览PDF
                     <van-icon name="icon iconfont icon-browse"/>
                 </a>
@@ -30,9 +30,8 @@
 </template>
 
 <script>
-    import {URL_WAN_FANG, URL_DOWNLOAD_FILE} from "@/assets/js/gateway/connect/ConSysUrl";
+    import {URL_WAN_FANG} from "@/assets/js/gateway/connect/ConSysUrl";
     import {UrlEncode} from "@/assets/js/gateway/Common";
-    import {downloadFile} from "@/assets/js/gateway/FileSaver";
 
     export default {
         name: "wanFangDetails",
@@ -45,6 +44,7 @@
                 },
                 reqUrl: {
                     url: '',
+                    fileName: '',
                     accountId: '',
                 },
                 details: {},
@@ -71,20 +71,19 @@
                 if (data.downUrl) {
                     this.downUrl = URL_WAN_FANG.GET_DOWNURL_FILE + '?fileName=' + UrlEncode(data.fileName) + '&downUrl=' + UrlEncode(this.reqUrl.url) + '&accountId=' + this.item.accountId;
                 }
+                this.reqUrl.fileName = data.fileName;
                 this.details = data;
             },
-            clickPreview() {
-                window.open('pdf/web/viewer.html?file=' + encodeURIComponent(this.downUrl));
-            },
             getDownloadFile: async function () {
-                let url = await this.$myHttp.myGet(URL_WAN_FANG.GET_ARTICLE_DOWNURL, this.reqUrl);
-                if (url) {
-
-                    let newUrl = URL_DOWNLOAD_FILE + '?fileName='+url;
-                    console.info(newUrl);
-                    window.location.href = newUrl;
-                    // downloadFile(newUrl, this.item.fileName);
+                let data = await this.$myHttp.myGet(URL_WAN_FANG.GET_ARTICLE_DOWNURL, this.reqUrl);
+                if (data && data != '') {
+                    this.clickPreview();
+                } else {
+                    this.$toast(data);
                 }
+            },
+            clickPreview() {
+                window.open('pdf2/web/viewer.html?file=' + encodeURIComponent(this.downUrl));
             },
         }
     }

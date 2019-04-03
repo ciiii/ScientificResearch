@@ -22,6 +22,9 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ScientificResearch.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     //[Produces("application/json")]
     //[Consumes("application/json", "multipart/form-data")]//此处为新增
     //[Route("[controller]/[action]")]
@@ -29,17 +32,26 @@ namespace ScientificResearch.Controllers
     [AllowAnonymous]
     public class TestController : ScientificResearchBaseController
     {
+        /// <summary>
+        /// JObject可以从一个json字串中生成,可以动态的往里面读写属性;
+        /// 可以转化为json字串,以及T的对象;
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public object GetJObejctString()
         {
             JObject staff = JObject.Parse(JsonConvert.SerializeObject(new { age = 1, name = "liyang" }));
 
             var x = staff["age"];
-            var y = x.ToString();
-            return staff;
+            staff["name"] = "liyang222222222";
+            return new { jobject = staff, json = staff.ToString(), obj = staff.ToObject<object>() };
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public object Get通过类名创建类实例()
         {
@@ -77,18 +89,31 @@ namespace ScientificResearch.Controllers
             public int 方法() { return 1; }
         }
 
+        /// <summary>
+        /// return int.TryParse("111", out int from) ? (int?)from : null;
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public object 测试下tryParse的写法()
         {
             return int.TryParse("111", out int from) ? (int?)from : null;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public object 测试下csharp的可列举数据处理()
         {
             return Enumerable.Range(0, 10).Select(i => new { a = i, b = i + 100 });
         }
 
+        /// <summary>
+        /// 重要!!!
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public object 测试表驱动法(int id)
         {
@@ -121,6 +146,10 @@ namespace ScientificResearch.Controllers
             }
         }
 
+        /// <summary>
+        /// config.get 和config.getvalue的区别
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public object 获取自定义的全局配置数据()
         {
@@ -134,12 +163,16 @@ namespace ScientificResearch.Controllers
             return x;
         }
 
-        public class Product
+        class Product
         {
             public string Name { get; set; }
             public IEnumerable<int> Children { get; set; }
         }
 
+        /// <summary>
+        /// 感觉还米有jobject好用;
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public object Tesetdynamic()
         {
@@ -159,6 +192,11 @@ namespace ScientificResearch.Controllers
             return new { exProd, exProd2 = (IDictionary<string, object>)exProd, ContainProperty = ((IDictionary<string, object>)exProd).ContainsKey("Name") };
         }
 
+        /// <summary>
+        /// x?.字段的写法
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
         [HttpGet]
         public object TestPoint(MyClass x)
         {
@@ -166,6 +204,10 @@ namespace ScientificResearch.Controllers
             return new { x, x?.字段 };
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public object 测试endnote的导入()
         {
@@ -235,6 +277,10 @@ namespace ScientificResearch.Controllers
             return new { x = dt1, y = listOf论文.ToDataTable<论文导入>() };
         }
 
+        /// <summary>
+        /// 也是个奇葩写法.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public object 测试元组()
         {
@@ -253,8 +299,12 @@ namespace ScientificResearch.Controllers
         //   return ("a", "b", "c");
         //}
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        async public Task<object> getBaidu()
+        async public Task<object> 测试获取整个页面的html()
         {
             var httpClient = new HttpClient();
 
@@ -268,10 +318,17 @@ namespace ScientificResearch.Controllers
             return Content(responseString, "text/html");
         }
 
+        /// <summary>
+        /// 还可以加content-type
+        /// </summary>
+        /// <param name="echostr"></param>
+        /// <returns></returns>
         [HttpGet]
         public object 返回纯字符串(string echostr)
         {
             return Content(echostr); //返回随机字符串则表示验证通过
+            //还可以加content-type
+            //return Content(responseString, "text/html");
         }
 
         /// <summary>
@@ -294,8 +351,6 @@ namespace ScientificResearch.Controllers
             return files;
         }
 
-        [AllowAnonymous]
-        [HttpGet]
         /// <summary>
         /// 根据code取openid,接着取该openid绑定的用户信息;
         /// OAuthScope.snsapi_base方式回调
@@ -304,6 +359,8 @@ namespace ScientificResearch.Controllers
         /// <param name="state"></param>
         /// <param name="returnUrl">用户最初尝试进入的页面</param>
         /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet]
         async public Task<object> BaseCallback(string code, string state, string returnUrl)
         {
             try
@@ -341,6 +398,11 @@ namespace ScientificResearch.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         async public Task<object> 测试merge人员OpenId([FromBody]人员OpenId model) =>
             await Db.Merge(model);

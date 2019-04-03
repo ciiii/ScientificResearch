@@ -5,7 +5,8 @@ axios.defaults.headers.post["Content-Type"] =
     "application/x-www-form-urlencoded;charset=UTF-8"; // 配置请求头
 // axios.defaults.baseURL = "/api"; // 配置接口地址
 // const api = '';
-const api = 'http://132.232.14.244'
+const api = 'http://192.168.0.99:63739'
+    // const api = 'http://132.232.14.244'
     // 132.232.14.244
     // a.ttz.cn
     //自动给同一个vue项目的所有请求添加请求头

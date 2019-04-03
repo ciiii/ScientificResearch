@@ -1,5 +1,5 @@
 function getMenuPermissions(getMenuPermissions) {
-    if (localStorage.myUserInfo) {
+    if (localStorage.myUserInfo&&) {
         Menu.getMenuPermissions('get', function getMenuPermissionsListener(success, obj, strErro) {
             if (success) {
                 var curTime = new Date().getTime();

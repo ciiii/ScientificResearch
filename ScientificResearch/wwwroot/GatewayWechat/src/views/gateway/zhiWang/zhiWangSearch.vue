@@ -29,8 +29,8 @@
             <div class="item">
                 <span class="title">发表时间</span>
                 <div class="time-box">
-                    <input v-model="req.publicYearFrom" placeholder="开始年度" type="number"> <span>至</span>
-                    <input v-model="req.publicYearTo" placeholder="结束年度" type="number">
+                    <input v-model="req.publicYearFrom" placeholder="开始年度" type="number" @keyup.enter="retrieval"> <span>至</span>
+                    <input v-model="req.publicYearTo" placeholder="结束年度" type="number" @keyup.enter="retrieval">
                 </div>
             </div>
             <van-field
@@ -40,7 +40,7 @@
             <div class="item new-item">
                 <span class="title">来源期刊</span>
                 <div class="time-box">
-                    <input v-model="req.sourceName" placeholder="请输入">
+                    <input v-model="req.sourceName" placeholder="请输入" @keyup.enter="retrieval">
                     <span @click="clickTitle(3)" class="title title-right">{{sourceRearchType}} <van-icon
                             name="icon iconfont icon-tabxiala"/></span>
                 </div>
@@ -48,7 +48,7 @@
             <div class="item new-item">
                 <span class="title">支持基金</span>
                 <div class="time-box">
-                    <input v-model="req.supportFundName" placeholder="请输入">
+                    <input v-model="req.supportFundName" placeholder="请输入" @keyup.enter="retrieval">
                     <span @click="clickTitle(4)" class="title title-right">{{supportFundType}} <van-icon
                             name="icon iconfont icon-tabxiala"/></span>
                 </div>
@@ -178,7 +178,6 @@
                     sourceType: '',
                     supportFundName: '',
                     supportFundType: '%',
-                    languageType: 1,
                     accountId: 2006
                 },
                 reqConfigs: {
@@ -218,6 +217,7 @@
             }
         },
         mounted: function () {
+            this.req.accountId = this.$route.query.accountId;
             this.getDataConfigs();
         },
         methods: {
@@ -279,7 +279,8 @@
             },
             clickSupportFundType(el) {
                 this.supportFundType = el.key;
-                this.req.supportFundType = el.value;;
+                this.req.supportFundType = el.value;
+                ;
                 this.showSupportFundType = false;
             },
             confirmSourceType() {
@@ -310,8 +311,12 @@
                 sessionStorage.setItem('ZWConfigs', JSON.stringify(this.configs));
             },
             retrieval() {
-                sessionStorage.setItem('ZWSearch', JSON.stringify(this.req));
-                this.$router.push({path: '/zhiWangList'});
+                if (this.req.searchKeyWord && this.req.searchKeyWord != '') {
+                    sessionStorage.setItem('ZWSearch', JSON.stringify(this.req));
+                    this.$router.push({path: '/zhiWangList'});
+                } else {
+                    this.$toast('请输入' + this.type + '！');
+                }
             }
         }
     }
@@ -321,8 +326,13 @@
         .van-overlay {
             top: 0 !important;
         }
-        .van-cell__title {
+
+        .tab-con .van-cell__title {
             text-align: left !important;
+        }
+
+        .van-cell__title.van-field__label{
+            text-align: center !important;
         }
     }
 

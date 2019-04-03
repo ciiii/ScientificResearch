@@ -177,12 +177,12 @@ export default {
 <style lang="less" scoped>
 .popup {
   text-align: left;
-  .zanwu {
-    display: flex;
-    img {
-      margin: 0 auto;
-    }
-  }
+//   .zanwu {
+//     display: flex;
+//     img {
+//       margin: 0 auto;
+//     }
+//   }
   .van-tab__pane {
     padding: 10px;
     height: 100vh;

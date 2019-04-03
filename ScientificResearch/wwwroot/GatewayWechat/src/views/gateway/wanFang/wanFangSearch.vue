@@ -17,8 +17,8 @@
             <div class="item">
                 <span class="title">出版时间</span>
                 <div class="time-box">
-                    <input v-model="starTime" placeholder="开始年度" type="number"> <span>至</span>
-                    <input v-model="endTime" placeholder="结束年度" type="number">
+                    <input v-model="starTime" placeholder="开始年度" type="number" @keyup.enter="retrieval"> <span>至</span>
+                    <input v-model="endTime" placeholder="结束年度" type="number" @keyup.enter="retrieval">
                 </div>
             </div>
             <p class="explain">说明：出版时间只能输入数字，例如 {{date}}</p>
@@ -85,6 +85,7 @@
             }
         },
         mounted: function () {
+            this.req.accountId = this.$route.query.accountId;
             this.getDataConfigs();
         },
         methods: {
@@ -115,11 +116,16 @@
                 sessionStorage.setItem('WFConfigs', JSON.stringify(this.configs));
             },
             retrieval() {
-                if (this.starTime && this.endTime) {
-                    this.req.出版时间_f = this.starTime + '-' + this.endTime;
+                if (this.req.q && this.req.q != '') {
+                    if (this.starTime && this.endTime) {
+                        this.req.出版时间_f = this.starTime + '-' + this.endTime;
+                    }
+                    sessionStorage.setItem('WFSearch', JSON.stringify(this.req));
+                    this.$router.push({path: '/wanFangList'});
+                } else {
+                    this.$toast('请输入关键词！');
                 }
-                sessionStorage.setItem('WFSearch', JSON.stringify(this.req));
-                this.$router.push({path: '/wanFangList'});
+
             }
         }
     }
@@ -129,8 +135,12 @@
         .van-overlay {
             top: 0 !important;
         }
-        .van-cell__title {
+
+        .tab-con .van-cell__title {
             text-align: left !important;
+        }
+        .van-cell__title.van-field__label{
+            text-align: center !important;
         }
     }
 

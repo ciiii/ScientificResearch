@@ -107,27 +107,24 @@
                         this.req.sort = '';
                         this.showScreen = false;
                         this.IconShow = false;
-                        this.onSearch();
                         break;
                     case 1:
                         this.req.sort = 'Date desc';
                         this.showScreen = false;
                         this.IconShow = false;
-                        this.onSearch();
                         break;
                     case 2:
                         this.req.sort = 'CitedCount desc';
                         this.showScreen = false;
                         this.IconShow = false;
-                        this.onSearch();
                         break;
                     case 3:
                         this.req.sort = '';
                         this.showScreen = true;
                         this.IconShow = true;
-                        this.onSearch();
                         break;
                 }
+                this.onSearch();
             },
             changeClass() {
                 if (this.IconShow) {
@@ -145,6 +142,9 @@
             },
             onSearch: _debounce(function () {
                 this.req.p = 1;
+                this.finished = false;
+                this.loading = true;
+                this.backTop();
                 this.list = [];
                 this.getList();
             }, 300),
@@ -172,11 +172,10 @@
                 this.loading = false;
             },
             onRefresh() {
-                setTimeout(() => {
-                    this.list = [];
-                    this.req.p = 1;
-                    this.getList();
-                }, 500)
+                this.finished = false;
+                this.list = [];
+                this.req.p = 1;
+                this.getList();
             },
             onClickLeft() {
                 this.$router.go(-1)

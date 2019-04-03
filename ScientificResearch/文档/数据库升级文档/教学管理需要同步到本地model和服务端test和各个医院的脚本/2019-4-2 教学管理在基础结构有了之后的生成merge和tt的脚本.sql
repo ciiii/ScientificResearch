@@ -104,8 +104,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 
 CREATE TYPE tt_教学本院科室任务 AS TABLE
@@ -167,8 +167,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 
 
@@ -227,8 +227,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 
 
@@ -292,8 +292,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 
 
@@ -343,8 +343,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 
 CREATE TYPE tt_教学出科申请 AS TABLE
@@ -393,8 +393,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 
 CREATE TYPE tt_教学出勤类型 AS TABLE
@@ -425,8 +425,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 
 CREATE TYPE tt_教学出勤情况 AS TABLE
@@ -478,13 +478,22 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
-
+IF OBJECT_ID('sp_教学带教老师_增改') IS NOT NULL
+    BEGIN
+        DROP PROC sp_教学带教老师_增改;
+    END;
+IF EXISTS ( SELECT  1
+            FROM    sys.types
+            WHERE   is_table_type = 1
+                    AND name = 'tt_教学带教老师' )
+    BEGIN
+        DROP TYPE  tt_教学带教老师;
+    END;
 CREATE TYPE tt_教学带教老师 AS TABLE
 (
-[编号] [INT] NULL ,
 [教学科室编号] [INT] NULL ,
 [带教老师编号] [INT] NULL ,
 [备注] [NVARCHAR] (500) NULL
@@ -499,7 +508,8 @@ AS
     DECLARE @output tt_教学带教老师;
     MERGE dbo.教学带教老师 t
     USING @tt s
-    ON s.编号 = t.编号
+    ON s.教学科室编号 = t.教学科室编号
+        AND s.带教老师编号 = t.带教老师编号
     WHEN MATCHED THEN
         UPDATE SET
                t.[教学科室编号] = s.[教学科室编号] ,
@@ -517,6 +527,7 @@ AS
         SELECT  *
         FROM    @output;
 GO
+
 
 CREATE TYPE tt_教学更换带教老师 AS TABLE
 (
@@ -563,8 +574,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 
 CREATE TYPE tt_教学管床病人 AS TABLE
@@ -602,8 +613,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 
 CREATE TYPE tt_教学活动 AS TABLE
@@ -680,8 +691,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 
 CREATE TYPE tt_教学活动反馈 AS TABLE
@@ -734,8 +745,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 
 CREATE TYPE tt_教学活动可参与者 AS TABLE
@@ -767,8 +778,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 
 CREATE TYPE tt_教学活动类型 AS TABLE
@@ -805,8 +816,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 
 CREATE TYPE tt_教学活动评价 AS TABLE
@@ -856,8 +867,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 
 CREATE TYPE tt_教学活动评价项目 AS TABLE
@@ -898,8 +909,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 
 
@@ -930,8 +941,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 
 CREATE TYPE tt_教学结业申请 AS TABLE
@@ -980,8 +991,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 
 CREATE TYPE tt_教学考试成绩 AS TABLE
@@ -1029,8 +1040,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 
 CREATE TYPE tt_教学科室 AS TABLE
@@ -1064,8 +1075,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 
 CREATE TYPE tt_教学轮转 AS TABLE
@@ -1128,8 +1139,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 
 CREATE TYPE tt_教学轮转任务 AS TABLE
@@ -1191,8 +1202,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 
 CREATE TYPE tt_教学评分等级 AS TABLE
@@ -1233,8 +1244,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 CREATE TYPE tt_教学请假申请 AS TABLE
 (
@@ -1297,8 +1308,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 CREATE TYPE tt_教学人员角色 AS TABLE
 (
@@ -1327,8 +1338,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 
 CREATE TYPE tt_教学宿舍楼 AS TABLE
@@ -1375,8 +1386,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 CREATE TYPE tt_教学退培申请 AS TABLE
 (
@@ -1424,8 +1435,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 
 CREATE TYPE tt_教学学员 AS TABLE
@@ -1595,8 +1606,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 
 CREATE TYPE tt_教学学员类型 AS TABLE
@@ -1627,8 +1638,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 CREATE TYPE tt_教学学员培训 AS TABLE
 (
@@ -1699,8 +1710,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 CREATE TYPE tt_教学学员宿舍安排 AS TABLE
 (
@@ -1783,8 +1794,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 CREATE TYPE tt_教学医疗差错及事故记录 AS TABLE
 (
@@ -1837,8 +1848,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 CREATE TYPE tt_教学专业 AS TABLE
 (
@@ -1888,8 +1899,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 CREATE TYPE tt_教学专业科室 AS TABLE
 (
@@ -1946,8 +1957,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 CREATE TYPE tt_教学专业科室任务 AS TABLE
 (
@@ -2008,8 +2019,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 CREATE TYPE tt_教学专业科室任务类型 AS TABLE
 (
@@ -2039,8 +2050,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 CREATE TYPE tt_教学专业科室要求 AS TABLE
 (
@@ -2085,8 +2096,8 @@ AS
     OUTPUT
         Inserted.*
         INTO @output;
-        SELECT  *
-        FROM    @output;
+    SELECT  *
+    FROM    @output;
 GO
 -------------------------------------tfn
 CREATE FUNCTION [dbo].[tfn_教学人员的权限] ( @工号 NVARCHAR(50) )

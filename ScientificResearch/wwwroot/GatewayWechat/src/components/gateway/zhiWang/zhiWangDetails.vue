@@ -19,7 +19,7 @@
                 【关键词】：<span v-for="el in details.keyWord" :key="el">{{el}}</span>
             </p>
             <div class="btn-box" v-if="isShowDown">
-                <a href="javascript:;" class="btn-preview" @click="clickPreview">
+                <a href="javascript:;" class="btn-preview" @click="getDownloadFile">
                     预览PDF
                     <van-icon name="icon iconfont icon-browse"/>
                 </a>
@@ -35,8 +35,6 @@
 <script>
     import {URL_ZHI_WANG} from "@/assets/js/gateway/connect/ConSysUrl";
     import {UrlEncode} from "@/assets/js/gateway/Common";
-    import {downloadFile} from "@/assets/js/gateway/FileSaver";
-
 
     export default {
         name: "zhiWangDetails",
@@ -81,8 +79,16 @@
                 }
                 this.details = data;
             },
+            getDownloadFile: async function () {
+                let data = await this.$myHttp.myGet(URL_ZHI_WANG.GET_ARTICLE_DOWNURL, this.reqUrl);
+                if (data && data != '') {
+                    this.clickPreview();
+                } else {
+                    this.$toast(data);
+                }
+            },
             clickPreview() {
-                window.open('pdf/web/viewer.html?file=' + encodeURIComponent(this.downUrl));
+                window.open('pdf2/web/viewer.html?file=' + encodeURIComponent(this.downUrl));
             }
         }
     }

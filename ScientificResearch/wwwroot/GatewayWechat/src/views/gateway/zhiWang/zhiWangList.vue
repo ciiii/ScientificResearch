@@ -26,8 +26,8 @@
                     <ul>
                         <li v-for="item in list" :key="item.id" @click="clickTitle(item)">
                             <p class="title">{{item.title}}</p>
-                            <!--<p class="author">【作者】{{item.authors}}</p>-->
-                            <p class="keyword"><span v-for="el in item.authors" :key="el">{{el}}</span></p>
+                            <p class="author">【作者】{{item.authors}}</p>
+                            <!--<p class="keyword"><span v-for="el in item.authors" :key="el">{{el}}</span></p>-->
                             <p class="author">【发表时间】{{item.publishDate}}</p>
                             <p class="source" v-if="item.source">【来源】{{item.source}}</p>
                             <p class="author" v-if="item.downCount">【下载】{{item.downCount}}</p>
@@ -83,9 +83,9 @@
                     sortUrl: '',
                     accountId: '',
                 },
-                isScreen: false,
                 list: [],
                 newList: [],
+                existList: [],
                 isLoading: false,
                 loading: false,
                 finished: false,
@@ -108,103 +108,103 @@
             window.addEventListener('scroll', this.scrollToTop)
         },
         methods: {
+            /**
+             * searchType 加载类型
+             * 0：请求列表
+             * 1：请求筛选
+             * 2：分页
+             * finished-true停止:停止加载更多
+             * isLoading-false不显示:刷新的状态;
+             * loading-false不显示:加载中的状态;
+             */
             onLoad() {
                 switch (this.searchType) {
                     case 0:
                         this.getList();
-                        break;
-                    case 1:
-                        this.getScreenList();
                         break;
                     case 2:
                         this.getPangingList();
                         break;
                 }
             },
+            //点击筛选触发条件
             clickTab(index, title) {
-                switch (index) {
-                    case 0:
-                        this.reqScreen.sortUrl = this.newList.sortRelateUrl;
-                        break;
-                    case 1:
-                        this.reqScreen.sortUrl = this.newList.sortPublicDateUrl;
-                        break;
-                    case 2:
-                        this.reqScreen.sortUrl = this.newList.sortByUseTimesUrl;
-                        break;
-                    case 3:
-                        this.reqScreen.sortUrl = this.newList.sortByDownTimesUrl;
-                        break;
+                if (this.existList && this.existList.sortRelateUrl) {
+                    switch (index) {
+                        case 0:
+                            this.reqScreen.sortUrl = this.existList.sortRelateUrl;
+                            break;
+                        case 1:
+                            this.reqScreen.sortUrl = this.existList.sortPublicDateUrl;
+                            break;
+                        case 2:
+                            this.reqScreen.sortUrl = this.existList.sortByUseTimesUrl;
+                            break;
+                        case 3:
+                            this.reqScreen.sortUrl = this.existList.sortByDownTimesUrl;
+                            break;
+                    }
+                    this.onSearch();
                 }
-                this.searchType = 1;
-                this.onSearch();
             },
             onSearch: _debounce(function () {
+                this.searchType = 1;
+                this.finished = false;
+                this.loading = true;
+                this.backTop();
                 this.list = [];
                 this.getScreenList();
             }, 300),
             getList: async function () {
-                this.newList = await this.$myHttp.myGet(URL_ZHI_WANG.GET_ARTICLE_LIST, this.req);
-                if (this.newList && this.newList.listDatas != []) {
-                    this.newList.listDatas.forEach(function (item) {
-                        if (item.authors && item.authors != "") {
-                            item.authors = item.authors.split(' ');
-                        }
-                    })
-                    this.list = this.newList.listDatas;
-                    this.reqPanging.pageUrl = this.newList.nextPageUrl;
-                }
-                this.searchType = 2;
-                this.isFinished();
-                this.isLoading = false;
-                this.loading = false;
-            },
-            getScreenList: async function () {
-                this.newList = await this.$myHttp.myGet(URL_ZHI_WANG.GET_SCREEN_LIST, this.reqScreen);
-                if (this.newList && this.newList.listDatas != []) {
-                    this.newList.listDatas.forEach(function (item) {
-                        if (item.authors && item.authors != "") {
-                            item.authors = item.authors.split(' ');
-                        }
-                    })
-                }
-                this.list = this.newList.listDatas;
-                this.reqPanging.pageUrl = this.newList.nextPageUrl;
-                this.isScreen = false;
-                this.searchType = 2;
-                this.isFinished();
-                this.isLoading = false;
-                this.loading = false;
-            },
-            getPangingList: async function () {
-                this.newList = await this.$myHttp.myGet(URL_ZHI_WANG.GET_PANGING_LIST, this.reqPanging);
-                if (this.newList && this.newList.listDatas != []) {
-                    this.reqPanging.pageUrl = this.newList.nextPageUrl;
-                    this.newList.listDatas.forEach(function (item) {
-                        if (item.authors && item.authors != "") {
-                            item.authors = item.authors.split(' ');
-                        }
-                    })
-                    this.list = this.list.concat(this.newList.listDatas);
-                    if (this.newList.listDatas.length < 20) {
-                        this.finished = true;
-                    }
+                let data = await this.$myHttp.myGet(URL_ZHI_WANG.GET_ARTICLE_LIST, this.req);
+                this.existList = data;
+                this.newList = data;
+                if (this.newList && this.newList.listDatas) {
+                    this.returnData(this.newList.listDatas);
                 } else {
                     this.finished = true;
                 }
                 this.isLoading = false;
                 this.loading = false;
+                this.searchType = 2;
             },
-            isFinished() {
-                if (!this.newList.listDatas || this.newList.listDatas.length < 20) {
+            getScreenList: async function () {
+                this.newList = await this.$myHttp.myGet(URL_ZHI_WANG.GET_SCREEN_LIST, this.reqScreen);
+                if (this.newList && this.newList.listDatas) {
+                    this.returnData(this.newList.listDatas);
+                } else {
+                    this.finished = true;
+                }
+                this.isLoading = false;
+                this.loading = false;
+                this.searchType = 2;
+            },
+            getPangingList: async function () {
+                this.newList = await this.$myHttp.myGet(URL_ZHI_WANG.GET_PANGING_LIST, this.reqPanging);
+                if (this.newList && this.newList.listDatas) {
+                    this.returnData(this.list.concat(this.newList.listDatas));
+                } else {
+                    this.finished = true;
+                }
+                this.isLoading = false;
+                this.loading = false;
+                this.searchType = 2;
+            },
+            returnData(data) {
+                this.reqPanging.pageUrl = this.newList.nextPageUrl;
+                this.newList.listDatas.forEach(function (item) {
+                    if (item.authors && item.authors != "") {
+                        item.authors = item.authors.split(' ');
+                    }
+                })
+                this.list = data;
+                if (this.newList.listDatas.length < 20) {
                     this.finished = true;
                 }
             },
             onRefresh() {
-                setTimeout(() => {
-                    this.list = [];
-                    this.getList();
-                }, 500)
+                this.list = [];
+                this.getList();
             },
             onClickLeft() {
                 this.$router.go(-1)
@@ -249,7 +249,7 @@
         .content {
             .keyword {
                 span {
-                    border-color: #409EFF ;
+                    border-color: #409EFF;
                     color: #409EFF;
                 }
             }

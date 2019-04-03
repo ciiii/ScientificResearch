@@ -198,7 +198,62 @@
             <param name="filter"></param>
             <returns></returns>
         </member>
-        <!-- 对于成员“M:ScientificResearch.Areas.TeachingManagement.Controllers.BaseInfoController.增改教学科室(ScientificResearch.Models.教学科室)”忽略有格式错误的 XML 注释 -->
+        <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.BaseInfoController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.BaseInfoController.获取某类字典(System.String)">
+            <summary>
+            字典相关的接口,都使用ScientificResearch-baseinfo中相关的接口,教学管理不再单独提供;
+            涉及的字典分类有:学历;职称;学科;民族
+            </summary>
+            <param name="分类"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.BaseInfoController.获取教学学员类型">
+            <summary>
+            教学学员不应该被修改;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.OrganizationController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.OrganizationController.获取部门列表(ScientificResearch.Models.V教学科室Filter)">
+            <summary>
+            部门的基础信息相关的接口,都使用ScientificResearch-baseinfo中相关的接口,教学管理不再单独提供;
+            获取部门列表比较特殊,需要在部门基础信息的之外,提供科室管理员/最大学员人数/带教老师人数等教学信息;
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.OrganizationController.获取某科室的教学带教老师(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="科室编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.OrganizationController.增改教学科室(ScientificResearch.Models.教学科室)">
+            <summary>
+            不会和部门一起更新.
+            先有部门在左侧菜单,然后再增改教学科室的信息;
+            由于历史原因,sp_部门_增改 的参数写为了"tt_部门",且没有返回;所以这里的Merge[部门]完全不符合要求;
+            这里写试试vs里面的事务
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.OrganizationController.增改教学带教老师(System.Collections.Generic.IEnumerable{ScientificResearch.Models.教学带教老师})">
+            <summary>
+            
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
         <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementBaseController">
             <summary>
             2019-1-9
@@ -312,11 +367,6 @@
         <member name="P:ScientificResearch.Models.医院.备注">
             <summary>
             
-            </summary>
-        </member>
-        <member name="T:ScientificResearch.Models.CurrentUserOfTeachingManagement">
-            <summary>
-            当前教学管理的医院方登录人的信息
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.参加会议申请增改.经费预算列表">
@@ -841,6 +891,21 @@
         <member name="P:ScientificResearch.Models.纵向项目结题完善.IsHold">
             <summary>
             需要暂存=true,不暂存=false
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.CurrentUserOfTeachingManagement">
+            <summary>
+            当前教学管理的医院方登录人的信息
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.V教学科室Filter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.V教学带教老师Filter">
+            <summary>
+            
             </summary>
         </member>
         <member name="T:ScientificResearch.Models.GET_DeleteScript_MSSQL">
@@ -5751,11 +5816,6 @@
         <member name="T:ScientificResearch.Models.教学带教老师">
             <summary>
             教学带教老师[类]
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学带教老师.编号">
-            <summary>
-            
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.教学带教老师.教学科室编号">
@@ -16218,6 +16278,121 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.V教学带教老师">
+            <summary>
+            V教学带教老师[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V教学带教老师.教学科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V教学带教老师.带教老师编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V教学带教老师.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V教学带教老师.姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V教学带教老师.部门编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V教学带教老师.英文名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V教学带教老师.性别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V教学带教老师.手机">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V教学带教老师.是否启用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.V教学科室">
+            <summary>
+            V教学科室[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V教学科室.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V教学科室.上级部门编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V教学科室.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V教学科室.负责人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V教学科室.负责人姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V教学科室.排序值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V教学科室.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V教学科室.是否启用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V教学科室.是否存在下级">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V教学科室.科室管理员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V教学科室.科室管理员姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.V教学科室.带教老师数量">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Business.AccessBusiness">
             <summary>
             登录|注销|获取个人权限|个人信息等
@@ -17077,10 +17252,91 @@
             <param name="model"></param>
             <returns></returns>
         </member>
+        <member name="T:ScientificResearch.Controllers.TestController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Controllers.TestController.GetJObejctString">
+            <summary>
+            JObject可以从一个json字串中生成,可以动态的往里面读写属性;
+            可以转化为json字串,以及T的对象;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.TestController.Get通过类名创建类实例">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:ScientificResearch.Controllers.TestController.GetPropertyinfo会不会取到类的方法">
             <summary>
             结果是字段和方法都不会被取到;
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.TestController.测试下tryParse的写法">
+            <summary>
+            return int.TryParse("111", out int from) ? (int?)from : null;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.TestController.测试下csharp的可列举数据处理">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.TestController.测试表驱动法(System.Int32)">
+            <summary>
+            重要!!!
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.TestController.获取自定义的全局配置数据">
+            <summary>
+            config.get 和config.getvalue的区别
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.TestController.Tesetdynamic">
+            <summary>
+            感觉还米有jobject好用;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.TestController.TestPoint(ScientificResearch.Controllers.TestController.MyClass)">
+            <summary>
+            x?.字段的写法
+            </summary>
+            <param name="x"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.TestController.测试endnote的导入">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.TestController.测试元组">
+            <summary>
+            也是个奇葩写法.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.TestController.测试获取整个页面的html">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.TestController.返回纯字符串(System.String)">
+            <summary>
+            还可以加content-type
+            </summary>
+            <param name="echostr"></param>
             <returns></returns>
         </member>
         <member name="M:ScientificResearch.Controllers.TestController.Index">
@@ -17094,6 +17350,23 @@
             试试swagger里面上传文件
             </summary>
             <param name="files"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.TestController.BaseCallback(System.String,System.String,System.String)">
+            <summary>
+            根据code取openid,接着取该openid绑定的用户信息;
+            OAuthScope.snsapi_base方式回调
+            </summary>
+            <param name="code"></param>
+            <param name="state"></param>
+            <param name="returnUrl">用户最初尝试进入的页面</param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.TestController.测试merge人员OpenId(ScientificResearch.Models.人员OpenId)">
+            <summary>
+            
+            </summary>
+            <param name="model"></param>
             <returns></returns>
         </member>
         <member name="M:ScientificResearch.Controllers.WorkFlowController.审核步骤(ScientificResearch.Models.完成步骤)">
