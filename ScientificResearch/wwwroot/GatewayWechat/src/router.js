@@ -11,6 +11,13 @@ export default new Router({
                 import ("./views/Home.vue"),
             meta: { title: '爱医生图书馆' },
         },
+        { // 入口我的
+            path: "/homePersonal",
+            name: "homePersonal",
+            component: () =>
+                import ("./views/scientificResearch/home/homePersonal.vue"),
+            meta: { title: '个人中心' },
+        },
         {
             path: '/wanFangSearch',
             name: 'wanFangSearch',
@@ -32,13 +39,6 @@ export default new Router({
                 import ('./components/gateway/wanFang/wanFangDetails.vue'),
             meta: { title: '文章详情' },
         },
-        // {
-        //     path: '/pdfViewer',
-        //     name: 'pdfViewer',
-        //     component: () =>
-        //         import ('./views/pdfViewer.vue'),
-        //     meta: { title: '文件预览'},
-        // },
         {
             path: '/zhiWangSearch',
             name: 'zhiWangSearch',
@@ -170,7 +170,7 @@ export default new Router({
                 import ("./views/scientificResearch/activity/meetingInformation/meetingFeedbackList.vue"),
             meta: { title: '参会反馈列表' }
         },
-        { // 参会经费报销列表
+        { // 参会经费报销管理
             path: "/expenseList",
             name: "expenseList",
             component: () =>

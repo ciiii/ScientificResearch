@@ -14,7 +14,7 @@
                 <van-tab title="下载次数"></van-tab>
             </van-tabs>
         </div>
-        <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+        <van-pull-refresh v-model="isRefreshLoading" @refresh="onRefresh">
             <div class="content">
                 <van-list class="list"
                           offset:500
@@ -26,12 +26,11 @@
                     <ul>
                         <li v-for="item in list" :key="item.id" @click="clickTitle(item)">
                             <p class="title">{{item.title}}</p>
-                            <p class="author">【作者】{{item.authors}}</p>
-                            <!--<p class="keyword"><span v-for="el in item.authors" :key="el">{{el}}</span></p>-->
                             <p class="author">【发表时间】{{item.publishDate}}</p>
                             <p class="source" v-if="item.source">【来源】{{item.source}}</p>
                             <p class="author" v-if="item.downCount">【下载】{{item.downCount}}</p>
                             <p class="author" v-if="item.refCount">【引用】{{item.refCount}}</p>
+                            <p class="keyword"><span v-for="el in item.authors" :key="el">{{el}}</span></p>
 
                         </li>
                     </ul>
@@ -86,7 +85,7 @@
                 list: [],
                 newList: [],
                 existList: [],
-                isLoading: false,
+                isRefreshLoading: false,
                 loading: false,
                 finished: false,
                 configs: {},
@@ -112,9 +111,8 @@
              * searchType 加载类型
              * 0：请求列表
              * 1：请求筛选
-             * 2：分页
              * finished-true停止:停止加载更多
-             * isLoading-false不显示:刷新的状态;
+             * isRefreshLoading-false不显示:刷新的状态;
              * loading-false不显示:加载中的状态;
              */
             onLoad() {
@@ -164,7 +162,7 @@
                 } else {
                     this.finished = true;
                 }
-                this.isLoading = false;
+                this.isRefreshLoading = false;
                 this.loading = false;
                 this.searchType = 2;
             },
@@ -175,7 +173,7 @@
                 } else {
                     this.finished = true;
                 }
-                this.isLoading = false;
+                this.isRefreshLoading = false;
                 this.loading = false;
                 this.searchType = 2;
             },
@@ -186,7 +184,7 @@
                 } else {
                     this.finished = true;
                 }
-                this.isLoading = false;
+                this.isRefreshLoading = false;
                 this.loading = false;
                 this.searchType = 2;
             },
@@ -194,7 +192,7 @@
                 this.reqPanging.pageUrl = this.newList.nextPageUrl;
                 this.newList.listDatas.forEach(function (item) {
                     if (item.authors && item.authors != "") {
-                        item.authors = item.authors.split(' ');
+                        item.authors = item.authors.split(';');
                     }
                 })
                 this.list = data;
@@ -203,7 +201,7 @@
                 }
             },
             onRefresh() {
-                this.list = [];
+                this.active = 0;
                 this.getList();
             },
             onClickLeft() {

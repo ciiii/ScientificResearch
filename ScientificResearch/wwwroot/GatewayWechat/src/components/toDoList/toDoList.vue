@@ -67,7 +67,7 @@ export default {
 
         横向项目: "XDetails",
         横向项目经费到账: "XFundsToTheAccount",
-        报销详情:"reimbursementDetails"
+        报销:"reimbursementDetails"
       }
     };
   },
@@ -110,7 +110,7 @@ export default {
       }, 500);
     },
     goDetails(item, code) {
-      // console.log(item,code,"详情")
+      console.log(item,code,"详情")
       for (let key in this.typeList) {
         if (key == item.流程名称) {
           this.$router.push({

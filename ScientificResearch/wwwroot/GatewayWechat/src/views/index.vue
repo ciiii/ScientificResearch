@@ -1,6 +1,9 @@
 <template>
   <div>
-    <search/>
+    <!-- <search/> -->
+    <div class="nav">
+      <img src="@/assets/images/iocn/logo.png" alt="科研logo">
+    </div>
     <section>
       <!-- <van-pull-refresh v-model="isLoading" @refresh="onRefresh"> -->
       <div class="backlogBox">
@@ -76,12 +79,12 @@
   </div>
 </template>
 <script>
-import search from "@/components/index/search";
+// import search from "@/components/index/search";
 import toDoList from "@/components/toDoList/toDoList";
 import navFooter from "@/components/footer/footer";
 export default {
   components: {
-    search,
+    // search,
     toDoList,
     navFooter
   },
@@ -131,7 +134,8 @@ export default {
       // 授权后重定向的回调链接地址
       let urlNow = encodeURIComponent(urlInit);
       let scope = "snsapi_base"; //静默授权 用户无感知
-      let appid = "wx5e45aca8fcb270f1";
+      // let appid = "wx5e45aca8fcb270f1";
+      let appid = "wxfcbe1c0c36e2f97c";
       let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${urlNow}&response_type=code&scope=${scope}&state=${state}#wechat_redirect`;
       return url;
     },
@@ -171,6 +175,13 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.nav {
+  background-color: #fff;
+  img {
+    height: 40px;
+    padding: 5px 0;
+  }
+}
 section {
   background-color: #f4f8fb;
   .backlogBox {

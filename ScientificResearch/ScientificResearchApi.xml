@@ -17369,6 +17369,12 @@
             <param name="model"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Controllers.TestController.测试获取ip">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:ScientificResearch.Controllers.WorkFlowController.审核步骤(ScientificResearch.Models.完成步骤)">
             <summary>
             审核等不需要附加动作的操作,可以直接调用这个接口;

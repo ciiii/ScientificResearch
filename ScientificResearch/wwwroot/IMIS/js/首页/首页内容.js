@@ -92,6 +92,7 @@ $(function () {
                         for (var i = 0; i < vm.navList.length; i++) {
                             vm.match(mUserInfo.权限, vm.newNavList, vm.navList[i]);
                         }
+                        localStorage.removeItem("isEntryLogin");
                         vm.getUserNoticeList();
                         vm.getEnableDownloadList();
                         vm.query();

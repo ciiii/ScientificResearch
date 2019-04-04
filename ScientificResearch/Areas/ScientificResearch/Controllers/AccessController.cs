@@ -47,7 +47,7 @@ namespace ScientificResearch.Controllers
         {
             //var IP = Request.Host.Host;
             var IP = HttpContext.Connection.RemoteIpAddress.ToString();
-
+            
             var dbWhenLogin = new SqlConnection(DbConnectionStringLack.Replace("{0}", model.DbKey));
             var result = await dbWhenLogin.QueryMultipleSpAsync(
                new sp_登录()

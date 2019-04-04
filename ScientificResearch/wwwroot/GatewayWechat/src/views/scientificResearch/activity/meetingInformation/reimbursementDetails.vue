@@ -2,7 +2,10 @@
   <div>
     <van-tabs v-model="active" swipeable class="popup">
       <van-tab title="报销信息">
-        <ul class="servicel">
+        <div v-if="someExpenseDetails === null" class="zanwu">
+          <img src="@/assets/images/nothing-3.png" alt>
+        </div>
+        <ul v-else class="servicel">
           <h4>基本信息</h4>
           <li class="title">
             <span>项目名称</span>
@@ -53,7 +56,10 @@
         </ul>
       </van-tab>
       <van-tab title="审核记录">
-        <ul v-for="(item,key) in expenseAudit" :key="key" class="audit">
+        <div v-if="expenseAudit.length === 0" class="zanwu">
+          <img src="@/assets/images/nothing-3.png" alt>
+        </div>
+        <ul v-else v-for="(item,key) in expenseAudit" :key="key" class="audit">
           <li>
             <span>步骤名称</span>
             <span>{{item.名称}}</span>
@@ -84,7 +90,10 @@
         </ul>
       </van-tab>
       <van-tab title="报销详情">
-        <ul v-for="(item,key) in expenseList" :key="key" class="audit">
+        <div v-if="expenseList.length === 0" class="zanwu">
+          <img src="@/assets/images/nothing-3.png" alt>
+        </div>
+        <ul v-else v-for="(item,key) in expenseList" :key="key" class="audit">
           <li>
             <span>报销科目</span>
             <span>{{item.财务科目}}</span>
@@ -120,7 +129,10 @@
         </ul>
       </van-tab>
       <ReturnTop/>
-      <ReturnBtn/>
+      <!-- <ReturnBtn/> -->
+      <div class="backtrack" @click="backtrack">
+        <i class="icon iconfont icon-fanhui1"></i> 返回
+      </div>
     </van-tabs>
   </div>
 </template>
@@ -133,7 +145,8 @@ export default {
       expenseAudit: [],
       expenseList: [],
       active: 0,
-      state: "审核通过"
+      state: "审核通过",
+      meetingCode: this.$route.params.code
     };
   },
   mounted() {
@@ -150,6 +163,15 @@ export default {
         this.someExpenseDetails = res.data.报销基本信息;
         this.expenseAudit = res.data.报销审核记录;
         this.expenseList = res.data.本次报销项目列表;
+      });
+    },
+    backtrack() {
+      this.$router.push({
+        path: "/someExpenseList",
+        name: "someExpenseList",
+        params: {
+          item: this.meetingCode
+        }
       });
     },
     // 截取时间
@@ -177,12 +199,12 @@ export default {
 <style lang="less" scoped>
 .popup {
   text-align: left;
-//   .zanwu {
-//     display: flex;
-//     img {
-//       margin: 0 auto;
-//     }
-//   }
+  .zanwu {
+    display: flex;
+    img {
+      margin: 0 auto;
+    }
+  }
   .van-tab__pane {
     padding: 10px;
     height: 100vh;
@@ -225,6 +247,20 @@ export default {
       display: flex;
       align-items: center;
     }
+  }
+  .backtrack {
+    line-height: 1.6;
+    font-size: 14px;
+    color: #fff;
+    width: 80px;
+    height: 26px;
+    padding: 6px;
+    text-align: center;
+    position: fixed;
+    bottom: 60px;
+    right: 20px;
+    border-radius: 20px;
+    background-color: rgba(28, 134, 238, 0.5);
   }
 }
 // .popup {

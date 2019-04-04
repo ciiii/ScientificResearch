@@ -84,11 +84,11 @@
                 if (data && data != '') {
                     this.clickPreview();
                 } else {
-                    this.$toast(data);
+                    this.$toast('您无权或余额不足不能下载此文章！');
                 }
             },
             clickPreview() {
-                window.open('pdf2/web/viewer.html?file=' + encodeURIComponent(this.downUrl));
+                window.open('pdf/web/viewer.html?file=' + encodeURIComponent(this.downUrl));
             }
         }
     }

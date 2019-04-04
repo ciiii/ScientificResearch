@@ -14,7 +14,7 @@
                 </van-tab>-->
             </van-tabs>
         </div>
-        <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+        <van-pull-refresh v-model="isRefreshLoading" @refresh="onRefresh">
             <div class="content">
                 <van-list class="list"
                           offset:500
@@ -76,7 +76,7 @@
             return {
                 req: {},
                 list: [],
-                isLoading: false,
+                isRefreshLoading: false,
                 loading: false,
                 finished: false,
                 configs: {},
@@ -87,7 +87,6 @@
                 isShowDetails: false,
                 isShowBtn: false,
                 item: {},
-
             }
         },
         mounted: function () {
@@ -151,30 +150,34 @@
             getList: async function () {
                 let data = await this.$myHttp.myGet(URL_WAN_FANG.GET_PANGING_LIST, this.req);
                 if (data && data != []) {
-                    this.req.p++;
-                    if (data.length < this.req.p) {
+                    if (Array.isArray(data)){
+                        this.req.p++;
+                        if (data.length < this.req.p) {
+                            this.finished = true;
+                        }
+                        data.forEach(function (item) {
+                            if (item.keyWord && item.keyWord != "") {
+                                item.keyWord = item.keyWord.slice(0, item.keyWord.length - 1);
+                                item.keyWord = item.keyWord.split('；');
+                            }
+                            if (item.introdution != '') {
+                                item.introdution = item.introdution.split(' ');
+                            }
+                        })
+                    } else {
                         this.finished = true;
                     }
-                    data.forEach(function (item) {
-                        if (item.keyWord && item.keyWord != "") {
-                            item.keyWord = item.keyWord.slice(0, item.keyWord.length - 1);
-                            item.keyWord = item.keyWord.split('；');
-                        }
-                        if (item.introdution != '') {
-                            item.introdution = item.introdution.split(' ');
-                        }
-                    })
                 } else {
                     this.finished = true;
                 }
                 this.list = this.list.concat(data);
-                this.isLoading = false;
+                this.isRefreshLoading = false;
                 this.loading = false;
             },
             onRefresh() {
                 this.finished = false;
-                this.list = [];
                 this.req.p = 1;
+                this.list = [];
                 this.getList();
             },
             onClickLeft() {

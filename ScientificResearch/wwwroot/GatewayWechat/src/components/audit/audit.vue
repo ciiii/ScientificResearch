@@ -109,7 +109,8 @@ export default {
             duration: 1500,
             message: "操作成功！"
           });
-          this.$emit("getBacklog");
+          // this.$emit("getBacklog");
+          this.refresh();
         }
       });
       this.back();

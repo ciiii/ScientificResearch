@@ -1,5 +1,6 @@
 function getMenuPermissions(getMenuPermissions) {
-    if (localStorage.myUserInfo&&) {
+    if (localStorage.getItem('isEntryLogin')) {
+        //入口进入
         Menu.getMenuPermissions('get', function getMenuPermissionsListener(success, obj, strErro) {
             if (success) {
                 var curTime = new Date().getTime();
@@ -16,6 +17,7 @@ function getMenuPermissions(getMenuPermissions) {
                 }
                 localStorage.setItem('info', JSON.stringify(postData));
                 sessionStorage.mUserId = personnel.编号;
+
                 getMenuPermissions(true);
             } else {
                 getMenuPermissions(false);
@@ -23,9 +25,11 @@ function getMenuPermissions(getMenuPermissions) {
                 console.info(strErro);
             }
         });
+        console.info(111)
     } else {
+        //手动登录
+        console.info(222)
         localStorage.setItem('Authorization', sessionStorage.Authorization);
         getMenuPermissions(true);
-
     }
 }

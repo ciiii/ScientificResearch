@@ -2,7 +2,7 @@
   <div>
     <!-- <search/> -->
     <div class="nav">
-      <img src="@/assets/images/iocn/homeLogo.jpg" alt="科研logo">
+      <img src="@/assets/images/iocn/logo.png" alt="科研logo">
       <span @click="toLogin" v-if="!personnel">登 录</span>
     </div>
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
@@ -169,7 +169,8 @@ export default {
 .nav {
   background-color: #fff;
   img {
-    height: 50px;
+    height: 40px;
+    padding: 5px 0;
   }
   span {
     position: absolute;

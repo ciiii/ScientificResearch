@@ -406,5 +406,20 @@ namespace ScientificResearch.Controllers
         [HttpPost]
         async public Task<object> 测试merge人员OpenId([FromBody]人员OpenId model) =>
             await Db.Merge(model);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public object 测试获取ip() =>
+            new
+            {
+                请求的ip = HttpContext.Connection.RemoteIpAddress.ToString(),
+                请求的端口 = HttpContext.Connection.RemotePort.ToString(),
+                网站的ip = Request.Host.Host,
+                网站的端口 = Request.Host.Port
+            };
+
     }
 }

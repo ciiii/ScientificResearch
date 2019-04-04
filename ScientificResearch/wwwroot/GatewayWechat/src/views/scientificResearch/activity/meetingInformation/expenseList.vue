@@ -1,7 +1,7 @@
 <template>
   <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" class="box">
     <div class="title">
-      <i class="icon iconfont icon-gonghuijingfeibaoxiao"></i>参会经费报销信息
+      <i class="icon iconfont icon-gonghuijingfeibaoxiao"></i>参会经费报销管理
     </div>
     <div class="backContentBox" v-for="(item, key) in expenseList" :key="key">
       <ul class="backContentTop" @click="goExpenseDetails(item.编号)">
@@ -46,7 +46,7 @@
           </span>
         </li>
       </ul>
-      <span class="audit" @click="goMeetingsList(item.编号)">参会信息</span>
+      <span class="audit" @click="goMeetingsList(item.编号)">参会详情</span>
     </div>
     <van-popup v-model="show" class="popup">
       <van-tabs v-model="active" swipeable>

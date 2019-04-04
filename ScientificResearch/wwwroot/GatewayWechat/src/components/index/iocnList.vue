@@ -2,7 +2,11 @@
   <div>
     <ul>
       <li v-for="(item,index) in iocnList" :key="index">
-        <a @click="path(item)">
+        <a v-if="item.手机链接地址!=upToDateUrl" @click="path(item)">
+          <img :src="item.Logo" :alt="item.名称">
+          <p>{{item.名称}}</p>
+        </a>
+        <a v-else :href="upToDateUrl">
           <img :src="item.Logo" :alt="item.名称">
           <p>{{item.名称}}</p>
         </a>
@@ -14,7 +18,8 @@
 export default {
   data() {
     return {
-      iocnList: []
+      iocnList: [],
+      upToDateUrl: "https://www.uptodate.com/contents/search"
     };
   },
   created() {},
@@ -83,6 +88,7 @@ export default {
           医院名称: personnel.DbKey
         };
         this.$http.getServiceList(para).then(res => {
+          console.log(res, "222");
           this.iocnList = res.data;
         });
         this.$emit("getPersonnel");
@@ -105,6 +111,14 @@ export default {
           }
         });
       }
+      // else {
+      //   this.$router.push({
+      //     path: item.手机链接地址,
+      //     query: {
+      //       accountId: item.编号
+      //     }
+      //   });
+      // }
     }
   }
 };

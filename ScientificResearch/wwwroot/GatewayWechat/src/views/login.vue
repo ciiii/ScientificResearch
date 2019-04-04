@@ -1,6 +1,6 @@
 <template>
   <section class="box">
-    <img src="@/assets/images/logo.png" alt="logo图片" class="img">
+    <img src="@/assets/images/iocn/logo.png" alt="logo图片" class="img">
     <form action="/" onsubmit="return false">
       <div class="input">
         <input type="text" placeholder="医院" v-model="DbKey" @click="hospital" readonly>
@@ -148,19 +148,20 @@ export default {
   background-color: #fff;
 }
 .img {
-  width: 180px;
-  height: 180px;
-  margin-top: 50px;
+  width:200px;
+  height: 60px;
+  margin: 50px 0 20px 0;
 }
 
 .input > input {
   display: block;
   margin: 0 auto;
-  padding: 6px 5px;
+  /* padding: 10px 5px; */
+  line-height: 2;
   margin-top: 5px;
   border: none;
   border-bottom: 1px solid #57d4ce;
-  width: 180px;
+  width: 250px;
   outline-style: none;
   font-size: 14px;
 }
@@ -171,7 +172,7 @@ export default {
   border-radius: 20px;
   background-color: #57d4ce;
   color: #fff;
-  width: 180px;
+  width: 260px;
   font-size: 16px;
 }
 </style>

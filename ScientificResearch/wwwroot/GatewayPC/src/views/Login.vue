@@ -103,7 +103,7 @@
                 localStorage.setItem('myUserInfo', JSON.stringify(data));
                 localStorage.setItem('Authorization', JSON.stringify(data.token_type + ' ' + data.access_token));
                 localStorage.setItem('gatewayUrl',window.location.href);
-                console.info(JSON.parse(localStorage.getItem('myUserInfo')));
+                localStorage.setItem('isEntryLogin',true);
                 if (this.checked) {
                     localStorage.setItem('myLoginInfo', JSON.stringify(this.account));
                 } else {

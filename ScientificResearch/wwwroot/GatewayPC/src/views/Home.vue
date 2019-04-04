@@ -37,7 +37,7 @@
                             </div>
                             <ul class="list">
                                 <li v-for="el in serviceList" :key="el.编号">
-                                    <a :href="el.电脑链接地址?el.电脑链接地址:'javascript:;'" @click="clickUrl(el)" target="_blank">
+                                    <a href="javascript:;" @click="clickUrl(el)">
                                         <span class="btn-icon"><i class="icon iconfont icon-yuandianxiao"></i></span>
                                         <img class="img-logo" v-if="el.Logo" :src="el.Logo" alt="服务logo" height="20"/>
                                         <img class="img-logo" v-else src="../assets/images/service-logo.jpg"
@@ -321,6 +321,8 @@
                         this.$message.warning('您没有订购该服务！');
                     } else {
                         localStorage.setItem('gatewayUrl', window.location.href);
+                        localStorage.setItem('isEntryLogin',true);
+                        window.open(el.电脑链接地址);
                     }
                 } else {
                     this.$message.error('请先登录！');

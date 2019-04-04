@@ -24,7 +24,7 @@
         </li>
         <li>
           <span>报销金额：</span>
-          <span>{{item.报销金额}}</span>
+          <span>{{NumFormat(item.报销金额)}}</span>
         </li>
         <li>
           <span>审核进度：</span>
@@ -44,131 +44,6 @@
       </ul>
       <ReturnBtn/>
     </div>
-    <!-- <van-popup v-model="show" class="popup">
-      <van-tabs v-model="active" swipeable>
-        <van-tab title="报销信息">
-          <ul class="servicel">
-            <h4>基本信息</h4>
-            <li class="title">
-              <span>项目名称</span>
-              <p>{{this.someExpenseDetails.项目名称}}</p>
-            </li>
-            <li>
-              <span>项目类型</span>
-              <span>{{this.someExpenseDetails.项目类型}}</span>
-            </li>
-            <li>
-              <span>报销编号</span>
-              <span>{{this.someExpenseDetails.报销编号}}</span>
-            </li>
-            <li>
-              <span>报销金额</span>
-              <span>{{this.someExpenseDetails.报销金额}}</span>
-            </li>
-            <li>
-              <span>报销经费用途</span>
-              <span>{{this.someExpenseDetails.报销经费用途}}</span>
-            </li>
-            <li>
-              <span>报销方式</span>
-              <span>{{this.someExpenseDetails.报销方式}}</span>
-            </li>
-            <li>
-              <span>公务卡号</span>
-              <span>{{this.someExpenseDetails.公务卡号}}</span>
-            </li>
-            <li>
-              <span>公务卡所属人</span>
-              <span>{{this.someExpenseDetails.公务卡所属人姓名}}</span>
-            </li>
-            <li>
-              <span>报销时间</span>
-              <span>{{startTime(this.someExpenseDetails.报销时间)}}</span>
-            </li>
-            <li>
-              <span>报销人</span>
-              <span>{{this.someExpenseDetails.报销人姓名}}</span>
-            </li>
-            <li>
-              <span>报销人部门</span>
-              <span>{{this.someExpenseDetails.报销人部门名称}}</span>
-            </li>
-            <h4>参会相关文件</h4>
-            <li>参会相关文件：{{this.someExpenseDetails.参会相关文件路径}}</li>
-          </ul>
-        </van-tab>
-        <van-tab title="审核记录">
-          <ul v-for="(item,key) in expenseAudit" :key="key" class="audit">
-            <li>
-              <span>步骤名称</span>
-              <span>{{item.名称}}</span>
-            </li>
-            <li>
-              <span>处理人</span>
-              <span>{{item.姓名}}</span>
-            </li>
-            <li>
-              <span>部门</span>
-              <span>{{item.部门名称}}</span>
-            </li>
-            <li>
-              <span>当前状态</span>
-              <span :style="{'color':(item.状态说明 == state ? '#31BD5D' : '#FF976A')}">{{item.状态说明}}</span>
-            </li>
-            <li>
-              <span>执行时间</span>
-              <span>
-                <i class="icon iconfont icon-shijian1"></i>
-                {{startTimeB(item.执行时间)}}
-              </span>
-            </li>
-            <li>
-              <span>备注</span>
-              <span>{{item.备注}}</span>
-            </li>
-          </ul>
-        </van-tab>
-        <van-tab title="报销详情">
-          <ul v-for="(item,key) in expenseList" :key="key" class="audit">
-            <li>
-              <span>报销科目</span>
-              <span>{{item.财务科目}}</span>
-            </li>
-            <li>
-              <span>支出类型</span>
-              <span>{{item.项目支出类型}}</span>
-            </li>
-            <li>
-              <span>支出内容</span>
-              <span>{{item.项目支出内容}}</span>
-            </li>
-            <li>
-              <span>批准经费</span>
-              <span>{{NumFormat(item.批准经费)}}</span>
-            </li>
-            <li>
-              <span>配套经费</span>
-              <span>{{NumFormat(item.配套经费)}}</span>
-            </li>
-            <li>
-              <span>已报销</span>
-              <span>{{NumFormat(item.已报销金额)}}</span>
-            </li>
-            <li>
-              <span>报销金额</span>
-              <span>{{NumFormat(item.报销金额)}}</span>
-            </li>
-            <li>
-              <span>备注</span>
-              <span>{{item.备注}}</span>
-            </li>
-          </ul>
-        </van-tab>
-      </van-tabs>
-      <div class="backtrack" @click="backtrack">
-        <i class="icon iconfont icon-fanhui1"></i> 返回
-      </div>
-    </van-popup> -->
   </van-list>
 </template>
 <script>
@@ -177,25 +52,21 @@ export default {
   data() {
     return {
       someExpenseList: [],
-      // someExpenseDetails: [],
-      // expenseAudit: [],
-      // expenseList: [],
-      // active: 0,
-      // show: false,
       loading: false,
       finished: false,
       flag: "已完成-审核通过",
-      // state: "审核通过"
+      meetingCode: this.$route.params.item
     };
   },
-  created() {
+  created() {},
+  mounted() {
     this.getParams();
   },
-  mounted() {},
   methods: {
     getParams() {
+      // this.meetingCode = this.$route.params.item;
       var para = {
-        参加会议编号: this.$route.params.item
+        参加会议编号: this.meetingCode
       };
       this.$http.getSomeExpenseList(para).then(res => {
         console.log(res, "www");
@@ -203,23 +74,15 @@ export default {
       });
     },
     detailsPopup(item) {
+      console.log(item, "22");
       this.$router.push({
         path: "/reimbursementDetails",
         name: "reimbursementDetails",
         params: {
-          item: item
+          item: item,
+          code: this.meetingCode
         }
       });
-      // var para = {
-      //   报销编号: item
-      // };
-      // this.$http.getSomeExpenseDetails(para).then(res => {
-      //   console.log(res, "2132132");
-      //   this.someExpenseDetails = res.data.报销基本信息;
-      //   this.expenseAudit = res.data.报销审核记录;
-      //   this.expenseList = res.data.本次报销项目列表;
-      // });
-      // this.show = true;
     },
     onLoad() {
       // 异步更新数据
@@ -254,11 +117,6 @@ export default {
         return item;
       }
     },
-    // 关闭弹窗
-    // backtrack() {
-
-    //   this.show = false;
-    // },
     //转换金额格式
     NumFormat(item) {
       return NumFormat(item);
@@ -316,70 +174,5 @@ export default {
       }
     }
   }
-  // .popup {
-  //   width: 100%;
-  //   height: 100%;
-  //   transform: none;
-  //   top: 0;
-  //   left: 0;
-  //   background-color: #f5f3fb;
-  //   .van-tab__pane {
-  //     padding: 10px;
-  //     height: 100vh;
-  //   }
-  //   .audit,
-  //   .servicel {
-  //     font-size: 14px;
-  //     padding: 10px;
-  //     margin-bottom: 20px;
-  //     border-bottom: 2px solid #ccc;
-  //     background-color: #fff;
-  //     h4 {
-  //       margin: 5px 0;
-  //       padding: 5px;
-  //       color: #1296db;
-  //       background-color: #e7e7e7;
-  //     }
-  //     li {
-  //       padding: 10px 0;
-  //       display: flex;
-  //       justify-content: space-between;
-  //       border-bottom: 1px solid #f2f2f2;
-  //       p {
-  //         width: 80%;
-  //         color: #5a5a5a;
-  //         margin: 0;
-  //         text-align: right;
-  //       }
-  //       span:nth-child(1) {
-  //         color: #888;
-  //       }
-  //       span:nth-child(2) {
-  //         color: #5a5a5a;
-  //       }
-  //       i {
-  //         color: rgb(6, 167, 6);
-  //       }
-  //     }
-  //     .title span {
-  //       display: flex;
-  //       align-items: center;
-  //     }
-  //   }
-  //   .backtrack {
-  //     line-height: 1.6;
-  //     font-size: 14px;
-  //     color: #fff;
-  //     width: 80px;
-  //     height: 26px;
-  //     padding: 6px;
-  //     text-align: center;
-  //     position: fixed;
-  //     bottom: 60px;
-  //     right: 20px;
-  //     border-radius: 20px;
-  //     background-color: rgba(28, 134, 238, 0.5);
-  //   }
-  // }
 }
 </style>
