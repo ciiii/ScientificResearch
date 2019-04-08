@@ -129,10 +129,7 @@
         </ul>
       </van-tab>
       <ReturnTop/>
-      <!-- <ReturnBtn/> -->
-      <div class="backtrack" @click="backtrack">
-        <i class="icon iconfont icon-fanhui1"></i> 返回
-      </div>
+      <ReturnBtn/>
     </van-tabs>
   </div>
 </template>
@@ -145,8 +142,7 @@ export default {
       expenseAudit: [],
       expenseList: [],
       active: 0,
-      state: "审核通过",
-      meetingCode: this.$route.params.code
+      state: "审核通过"
     };
   },
   mounted() {
@@ -159,19 +155,10 @@ export default {
         报销编号: this.$route.params.item
       };
       this.$http.getSomeExpenseDetails(para).then(res => {
-        console.log(res, "2132132");
+        // console.log(res, "2132132");
         this.someExpenseDetails = res.data.报销基本信息;
         this.expenseAudit = res.data.报销审核记录;
         this.expenseList = res.data.本次报销项目列表;
-      });
-    },
-    backtrack() {
-      this.$router.push({
-        path: "/someExpenseList",
-        name: "someExpenseList",
-        params: {
-          item: this.meetingCode
-        }
       });
     },
     // 截取时间
@@ -247,20 +234,6 @@ export default {
       display: flex;
       align-items: center;
     }
-  }
-  .backtrack {
-    line-height: 1.6;
-    font-size: 14px;
-    color: #fff;
-    width: 80px;
-    height: 26px;
-    padding: 6px;
-    text-align: center;
-    position: fixed;
-    bottom: 60px;
-    right: 20px;
-    border-radius: 20px;
-    background-color: rgba(28, 134, 238, 0.5);
   }
 }
 // .popup {

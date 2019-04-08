@@ -40,10 +40,10 @@ export default {
       this.$emit("getMessage");
       this.value = "";
     },
-    refresh(){
-      console.log("刷新待办列表!")
-      this.$emit("getBacklog");
-    },
+    // refresh(){
+    //   console.log("刷新待办列表!")
+    //   this.$emit("getBacklog");
+    // },
     pass() {
       console.log(this.message, "通过");
       var para = {
@@ -63,8 +63,6 @@ export default {
             duration: 1500,
             message: "操作成功！"
           });
-          // this.$emit("getBacklog");
-          this.refresh();
         }
       });
       this.back();
@@ -87,7 +85,7 @@ export default {
             message: "操作成功！"
           });
           // this.$emit("getBacklog");
-          this.refresh();
+          // this.refresh();
         }
       });
       this.back();
@@ -110,7 +108,7 @@ export default {
             message: "操作成功！"
           });
           // this.$emit("getBacklog");
-          this.refresh();
+          // this.refresh();
         }
       });
       this.back();

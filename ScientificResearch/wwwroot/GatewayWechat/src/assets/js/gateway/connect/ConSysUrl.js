@@ -1,4 +1,5 @@
-const HTTP_URL_HOST = 'http://oa.meinolf.net.cn:20003';
+const HTTP_URL_HOST = 'http://a.ttz.cn:89';
+// const HTTP_URL_HOST = 'http://oa.meinolf.net.cn:20003';
 // const HTTP_URL_HOST = 'http://192.168.0.72:20003';
 // const HTTP_URL_HOST = 'http://192.168.0.22:20001';
 const URL_DOWNLOAD_FILE = HTTP_URL_HOST + '/Lib/FileMgrController/DownLoadFile';

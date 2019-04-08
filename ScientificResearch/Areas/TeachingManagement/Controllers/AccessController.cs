@@ -36,7 +36,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         [HttpGet]
         async public Task<object> 获取教学权限菜单()
         {
-            var permission = await Db.GetListSpAsync<教学权限>($"tfn_教学人员的权限('{CurrentUser.工号}')", orderStr: "排序值");
+            var permission = await Db.GetListSpAsync<教学权限>($"tfn_教学人员的权限('{CurrentUser.工号}')", orderStr: "排序值", orderType:true);
             //处理一下中文
             //foreach (var item in permission)
             //{
@@ -60,7 +60,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
                    where item.上级编号 == topId
                    select new
                    {
-                       菜单 = item,
+                       菜单 = item.名称,
                        子级菜单 = RecursivePermission(permission, item.编号)
                    };
         }

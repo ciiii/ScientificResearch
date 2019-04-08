@@ -484,7 +484,7 @@ namespace ScientificResearch.Infrastucture
         //}
         #endregion
 
-
+        ///
         async public static Task<TOut> ExecuteTransaction<TOut>(string dbConnectionString, Func<SqlConnection,SqlTransaction, Task<TOut>> myTran)
         {
             using (var dbForTransaction = new SqlConnection(dbConnectionString))

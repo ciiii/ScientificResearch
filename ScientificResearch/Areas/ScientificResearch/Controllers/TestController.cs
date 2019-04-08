@@ -341,6 +341,7 @@ namespace ScientificResearch.Controllers
 
         /// <summary>
         /// 试试swagger里面上传文件
+        /// 并返回文件内容,不保存
         /// </summary>
         /// <param name="files"></param>
         /// <returns></returns>
@@ -348,7 +349,8 @@ namespace ScientificResearch.Controllers
         [HttpPost]
         public object testUpload(Microsoft.AspNetCore.Http.IFormFileCollection files)
         {
-            return files;
+            var sr = new StreamReader(files[0].OpenReadStream());
+            return sr.ReadToEnd();
         }
 
         /// <summary>
@@ -421,5 +423,54 @@ namespace ScientificResearch.Controllers
                 网站的端口 = Request.Host.Port
             };
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public object 测试CurrentUser() => CurrentUser;
+
+        /// <summary>
+        /// 看看即可
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public object 测试vs里面dapper的事务用func传进去的写法([FromBody] 教学科室 data)
+        {
+            //Task<教学科室> myTran(SqlConnection dbForTransaction, SqlTransaction transaction) =>
+            //    dbForTransaction.Merge<教学科室>(data, transaction);
+
+            //return await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+            return "自己看代码";
+        }
+
+        /// <summary>
+        /// 这是不可能的,只能重写,不能屏蔽;
+        /// 但是可以用Obsolete来实现swagger的post时不显示~~
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public object 测试子类屏蔽父类的某个属性([FromBody] 子类class1 obj)
+        {
+            return obj;
+        }
+
+        public class 父类class1
+        {
+            public int 年纪 { get; set; }
+            public int 岁数 { get; set; }
+        }
+
+        public class 子类class1:父类class1
+        {
+            /// <summary>
+            /// 不需要这样写哈,这么写是为说明子类不能屏蔽父类属性;
+            /// 要obsolete直接写在父类即可;
+            /// </summary>
+            [Obsolete]
+            public new int 年纪 { get;  }
+        }
     }
 }

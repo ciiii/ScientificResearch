@@ -14,6 +14,7 @@ using ScientificResearch.Business;
 using ScientificResearch.Infrastucture;
 using ScientificResearch.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 
 namespace ScientificResearch.Areas.Manage.Controllers
 {
@@ -57,12 +58,11 @@ namespace ScientificResearch.Areas.Manage.Controllers
             }
 
             var ApiMpHost = Config.GetValue<string>("WechatSetting:ApiMpHost");
-            var appId = Config.GetValue<string>("WechatSetting:appId"); 
-            var appSecret = Config.GetValue<string>("WechatSetting:appSecret");
+            var appId = Config.GetValue<string>(Env.IsDevelopment() == true ? "WechatSetting:TestappId":"WechatSetting:appId"); 
+            var appSecret = Config.GetValue<string>(Env.IsDevelopment() == true ? "WechatSetting:TestappSecret": "WechatSetting:appSecret");
             var grantType = Config.GetValue<string>("WechatSetting:grantType");
 
             //通过，用code换取access_token
-
             var url = string.Format($"{ApiMpHost}/sns/oauth2/access_token?appid={appId}&secret={appSecret}&code={code}&grant_type={grantType}");
 
             try
@@ -199,6 +199,7 @@ namespace ScientificResearch.Areas.Manage.Controllers
         /// 根据用户信息获取jwt字串,并返回"openid登录""用户名密码登录""绑定openid到用户"的一样的返回信息
         /// </summary>
         /// <param name="user"></param>
+        /// <param name="role"></param>
         /// <returns></returns>
         //private LoginReturn getJwt(CurrentUser user)
         private LoginReturn<T> getJwt<T>(T user, string role = "")

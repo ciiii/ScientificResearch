@@ -42,8 +42,8 @@
           <span id="state">{{item.步骤名称}}-{{item.步骤状态说明}}</span>
         </li>
       </ul>
-      <ReturnBtn/>
     </div>
+    <ReturnBtn/>
   </van-list>
 </template>
 <script>
@@ -55,7 +55,7 @@ export default {
       loading: false,
       finished: false,
       flag: "已完成-审核通过",
-      meetingCode: this.$route.params.item
+      meetingID: ""
     };
   },
   created() {},
@@ -64,23 +64,34 @@ export default {
   },
   methods: {
     getParams() {
-      // this.meetingCode = this.$route.params.item;
-      var para = {
-        参加会议编号: this.meetingCode
-      };
-      this.$http.getSomeExpenseList(para).then(res => {
-        console.log(res, "www");
-        this.someExpenseList = res.data;
-      });
+      this.meetingID = localStorage.getItem("meetingID")
+      // console.log(this.meetingID,"本地参加会议编号")
+      if (this.meetingID !== null) {
+        var para = {
+          参加会议编号: this.meetingID
+        };
+        this.$http.getSomeExpenseList(para).then(res => {
+          // console.log(res, "本地【有】参加会议编号");
+          this.someExpenseList = res.data;
+        });
+      } else {
+        localStorage.meetingID = this.$route.params.item
+        var para = {
+          参加会议编号: this.$route.params.item
+        };
+        this.$http.getSomeExpenseList(para).then(res => {
+          // console.log(res, "本地 【没有】 参加会议编号");
+          this.someExpenseList = res.data;
+        });
+      }
     },
     detailsPopup(item) {
-      console.log(item, "22");
+      // console.log(item, "报销编号");
       this.$router.push({
         path: "/reimbursementDetails",
         name: "reimbursementDetails",
         params: {
-          item: item,
-          code: this.meetingCode
+          item: item
         }
       });
     },

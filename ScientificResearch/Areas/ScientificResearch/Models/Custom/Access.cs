@@ -73,6 +73,7 @@ namespace ScientificResearch.Models
     public class CurrentUserBase
     {
         public string DbKey { get; set; }
+        //public string MyRole { get; set; }
     }
 
     /// <summary>

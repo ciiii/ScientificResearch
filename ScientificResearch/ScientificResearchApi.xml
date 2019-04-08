@@ -54,6 +54,7 @@
             根据用户信息获取jwt字串,并返回"openid登录""用户名密码登录""绑定openid到用户"的一样的返回信息
             </summary>
             <param name="user"></param>
+            <param name="role"></param>
             <returns></returns>
         </member>
         <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.记录登录日志(System.Data.SqlClient.SqlConnection,ScientificResearch.Models.CurrentUser)">
@@ -17348,6 +17349,7 @@
         <member name="M:ScientificResearch.Controllers.TestController.testUpload(Microsoft.AspNetCore.Http.IFormFileCollection)">
             <summary>
             试试swagger里面上传文件
+            并返回文件内容,不保存
             </summary>
             <param name="files"></param>
             <returns></returns>
@@ -17374,6 +17376,33 @@
             
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.TestController.测试CurrentUser">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.TestController.测试vs里面dapper的事务用func传进去的写法(ScientificResearch.Models.教学科室)">
+            <summary>
+            看看即可
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.TestController.测试子类屏蔽父类的某个属性(ScientificResearch.Controllers.TestController.子类class1)">
+            <summary>
+            这是不可能的,只能重写,不能屏蔽;
+            但是可以用Obsolete来实现swagger的post时不显示~~
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="P:ScientificResearch.Controllers.TestController.子类class1.年纪">
+            <summary>
+            不需要这样写哈,这么写是为说明子类不能屏蔽父类属性;
+            要obsolete直接写在父类即可;
+            </summary>
         </member>
         <member name="M:ScientificResearch.Controllers.WorkFlowController.审核步骤(ScientificResearch.Models.完成步骤)">
             <summary>
@@ -17880,15 +17909,7 @@
             <returns></returns>
         </member>
         <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.ExecuteTransaction``1(System.String,System.Func{System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction,System.Threading.Tasks.Task{``0}})">
-            <summary>
-            启禁某个表的某条记录,对应的sp名有特定约定;
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="cnn"></param>
-            <param name="id"></param>
-            <param name="state"></param>
-            <param name="transaction"></param>
-            <returns></returns>
+            
         </member>
         <member name="M:MyLib.MyDynamic.ConvertToDynamic(System.Object)">
             <summary>

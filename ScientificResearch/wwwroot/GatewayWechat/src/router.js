@@ -162,7 +162,14 @@ export default new Router({
             component: () =>
                 import ("./views/scientificResearch/activity/meetingInformation/meetingInformation.vue"),
             meta: { title: '参会信息' }
-        }, ,
+        },
+        { // 参会信息详情
+            path: "/meetingDetails",
+            name: "meetingDetails",
+            component: () =>
+                import ("./views/scientificResearch/activity/meetingInformation/meetingDetails.vue"),
+            meta: { title: '参会详情' }
+        },
         { // 参会反馈列表
             path: "/meetingFeedbackList",
             name: "meetingFeedbackList",

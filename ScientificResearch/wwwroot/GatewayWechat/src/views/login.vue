@@ -118,11 +118,11 @@ export default {
                 localStorage.flag = false;
               } else {
                 console.log("44444444")
-                this.$notify('登录信息错误！');
+                this.$notify('登录信息有误！');
               }
             });
         } else {
-          this.$notify("登录信息有误！");
+          this.$notify("请授权后再登录！");
         }
       }
     }, 500),

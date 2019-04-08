@@ -35,7 +35,7 @@
       </div>
     </div>
     <van-popup v-model="show" class="popup">
-      <Audit :message="message" @getMessage="getMessage" @getBacklog="getBacklog"></Audit>
+      <Audit :message="message" @getMessage="getMessage"></Audit>
     </van-popup>
   </van-list>
 </template>
@@ -83,6 +83,7 @@ export default {
     },
     // 获取待办列表
     getBacklog() {
+      console.log("<<<<<<<<<<<<<")
       let data = {
         index: this.index + 1
       };

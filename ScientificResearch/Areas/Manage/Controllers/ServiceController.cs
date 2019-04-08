@@ -51,19 +51,29 @@ namespace ScientificResearch.Areas.Manage.Controllers
         async public Task<object> 获取医院列表() => await Db_Manage.GetListSpAsync<医院>();
 
         [HttpPost]
-        async public Task<object> ExecuteSqlForEachUserDb([FromBody]string strSql)
+        async public Task<object> ExecuteSqlForEachUserDb(Microsoft.AspNetCore.Http.IFormFileCollection files)
+        //async public Task<object> ExecuteSqlForEachUserDb([FromBody]string strSql)
         {
+
+            //size += file.Length;
+
+            var sr = new StreamReader( files[0].OpenReadStream());
+            var strSql = sr.ReadToEnd();
+
+
             var list = await Db_Manage.GetListSpAsync<医院>();
 
             var errList = new List<string>();
 
             foreach (var item in list)
             {
+                //只对 测试李零零一 这个库来测试;
                 if (item.名称 != "测试李零零一") continue;
 
                 var sqlcon = new SqlConnection(DbConnectionStringLack.Replace("{0}", item.名称));
 
-                var arrSql = strSql.Split("GO");
+                var strSplit = "GO\r\n";
+                var arrSql = strSql.Split(strSplit);
                 var listSql = arrSql.ToList();
 
                 //await sqlcon.ExecuteAsync(strSql);
@@ -77,6 +87,7 @@ namespace ScientificResearch.Areas.Manage.Controllers
                     catch (Exception e)
                     {
                         errList.Add($"{ item.名称}: { e.Message}");
+                        //errList.Add($"{ item.名称}:{itemSql}: { e.Message}");
                     }
                 }
 
