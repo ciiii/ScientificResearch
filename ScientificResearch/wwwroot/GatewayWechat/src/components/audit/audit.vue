@@ -20,7 +20,7 @@
 </template>
 <script>
 export default {
-  props: ["message"],
+  props: ["message", "getBacklog"],
   data() {
     return {
       value: "",
@@ -31,7 +31,8 @@ export default {
         pass: 1,
         fail: -1,
         termination: -2
-      }
+      },
+      falg: true
     };
   },
   mounted() {},
@@ -40,19 +41,14 @@ export default {
       this.$emit("getMessage");
       this.value = "";
     },
-    // refresh(){
-    //   console.log("刷新待办列表!")
-    //   this.$emit("getBacklog");
-    // },
     pass() {
-      console.log(this.message, "通过");
+      // console.log(this.message, "通过");
       var para = {
         步骤编号: this.message.步骤编号,
         状态值: this.state.pass,
         备注: this.value
       };
       this.$http.auditStep(para).then(res => {
-        console.log(res, "1111111111111122222222");
         if (res.error) {
           this.$toast({
             duration: 1500,
@@ -63,6 +59,7 @@ export default {
             duration: 1500,
             message: "操作成功！"
           });
+          this.$emit("getBacklog", this.falg);
         }
       });
       this.back();
@@ -84,8 +81,7 @@ export default {
             duration: 1500,
             message: "操作成功！"
           });
-          // this.$emit("getBacklog");
-          // this.refresh();
+          this.$emit("getBacklog", this.falg);
         }
       });
       this.back();
@@ -107,8 +103,7 @@ export default {
             duration: 1500,
             message: "操作成功！"
           });
-          // this.$emit("getBacklog");
-          // this.refresh();
+          this.$emit("getBacklog", this.falg);
         }
       });
       this.back();

@@ -67,6 +67,7 @@
             </li>
             <h4>会议反馈文件</h4>
             <li>会议反馈文件：{{this.FeedbackDetails.会议反馈文件路径}}</li>
+            <li></li>
             <h4>会议基本信息</h4>
             <li>
               <span>会议名称</span>
@@ -117,7 +118,13 @@
               <span>{{this.FeedbackDetails.会议地址}}</span>
             </li>
             <h4>参会相关文件</h4>
-            <li>参会相关文件：{{this.FeedbackDetails.参会相关文件路径}}</li>
+            <li>参会相关文件：</li>
+            <li>
+              <a
+                :href="this.FeedbackDetails.参会相关文件路径"
+                download
+              >{{Interception(this.FeedbackDetails.参会相关文件路径)}}</a>
+            </li>
           </ul>
         </van-tab>
         <van-tab title="反馈申请记录">
@@ -156,6 +163,7 @@
   </van-list>
 </template>
 <script>
+import { Interception } from "@/assets/js/common/filter.js";
 export default {
   data() {
     return {
@@ -214,6 +222,9 @@ export default {
       } else {
         return item;
       }
+    },
+    Interception(item) {
+      return Interception(item);
     },
     //反馈详情
     goFeedbackDetails(item) {

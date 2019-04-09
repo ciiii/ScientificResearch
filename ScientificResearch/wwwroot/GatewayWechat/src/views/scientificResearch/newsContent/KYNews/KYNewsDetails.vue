@@ -21,7 +21,7 @@
         <ul class="servicel">
           <li class="title">
             <span>通知名称</span>
-            <p>{{this.detailslList.通知名称}}</p>
+            <span>{{this.detailslList.通知名称}}</span>
           </li>
           <li>
             <span>通知类型</span>
@@ -97,7 +97,7 @@ export default {
         编号: this.$route.params.item
       };
       this.$http.getKYNewsDetails(para).then(res => {
-        console.log(res, "dddff");
+        // console.log(res, "dddff");
         this.detailslList = res.data.通知公告;
         this.relatedProjects = res.data.接收条件;
       });
@@ -148,12 +148,6 @@ export default {
       display: flex;
       justify-content: space-between;
       border-bottom: 1px solid #f2f2f2;
-      p {
-        width: 78%;
-        color: #5a5a5a;
-        margin: 0;
-        text-align: right;
-      }
       span:nth-child(1) {
         color: #888;
       }
@@ -161,9 +155,15 @@ export default {
         color: #5a5a5a;
       }
     }
-    .title span{
+    .title {
       display: flex;
-      align-items: center; 
+      align-items: center;
+      span:nth-child(1) {
+        width: 30%;
+      }
+      span:nth-child(2) {
+        padding-left: 10px;
+      }
     }
     /deep/ img {
       max-width: 100%;

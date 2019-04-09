@@ -1,5 +1,5 @@
 <template>
-  <van-list v-model="loading" :finished="finished" offset:10 finished-text="没有更多了" @load="onLoad">
+  <van-list v-model="loading" :finished="finished" offset:10 finished-text="没有更多了" @load="onLoad" class="box">
     <h3>科研新闻</h3>
     <ul class="A_News" v-for="(item, key) in list" :key="key" @click="newsDetails(item.编号)">
       <li>
@@ -63,10 +63,9 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-// .van-list {
-//   background-color: #fff !important;
-//   padding-bottom: 150px;
-// }
+.box {
+  background-color: #fff;
+}
 h3 {
   text-align: left;
   font-size: 14px;

@@ -159,55 +159,19 @@
         </member>
         <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.AccessController">
             <summary>
-            
+            登录相关的接口,
             </summary>
-        </member>
-        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.AccessController.Login(ScientificResearch.Models.LoginInfo)">
-            <summary>
-            login 用manage里面的,这个作废了
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.AccessController.获取教学权限菜单">
-            <summary>
-            获取教学管理pc端的功能菜单;
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.AccessController.RecursivePermission(System.Collections.Generic.IEnumerable{ScientificResearch.Models.教学权限},System.Int32)">
-            <summary>
-            权限分层次
-            </summary>
-            <param name="permission"></param>
-            <param name="topId"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.AccessController.ChangePassword(ScientificResearch.Models.ChangePassword)">
-            <summary>
-            修改密码,这个也应该放到manage去 ;
-            </summary>
-            <param name="oldPassword"></param>
-            <param name="newPassword"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.AccessController.获取登录日志(ScientificResearch.Models.Paging,ScientificResearch.Models.登录日志Filter)">
-            <summary>
-            分页获取登录日志,这个也应该放到manage去;
-            </summary>
-            <param name="paging"></param>
-            <param name="filter"></param>
-            <returns></returns>
         </member>
         <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.BaseInfoController">
             <summary>
-            
+            和基础信息维护功能对应
             </summary>
         </member>
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.BaseInfoController.获取某类字典(System.String)">
             <summary>
             字典相关的接口,都使用ScientificResearch-baseinfo中相关的接口,教学管理不再单独提供;
             涉及的字典分类有:学历;职称;学科;民族
+            TODO:这块日后要独立为一个area对应一个db的框架,进而成为一个微服务;
             </summary>
             <param name="分类"></param>
             <returns></returns>
@@ -218,12 +182,52 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.OrganizationController">
+        <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.HomePageController">
             <summary>
-            
+            主页相关的接口
+            获取权限也在这里面
+            这个不能抽象为一个独立的area/架构/微服务,因为各自不同;
             </summary>
         </member>
-        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.OrganizationController.获取部门列表(ScientificResearch.Models.V教学科室Filter)">
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.HomePageController.Login(ScientificResearch.Models.LoginInfo)">
+            <summary>
+            login 用manage里面的,这个作废了
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.HomePageController.获取教学权限菜单">
+            <summary>
+            获取教学管理pc端的功能菜单;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.HomePageController.RecursivePermission(System.Collections.Generic.IEnumerable{ScientificResearch.Models.教学权限},System.Int32)">
+            <summary>
+            权限分层次
+            </summary>
+            <param name="permission"></param>
+            <param name="topId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.OfficeController">
+            <summary>
+            和科研办公功能对应
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.OfficeController.ChangePassword(ScientificResearch.Models.ChangePassword)">
+            <summary>
+            修改密码,这个应该放到一个独立的area去;
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.OrganizationController">
+            <summary>
+            和组织架构功能对应;
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.OrganizationController.获取部门列表(ScientificResearch.Models.v_教学科室Filter)">
             <summary>
             部门的基础信息相关的接口,都使用ScientificResearch-baseinfo中相关的接口,教学管理不再单独提供;
             获取部门列表比较特殊,需要在部门基础信息的之外,提供科室管理员/最大学员人数/带教老师人数等教学信息;
@@ -248,7 +252,72 @@
             <param name="data"></param>
             <returns></returns>
         </member>
-        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.OrganizationController.增改教学带教老师(System.Collections.Generic.IEnumerable{ScientificResearch.Models.教学带教老师})">
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.OrganizationController.增改某教学科室的带教老师(ScientificResearch.Infrastucture.PredefindedIdList{ScientificResearch.Models.教学带教老师})">
+            <summary>
+            
+            </summary>
+            <param name="data">id表示教学科室编号</param>
+            <returns></returns>
+        </member>
+        <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.PermissionController">
+            <summary>
+            基本上,和系统管理-权限管理功能对应;
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.PermissionController.获取登录日志(ScientificResearch.Models.Paging,ScientificResearch.Models.登录日志Filter)">
+            <summary>
+            分页获取登录日志
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.PermissionController.获取教学角色列表">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.PermissionController.增改教学角色(ScientificResearch.Models.教学角色)">
+            <summary>
+            暂时不对外提供
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.PermissionController.分页获取教学角色中的人员(System.Int32,ScientificResearch.Models.Paging,ScientificResearch.Models.教学人员Filter)">
+            <summary>
+            
+            </summary>
+            <param name="教学角色编号"></param>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.PermissionController.分页获取教学角色中没有的人员(System.Int32,ScientificResearch.Models.Paging,ScientificResearch.Models.教学人员Filter)">
+            <summary>
+            
+            </summary>
+            <param name="教学角色编号"></param>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.PermissionController.增改某教学角色中的人员(ScientificResearch.Infrastucture.PredefindedIdList{ScientificResearch.Models.教学人员角色})">
+            <summary>
+            注意不是同时修改一个教学角色+该角色下有哪些人员哈;
+            </summary>
+            <param name="data">id表示教学角色编号</param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.PermissionController.获取教学角色的权限(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="教学角色编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.PermissionController.增改某教学角色的权限(ScientificResearch.Infrastucture.PredefindedIdList{ScientificResearch.Models.教学角色权限})">
             <summary>
             
             </summary>
@@ -899,14 +968,39 @@
             当前教学管理的医院方登录人的信息
             </summary>
         </member>
-        <member name="T:ScientificResearch.Models.V教学科室Filter">
+        <member name="T:ScientificResearch.Models.v_教学科室Filter">
             <summary>
             
             </summary>
         </member>
-        <member name="T:ScientificResearch.Models.V教学带教老师Filter">
+        <member name="T:ScientificResearch.Models.v_教学带教老师Filter">
             <summary>
             
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学人员Filter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学人员Filter.NotEqual编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学人员Filter.部门编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学人员Filter.是否启用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学人员Filter.LikeAllName">
+            <summary>
+            同时对姓名和部门名称做搜索
             </summary>
         </member>
         <member name="T:ScientificResearch.Models.GET_DeleteScript_MSSQL">
@@ -1099,16 +1193,6 @@
             
             </summary>
         </member>
-        <member name="T:ScientificResearch.Models.sp_Execsql">
-            <summary>
-            sp_Execsql[类]
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.sp_Execsql.sql">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="T:ScientificResearch.Models.sp_GetList">
             <summary>
             sp_GetList[类]
@@ -1185,51 +1269,6 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_GetPagingList.strWhere">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="T:ScientificResearch.Models.sp_GetPagingList_作废180601">
-            <summary>
-            sp_GetPagingList_作废180601[类]
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.sp_GetPagingList_作废180601.tbName">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.sp_GetPagingList_作废180601.tbFields">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.sp_GetPagingList_作废180601.keyFields">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.sp_GetPagingList_作废180601.OrderType">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.sp_GetPagingList_作废180601.PageSize">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.sp_GetPagingList_作废180601.PageIndex">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.sp_GetPagingList_作废180601.OrderStr">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.sp_GetPagingList_作废180601.strWhere">
             <summary>
             
             </summary>
@@ -1425,16 +1464,6 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_医院_增改.tt">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="T:ScientificResearch.Models.sp_医院服务_删">
-            <summary>
-            sp_医院服务_删[类]
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.sp_医院服务_删.tt_编号">
             <summary>
             
             </summary>
@@ -1734,21 +1763,6 @@
             
             </summary>
         </member>
-        <member name="T:ScientificResearch.Models.sp_按部门统计成果">
-            <summary>
-            sp_按部门统计成果[类]
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.sp_按部门统计成果.字段名">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.sp_按部门统计成果.字段显示名">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="T:ScientificResearch.Models.sp_教学专业_增改">
             <summary>
             sp_教学专业_增改[类]
@@ -1802,6 +1816,11 @@
         <member name="T:ScientificResearch.Models.sp_教学人员角色_增改">
             <summary>
             sp_教学人员角色_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学人员角色_增改.fId">
+            <summary>
+            
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_教学人员角色_增改.tt">
@@ -1914,6 +1933,11 @@
             sp_教学带教老师_增改[类]
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.sp_教学带教老师_增改.fId">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.sp_教学带教老师_增改.tt">
             <summary>
             
@@ -2014,6 +2038,11 @@
             sp_教学活动评价项目_增改[类]
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.sp_教学活动评价项目_增改.fId">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.sp_教学活动评价项目_增改.tt">
             <summary>
             
@@ -2025,16 +2054,6 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_教学病人_增改.tt">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="T:ScientificResearch.Models.sp_教学病例_增改">
-            <summary>
-            sp_教学病例_增改[类]
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.sp_教学病例_增改.tt">
             <summary>
             
             </summary>
@@ -2089,9 +2108,24 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.sp_教学角色_增改">
+            <summary>
+            sp_教学角色_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学角色_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_教学角色权限_增改">
             <summary>
             sp_教学角色权限_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学角色权限_增改.fId">
+            <summary>
+            
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_教学角色权限_增改.tt">
@@ -2135,6 +2169,36 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_教学轮转任务_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学轮转手册_增改">
+            <summary>
+            sp_教学轮转手册_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学轮转手册_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学轮转手册完成任务_增改">
+            <summary>
+            sp_教学轮转手册完成任务_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学轮转手册完成任务_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学轮转手册类型_增改">
+            <summary>
+            sp_教学轮转手册类型_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学轮转手册类型_增改.tt">
             <summary>
             
             </summary>
@@ -2530,16 +2594,6 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_经费模版项目支出类型_增改.tt_经费模版项目支出内容">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="T:ScientificResearch.Models.sp_经费模版项目支出类型_增改_作废">
-            <summary>
-            sp_经费模版项目支出类型_增改_作废[类]
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.sp_经费模版项目支出类型_增改_作废.tt_经费模版项目支出类型">
             <summary>
             
             </summary>
@@ -5249,11 +5303,6 @@
             教学人员角色[类]
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.教学人员角色.编号">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="P:ScientificResearch.Models.教学人员角色.教学角色编号">
             <summary>
             
@@ -5360,11 +5409,6 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.教学出科申请.备注">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学出科申请.是否通过审核">
             <summary>
             
             </summary>
@@ -6184,11 +6228,6 @@
             
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.教学活动反馈.是否通过反馈">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="P:ScientificResearch.Models.教学活动反馈.建立时间">
             <summary>
             
@@ -6301,7 +6340,7 @@
         </member>
         <member name="P:ScientificResearch.Models.教学活动评价项目.教学活动类型编号">
             <summary>
-            
+            Obsolete
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.教学活动评价项目.名称">
@@ -6380,61 +6419,6 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.教学病人.备注">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="T:ScientificResearch.Models.教学病例">
-            <summary>
-            教学病例[类]
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学病例.编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学病例.教学轮转任务编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学病例.文献类型">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学病例.病例类型">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学病例.病人编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学病例.病例内容">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学病例.附件">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学病例.建立时间">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学病例.备注">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学病例.是否通过审核">
             <summary>
             
             </summary>
@@ -6525,11 +6509,6 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.教学结业申请.备注">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学结业申请.是否通过审核">
             <summary>
             
             </summary>
@@ -6644,11 +6623,6 @@
             教学角色权限[类]
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.教学角色权限.编号">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="P:ScientificResearch.Models.教学角色权限.教学角色编号">
             <summary>
             
@@ -6745,11 +6719,6 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.教学请假申请.备注">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学请假申请.是否通过审核">
             <summary>
             
             </summary>
@@ -6869,6 +6838,116 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.教学轮转手册">
+            <summary>
+            教学轮转手册[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转手册.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转手册.教学轮转编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转手册.文献类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转手册.教学轮转手册类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转手册.病人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转手册.病例内容">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转手册.附件">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转手册.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转手册.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学轮转手册完成任务">
+            <summary>
+            教学轮转手册完成任务[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转手册完成任务.教学轮转手册编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转手册完成任务.教学轮转任务编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转手册完成任务.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学轮转手册类型">
+            <summary>
+            教学轮转手册类型[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转手册类型.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转手册类型.任务类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转手册类型.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转手册类型.是否门诊">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转手册类型.是否病床">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转手册类型.是否医技">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转手册类型.备注">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.教学退培申请">
             <summary>
             教学退培申请[类]
@@ -6900,11 +6979,6 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.教学退培申请.备注">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学退培申请.是否通过审核">
             <summary>
             
             </summary>
@@ -16249,6 +16323,431 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.v_教学人员">
+            <summary>
+            v_教学人员[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.工号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.部门编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.英文名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.性别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.身份证">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.出生日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.入职日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.手机">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.QQ">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.邮箱">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.籍贯">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.毕业日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.合同开始日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.合同结束日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.参加工作日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.专业技术获得日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.职务任职日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.学位">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.学历">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.政治面貌">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.技术职称类别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.技术职称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.第二技术职称类别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.第二技术职称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.婚姻情况">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.学制">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.学历性质">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.学习形式">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.人员类别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.个人身份">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.民族">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.专业技术级别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.所学专业名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.岗位性质">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.职务名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.职务级别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.岗位名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.岗位类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.学科门类">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.一级学科">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.二级学科">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.三级学科">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.人员类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.获得最高学历的院校">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.获得最高学位的院校">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.住宅地址">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.学术特长">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.研究方向">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.个人获得的荣誉和奖项">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.是否启用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.部门名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学人员.AllName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_教学带教老师">
+            <summary>
+            v_教学带教老师[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学带教老师.教学科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学带教老师.带教老师编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学带教老师.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学带教老师.姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学带教老师.部门编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学带教老师.英文名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学带教老师.性别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学带教老师.手机">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学带教老师.是否启用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_教学科室">
+            <summary>
+            v_教学科室[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学科室.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学科室.上级部门编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学科室.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学科室.负责人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学科室.负责人姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学科室.排序值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学科室.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学科室.是否启用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学科室.是否存在下级">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学科室.科室管理员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学科室.科室管理员姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学科室.带教老师数量">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_教学角色">
+            <summary>
+            v_教学角色[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学角色.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学角色.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学角色.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学角色.人数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学角色.功能数">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.V_服务_启用">
             <summary>
             V_服务_启用[类]
@@ -16275,121 +16774,6 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.V_服务_启用.备注">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="T:ScientificResearch.Models.V教学带教老师">
-            <summary>
-            V教学带教老师[类]
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.V教学带教老师.教学科室编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.V教学带教老师.带教老师编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.V教学带教老师.备注">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.V教学带教老师.姓名">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.V教学带教老师.部门编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.V教学带教老师.英文名">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.V教学带教老师.性别">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.V教学带教老师.手机">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.V教学带教老师.是否启用">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="T:ScientificResearch.Models.V教学科室">
-            <summary>
-            V教学科室[类]
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.V教学科室.编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.V教学科室.上级部门编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.V教学科室.名称">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.V教学科室.负责人编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.V教学科室.负责人姓名">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.V教学科室.排序值">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.V教学科室.备注">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.V教学科室.是否启用">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.V教学科室.是否存在下级">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.V教学科室.科室管理员编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.V教学科室.科室管理员姓名">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.V教学科室.带教老师数量">
             <summary>
             
             </summary>
@@ -17873,6 +18257,19 @@
             </summary>
             <typeparam name="T"></typeparam>
             <param name="cnn"></param>
+            <param name="model"></param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.Merge``1(System.Data.IDbConnection,System.Int32,System.Collections.Generic.IEnumerable{``0},System.Data.IDbTransaction)">
+            <summary>
+            对子表,且有merge时Not matched by source的时候删除的要求时,用这种;
+            fid这个参数名字是约定的;
+            注意:tt里面必然有fid,在调用这个方法之前就要自己把它设置了;保证数据正确;
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="cnn"></param>
+            <param name="fId"></param>
             <param name="model"></param>
             <param name="transaction"></param>
             <returns></returns>

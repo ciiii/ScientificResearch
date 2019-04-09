@@ -41,10 +41,6 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-		public bool? 是否通过反馈 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
         [Required(ErrorMessage ="请提供[建立时间]")]
 		public DateTime? 建立时间 { get; set; }
         /// <summary>

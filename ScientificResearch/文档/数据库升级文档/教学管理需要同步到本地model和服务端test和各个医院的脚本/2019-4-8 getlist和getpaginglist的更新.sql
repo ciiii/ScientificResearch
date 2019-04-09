@@ -1,3 +1,22 @@
+DROP PROC dbo.GET_DeleteScript_MSSQL;
+GO
+
+DROP PROC dbo.GET_EnableDisableScript_MSSQL;
+GO
+
+DROP PROC dbo.GET_MergeScript_MSSQL;
+GO
+
+DROP PROC dbo.GET_TrigerScript_MSSQL;
+GO
+
+DROP PROC dbo.GET_TTScript_MSSQL;
+GO
+
+DROP PROC dbo.sp_Rebuild;
+GO
+
+
 
 ALTER PROCEDURE [dbo].[sp_GetList]
     @tbName NVARCHAR(200) ,        --±íÃû

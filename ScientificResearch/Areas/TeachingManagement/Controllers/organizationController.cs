@@ -12,7 +12,7 @@ using ScientificResearch.Models;
 namespace ScientificResearch.Areas.TeachingManagement.Controllers
 {
     /// <summary>
-    /// 
+    /// 和组织架构功能对应;
     /// </summary>
     public class OrganizationController : TeachingManagementBaseController
     {
@@ -23,9 +23,9 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         /// <param name="filter"></param>
         /// <returns></returns>
         [HttpGet]
-        async public Task<object> 获取部门列表(V教学科室Filter filter)
+        async public Task<object> 获取部门列表(v_教学科室Filter filter)
         {
-            return await Db.GetListSpAsync<V教学科室, V教学科室Filter>(filter);
+            return await Db.GetListSpAsync<v_教学科室, v_教学科室Filter>(filter);
         }
 
         /// <summary>
@@ -36,8 +36,8 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         [HttpGet]
         async public Task<object> 获取某科室的教学带教老师(int 科室编号)
         {
-            var filter = new V教学带教老师Filter() { 教学科室编号 = 科室编号 };
-            return await Db.GetListSpAsync<V教学带教老师, V教学带教老师Filter>(filter);
+            var filter = new v_教学带教老师Filter() { 教学科室编号 = 科室编号 };
+            return await Db.GetListSpAsync<v_教学带教老师, v_教学带教老师Filter>(filter);
         }
 
         /// <summary>
@@ -60,12 +60,17 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="data"></param>
+        /// <param name="data">id表示教学科室编号</param>
         /// <returns></returns>
         [HttpPost]
-        async public Task<object> 增改教学带教老师([FromBody] IEnumerable<教学带教老师> data)
+        async public Task<object> 增改某教学科室的带教老师([FromBody] PredefindedIdList<教学带教老师> data)
         {
-            return await Db.Merge(data);
+            foreach (var item in data.List)
+            {
+                item.教学科室编号 = data.Id;
+            }
+
+            return await Db.Merge(data.Id,data.List);
         }
     }
 }

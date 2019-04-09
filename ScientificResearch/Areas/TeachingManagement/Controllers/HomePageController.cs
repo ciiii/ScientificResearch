@@ -13,9 +13,11 @@ using ScientificResearch.Models;
 namespace ScientificResearch.Areas.TeachingManagement.Controllers
 {
     /// <summary>
-    /// 
+    /// 主页相关的接口
+    /// 获取权限也在这里面
+    /// 这个不能抽象为一个独立的area/架构/微服务,因为各自不同;
     /// </summary>
-    public class AccessController : TeachingManagementBaseController
+    public class HomePageController : TeachingManagementBaseController
     {
         /// <summary>
         /// login 用manage里面的,这个作废了
@@ -36,7 +38,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         [HttpGet]
         async public Task<object> 获取教学权限菜单()
         {
-            var permission = await Db.GetListSpAsync<教学权限>($"tfn_教学人员的权限('{CurrentUser.工号}')", orderStr: "排序值", orderType:true);
+            var permission = await Db.GetListSpAsync<教学权限>($"tfn_教学人员的权限('{CurrentUser.工号}')", orderStr: "排序值", orderType: true);
             //处理一下中文
             //foreach (var item in permission)
             //{
@@ -63,33 +65,6 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
                        菜单 = item.名称,
                        子级菜单 = RecursivePermission(permission, item.编号)
                    };
-        }
-
-        /// <summary>
-        /// 修改密码,这个也应该放到manage去 ;
-        /// </summary>
-        /// <param name="oldPassword"></param>
-        /// <param name="newPassword"></param>
-        /// <returns></returns>
-        [HttpPost]
-        async public Task ChangePassword([FromBody]ChangePassword model) =>
-            await Db.ExecuteSpAsync(new sp_人员_修改密码()
-            {
-                工号 = CurrentUser.工号,
-                旧密码 = model.旧密码,
-                新密码 = model.新密码
-            });
-
-        /// <summary>
-        /// 分页获取登录日志,这个也应该放到manage去;
-        /// </summary>
-        /// <param name="paging"></param>
-        /// <param name="filter"></param>
-        /// <returns></returns>
-        [HttpGet]
-        async public Task<PagingResult<登录日志>> 获取登录日志(Paging paging, 登录日志Filter filter)
-        {
-            return await Db.GetPagingListSpAsync<登录日志, 登录日志Filter>(paging, filter, orderType: false);
         }
     }
 }

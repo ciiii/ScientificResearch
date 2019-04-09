@@ -12,13 +12,14 @@ using ScientificResearch.Models;
 namespace ScientificResearch.Areas.TeachingManagement.Controllers
 {
     /// <summary>
-    /// 
+    /// 和基础信息维护功能对应
     /// </summary>
     public class BaseInfoController : TeachingManagementBaseController
     {
         /// <summary>
         /// 字典相关的接口,都使用ScientificResearch-baseinfo中相关的接口,教学管理不再单独提供;
         /// 涉及的字典分类有:学历;职称;学科;民族
+        /// TODO:这块日后要独立为一个area对应一个db的框架,进而成为一个微服务;
         /// </summary>
         /// <param name="分类"></param>
         /// <returns></returns>

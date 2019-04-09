@@ -113,14 +113,6 @@ export default {
           }
         });
       }
-      // else {
-      //   this.$router.push({
-      //     path: item.手机链接地址,
-      //     query: {
-      //       accountId: item.编号
-      //     }
-      //   });
-      // }
     }
   }
 };

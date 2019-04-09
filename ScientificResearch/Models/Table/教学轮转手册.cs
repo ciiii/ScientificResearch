@@ -6,10 +6,10 @@ using System.ComponentModel.DataAnnotations;
 namespace ScientificResearch.Models
 {
     /// <summary>
-    /// 教学病例[类]
+    /// 教学轮转手册[类]
     /// </summary>
     [Serializable]
-	public partial class 教学病例 
+	public partial class 教学轮转手册 
 	{       
         #region 属性
         /// <summary>
@@ -20,8 +20,8 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        [Required(ErrorMessage ="请提供[教学轮转任务编号]")]
-		public int 教学轮转任务编号 { get; set; }
+        [Required(ErrorMessage ="请提供[教学轮转编号]")]
+		public int 教学轮转编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
@@ -30,8 +30,8 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        [MaxLength(50,ErrorMessage ="病例类型不能超过[25]字")]
-		public string 病例类型 { get; set; }
+        [Required(ErrorMessage ="请提供[教学轮转手册类型编号]")]
+		public int 教学轮转手册类型编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
@@ -56,11 +56,6 @@ namespace ScientificResearch.Models
 		/// </summary>
         [MaxLength(500,ErrorMessage ="备注不能超过[250]字")]
 		public string 备注 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        [Required(ErrorMessage ="请提供[是否通过审核]")]
-		public bool 是否通过审核 { get; set; }
         
         
         #endregion

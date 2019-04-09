@@ -8,7 +8,7 @@ namespace ScientificResearch.Models
     /// <summary>
     /// 
     /// </summary>
-    public class V教学科室Filter
+    public class v_教学科室Filter
     {
         public string Like名称 { get; set; }
         public bool? 是否启用 { get; set; }
@@ -18,7 +18,7 @@ namespace ScientificResearch.Models
     /// <summary>
     /// 
     /// </summary>
-    public class V教学带教老师Filter
+    public class v_教学带教老师Filter
     {
         public int 教学科室编号 { get; set; }
     }

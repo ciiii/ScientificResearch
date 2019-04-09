@@ -6,10 +6,10 @@ using System.ComponentModel.DataAnnotations;
 namespace ScientificResearch.Models
 {
     /// <summary>
-    /// 教学活动评价项目[类]
+    /// 教学轮转手册类型[类]
     /// </summary>
     [Serializable]
-	public partial class 教学活动评价项目 
+	public partial class 教学轮转手册类型 
 	{       
         #region 属性
         /// <summary>
@@ -18,11 +18,10 @@ namespace ScientificResearch.Models
         [Required(ErrorMessage ="请提供[编号]")]
 		public int 编号 { get; set; }
         /// <summary>
-		/// Obsolete
+		/// 
 		/// </summary>
-        [DisplayName("Obsolete")]
-        [Required(ErrorMessage ="请提供[教学活动类型编号]")]
-		public int 教学活动类型编号 { get; set; }
+        [Required(ErrorMessage ="请提供[任务类型编号]")]
+		public int 任务类型编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
@@ -32,13 +31,15 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        [Required(ErrorMessage ="请提供[标准分]")]
-		public int 标准分 { get; set; }
+		public bool? 是否门诊 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        [MaxLength(500,ErrorMessage ="说明不能超过[250]字")]
-		public string 说明 { get; set; }
+		public bool? 是否病床 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+		public bool? 是否医技 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>

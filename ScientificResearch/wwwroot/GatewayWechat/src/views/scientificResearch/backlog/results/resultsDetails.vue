@@ -3,11 +3,9 @@
     <van-tab title="基本信息">
       <ul class="servicel">
         <h4>基本信息</h4>
-        <li>
+        <li class="title">
           <span>获奖名称</span>
-          <span>
-            <p>{{this.detailslList.获奖名称}}</p>
-          </span>
+          <span>{{this.detailslList.获奖名称}}</span>
         </li>
         <li>
           <span>获奖类别</span>
@@ -268,15 +266,6 @@ export default {
       display: flex;
       justify-content: space-between;
       border-bottom: 1px solid #f2f2f2;
-      p {
-        font-size: 14px;
-        margin: 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-      }
       span:nth-child(1) {
         color: #888;
       }
@@ -285,6 +274,16 @@ export default {
       }
       i {
         color: rgb(6, 167, 6);
+      }
+    }
+    .title {
+      display: flex;
+      align-items: center;
+      span:nth-child(1) {
+        width: 30%;
+      }
+      span:nth-child(2) {
+        padding-left: 10px;
       }
     }
   }

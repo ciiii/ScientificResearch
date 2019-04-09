@@ -5,7 +5,7 @@
         <h4>基本信息</h4>
         <li class="title">
           <span>会议名称</span>
-          <p>{{this.servicelList.会议名称}}</p>
+          <span>{{this.servicelList.会议名称}}</span>
         </li>
         <li>
           <span>主办单位</span>
@@ -52,13 +52,18 @@
           <span>{{this.servicelList.往返时间}} 天</span>
         </li>
         <h4>会议简介及申请理由</h4>
-        <li>
-          <span>会议简介</span>
+        <li class="title">
+          <span>会议简介：</span>
           <span>{{this.servicelList.会议简介及申请理由}}</span>
         </li>
-        <li></li>
         <h4>参会相关文件</h4>
-        <li>参会相关文件：{{this.servicelList.参会相关文件路径}}</li>
+        <li>参会相关文件：</li>
+        <li>
+          <a
+            :href="this.servicelList.参会相关文件路径"
+            download
+          >{{Interception(this.servicelList.参会相关文件路径)}}</a>
+        </li>
       </ul>
     </van-tab>
     <van-tab title="申请记录">
@@ -88,10 +93,12 @@
         </li>
       </ul>
     </van-tab>
+    <ReturnTop/>
     <ReturnBtn/>
   </van-tabs>
 </template>
 <script>
+import { Interception } from "@/assets/js/common/filter.js";
 export default {
   data() {
     return {
@@ -131,6 +138,9 @@ export default {
       } else {
         return "待定";
       }
+    },
+    Interception(item) {
+      return Interception(item);
     }
   }
 };
@@ -160,12 +170,6 @@ export default {
       display: flex;
       justify-content: space-between;
       border-bottom: 1px solid #f2f2f2;
-      p {
-        width: 80%;
-        color: #5a5a5a;
-        margin: 0;
-        text-align: right;
-      }
       span:nth-child(1) {
         color: #888;
       }
@@ -176,9 +180,15 @@ export default {
         color: rgb(6, 167, 6);
       }
     }
-    .title span {
+    .title {
       display: flex;
       align-items: center;
+      span:nth-child(1) {
+        width: 30%;
+      }
+      span:nth-child(2) {
+        padding-left: 10px;
+      }
     }
   }
 }

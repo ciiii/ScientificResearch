@@ -6,7 +6,7 @@
           <h4>基本信息</h4>
           <li class="title">
             <span>论文标题</span>
-            <p>{{this.detailslList.论文标题}}</p>
+            <span>{{this.detailslList.论文标题}}</span>
           </li>
           <li>
             <span>论文Online日期</span>
@@ -188,12 +188,15 @@
           <h4>论文正文</h4>
           <li>论文正文：</li>
           <li>
-            <a :href="this.detailslList.论文正文路径">{{Interception(this.detailslList.论文正文路径)}}</a>
+            <a :href="this.detailslList.论文正文路径" download>{{Interception(this.detailslList.论文正文路径)}}</a>
           </li>
           <h4>其他相关文件</h4>
           <li>其他相关文件：</li>
           <li>
-            <a :href="this.detailslList.其他相关文件路径">{{Interception(this.detailslList.其他相关文件路径)}}</a>
+            <a
+              :href="this.detailslList.其他相关文件路径"
+              download
+            >{{Interception(this.detailslList.其他相关文件路径)}}</a>
           </li>
         </ul>
       </van-tab>
@@ -318,12 +321,6 @@ export default {
       display: flex;
       justify-content: space-between;
       border-bottom: 1px solid #f2f2f2;
-      p {
-        width: 80%;
-        color: #5a5a5a;
-        margin: 0;
-        text-align: right;
-      }
       span:nth-child(1) {
         color: #888;
       }
@@ -334,9 +331,15 @@ export default {
         color: rgb(6, 167, 6);
       }
     }
-    .title span{
+    .title {
       display: flex;
-      align-items: center; 
+      align-items: center;
+      span:nth-child(1) {
+        width: 30%;
+      }
+      span:nth-child(2) {
+        padding-left: 10px;
+      }
     }
   }
 }

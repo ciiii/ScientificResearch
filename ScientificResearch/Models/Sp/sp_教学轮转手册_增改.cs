@@ -4,10 +4,10 @@ using System.Data;
 namespace ScientificResearch.Models
 {
     /// <summary>
-    /// sp_教学病例_增改[类]
+    /// sp_教学轮转手册_增改[类]
     /// </summary>
     [Serializable]
-	public class sp_教学病例_增改 
+	public class sp_教学轮转手册_增改 
 	{       
               
         #region 属性

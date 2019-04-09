@@ -53,7 +53,7 @@
             <h4>基本信息</h4>
             <li class="title">
               <span>活动名称</span>
-              <p>{{this.servicelList.活动名称}}</p>
+              <span>{{this.servicelList.活动名称}}</span>
             </li>
             <li>
               <span>活动类型</span>
@@ -342,9 +342,15 @@ export default {
           color: rgb(6, 167, 6);
         }
       }
-      .title span {
+      .title {
         display: flex;
         align-items: center;
+        span:nth-child(1) {
+          width: 30%;
+        }
+        span:nth-child(2) {
+          padding-left: 10px;
+        }
       }
     }
     .backtrack {

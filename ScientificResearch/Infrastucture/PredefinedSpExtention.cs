@@ -337,6 +337,28 @@ namespace ScientificResearch.Infrastucture
         }
 
         /// <summary>
+        /// 对子表,且有merge时Not matched by source的时候删除的要求时,用这种;
+        /// fid这个参数名字是约定的;
+        /// 注意:tt里面必然有fid,在调用这个方法之前就要自己把它设置了;保证数据正确;
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="cnn"></param>
+        /// <param name="fId"></param>
+        /// <param name="model"></param>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
+        async public static Task<IEnumerable<T>> Merge<T>(this IDbConnection cnn,int fId, IEnumerable<T> model, IDbTransaction transaction = null) where T : new()
+        {
+            var result = await cnn.QueryAsync<T>(PrdefindeSpMergeName<T>(), new
+            {
+                fId,
+                tt = model.ToDataTable()
+            }, transaction, commandType: CommandType.StoredProcedure);
+
+            return result;
+        }
+
+        /// <summary>
         /// 按约定SP_xxx_删的命名执行一个delete
         /// 注意其中的参数名也是约定
         /// </summary>

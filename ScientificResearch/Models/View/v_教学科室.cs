@@ -5,10 +5,10 @@ using System.ComponentModel;
 namespace ScientificResearch.Models
 {
     /// <summary>
-    /// V教学科室[类]
+    /// v_教学科室[类]
     /// </summary>
     [Serializable]
-	public partial class V教学科室 
+	public partial class v_教学科室 
 	{       
               
         #region 属性

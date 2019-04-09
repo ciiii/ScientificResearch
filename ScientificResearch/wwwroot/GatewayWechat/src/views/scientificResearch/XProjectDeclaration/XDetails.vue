@@ -81,7 +81,7 @@
           <h4>合同文件</h4>
           <li>合同文件：</li>
           <li>
-            <a :href="this.detailslList.合同文件路径" download>{{Interception(this.detailslList.合同文件路径)}}</a>
+            <a :href="this.detailslList.合同文件路径">{{Interception(this.detailslList.合同文件路径)}}</a>
           </li>
         </ul>
       </van-tab>

@@ -14,6 +14,10 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+		public int fId { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
 		public DataTable tt { get; set; }
         
           

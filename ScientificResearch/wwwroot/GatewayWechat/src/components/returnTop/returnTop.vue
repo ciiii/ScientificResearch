@@ -41,7 +41,7 @@ export default {
         document.documentElement.scrollTop ||
         document.body.scrollTop;
       that.scrollTop = scrollTop;
-      if (that.scrollTop > 30) {
+      if (that.scrollTop > 60) {
         that.isShow = true;
       } else {
         that.isShow = false;

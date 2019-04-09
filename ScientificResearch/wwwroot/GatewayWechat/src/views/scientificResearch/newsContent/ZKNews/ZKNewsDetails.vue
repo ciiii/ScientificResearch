@@ -4,6 +4,7 @@
     <div class="content" v-html="this.list.内容" :class="{active:active==this.list.内容}"></div>
     <div class="time" v-html="this.list.建立时间" :class="{active:active==this.list.建立时间}"></div>
     <ReturnBtn/>
+    <ReturnTop/>
   </div>
 </template>
 <script>
@@ -20,7 +21,6 @@ export default {
   methods: {
     getDetails() {
       this.list = this.$route.params.item;
-      // console.log(this.list, "4455");
     }
   }
 };
@@ -28,9 +28,9 @@ export default {
 <style lang="less" scoped>
 .box {
   padding: 10px 20px;
+  background-color: #fff;
   .title {
     font-size: 16px;
-    
   }
   .content,
   .time {

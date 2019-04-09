@@ -9,7 +9,7 @@
           <h4>基本信息</h4>
           <li class="title">
             <span>项目名称</span>
-            <p>{{this.someExpenseDetails.项目名称}}</p>
+            <span>{{this.someExpenseDetails.项目名称}}</span>
           </li>
           <li>
             <span>项目类型</span>
@@ -52,7 +52,13 @@
             <span>{{this.someExpenseDetails.报销人部门名称}}</span>
           </li>
           <h4>参会相关文件</h4>
-          <li>参会相关文件：{{this.someExpenseDetails.参会相关文件路径}}</li>
+          <li>参会相关文件：</li>
+          <li>
+            <a
+              :href="this.someExpenseDetails.参会相关文件路径"
+              download
+            >{{Interception(this.someExpenseDetails.参会相关文件路径)}}</a>
+          </li>
         </ul>
       </van-tab>
       <van-tab title="审核记录">
@@ -134,7 +140,7 @@
   </div>
 </template>
 <script>
-import { NumFormat } from "@/assets/js/common/filter.js";
+import { NumFormat, Interception } from "@/assets/js/common/filter.js";
 export default {
   data() {
     return {
@@ -179,6 +185,9 @@ export default {
     //转换金额格式
     NumFormat(item) {
       return NumFormat(item);
+    },
+    Interception(item) {
+      return Interception(item);
     }
   }
 };
@@ -214,12 +223,6 @@ export default {
       display: flex;
       justify-content: space-between;
       border-bottom: 1px solid #f2f2f2;
-      p {
-        width: 80%;
-        color: #5a5a5a;
-        margin: 0;
-        text-align: right;
-      }
       span:nth-child(1) {
         color: #888;
       }
@@ -230,61 +233,16 @@ export default {
         color: rgb(6, 167, 6);
       }
     }
-    .title span {
+    .title {
       display: flex;
       align-items: center;
+      span:nth-child(1) {
+        width: 30%;
+      }
+      span:nth-child(2) {
+        padding-left: 10px;
+      }
     }
   }
 }
-// .popup {
-//   width: 100%;
-//   height: 100%;
-//   transform: none;
-//   top: 0;
-//   left: 0;
-//   background-color: #f5f3fb;
-//   .van-tab__pane {
-//     padding: 10px;
-//     height: 100vh;
-//   }
-//   .audit,
-//   .servicel {
-//     font-size: 14px;
-//     padding: 10px;
-//     margin-bottom: 20px;
-//     border-bottom: 2px solid #ccc;
-//     background-color: #fff;
-//     h4 {
-//       margin: 5px 0;
-//       padding: 5px;
-//       color: #1296db;
-//       background-color: #e7e7e7;
-//     }
-//     li {
-//       padding: 10px 0;
-//       display: flex;
-//       justify-content: space-between;
-//       border-bottom: 1px solid #f2f2f2;
-//       p {
-//         width: 80%;
-//         color: #5a5a5a;
-//         margin: 0;
-//         text-align: right;
-//       }
-//       span:nth-child(1) {
-//         color: #888;
-//       }
-//       span:nth-child(2) {
-//         color: #5a5a5a;
-//       }
-//       i {
-//         color: rgb(6, 167, 6);
-//       }
-//     }
-//     .title span {
-//       display: flex;
-//       align-items: center;
-//     }
-//   }
-// }
 </style>

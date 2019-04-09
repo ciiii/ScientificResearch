@@ -6,23 +6,22 @@ using System.ComponentModel.DataAnnotations;
 namespace ScientificResearch.Models
 {
     /// <summary>
-    /// 教学带教老师[类]
+    /// 教学轮转手册完成任务[类]
     /// </summary>
     [Serializable]
-	public partial class 教学带教老师 
+	public partial class 教学轮转手册完成任务 
 	{       
         #region 属性
         /// <summary>
 		/// 
 		/// </summary>
-        [Obsolete]
-        [Required(ErrorMessage ="请提供[教学科室编号]")]
-		public int 教学科室编号 { get; set; }
+        [Required(ErrorMessage ="请提供[教学轮转手册编号]")]
+		public int 教学轮转手册编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        [Required(ErrorMessage ="请提供[带教老师编号]")]
-		public int 带教老师编号 { get; set; }
+        [Required(ErrorMessage ="请提供[教学轮转任务编号]")]
+		public int 教学轮转任务编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>

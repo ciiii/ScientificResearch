@@ -4,21 +4,17 @@ using System.Data;
 namespace ScientificResearch.Models
 {
     /// <summary>
-    /// sp_按部门统计成果[类]
+    /// sp_教学角色_增改[类]
     /// </summary>
     [Serializable]
-	public class sp_按部门统计成果 
+	public class sp_教学角色_增改 
 	{       
               
         #region 属性
         /// <summary>
 		/// 
 		/// </summary>
-		public string 字段名 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-		public string 字段显示名 { get; set; }
+		public DataTable tt { get; set; }
         
           
         #endregion

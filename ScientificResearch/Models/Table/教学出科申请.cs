@@ -42,11 +42,6 @@ namespace ScientificResearch.Models
 		/// </summary>
         [MaxLength(500,ErrorMessage ="备注不能超过[250]字")]
 		public string 备注 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        [Required(ErrorMessage ="请提供[是否通过审核]")]
-		public bool 是否通过审核 { get; set; }
         
         
         #endregion
