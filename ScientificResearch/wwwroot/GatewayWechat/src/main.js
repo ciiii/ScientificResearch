@@ -8,6 +8,7 @@ import 'babel-polyfill';
 import './assets/iconfont/iconfont.css';
 import Axios from './assets/js/gateway/connect/MyAxios';
 import VueWechatTitle from 'vue-wechat-title';
+import { META_TWO } from "./assets/js/gateway/connect/ConSysUrl";
 import ReturnBtn from './components/popup/index'
 Vue.use(ReturnBtn)
 import ReturnTop from './components/returnTop/index'
@@ -78,7 +79,32 @@ Vue.prototype.$myHttp = Axios;
 router.afterEach((to, from, next) => {
     window.scrollTo(0, 0)
 })
+router.beforeEach((to, from, next) => {
+    /* 路由发生变化修改页面meta */
+    let meta = document.getElementsByTagName("meta");
+    if (to.meta.content) {
+        meta[2]["content"] = to.meta.content;
+    } else {
+        meta[2]["content"] = META_TWO;
+    }
+    next()
+});
 
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requireAuth)) { // 判断该路由是否需要登录权限
+        var personnel = localStorage.getItem("personnel");
+        if (personnel) { // 判断当前的token是否存在
+            next();
+        } else {
+            Vue.prototype.$toast('请先登录')
+            next({
+                path: '/'
+            })
+        }
+    } else {
+        next();
+    }
+});
 new Vue({
     router,
     render: h => h(App)

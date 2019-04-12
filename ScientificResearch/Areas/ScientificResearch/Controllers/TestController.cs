@@ -304,18 +304,50 @@ namespace ScientificResearch.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        async public Task<object> 测试获取整个页面的html()
+        async public Task<object> 测试获取整个页面的html(params object[] param)
         {
             var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("Host", "www.baidu.com");
+            httpClient.DefaultRequestHeaders.Add("Connection", "keep-alive");
+            httpClient.DefaultRequestHeaders.Add("Cache-Control", "max-age=0");
+            httpClient.DefaultRequestHeaders.Add("Upgrade-Insecure-Requests", "1");
+            httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.80 Safari/537.36");
+            httpClient.DefaultRequestHeaders.Add("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
+            httpClient.DefaultRequestHeaders.Add("Referer", "https://www.baidu.com/");
+            httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
+            httpClient.DefaultRequestHeaders.Add("Cookie", "BD_UPN=12314753; ispeed_lsm=2; BAIDUID=6D149D5512AA8DD7F19ACEEB5966E39F:FG=1; PSTM=1555032264; H_PS_PSSID=1457_21096_18560_28769_28722_28557_28835_28585_26350_28603_28625_28605; BIDUPSID=8A865DD04526B3D71CC0F2D52EFAC4EC; BDORZ=B490B5EBF6F3CD402E515D22BCDA1598; delPer=0; BD_CK_SAM=1; PSINO=3; H_PS_645EC=bf5emVTwLUbIYx0ujrAjhpprhjqEm8FX67T4bMeU5GEYsK3E0vj3npqNg1k; BDUSS=DdYWGRjM2JqOVJPVnJ3a3ZiaU9qM1M2SW9GSmFlaEtUTzJZRFBJM3Z4SkcxTmRjRVFBQUFBJCQAAAAAAAAAAAEAAAApDGqCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEZHsFxGR7BcS; BD_HOME=1");
 
             //请求并,如果验证非200返回则报错;
-            var response = await httpClient.GetAsync(@"http://www.cnki.net/");
+            var response = await httpClient.GetAsync(@"https://www.baidu.com/" + MyHttpLib.ObjToQueryParam(param));
+
+            var header = response.Headers;
+
+            //return response;
             response.EnsureSuccessStatusCode();
 
             //解析返回内容到string
             var responseString = await response.Content.ReadAsStringAsync();
+            //return header;
 
+            
+            //给ie设这些header也没用
+            //foreach (var item in header)
+            //{
+            //    foreach (var itemKeyValue in item.Value)
+            //    {
+
+            //        if (item.Key == "Set-Cookie")
+            //        {
+            //            HttpContext.Response.Cookies.Append(itemKeyValue.Split(";")[0].Split("=")[0], itemKeyValue.Split(";")[0].Split("=")[1]);
+            //        }
+            //        else
+            //        {
+            //            HttpContext.Response.Headers.Add(item.Key, itemKeyValue);
+            //        }
+            //    }
+            //}
             return Content(responseString, "text/html");
+
         }
 
         /// <summary>
@@ -463,14 +495,14 @@ namespace ScientificResearch.Controllers
             public int 岁数 { get; set; }
         }
 
-        public class 子类class1:父类class1
+        public class 子类class1 : 父类class1
         {
             /// <summary>
             /// 不需要这样写哈,这么写是为说明子类不能屏蔽父类属性;
             /// 要obsolete直接写在父类即可;
             /// </summary>
             [Obsolete]
-            public new int 年纪 { get;  }
+            public new int 年纪 { get; }
         }
     }
 }

@@ -29,7 +29,7 @@
                             <p class="source">【来源】{{item.introdution[0]+item.introdution[1]}}</p>
                             <p class="author" v-if="item.authors">【作者】{{item.authors}}</p>
                             <p class="author">【引用】{{item.introdution[2]}}</p>
-                            <p class="keyword"><span v-for="el in item.keyWord" :key="el">{{el}}</span></p>
+                            <p class="keyword"><span v-for="(el,index) in item.keyWord" :key="index">{{el}}</span></p>
                         </li>
                     </ul>
                 </van-list>
@@ -53,8 +53,8 @@
         </van-popup>
         <van-popup v-model="isShowDetails" position="right" :overlay="false" class="details-popup" v-if='isShowDetails'>
             <wanFangDetails ref="wanFangDetails" :item="item"/>
-            <div class="back-btn-box">
-                <span @click="backtrack"><i class="icon iconfont icon-fanhui"></i></span>
+            <div class="backtrack">
+                <span @click="backtrack"><i class="icon iconfont icon-fanhui"></i> 返回</span>
             </div>
         </van-popup>
         <div class="back-btn-box" v-if="isShowBtn">
@@ -92,8 +92,6 @@
         mounted: function () {
             this.configs = JSON.parse(sessionStorage.getItem('WFConfigs'));
             this.req = JSON.parse(sessionStorage.getItem('WFSearch'));
-            this.req.p = 1;
-            this.req.n = 10;
             window.addEventListener('scroll', this.scrollToTop)
         },
         methods: {
@@ -139,20 +137,20 @@
             resetScreen() {
                 this.req.sort = '';
             },
-            onSearch: _debounce(function () {
-                this.req.p = 1;
+            onSearch() {
+                this.req.pageIndex = 1;
                 this.finished = false;
                 this.loading = true;
                 this.backTop();
                 this.list = [];
                 this.getList();
-            }, 300),
+            },
             getList: async function () {
                 let data = await this.$myHttp.myGet(URL_WAN_FANG.GET_PANGING_LIST, this.req);
                 if (data && data != []) {
-                    if (Array.isArray(data)){
-                        this.req.p++;
-                        if (data.length < this.req.p) {
+                    if (Array.isArray(data)) {
+                        this.req.pageIndex++;
+                        if (data.length < this.req.pageIndex) {
                             this.finished = true;
                         }
                         data.forEach(function (item) {
@@ -164,19 +162,21 @@
                                 item.introdution = item.introdution.split(' ');
                             }
                         })
+                        this.list = this.list.concat(data);
                     } else {
                         this.finished = true;
+                        this.list = [];
                     }
                 } else {
                     this.finished = true;
+                    this.list = [];
                 }
-                this.list = this.list.concat(data);
                 this.isRefreshLoading = false;
                 this.loading = false;
             },
             onRefresh() {
                 this.finished = false;
-                this.req.p = 1;
+                this.req.pageIndex = 1;
                 this.list = [];
                 this.getList();
             },

@@ -66,7 +66,7 @@ namespace MyLib
             var responseObj = JsonConvert.DeserializeObject<TResult>(responseString);
             return responseObj;
         }
-
+        
         /// <summary>
         /// 使用httpclient的postAsync,使用json作为contentType
         /// </summary>

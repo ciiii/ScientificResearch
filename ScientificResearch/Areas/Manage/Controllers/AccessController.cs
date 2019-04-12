@@ -112,7 +112,7 @@ namespace ScientificResearch.Areas.Manage.Controllers
         /// <summary>
         /// 使用OpenId登录
         /// </summary>
-        /// <param name="model">其中dbKey请先填"ScientificResearch_Test"</param>
+        /// <param name="code">其中dbKey请先填"ScientificResearch_Test"</param>
         /// <returns></returns>
         //jwt 6/4
         [HttpPost]
@@ -265,7 +265,6 @@ namespace ScientificResearch.Areas.Manage.Controllers
 
             //去掉session  -1
             //HttpContext.Session.Set<CurrentUser>("user", user);
-
 
             return new LoginReturn<T>
             {

@@ -159,6 +159,7 @@ namespace ScientificResearch.Infrastucture
         /// <param name="keyFields"></param>
         /// <param name="orderType"></param>
         /// <param name="orderStr"></param>
+        /// <param name="tbFields"></param>
         /// <returns></returns>
         async public static Task<IEnumerable<T>> GetListSpAsync<T, TFilter>(
             this IDbConnection cnn,
@@ -212,6 +213,7 @@ namespace ScientificResearch.Infrastucture
         /// <param name="tbName"></param>
         /// <param name="keyFields"></param>
         /// <param name="orderStr"></param>
+        /// <param name="orderType"></param>
         /// <returns></returns>
         async public static Task<PagingResult<T>> GetPagingListSpAsync<T, TFilter>(
             this IDbConnection cnn,
@@ -290,6 +292,23 @@ namespace ScientificResearch.Infrastucture
         }
 
         /// <summary>
+        /// 执行一个sp,返回指定类型的第一个数据,sp如果没有参数,则不输入model
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TOut"></typeparam>
+        /// <param name="cnn"></param>
+        /// <param name="model"></param>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
+        public static Task<TOut> QueryFirstSpAsync<T, TOut>(
+            this IDbConnection cnn,
+            T model = null,
+            IDbTransaction transaction = null) where T : class
+        {
+            return cnn.QueryFirstAsync<TOut>(typeof(T).Name, model, transaction, commandType: CommandType.StoredProcedure);
+        }
+
+        /// <summary>
         /// 执行一个sp,返回多个list,需要自己再去解析,
         /// sp如果没有参数,则不输入model
         /// </summary>
@@ -318,14 +337,22 @@ namespace ScientificResearch.Infrastucture
         /// <returns></returns>
         async public static Task<T> Merge<T>(this IDbConnection cnn, T model, IDbTransaction transaction = null) where T : new()
         {
-            var result = await cnn.QueryAsync<T>(PrdefindeSpMergeName<T>(), new
+            return await cnn.QueryFirstAsync<T>(PrdefindeSpMergeName<T>(), new
             {
                 tt = model.ToDataTable()
             }, transaction, commandType: CommandType.StoredProcedure);
 
-            return result.SingleOrDefault();
+            //return result.SingleOrDefault();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="cnn"></param>
+        /// <param name="model"></param>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
         async public static Task<IEnumerable<T>> Merge<T>(this IDbConnection cnn, IEnumerable<T> model, IDbTransaction transaction = null) where T : new()
         {
             var result = await cnn.QueryAsync<T>(PrdefindeSpMergeName<T>(), new

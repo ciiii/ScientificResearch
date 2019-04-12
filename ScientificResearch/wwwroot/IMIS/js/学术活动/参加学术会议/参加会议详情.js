@@ -8,6 +8,7 @@ $(function () {
             details: xueShuDetails,
             flieName: '',
             files: [],
+            funds:0,
             getDetails: function (id) {
                 Meeting.getMeetingDetails('get', id, function getMeetingDetailsListener(success, obj, strErro) {
                     if (success) {
@@ -18,6 +19,11 @@ $(function () {
                             vm.model = obj;
                             if (obj.参加会议详情.参会相关文件路径 != '' && obj.参加会议详情.参会相关文件路径 != null) {
                                 vm.files = obj.参加会议详情.参会相关文件路径.split(',');
+                            }
+                            if (obj.财务信息) {
+                                obj.财务信息.forEach(function (el) {
+                                    vm.funds += el.批准经费;
+                                })
                             }
                         }
 

@@ -16,14 +16,14 @@
             <p v-if="details.areaType">【领域】：{{details.areaType}}</p>
             <p v-if="details.fund">【基金】：{{details.fund}}</p>
             <p class="keyword" v-if="details.keyWord">
-                【关键词】：<span v-for="el in details.keyWord" :key="el">{{el}}</span>
+                <span v-for="(el,index) in details.keyWord" :key="index">{{el}}</span>
             </p>
-            <div class="btn-box" v-if="isShowDown">
+            <div class="btn-box" v-if="isShowDown&&details">
                 <a href="javascript:;" class="btn-preview" @click="getDownloadFile">
                     预览PDF
                     <van-icon name="icon iconfont icon-browse"/>
                 </a>
-                <a :href="downUrl" id="btn-download" class="btn-download" download="">
+                <a :href="this.downUrl" id="btn-download" class="btn-download" download="">
                     下载PDF
                     <van-icon name="icon iconfont icon-download"/>
                 </a>
@@ -34,7 +34,7 @@
 
 <script>
     import {URL_ZHI_WANG} from "@/assets/js/gateway/connect/ConSysUrl";
-    import {UrlEncode} from "@/assets/js/gateway/Common";
+    import {UrlEncode, _debounce} from "@/assets/js/gateway/Common";
 
     export default {
         name: "zhiWangDetails",
@@ -66,7 +66,9 @@
         methods: {
             getDetails: async function () {
                 let data = await this.$myHttp.myGet(URL_ZHI_WANG.GET_ARTICLE_DETAILS, this.req);
-                this.reqUrl.url = data.pdfDownUrl;
+                if(data.pdfDownUrl){
+                    this.reqUrl.url = data.pdfDownUrl;
+                }
                 if (data.keyWord) {
                     data.keyWord = data.keyWord.slice(0, data.keyWord.length - 1);
                     data.keyWord = data.keyWord.split(';');
@@ -79,21 +81,29 @@
                 }
                 this.details = data;
             },
-            getDownloadFile: async function () {
+            getLoading(){
+                this.toastLoading = this.$toast.loading({
+                    mask: true,
+                    message: '加载中...',
+                    duration: 5000,
+                });
+            },
+            getDownloadFile: _debounce(async function () {
+                this.getLoading();
                 let data = await this.$myHttp.myGet(URL_ZHI_WANG.GET_ARTICLE_DOWNURL, this.reqUrl);
                 if (data && data != '') {
                     this.clickPreview();
                 } else {
-                    this.$toast('您无权或余额不足不能下载此文章！');
+                    this.$toast('您无权或余额不足不能查看此文章！');
                 }
-            },
+            }, 300),
             clickPreview() {
-                window.open('pdf/web/viewer.html?file=' + encodeURIComponent(this.downUrl));
+                // window.open('pdf/web/viewer.html?file=' + encodeURIComponent(this.downUrl));
+                this.$router.push({path:'/pdfPreview', query:{url:this.downUrl}})
             }
         }
     }
 </script>
-
 <style scoped type="text/less" lang="less">
     @import "../../../assets/less/gateway/Details";
 </style>

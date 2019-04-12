@@ -1,18 +1,5 @@
 import Vue from 'vue'
 
-(function (doc, win) {
-    let docEl = doc.documentElement,
-        resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
-        recalc = function () {
-            let clientWidth = docEl.clientWidth;
-            if (!clientWidth) return;
-            docEl.style.fontSize = 20 * (clientWidth / 320) + 'px';
-        };
-    if (!doc.addEventListener) return;
-    win.addEventListener(resizeEvt, recalc, false);
-    doc.addEventListener('DOMContentLoaded', recalc, false);
-})(document, window);
-
 //时间格式化
 export function formatDate(date, fmt) {
     if (/(y+)/.test(fmt)) {
@@ -120,10 +107,9 @@ export function UrlEncode(str) {
 }
 
 export function transform(s) {
-    let hex = ''
-    let i, j, t
+    let hex = '';
+    let i, t;
 
-    j = 0
     for (i = 0; i < s.length; i++) {
         t = hexfromdec(s.charCodeAt(i));
         if (t == '25') {
@@ -170,4 +156,8 @@ export function getletter(num) {
             return "F"
         }
     }
+}
+
+export function trim(str){
+    return str.replace(/^(\s|\u00A0)+/,'').replace(/(\s|\u00A0)+$/,'');
 }

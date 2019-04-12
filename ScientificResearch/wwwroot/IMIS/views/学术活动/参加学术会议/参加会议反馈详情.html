@@ -32,16 +32,10 @@
             <a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">会议反馈信息</a>
         </li>
         <li role="presentation">
-            <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">会议反馈文件</a>
+            <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">会议基本信息</a>
         </li>
         <li role="presentation">
-            <a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">会议基本信息</a>
-        </li>
-        <li role="presentation">
-            <a href="#tab6" aria-controls="tab4" role="tab" data-toggle="tab">参会相关文件</a>
-        </li>
-        <li role="presentation">
-            <a href="#tab7" aria-controls="tab5" role="tab" data-toggle="tab">反馈申请记录</a>
+            <a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">反馈申请记录</a>
         </li>
     </ul>
     <div class="tab-content add-user">
@@ -71,19 +65,20 @@
                         </div>
                     </div>
                 </div>
-            </form>
-        </div>
-        <div role="tabpanel" id="tab2" class="tab-pane">
-            <form class="form-horizontal content fileUpload-box">
-                <label class="col-sm-3 control-label">会议反馈文件：</label>
-                <div class="form-group col-sm-8 items">
-                    <div class="item" ms-for="el in @files">
-                        <a class="name" ms-attr="{'href':@el}" download="">{{@getHtmlDocName(el)}}</a>
+                <div class="col-sm-12 content fileUpload-box">
+                    <h5 class="title"><span>会议反馈文件</span></h5>
+                    <div class="form-group col-sm-12">
+                        <label class="col-sm-3 control-label">文件：</label>
+                        <div class="form-group col-sm-8 items">
+                            <div class="item" ms-for="el in @files">
+                                <a class="name" ms-attr="{'href':@el}" download="">{{@getHtmlDocName(el)}}</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </form>
         </div>
-        <div role="tabpanel" id="tab3" class="tab-pane">
+        <div role="tabpanel" id="tab2" class="tab-pane">
             <form class="form-horizontal content">
                 <div class="col-sm-12">
                     <h5 class="title"><span>会议基本信息</span></h5>
@@ -169,19 +164,20 @@
                         </div>
                     </div>
                 </div>
-            </form>
-        </div>
-        <div role="tabpanel" id="tab6" class="tab-pane">
-            <form class="form-horizontal content fileUpload-box">
-                <label class="col-sm-3 control-label">参会相关文件：</label>
-                <div class="form-group col-sm-8 items">
-                    <div class="item" ms-for="el in @LectureFiles">
-                        <a class="name" ms-attr="{'href':@el}" download="">{{@getHtmlDocName(el)}}</a>
+                <div class="col-sm-12 content fileUpload-box">
+                    <h5 class="title"><span>参会相关文件</span></h5>
+                    <div class="form-group col-sm-12">
+                        <label class="col-sm-3 control-label">文件：</label>
+                        <div class="form-group col-sm-8 items">
+                            <div class="item" ms-for="el in @LectureFiles">
+                                <a class="name" ms-attr="{'href':@el}" download="">{{@getHtmlDocName(el)}}</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </form>
         </div>
-        <div role="tabpanel" id="tab7" class="tab-pane">
+        <div role="tabpanel" id="tab3" class="tab-pane">
             <h4 class="text-center auditing-title">反馈申请记录</h4>
             <div class="table-responsive">
                 <table class="table table-bordered table-striped">

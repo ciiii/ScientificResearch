@@ -9,7 +9,7 @@ $(function () {
             flieName: '',
             files: [],
             contractFiles: [],
-            funds:'',
+            funds:0,
             getXProjectDetails: function (id) {
                 XProject.getXProjectDetails('get', id, function getXProjectDetailsListener(success, obj, strErro) {
                     if (success) {
@@ -24,8 +24,9 @@ $(function () {
                             if (obj.基本信息.合同文件路径 != '' && obj.基本信息.合同文件路径 != null) {
                                 vm.contractFiles = obj.基本信息.合同文件路径.split(',');
                             }
+                            vm.funds = obj.基本信息.合同金额;
                         }
-                        vm.funds = obj.基本信息.合同金额;
+
 
                     } else {
                         console.info('获取横向项目详情失败！');

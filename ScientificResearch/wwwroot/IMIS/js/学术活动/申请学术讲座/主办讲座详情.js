@@ -8,6 +8,7 @@ $(function () {
             details: xueShuDetails,
             flieName: '',
             files: [],
+            funds: 0,
             getDetails: function (id) {
                 Lecture.getHostLectureDetails('get', id, function getHostLectureDetailsListener(success, obj, strErro) {
                     if (success) {
@@ -16,9 +17,11 @@ $(function () {
                             return;
                         } else {
                             vm.model = obj;
+                            console.info(obj);
                             if (obj.学术任职详情.主讲人简历路径 != '' && obj.学术任职详情.主讲人简历路径 != null) {
                                 vm.files = obj.学术任职详情.主讲人简历路径.split(',');
                             }
+                            vm.funds = obj.学术任职详情.活动经费;
                         }
 
                     } else {

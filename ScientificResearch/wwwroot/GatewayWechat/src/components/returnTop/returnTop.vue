@@ -1,5 +1,5 @@
 <template>
-  <div @click="backTop" v-show="isShow">
+  <div @click="backTop" v-show="isShow" :style="{'left':left+'px','top':top+'px'}">
     <i class="icon iconfont icon-xiaohuojian"></i>
     <p>返回顶部</p>
   </div>
@@ -8,10 +8,15 @@
 export default {
   data() {
     return {
-      isShow: false
+      isShow: false,
+      currentTop: 0,
+      left: 0
     };
   },
-
+  created() {
+    this.left = document.documentElement.clientWidth - 85;
+    this.top = document.documentElement.clientHeight * 0.78;
+  },
   mounted() {
     window.addEventListener("scroll", this.scrollToTop);
   },
@@ -43,8 +48,23 @@ export default {
       that.scrollTop = scrollTop;
       if (that.scrollTop > 60) {
         that.isShow = true;
+        this.timer && clearTimeout(this.timer);
+        this.timer = setTimeout(() => {
+          this.handleScrollEnd();
+        }, 200);
+        this.currentTop =
+          document.documentElement.scrollTop || document.body.scrollTop;
+        this.left = document.documentElement.clientWidth - 20;
       } else {
         that.isShow = false;
+      }
+    },
+    handleScrollEnd() {
+      let scrollTop =
+        document.documentElement.scrollTop || document.body.scrollTop;
+      if (scrollTop === this.currentTop) {
+        this.left = document.documentElement.clientWidth - 85;
+        clearTimeout(this.timer);
       }
     }
   }
@@ -59,12 +79,12 @@ div {
   height: 35px;
   padding: 6px;
   text-align: center;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
+  transition: all 0.3s;
   position: fixed;
-  bottom: 110px;
-  right: 40px;
   border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.5);
-  p{
+  p {
     margin: 0;
     font-size: 8px;
   }

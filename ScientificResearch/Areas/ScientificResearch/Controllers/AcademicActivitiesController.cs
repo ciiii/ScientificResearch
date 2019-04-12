@@ -53,16 +53,29 @@ namespace ScientificResearch.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        async public Task 发起一个主办讲座流程([FromBody]主办讲座 model)
+        //async public Task 发起一个主办讲座流程([FromBody]主办讲座 model)
+        //{
+        //    model.主办人编号 = CurrentUser.编号;
+        //    await MyWorkFlowBusiness.发起流程(
+        //        主办讲座流程模板编号,
+        //        new sp_主办讲座_增改()
+        //        {
+        //            tt = model.ToDataTable()
+        //        },
+        //        CurrentUser.编号);
+        //}
+        async public Task 发起一个主办讲座流程([FromBody]主办讲座申请增改 model)
         {
-            model.主办人编号 = CurrentUser.编号;
+            model.基本资料.主办人编号 = CurrentUser.编号;
             await MyWorkFlowBusiness.发起流程(
                 主办讲座流程模板编号,
                 new sp_主办讲座_增改()
                 {
-                    tt = model.ToDataTable()
+                    tt = model.基本资料.ToDataTable(),
+                    tt_项目经费预算 = model.经费预算列表.ToDataTable()
                 },
-                CurrentUser.编号);
+                CurrentUser.编号,
+                model.IsHold);
         }
 
         /// <summary>
@@ -71,12 +84,21 @@ namespace ScientificResearch.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        async public Task 完善主办讲座申请资料([FromBody]完成步骤<主办讲座> model) =>
+        //async public Task 完善主办讲座申请资料([FromBody]完成步骤<主办讲座> model) =>
+        //    await MyWorkFlowBusiness.完成步骤(
+        //        model.ToSimple(), CurrentUser.编号,
+        //        new sp_主办讲座_增改()
+        //        {
+        //            tt = model.附加数据.ToDataTable()
+        //        });
+        async public Task 完善主办讲座申请资料([FromBody]完成步骤<主办讲座申请增改> model) =>
             await MyWorkFlowBusiness.完成步骤(
                 model.ToSimple(), CurrentUser.编号,
                 new sp_主办讲座_增改()
                 {
-                    tt = model.附加数据.ToDataTable()
+                    tt = model.附加数据.基本资料.ToDataTable(),
+                    tt_项目经费预算 = model.附加数据.经费预算列表.ToDataTable()
+
                 });
 
         /// <summary>
@@ -111,8 +133,9 @@ namespace ScientificResearch.Controllers
         async public Task<object> 获取主办讲座详情(int 主办讲座编号)
         {
             var r1 = await Db.GetModelByIdSpAsync<v2_主办讲座>(主办讲座编号);
+            var 财务信息 = await Db.GetListSpAsync<object>($"tfn_项目经费预算({主办讲座流程模板编号},{主办讲座编号})");
             var r2 = await MyWorkFlowBusiness.获取某流程的步骤(主办讲座流程模板编号, 主办讲座编号);
-            return new { 学术任职详情 = r1, 审核情况 = r2 };
+            return new { 学术任职详情 = r1, 财务信息, 审核情况 = r2 };
         }
         #endregion
 

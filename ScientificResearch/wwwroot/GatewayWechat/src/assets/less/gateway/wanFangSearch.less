@@ -1,10 +1,12 @@
 @import "Common";
 
+.WF-search,.ZW-search{
+  background: #fff;
+}
 .logo {
   text-align: center;
   background: #fff;
   padding: 40px 0 30px;
-
   img {
     height: 40px;
   }
@@ -29,10 +31,14 @@
 
   .title {
     display: inline-block;
-    width: 120px !important;
+    width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     font-size: 14px;
     padding-top: 12px;
     color: @color;
+    margin-right: 5px;
 
     i {
       font-size: 14px;
@@ -40,16 +46,21 @@
     }
   }
 
+  .van-cell {
+    padding: 10px 10px 10px 0;
+    background: none;
+  }
 }
 
 .new-item {
   .title-right {
     width: 70px !important;
-    padding-right: 10px;
+    text-align: right;
   }
 
   input {
-    width: 180px !important;
+    width: 170px !important;
+
   }
 }
 
@@ -86,14 +97,27 @@
 
 .tab-con {
   padding-bottom: 20px;
+
+  .van-radio-group {
+    max-height: 500px;
+    overflow-y: auto;
+  }
 }
 
 .retrieval-box {
   background: #fff;
-  margin: 20px;
+  display: flex;
+  position: fixed;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: #fff;
 
   .btn-retrieval {
     height: 40px !important;
     line-height: 40px;
+    margin: 20px;
+    flex: 1;
   }
 }

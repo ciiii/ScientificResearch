@@ -9,13 +9,13 @@
         </div>
         <div class="centent"><p>{{details.abstracts}}</p></div>
         <div class="content-footer">
-            <p v-if="introdution">【来源】：{{introdution[0]+introdution[1]}}</p>
-            <p v-if="introdution">【被引】：{{introdution[2]}}</p>
+            <p>【来源】：{{introdution[0]+introdution[1]}}</p>
+            <p>【被引】：{{introdution[2]}}</p>
             <p v-if="keyWord">【关键词】：{{keyWord}}</p>
             <p v-if="item.tag" class="keyword">
-                【标签】：<span v-for="el in item.tag" :key="el">{{el}}</span>
+                <span v-for="(el,index) in item.tag" :key="index">{{el}}</span>
             </p>
-            <div class="btn-box" v-if="item.full">
+            <div class="btn-box" v-if="item.full&&details">
                 <a href="javascript:;" class="btn-preview" @click="getDownloadFile">
                     预览PDF
                     <van-icon name="icon iconfont icon-browse"/>
@@ -31,7 +31,7 @@
 
 <script>
     import {URL_WAN_FANG} from "@/assets/js/gateway/connect/ConSysUrl";
-    import {UrlEncode} from "@/assets/js/gateway/Common";
+    import {UrlEncode, _debounce} from "@/assets/js/gateway/Common";
 
     export default {
         name: "wanFangDetails",
@@ -74,21 +74,29 @@
                 this.reqUrl.fileName = data.fileName;
                 this.details = data;
             },
-            getDownloadFile: async function () {
+            getLoading() {
+                this.toastLoading = this.$toast.loading({
+                    mask: true,
+                    message: '加载中...',
+                    duration: 5000
+                });
+            },
+            getDownloadFile: _debounce(async function () {
+                this.getLoading();
                 let data = await this.$myHttp.myGet(URL_WAN_FANG.GET_ARTICLE_DOWNURL, this.reqUrl);
+
                 if (data && data != '') {
                     this.clickPreview();
                 } else {
-                    this.$toast('您无权或余额不足不能下载此文章！');
+                    this.$toast('您无权或余额不足不能查看此文章！');
                 }
-            },
+            }, 300),
             clickPreview() {
-                window.open('pdf/web/viewer.html?file=' + encodeURIComponent(this.downUrl));
+                this.$router.push({path:'/pdfPreview', query:{url:this.downUrl}})
             },
         }
     }
 </script>
-
 <style scoped type="text/less" lang="less">
     @import "../../../assets/less/gateway/Details";
 

@@ -41,6 +41,14 @@ namespace ScientificResearch.Controllers
             }
         }
 
+        public int 主办讲座流程模板编号
+        {
+            get
+            {
+                return Config.GetValue<int>("流程模板编号:主办讲座");
+            }
+        }
+
         public int 参加会议流程模板编号
         {
             get
@@ -64,6 +72,10 @@ namespace ScientificResearch.Controllers
             await Db.GetPagingListSpAsync<v3_项目经费报销_横向, 横向项目Filter>(paging, filter);
 
         [HttpGet]
+        async public Task<PagingResult<v3_主办讲座报销>> 分页获取主办会议合计报销列表(Paging paging, 主办讲座Filter filter) =>
+            await Db.GetPagingListSpAsync<v3_主办讲座报销, 主办讲座Filter>(paging, filter);
+
+        [HttpGet]
         async public Task<PagingResult<v3_参加会议报销>> 分页获取参加会议合计报销列表(Paging paging, 参加会议Filter filter) =>
             await Db.GetPagingListSpAsync<v3_参加会议报销, 参加会议Filter>(paging, filter);
 
@@ -82,6 +94,12 @@ namespace ScientificResearch.Controllers
         async public Task<object> 获取某横向项目经费报销列表(int 横向项目编号)
         {
             return await 获取经费报销列表(横向项目编号, 横向项目申请流程模板编号);
+        }
+
+        [HttpGet]
+        async public Task<object> 获取某主办讲座报销列表(int 主办讲座编号)
+        {
+            return await 获取经费报销列表(主办讲座编号, 主办讲座流程模板编号);
         }
 
         [HttpGet]
@@ -217,6 +235,12 @@ namespace ScientificResearch.Controllers
             //}
 
             await 新增经费报销(model, 流程模板编号);
+        }
+
+        [HttpPost]
+        async public Task 新增主办讲座报销([FromBody]报销增改 model)
+        {
+            await 新增有预算的经费报销(model, 主办讲座流程模板编号);
         }
 
         /// <summary>

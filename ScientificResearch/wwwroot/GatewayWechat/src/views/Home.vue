@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <search/> -->
     <div class="nav">
       <img src="@/assets/images/iocn/logo.png" alt="科研logo">
       <span @click="toLogin" v-if="!personnel">登 录</span>
@@ -59,14 +58,12 @@
   </div>
 </template>
 <script>
-// import search from "@/components/index/search";
 import swipe from "@/components/index/swipe";
 import iocnList from "@/components/index/iocnList";
 import HomeFooter from "@/components/footer/homeFooter";
 export default {
   name: "home",
   components: {
-    // search,
     swipe,
     iocnList,
     HomeFooter
@@ -89,13 +86,11 @@ export default {
   methods: {
     toLogin() {
       if (this.personnel === null) {
-        console.log(this.personnel,"sssssssssddddd")
         this.$router.push("/guidance");
       }
     },
-    getPersonnel(){
+    getPersonnel() {
       this.personnel = JSON.parse(localStorage.getItem("personnel"));
-      console.log(this.personnel,">>>>>")
     },
     getPrimaryNews() {
       var para = {
@@ -103,7 +98,6 @@ export default {
         size: this.size
       };
       this.$http.getNewsList(para).then(res => {
-        console.log(res, "res````111111");
         this.list = res.data.list;
         this.total = res.data.total;
       });
@@ -150,7 +144,6 @@ export default {
     onRefresh() {
       setTimeout(() => {
         this.getPrimaryNews();
-        this.$toast("刷新成功");
         this.isLoading = false;
       }, 500);
     },

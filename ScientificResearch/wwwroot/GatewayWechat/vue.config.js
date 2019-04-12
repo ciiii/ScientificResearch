@@ -9,7 +9,15 @@ module.exports = {
     runtimeCompiler: true,
 
     chainWebpack: () => {},
-    configureWebpack: () => {},
+    configureWebpack: (config) => {
+        if (process.env.NODE_ENV === 'production') {
+            // 为生产环境修改配置...
+            config.mode = 'production'
+        } else {
+            // 为开发环境修改配置...
+            config.mode = 'development'
+        }
+    },
 
     lintOnSave: false, // 在保存时校验格式
     productionSourceMap: false, // 生产环境是否生成 SourceMap
@@ -34,13 +42,7 @@ module.exports = {
     //     before: app => {}
     // },
     devServer: {
-        // open: process.platform === 'darwin',
-        // host: '0.0.0.0',
-        port: 8080,
-        // https: false,
-        // hotOnly: false,
-        // proxy: null,
-        // before: app => {},
+        port: 8080
     },
     // 第三方插件配置
     pluginOptions: {

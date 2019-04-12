@@ -2,7 +2,6 @@ $(function () {
     window.addVm = null;
     var xueShuDetails;
     var userInfo = vm.userInfo;
-    console.info(userInfo);
     var templateId;
     avalon.ready(function () {
         window.addVm = avalon.define({

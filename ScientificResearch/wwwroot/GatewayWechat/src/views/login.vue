@@ -73,20 +73,10 @@ export default {
         ) || null
       );
     },
-    // getCodeApi(toURL, state) {
-    //   //获取code
-    //   // 授权后重定向的回调链接地址
-    //   let urlNow = encodeURIComponent(toURL);
-    //   let scope = "snsapi_base"; //snsapi_userinfo   //静默授权 用户无感知
-    //   let appid = "wx5e45aca8fcb270f1";
-    //   let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${urlNow}&response_type=code&scope=${scope}&state=${state}&connect_redirect=1#wechat_redirect`;
-    //   localStorage.flag = false;
-    //   window.location.replace(url);
-    // },
     // 登录 防抖
     bind: _debounce(function() {
-      if (this.工号 == null || this.密码 == null) {
-        this.$notify("工号 密码 不能为空！");
+      if (this.工号 === null || this.密码 === null || this.DbKey === null) {
+        this.$notify("医院 工号 密码 不能为空！");
         return;
       } else if (this.工号.length < 4) {
         this.$notify("工号长度不能少于【4】位");
@@ -99,26 +89,20 @@ export default {
         return;
       } else {
         var code = this.getUrlKey("code");
-        console.log(code, "111111");
         if (code) {
           this.$http
             .BindOpenId(code, this.工号, this.密码, this.DbKey)
             .then(res => {
-              console.log(res, "2323");
-              // 登录成功
-              if (res !== undefined) {
-                console.log(res,"33333333")
-                // 储存 token
+              if (!res.error) {
+                // 登录成功 储存 token
                 localStorage.personnel = JSON.stringify(res.data.人员);
                 localStorage.token = `${res.data.token_type} ${
                   res.data.access_token
                 }`;
-                console.log(localStorage.token, "localStorage.token``````````");
                 this.$router.push("/");
                 localStorage.flag = false;
               } else {
-                console.log("44444444")
-                this.$notify('登录信息有误！');
+                this.$notify("登录信息有误！");
               }
             });
         } else {
@@ -148,7 +132,7 @@ export default {
   background-color: #fff;
 }
 .img {
-  width:200px;
+  width: 200px;
   height: 60px;
   margin: 50px 0 20px 0;
 }

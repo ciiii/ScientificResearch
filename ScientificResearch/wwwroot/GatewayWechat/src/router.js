@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-
+import { META_ONE } from "./assets/js/gateway/connect/ConSysUrl";
 Vue.use(Router);
 
 export default new Router({
@@ -16,7 +16,7 @@ export default new Router({
             name: "homePersonal",
             component: () =>
                 import ("./views/scientificResearch/home/homePersonal.vue"),
-            meta: { title: '个人中心' },
+            meta: { title: '个人中心', requireAuth: true },
         },
         {
             path: '/wanFangSearch',
@@ -54,6 +54,13 @@ export default new Router({
             meta: { title: '知网数据' },
         },
         {
+            path: '/pdfPreview',
+            name: 'pdfPreview',
+            component: () =>
+                import ('./views/gateway/pdf/pdfPreview.vue'),
+            meta: { title: 'PDF预览', content: META_ONE },
+        },
+        {
             path: '/zhiWangDetails',
             name: 'zhiWangDetails',
             component: () =>
@@ -77,7 +84,8 @@ export default new Router({
             path: "/alternative",
             name: "alternative",
             component: () =>
-                import ("./views/alternative.vue")
+                import ("./views/alternative.vue"),
+            meta: { requireAuth: true }
         },
         { // 待办
             path: "/backlog",

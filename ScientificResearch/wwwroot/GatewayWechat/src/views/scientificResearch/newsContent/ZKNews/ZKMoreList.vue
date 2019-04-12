@@ -1,5 +1,12 @@
 <template>
-  <van-list v-model="loading" :finished="finished" offset:10 finished-text="没有更多了" @load="onLoad">
+  <van-list
+    v-model="loading"
+    :finished="finished"
+    offset:10
+    finished-text="没有更多了"
+    @load="onLoad"
+    class="box"
+  >
     <h3>新闻</h3>
     <ul class="A_News" v-for="(item, key) in list" :key="key">
       <li @click="newsDetails(item)">
@@ -88,42 +95,45 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-h3 {
-  text-align: left;
-  font-size: 14px;
-  padding: 10px 20px;
-  margin: 0;
-  color: #1296db;
-  background-color: #e7e7e7;
-}
-.A_News {
-  border-bottom: 1px solid #ccc;
-  padding: 10px 20px;
-  margin: 10px 0;
-  li:nth-child(1) {
-    overflow: hidden;
-    -webkit-line-clamp: 2;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    max-height: 40px;
-    p {
-      font-size: 14px;
-      font-weight: 400;
-      margin: 0;
-      line-height: 1.6;
-      text-align: left;
-    }
-  }
-  li:nth-child(2) {
-    margin-top: 10px;
-    font-size: 12px;
+.box {
+  background-color: #fff;
+  h3 {
     text-align: left;
-    span {
-      font-size: 14px;
-      font-weight: 800;
-      color: #ff976a;
-      margin: 0 5px;
+    font-size: 14px;
+    padding: 10px 20px;
+    margin: 0;
+    color: #1296db;
+    background-color: #e7e7e7;
+  }
+  .A_News {
+    border-bottom: 1px solid #ccc;
+    padding: 10px 20px;
+    margin: 10px 0;
+    li:nth-child(1) {
+      overflow: hidden;
+      -webkit-line-clamp: 2;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      max-height: 40px;
+      p {
+        font-size: 14px;
+        font-weight: 400;
+        margin: 0;
+        line-height: 1.6;
+        text-align: left;
+      }
+    }
+    li:nth-child(2) {
+      margin-top: 10px;
+      font-size: 12px;
+      text-align: left;
+      span {
+        font-size: 14px;
+        font-weight: 800;
+        color: #ff976a;
+        margin: 0 5px;
+      }
     }
   }
 }

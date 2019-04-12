@@ -25,7 +25,7 @@
             <summary>
             使用OpenId登录
             </summary>
-            <param name="model">其中dbKey请先填"ScientificResearch_Test"</param>
+            <param name="code">其中dbKey请先填"ScientificResearch_Test"</param>
             <returns></returns>
         </member>
         <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.Login(ScientificResearch.Models.LoginInfo)">
@@ -1348,6 +1348,11 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.sp_主办讲座_增改.tt_项目经费预算">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_人员OpenId_增改">
             <summary>
             sp_人员OpenId_增改[类]
@@ -2209,6 +2214,31 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_教学退培申请_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学通知公告_增改">
+            <summary>
+            sp_教学通知公告_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学通知公告_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学通知公告接收条件_增改">
+            <summary>
+            sp_教学通知公告接收条件_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学通知公告接收条件_增改.fId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学通知公告接收条件_增改.tt">
             <summary>
             
             </summary>
@@ -6979,6 +7009,121 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.教学退培申请.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学通知公告">
+            <summary>
+            教学通知公告[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学通知公告.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学通知公告.通知类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学通知公告.发送人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学通知公告.通知名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学通知公告.关闭时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学通知公告.相关文件路径">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学通知公告.通知内容">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学通知公告.已接收人数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学通知公告.是否启用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学通知公告.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学通知公告.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学通知公告.是否必读">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学通知公告已接收人">
+            <summary>
+            教学通知公告已接收人[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学通知公告已接收人.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学通知公告已接收人.教学通知公告编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学通知公告已接收人.接收人类型">
+            <summary>
+            目前只可能是人员或学员
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学通知公告已接收人.接收人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学通知公告接收条件">
+            <summary>
+            教学通知公告接收条件[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学通知公告接收条件.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学通知公告接收条件.教学通知公告编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学通知公告接收条件.接收者类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学通知公告接收条件.接收者编号">
             <summary>
             
             </summary>
@@ -14383,6 +14528,126 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.v3_主办讲座报销">
+            <summary>
+            v3_主办讲座报销[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v3_主办讲座报销.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v3_主办讲座报销.活动名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v3_主办讲座报销.所属部门编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v3_主办讲座报销.所属部门名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v3_主办讲座报销.活动经费">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v3_主办讲座报销.会议类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v3_主办讲座报销.活动对象">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v3_主办讲座报销.开始时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v3_主办讲座报销.结束时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v3_主办讲座报销.主办人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v3_主办讲座报销.主讲人姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v3_主办讲座报销.主讲人国别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v3_主办讲座报销.主讲人单位">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v3_主办讲座报销.主讲人学位">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v3_主办讲座报销.主讲人职称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v3_主办讲座报销.主讲人简历路径">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v3_主办讲座报销.讲座地点">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v3_主办讲座报销.内容概述">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v3_主办讲座报销.主办人工号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v3_主办讲座报销.主办人姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v3_主办讲座报销.主办人部门名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v3_主办讲座报销.待审核报销">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v3_主办讲座报销.已审核报销">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v3_参加会议反馈">
             <summary>
             v3_参加会议反馈[类]
@@ -16887,14 +17152,14 @@
             <param name="项目编号"></param>
             <returns></returns>
         </member>
-        <member name="M:ScientificResearch.Controllers.AcademicActivitiesController.发起一个主办讲座流程(ScientificResearch.Models.主办讲座)">
+        <member name="M:ScientificResearch.Controllers.AcademicActivitiesController.发起一个主办讲座流程(ScientificResearch.Models.主办讲座申请增改)">
             <summary>
             发起一个主办讲座流程
             </summary>
             <param name="model"></param>
             <returns></returns>
         </member>
-        <member name="M:ScientificResearch.Controllers.AcademicActivitiesController.完善主办讲座申请资料(ScientificResearch.Models.完成步骤{ScientificResearch.Models.主办讲座})">
+        <member name="M:ScientificResearch.Controllers.AcademicActivitiesController.完善主办讲座申请资料(ScientificResearch.Models.完成步骤{ScientificResearch.Models.主办讲座申请增改})">
             <summary>
             完善主办讲座申请资料
             </summary>
@@ -17711,7 +17976,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:ScientificResearch.Controllers.TestController.测试获取整个页面的html">
+        <member name="M:ScientificResearch.Controllers.TestController.测试获取整个页面的html(System.Object[])">
             <summary>
             
             </summary>
@@ -18176,6 +18441,7 @@
             <param name="keyFields"></param>
             <param name="orderType"></param>
             <param name="orderStr"></param>
+            <param name="tbFields"></param>
             <returns></returns>
         </member>
         <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.GetListSpAsync``1(System.Data.IDbConnection,System.String,System.String,System.Boolean,System.String)">
@@ -18203,6 +18469,7 @@
             <param name="tbName"></param>
             <param name="keyFields"></param>
             <param name="orderStr"></param>
+            <param name="orderType"></param>
             <returns></returns>
         </member>
         <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.GetPagingListSpAsync``1(System.Data.IDbConnection,ScientificResearch.Models.Paging,System.String,System.String,System.String)">
@@ -18238,6 +18505,17 @@
             <param name="transaction"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.QueryFirstSpAsync``2(System.Data.IDbConnection,``0,System.Data.IDbTransaction)">
+            <summary>
+            执行一个sp,返回指定类型的第一个数据,sp如果没有参数,则不输入model
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TOut"></typeparam>
+            <param name="cnn"></param>
+            <param name="model"></param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
         <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.QueryMultipleSpAsync``1(System.Data.IDbConnection,``0,System.Data.IDbTransaction)">
             <summary>
             执行一个sp,返回多个list,需要自己再去解析,
@@ -18254,6 +18532,16 @@
             按约定SP_xxx_增改的命名执行一个merge
             注意其中的参数名也是约定
             注意他返回的是同类型T,而不是编号的int
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="cnn"></param>
+            <param name="model"></param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.Merge``1(System.Data.IDbConnection,System.Collections.Generic.IEnumerable{``0},System.Data.IDbTransaction)">
+            <summary>
+            
             </summary>
             <typeparam name="T"></typeparam>
             <param name="cnn"></param>

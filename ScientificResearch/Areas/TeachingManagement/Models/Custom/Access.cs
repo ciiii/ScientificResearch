@@ -16,5 +16,7 @@ namespace ScientificResearch.Models
         public string 姓名 { get; set; }
         public int 部门编号 { get; set; }
         public string 部门名称 { get; set; }
+
+        public string 人员类型 { get; set; } = nameof(人员);
     }
 }

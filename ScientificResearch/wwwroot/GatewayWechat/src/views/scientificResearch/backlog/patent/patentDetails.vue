@@ -87,12 +87,12 @@
           <span>超额费用来源</span>
           <span>{{this.detailslList.超额费用来源}}</span>
         </li>
-        <li>
-          <span>专利摘要</span>
+        <li class="title">
+          <span>专利摘要：</span>
           <span>{{this.detailslList.专利摘要}}</span>
         </li>
-        <li>
-          <span>备注</span>
+        <li class="title">
+          <span>备注：</span>
           <span>{{this.detailslList.备注}}</span>
         </li>
       </ul>

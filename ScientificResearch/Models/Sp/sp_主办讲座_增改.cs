@@ -15,6 +15,10 @@ namespace ScientificResearch.Models
 		/// 
 		/// </summary>
 		public DataTable tt { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+		public DataTable tt_项目经费预算 { get; set; }
         
           
         #endregion

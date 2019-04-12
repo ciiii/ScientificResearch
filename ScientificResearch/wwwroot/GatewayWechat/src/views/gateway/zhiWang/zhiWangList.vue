@@ -8,8 +8,8 @@
                 <div slot="action" @click="onSearch">搜索</div>
             </van-search>-->
             <van-tabs v-model="active" @click="clickTab">
-                <van-tab title="相关度"></van-tab>
                 <van-tab title="发表时间"></van-tab>
+                <van-tab title="相关度"></van-tab>
                 <van-tab title="被引次数"></van-tab>
                 <van-tab title="下载次数"></van-tab>
             </van-tabs>
@@ -28,9 +28,9 @@
                             <p class="title">{{item.title}}</p>
                             <p class="author">【发表时间】{{item.publishDate}}</p>
                             <p class="source" v-if="item.source">【来源】{{item.source}}</p>
-                            <p class="author" v-if="item.downCount">【下载】{{item.downCount}}</p>
-                            <p class="author" v-if="item.refCount">【引用】{{item.refCount}}</p>
-                            <p class="keyword"><span v-for="el in item.authors" :key="el">{{el}}</span></p>
+                            <p class="author">【下载】{{item.downCount?item.downCount:0}}</p>
+                            <p class="author">【引用】{{item.refCount?item.refCount:0}}</p>
+                            <p class="keyword"><span v-for="(el,index) in item.authors" :key="index">{{el}}</span></p>
 
                         </li>
                     </ul>
@@ -52,8 +52,8 @@
         </van-popup>-->
         <van-popup v-model="isShowDetails" position="right" :overlay="false" class="details-popup" v-if='isShowDetails'>
             <zhiWangDetails ref="wanFangDetails" :item="item"/>
-            <div class="back-btn-box">
-                <span @click="backtrack"><i class="icon iconfont icon-fanhui"></i></span>
+            <div class="backtrack">
+                <span @click="backtrack"><i class="icon iconfont icon-fanhui"></i> 返回</span>
             </div>
         </van-popup>
         <div class="back-btn-box" v-if="isShowBtn">
@@ -95,7 +95,7 @@
                 isShowDetails: false,
                 item: {},
                 isShowBtn: false,
-                searchType: 0
+                searchType: 0,
             }
         },
         mounted: function () {
@@ -130,29 +130,29 @@
                 if (this.existList && this.existList.sortRelateUrl) {
                     switch (index) {
                         case 0:
-                            this.reqScreen.sortUrl = this.existList.sortRelateUrl;
+                            this.reqScreen.sortUrl = this.newList.sortPublicDateUrl;
                             break;
                         case 1:
-                            this.reqScreen.sortUrl = this.existList.sortPublicDateUrl;
+                            this.reqScreen.sortUrl = this.newList.sortRelateUrl;
                             break;
                         case 2:
-                            this.reqScreen.sortUrl = this.existList.sortByUseTimesUrl;
+                            this.reqScreen.sortUrl = this.newList.sortByUseTimesUrl;
                             break;
                         case 3:
-                            this.reqScreen.sortUrl = this.existList.sortByDownTimesUrl;
+                            this.reqScreen.sortUrl = this.newList.sortByDownTimesUrl;
                             break;
                     }
                     this.onSearch();
                 }
             },
-            onSearch: _debounce(function () {
+            onSearch() {
                 this.searchType = 1;
                 this.finished = false;
                 this.loading = true;
                 this.backTop();
                 this.list = [];
                 this.getScreenList();
-            }, 300),
+            },
             getList: async function () {
                 let data = await this.$myHttp.myGet(URL_ZHI_WANG.GET_ARTICLE_LIST, this.req);
                 this.existList = data;
@@ -227,7 +227,7 @@
             },
             backtrack() {
                 this.isShowDetails = false;
-            }
+            },
         }
     }
 </script>

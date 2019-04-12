@@ -7,6 +7,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ScientificResearch.Models
 {
+    public class 主办讲座申请增改
+    {
+        public 主办讲座 基本资料 { get; set; }
+        public IEnumerable<项目经费预算> 经费预算列表 { get; set; }
+        public bool IsHold { get; set; } = false;
+
+    }
+
     public class 主办讲座Filter
     {
         public int? 编号 { get; set; }

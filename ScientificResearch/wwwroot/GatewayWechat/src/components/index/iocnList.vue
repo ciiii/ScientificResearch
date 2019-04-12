@@ -37,65 +37,104 @@ export default {
         ) || null
       );
     },
-    getCodeApi(state) {
-      //获取code
-      // 授权后重定向的回调链接地址
-      let urlNow = encodeURIComponent(window.location.href);
-      let scope = "snsapi_base"; //snsapi_userinfo   //静默授权 用户无感知
-      // 测试号 appid
-      let appid = "wx5e45aca8fcb270f1";
-      // 正式号 appid
-      // let appid = "wxfcbe1c0c36e2f97c";
-      let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${urlNow}&response_type=code&scope=${scope}&state=${state}&connect_redirect=1#wechat_redirect`;
-      window.location.replace(url);
-    },
-    getServiceName() {
-      var personnel = localStorage.getItem("personnel");
-      if (personnel === null) {
+    // getCodeApi(state) {
+    //   //获取code
+    //   // 授权后重定向的回调链接地址
+    //   let urlNow = encodeURIComponent(window.location.href);
+    //   console.log(urlNow,"67677")
+    //   let scope = "snsapi_base"; //snsapi_userinfo   //静默授权 用户无感知
+    //   // 测试号 appid
+    //   let appid = "wx5e45aca8fcb270f1";
+    //   if (process.env.NODE_ENV === "production") {
+    //     // 正式号 appid
+    //     appid = "wxfcbe1c0c36e2f97c";
+    //   }
+    //   let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${urlNow}&response_type=code&scope=${scope}&state=${state}&connect_redirect=1#wechat_redirect`;
+    //   window.location.replace(url);
+    // },
+    // getServiceName() {
+    //   var personnel = localStorage.getItem("personnel");
+    //   if (personnel === null) {
+    //     let code = this.getUrlKey("code");
+    //     if (code) {
+    //       this.$http.LoginWithOpenId(code).then(res => {
+    //         console.log(res, "111");
+    //         if (res !== undefined) {
+    //           localStorage.personnel = JSON.stringify(res.data.人员);
+    //           localStorage.token = `${res.data.token_type} ${
+    //             res.data.access_token
+    //           }`;
+    //           this.$emit("getPersonnel");
+    //           var name = res.data.人员.DbKey;
+    //           var para = {
+    //             医院名称: name
+    //           };
+    //           this.$http.getServiceList(para).then(res => {
+    //             this.iocnList = res.data;
+    //             this.$emit("getKYNews");
+    //           });
+    //           return;
+    //         } else {
+    //           var para = {
+    //             医院名称: ""
+    //           };
+    //           this.$http.getServiceList(para).then(res => {
+    //             this.iocnList = res.data;
+    //           });
+    //           return;
+    //         }
+    //       });
+    //     } else {
+    //       // this.getCodeApi("123");
+    //     }
+    //   } else {
+    //     var personnel = JSON.parse(localStorage.getItem("personnel"));
+    //     var para = {
+    //       医院名称: personnel.DbKey
+    //     };
+    //     this.$http.getServiceList(para).then(res => {
+    //       console.log(res, "222");
+    //       this.iocnList = res.data;
+    //     });
+    //     this.$emit("getPersonnel");
+    //     this.$emit("getKYNews");
+    //     return;
+    //   }
+    // },
+
+    //
+    async getServiceName() {
+      //本地存储
+      let personnel = JSON.parse(localStorage.getItem("personnel"));
+      //如果没有本地储存
+      if (!personnel) {
         let code = this.getUrlKey("code");
-        if (code) {
-          this.$http.LoginWithOpenId(code).then(res => {
-            console.log(res, "111");
-            if (res !== undefined) {
-              localStorage.personnel = JSON.stringify(res.data.人员);
-              localStorage.token = `${res.data.token_type} ${
-                res.data.access_token
-              }`;
-              this.$emit("getPersonnel");
-              var name = res.data.人员.DbKey;
-              var para = {
-                医院名称: name
-              };
-              this.$http.getServiceList(para).then(res => {
-                this.iocnList = res.data;
-                this.$emit("getKYNews");
-              });
-              return;
-            } else {
-              var para = {
-                医院名称: ""
-              };
-              this.$http.getServiceList(para).then(res => {
-                this.iocnList = res.data;
-              });
-              return;
-            }
-          });
-        } else {
-          this.getCodeApi("123");
+        let res = await this.$http.LoginWithOpenId(code);
+        //如果有绑定的
+        if (res) {
+          localStorage.personnel = JSON.stringify(res.data.人员);
+          localStorage.token = `${res.data.token_type} ${
+            res.data.access_token
+          }`;
+          this.$emit("getPersonnel");
+          this.$emit("getKYNews");
         }
-      } else {
-        var personnel = JSON.parse(localStorage.getItem("personnel"));
+        //取医院服务列表
+        let returnOfGetServiceList = await this.$http.getServiceList({
+          医院名称: !!res ? res.data.人员.DbKey : ""
+        });
+        this.iocnList = returnOfGetServiceList.data;
+      }
+      //如果有本地存储
+      else {
         var para = {
           医院名称: personnel.DbKey
         };
         this.$http.getServiceList(para).then(res => {
-          console.log(res, "222");
           this.iocnList = res.data;
         });
         this.$emit("getPersonnel");
         this.$emit("getKYNews");
-        return;
       }
     },
 

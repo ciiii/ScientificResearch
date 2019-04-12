@@ -157,7 +157,7 @@ export default {
       var para = {
         横向项目到账编号: this.$route.params.item
       };
-      this.$http.getXFundsToTheAccountDetails(para).then(res => { 
+      this.$http.getXFundsToTheAccountDetails(para).then(res => {
         console.log(res, ">>>>>");
         this.detailslList = res.data.横向项目到账详情;
         this.relatedProjects = res.data.横向项目立项详情;

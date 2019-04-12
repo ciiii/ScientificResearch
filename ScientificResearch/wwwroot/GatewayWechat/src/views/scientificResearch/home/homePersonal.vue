@@ -45,7 +45,7 @@ export default {
         })
         .then(() => {
           localStorage.clear();
-          this.$router.push("/");
+          this.$router.push('/');
         })
         .catch(() => {
           // on cancel

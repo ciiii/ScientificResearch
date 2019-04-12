@@ -1,11 +1,9 @@
 <template>
   <div>
-    <!-- <search/> -->
     <div class="nav">
       <img src="@/assets/images/iocn/logo.png" alt="科研logo">
     </div>
     <section>
-      <!-- <van-pull-refresh v-model="isLoading" @refresh="onRefresh"> -->
       <div class="backlogBox">
         <div class="backlog">
           <span>
@@ -73,18 +71,15 @@
         </div>
         <toDoList ref="toDoList"/>
       </div>
-      <!-- </van-pull-refresh> -->
     </section>
     <navFooter/>
   </div>
 </template>
 <script>
-// import search from "@/components/index/search";
 import toDoList from "@/components/toDoList/toDoList";
 import navFooter from "@/components/footer/footer";
 export default {
   components: {
-    // search,
     toDoList,
     navFooter
   },
@@ -109,8 +104,6 @@ export default {
       });
     });
   },
-  //https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5e45aca8fcb270f1&redirect_uri=http%3A%2F%2F192.168.0.157%3A8080%2F%23%2Flogin&response_type=code&scope=snsapi_base&state=undefined&connect_redirect=1#wechat_redirect
-  //https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5e45aca8fcb270f1&redirect_uri=http%3A%2F%2F192.168.0.157%3A8080%2F%23&response_type=code&scope=snsapi_base&state=undefined&connect_redirect=1#wechat_redirect
   methods: {
     onRefresh() {
       setTimeout(() => {
@@ -129,17 +122,6 @@ export default {
         ) || null
       );
     },
-    getCodeApi(urlInit, state) {
-      //获取code
-      // 授权后重定向的回调链接地址
-      let urlNow = encodeURIComponent(urlInit);
-      let scope = "snsapi_base"; //静默授权 用户无感知
-      // let appid = "wx5e45aca8fcb270f1";
-      let appid = "wxfcbe1c0c36e2f97c";
-      let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${urlNow}&response_type=code&scope=${scope}&state=${state}#wechat_redirect`;
-      return url;
-    },
-
     more() {
       this.$router.push("/KYMoreList");
     },

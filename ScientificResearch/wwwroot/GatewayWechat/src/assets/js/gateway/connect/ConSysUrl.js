@@ -1,7 +1,10 @@
-const HTTP_URL_HOST = 'http://a.ttz.cn:89';
-// const HTTP_URL_HOST = 'http://oa.meinolf.net.cn:20003';
-// const HTTP_URL_HOST = 'http://192.168.0.72:20003';
-// const HTTP_URL_HOST = 'http://192.168.0.22:20001';
+let HTTP_URL_HOST = 'http://192.168.0.22:20001';
+if (process.env.NODE_ENV === 'production') {
+    HTTP_URL_HOST = 'http://a.ttz.cn:89';
+}
+const META_ONE = 'width=device-width,initial-scale=1.0';
+const META_TWO = 'width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no';
+
 const URL_DOWNLOAD_FILE = HTTP_URL_HOST + '/Lib/FileMgrController/DownLoadFile';
 
 const URL_WAN_FANG = {
@@ -19,7 +22,7 @@ const URL_WAN_FANG = {
     GET_ARTICLE_DOWNURL: '/Lib/WFController/GetWfDataDownUrl',
 
     //下载文件
-    GET_DOWNURL_FILE: HTTP_URL_HOST +'/Lib/WFController/DownWfFile',
+    GET_DOWNURL_FILE: HTTP_URL_HOST + '/Lib/WFController/DownWfFile',
 
 }
 
@@ -51,6 +54,8 @@ const URL_ZHI_WANG = {
 
 export {
     HTTP_URL_HOST,
+    META_ONE,
+    META_TWO,
     URL_DOWNLOAD_FILE,
     URL_WAN_FANG,
     URL_ZHI_WANG,

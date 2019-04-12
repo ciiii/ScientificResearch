@@ -89,5 +89,7 @@ namespace ScientificResearch.Models
         //属于哪个公司,key决定是哪个db链接
         public int 部门编号 { get; set; }
         public string 部门名称 { get; set; }
+
+        public string 人员类型 { get; set; } = nameof(人员);
     }
 }

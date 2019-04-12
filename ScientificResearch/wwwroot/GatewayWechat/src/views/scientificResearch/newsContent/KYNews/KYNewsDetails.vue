@@ -97,7 +97,6 @@ export default {
         编号: this.$route.params.item
       };
       this.$http.getKYNewsDetails(para).then(res => {
-        // console.log(res, "dddff");
         this.detailslList = res.data.通知公告;
         this.relatedProjects = res.data.接收条件;
       });
