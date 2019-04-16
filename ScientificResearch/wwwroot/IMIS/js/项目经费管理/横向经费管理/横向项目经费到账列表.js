@@ -2,6 +2,7 @@ $(function () {
     window.vm = null;
     var id = parseInt(oa.getUrlParam('id'));
     var name = oa.getUrlParam('name');
+    var isAdd = oa.getUrlParam('isAdd');
     avalon.ready(function () {
         window.vm = avalon.define({
             $id: 'root',
@@ -11,6 +12,7 @@ $(function () {
             endTime: '',
             name: name,
             projectId: id,
+            isAdd: isAdd == 'true',
             nothing: false,
             loaded: false,
             editType: false,

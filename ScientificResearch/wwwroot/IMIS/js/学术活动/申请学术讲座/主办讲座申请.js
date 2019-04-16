@@ -47,6 +47,7 @@ $(function () {
                 isHold: true
             },
             onLoad: function () {
+                addVm.getMeetingType();
                 if (addVm.editType) {
                     addVm.title = '修改讲座';
                     xueShuDetails = JSON.parse(sessionStorage.xueShuDetails)
@@ -55,7 +56,6 @@ $(function () {
                     addVm.title = '添加讲座';
                     addVm.userName = userInfo.人员.姓名;
                     addVm.files = [];
-                    addVm.getMeetingType();
                     addVm.getTemplateList();
                 }
             },
@@ -230,12 +230,17 @@ $(function () {
                     return false;
                 }
             },
-            clickStop: function () {
-                addVm.stateVal = -2;
-                addVm.postData();
-            },
             clickSubmit: function () {
                 addVm.stateVal = 1;
+                addVm.postData();
+            },
+            temporary: function () {
+                addVm.stateVal = 1;
+                addVm.info.isHold = true;
+                addVm.postData();
+            },
+            clickStop: function () {
+                addVm.stateVal = -2;
                 addVm.postData();
             },
             postData: function () {

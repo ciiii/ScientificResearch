@@ -30,17 +30,6 @@ namespace ScientificResearch.Infrastucture
     public class BaseController<T> : Controller where T : CurrentUserBase, new()
     {
         /// <summary>
-        /// MyWorkFlowBusiness的实例不采用注入
-        /// </summary>
-        protected Business.WorkFlowBusiness MyWorkFlowBusiness
-        {
-            get
-            {
-                return new Business.WorkFlowBusiness(DbConnectionString);
-            }
-        }
-
-        /// <summary>
         ///  配置,使用config.GetValue T来读取
         /// </summary>
         protected IConfiguration Config => HttpContext.RequestServices.GetService<IConfiguration>();

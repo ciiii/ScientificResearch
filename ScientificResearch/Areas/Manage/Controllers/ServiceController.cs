@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using System.IO;
 using Microsoft.AspNetCore.Authorization;
 using System.Data.SqlClient;
+using Microsoft.AspNetCore.Hosting;
 
 namespace ScientificResearch.Areas.Manage.Controllers
 {
@@ -67,8 +68,9 @@ namespace ScientificResearch.Areas.Manage.Controllers
 
             foreach (var item in list)
             {
-                //只对 测试李零零一 这个库来测试;
-                if (item.名称 != "测试李零零一") continue;
+                //只对 测试李零零一,且在开发时 这个库来测试;
+                //生产环境中,manage库里面所有的医院都要来一遍;
+                if (item.名称 != "测试李零零一" && Env.IsDevelopment()) continue;
 
                 var sqlcon = new SqlConnection(DbConnectionStringLack.Replace("{0}", item.名称));
 

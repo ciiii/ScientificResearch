@@ -180,6 +180,17 @@ namespace ScientificResearch.Controllers
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="主办讲座编号"></param>
+        /// <returns></returns>
+        [HttpGet]
+        async public Task<IEnumerable<v1_预算已报销详情>> 获取某主办讲座预算已报销详情(int 主办讲座编号)
+        {
+            return await 获取项目预算已报销详情(主办讲座编号, 主办讲座流程模板编号);
+        }
+
+        /// <summary>
         /// 针对某个参加会议,查看其所有报销按支出类型+内容分类统计得到的汇总表
         /// 只在新增参加会议报销时候用
         /// </summary>

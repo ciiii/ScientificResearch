@@ -109,7 +109,7 @@
                             <th>项目类型</th>
                             <th>项目级别</th>
                             <th>负责人</th>
-                            <th>负责人单位</th>
+                            <th>登记人</th>
                             <th>经费(元)</th>
                             <th>已到账经费(元)</th>
                             <th>未到账经费(元)</th>
@@ -137,7 +137,7 @@
                             <td>{{el.分类名称}}</td>
                             <td>{{el.项目级别}}</td>
                             <td>{{el.负责人姓名}}</td>
-                            <td>{{el.负责人部门名称}}</td>
+                            <td>{{el.登记人姓名}}</td>
                             <td>{{el.经费|currency}}</td>
                             <td>{{el.已审核到账|currency}}</td>
                             <td>{{el.未到经费|currency}}</td>
@@ -145,7 +145,7 @@
                             <td>{{el.计划开始日期|date("yyyy-MM-dd")}}</td>
                             <td class="operation">
                                 <li class="bs-tooltip btn-addFeedback" data-toggle="tooltip"
-                                    data-placement="bottom" title="添加到账">
+                                    data-placement="bottom" title="添加到账" ms-if="@el.isAdd">
                                     <a data-toggle="modal" data-target=".modal-add"
                                        ms-attr="{'href':@getUrl('添加纵向项目经费到账.html')}" onclick="changeUrl(this)"
                                        ms-on-click="@clickBtnAdd(el.编号)">
@@ -154,7 +154,7 @@
                                 </li>
                                 <li class="bs-tooltip btn-examine" data-toggle="tooltip"
                                     data-placement="bottom" title="到账详情">
-                                    <a ms-attr="{'href':@getUrl('纵向项目经费到账列表.html?id='+@el.编号+'&name='+@el.项目中文名称)}"
+                                    <a ms-attr="{'href':@getUrl('纵向项目经费到账列表.html?id='+@el.编号+'&name='+@el.项目中文名称+'&isAdd='+@el.isAdd)}"
                                        ms-on-click="@clickBtnNext">
                                         <i class="icon iconfont icon-16"></i>
                                     </a>

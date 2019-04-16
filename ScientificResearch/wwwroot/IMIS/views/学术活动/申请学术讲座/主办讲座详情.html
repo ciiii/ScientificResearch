@@ -55,7 +55,13 @@
                     <div class="form-group col-sm-6">
                         <label class="col-sm-3 control-label">活动经费：</label>
                         <div class="col-sm-7">
-                            <span>{{@model.学术任职详情.活动经费|currency 元}}</span>
+                            <span>{{@model.学术任职详情.活动经费|currency}} 元</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">活动对象：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.学术任职详情.活动对象}}</span>
                         </div>
                     </div>
                     <div class="form-group col-sm-6">
@@ -88,6 +94,12 @@
                             <span>{{@model.学术任职详情.主办人姓名}}</span>
                         </div>
                     </div>
+                    <div class="form-group col-sm-6">
+                        <label class="col-sm-3 control-label">主办人部门：</label>
+                        <div class="col-sm-7">
+                            <span>{{@model.学术任职详情.主办人部门名称}}</span>
+                        </div>
+                    </div>
                     <div class="form-group col-sm-12">
                         <label class="col-sm-3 control-label">讲座地点：</label>
                         <div class="col-sm-9">
@@ -114,25 +126,25 @@
                         </div>
                     </div>
                     <div class="form-group col-sm-6">
-                        <label class="col-sm-3 control-label">国别：</label>
+                        <label class="col-sm-3 control-label">主讲人国别：</label>
                         <div class="col-sm-7">
                             <span>{{@model.学术任职详情.主讲人国别}}</span>
                         </div>
                     </div>
                     <div class="form-group col-sm-6">
-                        <label class="col-sm-3 control-label">单位：</label>
+                        <label class="col-sm-3 control-label">主讲人单位：</label>
                         <div class="col-sm-7">
                             <span>{{@model.学术任职详情.主讲人单位}}</span>
                         </div>
                     </div>
                     <div class="form-group col-sm-6">
-                        <label class="col-sm-3 control-label">学位：</label>
+                        <label class="col-sm-3 control-label">主讲人学位：</label>
                         <div class="col-sm-7">
                             <span>{{@model.学术任职详情.主讲人学位}}</span>
                         </div>
                     </div>
                     <div class="form-group col-sm-6">
-                        <label class="col-sm-3 control-label">职称：</label>
+                        <label class="col-sm-3 control-label">主讲人职称：</label>
                         <div class="col-sm-7">
                             <span>{{@model.学术任职详情.主讲人职称}}</span>
                         </div>
@@ -141,7 +153,7 @@
                 <div class="col-sm-12 content fileUpload-box">
                     <h5 class="title"><span>主讲人简历</span></h5>
                     <div class="form-group col-sm-12">
-                        <label class="col-sm-3 control-label">文件：</label>
+                        <label class="col-sm-3 control-label">附件：</label>
                         <div class="form-group col-sm-8 items">
                             <div class="item" ms-for="el in @files">
                                 <a class="name" ms-attr="{'href':@el}" download="">{{@getHtmlDocName(el)}}</a>
@@ -152,14 +164,6 @@
             </form>
         </div>
         <div role="tabpanel" id="tab3" class="tab-pane">
-            <form class="form-horizontal content ">
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">活动经费(元)：</label>
-                    <div class="col-sm-7">
-                        <span>{{@funds|currency}}</span>
-                    </div>
-                </div>
-            </form>
             <h4 class="text-center auditing-title">项目预算</h4>
             <div class="table-responsive">
                 <table class="table table-bordered table-striped">

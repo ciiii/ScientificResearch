@@ -30,7 +30,7 @@
           </li>
         </ul>
         <div class="audit">
-          <span @click="audit(item,key)" v-show="isShow">审核</span>
+          <span @click="audit(item,key)" v-show="item.步骤状态说明 === '待审核'">审核</span>
         </div>
       </div>
     </div>
@@ -48,13 +48,12 @@ export default {
   data() {
     return {
       index: 0,
-      size: 0,
+      size: 1,
       total: 0,
       list: [],
       loading: false,
       finished: false,
       show: false,
-      isShow: false,
       message: "",
       indexKey: null,
       typeList: {
@@ -65,7 +64,7 @@ export default {
         纵向项目申报: "YDeclarationDetails",
         纵向项目中检: "YProcessInspectionDetails",
         纵向项目经费到账: "YFundsToTheAccount",
-
+        主办讲座:"lectureDetails",
         横向项目: "XDetails",
         横向项目经费到账: "XFundsToTheAccount",
         报销: "reimbursementDetails"
@@ -83,7 +82,6 @@ export default {
         index: this.index + 1
       };
       this.$http.getBacklogProcess(data).then(res => {
-        console.log(res,"123")
         this.total = res.data.total;
         const data = this.list;
         if (type) {
@@ -91,11 +89,6 @@ export default {
         } else {
           this.list = data.concat(res.data.list);
         }
-        this.list.forEach((item, index) => {
-          if (item.步骤状态说明 === "待审核") {
-            this.isShow = true;
-          }
-        });
         this.loading = false;
         this.index++;
         if (this.index >= this.total) {
@@ -111,18 +104,24 @@ export default {
       }, 500);
     },
     goDetails(item, code) {
-      // console.log(item, code, "详情");
-      for (let key in this.typeList) {
-        if (key == item.流程名称) {
-          this.$router.push({
-            path: `/${this.typeList[key]}`,
-            name: `${this.typeList[key]}`,
-            params: {
-              item: code
-            }
-          });
+      this.$router.push({
+        path: `/${this.typeList[item.流程名称]}`,
+        name: `${this.typeList[item.流程名称]}`,
+        params: {
+          item: code
         }
-      }
+      });
+      // for (let key in this.typeList) {
+      //   if (key == item.流程名称) {
+      //     this.$router.push({
+      //       path: `/${this.typeList[key]}`,
+      //       name: `${this.typeList[key]}`,
+      //       params: {
+      //         item: code
+      //       }
+      //     });
+      //   }
+      // }
     },
     audit(item, key) {
       this.message = item;

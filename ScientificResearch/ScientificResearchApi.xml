@@ -332,6 +332,51 @@
             但是目前models还无法分开;
             </summary>
         </member>
+        <member name="P:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementBaseController.MyWorkFlowBusiness">
+            <summary>
+            MyWorkFlowBusiness的实例不采用注入
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController">
+            <summary>
+            工作流相关的接口
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.步骤通过审核(ScientificResearch.Models.StepDone)">
+            <summary>
+            审核等不需要附加动作的操作,可以直接调用这个接口;
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.步骤不通过审核(ScientificResearch.Models.StepDone)">
+            <summary>
+            
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.终止流程(ScientificResearch.Models.StepDone)">
+            <summary>
+            
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.分页获取办事流程列表(ScientificResearch.Models.Paging)">
+            <summary>
+            首页上查看"更多办事流程"时,列举出所有的办事流程
+            </summary>
+            <param name="paging"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.获取某办事流程步骤列表(System.Int32)">
+            <summary>
+            根据某个办事流程编号,获取该流程规定的步骤
+            </summary>
+            <param name="办事流程编号"></param>
+            <returns></returns>
+        </member>
         <member name="T:ScientificResearch.Models.CurrentUserOfManage">
             <summary>
             当前总库登录人的信息
@@ -1001,6 +1046,60 @@
         <member name="P:ScientificResearch.Models.教学人员Filter.LikeAllName">
             <summary>
             同时对姓名和部门名称做搜索
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.StepDone`1">
+            <summary>
+            完成步骤时,提交的数据
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:ScientificResearch.Models.StepDone`1.StepId">
+            <summary>
+            完成哪个步骤
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepDone`1.IsHold">
+            <summary>
+            需要暂存=true,不暂存=false
+            注意这个和ModelWithIsHold中的IsHold是完全一样的
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepDone`1.Remark">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepDone`1.Data">
+            <summary>
+            附加动作的传入数据,比如任职打回去修改时,修改后的数据
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Models.StepDone`1.ToSimple(System.Int32)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ScientificResearch.Models.StepDone">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepDone.StepId">
+            <summary>
+            完成哪个步骤
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepDone.State">
+            <summary>
+            完整的状态值,步骤类型状态
+            设为Obsolete仅仅是为了swagger上不可见;
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.StepDone.Remark">
+            <summary>
+            
             </summary>
         </member>
         <member name="T:ScientificResearch.Models.GET_DeleteScript_MSSQL">
@@ -16418,6 +16517,56 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.VStepTemplate">
+            <summary>
+            VStepTemplate[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VStepTemplate.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VStepTemplate.FlowTemplateId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VStepTemplate.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VStepTemplate.ViewComponentName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VStepTemplate.EditComponentName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VStepTemplate.Style">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VStepTemplate.Remark">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VStepTemplate.可操作人">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.VStepTemplate.可用操作">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.VTFN某医院购买的服务">
             <summary>
             VTFN某医院购买的服务[类]
@@ -17152,6 +17301,62 @@
             <param name="项目编号"></param>
             <returns></returns>
         </member>
+        <member name="T:ScientificResearch.Business.StepState">
+            <summary>
+            操作流程中步骤的代号
+            TODO:business真的不应该存在,放到model对应对象的方法会更好;
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Business.WorkFlowBusinessOfTeachingManagement">
+            <summary>
+            工作流静态方法
+            事务要是能挂载到db下就好了
+            事务要是能动态构成就更好了
+            
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Business.WorkFlowBusinessOfTeachingManagement.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="dbConnectionString"></param>
+        </member>
+        <member name="M:ScientificResearch.Business.WorkFlowBusinessOfTeachingManagement.InitFlow``1(System.Int32,``0,System.String,System.Int32,System.Boolean,System.Int32,System.String,System.Nullable{System.Int32})">
+            <summary>
+            执行一个将返回新建项目编号的sp,同时生成一个流程,再根据这个流程返回的步骤编号完成第一个步骤;
+            如果不完成第一个步骤,其实就相当于暂存;
+            </summary>
+            <param name="FlowTemplateId"></param>
+            <param name="model"></param>
+            <param name="OperatorType"></param>
+            <param name="CreatorType"></param>
+            <param name="OperatorId"></param>
+            <param name="isHold"></param>
+            <param name="State"></param>
+            <param name="CreatorId">不是有项目发起人发起的流程时,需要填写一下发起人,比如纵向立项登记时</param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Business.WorkFlowBusinessOfTeachingManagement.DoneStep(ScientificResearch.Models.StepDone,System.String,System.Int32)">
+            <summary>
+            没有附加动作的完成步骤
+            </summary>
+            <param name="step"></param>
+            <param name="OperatorType"></param>
+            <param name="OperatorId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Business.WorkFlowBusinessOfTeachingManagement.DoneStep(ScientificResearch.Models.StepDone,System.String,System.Int32,System.Collections.Generic.List{ScientificResearch.Infrastucture.PredefindedSPStructure},System.Boolean)">
+            <summary>
+            完成一个步骤,返回下一个步骤的id,返回0则表示没有下一步了;
+            可以多个附加动作;
+            </summary>
+            <param name="step"></param>
+            <param name="OperatorType"></param>
+            <param name="OperatorId"></param>
+            <param name="SPList"></param>
+            <param name="isHold"></param>
+            <returns></returns>
+        </member>
         <member name="M:ScientificResearch.Controllers.AcademicActivitiesController.发起一个主办讲座流程(ScientificResearch.Models.主办讲座申请增改)">
             <summary>
             发起一个主办讲座流程
@@ -17638,6 +17843,13 @@
             <param name="横向项目编号"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Controllers.ExpenseController.获取某主办讲座预算已报销详情(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="主办讲座编号"></param>
+            <returns></returns>
+        </member>
         <member name="M:ScientificResearch.Controllers.ExpenseController.获取某参加会议预算已报销详情(System.Int32)">
             <summary>
             针对某个参加会议,查看其所有报销按支出类型+内容分类统计得到的汇总表
@@ -17901,6 +18113,11 @@
             </summary>
             <param name="model"></param>
             <returns></returns>
+        </member>
+        <member name="P:ScientificResearch.Controllers.ScientificResearchBaseController.MyWorkFlowBusiness">
+            <summary>
+            MyWorkFlowBusiness的实例不采用注入
+            </summary>
         </member>
         <member name="T:ScientificResearch.Controllers.TestController">
             <summary>
@@ -18267,11 +18484,6 @@
             基础控制器
             </summary>
         </member>
-        <member name="P:ScientificResearch.Infrastucture.BaseController`1.MyWorkFlowBusiness">
-            <summary>
-            MyWorkFlowBusiness的实例不采用注入
-            </summary>
-        </member>
         <member name="P:ScientificResearch.Infrastucture.BaseController`1.Config">
             <summary>
              配置,使用config.GetValue T来读取
@@ -18376,6 +18588,12 @@
         <member name="T:ScientificResearch.Infrastucture.PredefindedKeyFields">
             <summary>
             预定义的主键,就是这个主键名称是固定的而已
+            对应tt_编号这个tt
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Infrastucture.PredefindedKeyFields.编号">
+            <summary>
+            
             </summary>
         </member>
         <member name="T:ScientificResearch.Infrastucture.PredefindedIdList`1">
@@ -18392,11 +18610,35 @@
             <typeparam name="T"></typeparam>
             <typeparam name="TList"></typeparam>
         </member>
+        <member name="T:ScientificResearch.Infrastucture.PredefindedSPStructure">
+            <summary>
+            用一个Name+一个Object表示一个可执行的SP的数据;
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Infrastucture.PredefindedSPStructure.Name">
+            <summary>
+            SP的名称
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Infrastucture.PredefindedSPStructure.Parameter">
+            <summary>
+            参数
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Infrastucture.PredefinedSpExtention">
             <summary>
             GetModelById
             一些预定义的sp的dapper调用
             </summary>
+        </member>
+        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.AddItem``1(System.Collections.Generic.IList{ScientificResearch.Infrastucture.PredefindedSPStructure},``0)">
+            <summary>
+            IList PredefindedSPStructure的AddItem挂载方法;
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="list"></param>
+            <param name="item"></param>
+            <returns></returns>
         </member>
         <member name="F:ScientificResearch.Infrastucture.PredefinedSpExtention.PredefindedKeyFields">
             <summary>

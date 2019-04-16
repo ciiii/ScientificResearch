@@ -1,6 +1,7 @@
 $(function () {
     isOverdue();
     window.vm = null;
+    var userInfo = JSON.parse(localStorage.info).data;
     avalon.ready(function () {
         window.vm = avalon.define({
             $id: 'root',
@@ -41,6 +42,9 @@ $(function () {
                             for (var i = 0; i < obj.length; i++) {
                                 obj[i].number = number;
                                 obj[i].checked = false;
+                                if (userInfo.人员.编号 == obj[i].申请人编号) {
+                                    obj[i].isAdd = true;
+                                }
                                 number++;
                             }
                             vm.model = obj;
@@ -102,7 +106,7 @@ $(function () {
             info:function (el) {
                 var details = {
                     项目名称: el.会议名称,
-                    项目编号: '',
+                    项目编号: el.编号,
                     项目负责人: el.申请人姓名,
                     项目负责人部门: el.申请人部门名称,
                     项目经费: el.经费,

@@ -65,29 +65,25 @@ export default {
   },
   methods: {
     getParams() {
-      this.meetingID = localStorage.getItem("meetingID")
-      // console.log(this.meetingID,"本地参加会议编号")
+      this.meetingID = localStorage.getItem("meetingID");
       if (this.meetingID !== null) {
         var para = {
           参加会议编号: this.meetingID
         };
         this.$http.getSomeExpenseList(para).then(res => {
-          // console.log(res, "本地【有】参加会议编号");
           this.someExpenseList = res.data;
         });
       } else {
-        localStorage.meetingID = this.$route.params.item
+        localStorage.meetingID = this.$route.params.item;
         var para = {
           参加会议编号: this.$route.params.item
         };
         this.$http.getSomeExpenseList(para).then(res => {
-          // console.log(res, "本地 【没有】 参加会议编号");
           this.someExpenseList = res.data;
         });
       }
     },
     detailsPopup(item) {
-      // console.log(item, "报销编号");
       this.$router.push({
         path: "/reimbursementDetails",
         name: "reimbursementDetails",

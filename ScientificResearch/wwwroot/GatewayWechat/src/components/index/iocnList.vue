@@ -24,7 +24,7 @@ export default {
   },
   created() {},
   mounted() {
-    this.getServiceName();
+    this.login();
   },
   methods: {
     getUrlKey(name) {
@@ -100,10 +100,10 @@ export default {
     //     this.$emit("getKYNews");
     //     return;
     //   }
-    // },
+    // },l
 
     //
-    async getServiceName() {
+    async login() {
       //本地存储
       let personnel = JSON.parse(localStorage.getItem("personnel"));
       //如果没有本地储存

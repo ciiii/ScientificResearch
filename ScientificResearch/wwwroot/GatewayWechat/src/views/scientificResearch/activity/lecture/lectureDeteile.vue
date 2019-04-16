@@ -1,0 +1,1 @@
+e:\scientific-research\src\views\scientificResearch\activity\lecture\lectureDeteile.vue

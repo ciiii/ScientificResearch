@@ -260,7 +260,7 @@ export default {
         讲座反馈编号: item
       };
       this.$http.getFeedbackDetails(para).then(res => {
-        console.log(res, "ffff");
+        // console.log(res, "ffff");
         this.FeedbackDetails = res.data.讲座反馈详情;
         this.auditList = res.data.审核情况;
       });

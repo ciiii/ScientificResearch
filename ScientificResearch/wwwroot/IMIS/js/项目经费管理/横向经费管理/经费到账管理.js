@@ -1,6 +1,7 @@
 $(function () {
     isOverdue();
     window.vm = null;
+    var userInfo = JSON.parse(localStorage.info).data;
     avalon.ready(function () {
         window.vm = avalon.define({
             $id: 'root',
@@ -49,6 +50,9 @@ $(function () {
                             for (var i = 0; i < obj.length; i++) {
                                 obj[i].number = number;
                                 obj[i].checked = false;
+                                if (userInfo.人员.编号 == obj[i].负责人编号) {
+                                    obj[i].isAdd = true;
+                                }
                                 number++;
                             }
                             vm.model = obj;

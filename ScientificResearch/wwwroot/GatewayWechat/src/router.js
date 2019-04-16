@@ -157,6 +157,13 @@ export default new Router({
                 import ("./views/scientificResearch/activity/lecture/lectureList.vue"),
             meta: { title: '主办讲座列表' }
         },
+        { // 主办讲座详情
+            path: "/lectureDetails",
+            name: "lectureDetails",
+            component: () =>
+                import ("./views/scientificResearch/activity/lecture/lectureDetails.vue"),
+            meta: { title: '主办讲座详情' }
+        },
         { // 讲座反馈列表
             path: "/feedbackList",
             name: "feedbackList",

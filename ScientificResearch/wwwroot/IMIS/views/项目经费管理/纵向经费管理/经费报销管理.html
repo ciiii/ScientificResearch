@@ -109,7 +109,7 @@
                             <th>项目类型</th>
                             <th>项目级别</th>
                             <th>负责人</th>
-                            <th>负责人单位</th>
+                            <th>登记人</th>
                             <th>经费(元)</th>
                             <th>已报销(元)</th>
                             <th>待审核报销(元)</th>
@@ -137,15 +137,15 @@
                             <td>{{el.分类名称}}</td>
                             <td>{{el.项目级别}}</td>
                             <td>{{el.负责人姓名}}</td>
-                            <td>{{el.负责人部门名称}}</td>
+                            <td>{{el.登记人姓名}}</td>
                             <td>{{el.经费|currency}}</td>
                             <td>{{el.已审核报销|currency}}</td>
                             <td>{{el.待审核报销|currency}}</td>
                             <td>{{el.剩余经费|currency}}</td>
                             <td>{{el.计划开始日期|date("yyyy-MM-dd")}}</td>
-                            <td class="operation">
+                            <td class="operation" width="100">
                                 <li class="bs-tooltip btn-addFeedback" data-toggle="tooltip"
-                                    data-placement="bottom" title="添加报销">
+                                    data-placement="bottom" title="添加报销" ms-if="@el.isAdd">
                                     <a data-toggle="modal" data-target=".modal-add"
                                        ms-attr="{'href':@getUrl('/IMIS/views/项目经费管理/申请报销.html')}"
                                        onclick="changeUrl(this)" ms-on-click="@info(el),@clickBtnAdd(el.编号)">
@@ -154,7 +154,7 @@
                                 </li>
                                 <li class="bs-tooltip btn-examine" data-toggle="tooltip"
                                     data-placement="bottom" title="报销详情">
-                                    <a ms-attr="{'href':@getUrl('纵向项目经费报销列表.html?id='+@el.编号+'&name='+@el.项目中文名称)}"
+                                    <a ms-attr="{'href':@getUrl('纵向项目经费报销列表.html?id='+@el.编号+'&name='+@el.项目中文名称+'&isAdd='+@el.isAdd)}"
                                        ms-on-click="@info(el),@clickBtnNext">
                                         <i class="icon iconfont icon-16"></i>
                                     </a>

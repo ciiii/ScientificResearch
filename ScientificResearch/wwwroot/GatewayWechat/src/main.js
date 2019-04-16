@@ -98,7 +98,8 @@ router.beforeEach((to, from, next) => {
         } else {
             Vue.prototype.$toast('请先登录')
             next({
-                path: '/'
+                path: '/',
+                query: { redirect: to.fullPath }
             })
         }
     } else {

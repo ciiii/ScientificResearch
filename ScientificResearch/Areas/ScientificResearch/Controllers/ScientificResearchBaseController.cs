@@ -18,6 +18,15 @@ namespace ScientificResearch.Controllers
     [Route("[controller]/[action]")]
     public class ScientificResearchBaseController : BaseController<CurrentUser>
     {
-
+        /// <summary>
+        /// MyWorkFlowBusiness的实例不采用注入
+        /// </summary>
+        protected Business.WorkFlowBusiness MyWorkFlowBusiness
+        {
+            get
+            {
+                return new Business.WorkFlowBusiness(DbConnectionString);
+            }
+        }
     }
 }

@@ -2654,6 +2654,56 @@ var FundsReimbursement = {
             }
         });
     },
+    getHostLectureReimbursementTotalList: function (type, options, getHostLectureReimbursementTotalListListener) {
+        var url = Code.URL_GET_HOST_LECTURE_REIMBURSEMENT_TOTAL_LIST;
+
+        Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
+            if (success) {
+                getHostLectureReimbursementTotalListListener(true, obj.data, '')
+            } else {
+                getHostLectureReimbursementTotalListListener(false, '', strErro)
+            }
+        });
+    },
+    getHostLectureReimbursementList: function (type, id, getHostLectureReimbursementListListener) {
+        var url = Code.URL_GET_HOST_LECTURE_REIMBURSEMENT_LIST;
+        var postData = {
+            主办讲座编号: id
+        }
+
+        Connect_Http.httpDatas(type, url, postData, function getBackListener(success, obj, strErro) {
+            if (success) {
+                getHostLectureReimbursementListListener(true, obj.data, '')
+            } else {
+                getHostLectureReimbursementListListener(false, '', strErro)
+            }
+        });
+    },
+    getHostLectureReimbursementDetails: function (type, id, getHostLectureReimbursementDetailsListener) {
+        var url = Code.URL_GET_HOST_LECTURE_REIMBURSEMENT_DETAILS;
+        var postData = {
+            主办讲座编号: id
+        }
+
+        Connect_Http.httpDatas(type, url, postData, function getBackListener(success, obj, strErro) {
+            if (success) {
+                getHostLectureReimbursementDetailsListener(true, obj.data, '')
+            } else {
+                getHostLectureReimbursementDetailsListener(false, '', strErro)
+            }
+        });
+    },
+    addHostLectureReimbursement: function (type, options, addHostLectureReimbursementListener) {
+        var url = Code.URL_POST_ADD_HOST_LECTURE_REIMBURSEMENT;
+
+        Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
+            if (success) {
+                addHostLectureReimbursementListener(true, obj, '')
+            } else {
+                addHostLectureReimbursementListener(false, '', strErro)
+            }
+        });
+    },
 }
 
 //成果统计

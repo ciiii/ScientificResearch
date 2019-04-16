@@ -16,14 +16,12 @@
                 <span v-for="(el,index) in item.tag" :key="index">{{el}}</span>
             </p>
             <div class="btn-box" v-if="item.full&&details">
-                <a href="javascript:;" class="btn-preview" @click="getDownloadFile">
-                    预览PDF
-                    <van-icon name="icon iconfont icon-browse"/>
-                </a>
-                <a :href="downUrl" id="btn-download" class="btn-download" download="">
-                    下载PDF
-                    <van-icon name="icon iconfont icon-download"/>
-                </a>
+                <van-button type="default" @click="getDownloadFile(true)">
+                    <van-icon name="icon iconfont icon-browse"/> 预览PDF
+                </van-button>
+                <van-button type="default" @click="getDownloadFile(false)">
+                    <van-icon name="icon iconfont icon-download"/>下载PDF
+                </van-button>
             </div>
         </div>
     </div>
@@ -68,9 +66,6 @@
             getDetails: async function () {
                 let data = await this.$myHttp.myGet(URL_WAN_FANG.GET_ARTICLE_DETAILS, this.req);
                 this.reqUrl.url = data.downUrl;
-                if (data.downUrl) {
-                    this.downUrl = URL_WAN_FANG.GET_DOWNURL_FILE + '?fileName=' + UrlEncode(data.fileName) + '&downUrl=' + UrlEncode(this.reqUrl.url) + '&accountId=' + this.item.accountId;
-                }
                 this.reqUrl.fileName = data.fileName;
                 this.details = data;
             },
@@ -81,19 +76,21 @@
                     duration: 5000
                 });
             },
-            getDownloadFile: _debounce(async function () {
+            getDownloadFile: _debounce(async function (type) {
                 this.getLoading();
                 let data = await this.$myHttp.myGet(URL_WAN_FANG.GET_ARTICLE_DOWNURL, this.reqUrl);
-
                 if (data && data != '') {
-                    this.clickPreview();
+                    this.toastLoading.clear();
+                    this.downUrl = URL_WAN_FANG.GET_DOWNURL_FILE + '?fileName=' + UrlEncode(data) + '&downUrl=' + UrlEncode(this.reqUrl.url) + '&accountId=' + this.item.accountId;
+                    if (type) {
+                        this.$router.push({path: '/pdfPreview', query: {url: this.downUrl}})
+                    } else {
+                        window.location.href = this.downUrl;
+                    }
                 } else {
-                    this.$toast('您无权或余额不足不能查看此文章！');
+                    this.$toast('您无权或余额不足不能下载此文章！');
                 }
             }, 300),
-            clickPreview() {
-                this.$router.push({path:'/pdfPreview', query:{url:this.downUrl}})
-            },
         }
     }
 </script>

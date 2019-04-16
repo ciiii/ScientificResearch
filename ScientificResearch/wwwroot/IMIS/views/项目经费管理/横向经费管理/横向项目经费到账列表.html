@@ -43,7 +43,7 @@
         <div class="screen-box">
             <div class="form-inline">
                 <div class="form-group form-add-box">
-                    <a class="btn btn-primary btn-add" data-toggle="modal" data-target=".modal-add"
+                    <a class="btn btn-primary btn-add" ms-if="@isAdd" data-toggle="modal" data-target=".modal-add"
                        ms-attr="{'href':@getUrl('添加横向项目经费到账.html')}" onclick="changeUrl(this)"
                        ms-on-click="@clickBtnAdd">
                         <i class="icon iconfont icon-tianjia"></i> 添加到账

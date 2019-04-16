@@ -21,5 +21,15 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
     [Authorize(Roles = "ScientificResearchUser,UserFromManage")]
     public class TeachingManagementBaseController : BaseController<CurrentUserOfTeachingManagement>
     {
+        /// <summary>
+        /// MyWorkFlowBusiness的实例不采用注入
+        /// </summary>
+        protected Business.WorkFlowBusinessOfTeachingManagement MyWorkFlowBusiness
+        {
+            get
+            {
+                return new Business.WorkFlowBusinessOfTeachingManagement(DbConnectionString);
+            }
+        }
     }
 }

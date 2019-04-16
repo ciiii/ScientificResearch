@@ -13,9 +13,13 @@ namespace ScientificResearch.Infrastucture
 {
     /// <summary>
     /// 预定义的主键,就是这个主键名称是固定的而已
+    /// 对应tt_编号这个tt
     /// </summary>
     public class PredefindedKeyFields
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public int 编号 { get; set; }
     }
 
@@ -42,11 +46,39 @@ namespace ScientificResearch.Infrastucture
     }
 
     /// <summary>
+    /// 用一个Name+一个Object表示一个可执行的SP的数据;
+    /// </summary>
+    public class PredefindedSPStructure
+    {
+        /// <summary>
+        /// SP的名称
+        /// </summary>
+        public string Name { get; set; }
+        /// <summary>
+        /// 参数
+        /// </summary>
+        public object Parameter { get; set; }
+    }
+
+    /// <summary>
     /// GetModelById
     /// 一些预定义的sp的dapper调用
     /// </summary>
     public static class PredefinedSpExtention
     {
+        /// <summary>
+        /// IList PredefindedSPStructure的AddItem挂载方法;
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public static IList<PredefindedSPStructure> AddItem<T>(this IList<PredefindedSPStructure> list, T item)
+        {
+            list.Add(new PredefindedSPStructure() { Name = typeof(T).Name, Parameter = item });
+            return list;
+        }
+
         /// <summary>
         /// 预定义的主键,非要叫"编号"而不叫"Id"我有啥法
         /// </summary>

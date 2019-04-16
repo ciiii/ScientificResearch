@@ -145,7 +145,7 @@
                             <td>{{el.签订时间|date("yyyy-MM-dd")}}</td>
                             <td class="operation">
                                 <li class="bs-tooltip btn-addFeedback" data-toggle="tooltip"
-                                    data-placement="bottom" title="添加到账">
+                                    data-placement="bottom" title="添加到账" ms-if="@el.isAdd">
                                     <a data-toggle="modal" data-target=".modal-add"
                                        ms-attr="{'href':@getUrl('添加横向项目经费到账.html')}" onclick="changeUrl(this)"
                                        ms-on-click="@clickBtnAdd(el.编号)">
@@ -154,7 +154,7 @@
                                 </li>
                                 <li class="bs-tooltip btn-examine" data-toggle="tooltip"
                                     data-placement="bottom" title="到账详情">
-                                    <a ms-attr="{'href':@getUrl('横向项目经费到账列表.html?id='+@el.编号+'&name='+@el.合同名称)}"
+                                    <a ms-attr="{'href':@getUrl('横向项目经费到账列表.html?id='+@el.编号+'&name='+@el.合同名称+'&isAdd='+@el.isAdd)}"
                                        ms-on-click="@clickBtnNext">
                                         <i class="icon iconfont icon-16"></i>
                                     </a>

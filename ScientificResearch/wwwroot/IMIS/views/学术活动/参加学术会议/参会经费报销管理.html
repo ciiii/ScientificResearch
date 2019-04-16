@@ -97,14 +97,14 @@
                             <td>{{el.会议结束时间|date("yyyy-MM-dd")}}</td>
                             <td class="operation">
                                 <li class="bs-tooltip btn-addFeedback" data-toggle="tooltip"
-                                    data-placement="bottom" title="添加报销">
+                                    data-placement="bottom" title="添加报销" ms-if="@el.isAdd">
                                     <a data-toggle="modal" data-target=".modal-add" ms-attr="{'href':@getUrl('/IMIS/views/项目经费管理/申请报销.html')}" onclick="changeUrl(this)" ms-on-click="@info(el),@clickBtnAdd(el.编号)">
                                         <i class="icon iconfont icon-tianjia"></i>
                                     </a>
                                 </li>
                                 <li class="bs-tooltip btn-examine" data-toggle="tooltip"
                                     data-placement="bottom" title="报销详情">
-                                    <a ms-attr="{'href':@getUrl('参会经费报销列表.html?id='+@el.编号+'&name='+@el.会议名称)}" ms-on-click="@info(el),@clickBtnNext">
+                                    <a ms-attr="{'href':@getUrl('参会经费报销列表.html?id='+@el.编号+'&name='+@el.会议名称+'&isAdd='+@el.isAdd)}" ms-on-click="@info(el),@clickBtnNext">
                                         <i class="icon iconfont icon-16"></i>
                                     </a>
                                 </li>

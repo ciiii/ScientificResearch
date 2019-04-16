@@ -6,10 +6,22 @@
     <div class="backContentBox" v-for="(item, key) in lectureList" :key="key">
       <ul class="backContentTop" @click="goDetails(item,item.成果编号)">
         <li>{{item.成果名称}}</li>
-        <li><span>成果类型：</span><span>{{item.成果类型}}</span></li>
-        <li><span>发起人：</span><span>{{item.发起人姓名}}</span></li>
-        <li><span>发起人部门：</span><span>{{item.发起人部门名称}}</span></li>
-        <li><span>年度：</span><span>{{item.年度}}</span></li>
+        <li>
+          <span>成果类型：</span>
+          <span>{{item.成果类型}}</span>
+        </li>
+        <li>
+          <span>发起人：</span>
+          <span>{{item.发起人姓名}}</span>
+        </li>
+        <li>
+          <span>发起人部门：</span>
+          <span>{{item.发起人部门名称}}</span>
+        </li>
+        <li>
+          <span>年度：</span>
+          <span>{{item.年度}}</span>
+        </li>
       </ul>
     </div>
     <ReturnBtn/>
@@ -39,23 +51,19 @@ export default {
   methods: {
     getPaper() {
       this.$http.getAchievementAllList(this.index, this.size).then(res => {
-        console.log(res);
+        // console.log(res);
         this.lectureList = res.data.list;
       });
     },
     // 查看详情
     goDetails(item, code) {
-      for (let key in this.typeList) {
-        if (key == item.成果类型) {
-          this.$router.push({
-            path: `/${this.typeList[key]}`,
-            name: `${this.typeList[key]}`,
-            params: {
-              item: code
-            }
-          });
+      this.$router.push({
+        path: `/${this.typeList[item.成果类型]}`,
+        name: `${this.typeList[item.成果类型]}`,
+        params: {
+          item: code
         }
-      }
+      });
     },
     // 截取时间
     startTime(item) {

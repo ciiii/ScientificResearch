@@ -346,6 +346,9 @@ var Code = {
     //上传讲座附件
     URL_POST_UPLOAD_LECTURE_ENCLOSURE: getApiHost + '/AcademicActivities/上传讲座附件',
 
+
+
+
     //分页获取参加会议
     URL_GET_MEETING_LIST: getApiHost + '/AcademicActivities/分页获取参加会议',
 
@@ -789,6 +792,22 @@ var Code = {
 
     //完善没有预算的经费报销
     URL_POST_EDIT_MEETING_FUNDS_REIMBURSEMENT: getApiHost + '/Expense/完善没有预算的经费报销',
+
+
+
+    //分页获取主办会议合计报销列表
+    URL_GET_HOST_LECTURE_REIMBURSEMENT_TOTAL_LIST: getApiHost + '/Expense/分页获取主办会议合计报销列表',
+
+    //获取某主办讲座报销列表
+    URL_GET_HOST_LECTURE_REIMBURSEMENT_LIST: getApiHost  + '/Expense/获取某主办讲座报销列表',
+
+    //获取某主办讲座预算已报销详情
+    URL_GET_HOST_LECTURE_REIMBURSEMENT_DETAILS: getApiHost + '/Expense/获取某主办讲座预算已报销详情',
+
+    //新增主办讲座报销
+    URL_POST_ADD_HOST_LECTURE_REIMBURSEMENT: getApiHost + '/Expense/新增主办讲座报销',
+
+
 
 
 

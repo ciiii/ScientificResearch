@@ -63,8 +63,10 @@ $(function () {
                         case 2:
                             dAddVm.getMeetingFundsReimbursementDetails();
                             break;
+                        case 3:
+                            dAddVm.getHostLectureReimbursementDetails();
+                            break;
                     }
-
                 }
             },
             getFundsReimbursementDetails: function () {
@@ -98,7 +100,7 @@ $(function () {
                             }
                         }
                     } else {
-                        console.info('获取项目经费报销详情失败！');
+                        console.info('获取某报销详情失败！');
                         console.info(strErro);
                     }
                 });
@@ -123,7 +125,7 @@ $(function () {
                         }
 
                     } else {
-                        console.info('获取纵向项目报销详情失败！');
+                        console.info('获取某纵向项目预算已报销详情失败！');
                         console.info(strErro);
                     }
                 });
@@ -148,7 +150,7 @@ $(function () {
                         }
 
                     } else {
-                        console.info('获取横向项目报销详情失败！');
+                        console.info('获取某横向项目预算已报销详情失败！');
                         console.info(strErro);
                     }
                 });
@@ -173,14 +175,39 @@ $(function () {
                         }
 
                     } else {
-                        console.info('获取参会报销详情失败！');
+                        console.info('获取某参会预算已报销详情失败！');
+                        console.info(strErro);
+                    }
+                });
+            },
+            getHostLectureReimbursementDetails: function () {
+                FundsReimbursement.getHostLectureReimbursementDetails('get', dAddVm.projectId, function getHostLectureReimbursementDetailsListener(success, obj, strErro) {
+                    if (success) {
+                        if (obj == null || obj.length == 0) {
+                            dAddVm.info.报销详情列表 = [];
+                            return;
+                        } else {
+                            for (var i = 0; i < obj.length; i++) {
+                                if (obj[i].报销金额 == null) {
+                                    obj[i].报销金额 = 0;
+                                }
+                                if (obj[i].编制依据 == null) {
+                                    obj[i].编制依据 = '';
+                                }
+                                obj[i].备注 = obj[i].编制依据;
+                            }
+                            dAddVm.info.报销详情列表 = obj;
+                        }
+
+                    } else {
+                        console.info('获取某主办讲座预算已报销详情失败！');
                         console.info(strErro);
                     }
                 });
             },
             changeFunds: function () {
                 var funds = 0;
-                for (var i = 0; i < dAddVm.info.报销详情列表.length; i++ ) {
+                for (var i = 0; i < dAddVm.info.报销详情列表.length; i++) {
                     dAddVm.info.报销详情列表[i].报销金额 = parseInt(dAddVm.info.报销详情列表[i].报销金额);
                     funds += dAddVm.info.报销详情列表[i].报销金额;
                 }
@@ -203,7 +230,7 @@ $(function () {
                 var ReimbursementMoney = dAddVm.inputVal('.modal .reimbursement-money');
                 var time = dAddVm.inputVal('.modal .reach-time');
                 var name = dAddVm.inputVal('.modal .people-name');
-                dAddVm.info.基本资料.报销凭证路径 = dAddVm.files.join();
+                dAddVm.info.基本资料.相关文件路径 = dAddVm.files.join();
 
                 if (!ReimbursementType) {
                     $.oaNotify.error('请选择报销方式！');
@@ -228,12 +255,6 @@ $(function () {
                     return;
                 }
                 dAddVm.info.基本资料.报销金额 = dAddVm.funds;
-
-                /*if (dAddVm.files.length == 0) {
-                    $.oaNotify.error(' 请上传到账凭证！');
-                    return;
-                }*/
-
                 if (dAddVm.editType) {
                     var data = {
                         步骤编号: xueShuDetails.步骤编号,
@@ -252,6 +273,9 @@ $(function () {
                             break;
                         case 2:
                             dAddVm.addMeetingFundsReimbursement(dAddVm.info.$model);
+                            break;
+                        case 3:
+                            dAddVm.addHostLectureReimbursement(dAddVm.info.$model);
                             break;
                     }
                 }
@@ -292,15 +316,15 @@ $(function () {
                     });
                 });
             },
-            editFundsReimbursement: function (data) {
-                FundsReimbursement.editFundsReimbursement('post', data, function editFundsReimbursementListener(success, obj, strErro) {
+            addHostLectureReimbursement: function (data) {
+                FundsReimbursement.addHostLectureReimbursement('post', data, function addHostLectureReimbursementListener(success, obj, strErro) {
                     postBack(success, strErro, '提交成功！', '提交失败：', '.modal-add', function callBack() {
                         vm.query();
                     });
                 });
             },
-            editMeetingFundsReimbursement: function (data) {
-                FundsReimbursement.editMeetingFundsReimbursement('post', data, function editMeetingFundsReimbursementListener(success, obj, strErro) {
+            editFundsReimbursement: function (data) {
+                FundsReimbursement.editFundsReimbursement('post', data, function editFundsReimbursementListener(success, obj, strErro) {
                     postBack(success, strErro, '提交成功！', '提交失败：', '.modal-add', function callBack() {
                         vm.query();
                     });
@@ -320,7 +344,7 @@ $(function () {
                     contentType: false,
                     data: data,
                     dataType: 'text',
-                    beforeSend : function(request) {
+                    beforeSend: function (request) {
                         request.setRequestHeader('Authorization', JSON.parse(sessionStorage.Authorization));
                     },
                     success: function (e) {

@@ -39,7 +39,7 @@
                             </th>
                         </tr>
                         <tr>
-                            <th class="name">部门</th>
+                            <th class="name">报销人部门</th>
                             <td width="180">{{@model.报销基本信息.报销人部门名称}}</td>
                             <th>报销日期</th>
                             <td colspan="3">{{@model.报销基本信息.报销时间|date("yyyy-MM-dd")}}</td>
@@ -58,6 +58,10 @@
                         </tr>
                         <tr ms-if="type==2">
                             <th>参会名称</th>
+                            <td colspan="5">{{@model.报销基本信息.项目名称}}</td>
+                        </tr>
+                        <tr ms-if="type==3">
+                            <th>讲座名称</th>
                             <td colspan="5">{{@model.报销基本信息.项目名称}}</td>
                         </tr>
                         <tr>
@@ -98,8 +102,8 @@
                         <tr>
                             <th>实付金额（元）</th>
                             <td colspan="5">
-                                <span>（大写）：</span>
-                                <span>（小写）：{{@model.报销基本信息.报销金额|currency}}</span>
+                                <span style="margin-right: 5px">（大写）：{{numberDX(@model.报销基本信息.报销金额)}}</span>
+                                <span>（小写）：{{@model.报销基本信息.报销金额|currency}} 元</span>
                             </td>
                         </tr>
                         <tr>
