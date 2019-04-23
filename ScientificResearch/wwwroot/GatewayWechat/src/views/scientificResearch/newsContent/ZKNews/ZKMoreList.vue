@@ -1,80 +1,67 @@
 <template>
-  <van-list
-    v-model="loading"
-    :finished="finished"
-    offset:10
-    finished-text="没有更多了"
-    @load="onLoad"
-    class="box"
-  >
-    <h3>新闻</h3>
-    <ul class="A_News" v-for="(item, key) in list" :key="key">
-      <li @click="newsDetails(item)">
-        <p>{{item.标题}}</p>
-      </li>
-      <li>
-        <i class="icon iconfont icon-tongzhi"></i>
-        {{startTime(item.建立时间)}}
-      </li>
-    </ul>
+  <div>
+    <van-pull-refresh v-model="isDownLoading" @refresh="onDownRefresh">
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        offset:10
+        finished-text="没有更多了"
+        @load="onLoad"
+        class="box"
+      >
+        <h3>新闻</h3>
+        <ul class="A_News" v-for="(item, key) in list" :key="key">
+          <li @click="newsDetails(item)">
+            <p>{{item.标题}}</p>
+          </li>
+          <li>
+            <i class="icon iconfont icon-tongzhi"></i>
+            {{startTime(item.建立时间)}}
+          </li>
+        </ul>
+      </van-list>
+    </van-pull-refresh>
     <ReturnBtn/>
-  </van-list>
+    <ReturnTop/>
+  </div>
 </template>
 <script>
 export default {
+  inject: ["reload"],
   data() {
     return {
       loading: false, //是否处于加载状态
       finished: false, //是否已加载完所有数据
       index: 1,
-      size: 1,
+      size: 15,
+      total: 0,
+      isDownLoading: false,
       list: [],
       total: null
     };
   },
-  mounted() {
-    this.getPrimaryNews();
-  },
   methods: {
-    getPrimaryNews() {
-      // console.log(this.postInfoUp,"xx")
+    onLoad() {
       var para = {
-        index: 1,
-        size: 10
+        index: this.index,
+        size: this.size
       };
       this.$http.getNewsList(para).then(res => {
-        console.log(res, "res````111111");
         this.total = res.data.total;
-        this.list = res.data.list;
-        // if (res.data.list != null) {
-        //   this.total = res.data.total;
-        //   let re = res.data.list;
-        //   if (re.length != 0) {
-        //     this.list = this.list.concat(re);
-        //   }
-        //   // 加载状态结束
-        //   this.loading = false;
-        //   // 数据全部加载完成
-        //   if (this.list.length >= this.total) {
-        //     this.finished = true;
-        //   }
-        // } else {
-        //   this.finished = true;
-        // }
+        const data = this.list;
+        this.list = data.concat(res.data.list);
+        this.loading = false;
+        this.index++;
+        if (this.list.length >= this.total) {
+          this.finished = true;
+        }
       });
     },
-    onLoad() {
-      //   console.log("下拉刷新！");
-      this.loading = false;
-      //   let postInfoUp = {
-      //     data: {
-      //       //参数为每次访问的个数和页数
-      //       index: ++this.index,
-      //       size: this.size
-      //     }
-      //   };
-      //   console.log(postInfoUp, "xx");
-      //   this.getPrimaryNews(postInfoUp);
+    onDownRefresh() {
+      setTimeout(() => {
+        this.reload();
+        this.isDownLoading = false;
+      }, 1000);
     },
     newsDetails(item) {
       this.$router.push({

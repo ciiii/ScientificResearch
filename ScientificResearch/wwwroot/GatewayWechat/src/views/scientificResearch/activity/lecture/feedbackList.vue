@@ -1,58 +1,66 @@
 <template>
-  <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" class="box">
-    <div class="title">
-      <i class="icon iconfont icon-fankui"></i>讲座反馈
-    </div>
-    <div class="backContentBox" v-for="(item, key) in FeedbackList" :key="key">
-      <ul class="backContentTop" @click="goFeedbackDetails(item.编号)">
-        <li>{{item.活动名称}}</li>
-        <li>
-          <span>会议类型：</span>
-          <span>{{item.会议类型}}</span>
-        </li>
-        <li>
-          <span>所属部门：</span>
-          <span>{{item.所属部门名称}}</span>
-        </li>
-        <li>
-          <span>主办人：</span>
-          <span>{{item.主办人姓名}}</span>
-        </li>
-        <li>
-          <span>专家：</span>
-          <span>{{item.专家姓名}}</span>
-        </li>
-        <li>
-          <span>经费：</span>
-          <span>{{NumFormat(item.活动经费)}}</span>
-        </li>
-        <li>
-          <span>结算方式：</span>
-          <span>{{item.结算方式}}</span>
-        </li>
-        <li>
-          <span>当前步骤：</span>
-          <span id="contentSpan">{{item.步骤名称}} - {{item.步骤状态说明}}</span>
-        </li>
-        <li>
-          <span>审核进度：</span>
-          <span
-            :style="{'color':(item.审核进度 == flag1 ? '#31BD5D' : '#ff976a')}"
-          >{{item.审核进度}}</span>
-        </li>
-        <li>
-          <span>参会人数：</span>
-          <span>{{item.参会人数}} 人</span>
-        </li>
-        <li>
-          <span>开始时间：</span>
-          <span>
-            <i class="icon iconfont icon-shijian1"></i>
-            {{startTime(item.开始时间)}}
-          </span>
-        </li>
-      </ul>
-    </div>
+  <div>
+    <van-pull-refresh v-model="isDownLoading" @refresh="onDownRefresh">
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+        class="box"
+      >
+        <div class="title">
+          <i class="icon iconfont icon-fankui"></i>讲座反馈
+        </div>
+        <div class="backContentBox" v-for="(item, key) in FeedbackList" :key="key">
+          <ul class="backContentTop" @click="goFeedbackDetails(item.编号)">
+            <li>{{item.活动名称}}</li>
+            <li>
+              <span>会议类型：</span>
+              <span>{{item.会议类型}}</span>
+            </li>
+            <li>
+              <span>所属部门：</span>
+              <span>{{item.所属部门名称}}</span>
+            </li>
+            <li>
+              <span>主办人：</span>
+              <span>{{item.主办人姓名}}</span>
+            </li>
+            <li>
+              <span>专家：</span>
+              <span>{{item.专家姓名}}</span>
+            </li>
+            <li>
+              <span>经费：</span>
+              <span>{{NumFormat(item.活动经费)}}</span>
+            </li>
+            <li>
+              <span>结算方式：</span>
+              <span>{{item.结算方式}}</span>
+            </li>
+            <li>
+              <span>当前步骤：</span>
+              <span id="contentSpan">{{item.步骤名称}} - {{item.步骤状态说明}}</span>
+            </li>
+            <li>
+              <span>审核进度：</span>
+              <span :style="{'color':(item.审核进度 == flag1 ? '#31BD5D' : '#ff976a')}">{{item.审核进度}}</span>
+            </li>
+            <li>
+              <span>参会人数：</span>
+              <span>{{item.参会人数}} 人</span>
+            </li>
+            <li>
+              <span>开始时间：</span>
+              <span>
+                <i class="icon iconfont icon-shijian1"></i>
+                {{startTime(item.开始时间)}}
+              </span>
+            </li>
+          </ul>
+        </div>
+      </van-list>
+    </van-pull-refresh>
     <van-popup v-model="show" class="popup">
       <van-tabs v-model="active" swipeable>
         <van-tab title="讲座反馈详情">
@@ -187,15 +195,19 @@
       </div>
     </van-popup>
     <ReturnBtn/>
-  </van-list>
+    <ReturnTop/>
+  </div>
 </template>
 <script>
 import { NumFormat } from "@/assets/js/common/filter.js";
 export default {
+  inject: ["reload"],
   data() {
     return {
       index: 1,
-      size: 5,
+      size: 15,
+      total: 0,
+      isDownLoading: false,
       loading: false,
       finished: false,
       FeedbackList: [],
@@ -204,32 +216,27 @@ export default {
       show: false,
       active: 0,
       flag: "审核通过",
-      flag1: "已完成-审核通过",
+      flag1: "已完成-审核通过"
     };
   },
-  mounted() {
-    this.getFeedback();
-  },
   methods: {
-    getFeedback() {
-      this.$http.getFeedbackList(this.index, this.size).then(res => {
-        console.log(res, "333444");
-        this.FeedbackList = res.data.list;
-      });
-    },
     onLoad() {
-      // 异步更新数据
-      setTimeout(() => {
-        for (let i = 0; i < 0; i++) {
-          this.FeedbackList.push(this.FeedbackList.length + 1);
-        }
-        // 加载状态结束
+      this.$http.getFeedbackList(this.index, this.size).then(res => {
+        this.total = res.data.total;
+        const data = this.FeedbackList;
+        this.FeedbackList = data.concat(res.data.list);
         this.loading = false;
-        // 数据全部加载完成
-        if (this.FeedbackList.length >= 0) {
+        this.index++;
+        if (this.FeedbackList.length >= this.total) {
           this.finished = true;
         }
-      }, 500);
+      });
+    },
+    onDownRefresh() {
+      setTimeout(() => {
+        this.reload();
+        this.isDownLoading = false;
+      }, 1000);
     },
     // 状态显示转换
     formatState(item) {
@@ -323,70 +330,71 @@ export default {
       }
     }
   }
-  .popup {
-    width: 100%;
-    height: 100%;
-    transform: none;
-    top: 0;
-    left: 0;
-    background-color: #f5f3fb;
-    .van-tab__pane {
-      padding: 10px;
-      height: 100vh;
+}
+.popup {
+  width: 100%;
+  height: 100%;
+  transform: none;
+  top: 0;
+  left: 0;
+  background-color: #f5f3fb;
+  text-align: left;
+  .van-tab__pane {
+    padding: 10px;
+    height: 100vh;
+  }
+  .audit,
+  .servicel {
+    font-size: 14px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ccc;
+    background-color: #fff;
+    h4 {
+      margin: 5px 0;
+      padding: 5px;
+      color: #1296db;
+      background-color: #e7e7e7;
     }
-    .audit,
-    .servicel {
-      font-size: 14px;
-      padding: 10px;
-      margin-bottom: 20px;
-      border-bottom: 2px solid #ccc;
-      background-color: #fff;
-      h4 {
-        margin: 5px 0;
-        padding: 5px;
-        color: #1296db;
-        background-color: #e7e7e7;
+    li {
+      padding: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #f2f2f2;
+      p {
+        width: 80%;
+        color: #5a5a5a;
+        margin: 0;
+        text-align: right;
       }
-      li {
-        padding: 10px 0;
-        display: flex;
-        justify-content: space-between;
-        border-bottom: 1px solid #f2f2f2;
-        p {
-          width: 80%;
-          color: #5a5a5a;
-          margin: 0;
-          text-align: right;
-        }
-        span:nth-child(1) {
-          color: #888;
-        }
-        span:nth-child(2) {
-          color: #5a5a5a;
-        }
-        i {
-          color: rgb(6, 167, 6);
-        }
+      span:nth-child(1) {
+        color: #888;
       }
-      .title span {
-        display: flex;
-        align-items: center;
+      span:nth-child(2) {
+        color: #5a5a5a;
+      }
+      i {
+        color: rgb(6, 167, 6);
       }
     }
-    .backtrack {
-      line-height: 1.6;
-      font-size: 14px;
-      color: #fff;
-      width: 80px;
-      height: 26px;
-      padding: 6px;
-      text-align: center;
-      position: fixed;
-      bottom: 60px;
-      right: 20px;
-      border-radius: 20px;
-      background-color: rgba(28, 134, 238, 0.5);
+    .title span {
+      display: flex;
+      align-items: center;
     }
+  }
+  .backtrack {
+    line-height: 1.6;
+    font-size: 14px;
+    color: #fff;
+    width: 80px;
+    height: 26px;
+    padding: 6px;
+    text-align: center;
+    position: fixed;
+    bottom: 60px;
+    right: 20px;
+    border-radius: 20px;
+    background-color: rgba(28, 134, 238, 0.5);
   }
 }
 </style>

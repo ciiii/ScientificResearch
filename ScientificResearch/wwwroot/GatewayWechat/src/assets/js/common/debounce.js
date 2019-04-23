@@ -6,7 +6,6 @@
  * @constructor
  */
 export function _debounce(fn, delay) {
-
     var delay = delay || 200;
     var timer;
     return function() {

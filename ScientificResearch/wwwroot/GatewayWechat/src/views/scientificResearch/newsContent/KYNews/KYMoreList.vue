@@ -1,36 +1,47 @@
 <template>
-  <van-list v-model="loading" :finished="finished" offset:10 finished-text="没有更多了" @load="onLoad" class="box">
-    <h3>科研新闻</h3>
-    <ul class="A_News" v-for="(item, key) in list" :key="key" @click="newsDetails(item.编号)">
-      <li>
-        <p>{{item.通知名称}}</p>
-      </li>
-      <li>
-        <i class="icon iconfont icon-tongzhi"></i>
-        <span>{{item.通知类型}}</span>
-        {{startTime(item.建立时间)}}
-      </li>
-    </ul>
+  <div>
+    <van-pull-refresh v-model="isDownLoading" @refresh="onDownRefresh">
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+        class="box"
+      >
+        <h3>科研新闻</h3>
+        <ul class="A_News" v-for="(item, key) in list" :key="key" @click="newsDetails(item.编号)">
+          <li>
+            <p>{{item.通知名称}}</p>
+          </li>
+          <li>
+            <i class="icon iconfont icon-tongzhi"></i>
+            <span>{{item.通知类型}}</span>
+            {{startTime(item.建立时间)}}
+          </li>
+        </ul>
+      </van-list>
+    </van-pull-refresh>
     <ReturnBtn/>
-  </van-list>
+    <ReturnTop/>
+  </div>
 </template>
 <script>
 export default {
+  inject: ["reload"],
   data() {
     return {
       loading: false, //是否处于加载状态
       finished: false, //是否已加载完所有数据
       index: 1,
-      size: 10,
+      size: 15,
+      total: 0,
+      isDownLoading: false,
       list: [],
       total: null
     };
   },
-  mounted() {
-    this.getPrimaryNews();
-  },
   methods: {
-    getPrimaryNews() {
+    onLoad() {
       var code = JSON.parse(localStorage.getItem("personnel"));
       var para = {
         人员编号: code.编号,
@@ -38,11 +49,21 @@ export default {
         size: this.size
       };
       this.$http.getToViewNewsList(para).then(res => {
-        this.list = res.data.list;
+        this.total = res.data.total;
+        const data = this.list;
+        this.list = data.concat(res.data.list);
+        this.loading = false;
+        this.index++;
+        if (this.list.length >= this.total) {
+          this.finished = true;
+        }
       });
     },
-    onLoad() {
-      this.loading = false;
+    onDownRefresh() {
+      setTimeout(() => {
+        this.reload();
+        this.isDownLoading = false;
+      }, 1000);
     },
     newsDetails(item) {
       this.$router.push({

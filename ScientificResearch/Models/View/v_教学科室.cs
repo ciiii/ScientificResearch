@@ -51,6 +51,10 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        public bool? 是否教学科室 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
         public int? 科室管理员编号 { get; set; }
         /// <summary>
 		/// 

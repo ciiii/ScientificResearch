@@ -1,64 +1,78 @@
 <template>
-  <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" class="box">
-    <div class="title">
-      <i class="icon iconfont icon-fankui"></i>论文管理
-    </div>
-    <div class="backContentBox" v-for="(item, key) in detailsList" :key="key">
-      <ul class="backContentTop" @click="goDetails(item.编号)">
-        <li>{{item.论文标题}}</li>
-        <li>
-          <span>刊物名称：</span>
-          <span>{{item.刊物名称}}</span>
-        </li>
-        <li>
-          <span>第一作者：</span>
-          <span>{{item.第一作者}}</span>
-        </li>
-        <li>
-          <span>影响因子</span>
-          <span>{{item.影响因子}}</span>
-        </li>
-        <li>
-          <span>当前步骤：</span>
-          <span id="contentSpan">{{item.步骤名称}} - {{item.步骤状态说明}}</span>
-        </li>
-        <li>
-          <span>审核进度：</span>
-          <span :style="{'color':(item.审核进度 == flag ? '#31BD5D' : '#FF976A')}">{{item.审核进度}}</span>
-        </li>
-        <li>
-          <span>Online日期：</span>
-          <span>{{startTime(item.论文Online日期)}}</span>
-        </li>
-        <li>
-          <span>正式出版日期：</span>
-          <span>{{startTime(item.论文正式出版日期)}}</span>
-        </li>
-        <li>
-          <span>认领人：</span>
-          <span>{{item.认领人姓名}}</span>
-        </li>
-      </ul>
-      <div class="audit">
-        <span @click="audit(item)" v-show="isShow">审核</span>
-      </div>
-    </div>
-    <van-popup v-model="show" class="popup">
-      <Audit :message="message" @getMessage="getMessage"></Audit>
-    </van-popup>
+  <div>
+    <van-pull-refresh v-model="isDownLoading" @refresh="onDownRefresh">
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+        class="box"
+      >
+        <div class="title">
+          <i class="icon iconfont icon-fankui"></i>论文管理
+        </div>
+        <div class="backContentBox" v-for="(item, key) in detailsList" :key="key">
+          <ul class="backContentTop" @click="goDetails(item.编号)">
+            <li>{{item.论文标题}}</li>
+            <li>
+              <span>刊物名称：</span>
+              <span>{{item.刊物名称}}</span>
+            </li>
+            <li>
+              <span>第一作者：</span>
+              <span>{{item.第一作者}}</span>
+            </li>
+            <li>
+              <span>影响因子：</span>
+              <span>{{item.影响因子}}</span>
+            </li>
+            <li>
+              <span>当前步骤：</span>
+              <span id="contentSpan">{{item.步骤名称}} - {{item.步骤状态说明}}</span>
+            </li>
+            <li>
+              <span>审核进度：</span>
+              <span :style="{'color':(item.审核进度 == flag ? '#31BD5D' : '#FF976A')}">{{item.审核进度}}</span>
+            </li>
+            <li>
+              <span>Online日期：</span>
+              <span>{{startTime(item.论文Online日期)}}</span>
+            </li>
+            <li>
+              <span>正式出版日期：</span>
+              <span>{{startTime(item.论文正式出版日期)}}</span>
+            </li>
+            <li>
+              <span>认领人：</span>
+              <span>{{item.认领人姓名}}</span>
+            </li>
+          </ul>
+          <div class="audit">
+            <span @click="audit(item)" v-show="item.步骤状态说明 === '待审核'">审核</span>
+          </div>
+        </div>
+        <van-popup v-model="show" class="popup">
+          <Audit :message="message" @getMessage="getMessage"></Audit>
+        </van-popup>
+      </van-list>
+    </van-pull-refresh>
     <ReturnBtn/>
-  </van-list>
+  </div>
 </template>
 <script>
 import Audit from "@/components/audit/audit";
 export default {
+  inject:['reload'],
   components: {
     Audit
   },
   data() {
     return {
       index: 1,
-      size: 5,
+      size: 15,
+      total: 0,
+      indexKey: null,
+      isDownLoading: false,
       loading: false,
       finished: false,
       detailsList: [],
@@ -68,23 +82,10 @@ export default {
       message: ""
     };
   },
-  mounted() {
-    this.getPaperAll();
-  },
   methods: {
     // 子组件方法
     getMessage() {
       this.show = false;
-    },
-    getPaperAll() {
-      this.$http.getPaperAllList(this.index, this.size).then(res => {
-        this.detailsList = res.data.list;
-        this.detailsList.forEach((item, index) => {
-          if (item.步骤状态说明 === "待审核") {
-            this.isShow = true;
-          }
-        });
-      });
     },
     goDetails(item) {
       this.$router.push({
@@ -95,12 +96,32 @@ export default {
         }
       });
     },
-    audit(item) {
+    audit(item, key) {
       this.message = item;
       this.show = true;
+      this.indexKey = key;
     },
-    onLoad() {
-      console.log("121");
+    onLoad(type) {
+      this.$http.getPaperAllList(this.index, this.size).then(res => {
+        this.total = res.data.total;
+        const data = this.detailsList;
+        if (type) {
+          data.splice(this.indexKey, 1);
+        } else {
+          this.detailsList = data.concat(res.data.list);
+        }
+        this.loading = false;
+        this.index++;
+        if (this.detailsList.length >= this.total) {
+          this.finished = true;
+        }
+      });
+    },
+    onDownRefresh() {
+      setTimeout(() => {
+        this.reload();
+        this.isDownLoading = false;
+      }, 1000);
     },
     // 截取时间
     startTime(item) {

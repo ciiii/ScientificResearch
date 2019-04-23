@@ -11,6 +11,11 @@ using MyLib;
 
 namespace ScientificResearch.Models
 {
+    public class 医院Filter
+    {
+        public string 名称 { get; set; }
+    }
+
     public partial class 医院服务
     {
         async public static Task Merge(IDbConnection Db, int 医院编号, IEnumerable<医院服务> list)

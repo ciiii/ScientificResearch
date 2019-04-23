@@ -51,6 +51,20 @@ namespace ScientificResearch.Areas.Manage.Controllers
         [HttpGet]
         async public Task<object> 获取医院列表() => await Db_Manage.GetListSpAsync<医院>();
 
+        /// <summary>
+        /// 这个不需要登录
+        /// </summary>
+        /// <param name="k"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet]
+        async public Task<object> 根据dbkey获取某医院信息(string k="")
+        {
+            var result = await Db_Manage.GetListSpAsync<医院, 医院Filter>(new 医院Filter() { 名称 = k });
+            return result.FirstOrDefault();
+
+        }
+
         [HttpPost]
         async public Task<object> ExecuteSqlForEachUserDb(Microsoft.AspNetCore.Http.IFormFileCollection files)
         //async public Task<object> ExecuteSqlForEachUserDb([FromBody]string strSql)
@@ -115,6 +129,21 @@ namespace ScientificResearch.Areas.Manage.Controllers
         {
             var result = await Db_Manage.GetListSpAsync<医院>();
             return result.Select(i => i.名称);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task<object> 上传医院Logo图片()
+        {
+            var filesNameList = await UploadFile.Upload(
+                Request.Form.Files,
+                Env.WebRootPath,
+                "upload/总库/Logo",
+                Config.GetValue<int>("uploadFileMaxSize"));
+            return filesNameList;
         }
 
         [HttpPost]

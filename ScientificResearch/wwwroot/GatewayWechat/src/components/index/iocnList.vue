@@ -3,11 +3,12 @@
     <ul>
       <li v-for="(item,index) in iocnList" :key="index">
         <a v-if="item.手机链接地址!=upToDateUrl" @click="path(item)">
-          <img :src="item.Logo" :alt="item.名称">
+          <img v-if="item.手机链接地址!=url" :src="url + item.Logo">
+          <img v-else :src="item.Logo">
           <p>{{item.名称}}</p>
         </a>
         <a v-else :href="upToDateUrl">
-          <img :src="item.Logo" :alt="item.名称">
+          <img :src="item.Logo">
           <p>{{item.名称}}</p>
         </a>
       </li>
@@ -19,12 +20,16 @@ export default {
   data() {
     return {
       iocnList: [],
-      upToDateUrl: "https://www.uptodate.com/contents/search"
+      upToDateUrl: "https://www.uptodate.com/contents/search",
+      url: "http://192.168.0.99:63739",
+      HospitalInformation:''
     };
   },
   created() {},
   mounted() {
     this.login();
+    // let urlNow = encodeURIComponent("http://192.168.0.157:8080/#/login?name=测试医院第一家");
+    // console.log(urlNow,"eee")
   },
   methods: {
     getUrlKey(name) {
@@ -100,9 +105,7 @@ export default {
     //     this.$emit("getKYNews");
     //     return;
     //   }
-    // },l
-
-    //
+    // },
     async login() {
       //本地存储
       let personnel = JSON.parse(localStorage.getItem("personnel"));
@@ -130,9 +133,8 @@ export default {
         var para = {
           医院名称: personnel.DbKey
         };
-        this.$http.getServiceList(para).then(res => {
-          this.iocnList = res.data;
-        });
+        let res = await this.$http.getServiceList(para);
+        this.iocnList = res.data;
         this.$emit("getPersonnel");
         this.$emit("getKYNews");
       }
@@ -140,9 +142,13 @@ export default {
 
     path(item) {
       if (item.手机链接地址 === null) {
-        this.$toast.fail({
-          duration: 1000,
-          message: "请先购买服务!"
+        // this.$toast.fail({
+        //   duration: 1000,
+        //   message: "请先购买服务!"
+        // });
+        this.$toast({
+          duration: 2000,
+          message: "你还没有权限，请先联系医院管理员!"
         });
       } else {
         this.$router.push({

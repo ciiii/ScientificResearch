@@ -1,43 +1,52 @@
 <template>
-  <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-    <div class="backContentBox" v-for="(item, key) in list" :key="key">
-      <div class="bacnButtom">
-        <ul @click="goDetails(item,item.项目编号)">
-          <li>{{item.流程名称}}</li>
-          <li>
-            <span>项目名称：</span>
-            <span>{{item.项目名称}}</span>
-          </li>
-          <li>
-            <span>步骤名称：</span>
-            <span>{{item.步骤名称}}</span>
-          </li>
-          <li>
-            <span>发起人姓名：</span>
-            <span>{{item.发起人姓名}}</span>
-          </li>
-          <li>
-            <i class="currentState">{{item.状态名称}}</i>
-            <i class="stepState">{{item.步骤状态说明}}</i>
-          </li>
-          <li class="contentSpan">
-            <span>当前步骤：</span>
-            <span>{{item.步骤名称}} - {{item.步骤状态说明}}</span>
-          </li>
-          <li>
-            <span>创建时间：</span>
-            <span>{{startTime(item.流程创建时间)}}</span>
-          </li>
-        </ul>
-        <div class="audit">
-          <span @click="audit(item,key)" v-show="item.步骤状态说明 === '待审核'">审核</span>
+  <div>
+    <van-list
+      v-model="loading"
+      :finished="finished"
+      finished-text="没有更多了"
+      :error.sync="error"
+      error-text="请求失败，点击重新加载"
+      @load="onLoad"
+    >
+      <div class="backContentBox" v-for="(item, key) in list" :key="key">
+        <div class="bacnButtom">
+          <ul @click="goDetails(item,item.项目编号)">
+            <li>{{item.流程名称}}</li>
+            <li>
+              <span>项目名称：</span>
+              <span>{{item.项目名称}}</span>
+            </li>
+            <li>
+              <span>步骤名称：</span>
+              <span>{{item.步骤名称}}</span>
+            </li>
+            <li>
+              <span>发起人姓名：</span>
+              <span>{{item.发起人姓名}}</span>
+            </li>
+            <li>
+              <i class="currentState">{{item.状态名称}}</i>
+              <i class="stepState">{{item.步骤状态说明}}</i>
+            </li>
+            <li class="contentSpan">
+              <span>当前步骤：</span>
+              <span>{{item.步骤名称}} - {{item.步骤状态说明}}</span>
+            </li>
+            <li>
+              <span>创建时间：</span>
+              <span>{{startTime(item.流程创建时间)}}</span>
+            </li>
+          </ul>
+          <div class="audit">
+            <span @click="audit(item,key)" v-show="item.步骤状态说明 === '待审核'">审核</span>
+          </div>
         </div>
       </div>
-    </div>
+    </van-list>
     <van-popup v-model="show" class="popup">
       <Audit :message="message" @getMessage="getMessage" @getBacklog="getBacklog"></Audit>
     </van-popup>
-  </van-list>
+  </div>
 </template>
 <script>
 import Audit from "../audit/audit";
@@ -47,12 +56,13 @@ export default {
   },
   data() {
     return {
-      index: 0,
-      size: 1,
+      index: 1,
+      size: 15,
       total: 0,
       list: [],
       loading: false,
       finished: false,
+      error: false,
       show: false,
       message: "",
       indexKey: null,
@@ -64,7 +74,7 @@ export default {
         纵向项目申报: "YDeclarationDetails",
         纵向项目中检: "YProcessInspectionDetails",
         纵向项目经费到账: "YFundsToTheAccount",
-        主办讲座:"lectureDetails",
+        主办讲座: "lectureDetails",
         横向项目: "XDetails",
         横向项目经费到账: "XFundsToTheAccount",
         报销: "reimbursementDetails"
@@ -79,9 +89,11 @@ export default {
     // 获取待办列表
     getBacklog(type) {
       let data = {
-        index: this.index + 1
+        index: this.index,
+        size: this.size
       };
       this.$http.getBacklogProcess(data).then(res => {
+        // console.log(res,"3322")
         this.total = res.data.total;
         const data = this.list;
         if (type) {
@@ -91,17 +103,14 @@ export default {
         }
         this.loading = false;
         this.index++;
-        if (this.index >= this.total) {
+        if (this.list.length >= this.total) {
           this.finished = true;
         }
       });
     },
     // 获取待办流程
     onLoad() {
-      // 异步更新数据
-      setTimeout(() => {
-        this.getBacklog();
-      }, 500);
+      this.getBacklog();
     },
     goDetails(item, code) {
       this.$router.push({
@@ -111,17 +120,6 @@ export default {
           item: code
         }
       });
-      // for (let key in this.typeList) {
-      //   if (key == item.流程名称) {
-      //     this.$router.push({
-      //       path: `/${this.typeList[key]}`,
-      //       name: `${this.typeList[key]}`,
-      //       params: {
-      //         item: code
-      //       }
-      //     });
-      //   }
-      // }
     },
     audit(item, key) {
       this.message = item;

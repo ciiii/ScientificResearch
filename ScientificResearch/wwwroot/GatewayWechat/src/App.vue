@@ -1,8 +1,31 @@
 <template>
   <div id="app">
-    <router-view v-wechat-title='$route.meta.title'/>
+    <router-view v-if="isRouterAlive" v-wechat-title="$route.meta.title"/>
   </div>
 </template>
+<script>
+export default {
+  name: "App",
+  provide() {
+    return {
+      reload: this.reload
+    };
+  },
+  data() {
+    return {
+      isRouterAlive: true
+    };
+  },
+  methods: {
+    reload() {
+      this.isRouterAlive = false;
+      this.$nextTick(function() {
+        this.isRouterAlive = true;
+      });
+    }
+  }
+};
+</script>
 
 <style lang="scss">
 @import url("//at.alicdn.com/t/font_1026868_lybqwjxz2x.css");

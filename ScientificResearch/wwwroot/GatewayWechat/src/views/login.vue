@@ -1,9 +1,11 @@
 <template>
   <section class="box">
-    <img src="@/assets/images/iocn/logo.png" alt="logo图片" class="img">
+    <!-- <img src="@/assets/images/iocn/logo.png" alt="logo图片" class="img"> -->
+    <img :src="this.Logo || this.defaultImg" class="img">
     <form action="/" onsubmit="return false">
       <div class="input">
-        <input type="text" placeholder="医院" v-model="DbKey" @click="hospital" readonly>
+        <!-- <input type="text" placeholder="医院" v-model="DbKey" @click="hospital" readonly> -->
+        <!-- <input type="text" placeholder="医院" v-model="DbKey" readonly> -->
         <input
           type="text"
           placeholder="工号"
@@ -25,7 +27,7 @@
         <span>登 录</span>
       </div>
     </form>
-    <van-popup v-model="show" position="bottom" overlay close-on-click-overlay>
+    <!-- <van-popup v-model="show" position="bottom" overlay close-on-click-overlay>
       <van-picker
         show-toolbar
         title="医院列表"
@@ -33,7 +35,7 @@
         @cancel="onCancel"
         @confirm="onConfirm"
       />
-    </van-popup>
+    </van-popup>-->
   </section>
 </template>
 <script>
@@ -47,20 +49,29 @@ export default {
       工号: null,
       密码: null,
       DbKey: null,
-      columns: [],
-      show: false
+      Logo: "",
+      HospitalInformation: "",
+      url: "http://192.168.0.99:63739",
+      defaultImg: require("@/assets/images/iocn/logo.png")
+      // columns: [],
+      // show: false
     };
+  },
+  created() {
+    this.DbKey = this.getUrlKey("name");
+    console.log(this.DbKey)
+    this.getLogo();
   },
   mounted() {
     // 获取医院列表
-    this.$http
-      .getHospitalList()
-      .then(res => {
-        this.columns = res.data;
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    // this.$http
+    //   .getHospitalList()
+    //   .then(res => {
+    //     this.columns = res.data;
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
   },
   methods: {
     getUrlKey(name) {
@@ -72,6 +83,17 @@ export default {
           ) || [, ""])[1].replace(/\+/g, "%20")
         ) || null
       );
+    },
+    async getLogo() {
+      let para = {
+        k: this.DbKey
+      };
+      let res = await this.$http.getHospitalInformation(para);
+      if (process.env.NODE_ENV === "production") {
+        this.Logo = res.data.Logo;
+      }
+      this.Logo = this.url + res.data.Logo;
+      this.HospitalInformation = res.data;
     },
     // 登录 防抖
     bind: _debounce(function() {
@@ -100,6 +122,9 @@ export default {
                   res.data.access_token
                 }`;
                 this.$router.push("/");
+                localStorage.HospitalInformation = JSON.stringify(
+                  this.HospitalInformation
+                );
                 localStorage.flag = false;
               } else {
                 this.$notify("登录信息有误！");
@@ -109,19 +134,19 @@ export default {
           this.$notify("请授权后再登录！");
         }
       }
-    }, 500),
+    }, 500)
 
     // 显示医院列表
-    hospital() {
-      this.show = true;
-    },
-    onConfirm(value, index) {
-      this.DbKey = value;
-      this.show = false;
-    },
-    onCancel() {
-      this.show = false;
-    }
+    // hospital() {
+    //   this.show = true;
+    // },
+    // onConfirm(value, index) {
+    //   this.DbKey = value;
+    //   this.show = false;
+    // },
+    // onCancel() {
+    //   this.show = false;
+    // }
   }
 };
 </script>

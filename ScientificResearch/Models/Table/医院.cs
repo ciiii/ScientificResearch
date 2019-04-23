@@ -54,6 +54,11 @@ namespace ScientificResearch.Models
 		/// </summary>
         [MaxLength(2000,ErrorMessage ="备注不能超过[1000]字")]
 		public string 备注 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        [MaxLength(200,ErrorMessage ="Logo不能超过[100]字")]
+		public string Logo { get; set; }
         
         
         #endregion

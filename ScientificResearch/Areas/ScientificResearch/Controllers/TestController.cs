@@ -19,6 +19,7 @@ using System.Text;
 using System.Net.Http;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 
 namespace ScientificResearch.Controllers
 {
@@ -304,7 +305,7 @@ namespace ScientificResearch.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        async public Task<object> 测试获取整个页面的html(params object[] param)
+        async public Task<object> 测试获取整个百度页面的html(params object[] param)
         {
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("Host", "www.baidu.com");
@@ -329,7 +330,6 @@ namespace ScientificResearch.Controllers
             var responseString = await response.Content.ReadAsStringAsync();
             //return header;
 
-            
             //给ie设这些header也没用
             //foreach (var item in header)
             //{
@@ -346,9 +346,37 @@ namespace ScientificResearch.Controllers
             //        }
             //    }
             //}
+
+            //Log.Error($"\r\n" +
+            //            $"TODO:FIXME:看看百度\r\n" +
+            //            $"FIXME:时间{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}\r\n" +
+            //            $"{responseString}\r\n");
+
             return Content(responseString, "text/html");
 
         }
+
+        [HttpGet]
+        async public Task<object> 测试获取整个知网页面的html(params object[] param)
+        {
+            var httpClient = new HttpClient();
+           
+            //请求并,如果验证非200返回则报错;
+            var response = await httpClient.GetAsync(@"http://www.cnki.net/" + MyHttpLib.ObjToQueryParam(param));
+
+            var header = response.Headers;
+
+            //return response;
+            response.EnsureSuccessStatusCode();
+
+            //解析返回内容到string
+            var responseString = await response.Content.ReadAsStringAsync();
+            //return header;
+
+            return Content(responseString, "text/html");
+
+        }
+
 
         /// <summary>
         /// 还可以加content-type
@@ -503,6 +531,31 @@ namespace ScientificResearch.Controllers
             /// </summary>
             [Obsolete]
             public new int 年纪 { get; }
+        }
+
+        [HttpPost]
+        async public  Task<object> 测试发送微信模板消息([FromBody]MyWxTemplate myData)
+        {
+            var appId = Config.GetValue<string>(Env.IsDevelopment() == true ? "WechatSetting:TestappId" : "WechatSetting:appId");
+            var appSecret = Config.GetValue<string>(Env.IsDevelopment() == true ? "WechatSetting:TestappSecret" : "WechatSetting:appSecret");
+
+            var myMessage = new MyWxTemplate()
+            {
+                touser = "o67SQ1t_HcG8izl34cNWjfvWVJMQ",
+                url = "www.baidu.com",
+                template_id = "WmBf7XFKUDLuq09KliZa0FPayzLUNQT0DNhZqeBPluI",
+                data = new MyWxData()
+                {
+                    first = new MyWxFirst() { value = "小贾同志" },
+                    keyword1 = new MyWxKeynote() { value = "你的模板消息" ,color = "red"},
+                    keyword2 = new MyWxKeynote() { value = "老子" },
+                    keyword3 = new MyWxKeynote() { value = "给你搞定了" },
+                    keyword4 = new MyWxKeynote() { value = "你要请我吃饭" },
+                    remark = new MyWxRemark() { value = "哈哈哈哈" }
+                }
+            };
+
+            return MyLib.MyWx.SentMessage(appId, appSecret, myData);
         }
     }
 }

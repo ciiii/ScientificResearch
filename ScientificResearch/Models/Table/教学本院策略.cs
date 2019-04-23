@@ -35,6 +35,11 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        [Required(ErrorMessage ="请提供[是否启用]")]
+		public bool 是否启用 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
         [Required(ErrorMessage ="请提供[建立日期]")]
 		public DateTime? 建立日期 { get; set; }
         /// <summary>

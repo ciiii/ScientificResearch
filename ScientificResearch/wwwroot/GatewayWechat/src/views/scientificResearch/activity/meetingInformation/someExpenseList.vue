@@ -1,65 +1,76 @@
 <template>
-  <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" class="box">
-    <div class="title">
-      <i class="icon iconfont icon-huiyi"></i>经费报销列表
-    </div>
-    <div class="backContentBox" v-for="(item, key) in someExpenseList" :key="key">
-      <ul class="backContentTop" @click="detailsPopup(item.报销编号)">
-        <li>{{item.项目名称}}</li>
-        <li>
-          <span>报销编号：</span>
-          <span>{{item.报销编号}}</span>
-        </li>
-        <li>
-          <span>报销方式：</span>
-          <span>{{item.报销方式}}</span>
-        </li>
-        <li>
-          <span>报销人：</span>
-          <span>{{item.报销人姓名}}</span>
-        </li>
-        <li>
-          <span>报销人部门：</span>
-          <span>{{item.报销人部门名称}}</span>
-        </li>
-        <li>
-          <span>报销金额：</span>
-          <span>{{NumFormat(item.报销金额)}}</span>
-        </li>
-        <li>
-          <span>审核进度：</span>
-          <span :style="{'color':(item.审核进度 == flag ? '#31BD5D' : '#FF976A')}">{{item.审核进度}}</span>
-        </li>
-        <li>
-          <span>报销时间：</span>
-          <span>
-            <i class="icon iconfont icon-shijian1"></i>
-            {{startTime(item.报销时间)}}
-          </span>
-        </li>
-        <li>
-          <span>当前状态：</span>
-          <span id="state">{{item.步骤名称}}-{{item.步骤状态说明}}</span>
-        </li>
-      </ul>
-    </div>
+  <div>
+    <van-pull-refresh v-model="isDownLoading" @refresh="onDownRefresh">
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+        class="box"
+      >
+        <div class="title">
+          <i class="icon iconfont icon-huiyi"></i>经费报销列表
+        </div>
+        <div class="backContentBox" v-for="(item, key) in someExpenseList" :key="key">
+          <ul class="backContentTop" @click="detailsPopup(item.报销编号)">
+            <li>{{item.项目名称}}</li>
+            <li>
+              <span>报销编号：</span>
+              <span>{{item.报销编号}}</span>
+            </li>
+            <li>
+              <span>报销方式：</span>
+              <span>{{item.报销方式}}</span>
+            </li>
+            <li>
+              <span>报销人：</span>
+              <span>{{item.报销人姓名}}</span>
+            </li>
+            <li>
+              <span>报销人部门：</span>
+              <span>{{item.报销人部门名称}}</span>
+            </li>
+            <li>
+              <span>报销金额：</span>
+              <span>{{NumFormat(item.报销金额)}}</span>
+            </li>
+            <li>
+              <span>审核进度：</span>
+              <span :style="{'color':(item.审核进度 == flag ? '#31BD5D' : '#FF976A')}">{{item.审核进度}}</span>
+            </li>
+            <li>
+              <span>报销时间：</span>
+              <span>
+                <i class="icon iconfont icon-shijian1"></i>
+                {{startTime(item.报销时间)}}
+              </span>
+            </li>
+            <li>
+              <span>当前状态：</span>
+              <span id="state">{{item.步骤名称}}-{{item.步骤状态说明}}</span>
+            </li>
+          </ul>
+        </div>
+      </van-list>
+    </van-pull-refresh>
     <ReturnBtn/>
     <ReturnTop/>
-  </van-list>
+  </div>
 </template>
 <script>
 import { NumFormat } from "@/assets/js/common/filter.js";
 export default {
+  inject: ["reload"],
   data() {
     return {
       someExpenseList: [],
       loading: false,
       finished: false,
+      isDownLoading: false,
       flag: "已完成-审核通过",
       meetingID: ""
     };
   },
-  created() {},
   mounted() {
     this.getParams();
   },
@@ -83,6 +94,20 @@ export default {
         });
       }
     },
+    onLoad() {
+      // 加载状态结束
+      this.loading = false;
+      // 数据全部加载完成
+      if (this.someExpenseList.length >= 0) {
+        this.finished = true;
+      }
+    },
+    onDownRefresh() {
+      setTimeout(() => {
+        this.reload();
+        this.isDownLoading = false;
+      }, 1000);
+    },
     detailsPopup(item) {
       this.$router.push({
         path: "/reimbursementDetails",
@@ -91,20 +116,6 @@ export default {
           item: item
         }
       });
-    },
-    onLoad() {
-      // 异步更新数据
-      setTimeout(() => {
-        for (let i = 0; i < 0; i++) {
-          this.someExpenseList.push(this.someExpenseList.length + 1);
-        }
-        // 加载状态结束
-        this.loading = false;
-        // 数据全部加载完成
-        if (this.someExpenseList.length >= 0) {
-          this.finished = true;
-        }
-      }, 500);
     },
     // 状态显示转换
     formatState(item) {

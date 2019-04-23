@@ -1,56 +1,79 @@
 <template>
-  <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" class="box">
-    <div class="title">
-      <i class="icon iconfont icon-lunwentimu"></i>论文未认领列表
-    </div>
-    <div class="backContentBox" v-for="(item, key) in lectureList" :key="key">
-      <ul class="bacnButtom" @click="goDetails(item.编号)">
-        <li>{{item.论文标题}}</li>
-        <li>
-          <span>刊物名称：</span>
-          <span>{{item.刊物名称}}</span>
-        </li>
-        <li>
-          <span>在线日期：</span>
-          <span>{{startTime(item.论文Online日期)}}</span>
-        </li>
-        <li>
-          <span>正式出版日期：</span>
-          <span>{{startTime(item.论文正式出版日期)}}</span>
-        </li>
-        <li>
-          <span>第一作者：</span>
-          <span>{{item.第一作者}}</span>
-        </li>
-      </ul>
-      <div class="audit">
-        <!-- 暂时不做 -->
-        <!-- <span @click="goMeetingsList">论文认领</span> -->
-      </div>
-    </div>
+  <div>
+    <van-pull-refresh v-model="isDownLoading" @refresh="onDownRefresh">
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+        class="box"
+      >
+        <div class="title">
+          <i class="icon iconfont icon-lunwentimu"></i>论文未认领列表
+        </div>
+        <div class="backContentBox" v-for="(item, key) in lectureList" :key="key">
+          <ul class="bacnButtom" @click="goDetails(item.编号)">
+            <li>{{item.论文标题}}</li>
+            <li>
+              <span>刊物名称：</span>
+              <span>{{item.刊物名称}}</span>
+            </li>
+            <li>
+              <span>在线日期：</span>
+              <span>{{startTime(item.论文Online日期)}}</span>
+            </li>
+            <li>
+              <span>正式出版日期：</span>
+              <span>{{startTime(item.论文正式出版日期)}}</span>
+            </li>
+            <li>
+              <span>第一作者：</span>
+              <span>{{item.第一作者}}</span>
+            </li>
+          </ul>
+          <div class="audit">
+            <!-- 暂时不做 -->
+            <!-- <span @click="goMeetingsList">论文认领</span> -->
+          </div>
+        </div>
+      </van-list>
+    </van-pull-refresh>
     <ReturnBtn/>
-  </van-list>
+    <ReturnTop/>
+  </div>
 </template>
 <script>
 export default {
+  inject: ["reload"],
   data() {
     return {
       lectureList: [],
       index: 1,
-      size: 5,
+      size: 15,
+      total: 0,
       loading: false,
-      finished: false
+      finished: false,
+      isDownLoading: false
     };
   },
-  mounted() {
-    this.getPaper();
-  },
   methods: {
-    getPaper() {
+    onLoad() {
       this.$http.getPaperList(this.index, this.size).then(res => {
-        // console.log(res);
-        this.lectureList = res.data.list;
+        this.total = res.data.total;
+        const data = this.lectureList;
+        this.lectureList = data.concat(res.data.list);
+        this.loading = false;
+        this.index++;
+        if (this.lectureList.length >= this.total) {
+          this.finished = true;
+        }
       });
+    },
+    onDownRefresh() {
+      setTimeout(() => {
+        this.reload();
+        this.isDownLoading = false;
+      }, 1000);
     },
     // 查看详情
     goDetails(item) {
@@ -73,20 +96,6 @@ export default {
       } else {
         return;
       }
-    },
-    onLoad() {
-      // 异步更新数据
-      setTimeout(() => {
-        for (let i = 0; i < 0; i++) {
-          this.lectureList.push(this.lectureList.length + 1);
-        }
-        // 加载状态结束
-        this.loading = false;
-        // 数据全部加载完成
-        if (this.lectureList.length >= 0) {
-          this.finished = true;
-        }
-      }, 500);
     }
   }
 };

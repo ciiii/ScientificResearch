@@ -114,6 +114,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.ServiceController.根据dbkey获取某医院信息(System.String)">
+            <summary>
+            这个不需要登录
+            </summary>
+            <param name="k"></param>
+            <returns></returns>
+        </member>
         <member name="M:ScientificResearch.Areas.Manage.Controllers.ServiceController.获取可用的医院列表">
             <summary>
             获取可用的医院列表,使用这些医院时用,仅仅包括启用的医院;
@@ -123,6 +130,12 @@
         <member name="M:ScientificResearch.Areas.Manage.Controllers.ServiceController.获取可用的医院名称列表">
             <summary>
             获取可用的医院名称列表,以供微信绑定时选取医院名称作为dbkey用;当然pc端也可以用,只不过现在是给每个医院提供了一个写死了dbkey的登录页面而已;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.ServiceController.上传医院Logo图片">
+            <summary>
+            
             </summary>
             <returns></returns>
         </member>
@@ -170,8 +183,7 @@
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.BaseInfoController.获取某类字典(System.String)">
             <summary>
             字典相关的接口,都使用ScientificResearch-baseinfo中相关的接口,教学管理不再单独提供;
-            涉及的字典分类有:学历;职称;学科;民族
-            TODO:这块日后要独立为一个area对应一个db的框架,进而成为一个微服务;
+            涉及的字典分类有:学历;职称;学科;民族,"往届应届","送培方式","医疗卫生机构类型"
             </summary>
             <param name="分类"></param>
             <returns></returns>
@@ -179,6 +191,27 @@
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.BaseInfoController.获取教学学员类型">
             <summary>
             教学学员不应该被修改;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.BaseInfoController.获取教学宿舍楼">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.BaseInfoController.增改教学宿舍楼(ScientificResearch.Models.教学宿舍楼)">
+            <summary>
+            
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.BaseInfoController.获取教学评分等级">
+            <summary>
+            只读;用来说明打分分数和评分等级之间的对应关系;
+            如果业务上是打分,可以用此来说明其"掌握程度"
+            如果业务上是评等级,实际上是将取对应评分等级中的最大分值保存;
             </summary>
             <returns></returns>
         </member>
@@ -230,6 +263,8 @@
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.OrganizationController.获取部门列表(ScientificResearch.Models.v_教学科室Filter)">
             <summary>
             部门的基础信息相关的接口,都使用ScientificResearch-baseinfo中相关的接口,教学管理不再单独提供;
+            并不是每一个部门都是教学科室,只有"是否教学科室"为真的才是,
+            设置某个部门为教学科室,用下面"增改教学科室"的接口;
             获取部门列表比较特殊,需要在部门基础信息的之外,提供科室管理员/最大学员人数/带教老师人数等教学信息;
             </summary>
             <param name="filter"></param>
@@ -322,6 +357,32 @@
             
             </summary>
             <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.SettingController">
+            <summary>
+            系统设置中的培训设置 教学活动设置 360评价设置
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.SettingController.批量增改教学专业科室要求(System.Collections.Generic.IEnumerable{ScientificResearch.Models.教学专业科室要求})">
+            <summary>
+            这个不会删除fid相同,但编号不符合的数据;
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.SettingController.批量删除教学专业科室要求(System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            这个可以删除;
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.SettingController.获取教学专业科室任务类型">
+            <summary>
+            查看,这个目前是定死的"技能"/"疾病",
+            后期很可能有额外的属性加入;
+            </summary>
             <returns></returns>
         </member>
         <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementBaseController">
@@ -480,6 +541,11 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.医院.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.医院.Logo">
             <summary>
             
             </summary>
@@ -1887,6 +1953,16 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.sp_教学专业科室任务_删">
+            <summary>
+            sp_教学专业科室任务_删[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学专业科室任务_删.tt_编号">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_教学专业科室任务_增改">
             <summary>
             sp_教学专业科室任务_增改[类]
@@ -1903,6 +1979,16 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_教学专业科室任务类型_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学专业科室要求_删">
+            <summary>
+            sp_教学专业科室要求_删[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学专业科室要求_删.tt_编号">
             <summary>
             
             </summary>
@@ -2060,6 +2146,11 @@
         <member name="T:ScientificResearch.Models.sp_教学本院科室_增改">
             <summary>
             sp_教学本院科室_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学本院科室_增改.fId">
+            <summary>
+            
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_教学本院科室_增改.tt">
@@ -6057,7 +6148,7 @@
             
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.教学本院科室.教学专业本院策略编号">
+        <member name="P:ScientificResearch.Models.教学本院科室.教学本院策略编号">
             <summary>
             
             </summary>
@@ -6178,6 +6269,11 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.教学本院策略.专业基地管理员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学本院策略.是否启用">
             <summary>
             
             </summary>
@@ -6768,11 +6864,6 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.教学评分等级.编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学评分等级.分类名称">
             <summary>
             
             </summary>
@@ -16737,6 +16828,126 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.v_教学专业科室">
+            <summary>
+            v_教学专业科室[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室.教学专业编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室.排序值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室.科室名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室.最低培训时长">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室.最低管床数量">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室.最低全程管理数量">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室.科室要求">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室.教学专业名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_教学专业科室任务">
+            <summary>
+            v_教学专业科室任务[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室任务.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室任务.教学专业科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室任务.项目名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室任务.任务类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室任务.任务类型名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室任务.是否门诊">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室任务.是否病房">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室任务.是否医技">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室任务.最低评分要求">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室任务.最低评分等级">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室任务.数量要求">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室任务.备注">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v_教学人员">
             <summary>
             v_教学人员[类]
@@ -17067,6 +17278,61 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.v_教学本院策略">
+            <summary>
+            v_教学本院策略[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院策略.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院策略.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院策略.教学专业编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院策略.教学专业名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院策略.教学专业年份">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院策略.专业基地管理员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院策略.教学本院科室数量">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院策略.是否启用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院策略.建立日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院策略.备注">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v_教学科室">
             <summary>
             v_教学科室[类]
@@ -17113,6 +17379,11 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_教学科室.是否存在下级">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学科室.是否教学科室">
             <summary>
             
             </summary>
@@ -17329,10 +17600,10 @@
             <param name="FlowTemplateId"></param>
             <param name="model"></param>
             <param name="OperatorType"></param>
-            <param name="CreatorType"></param>
             <param name="OperatorId"></param>
             <param name="isHold"></param>
             <param name="State"></param>
+            <param name="CreatorType"></param>
             <param name="CreatorId">不是有项目发起人发起的流程时,需要填写一下发起人,比如纵向立项登记时</param>
             <returns></returns>
         </member>
@@ -18193,7 +18464,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:ScientificResearch.Controllers.TestController.测试获取整个页面的html(System.Object[])">
+        <member name="M:ScientificResearch.Controllers.TestController.测试获取整个百度页面的html(System.Object[])">
             <summary>
             
             </summary>
@@ -18992,6 +19263,81 @@
             </summary>
             <param name="directoryPath"></param>
             <returns></returns>
+        </member>
+        <member name="T:MyLib.MyWxOAuthAccessTokenResult">
+            <summary>
+            获取OAuth AccessToken的结果
+            </summary>
+        </member>
+        <member name="P:MyLib.MyWxOAuthAccessTokenResult.access_token">
+            <summary>
+            接口调用凭证
+            </summary>
+        </member>
+        <member name="P:MyLib.MyWxOAuthAccessTokenResult.expires_in">
+            <summary>
+            access_token接口调用凭证超时时间，单位（秒）
+            </summary>
+        </member>
+        <member name="P:MyLib.MyWxOAuthAccessTokenResult.refresh_token">
+            <summary>
+            用户刷新access_token
+            </summary>
+        </member>
+        <member name="P:MyLib.MyWxOAuthAccessTokenResult.openid">
+            <summary>
+            授权用户唯一标识
+            </summary>
+        </member>
+        <member name="P:MyLib.MyWxOAuthAccessTokenResult.scope">
+            <summary>
+            用户授权的作用域，使用逗号（,）分隔
+            </summary>
+        </member>
+        <member name="P:MyLib.MyWxOAuthAccessTokenResult.unionid">
+            <summary>
+            只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段。详见：获取用户个人信息（UnionID机制）
+            </summary>
+        </member>
+        <member name="T:MyLib.MyWxTemplate">
+            <summary>
+            模板消息
+            </summary>
+        </member>
+        <member name="P:MyLib.MyWxTemplate.touser">
+            <summary>
+            接收消息的openid
+            </summary>
+        </member>
+        <member name="P:MyLib.MyWxTemplate.template_id">
+            <summary>
+            模板id
+            </summary>
+        </member>
+        <member name="P:MyLib.MyWxTemplate.url">
+            <summary>
+            点击后指向的url
+            </summary>
+        </member>
+        <member name="P:MyLib.MyWxTemplate.data">
+            <summary>
+            消息内容
+            </summary>
+        </member>
+        <member name="T:MyLib.MyWxData">
+            <summary>
+            这个应该对应某个具体的模板消息;目前先测试;
+            </summary>
+        </member>
+        <member name="T:MyLib.MyWxFirst">
+            <summary>
+            头部消息
+            </summary>
+        </member>
+        <member name="T:MyLib.MyWxKeynote">
+            <summary>
+            内容消息
+            </summary>
         </member>
         <member name="T:MyLib.MyXls">
             <summary>

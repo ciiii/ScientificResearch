@@ -62,7 +62,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
                    where item.上级编号 == topId
                    select new
                    {
-                       菜单 = item.名称,
+                       菜单 = item,
                        子级菜单 = RecursivePermission(permission, item.编号)
                    };
         }

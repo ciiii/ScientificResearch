@@ -145,7 +145,7 @@ namespace ScientificResearch.Controllers
         [HttpGet]
         async public Task<object> 获取权限菜单()
         {
-            var permission = await Db.GetListSpAsync<权限>($"tfn_人员的权限('{CurrentUser.工号}')", orderStr: "排序");
+            var permission = await Db.GetListSpAsync<权限>($"tfn_人员的权限('{CurrentUser.工号}')", orderStr: "排序",orderType:true);
             //处理一下中文
             foreach (var item in permission)
             {

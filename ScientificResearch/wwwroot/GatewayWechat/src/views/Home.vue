@@ -1,10 +1,11 @@
 <template>
   <div>
     <div class="nav">
-      <img src="@/assets/images/iocn/logo.png" alt="科研logo">
-      <span @click="toLogin" v-if="!personnel">登 录</span>
+      <!-- <img src="@/assets/images/iocn/logo.png" alt="科研logo"> -->
+      <img :src="this.Logo || this.defaultImg">
+      <!-- <span @click="toLogin" v-if="!personnel">登 录</span> -->
     </div>
-    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+    <van-pull-refresh v-model="isDownLoading" @refresh="onDownRefresh">
       <div class="section">
         <swipe/>
         <div class="listBox">
@@ -63,6 +64,7 @@ import iocnList from "@/components/index/iocnList";
 import HomeFooter from "@/components/footer/homeFooter";
 export default {
   name: "home",
+  inject: ["reload"],
   components: {
     swipe,
     iocnList,
@@ -70,27 +72,54 @@ export default {
   },
   data() {
     return {
-      isLoading: false, //控制下拉刷新的加载动画
+      isDownLoading: false, //控制下拉刷新的加载动画
       list: [],
       index: 1,
       size: 3,
       total: 0,
       KYList: [],
       isShow: false,
-      personnel: null
+      personnel: null,
+      url: "http://192.168.0.99:63739",
+      Logo: "",
+      HospitalInformation: JSON.parse(
+        localStorage.getItem("HospitalInformation")
+      ),
+      defaultImg: require("@/assets/images/iocn/logo.png")
     };
   },
+  created() {},
   mounted() {
     this.getPrimaryNews();
   },
   methods: {
-    toLogin() {
-      if (this.personnel === null) {
-        this.$router.push("/guidance");
+    // toLogin() {
+    //   if (this.personnel === null) {
+    //     this.$router.push("/guidance");
+    //   }
+    // },
+    // 获取医院信息
+    async getLogo(personnel) {
+      let para = {
+        k: personnel.DbKey
+      };
+      let res = await this.$http.getHospitalInformation(para);
+      if (process.env.NODE_ENV === "production") {
+        this.Logo = res.data.Logo;
       }
+      this.Logo = this.url + res.data.Logo;
+      localStorage.HospitalInformation = JSON.stringify(res.data);
     },
     getPersonnel() {
       this.personnel = JSON.parse(localStorage.getItem("personnel"));
+      if (!localStorage.HospitalInformation) {
+        this.getLogo(this.personnel);
+      } else {
+        if (process.env.NODE_ENV === "production") {
+          this.Logo = this.HospitalInformation.Logo;
+        }
+        this.Logo = this.url + this.HospitalInformation.Logo;
+      }
     },
     getPrimaryNews() {
       var para = {
@@ -110,7 +139,6 @@ export default {
         size: this.size
       };
       this.$http.getToViewNewsList(para).then(res => {
-        // console.log(res,"取科研新闻")
         this.KYList = res.data.list;
         this.isShow = true;
       });
@@ -141,9 +169,42 @@ export default {
       this.$router.push("/KYMoreList");
     },
     // 下拉刷新
-    onRefresh() {
+    onDownRefresh() {
+      // 发送模板消息
+      // let para = {
+      //   touser: "o67SQ1t_HcG8izl34cNWjfvWVJMQ",
+      //   template_id: "UGnXJOF05J01wINUrHdGbL_AkN4FK1JDEreLC5g8DiU",
+      //   url: "http://192.168.0.157:8080",
+      //   data: {
+      //     first: {
+      //       value: "您好，有待办事件需处理如下",
+      //       color: "#FF0000"
+      //     },
+      //     keyword1: {
+      //       value: "横向项目经费到账",
+      //       color: "#173177"
+      //     },
+      //     keyword2: {
+      //       value: "横向测试",
+      //       color: "#173177"
+      //     },
+      //     keyword3: {
+      //       value: "科研管理员复核",
+      //       color: "#173177"
+      //     },
+      //     keyword4: {
+      //       value: "2019-04-18",
+      //       color: "#173177"
+      //     },
+      //     remark: {
+      //       value: "希望你尽快处理！",
+      //       color: "#173177"
+      //     }
+      //   }
+      // };
+      // let res = await this.$http.testTemplate(para);
       setTimeout(() => {
-        this.getPrimaryNews();
+        this.reload();
         this.isLoading = false;
       }, 500);
     },

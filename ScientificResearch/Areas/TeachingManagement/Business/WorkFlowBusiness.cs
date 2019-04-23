@@ -51,10 +51,10 @@ namespace ScientificResearch.Business
         /// <param name="FlowTemplateId"></param>
         /// <param name="model"></param>
         /// <param name="OperatorType"></param>
-        /// <param name="CreatorType"></param>
         /// <param name="OperatorId"></param>
         /// <param name="isHold"></param>
         /// <param name="State"></param>
+        /// <param name="CreatorType"></param>
         /// <param name="CreatorId">不是有项目发起人发起的流程时,需要填写一下发起人,比如纵向立项登记时</param>
         /// <returns></returns>
         async public Task InitFlow<T>(
@@ -76,6 +76,7 @@ namespace ScientificResearch.Business
                     try
                     {
                         //这个sp,必须返回一个int类型的编号,作为流程的项目编号
+                        //也可以默认返回的里面包含的是PredefindedKeyFields名称
                         var SourceId = await dbForTransaction.QueryFirstSpAsync<T, int>(
                             model,
                             transaction);

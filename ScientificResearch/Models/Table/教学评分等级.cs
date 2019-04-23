@@ -20,12 +20,6 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        [Required(ErrorMessage ="请提供[分类名称]")]
-        [MaxLength(50,ErrorMessage ="分类名称不能超过[25]字")]
-		public string 分类名称 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
         [Required(ErrorMessage ="请提供[等级名称]")]
         [MaxLength(50,ErrorMessage ="等级名称不能超过[25]字")]
 		public string 等级名称 { get; set; }

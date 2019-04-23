@@ -12,6 +12,12 @@ const http = {
         });
     },
     /**
+     * 根据DbKey获取医院信息
+     */
+    getHospitalInformation(para) {
+        return get("/Manage/Service/根据dbkey获取某医院信息", para)
+    },
+    /**
      * 绑定 登录
      */
     BindOpenId(code, 工号, 密码, DbKey) {
@@ -271,6 +277,12 @@ const http = {
      */
     getSomePersonnelDetails(code) {
         return get("/People/获取某人员详情", code)
+    },
+    /**
+     * 测试模板消息
+     */
+    testTemplate(para) {
+        return post("/Test/测试发送微信模板消息", para);
     },
 };
 

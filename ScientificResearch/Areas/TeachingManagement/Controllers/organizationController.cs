@@ -18,6 +18,8 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
     {
         /// <summary>
         /// 部门的基础信息相关的接口,都使用ScientificResearch-baseinfo中相关的接口,教学管理不再单独提供;
+        /// 并不是每一个部门都是教学科室,只有"是否教学科室"为真的才是,
+        /// 设置某个部门为教学科室,用下面"增改教学科室"的接口;
         /// 获取部门列表比较特殊,需要在部门基础信息的之外,提供科室管理员/最大学员人数/带教老师人数等教学信息;
         /// </summary>
         /// <param name="filter"></param>

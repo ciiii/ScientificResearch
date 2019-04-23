@@ -20,8 +20,9 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        [Required(ErrorMessage ="请提供[教学专业本院策略编号]")]
-		public int 教学专业本院策略编号 { get; set; }
+        [Obsolete]
+        [Required(ErrorMessage ="请提供[教学本院策略编号]")]
+		public int 教学本院策略编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>

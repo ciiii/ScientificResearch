@@ -1,40 +1,54 @@
 <template>
-  <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" class="box">
-    <div class="title">
-      <i class="icon iconfont icon-overview"></i>成果总览
-    </div>
-    <div class="backContentBox" v-for="(item, key) in lectureList" :key="key">
-      <ul class="backContentTop" @click="goDetails(item,item.成果编号)">
-        <li>{{item.成果名称}}</li>
-        <li>
-          <span>成果类型：</span>
-          <span>{{item.成果类型}}</span>
-        </li>
-        <li>
-          <span>发起人：</span>
-          <span>{{item.发起人姓名}}</span>
-        </li>
-        <li>
-          <span>发起人部门：</span>
-          <span>{{item.发起人部门名称}}</span>
-        </li>
-        <li>
-          <span>年度：</span>
-          <span>{{item.年度}}</span>
-        </li>
-      </ul>
-    </div>
+  <div>
+    <van-pull-refresh v-model="isDownLoading" @refresh="onDownRefresh">
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+        class="box"
+      >
+        <div class="title">
+          <i class="icon iconfont icon-overview"></i>成果总览
+        </div>
+        <div class="backContentBox" v-for="(item, key) in lectureList" :key="key">
+          <ul class="backContentTop" @click="goDetails(item,item.成果编号)">
+            <li>{{item.成果名称}}</li>
+            <li>
+              <span>成果类型：</span>
+              <span>{{item.成果类型}}</span>
+            </li>
+            <li>
+              <span>发起人：</span>
+              <span>{{item.发起人姓名}}</span>
+            </li>
+            <li>
+              <span>发起人部门：</span>
+              <span>{{item.发起人部门名称}}</span>
+            </li>
+            <li>
+              <span>年度：</span>
+              <span>{{item.年度}}</span>
+            </li>
+          </ul>
+        </div>
+      </van-list>
+    </van-pull-refresh>
+    <ReturnTop/>
     <ReturnBtn/>
-  </van-list>
+  </div>
 </template>
 <script>
 import { NumFormat } from "@/assets/js/common/filter.js";
 export default {
+  inject: ["reload"],
   data() {
     return {
       lectureList: [],
       index: 1,
       size: 15,
+      total: 0,
+      isDownLoading: false,
       loading: false,
       finished: false,
       typeList: {
@@ -45,15 +59,24 @@ export default {
       }
     };
   },
-  mounted() {
-    this.getPaper();
-  },
   methods: {
-    getPaper() {
+    onLoad(type) {
       this.$http.getAchievementAllList(this.index, this.size).then(res => {
-        // console.log(res);
-        this.lectureList = res.data.list;
+        this.total = res.data.total;
+        const data = this.lectureList;
+        this.lectureList = data.concat(res.data.list);
+        this.loading = false;
+        this.index++;
+        if (this.lectureList.length >= this.total) {
+          this.finished = true;
+        }
       });
+    },
+    onDownRefresh() {
+      setTimeout(() => {
+        this.reload();
+        this.isDownLoading = false;
+      }, 1000);
     },
     // 查看详情
     goDetails(item, code) {
@@ -76,24 +99,6 @@ export default {
     //转换金额格式
     NumFormat(item) {
       return NumFormat(item);
-    },
-    backtrack() {
-      this.show = false;
-    },
-
-    onLoad() {
-      // 异步更新数据
-      setTimeout(() => {
-        for (let i = 0; i < 0; i++) {
-          this.lectureList.push(this.lectureList.length + 1);
-        }
-        // 加载状态结束
-        this.loading = false;
-        // 数据全部加载完成
-        if (this.lectureList.length >= 0) {
-          this.finished = true;
-        }
-      }, 500);
     }
   }
 };

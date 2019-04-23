@@ -25,6 +25,4 @@ export function Interception(value) {
     } else {
         return;
     }
-
-
 }

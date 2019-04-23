@@ -1,79 +1,102 @@
 <template>
-  <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" class="box">
-    <div class="title">
-      <i class="icon iconfont icon-huiyi"></i>参会信息
-    </div>
-    <div class="backContentBox" v-for="(item, key) in lectureList" :key="key">
-      <ul class="backContentTop" @click="goMeetingDetails(item.编号)">
-        <li>{{item.会议名称}}</li>
-        <li>
-          <span>学科类型：</span>
-          <span>{{item.学科类型}}</span>
-        </li>
-        <li>
-          <span>主办单位：</span>
-          <span>{{item.会议主办单位}}</span>
-        </li>
-        <li>
-          <span>申请人：</span>
-          <span>{{item.申请人姓名}}</span>
-        </li>
-        <li>
-          <span>申请人部门：</span>
-          <span>{{item.申请人部门名称}}</span>
-        </li>
-        <li>
-          <span>会议地址：</span>
-          <span>{{item.会议地址}}</span>
-        </li>
-        <li>
-          <span>当前步骤：</span>
-          <span id="contentSpan">{{item.步骤名称}} - {{item.步骤状态说明}}</span>
-        </li>
-        <li>
-          <span>是否反馈：</span>
-          <span
-            :style="{'color':(item.是否反馈过 === flag ? '#31BD5D' : '#FF4444')}"
-          >{{formatState(item.是否反馈过)}}</span>
-        </li>
-        <li>
-          <span>审核进度：</span>
-          <span>{{item.审核进度}}</span>
-        </li>
-        <li>
-          <span>开始时间：</span>
-          <span>
-            <i class="icon iconfont icon-shijian1"></i>
-            {{startTime(item.会议开始时间)}}
-          </span>
-        </li>
-      </ul>
-      <span class="audit" @click="goMeetingsList">反馈列表</span>
-    </div>
+  <div>
+    <van-pull-refresh v-model="isDownLoading" @refresh="onDownRefresh">
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+        class="box"
+      >
+        <div class="title">
+          <i class="icon iconfont icon-huiyi"></i>参会信息
+        </div>
+        <div class="backContentBox" v-for="(item, key) in lectureList" :key="key">
+          <ul class="backContentTop" @click="goMeetingDetails(item.编号)">
+            <li>{{item.会议名称}}</li>
+            <li>
+              <span>学科类型：</span>
+              <span>{{item.学科类型}}</span>
+            </li>
+            <li>
+              <span>主办单位：</span>
+              <span>{{item.会议主办单位}}</span>
+            </li>
+            <li>
+              <span>申请人：</span>
+              <span>{{item.申请人姓名}}</span>
+            </li>
+            <li>
+              <span>申请人部门：</span>
+              <span>{{item.申请人部门名称}}</span>
+            </li>
+            <li>
+              <span>会议地址：</span>
+              <span>{{item.会议地址}}</span>
+            </li>
+            <li>
+              <span>当前步骤：</span>
+              <span id="contentSpan">{{item.步骤名称}} - {{item.步骤状态说明}}</span>
+            </li>
+            <li>
+              <span>是否反馈：</span>
+              <span
+                :style="{'color':(item.是否反馈过 === flag ? '#31BD5D' : '#FF4444')}"
+              >{{formatState(item.是否反馈过)}}</span>
+            </li>
+            <li>
+              <span>审核进度：</span>
+              <span>{{item.审核进度}}</span>
+            </li>
+            <li>
+              <span>开始时间：</span>
+              <span>
+                <i class="icon iconfont icon-shijian1"></i>
+                {{startTime(item.会议开始时间)}}
+              </span>
+            </li>
+          </ul>
+          <span class="audit" @click="goMeetingsList">反馈列表</span>
+        </div>
+      </van-list>
+    </van-pull-refresh>
     <ReturnBtn/>
-  </van-list>
+    <ReturnTop/>
+  </div>
 </template>
 <script>
 export default {
+  inject: ["reload"],
   data() {
     return {
       lectureList: [],
       index: 1,
-      size: 5,
+      size: 15,
+      total: 0,
+      isDownLoading: false,
       loading: false,
       finished: false,
       flag: true
     };
   },
-  mounted() {
-    this.getLecture();
-  },
   methods: {
-    getLecture() {
+    onLoad() {
       this.$http.getMeetingList(this.index, this.size).then(res => {
-        console.log(res, "resssss");
-        this.lectureList = res.data.list;
+        this.total = res.data.total;
+        const data = this.lectureList;
+        this.lectureList = data.concat(res.data.list);
+        this.loading = false;
+        this.index++;
+        if (this.lectureList.length >= this.total) {
+          this.finished = true;
+        }
       });
+    },
+    onDownRefresh() {
+      setTimeout(() => {
+        this.reload();
+        this.isDownLoading = false;
+      }, 1000);
     },
     // 状态显示转换
     formatState(item) {
@@ -111,20 +134,6 @@ export default {
     //跳转反馈列表
     goFeedbackList() {
       this.$router.push("/feedbackList");
-    },
-    onLoad() {
-      // 异步更新数据
-      setTimeout(() => {
-        for (let i = 0; i < 0; i++) {
-          this.lectureList.push(this.lectureList.length + 1);
-        }
-        // 加载状态结束
-        this.loading = false;
-        // 数据全部加载完成
-        if (this.lectureList.length >= 0) {
-          this.finished = true;
-        }
-      }, 500);
     }
   }
 };

@@ -32,7 +32,7 @@ export async function get(url, params) {
             resolve(res);
         });
     } catch (err) {
-        console.log(err);
+        console.log(err, "33");
     }
 }
 
@@ -45,6 +45,6 @@ export async function post(url, params) {
             resolve(res);
         });
     } catch (err) {
-        console.log(err);
+        console.log(err, "44");
     }
 }

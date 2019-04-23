@@ -1,74 +1,98 @@
 <template>
-  <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" class="box">
-    <div class="title">
-      <i class="icon iconfont icon-jiangzuo"></i>主办讲座
-    </div>
-    <div class="backContentBox" v-for="(item, key) in lectureList" :key="key">
-      <ul class="backContentTop" @click="goLectureDetails(item.编号)">
-        <li>【{{item.会议类型}}】{{item.活动名称}}</li>
-        <li>
-          <span>所属部门：</span>
-          <span>{{item.所属部门名称}}</span>
-        </li>
-        <li>
-          <span>主办人：</span>
-          <span>{{item.主办人姓名}}</span>
-        </li>
-        <li>
-          <span>活动对象：</span>
-          <span>{{item.活动对象}}</span>
-        </li>
-        <li>
-          <span>经费：</span>
-          <span>{{item.活动经费}}</span>
-        </li>
-        <li>
-          <span>当前步骤：</span>
-          <span id="contentSpan">{{item.步骤名称}} - {{item.步骤状态说明}}</span>
-        </li>
-        <li>
-          <span>是否反馈：</span>
-          <span
-            :style="{'color':(item.是否反馈过 === flag ? '#31BD5D' : '#FF4444')}"
-          >{{formatState(item.是否反馈过)}}</span>
-        </li>
-        <li>
-          <span>审核进度：</span>
-          <span>{{item.审核进度}}</span>
-        </li>
-        <li>
-          <span>开始时间：</span>
-          <span>
-            <i class="icon iconfont icon-shijian1"></i>
-            {{startTime(item.开始时间)}}
-          </span>
-        </li>
-      </ul>
-      <span class="audit" @click="goFeedbackList">反馈列表</span>
-    </div>
+  <div>
+    <van-pull-refresh v-model="isDownLoading" @refresh="onDownRefresh">
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+        class="box"
+      >
+        <div class="title">
+          <i class="icon iconfont icon-jiangzuo"></i>主办讲座
+        </div>
+        <div class="backContentBox" v-for="(item, key) in lectureList" :key="key">
+          <ul class="backContentTop" @click="goLectureDetails(item.编号)">
+            <li>【{{item.会议类型}}】{{item.活动名称}}</li>
+            <li>
+              <span>所属部门：</span>
+              <span>{{item.所属部门名称}}</span>
+            </li>
+            <li>
+              <span>主办人：</span>
+              <span>{{item.主办人姓名}}</span>
+            </li>
+            <li>
+              <span>活动对象：</span>
+              <span>{{item.活动对象}}</span>
+            </li>
+            <li>
+              <span>经费：</span>
+              <span>{{item.活动经费}}</span>
+            </li>
+            <li>
+              <span>当前步骤：</span>
+              <span id="contentSpan">{{item.步骤名称}} - {{item.步骤状态说明}}</span>
+            </li>
+            <li>
+              <span>是否反馈：</span>
+              <span
+                :style="{'color':(item.是否反馈过 === flag ? '#31BD5D' : '#FF4444')}"
+              >{{formatState(item.是否反馈过)}}</span>
+            </li>
+            <li>
+              <span>审核进度：</span>
+              <span>{{item.审核进度}}</span>
+            </li>
+            <li>
+              <span>开始时间：</span>
+              <span>
+                <i class="icon iconfont icon-shijian1"></i>
+                {{startTime(item.开始时间)}}
+              </span>
+            </li>
+          </ul>
+          <span class="audit" @click="goFeedbackList">反馈列表</span>
+        </div>
+      </van-list>
+    </van-pull-refresh>
     <ReturnBtn/>
-  </van-list>
+    <ReturnTop/>
+  </div>
 </template>
 <script>
 export default {
+  inject: ["reload"],
   data() {
     return {
       lectureList: [],
       index: 1,
-      size: 5,
+      size: 15,
+      total: 0,
+      isDownLoading: false,
       loading: false,
       finished: false,
       flag: true
     };
   },
-  mounted() {
-    this.getLecture();
-  },
   methods: {
-    getLecture() {
+    onLoad() {
       this.$http.getLectureList(this.index, this.size).then(res => {
-        this.lectureList = res.data.list;
+        this.total = res.data.total;
+        const data = this.lectureList;
+        this.lectureList = data.concat(res.data.list);
+        this.loading = false;
+        this.index++;
+        if (this.lectureList.length >= this.total) {
+          this.finished = true;
+        }
       });
+    },
+    onDownRefresh() {
+      setTimeout(() => {
+        this.reload();
+        this.isDownLoading = false;
+      }, 1000);
     },
     // 状态显示转换
     formatState(item) {
@@ -95,20 +119,6 @@ export default {
     //跳转反馈列表
     goFeedbackList() {
       this.$router.push("/feedbackList");
-    },
-    onLoad() {
-      // 异步更新数据
-      setTimeout(() => {
-        for (let i = 0; i < 0; i++) {
-          this.lectureList.push(this.lectureList.length + 1);
-        }
-        // 加载状态结束
-        this.loading = false;
-        // 数据全部加载完成
-        if (this.lectureList.length >= 0) {
-          this.finished = true;
-        }
-      }, 500);
     }
   }
 };
@@ -129,9 +139,9 @@ export default {
     }
   }
   .backContentBox {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
+    // display: flex;
+    // justify-content: space-between;
+    // align-items: flex-end;
     font-size: 14px;
     padding: 8px 15px;
     border: 1px dashed #ccc;
@@ -173,8 +183,11 @@ export default {
       }
     }
     .audit {
-      display: inline-block;
-      width: 48px;
+      // display: inline-block;
+      position: relative;
+      left: 80%;
+      bottom: 15px;
+      // width: 48px;
       font-size: 12px;
       padding: 8px 12px;
       background-color: #07c160;
