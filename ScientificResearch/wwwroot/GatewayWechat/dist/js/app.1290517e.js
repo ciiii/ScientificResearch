@@ -1,1 +1,0 @@
-e:\scientific-research\dist\js\app.1290517e.js

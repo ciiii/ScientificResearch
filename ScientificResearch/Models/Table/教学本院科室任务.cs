@@ -20,6 +20,7 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        [Obsolete]
         [Required(ErrorMessage ="请提供[教学本院科室编号]")]
 		public int 教学本院科室编号 { get; set; }
         /// <summary>

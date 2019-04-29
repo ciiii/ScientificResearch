@@ -9,7 +9,8 @@
             </van-search>-->
             <van-tabs v-model="active" @click="clickTab">
                 <van-tab title="发表时间"></van-tab>
-                <van-tab title="相关度"></van-tab>
+                <van-tab title="相关度" v-if="type==0"></van-tab>
+                <van-tab title="主题" v-if="type==1"></van-tab>
                 <van-tab title="被引次数"></van-tab>
                 <van-tab title="下载次数"></van-tab>
             </van-tabs>
@@ -64,7 +65,7 @@
 </template>
 
 <script>
-    import {URL_ZHI_WANG} from '@/assets/js/gateway/connect/ConSysUrl'
+    import {URL_ZHI_WANG, URL_ZHI_WANG_CHKD} from '@/assets/js/gateway/connect/ConSysUrl'
     import {_debounce} from "@/assets/js/gateway/Common";
     import zhiWangDetails from "@/components/gateway/zhiWang/zhiWangDetails"
 
@@ -96,9 +97,11 @@
                 item: {},
                 isShowBtn: false,
                 searchType: 0,
+                type: 0,
             }
         },
         mounted: function () {
+            this.type = this.$route.query.type;
             this.configs = JSON.parse(sessionStorage.getItem('ZWConfigs'));
             this.req = JSON.parse(sessionStorage.getItem('ZWSearch'));
 
@@ -108,9 +111,8 @@
         },
         methods: {
             /**
-             * searchType 加载类型
-             * 0：请求列表
-             * 1：请求筛选
+             * type:0 知网，1 知网医学
+             * searchType 加载类型：0：请求列表， 1：请求筛选
              * finished-true停止:停止加载更多
              * isRefreshLoading-false不显示:刷新的状态;
              * loading-false不显示:加载中的状态;
@@ -118,22 +120,35 @@
             onLoad() {
                 switch (this.searchType) {
                     case 0:
-                        this.getList();
+                        if (this.type == 0) {
+                            this.getList(URL_ZHI_WANG.GET_ARTICLE_LIST);
+                        } else {
+                            this.getList(URL_ZHI_WANG_CHKD.GET_CHKD_ARTICLE_LIST);
+                        }
                         break;
                     case 2:
-                        this.getPangingList();
+                        if (this.type == 0) {
+                            this.getPangingList(URL_ZHI_WANG.GET_PANGING_LIST);
+                        } else {
+                            this.getPangingList(URL_ZHI_WANG_CHKD.GET_CHKD_PANGING_LIST);
+                        }
                         break;
                 }
             },
             //点击筛选触发条件
             clickTab(index, title) {
-                if (this.existList && this.existList.sortRelateUrl) {
+                if (this.existList && this.existList.sortPublicDateUrl) {
                     switch (index) {
                         case 0:
                             this.reqScreen.sortUrl = this.newList.sortPublicDateUrl;
                             break;
                         case 1:
-                            this.reqScreen.sortUrl = this.newList.sortRelateUrl;
+                            if (this.type == 0) {
+                                this.reqScreen.sortUrl = this.newList.sortRelateUrl;
+                            }
+                            if (this.type == 1) {
+                                this.reqScreen.sortUrl = this.newList.sortByTheme;
+                            }
                             break;
                         case 2:
                             this.reqScreen.sortUrl = this.newList.sortByUseTimesUrl;
@@ -151,10 +166,14 @@
                 this.loading = true;
                 this.backTop();
                 this.list = [];
-                this.getScreenList();
+                if (this.type == 0) {
+                    this.getScreenList(URL_ZHI_WANG.GET_SCREEN_LIST);
+                } else {
+                    this.getScreenList(URL_ZHI_WANG_CHKD.GET_CHKD_SCREEN_LIST);
+                }
             },
-            getList: async function () {
-                let data = await this.$myHttp.myGet(URL_ZHI_WANG.GET_ARTICLE_LIST, this.req);
+            getList: async function (url) {
+                let data = await this.$myHttp.myGet(url, this.req);
                 this.existList = data;
                 this.newList = data;
                 if (this.newList && this.newList.listDatas) {
@@ -166,8 +185,8 @@
                 this.loading = false;
                 this.searchType = 2;
             },
-            getScreenList: async function () {
-                this.newList = await this.$myHttp.myGet(URL_ZHI_WANG.GET_SCREEN_LIST, this.reqScreen);
+            getScreenList: async function (url) {
+                this.newList = await this.$myHttp.myGet(url, this.reqScreen);
                 if (this.newList && this.newList.listDatas) {
                     this.returnData(this.newList.listDatas);
                 } else {
@@ -177,8 +196,8 @@
                 this.loading = false;
                 this.searchType = 2;
             },
-            getPangingList: async function () {
-                this.newList = await this.$myHttp.myGet(URL_ZHI_WANG.GET_PANGING_LIST, this.reqPanging);
+            getPangingList: async function (url) {
+                this.newList = await this.$myHttp.myGet(url, this.reqPanging);
                 if (this.newList && this.newList.listDatas) {
                     this.returnData(this.list.concat(this.newList.listDatas));
                 } else {
@@ -202,13 +221,18 @@
             },
             onRefresh() {
                 this.active = 0;
-                this.getList();
+                if (this.type == 0) {
+                    this.getList(URL_ZHI_WANG.GET_ARTICLE_LIST);
+                } else {
+                    this.getList(URL_ZHI_WANG_CHKD.GET_CHKD_ARTICLE_LIST);
+                }
             },
             onClickLeft() {
                 this.$router.go(-1)
             },
             clickTitle(item) {
                 item.accountId = this.req.accountId;
+                item.type = this.type;
                 this.item = item;
                 this.isShowDetails = true;
             },

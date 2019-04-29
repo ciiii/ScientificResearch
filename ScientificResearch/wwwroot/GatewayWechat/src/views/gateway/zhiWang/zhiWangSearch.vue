@@ -1,7 +1,8 @@
 <template>
     <div class="ZW-search">
         <div class="logo">
-            <img src="@/assets/images/logo_zhiwang.png" alt="">
+            <img src="@/assets/images/logo_zhiwang.png" alt="" v-if="searchType==0">
+            <img src="@/assets/images/logo_zhiwangCHKD.jpg" alt="" v-else>
         </div>
         <div class="main">
             <van-cell-group>
@@ -171,7 +172,7 @@
                     sourceType: '',
                     supportFundName: '',
                     supportFundType: '%',
-                    accountId: 2006
+                    accountId: 2015
                 },
                 reqConfigs: {
                     isReload: true,
@@ -206,10 +207,12 @@
                 supportFundType: '模糊',
                 sourceType: '',
                 newSourceType: [],
-                item: {}
+                item: {},
+                searchType: 0
             }
         },
         mounted: function () {
+            this.searchType = this.$route.query.type;
             this.req.accountId = this.$route.query.accountId;
             this.getDataConfigs();
         },
@@ -304,8 +307,28 @@
                 sessionStorage.setItem('ZWConfigs', JSON.stringify(this.configs));
             },
             retrieval: _debounce(function () {
-                sessionStorage.setItem('ZWSearch', JSON.stringify(this.req));
-                this.$router.push({path: '/zhiWangList'});
+                if (this.searchType == 0) {
+                    sessionStorage.setItem('ZWSearch', JSON.stringify(this.req));
+                } else {
+                    let data = {
+                        mainType: this.req.searchType,
+                        mainWord: this.req.searchKeyWord,
+                        authorMatchType: this.req.authorType,
+                        author: this.req.authorName,
+                        authorDepartment: this.req.authorGroup,
+                        fromYear: this.req.publicYearFrom,
+                        toYear: this.req.publicYearTo,
+                        updateTag:this.req.updateTimeTag,
+                        sourceName: this.req.sourceName,
+                        sourceNameMatchType: this.req.sourceRearchType,
+                        sourceType: this.req.sourceType,
+                        supportFundName: this.req.supportFundName,
+                        supportFundNameMatcthType: this.req.supportFundType,
+                        accountId: this.req.accountId
+                    }
+                    sessionStorage.setItem('ZWSearch', JSON.stringify(data));
+                }
+                this.$router.push({path: '/zhiWangList', query: {type: this.searchType}});
             }, 300)
         }
     }
@@ -331,4 +354,10 @@
 </style>
 <style type="text/less" scoped lang="less">
     @import "../../../assets/less/gateway/wanFangSearch";
+    .logo{
+        img{
+            width: 188px;
+            height: auto;
+        }
+    }
 </style>

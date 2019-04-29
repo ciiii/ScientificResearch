@@ -258,7 +258,7 @@ export default {
         论文编号: this.$route.params.item
       };
       this.$http.getpaperDetails(para).then(res => {
-        console.log(res, "sss");
+        // console.log(res, "sss");
         this.detailslList = res.data.论文详情;
         this.relatedProjects = res.data.成果项目;
         this.authorInformation = res.data.成果作者;

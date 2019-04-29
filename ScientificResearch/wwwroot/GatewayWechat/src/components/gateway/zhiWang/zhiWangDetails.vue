@@ -19,11 +19,13 @@
                 <span v-for="(el,index) in details.keyWord" :key="index">{{el}}</span>
             </p>
             <div class="btn-box" v-if="isShowDown&&details">
-                <van-button type="default" @click="getDownloadFile(true)">
-                    <van-icon name="icon iconfont icon-browse"/> 预览PDF
+                <van-button type="default" @click="btnDownloadFile(true)">
+                    <van-icon name="icon iconfont icon-browse"/>
+                    预览PDF
                 </van-button>
-                <van-button type="default" @click="getDownloadFile(false)">
-                    <van-icon name="icon iconfont icon-download"/>下载PDF
+                <van-button type="default" @click="btnDownloadFile(false)">
+                    <van-icon name="icon iconfont icon-download"/>
+                    下载PDF
                 </van-button>
             </div>
         </div>
@@ -31,7 +33,7 @@
 </template>
 
 <script>
-    import {URL_ZHI_WANG} from "@/assets/js/gateway/connect/ConSysUrl";
+    import {URL_ZHI_WANG, URL_ZHI_WANG_CHKD, URL_DOWNLOAD_FILE} from "@/assets/js/gateway/connect/ConSysUrl";
     import {UrlEncode, _debounce} from "@/assets/js/gateway/Common";
 
     export default {
@@ -59,11 +61,15 @@
             this.req.accountId = this.item.accountId;
             this.reqUrl.accountId = this.item.accountId;
             this.reqUrl.fileName = this.item.fileName;
-            this.getDetails();
+            if (this.item.type == 0) {
+                this.getDetails(URL_ZHI_WANG.GET_ARTICLE_DETAILS);
+            } else {
+                this.getDetails(URL_ZHI_WANG_CHKD.GET_CHKD_ARTICLE_DETAILS);
+            }
         },
         methods: {
-            getDetails: async function () {
-                let data = await this.$myHttp.myGet(URL_ZHI_WANG.GET_ARTICLE_DETAILS, this.req);
+            getDetails: async function (url) {
+                let data = await this.$myHttp.myGet(url, this.req);
                 if (data.pdfDownUrl) {
                     this.reqUrl.url = data.pdfDownUrl;
                 }
@@ -85,12 +91,19 @@
                     duration: 5000,
                 });
             },
-            getDownloadFile: _debounce(async function (type) {
+            btnDownloadFile: _debounce(function (type) {
+                if (this.item.type == 0) {
+                    this.getDownloadFile(type, URL_ZHI_WANG.GET_ARTICLE_DOWNURL);
+                } else {
+                    this.getDownloadFile(type, URL_ZHI_WANG_CHKD.GET_CHKD_ARTICLE_DOWNURL);
+                }
+            }, 300),
+            getDownloadFile: async function (type, url) {
                 this.getLoading();
-                let data = await this.$myHttp.myGet(URL_ZHI_WANG.GET_ARTICLE_DOWNURL, this.reqUrl);
+                let data = await this.$myHttp.myGet(url, this.reqUrl);
                 if (data && data != '') {
                     this.toastLoading.clear();
-                    this.downUrl = URL_ZHI_WANG.GET_DOWNURL_FILE + '?fileName=' + UrlEncode(data) + '&downUrl=' + UrlEncode(this.reqUrl.url) + '&accountId=' + this.item.accountId;
+                    this.downUrl = URL_DOWNLOAD_FILE + '?fileName=' + UrlEncode(data);
                     if (type) {
                         this.$router.push({path: '/pdfPreview', query: {url: this.downUrl}})
                     } else {
@@ -99,7 +112,7 @@
                 } else {
                     this.$toast('您无权或余额不足不能下载此文章！');
                 }
-            }, 300),
+            },
         }
     }
 </script>

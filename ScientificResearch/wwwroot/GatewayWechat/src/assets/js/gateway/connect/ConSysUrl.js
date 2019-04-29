@@ -1,4 +1,5 @@
-let HTTP_URL_HOST = 'http://192.168.0.22:20001';
+// let HTTP_URL_HOST = 'http://192.168.0.22:20001';
+let HTTP_URL_HOST = 'http://192.168.0.72:20003';
 if (process.env.NODE_ENV === 'production') {
     HTTP_URL_HOST = 'http://a.ttz.cn:89';
 }
@@ -20,10 +21,6 @@ const URL_WAN_FANG = {
 
     //获取文章下载地址
     GET_ARTICLE_DOWNURL: '/Lib/WFController/GetWfDataDownUrl',
-
-    //下载文件
-    GET_DOWNURL_FILE: HTTP_URL_HOST + '/Lib/WFController/DownWfFile',
-
 }
 
 const URL_ZHI_WANG = {
@@ -45,11 +42,27 @@ const URL_ZHI_WANG = {
 
     //获取文章下载地址
     GET_ARTICLE_DOWNURL: '/Lib/ZWController/GetZwDataDownUrl',
-
-    //下载文件
-    GET_DOWNURL_FILE: HTTP_URL_HOST + '/Lib/ZWController/DownZwFile',
-
 }
+
+const URL_ZHI_WANG_CHKD = {
+
+    //获取知网医学文章列表
+    GET_CHKD_ARTICLE_LIST: '/Lib/ZWMedicalController/GetMedicalPaperList',
+
+    //获取知网医学文章排序列表
+    GET_CHKD_SCREEN_LIST: '/Lib/ZWMedicalController/GetMedicalPageListBySort',
+
+    //分页获取知网医学文章列表
+    GET_CHKD_PANGING_LIST: '/Lib/ZWMedicalController/GetMedicalPaperListByPage',
+
+    //获取知网医学文章详情
+    GET_CHKD_ARTICLE_DETAILS: '/Lib/ZWMedicalController/GetMedicalDataDetail',
+
+    //获取知网医学文章下载地址
+    GET_CHKD_ARTICLE_DOWNURL: '/Lib/ZWMedicalController/GetZwMedicalDataDownUrl',
+}
+
+
 
 
 export {
@@ -59,5 +72,6 @@ export {
     URL_DOWNLOAD_FILE,
     URL_WAN_FANG,
     URL_ZHI_WANG,
+    URL_ZHI_WANG_CHKD
 
 };

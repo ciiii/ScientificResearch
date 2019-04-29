@@ -9,7 +9,8 @@ export default {
     return {
       timer: null,
       currentTop: 0,
-      left:0
+      left: 0,
+      top: 0
     };
   },
   created() {
@@ -27,7 +28,7 @@ export default {
       this.timer && clearTimeout(this.timer);
       this.timer = setTimeout(() => {
         this.handleScrollEnd();
-      }, 200); 
+      }, 200);
       this.currentTop =
         document.documentElement.scrollTop || document.body.scrollTop;
       this.left = document.documentElement.clientWidth - 40;

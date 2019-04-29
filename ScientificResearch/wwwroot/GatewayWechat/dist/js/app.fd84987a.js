@@ -1,1 +1,0 @@
-e:\scientific-research\dist\js\app.fd84987a.js

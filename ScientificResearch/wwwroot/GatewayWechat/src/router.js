@@ -4,6 +4,7 @@ import { META_ONE } from "./assets/js/gateway/connect/ConSysUrl";
 Vue.use(Router);
 
 export default new Router({
+    // mode: 'history',
     routes: [{ // 入口
             path: "/",
             name: "home",

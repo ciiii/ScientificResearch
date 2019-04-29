@@ -29,7 +29,7 @@ function getMenuPermissions(getMenuPermissions) {
     } else {
         //手动登录
         console.info(222)
-        localStorage.setItem('Authorization', sessionStorage.Authorization);
+        localStorage.setItem('Authorization',sessionStorage.Authorization);
         getMenuPermissions(true);
     }
 }

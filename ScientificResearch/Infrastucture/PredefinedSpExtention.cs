@@ -406,7 +406,7 @@ namespace ScientificResearch.Infrastucture
         /// <param name="model"></param>
         /// <param name="transaction"></param>
         /// <returns></returns>
-        async public static Task<IEnumerable<T>> Merge<T>(this IDbConnection cnn,int fId, IEnumerable<T> model, IDbTransaction transaction = null) where T : new()
+        async public static Task<IEnumerable<T>> Merge<T>(this IDbConnection cnn, int fId, IEnumerable<T> model, IDbTransaction transaction = null) where T : new()
         {
             var result = await cnn.QueryAsync<T>(PrdefindeSpMergeName<T>(), new
             {
@@ -442,11 +442,21 @@ namespace ScientificResearch.Infrastucture
         /// <param name="id"></param>
         /// <param name="transaction"></param>
         /// <returns></returns>
+        [Obsolete(message: "请使用批量的启禁方法和生成脚本")]
         async public static Task Enable<T>(this IDbConnection cnn, int id, IDbTransaction transaction = null) where T : new()
         {
             var result = await cnn.QueryAsync<T>(PrdefindeSpEnableName<T>(), new
             {
                 编号 = id,
+                是否启用 = true
+            }, transaction, commandType: CommandType.StoredProcedure);
+        }
+
+        async public static Task Enable<T>(this IDbConnection cnn, IEnumerable<int> idList, IDbTransaction transaction = null) where T : new()
+        {
+            await cnn.ExecuteAsync(PrdefindeSpEnableName<T>(), new
+            {
+                tt_编号 = idList.ToPredefindedKeyFieldsList().ToDataTable(),
                 是否启用 = true
             }, transaction, commandType: CommandType.StoredProcedure);
         }
@@ -459,11 +469,21 @@ namespace ScientificResearch.Infrastucture
         /// <param name="id"></param>
         /// <param name="transaction"></param>
         /// <returns></returns>
+        [Obsolete(message: "请使用批量的启禁方法和生成脚本")]
         async public static Task Disable<T>(this IDbConnection cnn, int id, IDbTransaction transaction = null) where T : new()
         {
             var result = await cnn.QueryAsync<T>(PrdefindeSpEnableName<T>(), new
             {
                 编号 = id,
+                是否启用 = false
+            }, transaction, commandType: CommandType.StoredProcedure);
+        }
+
+        async public static Task Disable<T>(this IDbConnection cnn, IEnumerable<int> idList, IDbTransaction transaction = null) where T : new()
+        {
+            await cnn.ExecuteAsync(PrdefindeSpEnableName<T>(), new
+            {
+                tt_编号 = idList.ToPredefindedKeyFieldsList().ToDataTable(),
                 是否启用 = false
             }, transaction, commandType: CommandType.StoredProcedure);
         }
@@ -566,7 +586,7 @@ namespace ScientificResearch.Infrastucture
         #endregion
 
         ///
-        async public static Task<TOut> ExecuteTransaction<TOut>(string dbConnectionString, Func<SqlConnection,SqlTransaction, Task<TOut>> myTran)
+        async public static Task<TOut> ExecuteTransaction<TOut>(string dbConnectionString, Func<SqlConnection, SqlTransaction, Task<TOut>> myTran)
         {
             using (var dbForTransaction = new SqlConnection(dbConnectionString))
             {
@@ -576,7 +596,7 @@ namespace ScientificResearch.Infrastucture
                     try
                     {
 
-                        var result = await myTran(dbForTransaction,transaction);
+                        var result = await myTran(dbForTransaction, transaction);
 
                         transaction.Commit();
 

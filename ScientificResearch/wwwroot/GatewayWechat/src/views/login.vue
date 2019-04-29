@@ -1,11 +1,14 @@
 <template>
   <section class="box">
-    <!-- <img src="@/assets/images/iocn/logo.png" alt="logo图片" class="img"> -->
-    <img :src="this.Logo || this.defaultImg" class="img">
+    <div class="nav">
+      <!-- <img src="@/assets/images/iocn/logo.png" alt="logo图片" class="img"> -->
+      <!-- <img :src="this.Logo || this.defaultImg" class="img"> -->
+      <img v-if="this.Logo!=null" :src="url+this.Logo">
+      <img v-else :src="this.defaultImg">
+    </div>
     <form action="/" onsubmit="return false">
       <div class="input">
         <!-- <input type="text" placeholder="医院" v-model="DbKey" @click="hospital" readonly> -->
-        <!-- <input type="text" placeholder="医院" v-model="DbKey" readonly> -->
         <input
           type="text"
           placeholder="工号"
@@ -49,9 +52,12 @@ export default {
       工号: null,
       密码: null,
       DbKey: null,
-      Logo: "",
-      HospitalInformation: "",
-      url: "http://192.168.0.99:63739",
+      Logo: null,
+      url:
+        process.env.NODE_ENV === "development"
+          ? "http://192.168.0.99:63739"
+          : "",
+      HospitalInformationL: "",
       defaultImg: require("@/assets/images/iocn/logo.png")
       // columns: [],
       // show: false
@@ -59,7 +65,6 @@ export default {
   },
   created() {
     this.DbKey = this.getUrlKey("name");
-    console.log(this.DbKey)
     this.getLogo();
   },
   mounted() {
@@ -89,10 +94,7 @@ export default {
         k: this.DbKey
       };
       let res = await this.$http.getHospitalInformation(para);
-      if (process.env.NODE_ENV === "production") {
-        this.Logo = res.data.Logo;
-      }
-      this.Logo = this.url + res.data.Logo;
+      this.Logo = res.data.Logo;
       this.HospitalInformation = res.data;
     },
     // 登录 防抖
@@ -156,8 +158,8 @@ export default {
   /* padding-bottom: 50px; */
   background-color: #fff;
 }
-.img {
-  width: 200px;
+.nav img {
+  width: 250px;
   height: 60px;
   margin: 50px 0 20px 0;
 }

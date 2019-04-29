@@ -2,7 +2,8 @@
   <div>
     <div class="nav">
       <!-- <img src="@/assets/images/iocn/logo.png" alt="科研logo"> -->
-      <img :src="this.Logo || this.defaultImg">
+      <img v-if="this.Logo!=null" :src="url+this.Logo">
+      <img v-else :src="this.defaultImg">
       <!-- <span @click="toLogin" v-if="!personnel">登 录</span> -->
     </div>
     <van-pull-refresh v-model="isDownLoading" @refresh="onDownRefresh">
@@ -80,15 +81,22 @@ export default {
       KYList: [],
       isShow: false,
       personnel: null,
-      url: "http://192.168.0.99:63739",
-      Logo: "",
+      url:
+        process.env.NODE_ENV === "development"
+          ? "http://192.168.0.99:63739"
+          : "",
+      Logo: null,
       HospitalInformation: JSON.parse(
         localStorage.getItem("HospitalInformation")
       ),
       defaultImg: require("@/assets/images/iocn/logo.png")
     };
   },
-  created() {},
+  created() {
+    if (localStorage.HospitalInformation) {
+      this.Logo = this.HospitalInformation.Logo;
+    }
+  },
   mounted() {
     this.getPrimaryNews();
   },
@@ -104,21 +112,13 @@ export default {
         k: personnel.DbKey
       };
       let res = await this.$http.getHospitalInformation(para);
-      if (process.env.NODE_ENV === "production") {
-        this.Logo = res.data.Logo;
-      }
-      this.Logo = this.url + res.data.Logo;
+      this.Logo = res.data.Logo;
       localStorage.HospitalInformation = JSON.stringify(res.data);
     },
     getPersonnel() {
       this.personnel = JSON.parse(localStorage.getItem("personnel"));
       if (!localStorage.HospitalInformation) {
         this.getLogo(this.personnel);
-      } else {
-        if (process.env.NODE_ENV === "production") {
-          this.Logo = this.HospitalInformation.Logo;
-        }
-        this.Logo = this.url + this.HospitalInformation.Logo;
       }
     },
     getPrimaryNews() {
@@ -140,7 +140,9 @@ export default {
       };
       this.$http.getToViewNewsList(para).then(res => {
         this.KYList = res.data.list;
-        this.isShow = true;
+        if (res.data.list.length != 0) {
+          this.isShow = true;
+        }
       });
     },
 
@@ -170,39 +172,6 @@ export default {
     },
     // 下拉刷新
     onDownRefresh() {
-      // 发送模板消息
-      // let para = {
-      //   touser: "o67SQ1t_HcG8izl34cNWjfvWVJMQ",
-      //   template_id: "UGnXJOF05J01wINUrHdGbL_AkN4FK1JDEreLC5g8DiU",
-      //   url: "http://192.168.0.157:8080",
-      //   data: {
-      //     first: {
-      //       value: "您好，有待办事件需处理如下",
-      //       color: "#FF0000"
-      //     },
-      //     keyword1: {
-      //       value: "横向项目经费到账",
-      //       color: "#173177"
-      //     },
-      //     keyword2: {
-      //       value: "横向测试",
-      //       color: "#173177"
-      //     },
-      //     keyword3: {
-      //       value: "科研管理员复核",
-      //       color: "#173177"
-      //     },
-      //     keyword4: {
-      //       value: "2019-04-18",
-      //       color: "#173177"
-      //     },
-      //     remark: {
-      //       value: "希望你尽快处理！",
-      //       color: "#173177"
-      //     }
-      //   }
-      // };
-      // let res = await this.$http.testTemplate(para);
       setTimeout(() => {
         this.reload();
         this.isLoading = false;

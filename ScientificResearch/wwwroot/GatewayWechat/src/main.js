@@ -96,11 +96,11 @@ router.beforeEach((to, from, next) => {
         if (personnel) { // 判断当前的token是否存在
             next();
         } else {
-            Vue.prototype.$toast('请先登录')
-            next({
-                path: '/',
-                query: { redirect: to.fullPath }
-            })
+            Vue.prototype.$toast('请先登录'),
+                next({
+                    path: '/',
+                    query: { redirect: to.fullPath }
+                })
         }
     } else {
         next();

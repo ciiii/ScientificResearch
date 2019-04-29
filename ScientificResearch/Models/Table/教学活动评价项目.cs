@@ -20,6 +20,7 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// Obsolete
 		/// </summary>
+        [Obsolete]
         [DisplayName("Obsolete")]
         [Required(ErrorMessage ="请提供[教学活动类型编号]")]
 		public int 教学活动类型编号 { get; set; }
@@ -34,6 +35,11 @@ namespace ScientificResearch.Models
 		/// </summary>
         [Required(ErrorMessage ="请提供[标准分]")]
 		public int 标准分 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        [Required(ErrorMessage ="请提供[是否启用]")]
+		public bool 是否启用 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>

@@ -28,7 +28,7 @@
 </template>
 
 <script>
-    import {URL_WAN_FANG} from "@/assets/js/gateway/connect/ConSysUrl";
+    import {URL_WAN_FANG,URL_DOWNLOAD_FILE} from "@/assets/js/gateway/connect/ConSysUrl";
     import {UrlEncode, _debounce} from "@/assets/js/gateway/Common";
 
     export default {
@@ -81,7 +81,7 @@
                 let data = await this.$myHttp.myGet(URL_WAN_FANG.GET_ARTICLE_DOWNURL, this.reqUrl);
                 if (data && data != '') {
                     this.toastLoading.clear();
-                    this.downUrl = URL_WAN_FANG.GET_DOWNURL_FILE + '?fileName=' + UrlEncode(data) + '&downUrl=' + UrlEncode(this.reqUrl.url) + '&accountId=' + this.item.accountId;
+                    this.downUrl = URL_DOWNLOAD_FILE + '?fileName=' + UrlEncode(data);
                     if (type) {
                         this.$router.push({path: '/pdfPreview', query: {url: this.downUrl}})
                     } else {

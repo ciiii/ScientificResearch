@@ -28,7 +28,7 @@ export default {
   },
   data() {
     return {
-      list: []
+      list: {}
     };
   },
   mounted() {
@@ -45,7 +45,14 @@ export default {
         })
         .then(() => {
           localStorage.clear();
-          this.$router.push('/');
+          //  this.$router.push('/');
+          this.$router.push({
+            path: "/",
+            name: "home",
+            params: {
+              item: false
+            }
+          });
         })
         .catch(() => {
           // on cancel

@@ -62,7 +62,7 @@ $(function () {
                         dataType: 'json',
                         type: 'get',
                         beforeSend: function (request) {
-                            request.setRequestHeader('Authorization', localStorage.Authorization);
+                            request.setRequestHeader('Authorization', JSON.parse(localStorage.Authorization));
                         },
                         dataFilter: filter
                     },

@@ -13,8 +13,9 @@ namespace ScientificResearch.Models
 	{       
         #region 属性
         /// <summary>
-		/// 
+		/// 以周为单位
 		/// </summary>
+        [DisplayName("以周为单位")]
         [Required(ErrorMessage ="请提供[编号]")]
 		public int 编号 { get; set; }
         /// <summary>

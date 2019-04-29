@@ -21,6 +21,7 @@ export default {
   methods: {
     getDetails() {
       this.list = this.$route.params.item;
+      console.log(this.$route.params.item)
     }
   }
 };

@@ -2,10 +2,9 @@
   <div>
     <div class="nav">
       <!-- <img src="@/assets/images/iocn/logo.png" alt="科研logo"> -->
-      <img :src="this.Logo || this.defaultImg">
+      <img :src="url+this.Logo || this.defaultImg">
     </div>
     <section>
-      <!-- <van-pull-refresh v-model="isDownLoading" @refresh="onDownRefresh"> -->
       <div class="backlogBox">
         <div class="backlog">
           <span>
@@ -73,7 +72,6 @@
         </div>
         <toDoList ref="toDoList"/>
       </div>
-      <!-- </van-pull-refresh> -->
     </section>
     <navFooter/>
   </div>
@@ -82,7 +80,7 @@
 import toDoList from "@/components/toDoList/toDoList";
 import navFooter from "@/components/footer/footer";
 export default {
-  inject: ["reload"],
+  // inject: ["reload"],
   components: {
     toDoList,
     navFooter
@@ -92,15 +90,37 @@ export default {
       isLoading: false,
       index: 1,
       size: 15,
-      // isDownLoading: false,
       KYList: [],
-      url: "http://192.168.0.99:63739",
+      url:
+        process.env.NODE_ENV === "development"
+          ? "http://192.168.0.99:63739"
+          : "",
       Logo: "",
       HospitalInformation: JSON.parse(
         localStorage.getItem("HospitalInformation")
       ),
       defaultImg: require("@/assets/images/iocn/logo.png")
     };
+  },
+  created() {
+    this.Logo = this.HospitalInformation.Logo;
+    if (!localStorage.token) {
+      let code = this.getUrlKey("code");
+      if (code) {
+        this.$http.LoginWithOpenId(code).then(res => {
+          // console.log(res, "res```````");
+          localStorage.personnel = JSON.stringify(res.data.人员);
+          localStorage.token = `${res.data.token_type} ${
+            res.data.access_token
+          }`;
+          // console.log(localStorage.token, "localStorage.token  ????????");
+          this.$refs.toDoList.getBacklog();
+        });
+      } else {
+        this.$router.push("/login");
+        this.$notify("没有权限，请绑定！");
+      }
+    }
   },
   mounted() {
     var code = JSON.parse(localStorage.getItem("personnel"));
@@ -114,12 +134,6 @@ export default {
     });
   },
   methods: {
-    // onDownRefresh() {
-    //   setTimeout(() => {
-    //     this.reload();
-    //     this.isDownLoading = false;
-    //   }, 1000);
-    // },
     getUrlKey(name) {
       //获取url 参数 解码
       return (
@@ -141,29 +155,6 @@ export default {
           item
         }
       });
-    }
-  },
-  created() {
-    if (process.env.NODE_ENV === "production") {
-      this.Logo = this.HospitalInformation.Logo;
-    }
-    this.Logo = this.url + this.HospitalInformation.Logo;
-    if (!localStorage.token) {
-      let code = this.getUrlKey("code");
-      if (code) {
-        this.$http.LoginWithOpenId(code).then(res => {
-          // console.log(res, "res```````");
-          localStorage.personnel = JSON.stringify(res.data.人员);
-          localStorage.token = `${res.data.token_type} ${
-            res.data.access_token
-          }`;
-          // console.log(localStorage.token, "localStorage.token  ????????");
-          this.$refs.toDoList.getBacklog();
-        });
-      } else {
-        this.$router.push("/login");
-        this.$notify("没有权限，请绑定！");
-      }
     }
   }
 };

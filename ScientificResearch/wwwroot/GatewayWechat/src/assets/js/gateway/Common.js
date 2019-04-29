@@ -158,6 +158,32 @@ export function getletter(num) {
     }
 }
 
-export function trim(str){
-    return str.replace(/^(\s|\u00A0)+/,'').replace(/(\s|\u00A0)+$/,'');
+export function trim(str) {
+    return str.replace(/^(\s|\u00A0)+/, '').replace(/(\s|\u00A0)+$/, '');
+}
+
+//判断访问终端
+export function getBrowser() {
+    let browser = {
+        versions: function () {
+            let u = navigator.userAgent, app = navigator.appVersion;
+            return { //移动终端浏览器版本信息
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览器
+                iPhone: u.indexOf('iPhone') > -1, //是否为iPhone
+                iPad: u.indexOf('iPad') > -1, //是否iPad
+            };
+        }(),
+    }
+    return browser;
+}
+
+//判断是否微信
+export function is_weixn() {
+    let ua = navigator.userAgent.toLowerCase();
+    if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+        return true;
+    } else {
+        return false;
+    }
 }

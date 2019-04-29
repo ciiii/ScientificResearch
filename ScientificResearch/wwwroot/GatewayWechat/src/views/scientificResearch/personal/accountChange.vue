@@ -61,7 +61,7 @@ export default {
         人员编号: JSON.parse(localStorage.getItem("personnel")).编号
       };
       this.$http.getSomePersonnelDetails(para).then(res => {
-        console.log(res, "ffgg");
+        // console.log(res, "ffgg");
         this.list = res.data;
       });
     },

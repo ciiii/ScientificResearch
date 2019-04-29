@@ -364,7 +364,22 @@
             系统设置中的培训设置 教学活动设置 360评价设置
             </summary>
         </member>
-        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.SettingController.批量增改教学专业科室要求(System.Collections.Generic.IEnumerable{ScientificResearch.Models.教学专业科室要求})">
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.SettingController.获取某教学专业下的科室(System.Int32,ScientificResearch.Models.教学专业Filter)">
+            <summary>
+            获取某个专业下的专业科室时,可以用这个
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.SettingController.增改某教学专业下的科室(ScientificResearch.Infrastucture.PredefindedIdList{ScientificResearch.Models.教学专业科室})">
+            <summary>
+            这个data中的教学专业编号要自己填好传上来,
+            这个应该带个"是否启用"的属性,并提供启禁接口,不过暂时没提供;
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.SettingController.批量增改教学专业科室要求(ScientificResearch.Infrastucture.PredefindedIdList{ScientificResearch.Models.教学专业科室要求})">
             <summary>
             这个不会删除fid相同,但编号不符合的数据;
             </summary>
@@ -382,6 +397,45 @@
             <summary>
             查看,这个目前是定死的"技能"/"疾病",
             后期很可能有额外的属性加入;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.SettingController.分页获取某个教学专业科室的教学任务(ScientificResearch.Models.Paging,System.Int32,ScientificResearch.Models.教学专业科室任务Filter)">
+            <summary>
+            
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <param name="教学专业科室编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.SettingController.获取某个教学专业科室的教学任务(System.Int32,ScientificResearch.Models.教学专业科室任务Filter)">
+            <summary>
+            不分页的
+            </summary>
+            <param name="filter"></param>
+            <param name="教学专业科室编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.SettingController.获取教学本院策略(ScientificResearch.Models.教学本院策略Filter)">
+            <summary>
+            注意其中有"是否启用"筛选条件,管理时不用带,全部都选出来管理;
+            使用时,一般要带该条件为真的条件;有效的才能使用;
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.SettingController.增改某教学本院策略下的科室(ScientificResearch.Infrastucture.PredefindedIdList{ScientificResearch.Models.教学本院科室})">
+            <summary>
+            这个就自带删除了,
+            教学本院科室任务需要另外设置;
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.SettingController.获取教学活动类型">
+            <summary>
+            目前只有查看,且没有分页;
             </summary>
             <returns></returns>
         </member>
@@ -1933,6 +1987,21 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.sp_教学360评价项目_增改">
+            <summary>
+            sp_教学360评价项目_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学360评价项目_增改.fId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学360评价项目_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_教学专业_增改">
             <summary>
             sp_教学专业_增改[类]
@@ -1946,6 +2015,11 @@
         <member name="T:ScientificResearch.Models.sp_教学专业科室_增改">
             <summary>
             sp_教学专业科室_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学专业科室_增改.fId">
+            <summary>
+            
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_教学专业科室_增改.tt">
@@ -1966,6 +2040,11 @@
         <member name="T:ScientificResearch.Models.sp_教学专业科室任务_增改">
             <summary>
             sp_教学专业科室任务_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学专业科室任务_增改.fId">
+            <summary>
+            
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_教学专业科室任务_增改.tt">
@@ -1996,6 +2075,11 @@
         <member name="T:ScientificResearch.Models.sp_教学专业科室要求_增改">
             <summary>
             sp_教学专业科室要求_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学专业科室要求_增改.fId">
+            <summary>
+            
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_教学专业科室要求_增改.tt">
@@ -2158,12 +2242,42 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.sp_教学本院科室任务_删">
+            <summary>
+            sp_教学本院科室任务_删[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学本院科室任务_删.tt_编号">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_教学本院科室任务_增改">
             <summary>
             sp_教学本院科室任务_增改[类]
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.sp_教学本院科室任务_增改.fId">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.sp_教学本院科室任务_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学本院策略_启禁">
+            <summary>
+            sp_教学本院策略_启禁[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学本院策略_启禁.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学本院策略_启禁.是否启用">
             <summary>
             
             </summary>
@@ -2224,6 +2338,21 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_教学活动评价_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学活动评价项目_启禁">
+            <summary>
+            sp_教学活动评价项目_启禁[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学活动评价项目_启禁.tt_编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学活动评价项目_启禁.是否启用">
             <summary>
             
             </summary>
@@ -6145,7 +6274,7 @@
         </member>
         <member name="P:ScientificResearch.Models.教学本院科室.编号">
             <summary>
-            
+            以周为单位
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.教学本院科室.教学本院策略编号">
@@ -6574,6 +6703,11 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.教学活动评价项目.标准分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动评价项目.是否启用">
             <summary>
             
             </summary>
@@ -16828,6 +16962,76 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.v_教学360评价分类">
+            <summary>
+            v_教学360评价分类[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价分类.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价分类.目标类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价分类.被评价人类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价分类.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价分类.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_教学360评价方向">
+            <summary>
+            v_教学360评价方向[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价方向.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价方向.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价方向.来源类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价方向.评价人类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价方向.目标类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价方向.被评价人类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价方向.备注">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v_教学专业科室">
             <summary>
             v_教学专业科室[类]
@@ -17274,6 +17478,76 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_教学带教老师.是否启用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_教学本院科室">
+            <summary>
+            v_教学本院科室[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室.教学本院策略编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室.教学本院策略名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室.排序值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室.教学专业科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室.教学专业科室名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室.本院科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室.本院科室名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室.是否必选">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室.培训时长">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室.最低管床数量">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室.最低全程管理数量">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室.备注">
             <summary>
             
             </summary>

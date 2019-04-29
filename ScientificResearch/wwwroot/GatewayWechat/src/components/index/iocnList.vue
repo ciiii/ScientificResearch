@@ -2,13 +2,12 @@
   <div>
     <ul>
       <li v-for="(item,index) in iocnList" :key="index">
-        <a v-if="item.手机链接地址!=upToDateUrl" @click="path(item)">
-          <img v-if="item.手机链接地址!=url" :src="url + item.Logo">
-          <img v-else :src="item.Logo">
+        <a v-if="item.手机链接地址 && item.手机链接地址.indexOf('http')==0" :href="item.手机链接地址">
+          <img :src="url+ item.Logo">
           <p>{{item.名称}}</p>
         </a>
-        <a v-else :href="upToDateUrl">
-          <img :src="item.Logo">
+        <a v-else @click="path(item)">
+          <img :src="url+item.Logo">
           <p>{{item.名称}}</p>
         </a>
       </li>
@@ -20,15 +19,17 @@ export default {
   data() {
     return {
       iocnList: [],
-      upToDateUrl: "https://www.uptodate.com/contents/search",
-      url: "http://192.168.0.99:63739",
-      HospitalInformation:''
+      url:
+        process.env.NODE_ENV === "development"
+          ? "http://192.168.0.99:63739"
+          : ""
     };
   },
-  created() {},
   mounted() {
     this.login();
-    // let urlNow = encodeURIComponent("http://192.168.0.157:8080/#/login?name=测试医院第一家");
+    // let urlNow = encodeURIComponent("http://192.168.0.157:8080/login?name=ScientificResearch_Test");
+    // console.log(urlNow,"eee")
+    // let urlNow = encodeURIComponent("http://192.168.0.157:8080/#/");
     // console.log(urlNow,"eee")
   },
   methods: {
@@ -109,34 +110,45 @@ export default {
     async login() {
       //本地存储
       let personnel = JSON.parse(localStorage.getItem("personnel"));
-      //如果没有本地储存
-      if (!personnel) {
-        let code = this.getUrlKey("code");
-        let res = await this.$http.LoginWithOpenId(code);
-        //如果有绑定的
-        if (res) {
-          localStorage.personnel = JSON.stringify(res.data.人员);
-          localStorage.token = `${res.data.token_type} ${
-            res.data.access_token
-          }`;
+      let flag = this.$route.params.item;
+      // 如果没有flag
+      if (flag == undefined) {
+        //如果没有本地储存
+        if (!personnel) {
+          let code = this.getUrlKey("code");
+          let res = await this.$http.LoginWithOpenId(code);
+          //如果有绑定的
+          // if (res.data)
+          if (res != undefined) {
+            localStorage.personnel = JSON.stringify(res.data.人员);
+            localStorage.token = `${res.data.token_type} ${
+              res.data.access_token
+            }`;
+            this.$emit("getPersonnel");
+            this.$emit("getKYNews");
+          }
+          // 取医院服务列表
+          let returnOfGetServiceList = await this.$http.getServiceList({
+            // 医院名称: !!res.data ? res.data.人员.DbKey : ""
+            医院名称: !!res ? res.data.人员.DbKey : ""
+          });
+          this.iocnList = returnOfGetServiceList.data;
+        }
+        //如果有本地存储
+        else {
+          var para = {
+            医院名称: personnel.DbKey
+          };
+          let res = await this.$http.getServiceList(para);
+          this.iocnList = res.data;
           this.$emit("getPersonnel");
           this.$emit("getKYNews");
         }
-        //取医院服务列表
+      } else {
         let returnOfGetServiceList = await this.$http.getServiceList({
-          医院名称: !!res ? res.data.人员.DbKey : ""
+          医院名称: ""
         });
         this.iocnList = returnOfGetServiceList.data;
-      }
-      //如果有本地存储
-      else {
-        var para = {
-          医院名称: personnel.DbKey
-        };
-        let res = await this.$http.getServiceList(para);
-        this.iocnList = res.data;
-        this.$emit("getPersonnel");
-        this.$emit("getKYNews");
       }
     },
 
