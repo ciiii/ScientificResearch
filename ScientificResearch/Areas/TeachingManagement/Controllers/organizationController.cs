@@ -5,7 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.Extensions.Configuration;
+using MyLib;
 using ScientificResearch.Infrastucture;
 using ScientificResearch.Models;
 
@@ -25,9 +26,9 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         /// <param name="filter"></param>
         /// <returns></returns>
         [HttpGet]
-        async public Task<object> 获取部门列表(v_教学科室Filter filter)
+        async public Task<object> 获取部门列表(教学科室Filter filter)
         {
-            return await Db.GetListSpAsync<v_教学科室, v_教学科室Filter>(filter);
+            return await Db.GetListSpAsync<v_教学科室, 教学科室Filter>(filter);
         }
 
         /// <summary>
@@ -38,8 +39,8 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         [HttpGet]
         async public Task<object> 获取某科室的教学带教老师(int 科室编号)
         {
-            var filter = new v_教学带教老师Filter() { 教学科室编号 = 科室编号 };
-            return await Db.GetListSpAsync<v_教学带教老师, v_教学带教老师Filter>(filter);
+            var filter = new 教学带教老师Filter() { 教学科室编号 = 科室编号 };
+            return await Db.GetListSpAsync<v_教学带教老师, 教学带教老师Filter>(filter);
         }
 
         /// <summary>
@@ -72,7 +73,77 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
                 item.教学科室编号 = data.Id;
             }
 
-            return await Db.Merge(data.Id,data.List);
+            return await Db.Merge(data.Id, data.List);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="paging"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        [HttpGet]
+        async public Task<object> 分页获取教学学员(Paging paging, 教学学员Filter filter)
+        {
+            return await Db.GetPagingListSpAsync<v_教学学员, 教学学员Filter>(paging, filter, orderType: true);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task<object> 增改教学学员([FromBody]教学学员 data)
+        {
+            return await Db.Merge(data);
+        }
+
+        [HttpPost]
+        async public Task<object> 上传教学学员头像()
+        {
+            var filesNameList = await MyLib.UploadFile.Upload(
+                Request.Form.Files,
+                Env.WebRootPath,
+                "upload/教学/组织机构/学员头像",
+                Config.GetValue<int>("uploadFileMaxSize"));
+            return filesNameList;
+        }
+
+        [HttpPost]
+        async public Task 导入教学学员(IFormFileCollection files)
+        {
+            var filesNameList = await MyLib.UploadFile.Upload(
+               files,
+               Env.WebRootPath,
+               "upload/教学/组织机构/导入学员",
+               Config.GetValue<int>("uploadFileMaxSize"));
+
+            //可以尝试直接用"教学学员"来导入,不过这里先用原来的方法;至少让属性对应的好一些;
+            var inputData = MyXls.Import<学员导入>(MyPath.Combine(Env.WebRootPath, filesNameList[0]));
+            ////工号|密码|姓名|部门名称都空的删掉
+            //result = result.Where(i => !string.IsNullOrWhiteSpace(i.工号) ||
+            //                           !string.IsNullOrWhiteSpace(i.密码) ||
+            //                           !string.IsNullOrWhiteSpace(i.姓名) ||
+            //                           !string.IsNullOrWhiteSpace(i.部门名称));
+
+            //转为字典更好;
+            var 教学学员类型list = await Db.GetListSpAsync<教学学员类型>();
+            var 教学学员类型dic = 教学学员类型list.ToDictionary(i => i.名称, i => i.编号);
+
+            var data = new List<教学学员>();
+            foreach (var item in inputData)
+            {
+                //学员类型名称不对的话,默认给学员类型编号 = 0;
+                //item.学员类型编号 = 教学学员类型list.Where(i => i.名称 == item.学员类型名称).FirstOrDefault()?.编号??0;
+                //如果学员类型名称不对怎么办?
+                item.学员类型编号 = 教学学员类型dic.ContainsKey(item.学员类型名称 ?? "")?教学学员类型dic[item.学员类型名称]:1;
+                data.Add(MyLib.Tool.ModelToModel<教学学员, 学员导入>(item));
+            }
+
+            TryValidateModel(data);
+
+            await Db.Merge(data.AsEnumerable());
         }
     }
 }

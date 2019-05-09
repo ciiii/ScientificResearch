@@ -102,6 +102,9 @@
     <Folder Include="wwwroot\upload\成果\论文\检索信息页相关文件\" />
     <Folder Include="wwwroot\upload\成果\论文\论文正文\" />
     <Folder Include="wwwroot\upload\报销\相关文件\" />
+    <Folder Include="wwwroot\upload\教学\办公\通知公告文件和图片\" />
+    <Folder Include="wwwroot\upload\教学\组织机构\导入学员\" />
+    <Folder Include="wwwroot\upload\教学\组织机构\学员头像\" />
     <Folder Include="wwwroot\upload\横向项目\合同文件\" />
     <Folder Include="wwwroot\upload\横向项目\合同认定登记承诺书\" />
     <Folder Include="wwwroot\upload\横向项目\结题资料\" />

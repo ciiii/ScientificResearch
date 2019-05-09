@@ -1,0 +1,29 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<!--
+2013-9-30: Created.
+-->
+<svg>
+<metadata>
+Created by iconfont
+</metadata>
+<defs>
+
+<font id="iconfont" horiz-adv-x="1024" >
+  <font-face
+    font-family="iconfont"
+    font-weight="500"
+    font-stretch="normal"
+    units-per-em="1024"
+    ascent="896"
+    descent="-128"
+  />
+    <missing-glyph />
+    
+    <glyph glyph-name="tongzhi" unicode="&#58897;" d="M832 384l192 0 0-64-192 0 0 64ZM1027.904 738.24 1011.328 800.064 828.096 733.76 844.672 671.936ZM828.096-29.76 1011.328-96.064 1027.904-34.24 844.672 32.064ZM224 640l-128 0C43.008 640 0 596.992 0 544l0-320C0 171.008 43.008 128 96 128l128 0c31.36 0 59.008 15.296 76.48 38.592L704-64 704 832 300.48 601.408C283.008 624.704 255.36 640 224 640zM224 192l-128 0C78.336 192 64 206.336 64 224l0 320C64 561.664 78.336 576 96 576l128 0C241.664 576 256 561.664 256 544l0-320C256 206.336 241.664 192 224 192zM640 46.272 320 229.12 320 538.88l320 182.848L640 46.272z"  horiz-adv-x="1028" />
+
+    
+
+
+  </font>
+</defs></svg>

@@ -243,10 +243,50 @@
             <param name="topId"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.HomePageController.分页获取可查看的教学通知公告(ScientificResearch.Models.Paging,ScientificResearch.Models.教学某人员可查看的通知公告Filter)">
+            <summary>
+            如果要获取必读且未读的通知公告,使用条件"是否必读=true 且 是否已接收=false"
+            </summary>
+            <param name="人员编号"></param>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.HomePageController.获取教学通知公告详情(System.Int32)">
+            <summary>
+            首页上查看教学通知公告详情会设置为"已接收"
+            不需要看到接收条件
+            </summary>
+            <param name="编号"></param>
+            <returns></returns>
+        </member>
         <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.OfficeController">
             <summary>
             和科研办公功能对应
             </summary>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.OfficeController.分页获取教学通知公告(ScientificResearch.Models.Paging,ScientificResearch.Models.教学通知公告Filter)">
+            <summary>
+            注意,这个是教学通知公告的管理,而不是首页上的"我可以看到的通知公告"
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.OfficeController.获取教学通知公告详情(System.Int32)">
+            <summary>
+            管理时查看教学通知公告详情并不会设置"已接收"
+            </summary>
+            <param name="编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.OfficeController.增改教学通知公告(ScientificResearch.Infrastucture.PredefindedModelList{ScientificResearch.Models.教学通知公告,ScientificResearch.Models.教学通知公告接收条件})">
+            <summary>
+            接收者类型,即PersonType:人员,教学学员,部门,教学角色
+            接受者编号,=0表示该接收者类型的所有人,=某个编号则表示具体的某个接受者类型
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
         </member>
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.OfficeController.ChangePassword(ScientificResearch.Models.ChangePassword)">
             <summary>
@@ -260,7 +300,7 @@
             和组织架构功能对应;
             </summary>
         </member>
-        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.OrganizationController.获取部门列表(ScientificResearch.Models.v_教学科室Filter)">
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.OrganizationController.获取部门列表(ScientificResearch.Models.教学科室Filter)">
             <summary>
             部门的基础信息相关的接口,都使用ScientificResearch-baseinfo中相关的接口,教学管理不再单独提供;
             并不是每一个部门都是教学科室,只有"是否教学科室"为真的才是,
@@ -292,6 +332,21 @@
             
             </summary>
             <param name="data">id表示教学科室编号</param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.OrganizationController.分页获取教学学员(ScientificResearch.Models.Paging,ScientificResearch.Models.教学学员Filter)">
+            <summary>
+            
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.OrganizationController.增改教学学员(ScientificResearch.Models.教学学员)">
+            <summary>
+            
+            </summary>
+            <param name="data"></param>
             <returns></returns>
         </member>
         <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.PermissionController">
@@ -1133,12 +1188,18 @@
             当前教学管理的医院方登录人的信息
             </summary>
         </member>
-        <member name="T:ScientificResearch.Models.v_教学科室Filter">
+        <member name="T:ScientificResearch.Models.PersonInfoByType">
+            <summary>
+            这个可以考虑放到predifined里面去;
+            还没用到...
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学科室Filter">
             <summary>
             
             </summary>
         </member>
-        <member name="T:ScientificResearch.Models.v_教学带教老师Filter">
+        <member name="T:ScientificResearch.Models.教学带教老师Filter">
             <summary>
             
             </summary>
@@ -2537,12 +2598,47 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.sp_教学通知公告_启禁">
+            <summary>
+            sp_教学通知公告_启禁[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学通知公告_启禁.tt_编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学通知公告_启禁.是否启用">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_教学通知公告_增改">
             <summary>
             sp_教学通知公告_增改[类]
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_教学通知公告_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学通知公告_接收">
+            <summary>
+            sp_教学通知公告_接收[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学通知公告_接收.通知公告编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学通知公告_接收.接收人类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学通知公告_接收.接收人编号">
             <summary>
             
             </summary>
@@ -5912,7 +6008,7 @@
             
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.教学学员.职业证书编号">
+        <member name="P:ScientificResearch.Models.教学学员.执业证书编号">
             <summary>
             
             </summary>
@@ -5967,7 +6063,7 @@
             
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.教学学员.是否应届生">
+        <member name="P:ScientificResearch.Models.教学学员.往届应届">
             <summary>
             
             </summary>
@@ -17432,6 +17528,201 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.v_教学学员">
+            <summary>
+            v_教学学员[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.学员类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.学员类型名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.工号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.密码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.头像路径">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.性别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.民族">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.证件类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.证件号码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.出生日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.手机号码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.政治面貌">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.电子邮箱">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.QQ号码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.微信号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.家庭住址">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.取得执业证书日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.执业证书编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.取得医师资格证书日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.医师资格证书编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.最高学历">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.毕业年份">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.毕业学校">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.毕业专业">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.毕业证编码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.学位证编码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.学员培训年界">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.学员培训年限">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.往届应届">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.专业编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.专业名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.送培方式">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.工作单位">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.医疗卫生机构">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员.备注">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v_教学带教老师">
             <summary>
             v_教学带教老师[类]
@@ -17703,6 +17994,201 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_教学角色.功能数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_教学通知公告">
+            <summary>
+            v_教学通知公告[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告.通知类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告.发送人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告.通知名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告.关闭时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告.相关文件路径">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告.通知内容">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告.已接收人数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告.是否启用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告.是否必读">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告.发送人工号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告.发送人姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告.发送人部门编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告.发送人部门名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_教学通知公告_列表">
+            <summary>
+            v_教学通知公告_列表[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告_列表.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告_列表.通知类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告_列表.发送人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告_列表.通知名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告_列表.关闭时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告_列表.相关文件路径">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告_列表.已接收人数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告_列表.是否启用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告_列表.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告_列表.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告_列表.是否必读">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告_列表.发送人工号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告_列表.发送人姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告_列表.发送人部门编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告_列表.发送人部门名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_教学通知公告接收条件">
+            <summary>
+            v_教学通知公告接收条件[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告接收条件.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告接收条件.教学通知公告编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告接收条件.接收者类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告接收条件.接收者编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学通知公告接收条件.接收者名称">
             <summary>
             
             </summary>

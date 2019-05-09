@@ -20,10 +20,12 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        [Obsolete]
 		public int? 来源学校编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
+        [Obsolete]
 		public int? 来源学生编号 { get; set; }
         /// <summary>
 		/// 
@@ -114,8 +116,8 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        [MaxLength(50,ErrorMessage ="职业证书编号不能超过[25]字")]
-		public string 职业证书编号 { get; set; }
+        [MaxLength(50,ErrorMessage ="执业证书编号不能超过[25]字")]
+		public string 执业证书编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
@@ -167,7 +169,8 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-		public bool? 是否应届生 { get; set; }
+        [MaxLength(50,ErrorMessage ="往届应届不能超过[25]字")]
+		public string 往届应届 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>

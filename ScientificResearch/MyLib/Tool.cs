@@ -670,6 +670,7 @@ namespace MyLib
         /// <param name="url">提交地址</param>
         /// <param name="param">参数信息</param>
         /// <returns></returns>
+        [Obsolete]
         public static string PostData(string url, string param)
         {
             try
@@ -707,6 +708,7 @@ namespace MyLib
         /// <param name="url">提交地址</param>
         /// <param name="param">参数信息</param>
         /// <returns></returns>
+        [Obsolete]
         public static string PostDataForGet(string url, string param)
         {
             try

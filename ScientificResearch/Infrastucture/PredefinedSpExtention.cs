@@ -610,5 +610,29 @@ namespace ScientificResearch.Infrastucture
                 }
             }
         }
+
+        async public static Task ExecuteTransaction(string dbConnectionString, Func<SqlConnection, SqlTransaction, Task> myTran)
+        {
+            using (var dbForTransaction = new SqlConnection(dbConnectionString))
+            {
+                dbForTransaction.Open();
+                using (var transaction = dbForTransaction.BeginTransaction())
+                {
+                    try
+                    {
+
+                        await myTran(dbForTransaction, transaction);
+
+                        transaction.Commit();
+
+                    }
+                    catch (Exception e)
+                    {
+                        transaction.Rollback();
+                        throw e;
+                    }
+                }
+            }
+        }
     }
 }

@@ -66,5 +66,48 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
                        子级菜单 = RecursivePermission(permission, item.编号)
                    };
         }
+
+        /// <summary>
+        /// 如果要获取必读且未读的通知公告,使用条件"是否必读=true 且 是否已接收=false"
+        /// </summary>
+        /// <param name="人员编号"></param>
+        /// <param name="paging"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        [HttpGet]
+        async public Task<object> 分页获取可查看的教学通知公告(Paging paging, 教学某人员可查看的通知公告Filter filter)
+        {
+            return await Db.GetPagingListSpAsync<object, 教学某人员可查看的通知公告Filter>(
+                paging, filter, $"tfn_教学某人员可查看的通知公告('{CurrentUser.人员类型}',{CurrentUser.编号})");
+        }
+
+        /// <summary>
+        /// 首页上查看教学通知公告详情会设置为"已接收"
+        /// 不需要看到接收条件
+        /// </summary>
+        /// <param name="编号"></param>
+        /// <returns></returns>
+        [HttpGet]
+        async public Task<object> 获取教学通知公告详情(int 编号)
+        {
+            var model = await Db.GetModelByIdSpAsync<v_教学通知公告>(编号);
+
+            await Db.ExecuteSpAsync(new sp_教学通知公告_接收()
+            {
+                通知公告编号 = 编号,
+                接收人类型 = CurrentUser.人员类型,
+                接收人编号 = CurrentUser.编号
+            });
+
+            return model;
+
+            //var list = await Db.GetListSpAsync<v_教学通知公告接收条件, 教学通知公告接收条件Filter>(new 教学通知公告接收条件Filter() { 教学通知公告编号 = 编号 });
+
+            //return new
+            //{
+            //    通知公告 = model,
+            //    接收条件 = list
+            //};
+        }
     }
 }
