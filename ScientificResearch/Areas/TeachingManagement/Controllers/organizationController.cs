@@ -111,8 +111,10 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         }
 
         [HttpPost]
-        async public Task 导入教学学员(IFormFileCollection files)
+        async public Task 导入教学学员()
+        //async public Task 导入教学学员(IFormFileCollection files)
         {
+            var files = Request.Form.Files;
             var filesNameList = await MyLib.UploadFile.Upload(
                files,
                Env.WebRootPath,
@@ -137,13 +139,13 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
                 //学员类型名称不对的话,默认给学员类型编号 = 0;
                 //item.学员类型编号 = 教学学员类型list.Where(i => i.名称 == item.学员类型名称).FirstOrDefault()?.编号??0;
                 //如果学员类型名称不对怎么办?
-                item.学员类型编号 = 教学学员类型dic.ContainsKey(item.学员类型名称 ?? "")?教学学员类型dic[item.学员类型名称]:1;
+                item.学员类型编号 = 教学学员类型dic.ContainsKey(item.学员类型名称 ?? "") ? 教学学员类型dic[item.学员类型名称] : 1;
                 data.Add(MyLib.Tool.ModelToModel<教学学员, 学员导入>(item));
             }
 
             TryValidateModel(data);
 
-            await Db.Merge(data.AsEnumerable());
+            await Db.ExecuteSpAsync(new sp_教学学员_导入() { tt = data.AsEnumerable().ToDataTable() });
         }
     }
 }

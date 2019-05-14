@@ -19,11 +19,81 @@ export default new Router({
             meta: { title: '登录', requireAuth: true }
         },
         {
+            path: '/noticeList',
+            name: 'noticeList',
+            component: () =>
+                import('./views/notice/noticeList.vue'),
+            meta: { title: '公告列表' }
+        },
+        {
+            path: '/noticeDetails',
+            name: 'noticeDetails',
+            component: () =>
+                import('./views/notice/noticeDetails.vue'),
+            meta: { title: '公告详情' }
+        },
+        {
+            path: '/downloadCenter',
+            name: 'downloadCenter',
+            component: () =>
+                import('./views/personal/downloadCenter/downloadCenter.vue'),
+            meta: { title: '下载中心' }
+        },
+        {
+            path: '/downloadDetails',
+            name: 'downloadDetails',
+            component: () =>
+                import('./views/personal/downloadCenter/downloadDetails.vue'),
+            meta: { title: '文档详情' }
+        },
+        {
+            path: '/allStudentsList',
+            name: 'allStudentsList',
+            component: () =>
+                import('./views/students/allStudentsList.vue'),
+            meta: { title: '带教学员情况列表' }
+        },
+        {
+            path: '/studentInformation',
+            name: 'studentInformation',
+            component: () =>
+                import('./views/students/studentInformation.vue'),
+            meta: { title: '学员个人信息' }
+        },
+        {
             path: '/personal',
             name: 'personal',
             component: () =>
                 import('./views/personal/personal.vue'),
             meta: { title: '个人中心', requireAuth: true }
+        },
+        {
+            path: '/personalData',
+            name: 'personalData',
+            component: () =>
+                import('./views/personal/personalData.vue'),
+            meta: { title: '个人资料', requireAuth: true }
+        },
+        {
+            path: '/changePWD',
+            name: 'changePWD',
+            component: () =>
+                import('./views/personal/changePWD.vue'),
+            meta: { title: '密码修改' }
+        },
+        {
+            path: '/trainingManagementList',
+            name: 'trainingManagementList',
+            component: () =>
+                import('./views/trainingManagement/trainingManagementList.vue'),
+            meta: { title: '培训管理' }
+        },
+        {
+            path: '/studentsReport',
+            name: 'studentsReport',
+            component: () =>
+                import('./views/trainingManagement/studentsReport.vue'),
+            meta: { title: '学员报到' }
         }
     ]
 })

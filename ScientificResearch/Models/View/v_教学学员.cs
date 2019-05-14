@@ -31,10 +31,6 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        public string 密码 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
         public string 头像路径 { get; set; }
         /// <summary>
 		/// 

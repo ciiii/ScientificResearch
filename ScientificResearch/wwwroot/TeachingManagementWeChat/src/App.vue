@@ -1,11 +1,36 @@
 <template>
   <div id="app">
-    <router-view v-wechat-title="$route.meta.title" />
+    <router-view v-if="isRouterAlive"
+                 v-wechat-title="$route.meta.title" />
   </div>
 </template>
 
+<script>
+export default {
+  name: 'App',
+  provide () {
+    return {
+      reload: this.reload
+    }
+  },
+  data () {
+    return {
+      isRouterAlive: true
+    }
+  },
+  methods: {
+    reload () {
+      this.isRouterAlive = false
+      this.$nextTick(function () {
+        this.isRouterAlive = true
+      })
+    }
+  }
+}
+</script>
+
 <style lang="less">
-@import url("//at.alicdn.com/t/font_1177630_006ti1k4idyw.css");
+@import url("//at.alicdn.com/t/font_1177630_sgjfn6y34af.css");
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

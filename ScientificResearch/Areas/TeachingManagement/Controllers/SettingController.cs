@@ -19,9 +19,9 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
     public class SettingController : TeachingManagementBaseController
     {
         [HttpGet]
-        async public Task<object> 获取教学专业()
+        async public Task<object> 获取教学专业(教学专业Filter filter)
         {
-            return await Db.GetListSpAsync<教学专业>(orderType: true);
+            return await Db.GetListSpAsync<教学专业, 教学专业Filter>(filter, orderType: true);
         }
 
         [HttpPost]
@@ -35,21 +35,21 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         /// <returns></returns>
         [HttpGet]
         async public Task<object> 获取某教学专业下的科室(
-            [Required(ErrorMessage = "请输入教学专业编号")] int 教学专业编号,
-            教学专业Filter filter)
+            //[Required(ErrorMessage = "请输入教学专业编号")] int 教学专业编号,
+            教学专业科室Filter filter)
         {
-            filter.教学专业编号 = 教学专业编号;
-            return await Db.GetListSpAsync<v_教学专业科室, 教学专业Filter>(filter);
+            //filter.教学专业编号 = 教学专业编号;
+            return await Db.GetListSpAsync<v_教学专业科室, 教学专业科室Filter>(filter);
         }
 
         [HttpGet]
         async public Task<object> 分页获取某教学专业下的科室(
             Paging paging,
-            [Required(ErrorMessage = "请输入教学专业编号")] int 教学专业编号,
-            教学专业Filter filter)
+            //[Required(ErrorMessage = "请输入教学专业编号")] int 教学专业编号,
+            教学专业科室Filter filter)
         {
-            filter.教学专业编号 = 教学专业编号;
-            return await Db.GetPagingListSpAsync<v_教学专业科室, 教学专业Filter>(paging, filter);
+            //filter.教学专业编号 = 教学专业编号;
+            return await Db.GetPagingListSpAsync<v_教学专业科室, 教学专业科室Filter>(paging, filter);
         }
 
         /// <summary>
@@ -65,10 +65,10 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         [HttpGet]
         async public Task<object> 分页获取某个教学专业科室的教学要求(
             Paging paging,
-            教学专业科室要求Filter filter,
-            [Required(ErrorMessage = "请输入教学专业科室编号")] int 教学专业科室编号)
+            //[Required(ErrorMessage = "请输入教学专业科室编号")] int 教学专业科室编号,
+            教学专业科室要求Filter filter)
         {
-            filter.教学专业科室编号 = 教学专业科室编号;
+            //filter.教学专业科室编号 = 教学专业科室编号;
             return await Db.GetPagingListSpAsync<教学专业科室要求, 教学专业科室要求Filter>(paging, filter);
         }
 
@@ -111,11 +111,11 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         [HttpGet]
         async public Task<object> 分页获取某个教学专业科室的教学任务(
             Paging paging,
-            [Required(ErrorMessage = "请输入教学专业科室编号")] int 教学专业科室编号,
+            //[Required(ErrorMessage = "请输入教学专业科室编号")] int 教学专业科室编号,
             教学专业科室任务Filter filter
             )
         {
-            filter.教学专业科室编号 = 教学专业科室编号;
+            //filter.教学专业科室编号 = 教学专业科室编号;
             return await Db.GetPagingListSpAsync<v_教学专业科室任务, 教学专业科室任务Filter>(paging, filter);
         }
 
@@ -127,10 +127,10 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         /// <returns></returns>
         [HttpGet]
         async public Task<object> 获取某个教学专业科室的教学任务(
-            [Required(ErrorMessage = "请输入教学专业科室编号")] int 教学专业科室编号,
+            //[Required(ErrorMessage = "请输入教学专业科室编号")] int 教学专业科室编号,
             教学专业科室任务Filter filter)
         {
-            filter.教学专业科室编号 = 教学专业科室编号;
+            //filter.教学专业科室编号 = 教学专业科室编号;
             return await Db.GetListSpAsync<v_教学专业科室任务, 教学专业科室任务Filter>(filter);
         }
 
@@ -156,17 +156,28 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         async public Task<object> 增改教学本院策略([FromBody]教学本院策略 data) =>
             await Db.Merge(data);
 
-        [HttpPost]
-        async public Task 启用教学本院策略([FromBody]int 教学本院策略编号) => await Db.Enable<教学本院策略>(教学本院策略编号);
+        //[HttpPost]
+        //async public Task 启用教学本院策略([FromBody]int 教学本院策略编号) => await Db.Enable<教学本院策略>(教学本院策略编号);
+
+        //[HttpPost]
+        //async public Task 禁用教学本院策略([FromBody]int 教学本院策略编号) => await Db.Disable<教学本院策略>(教学本院策略编号);
 
         [HttpPost]
-        async public Task 禁用教学本院策略([FromBody]int 教学本院策略编号) => await Db.Disable<教学本院策略>(教学本院策略编号);
+        async public Task 启用某些教学本院策略([FromBody]IEnumerable<int> data)
+        {
+            await Db.Enable<教学本院策略>(data);
+        }
+
+        [HttpPost]
+        async public Task 禁用某些教学本院策略([FromBody]IEnumerable<int> data)
+        {
+            await Db.Disable<教学本院策略>(data);
+        }
 
         [HttpGet]
-        async public Task<object> 获取某教学本院策略下的科室([Required(ErrorMessage = "请提供教学本院策略编号")]int 教学本院策略编号)
+        async public Task<object> 获取某教学本院策略下的科室(教学本院科室Filter filter)
         {
-            return await Db.GetListSpAsync<v_教学本院科室, 教学本院科室Filter>
-                (new 教学本院科室Filter() { 教学本院策略编号 = 教学本院策略编号 });
+            return await Db.GetListSpAsync<v_教学本院科室, 教学本院科室Filter>(filter);
         }
 
         /// <summary>
@@ -188,10 +199,8 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
 
         [HttpGet]
         async public Task<object> 获取某教学本院科室下的任务(
-            教学本院科室任务Filter filter,
-            [Required(ErrorMessage = "请输入教学本院科室编号")] int 教学本院科室编号)
+            教学本院科室任务Filter filter)
         {
-            filter.教学本院科室编号 = 教学本院科室编号;
             return await Db.GetListSpAsync<教学本院科室任务, 教学本院科室任务Filter>(filter);
         }
 
@@ -213,10 +222,18 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         async public Task<object> 获取教学活动类型() =>
             await Db.GetListSpAsync<教学活动类型>(orderType: true);
 
+        /// <summary>
+        /// 这个只有修改,没有增加的功能,如果来个编号=0的不会发生任何事情;
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task<object> 增改教学活动类型([FromBody]教学活动类型 data) =>
+            await Db.Merge(data);
+
         [HttpGet]
-        async public Task<object> 获取某教学活动分类下的评价项目([Required]int 教学活动类型编号, 教学活动评价项目Filter filter)
+        async public Task<object> 获取某教学活动分类下的评价项目(教学活动评价项目Filter filter)
         {
-            filter.教学活动类型编号 = 教学活动类型编号;
             return await Db.GetListSpAsync<教学活动评价项目, 教学活动评价项目Filter>(filter, orderType: true);
         }
 
@@ -240,19 +257,18 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
 
         [HttpGet]
         async public Task<object> 获取教学360评价方向() =>
-            await Db.GetListSpAsync<v_教学360评价方向>(orderType:true);
+            await Db.GetListSpAsync<v_教学360评价方向>(orderType: true);
 
         [HttpGet]
-        async public Task<object> 获取某目标类型的教学360评价分类([Required]int 目标类型)
+        async public Task<object> 获取某目标类型的教学360评价分类(教学360评价分类Filter filter)
         {
-            var filter = new 教学360评价分类Filter() { 目标类型 = 目标类型 };
             return await Db.GetListSpAsync<v_教学360评价分类, 教学360评价分类Filter>(filter, orderType: true);
         }
 
         [HttpGet]
-        async public Task<object> 获取某教学360评价分类下的评价项目([Required]int 教学360评价分类编号)
+        async public Task<object> 获取某教学360评价分类下的评价项目(教学360评价项目Filter filter)
         {
-            var filter = new 教学360评价项目Filter() { 教学360评价分类编号 = 教学360评价分类编号 };
+            //filter.教学360评价分类编号 = 教学360评价分类编号;
             return await Db.GetListSpAsync<教学360评价项目, 教学360评价项目Filter>(filter, orderType: true);
         }
 
@@ -260,6 +276,18 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         async public Task<object> 增改某教学360评价分类下的评价项目([FromBody]PredefindedIdList<教学360评价项目> data)
         {
             return await Db.Merge(data.Id, data.List);
+        }
+
+        [HttpPost]
+        async public Task 启用某些教学360评价项目([FromBody]IEnumerable<int> data)
+        {
+            await Db.Enable<教学360评价项目>(data);
+        }
+
+        [HttpPost]
+        async public Task 禁用某些教学360评价项目([FromBody]IEnumerable<int> data)
+        {
+            await Db.Disable<教学360评价项目>(data);
         }
     }
 }

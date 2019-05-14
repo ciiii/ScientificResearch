@@ -14,8 +14,9 @@
          v-for="(item,key) in 5"
          :key='key'>
       <div class="bacnButtom">
+        <h3 @click="studentDetails()">赵云</h3>
         <ul @click="goDetails()">
-          <li>赵云</li>
+          <!-- <li>赵云</li> -->
           <li>
             <span>规培专业：</span>
             <span>内科</span>
@@ -63,12 +64,17 @@ export default {
   methods: {
     more () {
       console.log('学员列表更多!')
+      this.$router.push('/allStudentsList')
     },
     goDetails () {
       console.log('查看培训详情')
     },
     requirements () {
       console.log('查看任务要求')
+    },
+    studentDetails () {
+      console.log('查看学员详情')
+      this.$router.push('/studentInformation')
     }
   }
 }
@@ -92,7 +98,6 @@ export default {
     }
   }
   .backContentBox {
-    // text-align: left;
     padding: 10px 15px;
     border: 1px dashed #ccc;
     // background-color: #fff;
@@ -100,8 +105,11 @@ export default {
     margin-bottom: 20px;
     .bacnButtom {
       position: relative;
-      li:nth-child(1) {
-        font-weight: 800;
+      h3 {
+        text-align: left;
+        font-size: 14px;
+        padding: 4px 0;
+        margin: 0;
         color: #1296db;
       }
       li {
@@ -126,7 +134,7 @@ export default {
         right: 0;
         bottom: 10px;
         span {
-          display: inline-block;
+          // display: inline-block;
           font-size: 14px;
           padding: 8px;
           background-color: #07c160;

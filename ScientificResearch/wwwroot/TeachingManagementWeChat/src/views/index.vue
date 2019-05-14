@@ -19,15 +19,17 @@
                  vertical
                  :show-indicators="false"
                  class="backlogContent">
-        <!-- <van-swipe-item v-for="(item,key) in KYList" :key="key">
-            <span @click="newsItem(item.编号)">
-              <i class="iocn iconfont icon-tongzhi"></i>
-              {{item.通知名称}}
-            </span>
-          </van-swipe-item> -->
+        <van-swipe-item v-for="(item,key) in NoticeInformation"
+                        :key="key">
+          <span @click="newsItem(item.编号)">
+            <i class="iocn iconfont icon-tongzhi"></i>
+            {{item.通知名称}}
+          </span>
+        </van-swipe-item>
       </van-swipe>
     </div>
-    <StudentsList />
+    <!-- <StudentsList /> -->
+    <StudentsChart />
     <ToDoList />
     <Footer />
   </div>
@@ -35,17 +37,20 @@
 
 <script>
 import Footer from '@/components/footer/footer'
-import StudentsList from '../components/indexList/studentsList'
-import ToDoList from '../components/indexList/toDoList'
+// import StudentsList from '@/components/indexList/studentsList'
+import StudentsChart from '@/components/chart/studentsChart'
+import ToDoList from '@/components/indexList/toDoList'
 export default {
   name: 'index',
   components: {
     Footer,
-    StudentsList,
+    // StudentsList,
+    StudentsChart,
     ToDoList
   },
   data () {
     return {
+      NoticeInformation: [],
       url:
         process.env.NODE_ENV === 'development'
           ? 'http://192.168.0.99:63739'
@@ -61,14 +66,31 @@ export default {
     this.Logo = this.HospitalInformation.Logo
   },
   mounted () {
+    var para = {
+      index: 1,
+      size: 15
+    }
+    this.$http.getNoticeInformation(para).then(res => {
+      this.NoticeInformation = res.data.list
+    })
   },
   methods: {
     login () {
       this.$router.push('/login')
     },
+    newsItem (item) {
+      this.$router.push({
+        path: '/noticeDetails',
+        name: 'noticeDetails',
+        params: {
+          item
+        }
+      })
+    },
     more () {
-      console.log('更多```')
+      this.$router.push('/noticeList')
     }
+
   }
 }
 </script>

@@ -419,7 +419,7 @@
             系统设置中的培训设置 教学活动设置 360评价设置
             </summary>
         </member>
-        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.SettingController.获取某教学专业下的科室(System.Int32,ScientificResearch.Models.教学专业Filter)">
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.SettingController.获取某教学专业下的科室(ScientificResearch.Models.教学专业科室Filter)">
             <summary>
             获取某个专业下的专业科室时,可以用这个
             </summary>
@@ -455,7 +455,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.SettingController.分页获取某个教学专业科室的教学任务(ScientificResearch.Models.Paging,System.Int32,ScientificResearch.Models.教学专业科室任务Filter)">
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.SettingController.分页获取某个教学专业科室的教学任务(ScientificResearch.Models.Paging,ScientificResearch.Models.教学专业科室任务Filter)">
             <summary>
             
             </summary>
@@ -464,7 +464,7 @@
             <param name="教学专业科室编号"></param>
             <returns></returns>
         </member>
-        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.SettingController.获取某个教学专业科室的教学任务(System.Int32,ScientificResearch.Models.教学专业科室任务Filter)">
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.SettingController.获取某个教学专业科室的教学任务(ScientificResearch.Models.教学专业科室任务Filter)">
             <summary>
             不分页的
             </summary>
@@ -492,6 +492,13 @@
             <summary>
             目前只有查看,且没有分页;
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.SettingController.增改教学活动类型(ScientificResearch.Models.教学活动类型)">
+            <summary>
+            这个只有修改,没有增加的功能,如果来个编号=0的不会发生任何事情;
+            </summary>
+            <param name="data"></param>
             <returns></returns>
         </member>
         <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementBaseController">
@@ -2048,6 +2055,21 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.sp_教学360评价项目_启禁">
+            <summary>
+            sp_教学360评价项目_启禁[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学360评价项目_启禁.tt_编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学360评价项目_启禁.是否启用">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_教学360评价项目_增改">
             <summary>
             sp_教学360评价项目_增改[类]
@@ -2219,6 +2241,16 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_教学学员_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学学员_导入">
+            <summary>
+            sp_教学学员_导入[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学学员_导入.tt">
             <summary>
             
             </summary>
@@ -5529,6 +5561,11 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.教学360评价项目.标准分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学360评价项目.是否启用">
             <summary>
             
             </summary>
@@ -17549,11 +17586,6 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_教学学员.工号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员.密码">
             <summary>
             
             </summary>

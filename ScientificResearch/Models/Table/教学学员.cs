@@ -41,7 +41,7 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        [Required(ErrorMessage ="请提供[密码]")]
+        [Obsolete]
         [MaxLength(50,ErrorMessage ="密码不能超过[25]字")]
 		public string 密码 { get; set; }
         /// <summary>

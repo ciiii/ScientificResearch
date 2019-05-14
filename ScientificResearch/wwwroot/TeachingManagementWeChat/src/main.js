@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import VeLine from 'v-charts/lib/line.common'
 import App from './App.vue'
 import router from './router'
 import http from './assets/js/http/http'
@@ -6,6 +7,8 @@ import 'amfe-flexible'
 import 'lib-flexible/flexible.js'
 import './assets/iconfont/iconfont.css'
 import VueWechatTitle from 'vue-wechat-title'
+import ReturnBtn from './components/returnBtn/index'
+import ReturnTop from './components/returnTop/index'
 
 import {
     Icon,
@@ -18,8 +21,17 @@ import {
     Dialog,
     Swipe,
     SwipeItem,
-    List
+    List,
+    Field,
+    PullRefresh,
+    Tab,
+    Tabs,
+    Toast
 } from 'vant'
+Vue.use(ReturnBtn)
+Vue.use(ReturnTop)
+
+Vue.component(VeLine.name, VeLine)
 
 Vue.config.productionTip = false
 
@@ -31,6 +43,10 @@ Vue.use(Cell).use(CellGroup)
 Vue.use(Dialog)
 Vue.use(Swipe).use(SwipeItem)
 Vue.use(List)
+Vue.use(Field)
+Vue.use(PullRefresh)
+Vue.use(Tab).use(Tabs)
+Vue.use(Toast)
 
 Vue.use(VueWechatTitle)
 Vue.prototype.$http = http

@@ -12,6 +12,17 @@
       <div class="account">
         <van-cell title="个人资料"
                   icon="contact"
+                  to="/personalData"
+                  is-link />
+        <van-cell title="密码修改"
+                  icon="closed-eye"
+                  to="/changePWD"
+                  is-link />
+      </div>
+      <div class="account">
+        <van-cell title="下载中心"
+                  icon="tosend"
+                  to="/downloadCenter"
                   is-link />
       </div>
       <div class="account">
@@ -52,7 +63,7 @@ export default {
           message: '确认退出吗？'
         })
         .then(() => {
-          // localStorage.clear()
+          localStorage.removeItem('teachingPersonnel')
           this.$router.push('/TeachingManagementWeChat')
         })
         .catch(() => {

@@ -15,7 +15,6 @@
     <div class="empty"></div>
   </footer>
 </template>
-
 <script>
 export default {
   data () {
@@ -29,7 +28,7 @@ export default {
           bcktxt: ''
         },
         {
-          topath: '/',
+          topath: '/trainingManagementList',
           tit: '培训',
           img: 'backlog',
           bckimg: '',
