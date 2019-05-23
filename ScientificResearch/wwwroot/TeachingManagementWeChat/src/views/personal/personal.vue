@@ -9,7 +9,7 @@
         </p>
         <span>{{this.list.部门名称}}</span>
       </div>
-      <div class="account">
+      <!-- <div class="account">
         <van-cell title="个人资料"
                   icon="contact"
                   to="/personalData"
@@ -18,7 +18,7 @@
                   icon="closed-eye"
                   to="/changePWD"
                   is-link />
-      </div>
+      </div> -->
       <div class="account">
         <van-cell title="下载中心"
                   icon="tosend"
@@ -33,11 +33,11 @@
                   icon="flower-o"
                   is-link />
       </div>
-      <div class="account"
+      <!-- <div class="account"
            @click="outLogin">
         <van-cell title="退出登录"
                   icon="close" />
-      </div>
+      </div> -->
     </div>
     <Footer />
   </div>
@@ -54,22 +54,22 @@ export default {
     }
   },
   mounted () {
-    this.list = JSON.parse(localStorage.getItem('teachingPersonnel'))
+    this.list = JSON.parse(localStorage.getItem('personnel'))
   },
   methods: {
-    outLogin () {
-      this.$dialog
-        .confirm({
-          message: '确认退出吗？'
-        })
-        .then(() => {
-          localStorage.removeItem('teachingPersonnel')
-          this.$router.push('/TeachingManagementWeChat')
-        })
-        .catch(() => {
-          // on cancel
-        })
-    }
+    // outLogin () {
+    //   this.$dialog
+    //     .confirm({
+    //       message: '确认退出吗？'
+    //     })
+    //     .then(() => {
+    //       localStorage.removeItem('teachingPersonnel')
+    //       this.$router.push('/TeachingManagementWeChat')
+    //     })
+    //     .catch(() => {
+    //       // on cancel
+    //     })
+    // }
   }
 }
 </script>

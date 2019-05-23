@@ -26,7 +26,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         /// <param name="filter"></param>
         /// <returns></returns>
         [HttpGet]
-        async public Task<object> 获取部门列表(教学科室Filter filter)
+        async public Task<object> 获取部门带教学科室信息(教学科室Filter filter)
         {
             return await Db.GetListSpAsync<v_教学科室, 教学科室Filter>(filter);
         }
@@ -47,15 +47,17 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         /// 不会和部门一起更新.
         /// 先有部门在左侧菜单,然后再增改教学科室的信息;
         /// 由于历史原因,sp_部门_增改 的参数写为了"tt_部门",且没有返回;所以这里的Merge[部门]完全不符合要求;
-        /// 这里写试试vs里面的事务
+        /// 这里写试试vs里面的事务,注意这里是同步的mytran,实际应该是写成异步的.参考"增改教学科室以及带教老师"
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
         [HttpPost]
         async public Task<object> 增改教学科室([FromBody] 教学科室 data)
         {
-            Task<教学科室> myTran(SqlConnection dbForTransaction, SqlTransaction transaction) =>
-                dbForTransaction.Merge<教学科室>(data, transaction);
+            Task<教学科室> myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+            {
+                return dbForTransaction.Merge<教学科室>(data, transaction);
+            }
 
             return await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
         }
@@ -68,12 +70,29 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         [HttpPost]
         async public Task<object> 增改某教学科室的带教老师([FromBody] PredefindedIdList<教学带教老师> data)
         {
-            foreach (var item in data.List)
+            return await Db.Merge(data.Id, data.List);
+        }
+
+        /// <summary>
+        /// 这是上面两个合在一起的接口
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task<object> 增改教学科室以及带教老师([FromBody]PredefindedModelList<教学科室, 教学带教老师> data)
+        {
+            async Task<object> myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
             {
-                item.教学科室编号 = data.Id;
+                var 教学科室 = await dbForTransaction.Merge<教学科室>(data.Model, transaction);
+                var 带教老师 = await dbForTransaction.Merge<教学带教老师>(教学科室.编号, data.List, transaction);
+                return new
+                {
+                    教学科室,
+                    带教老师
+                };
             }
 
-            return await Db.Merge(data.Id, data.List);
+            return await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
         }
 
         /// <summary>

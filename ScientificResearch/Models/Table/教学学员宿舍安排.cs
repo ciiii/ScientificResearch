@@ -20,7 +20,14 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-		public int? 宿舍楼编号 { get; set; }
+        [Required(ErrorMessage ="请提供[宿舍楼编号]")]
+		public int 宿舍楼编号 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        [Required(ErrorMessage ="请提供[宿舍编号]")]
+        [MaxLength(50,ErrorMessage ="宿舍编号不能超过[25]字")]
+		public string 宿舍编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>

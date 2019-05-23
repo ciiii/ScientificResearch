@@ -63,6 +63,10 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        public int? 最大学员人数 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
         public int? 带教老师数量 { get; set; }
         
           

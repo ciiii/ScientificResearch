@@ -2,7 +2,11 @@
   <div class="index">
     <div class="nav">
       <span @click="login">登录</span>
-      <img :src="url+this.Logo || this.defaultImg">
+      <!-- <img :src="url+this.Logo || this.defaultImg"> -->
+      <img v-if="this.HospitalInformation!==null"
+           :src="url+this.HospitalInformation.Logo">
+      <img v-else
+           :src="this.defaultImg">
     </div>
     <div class="backlogBox">
       <div class="backlog">
@@ -41,7 +45,6 @@ import Footer from '@/components/footer/footer'
 import StudentsChart from '@/components/chart/studentsChart'
 import ToDoList from '@/components/indexList/toDoList'
 export default {
-  name: 'index',
   components: {
     Footer,
     // StudentsList,
@@ -55,7 +58,7 @@ export default {
         process.env.NODE_ENV === 'development'
           ? 'http://192.168.0.99:63739'
           : '',
-      Logo: '',
+      // Logo: '',
       HospitalInformation: JSON.parse(
         localStorage.getItem('HospitalInformation')
       ),
@@ -63,7 +66,7 @@ export default {
     }
   },
   created () {
-    this.Logo = this.HospitalInformation.Logo
+    // this.Logo = this.HospitalInformation.Logo
   },
   mounted () {
     var para = {

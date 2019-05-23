@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import TeachingManagementWeChat from './views/index.vue'
+// import TeachingManagementWeChat from './views/index.vue'
 
 Vue.use(Router)
 
@@ -8,7 +8,8 @@ export default new Router({
     routes: [{
             path: '/TeachingManagementWeChat',
             name: 'TeachingManagementWeChat',
-            component: TeachingManagementWeChat,
+            component: () =>
+                import('./views/index.vue'),
             meta: { title: '教学管理' }
         },
         {
@@ -16,7 +17,7 @@ export default new Router({
             name: 'login',
             component: () =>
                 import('./views/login.vue'),
-            meta: { title: '登录', requireAuth: true }
+            meta: { title: '登录' }
         },
         {
             path: '/noticeList',
@@ -65,14 +66,14 @@ export default new Router({
             name: 'personal',
             component: () =>
                 import('./views/personal/personal.vue'),
-            meta: { title: '个人中心', requireAuth: true }
+            meta: { title: '个人中心' }
         },
         {
             path: '/personalData',
             name: 'personalData',
             component: () =>
                 import('./views/personal/personalData.vue'),
-            meta: { title: '个人资料', requireAuth: true }
+            meta: { title: '个人资料' }
         },
         {
             path: '/changePWD',
@@ -94,6 +95,48 @@ export default new Router({
             component: () =>
                 import('./views/trainingManagement/studentsReport.vue'),
             meta: { title: '学员报到' }
+        },
+        {
+            path: '/addStudentsReport',
+            name: 'addStudentsReport',
+            component: () =>
+                import('./views/trainingManagement/addStudentsReport.vue'),
+            meta: { title: '添加学员报到' }
+        },
+        {
+            path: '/studentsDormitoryArrangeList',
+            name: 'studentsDormitoryArrangeList',
+            component: () =>
+                import('./views/trainingManagement/studentsDormitoryArrangeList.vue'),
+            meta: { title: '学员宿舍安排' }
+        },
+        {
+            path: '/studentsExitTraining',
+            name: 'studentsExitTraining',
+            component: () =>
+                import('./views/trainingManagement/studentsExitTraining.vue'),
+            meta: { title: '学员退培管理' }
+        },
+        {
+            path: '/studentsTestScores',
+            name: 'studentsTestScores',
+            component: () =>
+                import('./views/trainingManagement/studentsTestScores.vue'),
+            meta: { title: '学员考试成绩' }
+        },
+        {
+            path: '/teachingManagementList',
+            name: 'teachingManagementList',
+            component: () =>
+                import('./views/teachingManagement/teachingManagementList.vue'),
+            meta: { title: '教学管理' }
+        },
+        {
+            path: '/toStudentEvaluation',
+            name: 'toStudentEvaluation',
+            component: () =>
+                import('./views/teachingManagement/360Evaluate/toStudentEvaluation.vue'),
+            meta: { title: '学员日常行为评价' }
         }
     ]
 })

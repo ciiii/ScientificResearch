@@ -42,7 +42,7 @@ export default {
           bcktxt: ''
         },
         {
-          topath: '/',
+          topath: '/teachingManagementList',
           tit: '教学',
           img: 'release',
           bckimg: '',
@@ -75,6 +75,11 @@ export default {
       })
       nav.bckimg = nav.img + '_active'
       nav.bcktxt = 'active'
+      if (process.env.NODE_ENV === 'development') {
+        if (index === 2) {
+          window.location.replace('http://192.168.0.157:8080/')
+        }
+      }
       this.$router.push(nav.topath)
     }
   }

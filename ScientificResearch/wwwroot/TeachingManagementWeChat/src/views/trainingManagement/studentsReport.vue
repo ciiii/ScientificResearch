@@ -1,53 +1,69 @@
 <template>
-  <van-pull-refresh v-model="isDownLoading"
-                    @refresh="onDownRefresh">
-    <van-list v-model="loading"
-              :finished="finished"
-              finished-text="没有更多了"
-              @load="onLoad"
-              class="box">
-      <div class="backlogBox">
-        <div class="backlog">
-          <span>
-            <i class="icon iconfont iconxueyuanliebiao-copy"></i>
-            <span>学员报到</span>
-          </span>
-        </div>
-        <div class="backContentBox"
-             v-for="(item,key) in list"
-             :key='key'>
-          <div class="bacnButtom">
-            <ul @click="goDetails(item.编号)">
-              <li>{{item.姓名}}</li>
-              <li>
-                <span>登录号码：</span>
-                <span>{{item.工号}}</span>
-              </li>
-              <li>
-                <span>学员类型：</span>
-                <span>{{item.学员类型名称}}</span>
-              </li>
-              <li>
-                <span>规培专业：</span>
-                <span>{{item.专业名称}}</span>
-              </li>
-              <li>
-                <span>责任导师：</span>
-                <span>????</span>
-              </li>
-              <li>
-                <span>计划开始培训时间：</span>
-                <span>????</span>
-              </li>
-            </ul>
-            <div class="requirements">
-              <span @click="requirements()">修改导师</span>
+  <div>
+    <van-pull-refresh v-model="isDownLoading"
+                      @refresh="onDownRefresh">
+      <van-list v-model="loading"
+                :finished="finished"
+                finished-text="没有更多了"
+                @load="onLoad"
+                class="box">
+        <div class="backlogBox">
+          <div class="backlog">
+            <span>
+              <i class="icon iconfont iconxueyuanliebiao-copy"></i>
+              <span>学员报到</span>
+            </span>
+            <van-button @click="addStudentsRegister"
+                        plain
+                        hairline
+                        size="small"
+                        type="primary">添加学员报到</van-button>
+          </div>
+          <div class="backContentBox"
+               v-for="(item,key) in list"
+               :key='key'>
+            <div class="bacnButtom">
+              <ul @click="goDetails(item)">
+                <li>{{item.姓名}}</li>
+                <li>
+                  <span>登录号码：</span>
+                  <span>{{item.工号}}</span>
+                </li>
+                <li>
+                  <span>学员类型：</span>
+                  <span>{{item.学员类型名称}}</span>
+                </li>
+                <li>
+                  <span>规培专业：</span>
+                  <span>{{item.专业名称}}</span>
+                </li>
+                <li>
+                  <span>责任导师：</span>
+                  <span>????</span>
+                </li>
+                <li>
+                  <span>计划开始培训时间：</span>
+                  <span>????</span>
+                </li>
+              </ul>
+              <div class="requirements">
+                <van-button v-if="item.编号 %2 !== 0"
+                            @click="requirements(item)"
+                            size="small"
+                            type="primary">修改导师</van-button>
+                <van-button v-else
+                            @click="deleteStudents(item.编号)"
+                            size="small"
+                            type="danger">删除</van-button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </van-list>
-  </van-pull-refresh>
+      </van-list>
+    </van-pull-refresh>
+    <ReturnBtn />
+    <ReturnTop />
+  </div>
 </template>
 <script>
 export default {
@@ -88,31 +104,40 @@ export default {
     goDetails (item) {
       this.$router.push({
         path: '/studentInformation',
-        nmae: 'studentInformation',
+        name: 'studentInformation',
         params: {
           item
         }
       })
     },
-    requirements () {
-      console.log('修改责任导师')
+    addStudentsRegister () {
+      this.$router.push('/addStudentsReport')
+    },
+    requirements (item) {
+      console.log(item, '修改责任导师')
+      this.$toast('修改责任导师')
+    },
+    deleteStudents (item) {
+      console.log(item, '删除')
+      this.$toast('删除')
     }
   }
 }
 </script>
 <style lang="less" scoped>
 .box {
-  padding: 12px;
   text-align: left;
   background-color: #f5f3fb;
   .backlogBox {
     padding: 10px;
-    background-color: #fff;
+    // padding-bottom: 80px;
     .backlog {
       display: flex;
       justify-content: space-between;
       font-size: 14px;
+      padding-bottom: 2px;
       margin-bottom: 10px;
+      border-bottom: 2px solid rgb(25, 186, 235);
       span {
         padding: 5px 0;
         .iconxueyuanliebiao-copy {
@@ -122,8 +147,9 @@ export default {
       }
     }
     .backContentBox {
+      background-color: #fff;
       padding: 10px 15px;
-      border: 1px dashed #ccc;
+      border-radius: 10px;
       box-shadow: 6px 6px 6px #ccc;
       margin-bottom: 20px;
       .bacnButtom {
@@ -147,13 +173,13 @@ export default {
           position: absolute;
           right: 0;
           bottom: 10px;
-          span {
-            font-size: 14px;
-            padding: 8px;
-            background-color: #07c160;
-            border-radius: 5px;
-            color: #fff;
-          }
+          // span {
+          //   font-size: 14px;
+          //   padding: 8px;
+          //   background-color: #07c160;
+          //   border-radius: 5px;
+          //   color: #fff;
+          // }
         }
       }
     }

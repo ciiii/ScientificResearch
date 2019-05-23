@@ -39,9 +39,9 @@ namespace ScientificResearch.Models
         [MaxLength(50,ErrorMessage ="标准代码不能超过[25]字")]
 		public string 标准代码 { get; set; }
         /// <summary>
-		/// 单位是周?,前台显示可以做别的格式.
+		/// 单位是周,前台显示可以做别的格式.
 		/// </summary>
-        [DisplayName("单位是周?,前台显示可以做别的格式.")]
+        [DisplayName("单位是周,前台显示可以做别的格式.")]
 		public int? 最低培训时长 { get; set; }
         /// <summary>
 		/// 

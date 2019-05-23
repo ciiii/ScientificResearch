@@ -16,8 +16,8 @@ export default {
     }
   },
   created () {
-    this.left = document.documentElement.clientWidth - 110
-    this.top = document.documentElement.clientHeight * 0.86
+    this.left = document.documentElement.clientWidth - 90
+    this.top = document.documentElement.clientHeight * 0.92
   },
   mounted () {
     window.addEventListener('scroll', this.handleScrollStart)
@@ -39,7 +39,7 @@ export default {
       let scrollTop =
         document.documentElement.scrollTop || document.body.scrollTop
       if (scrollTop === this.currentTop) {
-        this.left = document.documentElement.clientWidth - 110
+        this.left = document.documentElement.clientWidth - 90
         clearTimeout(this.timer)
       }
     }

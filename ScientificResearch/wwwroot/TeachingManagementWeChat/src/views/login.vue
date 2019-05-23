@@ -2,7 +2,7 @@
 <template>
   <section class="box">
     <div class="nav">
-      <img v-if="this.HospitalInformation.Logo!=null"
+      <img v-if="this.HospitalInformation!==null"
            :src="url+this.HospitalInformation.Logo">
       <img v-else
            :src="this.defaultImg">
@@ -34,7 +34,6 @@
 <script>
 import { _debounce } from '@/assets/js/common/debounce.js'
 export default {
-  name: 'login',
   data () {
     return {
       max: 20,
@@ -43,9 +42,9 @@ export default {
       密码: '',
       stateA: false,
       stateB: false,
-      personnel: JSON.parse(
-        localStorage.getItem('personnel')
-      ),
+      // personnel: JSON.parse(
+      //   localStorage.getItem('personnel')
+      // ),
       HospitalInformation: JSON.parse(
         localStorage.getItem('HospitalInformation')
       ),
@@ -53,6 +52,9 @@ export default {
         process.env.NODE_ENV === 'development'
           ? 'http://192.168.0.99:63739'
           : '',
+      Dbkey: process.env.NODE_ENV === 'development'
+        ? 'ScientificResearch_Test'
+        : this.HospitalInformation.名称,
       defaultImg: require('@/assets/images/logo/logo.png')
     }
   },
@@ -64,8 +66,24 @@ export default {
       return true
     }
   },
-  mounted () { },
+  created () {
+    if (this.HospitalInformation === null) {
+      this.getLogo()
+    }
+  },
+  mounted () {
+  },
   methods: {
+    async getLogo () {
+      let para = {
+        k: 'ScientificResearch_Test'
+      }
+      let res = await this.$http.getHospitalInformation(para)
+      console.log(res, 'rrr')
+      // this.Logo = res.data.Logo
+      this.HospitalInformation = res.data
+      localStorage.HospitalInformation = JSON.stringify(res.data)
+    },
     name () {
       if (!/^.{3,20}$/.test(this.工号)) {
         this.$notify('账号不能少于3位或大于20位！')
@@ -87,14 +105,18 @@ export default {
       let para = {
         工号: this.工号,
         密码: this.密码,
-        DbKey: this.personnel.DbKey
+        // DbKey: this.HospitalInformation.名称
+        DbKey: this.Dbkey
       }
       this.$http
         .Login(para)
         .then(res => {
           if (!res.error) {
             // 登录成功 储存 token
-            localStorage.teachingPersonnel = JSON.stringify(res.data.人员)
+            localStorage.personnel = JSON.stringify(res.data.人员)
+            localStorage.token = `${res.data.token_type} ${
+              res.data.access_token
+              }`
             this.$router.push('/TeachingManagementWeChat')
           } else {
             this.$notify('登录信息错误！')

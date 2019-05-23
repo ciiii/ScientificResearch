@@ -5,11 +5,20 @@
     </div>
     <div>
       <van-cell title="学员报到"
-                icon="location-o"
+                icon="user-circle-o"
                 to="studentsReport"
                 is-link />
       <van-cell title="学员宿舍安排"
-                icon="location-o"
+                icon="home-o"
+                to="/studentsDormitoryArrangeList"
+                is-link />
+      <van-cell title="学员退培管理"
+                icon="exchange"
+                to="/studentsExitTraining"
+                is-link />
+      <van-cell title="学员考试成绩"
+                icon="edit"
+                to="/studentsTestScores"
                 is-link />
     </div>
     <Footer />

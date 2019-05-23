@@ -300,7 +300,7 @@
             和组织架构功能对应;
             </summary>
         </member>
-        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.OrganizationController.获取部门列表(ScientificResearch.Models.教学科室Filter)">
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.OrganizationController.获取部门带教学科室信息(ScientificResearch.Models.教学科室Filter)">
             <summary>
             部门的基础信息相关的接口,都使用ScientificResearch-baseinfo中相关的接口,教学管理不再单独提供;
             并不是每一个部门都是教学科室,只有"是否教学科室"为真的才是,
@@ -322,7 +322,7 @@
             不会和部门一起更新.
             先有部门在左侧菜单,然后再增改教学科室的信息;
             由于历史原因,sp_部门_增改 的参数写为了"tt_部门",且没有返回;所以这里的Merge[部门]完全不符合要求;
-            这里写试试vs里面的事务
+            这里写试试vs里面的事务,注意这里是同步的mytran,实际应该是写成异步的.参考"增改教学科室以及带教老师"
             </summary>
             <param name="data"></param>
             <returns></returns>
@@ -332,6 +332,13 @@
             
             </summary>
             <param name="data">id表示教学科室编号</param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.OrganizationController.增改教学科室以及带教老师(ScientificResearch.Infrastucture.PredefindedModelList{ScientificResearch.Models.教学科室,ScientificResearch.Models.教学带教老师})">
+            <summary>
+            这是上面两个合在一起的接口
+            </summary>
+            <param name="data"></param>
             <returns></returns>
         </member>
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.OrganizationController.分页获取教学学员(ScientificResearch.Models.Paging,ScientificResearch.Models.教学学员Filter)">
@@ -513,6 +520,55 @@
             <summary>
             MyWorkFlowBusiness的实例不采用注入
             </summary>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.分页获取我的学员(ScientificResearch.Models.Paging,ScientificResearch.Models.教学学员培训情况Filter)">
+            <summary>
+            医院管理员可以看到所有学员;
+            科室管理员只能看到轮转科室有自己管理的科室的学员;
+            带教老师只能看到自己带教的学员;
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.分页获取学员报到情况(ScientificResearch.Models.Paging,ScientificResearch.Models.教学学员报到Filter)">
+            <summary>
+            注意:Null报到时间 = true是所有未报到的学员; = false 是所有已报到的学员;
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.增改学员报到(ScientificResearch.Models.教学学员培训)">
+            <summary>
+            学员报到/学员报到信息修改;
+            报到时,只需要填报到时间,选择的教学本院策略,计划开始培训日期,计划结束培训日期,其他都不用填;
+            修改报到信息时,理论上所有的数据都需要;
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.分页获取学员宿舍楼安排(ScientificResearch.Models.Paging,ScientificResearch.Models.教学学员宿舍楼安排Filter)">
+            <summary>
+            注意条件:是否已安排宿舍
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.增改学员宿舍安排(ScientificResearch.Models.教学学员宿舍安排)">
+            <summary>
+            编号就是学员的编号;
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.批量增改学员宿舍安排(System.Collections.Generic.IEnumerable{ScientificResearch.Models.教学学员宿舍安排})">
+            <summary>
+            可以针对一批学员设置宿舍
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
         </member>
         <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController">
             <summary>
@@ -5607,7 +5663,7 @@
         </member>
         <member name="P:ScientificResearch.Models.教学专业.最低培训时长">
             <summary>
-            单位是周?,前台显示可以做别的格式.
+            单位是周,前台显示可以做别的格式.
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.教学专业.学习要求及目标">
@@ -6211,6 +6267,11 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.教学学员宿舍安排.宿舍楼编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员宿舍安排.宿舍编号">
             <summary>
             
             </summary>
@@ -7101,6 +7162,11 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.教学角色.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学角色.能否直接配置人员">
             <summary>
             
             </summary>
@@ -17285,6 +17351,46 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.v_教学专业科室要求">
+            <summary>
+            v_教学专业科室要求[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室要求.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室要求.教学专业科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室要求.项目名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室要求.说明">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室要求.最低评分要求">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室要求.最低评分等级">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室要求.备注">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v_教学人员">
             <summary>
             v_教学人员[类]
@@ -17755,6 +17861,636 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.v_教学学员培训情况">
+            <summary>
+            v_教学学员培训情况[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.学员类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.学员类型名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.工号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.头像路径">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.性别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.民族">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.证件类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.证件号码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.出生日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.手机号码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.政治面貌">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.电子邮箱">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.QQ号码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.微信号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.家庭住址">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.取得执业证书日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.执业证书编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.取得医师资格证书日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.医师资格证书编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.最高学历">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.毕业年份">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.毕业学校">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.毕业专业">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.毕业证编码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.学位证编码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.学员培训年界">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.学员培训年限">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.往届应届">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.专业编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.专业名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.送培方式">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.工作单位">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.医疗卫生机构">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.状态">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.报到时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.教学本院策略编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.计划开始培训日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.计划结束培训日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.实际开始培训日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.实际结束培训日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.退培日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.结业日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.证书">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_教学学员宿舍安排">
+            <summary>
+            v_教学学员宿舍安排[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.学员类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.学员类型名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.工号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.头像路径">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.性别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.民族">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.证件类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.证件号码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.出生日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.手机号码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.政治面貌">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.电子邮箱">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.QQ号码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.微信号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.家庭住址">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.取得执业证书日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.执业证书编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.取得医师资格证书日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.医师资格证书编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.最高学历">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.毕业年份">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.毕业学校">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.毕业专业">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.毕业证编码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.学位证编码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.学员培训年界">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.学员培训年限">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.往届应届">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.专业编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.专业名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.送培方式">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.工作单位">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.医疗卫生机构">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.是否已安排宿舍">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.宿舍楼编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.宿舍楼名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.门禁卡卡号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.门牌号及床号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.职位">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.水起数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.电起数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.气起数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.滞纳金比例">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.入住日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.退出日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.退出原因">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.宿舍安排说明">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_教学学员报到">
+            <summary>
+            v_教学学员报到[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员报到.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员报到.学员类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员报到.学员类型名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员报到.工号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员报到.头像路径">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员报到.姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员报到.性别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员报到.学员培训年界">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员报到.学员培训年限">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员报到.往届应届">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员报到.专业编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员报到.专业名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员报到.送培方式">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员报到.是否已报到">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员报到.报到时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员报到.教学本院策略编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员报到.计划开始培训日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员报到.计划结束培训日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员报到.实际开始培训日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员报到.实际结束培训日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员报到.退培日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员报到.结业日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员报到.证书">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员报到.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员报到.备注">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v_教学带教老师">
             <summary>
             v_教学带教老师[类]
@@ -17995,6 +18731,11 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.v_教学科室.最大学员人数">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.v_教学科室.带教老师数量">
             <summary>
             
@@ -18011,6 +18752,11 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_教学角色.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学角色.能否直接配置人员">
             <summary>
             
             </summary>

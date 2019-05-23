@@ -30,7 +30,7 @@ export default {
 </script>
 
 <style lang="less">
-@import url("//at.alicdn.com/t/font_1177630_sgjfn6y34af.css");
+@import url("//at.alicdn.com/t/font_1177630_3lqdjartlys.css");
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

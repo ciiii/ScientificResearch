@@ -1,8 +1,7 @@
 <template>
     <div class="ZW-search">
         <div class="logo">
-            <img src="@/assets/images/logo_zhiwang.png" alt="" v-if="searchType==0">
-            <img src="@/assets/images/logo_zhiwangCHKD.jpg" alt="" v-else>
+            <img src="@/assets/images/logo_zhiwang.png" alt="">
         </div>
         <div class="main">
             <van-cell-group>
@@ -208,11 +207,9 @@
                 sourceType: '',
                 newSourceType: [],
                 item: {},
-                searchType: 0
             }
         },
         mounted: function () {
-            this.searchType = this.$route.query.type;
             this.req.accountId = this.$route.query.accountId;
             this.getDataConfigs();
         },
@@ -307,28 +304,8 @@
                 sessionStorage.setItem('ZWConfigs', JSON.stringify(this.configs));
             },
             retrieval: _debounce(function () {
-                if (this.searchType == 0) {
-                    sessionStorage.setItem('ZWSearch', JSON.stringify(this.req));
-                } else {
-                    let data = {
-                        mainType: this.req.searchType,
-                        mainWord: this.req.searchKeyWord,
-                        authorMatchType: this.req.authorType,
-                        author: this.req.authorName,
-                        authorDepartment: this.req.authorGroup,
-                        fromYear: this.req.publicYearFrom,
-                        toYear: this.req.publicYearTo,
-                        updateTag:this.req.updateTimeTag,
-                        sourceName: this.req.sourceName,
-                        sourceNameMatchType: this.req.sourceRearchType,
-                        sourceType: this.req.sourceType,
-                        supportFundName: this.req.supportFundName,
-                        supportFundNameMatcthType: this.req.supportFundType,
-                        accountId: this.req.accountId
-                    }
-                    sessionStorage.setItem('ZWSearch', JSON.stringify(data));
-                }
-                this.$router.push({path: '/zhiWangList', query: {type: this.searchType}});
+                sessionStorage.setItem('ZWSearch', JSON.stringify(this.req));
+                this.$router.push({path: '/zhiWangList', query: {type: 0}});
             }, 300)
         }
     }

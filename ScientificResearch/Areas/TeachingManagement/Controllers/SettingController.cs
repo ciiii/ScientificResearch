@@ -69,7 +69,13 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             教学专业科室要求Filter filter)
         {
             //filter.教学专业科室编号 = 教学专业科室编号;
-            return await Db.GetPagingListSpAsync<教学专业科室要求, 教学专业科室要求Filter>(paging, filter);
+            return await Db.GetPagingListSpAsync<v_教学专业科室要求, 教学专业科室要求Filter>(paging, filter);
+        }
+
+        [HttpGet]
+        async public Task<object> 获取某个教学专业科室的教学要求(教学专业科室要求Filter filter)
+        {
+            return await Db.GetListSpAsync<v_教学专业科室要求, 教学专业科室要求Filter>(filter);
         }
 
         /// <summary>

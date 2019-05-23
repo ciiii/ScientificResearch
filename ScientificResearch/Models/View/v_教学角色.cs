@@ -23,6 +23,10 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        public bool? 能否直接配置人员 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
         public string 备注 { get; set; }
         /// <summary>
 		/// 
