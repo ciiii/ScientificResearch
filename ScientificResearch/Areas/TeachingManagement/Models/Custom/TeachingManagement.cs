@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -30,4 +31,17 @@ namespace ScientificResearch.Models
     {
         public bool? 是否已安排宿舍 { get; set; }
     }
+
+    public class 自动设置轮转
+    {
+        [Required(ErrorMessage = "请指定计划开始培训日期")]
+        public DateTime? 计划开始培训日期 { get; set; }
+
+        [Required(ErrorMessage = "请指定教学本院策略编号")]
+        public int? 教学本院策略编号 { get; set; }
+
+        [Required(ErrorMessage = "请指定学员编号列表")]
+        public List<int> 学员编号列表 { get; set; }
+    }
+
 }

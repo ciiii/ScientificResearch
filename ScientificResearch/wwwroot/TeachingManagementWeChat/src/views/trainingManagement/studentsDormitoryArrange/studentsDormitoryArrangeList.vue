@@ -113,8 +113,8 @@ export default {
     },
     requirements (item) {
       this.$router.push({
-        path: '',
-        name: '',
+        path: '/ModifyDormitoryArrange',
+        name: 'ModifyDormitoryArrange',
         params: {
           item
         }

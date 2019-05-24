@@ -570,6 +570,13 @@
             <param name="data"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.获取轮转自动设置临时结果(ScientificResearch.Models.自动设置轮转)">
+            <summary>
+            
+            </summary>
+            <param name="data">id为教学本院科室编号,list为</param>
+            <returns></returns>
+        </member>
         <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController">
             <summary>
             工作流相关的接口
@@ -2421,7 +2428,7 @@
             sp_教学本院策略_启禁[类]
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.sp_教学本院策略_启禁.编号">
+        <member name="P:ScientificResearch.Models.sp_教学本院策略_启禁.tt_编号">
             <summary>
             
             </summary>
@@ -18586,6 +18593,26 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室.科室管理员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室.科室管理员姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室.最大学员人数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室.带教老师数量">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.v_教学本院科室.是否必选">
             <summary>
             
@@ -18647,6 +18674,11 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_教学本院策略.教学本院科室数量">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院策略.培训总时长">
             <summary>
             
             </summary>
@@ -18772,6 +18804,91 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_教学角色.功能数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_教学轮转">
+            <summary>
+            v_教学轮转[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转.学员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转.学员姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转.计划入科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转.计划出科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转.实际入科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转.实际出科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转.本院科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转.本院科室名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转.科室管理员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转.科室管理员姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转.带教老师编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转.带教老师姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转.最低管床数量">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转.最低全程管理数量">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转.备注">
             <summary>
             
             </summary>
@@ -20079,6 +20196,19 @@
             要obsolete直接写在父类即可;
             </summary>
         </member>
+        <member name="M:ScientificResearch.Controllers.TestController.测试时间传入(ScientificResearch.Controllers.TestController.测试时间传入model)">
+            <summary>
+            date1 不传就会是0001-01-01 00:00:00
+            date2 不传就是null,正确
+            date3不传也不会提示必填,默认给一个0001-01-01 00:00:00
+            date4不传会提示必填,正确;
+            int 同理
+            注意只有在post的时候才会发生;
+            
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
         <member name="M:ScientificResearch.Controllers.WorkFlowController.审核步骤(ScientificResearch.Models.完成步骤)">
             <summary>
             审核等不需要附加动作的操作,可以直接调用这个接口;
@@ -20760,6 +20890,14 @@
             该类型是否可直接进行值的比较
             </summary>
             <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MyLib.MyObject.CreateDeepCopy``1(``0)">
+            <summary>
+            深拷贝
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="obj"></param>
             <returns></returns>
         </member>
         <member name="M:MyLib.MyPath.Combine(System.String[])">

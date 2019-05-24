@@ -48,8 +48,7 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        [Required(ErrorMessage ="请提供[带教老师编号]")]
-		public int 带教老师编号 { get; set; }
+		public int? 带教老师编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>

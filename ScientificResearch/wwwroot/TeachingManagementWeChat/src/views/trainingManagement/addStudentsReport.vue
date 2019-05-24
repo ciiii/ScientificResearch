@@ -4,62 +4,53 @@
       <i class="icon iconfont icontianjia"></i>
       <span>添加学员报到</span>
     </div>
-
     <div class="searchBox">
-      <div class="searchTitle"
-           @click="showAddType">
+      <div class="searchTitle">
         <span>登录号码</span>
-        <i class="icon iconfont iconxiala1"></i>
       </div>
       <input type="text"
-             placeholder="请输入">
+             placeholder="请输入关键字">
+      <i @click="search"
+         class="icon iconfont iconsousuo"></i>
     </div>
-    <van-actionsheet v-model="show"
-                     title="请选择">
-      <van-radio-group v-model="radio">
-        <van-cell-group>
-          <van-cell title="登录号码"
-                    clickable
-                    @click="radio = '1'">
-            <van-radio name="1" />
-          </van-cell>
-          <van-cell title="学员姓名"
-                    clickable
-                    @click="radio = '2'">
-            <van-radio name="2" />
-          </van-cell>
-          <van-cell title="专业"
-                    clickable
-                    @click="radio = '3'">
-            <van-radio name="3" />
-          </van-cell>
-          <van-cell title="年届"
-                    clickable
-                    @click="radio = '4'">
-            <van-radio name="4" />
-          </van-cell>
-        </van-cell-group>
-      </van-radio-group>
-    </van-actionsheet>
+    <van-button class="sumitBtn"
+                v-show="isOriginHei"
+                type="primary"
+                size="large">提 交</van-button>
   </div>
 </template>
 <script>
 export default {
   data () {
     return {
-      show: false,
-      radio: '1'
+      isOriginHei: true,
+      screenHeight: document.documentElement.clientHeight,
+      originHeight: document.documentElement.clientHeight
     }
   },
   created () {
 
   },
   mounted () {
-
+    let self = this
+    window.onresize = function () {
+      return (() => {
+        self.screenHeight = document.documentElement.clientHeight
+      })()
+    }
+  },
+  watch: {
+    screenHeight (val) {
+      if (this.originHeight > val + 100) { // 加100为了兼容华为的返回键
+        this.isOriginHei = false
+      } else {
+        this.isOriginHei = true
+      }
+    }
   },
   methods: {
-    showAddType () {
-      this.show = true
+    search () {
+      this.$toast('你点了搜索!')
     }
   }
 }
@@ -67,7 +58,7 @@ export default {
 <style lang="less" scoped>
 .box {
   background-color: #fff;
-  padding: 10px;
+  padding: 10px 20px;
   text-align: left;
   .title {
     font-size: 14px;
@@ -83,19 +74,29 @@ export default {
   }
   .searchBox {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #f5f3fb;
+    margin-top: 20px;
     .searchTitle {
       font-size: 14px;
-      .iconxiala1 {
-        font-size: 12px;
-        padding-left: 5px;
-      }
+      padding-right: 10px;
     }
     input {
       border: none;
       line-height: 2;
       width: 70%;
+      font-size: 14px;
+      flex-grow: 1;
     }
+    .iconsousuo {
+      padding-left: 10px;
+    }
+  }
+  .sumitBtn {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
   }
 }
 </style>

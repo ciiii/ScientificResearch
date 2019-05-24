@@ -26,6 +26,7 @@ namespace ScientificResearch.Models
 
     public class 教学学员Filter
     {
+        public string WhereIn编号 { get; set; }
         public string Like学员类型名称 { get; set; }
         public string Like工号 { get; set; }
         public string Like姓名 { get; set; }

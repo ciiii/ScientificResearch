@@ -20,6 +20,7 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using System.ComponentModel.DataAnnotations;
 
 namespace ScientificResearch.Controllers
 {
@@ -556,6 +557,43 @@ namespace ScientificResearch.Controllers
             };
 
             return MyLib.MyWx.SentMessage(appId, appSecret, myData);
+        }
+
+        public class 测试时间传入model
+        {
+            public DateTime date1 { get; set; }
+            public DateTime? date2 { get; set; }
+
+            [Required]
+            public DateTime date3 { get; set; }
+
+            [Required]
+            public DateTime? date4 { get; set; }
+
+            public int int1 { get; set; }
+            public int? int2 { get; set; }
+
+            [Required]
+            public int int3 { get; set; }
+            [Required]
+            public int? int4 { get; set; }
+        }
+
+        /// <summary>
+        /// date1 不传就会是0001-01-01 00:00:00
+        /// date2 不传就是null,正确
+        /// date3不传也不会提示必填,默认给一个0001-01-01 00:00:00
+        /// date4不传会提示必填,正确;
+        /// int 同理
+        /// 注意只有在post的时候才会发生;
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public object 测试时间传入([FromBody]测试时间传入model data)
+        {
+            return data;
         }
     }
 }

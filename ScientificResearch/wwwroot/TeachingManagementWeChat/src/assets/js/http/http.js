@@ -8,6 +8,7 @@ const http = {
     getHospitalInformation (para) {
         return get('/Manage/Service/根据dbkey获取某医院信息', para)
     },
+
     /**
      * 登录
      */
@@ -42,7 +43,7 @@ const http = {
         return get('/Office/分页获取可查看的下载中心', para)
     },
     /**
-     * 获取某人员详情
+     * 获取某人员详情 ???
      */
     getSomePersonnelDetails (code) {
         return get('/People/获取某人员详情', code)
@@ -53,6 +54,13 @@ const http = {
     getStudents (code) {
         return get('/TeachingManagement/Organization/分页获取教学学员', code)
     },
+    /**
+     * 分页获取学员宿舍楼安排
+     */
+    getDormitoryarrange (code) {
+        return get('/TeachingManagement/TeachingManagement/分页获取学员宿舍楼安排', code)
+    },
+
     /**
      * 获取教学活动类型
      */

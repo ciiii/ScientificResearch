@@ -93,35 +93,42 @@ export default new Router({
             path: '/studentsReport',
             name: 'studentsReport',
             component: () =>
-                import('./views/trainingManagement/studentsReport.vue'),
+                import('./views/trainingManagement/studentsReport/studentsReport.vue'),
             meta: { title: '学员报到' }
         },
         {
             path: '/addStudentsReport',
             name: 'addStudentsReport',
             component: () =>
-                import('./views/trainingManagement/addStudentsReport.vue'),
+                import('./views/trainingManagement/studentsReport/addStudentsReport.vue'),
             meta: { title: '添加学员报到' }
         },
         {
             path: '/studentsDormitoryArrangeList',
             name: 'studentsDormitoryArrangeList',
             component: () =>
-                import('./views/trainingManagement/studentsDormitoryArrangeList.vue'),
+                import('./views/trainingManagement/studentsDormitoryArrange/studentsDormitoryArrangeList.vue'),
             meta: { title: '学员宿舍安排' }
+        },
+        {
+            path: '/ModifyDormitoryArrange',
+            name: 'ModifyDormitoryArrange',
+            component: () =>
+                import('./views/trainingManagement/studentsDormitoryArrange/ModifyDormitoryArrange.vue'),
+            meta: { title: '修改学员宿舍安排' }
         },
         {
             path: '/studentsExitTraining',
             name: 'studentsExitTraining',
             component: () =>
-                import('./views/trainingManagement/studentsExitTraining.vue'),
+                import('./views/trainingManagement/studentsExitTraining/studentsExitTraining.vue'),
             meta: { title: '学员退培管理' }
         },
         {
             path: '/studentsTestScores',
             name: 'studentsTestScores',
             component: () =>
-                import('./views/trainingManagement/studentsTestScores.vue'),
+                import('./views/trainingManagement/studentsTestScores/studentsTestScores.vue'),
             meta: { title: '学员考试成绩' }
         },
         {

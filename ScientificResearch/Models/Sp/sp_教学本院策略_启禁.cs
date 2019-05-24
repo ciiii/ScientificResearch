@@ -14,7 +14,7 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-		public int 编号 { get; set; }
+		public DataTable tt_编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>

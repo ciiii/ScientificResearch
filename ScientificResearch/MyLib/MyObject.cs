@@ -245,5 +245,22 @@ namespace MyLib
             }
         }
         #endregion
+
+        /// <summary>
+        /// 深拷贝
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static T CreateDeepCopy<T>(T obj)
+        {
+            T t;
+            MemoryStream memoryStream = new MemoryStream();
+            BinaryFormatter formatter = new BinaryFormatter();
+            formatter.Serialize(memoryStream, obj);
+            memoryStream.Position = 0;
+            t = (T)formatter.Deserialize(memoryStream);
+            return t;
+        }
     }
 }

@@ -26,10 +26,7 @@ import {
     PullRefresh,
     Tab,
     Tabs,
-    Toast,
-    Actionsheet,
-    RadioGroup,
-    Radio
+    Toast
 } from 'vant'
 Vue.use(ReturnBtn)
 Vue.use(ReturnTop)
@@ -50,9 +47,6 @@ Vue.use(Field)
 Vue.use(PullRefresh)
 Vue.use(Tab).use(Tabs)
 Vue.use(Toast)
-Vue.use(Actionsheet)
-Vue.use(RadioGroup)
-Vue.use(Radio)
 
 Vue.use(VueWechatTitle)
 Vue.prototype.$http = http

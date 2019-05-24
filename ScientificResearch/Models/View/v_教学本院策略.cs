@@ -43,6 +43,10 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        public int? 培训总时长 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
         public bool 是否启用 { get; set; }
         /// <summary>
 		/// 

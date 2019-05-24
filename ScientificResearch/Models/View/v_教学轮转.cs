@@ -5,10 +5,10 @@ using System.ComponentModel;
 namespace ScientificResearch.Models
 {
     /// <summary>
-    /// v_教学本院科室[类]
+    /// v_教学轮转[类]
     /// </summary>
     [Serializable]
-	public partial class v_教学本院科室 
+	public partial class v_教学轮转 
 	{       
               
         #region 属性
@@ -19,23 +19,27 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        public int 教学本院策略编号 { get; set; }
+        public int 学员编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public string 教学本院策略名称 { get; set; }
+        public string 学员姓名 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public int 排序值 { get; set; }
+        public DateTime 计划入科日期 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public int 教学专业科室编号 { get; set; }
+        public DateTime 计划出科日期 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public string 教学专业科室名称 { get; set; }
+        public DateTime? 实际入科日期 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public DateTime? 实际出科日期 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
@@ -55,19 +59,11 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        public int? 最大学员人数 { get; set; }
+        public int? 带教老师编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public int? 带教老师数量 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public bool 是否必选 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public int 培训时长 { get; set; }
+        public string 带教老师姓名 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
@@ -75,7 +71,7 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        public int? 最低全程管理数量 { get; set; }
+        public int 最低全程管理数量 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
