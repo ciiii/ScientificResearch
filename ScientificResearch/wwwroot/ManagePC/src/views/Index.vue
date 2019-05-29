@@ -4,7 +4,9 @@
             <el-header>
                 <div class="left">
                     <div class="logo">
-                        <router-link to="/home">LOGO 总库管理系统</router-link>
+                        <router-link to="/home">
+                            <img src="@/assets/images/logo.png" alt="logo">
+                        </router-link>
                     </div>
                     <el-menu class="el-menu-demo" :default-active="activIndex" mode="horizontal"
                              @select="handleSelect" :router="true">

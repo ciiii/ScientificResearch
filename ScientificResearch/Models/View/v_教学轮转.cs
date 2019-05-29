@@ -43,7 +43,27 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        public int 本院科室编号 { get; set; }
+        public int 教学本院科室编号 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int? 教学本院策略编号 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public string 教学本院策略名称 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int? 教学专业科室编号 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public string 教学专业科室名称 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int? 本院科室编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
@@ -76,6 +96,30 @@ namespace ScientificResearch.Models
 		/// 
 		/// </summary>
         public string 备注 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public string 状态 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int? 技能病例数 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int? 疾病病例数 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int? 门诊病例数 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int? 住院病例数 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int? 医技病例数 { get; set; }
         
           
         #endregion

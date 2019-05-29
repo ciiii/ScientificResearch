@@ -48,6 +48,7 @@ namespace ScientificResearch.Models
     {
         [Required(ErrorMessage = "请输入教学本院科室编号")]
         public int? 教学本院科室编号 { get; set; }
+        public string Like项目名称 { get; set; }
     }
 
     public class 教学活动评价项目Filter

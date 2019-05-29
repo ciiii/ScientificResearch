@@ -2,8 +2,7 @@
     <div class="page-login">
         <div class="login-top">
             <div class="left">
-                <!--<img class="logo2" src="../assets/images/logo3.png" alt="数据库门户入口网站">-->
-                <span>LOGO 总库管理系统</span>
+                <img src="@/assets/images/logo-2.png" alt="logo"> <span>总库后台管理系统</span>
             </div>
         </div>
         <div class="content">
@@ -24,8 +23,7 @@
                     </el-checkbox-group>
                 </el-form-item>
                 <el-form-item>
-                    <el-button class="btn-login" type="primary" height="30" @click="isLogin">立即登录
-                    </el-button>
+                    <el-button class="btn-login" type="primary" height="30" @click="isLogin">立即登录</el-button>
                 </el-form-item>
             </el-form>
             <p class="support">技术支持：上海路炳通信息技术有限公司</p>

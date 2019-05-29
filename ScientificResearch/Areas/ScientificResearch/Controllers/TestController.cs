@@ -595,5 +595,15 @@ namespace ScientificResearch.Controllers
         {
             return data;
         }
+
+        /// <summary>
+        /// 教学轮转状态.已出科.ToString()这样就可以得到了;
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public object 测试取得enum中具体某个值的中文名()
+        {
+            return 教学轮转状态.已出科.ToString();
+        }
     }
 }

@@ -188,26 +188,65 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
 
         /// <summary>
         /// 这个就自带删除了,
+        /// id表示教学本院策略的编号;
         /// 教学本院科室任务需要另外设置;
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
         [HttpPost]
-        async public Task<object> 增改某教学本院策略下的科室([FromBody]PredefindedIdList<教学本院科室> data)
+        async public Task 增改某教学本院策略下的科室([FromBody]PredefindedIdList<教学本院科室> data)
         {
-            ////这个是否可以放到sp里面去;
-            //foreach (var item in data.List)
-            //{
-            //    item.教学本院策略编号 = data.Id;
-            //}
-            return await Db.Merge(data.Id, data.List);
+            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+            {
+                foreach (var item in data.List.Where(i => i.编号 == 0))
+                {
+                    var 将增加的教学本院科室任务列表 = new List<教学本院科室任务>();
+                    //如果是新增一个教学本院科室对应关系,则需要同时新增其相应的任务;
+                    var 新增的教学本院科室 = await dbForTransaction.Merge(data.Id, item, transaction);
+                    var 新增的教学本院科室对应的专业科室任务列表 =
+                        await dbForTransaction.GetListSpAsync<教学专业科室任务, 教学专业科室任务Filter>
+                        (new 教学专业科室任务Filter()
+                        {
+                            教学专业科室编号 = item.教学专业科室编号
+                        }, transaction: transaction);
+
+                    foreach (var 新增的教学本院科室对应的专业科室任务 in 新增的教学本院科室对应的专业科室任务列表)
+                    {
+                        var 将增加的教学本院科室任务 = new 教学本院科室任务()
+                        {
+                            编号 = 0,
+                            教学本院科室编号 = 新增的教学本院科室.编号,
+                            项目名称 = 新增的教学本院科室对应的专业科室任务.项目名称,
+                            任务类型编号 = 新增的教学本院科室对应的专业科室任务.任务类型编号,
+                            是否门诊 = 新增的教学本院科室对应的专业科室任务.是否门诊,
+                            是否病房 = 新增的教学本院科室对应的专业科室任务.是否病房,
+                            是否医技 = 新增的教学本院科室对应的专业科室任务.是否医技,
+                            最低评分要求 = 新增的教学本院科室对应的专业科室任务.最低评分要求,
+                            数量要求 = 新增的教学本院科室对应的专业科室任务.数量要求,
+                            备注 = 新增的教学本院科室对应的专业科室任务.备注,
+                        };
+                        将增加的教学本院科室任务列表.Add(将增加的教学本院科室任务);
+                    }
+                    await dbForTransaction.Merge(新增的教学本院科室.编号, 将增加的教学本院科室任务列表.AsEnumerable(), transaction);
+                }
+
+                //修改的,能否修改?能否修改科室?是否相应修改任务?
+                await dbForTransaction.Merge(data.Id, data.List.Where(i => i.编号 != 0), transaction);
+            }
+
+            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+            //return await Db.Merge(data.Id, data.List);
         }
 
+        [HttpPost]
+        async public Task 批量删除教学本院科室([FromBody]IEnumerable<int> data) =>
+            await Db.Delete<教学本院科室>(data);
+
         [HttpGet]
-        async public Task<object> 获取某教学本院科室下的任务(
+        async public Task<object> 分页获取某教学本院科室下的任务(Paging paging,
             教学本院科室任务Filter filter)
         {
-            return await Db.GetListSpAsync<教学本院科室任务, 教学本院科室任务Filter>(filter);
+            return await Db.GetPagingListSpAsync<v_教学本院科室任务, 教学本院科室任务Filter>(paging, filter);
         }
 
         [HttpPost]

@@ -166,7 +166,7 @@ namespace ScientificResearch.Infrastucture
         /// <param name="cnn"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        async public static Task<T> GetModelByIdSpAsync<T>(this IDbConnection cnn, int id)
+        async public static Task<T> GetModelByIdSpAsync<T>(this IDbConnection cnn, int id, IDbTransaction transaction = null)
         {
             var result = await cnn.QuerySpAsync<sp_GetList, T>(new sp_GetList()
             {
@@ -175,7 +175,7 @@ namespace ScientificResearch.Infrastucture
                 keyFields = PredefindedKeyFields,
                 OrderStr = "",
                 tbFields = "*"
-            });
+            }, transaction);
             return result.FirstOrDefault();
         }
 
@@ -200,7 +200,8 @@ namespace ScientificResearch.Infrastucture
             string keyFields = PredefindedKeyFields,
             bool orderType = false,
             string orderStr = "",
-            string tbFields = "*") where TFilter : class
+            string tbFields = "*",
+            IDbTransaction transaction = null) where TFilter : class
         {
             return await cnn.QuerySpAsync<sp_GetList, T>(new sp_GetList()
             {
@@ -210,7 +211,7 @@ namespace ScientificResearch.Infrastucture
                 OrderType = orderType,
                 OrderStr = orderStr,
                 tbFields = tbFields
-            });
+            }, transaction);
         }
 
         /// <summary>
@@ -228,9 +229,9 @@ namespace ScientificResearch.Infrastucture
             string tbName = null,
             string keyFields = null,
             bool orderType = false,
-            string orderStr = "")
+            string orderStr = "", IDbTransaction transaction = null)
         {
-            return await cnn.GetListSpAsync<T, object>(null, tbName, keyFields, orderType, orderStr);
+            return await cnn.GetListSpAsync<T, object>(null, tbName, keyFields, orderType, orderStr, transaction: transaction);
         }
 
         /// <summary>
@@ -254,7 +255,7 @@ namespace ScientificResearch.Infrastucture
             string tbName = null,
             string keyFields = null,
             string orderStr = "",
-            bool orderType = true) where TFilter : class
+            bool orderType = true, IDbTransaction transaction = null) where TFilter : class
         {
             if (paging == null) paging = new Paging();
             var result = await cnn.QueryMultipleSpAsync(new sp_GetPagingList
@@ -267,7 +268,7 @@ namespace ScientificResearch.Infrastucture
                 OrderType = paging.OrderType,
                 OrderStr = orderStr,
                 tbFields = "*"
-            });
+            }, transaction);
             var total = result.Read<int>().FirstOrDefault();
             var list = result.Read<T>();
             return new PagingResult<T> { total = total, list = list };
@@ -288,9 +289,9 @@ namespace ScientificResearch.Infrastucture
             Paging paging = null,
             string tbName = null,
             string keyFields = null,
-            string orderStr = "")
+            string orderStr = "", bool orderType = true, IDbTransaction transaction = null)
         {
-            return await cnn.GetPagingListSpAsync<T, object>(paging, null, tbName, keyFields, orderStr);
+            return await cnn.GetPagingListSpAsync<T, object>(paging, null, tbName, keyFields, orderStr, orderType, transaction);
         }
 
         /// <summary>
@@ -315,12 +316,12 @@ namespace ScientificResearch.Infrastucture
         /// <param name="model"></param>
         /// <param name="transaction"></param>
         /// <returns></returns>
-        public static Task<IEnumerable<TOut>> QuerySpAsync<T, TOut>(
+        async public static Task<IEnumerable<TOut>> QuerySpAsync<T, TOut>(
             this IDbConnection cnn,
             T model = null,
             IDbTransaction transaction = null) where T : class
         {
-            return cnn.QueryAsync<TOut>(typeof(T).Name, model, transaction, commandType: CommandType.StoredProcedure);
+            return await cnn.QueryAsync<TOut>(typeof(T).Name, model, transaction, commandType: CommandType.StoredProcedure);
         }
 
         /// <summary>
@@ -385,7 +386,10 @@ namespace ScientificResearch.Infrastucture
         /// <param name="model"></param>
         /// <param name="transaction"></param>
         /// <returns></returns>
-        async public static Task<IEnumerable<T>> Merge<T>(this IDbConnection cnn, IEnumerable<T> model, IDbTransaction transaction = null) where T : new()
+        async public static Task<IEnumerable<T>> Merge<T>(
+            this IDbConnection cnn,
+            IEnumerable<T> model,
+            IDbTransaction transaction = null) where T : new()
         {
             var result = await cnn.QueryAsync<T>(PrdefindeSpMergeName<T>(), new
             {
@@ -409,6 +413,17 @@ namespace ScientificResearch.Infrastucture
         async public static Task<IEnumerable<T>> Merge<T>(this IDbConnection cnn, int fId, IEnumerable<T> model, IDbTransaction transaction = null) where T : new()
         {
             var result = await cnn.QueryAsync<T>(PrdefindeSpMergeName<T>(), new
+            {
+                fId,
+                tt = model.ToDataTable()
+            }, transaction, commandType: CommandType.StoredProcedure);
+
+            return result;
+        }
+
+        async public static Task<T> Merge<T>(this IDbConnection cnn, int fId, T model, IDbTransaction transaction = null) where T : new()
+        {
+            var result = await cnn.QueryFirstAsync<T>(PrdefindeSpMergeName<T>(), new
             {
                 fId,
                 tt = model.ToDataTable()

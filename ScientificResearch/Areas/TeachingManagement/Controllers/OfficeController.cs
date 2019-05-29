@@ -73,13 +73,12 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
 
             async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
             {
-
                 var 教学通知公告基本信息 = await dbForTransaction.Merge(data.Model, transaction);
                 await dbForTransaction.Merge(教学通知公告基本信息.编号, data.List, transaction);
+                //await dbForTransaction.GetListSpAsync<教学通知公告>(transaction: transaction);
             }
 
             await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
-
         }
 
         [HttpPost]
@@ -112,7 +111,5 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
                 旧密码 = model.旧密码,
                 新密码 = model.新密码
             });
-
-
     }
 }

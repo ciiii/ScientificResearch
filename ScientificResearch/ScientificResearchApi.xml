@@ -490,6 +490,7 @@
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.SettingController.增改某教学本院策略下的科室(ScientificResearch.Infrastucture.PredefindedIdList{ScientificResearch.Models.教学本院科室})">
             <summary>
             这个就自带删除了,
+            id表示教学本院策略的编号;
             教学本院科室任务需要另外设置;
             </summary>
             <param name="data"></param>
@@ -575,6 +576,44 @@
             
             </summary>
             <param name="data">id为教学本院科室编号,list为</param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.增改教学轮转(System.Collections.Generic.IEnumerable{ScientificResearch.Models.教学轮转})">
+            <summary>
+            1 更新相应学员的计划开始结束培训日期
+            2 如果是增加,那每个教学轮转的任务要添加
+            但是没有考虑原来是a科室,改为b科室后相应任务的变换
+            3 增改教学轮转基本信息
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.获取某学员的教学轮转(System.Int32)">
+            <summary>
+            看某个学员的所有轮转
+            </summary>
+            <param name="学员编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.分页获取我的学员的教学轮转(ScientificResearch.Models.Paging,ScientificResearch.Models.教学学员培训情况Filter)">
+            <summary>
+            分页获取多个我的学员,以及每个学员的所有轮转
+            注意:我的学员不一定是所有学员,这是根据权限来的;
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.补轮转(ScientificResearch.Models.补轮转)">
+            <summary>
+            教学补轮转
+            在某个未入科或者在科的教学轮转上增加计划出科日期;
+            1 相应学员的教学培训的计划结束培训日期会相应增加
+            2 该教学轮转的计划出科日期会增加;
+            3 该学员该教学轮转之后的轮转的计划入科和出科日期会增加;
+            4 会记录此补轮转日志;
+            </summary>
+            <param name="data"></param>
             <returns></returns>
         </member>
         <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController">
@@ -1297,6 +1336,16 @@
         <member name="P:ScientificResearch.Models.教学人员Filter.LikeAllName">
             <summary>
             同时对姓名和部门名称做搜索
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员培训情况Filter.状态">
+            <summary>
+            有:未报到,退培,已报到,轮转计划已安排,在培,待结业,结业
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转Filter.状态">
+            <summary>
+            未入科,在科,已出科
             </summary>
         </member>
         <member name="T:ScientificResearch.Models.StepDone`1">
@@ -2373,12 +2422,37 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.sp_教学按科室统计轮转">
+            <summary>
+            sp_教学按科室统计轮转[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学按科室统计轮转.beginDate">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学按科室统计轮转.endDate">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_教学更换带教老师_增改">
             <summary>
             sp_教学更换带教老师_增改[类]
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_教学更换带教老师_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学本院科室_删">
+            <summary>
+            sp_教学本院科室_删[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学本院科室_删.tt_编号">
             <summary>
             
             </summary>
@@ -2633,12 +2707,32 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.sp_教学轮转_删">
+            <summary>
+            sp_教学轮转_删[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学轮转_删.tt_编号">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_教学轮转_增改">
             <summary>
             sp_教学轮转_增改[类]
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_教学轮转_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学轮转任务_删">
+            <summary>
+            sp_教学轮转任务_删[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学轮转任务_删.tt_编号">
             <summary>
             
             </summary>
@@ -7318,7 +7412,7 @@
             
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.教学轮转.本院科室编号">
+        <member name="P:ScientificResearch.Models.教学轮转.教学本院科室编号">
             <summary>
             
             </summary>
@@ -17293,6 +17387,31 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室.技能病例数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室.疾病病例数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室.门诊病例数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室.住院病例数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学专业科室.医技病例数">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v_教学专业科室任务">
             <summary>
             v_教学专业科室任务[类]
@@ -18638,6 +18757,96 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室.技能病例数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室.疾病病例数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室.门诊病例数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室.住院病例数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室.医技病例数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_教学本院科室任务">
+            <summary>
+            v_教学本院科室任务[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室任务.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室任务.教学本院科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室任务.项目名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室任务.任务类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室任务.任务类型名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室任务.是否门诊">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室任务.是否病房">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室任务.是否医技">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室任务.最低评分要求">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室任务.最低评分等级">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室任务.数量要求">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学本院科室任务.备注">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v_教学本院策略">
             <summary>
             v_教学本院策略[类]
@@ -18773,6 +18982,96 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.v_教学补轮转">
+            <summary>
+            v_教学补轮转[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学补轮转.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学补轮转.教学轮转编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学补轮转.学员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学补轮转.学员姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学补轮转.计划入科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学补轮转.本院科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学补轮转.本院科室名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学补轮转.科室管理员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学补轮转.科室管理员姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学补轮转.带教老师编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学补轮转.带教老师姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学补轮转.说明">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学补轮转.开始日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学补轮转.结束日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学补轮转.建立人">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学补轮转.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学补轮转.备注">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v_教学角色">
             <summary>
             v_教学角色[类]
@@ -18848,6 +19147,31 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转.教学本院科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转.教学本院策略编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转.教学本院策略名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转.教学专业科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转.教学专业科室名称">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.v_教学轮转.本院科室编号">
             <summary>
             
@@ -18889,6 +19213,101 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_教学轮转.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转.状态">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转.技能病例数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转.疾病病例数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转.门诊病例数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转.住院病例数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转.医技病例数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_教学轮转任务">
+            <summary>
+            v_教学轮转任务[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转任务.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转任务.教学轮转编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转任务.项目名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转任务.任务类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转任务.任务类型名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转任务.是否门诊">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转任务.是否病房">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转任务.是否医技">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转任务.最低评分要求">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转任务.最低评分等级">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转任务.数量要求">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转任务.备注">
             <summary>
             
             </summary>
@@ -20209,6 +20628,12 @@
             <param name="data"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Controllers.TestController.测试取得enum中具体某个值的中文名">
+            <summary>
+            教学轮转状态.已出科.ToString()这样就可以得到了;
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:ScientificResearch.Controllers.WorkFlowController.审核步骤(ScientificResearch.Models.完成步骤)">
             <summary>
             审核等不需要附加动作的操作,可以直接调用这个接口;
@@ -20599,7 +21024,7 @@
             <param name="Spacer"></param>
             <returns></returns>
         </member>
-        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.GetModelByIdSpAsync``1(System.Data.IDbConnection,System.Int32)">
+        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.GetModelByIdSpAsync``1(System.Data.IDbConnection,System.Int32,System.Data.IDbTransaction)">
             <summary>
             通过主键获得对象,或者null
             T为表映射而来的类
@@ -20609,7 +21034,7 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.GetListSpAsync``2(System.Data.IDbConnection,``1,System.String,System.String,System.Boolean,System.String,System.String)">
+        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.GetListSpAsync``2(System.Data.IDbConnection,``1,System.String,System.String,System.Boolean,System.String,System.String,System.Data.IDbTransaction)">
             <summary>
             sp_GetList,带搜索条件的
             T的作用有2:1默认用T的名称做TbName,2dapper返回类型的指定
@@ -20625,7 +21050,7 @@
             <param name="tbFields"></param>
             <returns></returns>
         </member>
-        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.GetListSpAsync``1(System.Data.IDbConnection,System.String,System.String,System.Boolean,System.String)">
+        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.GetListSpAsync``1(System.Data.IDbConnection,System.String,System.String,System.Boolean,System.String,System.Data.IDbTransaction)">
             <summary>
             没有搜索条件的单独传参数
             </summary>
@@ -20637,7 +21062,7 @@
             <param name="orderStr"></param>
             <returns></returns>
         </member>
-        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.GetPagingListSpAsync``2(System.Data.IDbConnection,ScientificResearch.Models.Paging,``1,System.String,System.String,System.String,System.Boolean)">
+        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.GetPagingListSpAsync``2(System.Data.IDbConnection,ScientificResearch.Models.Paging,``1,System.String,System.String,System.String,System.Boolean,System.Data.IDbTransaction)">
             <summary>
             有条件的分页获取
             T的作用有2:1默认用T的名称做TbName,2dapper返回类型的指定
@@ -20653,7 +21078,7 @@
             <param name="orderType"></param>
             <returns></returns>
         </member>
-        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.GetPagingListSpAsync``1(System.Data.IDbConnection,ScientificResearch.Models.Paging,System.String,System.String,System.String)">
+        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.GetPagingListSpAsync``1(System.Data.IDbConnection,ScientificResearch.Models.Paging,System.String,System.String,System.String,System.Boolean,System.Data.IDbTransaction)">
             <summary>
             没有搜索条件的,返回分页数据
             </summary>

@@ -51,6 +51,7 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        [Obsolete]
         [Required(ErrorMessage ="请提供[已接收人数]")]
 		public int 已接收人数 { get; set; }
         /// <summary>

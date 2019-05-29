@@ -11,53 +11,51 @@
           <div class="backlog">
             <span>
               <i class="icon iconfont iconxueyuanliebiao-copy"></i>
-              <span>已安排宿舍列表</span>
+              <span>学员报到</span>
             </span>
-            <van-button @click="arrangeDormitory"
+            <van-button @click="addStudentsRegister"
                         plain
                         hairline
                         size="small"
-                        type="primary">安排宿舍</van-button>
+                        type="primary">添加学员报到</van-button>
           </div>
           <div class="backContentBox"
-               v-for="item of list"
-               :key='item.编号'>
+               v-for="(item,key) in list"
+               :key='key'>
             <div class="bacnButtom">
-              <ul @click="requirements(item)">
+              <ul @click="goDetails(item)">
                 <li>{{item.姓名}}</li>
                 <li>
                   <span>登录号码：</span>
-                  <span>???</span>
+                  <span>{{item.工号}}</span>
                 </li>
                 <li>
-                  <span>联系方式：</span>
-                  <span>{{item.手机号码}}</span>
+                  <span>学员类型：</span>
+                  <span>{{item.学员类型名称}}</span>
                 </li>
                 <li>
-                  <span>培训专业：</span>
+                  <span>规培专业：</span>
                   <span>{{item.专业名称}}</span>
                 </li>
                 <li>
-                  <span>楼栋名称：</span>
-                  <span>{{item.宿舍楼名称}}</span>
+                  <span>责任导师：</span>
+                  <span>????</span>
                 </li>
                 <li>
-                  <span>门牌号及床号：</span>
-                  <span>{{item.门牌号及床号}}</span>
-                </li>
-                <li>
-                  <span>入住时间：</span>
-                  <span>{{item.入住日期}}</span>
-                </li>
-                <li>
-                  <span>退出时间：</span>
-                  <span>{{item.退出日期}}</span>
-                </li>
-                <li>
-                  <span>职务：</span>
-                  <span>{{item.职位}}</span>
+                  <span>计划开始培训时间：</span>
+                  <span>????</span>
                 </li>
               </ul>
+              <div class="requirements">
+                <van-button v-if="item.编号 %2 !== 0"
+                            @click="requirements(item)"
+                            size="small"
+                            type="primary">修改导师</van-button>
+                <van-button v-else
+                            @click="deleteStudents(item.编号)"
+                            size="small"
+                            type="danger">删除</van-button>
+              </div>
             </div>
           </div>
         </div>
@@ -74,7 +72,7 @@ export default {
     return {
       list: [],
       index: 1,
-      size: 15,
+      size: 5,
       total: 0,
       isDownLoading: false,
       loading: false,
@@ -86,10 +84,8 @@ export default {
       var para = {
         index: this.index,
         size: this.size
-        // 是否已安排宿舍: false
       }
-      let res = await this.$http.getDormitoryarrange(para)
-      // console.log(res, '6666')
+      let res = await this.$http.getStudents(para)
       this.total = res.data.total
       const data = this.list
       this.list = data.concat(res.data.list)
@@ -105,35 +101,42 @@ export default {
         this.isDownLoading = false
       }, 1000)
     },
-    arrangeDormitory () {
-      this.$router.push('/addDormitoryArrange')
+    goDetails (item) {
+      this.$router.push({
+        path: '/studentInformation',
+        name: 'studentInformation',
+        params: {
+          item
+        }
+      })
+    },
+    addStudentsRegister () {
+      this.$router.push('/addStudentsReport')
     },
     requirements (item) {
-      // this.$router.push({
-      //   path: '/ModifyDormitoryArrange',
-      //   name: 'ModifyDormitoryArrange',
-      //   params: {
-      //     item
-      //   }
-      // })
+      console.log(item, '修改责任导师')
+      this.$toast('修改责任导师')
+    },
+    deleteStudents (item) {
+      console.log(item, '删除')
+      this.$toast('删除')
     }
   }
 }
 </script>
 <style lang="less" scoped>
 .box {
-  // padding: 12px 0;
   text-align: left;
   background-color: #f5f3fb;
   .backlogBox {
     padding: 10px;
-    // background-color: #fff;
+    // padding-bottom: 80px;
     .backlog {
       display: flex;
       justify-content: space-between;
       font-size: 14px;
-      margin-bottom: 10px;
       padding-bottom: 2px;
+      margin-bottom: 10px;
       border-bottom: 2px solid rgb(25, 186, 235);
       span {
         padding: 5px 0;
@@ -146,7 +149,6 @@ export default {
     .backContentBox {
       background-color: #fff;
       padding: 10px 15px;
-      // border: 1px dashed #ccc;
       border-radius: 10px;
       box-shadow: 6px 6px 6px #ccc;
       margin-bottom: 20px;
@@ -167,18 +169,18 @@ export default {
             color: #5a5a5a;
           }
         }
-        // .requirements {
-        //   position: absolute;
-        //   right: 0;
-        //   bottom: 10px;
-        //   span {
-        //     font-size: 14px;
-        //     padding: 8px;
-        //     background-color: #07c160;
-        //     border-radius: 5px;
-        //     color: #fff;
-        //   }
-        // }
+        .requirements {
+          position: absolute;
+          right: 0;
+          bottom: 10px;
+          // span {
+          //   font-size: 14px;
+          //   padding: 8px;
+          //   background-color: #07c160;
+          //   border-radius: 5px;
+          //   color: #fff;
+          // }
+        }
       }
     }
   }

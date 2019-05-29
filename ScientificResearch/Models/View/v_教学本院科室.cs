@@ -80,6 +80,26 @@ namespace ScientificResearch.Models
 		/// 
 		/// </summary>
         public string 备注 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int? 技能病例数 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int? 疾病病例数 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int? 门诊病例数 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int? 住院病例数 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int? 医技病例数 { get; set; }
         
           
         #endregion

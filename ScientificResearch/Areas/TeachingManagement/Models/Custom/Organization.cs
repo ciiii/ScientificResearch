@@ -13,6 +13,7 @@ namespace ScientificResearch.Models
     {
         public string Like名称 { get; set; }
         public bool? 是否启用 { get; set; }
+        public bool? 是否教学科室 { get; set; }
         public int? 上级部门编号 { get; set; }
     }
 

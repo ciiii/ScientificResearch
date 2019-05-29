@@ -5,10 +5,10 @@ using System.ComponentModel;
 namespace ScientificResearch.Models
 {
     /// <summary>
-    /// v_教学专业科室[类]
+    /// v_教学补轮转[类]
     /// </summary>
     [Serializable]
-	public partial class v_教学专业科室 
+	public partial class v_教学补轮转 
 	{       
               
         #region 属性
@@ -19,59 +19,67 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        public int 教学专业编号 { get; set; }
+        public int 教学轮转编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public int 排序值 { get; set; }
+        public int 学员编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public string 科室名称 { get; set; }
+        public string 学员姓名 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public int 最低培训时长 { get; set; }
+        public DateTime 计划入科日期 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public int 最低管床数量 { get; set; }
+        public int? 本院科室编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public int 最低全程管理数量 { get; set; }
+        public string 本院科室名称 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public string 科室要求 { get; set; }
+        public int? 科室管理员编号 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public string 科室管理员姓名 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int? 带教老师编号 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public string 带教老师姓名 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public string 说明 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public DateTime 开始日期 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public DateTime 结束日期 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int 建立人 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public DateTime 建立时间 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
         public string 备注 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public string 教学专业名称 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public int? 技能病例数 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public int? 疾病病例数 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public int? 门诊病例数 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public int? 住院病例数 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public int? 医技病例数 { get; set; }
         
           
         #endregion

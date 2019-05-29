@@ -108,7 +108,7 @@ export default new Router({
             name: 'studentsDormitoryArrangeList',
             component: () =>
                 import('./views/trainingManagement/studentsDormitoryArrange/studentsDormitoryArrangeList.vue'),
-            meta: { title: '学员宿舍安排' }
+            meta: { title: '已安排宿舍列表' }
         },
         {
             path: '/ModifyDormitoryArrange',
@@ -116,6 +116,13 @@ export default new Router({
             component: () =>
                 import('./views/trainingManagement/studentsDormitoryArrange/ModifyDormitoryArrange.vue'),
             meta: { title: '修改学员宿舍安排' }
+        },
+        {
+            path: '/addDormitoryArrange',
+            name: 'addDormitoryArrange',
+            component: () =>
+                import('./views/trainingManagement/studentsDormitoryArrange/addDormitoryArrange.vue'),
+            meta: { title: '学员宿舍安排' }
         },
         {
             path: '/studentsExitTraining',
