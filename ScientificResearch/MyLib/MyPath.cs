@@ -83,6 +83,57 @@ namespace MyLib
         }
 
         /// <summary>
+        /// 2019-5-30 指定是http相对路径;
+        /// </summary>
+        /// <param name="isHttp"></param>
+        /// <param name="paths"></param>
+        /// <returns></returns>
+        public static string CombineUrl(params string[] paths)
+        {
+            if (paths.Length == 0)
+            {
+                throw new ArgumentException($"请传入路径");
+            }
+            else
+            {
+                StringBuilder builder = new StringBuilder();
+                string spliter = HttpSeparatorChar;
+
+                string firstPath = paths[0];
+
+                if (!firstPath.EndsWith(spliter))
+                {
+                    firstPath = firstPath + spliter;
+                }
+                builder.Append(firstPath);
+
+                for (int i = 1; i < paths.Length; i++)
+                {
+                    string nextPath = paths[i];
+                    if (nextPath.StartsWith(DirectorySeparatorChar) || nextPath.StartsWith(HttpSeparatorChar))
+                    {
+                        nextPath = nextPath.Substring(1);
+                    }
+
+                    if (i != paths.Length - 1)//not the last one
+                    {
+                        if (nextPath.EndsWith(DirectorySeparatorChar) || nextPath.EndsWith(HttpSeparatorChar))
+                        {
+                            nextPath = nextPath.Substring(0, nextPath.Length - 1) + spliter;
+                        }
+                        else
+                        {
+                            nextPath = nextPath + spliter;
+                        }
+                    }
+
+                    builder.Append(nextPath);
+                }
+
+                return builder.ToString();
+            }
+        }
+        /// <summary>
         /// 是否是绝对路径,注意:这个路径为文件系统的路径,而不是url;
         /// windows下判断 路径是否包含 ":"
         /// Mac OS、Linux下判断 路径是否包含 "\"

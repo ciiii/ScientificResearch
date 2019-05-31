@@ -72,6 +72,8 @@ namespace ScientificResearch.Models
         /// 未入科,在科,已出科
         /// </summary>
         public string 状态 { get; set; }
+        public string NotEqual状态 { get; set; }
+
     }
 
     public class 按科室统计轮转的结果

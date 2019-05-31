@@ -18,9 +18,16 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
     public class WorkFlowController : TeachingManagementBaseController
     {
 
-        private async Task 完成步骤(StepDone data)
+        private async Task 完成步骤(StepDone step,int state)
         {
-            await MyWorkFlowBusiness.DoneStep(data, CurrentUser.人员类型, CurrentUser.编号);
+            //await MyWorkFlowBusiness.DoneStep(data, CurrentUser.人员类型, CurrentUser.编号);
+
+            Task<int> myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+            {
+                return WorkFlow.DoneStep(dbForTransaction, transaction, step, state, CurrentUser.人员类型, CurrentUser.编号);
+            }
+
+            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
         }
 
         /// <summary>
@@ -31,8 +38,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         [HttpPost]
         async public Task 步骤通过审核([FromBody]StepDone data)
         {
-            data.State = (int)StepState.Forward;
-            await 完成步骤(data);
+            await 完成步骤(data, (int)StepState.Forward);
         }
 
         /// <summary>
@@ -43,8 +49,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         [HttpPost]
         async public Task 步骤不通过审核([FromBody]StepDone data)
         {
-            data.State = (int)StepState.Back;
-            await 完成步骤(data);
+            await 完成步骤(data, (int)StepState.Back);
         }
 
         /// <summary>
@@ -55,8 +60,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         [HttpPost]
         async public Task 终止流程([FromBody]StepDone data)
         {
-            data.State = (int)StepState.Quit;
-            await 完成步骤(data);
+            await 完成步骤(data, (int)StepState.Quit);
         }
 
         /// <summary>

@@ -517,11 +517,6 @@
             但是目前models还无法分开;
             </summary>
         </member>
-        <member name="P:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementBaseController.MyWorkFlowBusiness">
-            <summary>
-            MyWorkFlowBusiness的实例不采用注入
-            </summary>
-        </member>
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.分页获取我的学员(ScientificResearch.Models.Paging,ScientificResearch.Models.教学学员培训情况Filter)">
             <summary>
             医院管理员可以看到所有学员;
@@ -615,6 +610,35 @@
             </summary>
             <param name="data"></param>
             <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.学员发起退培申请(ScientificResearch.Models.FlowInit{ScientificResearch.Models.教学退培申请})">
+            <summary>
+            这个应该是在学员端,目前为了测试方便放在这里,人员类型和编号都是写死的;
+            data是教学退培申请
+            </summary>
+            <param name="date"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.通过退培申请(ScientificResearch.Models.StepDone{System.Int32})">
+            <summary>
+            Data填申请退培的学员编号
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.不通过退培申请(ScientificResearch.Models.StepDone)">
+             <summary>
+            
+             </summary>
+             <param name="data"></param>
+             <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.终止退培申请(ScientificResearch.Models.StepDone)">
+             <summary>
+            
+             </summary>
+             <param name="data"></param>
+             <returns></returns>
         </member>
         <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController">
             <summary>
@@ -1351,6 +1375,7 @@
         <member name="T:ScientificResearch.Models.StepDone`1">
             <summary>
             完成步骤时,提交的数据
+            2019-5-30作废,因为增加了Predefinded2Models类型
             </summary>
             <typeparam name="T"></typeparam>
         </member>
@@ -1375,7 +1400,7 @@
             附加动作的传入数据,比如任职打回去修改时,修改后的数据
             </summary>
         </member>
-        <member name="M:ScientificResearch.Models.StepDone`1.ToSimple(System.Int32)">
+        <member name="M:ScientificResearch.Models.StepDone`1.ToSimple">
             <summary>
             
             </summary>
@@ -1391,16 +1416,52 @@
             完成哪个步骤
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.StepDone.State">
+        <member name="P:ScientificResearch.Models.StepDone.IsHold">
             <summary>
-            完整的状态值,步骤类型状态
-            设为Obsolete仅仅是为了swagger上不可见;
+            需要暂存=true,不暂存=false
+            注意这个和ModelWithIsHold中的IsHold是完全一样的
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.StepDone.Remark">
             <summary>
             
             </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.StepState">
+            <summary>
+            操作流程中步骤的代号
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Models.WorkFlow.InitFlow(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction,System.Int32,System.Int32,System.String,System.Int32,System.String,System.Nullable{System.Int32},System.Boolean)">
+            <summary>
+            注意这个方法一定要放到一个ExecuteTransaction事务里面
+            额外的事情都在自定义的事务里面自己写;
+            接收指定的FlowTemplateId和SourceId,同时生成一个流程,再根据这个流程返回的步骤编号完成第一个步骤;
+            如果不完成第一个步骤,其实就相当于暂存;
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="dbForTransaction"></param>
+            <param name="transaction"></param>
+            <param name="FlowTemplateId"></param>
+            <param name="SourceId"></param>
+            <param name="CreatorType">流程发起人类型</param>
+            <param name="CreatorId">流程发起人id</param>
+            <param name="OperatorType">流程第一步操作人类型</param>
+            <param name="OperatorId">流程第一步操作人id</param>
+            <param name="isHold"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Models.WorkFlow.DoneStep(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction,ScientificResearch.Models.StepDone,System.Int32,System.String,System.Int32)">
+            <summary>
+            完成一个步骤,返回下一个步骤的id,返回0则表示没有下一步了;
+            可以多个附加动作;
+            </summary>
+            <param name="dbForTransaction"></param>
+            <param name="transaction"></param>
+            <param name="step"></param>
+            <param name="OperatorType"></param>
+            <param name="OperatorId"></param>
+            <returns></returns>
         </member>
         <member name="T:ScientificResearch.Models.GET_DeleteScript_MSSQL">
             <summary>
@@ -16977,6 +17038,11 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.VStep.SourceId">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.VStep.StepTemplateId">
             <summary>
             
@@ -19646,62 +19712,6 @@
             <param name="项目编号"></param>
             <returns></returns>
         </member>
-        <member name="T:ScientificResearch.Business.StepState">
-            <summary>
-            操作流程中步骤的代号
-            TODO:business真的不应该存在,放到model对应对象的方法会更好;
-            </summary>
-        </member>
-        <member name="T:ScientificResearch.Business.WorkFlowBusinessOfTeachingManagement">
-            <summary>
-            工作流静态方法
-            事务要是能挂载到db下就好了
-            事务要是能动态构成就更好了
-            
-            </summary>
-        </member>
-        <member name="M:ScientificResearch.Business.WorkFlowBusinessOfTeachingManagement.#ctor(System.String)">
-            <summary>
-            
-            </summary>
-            <param name="dbConnectionString"></param>
-        </member>
-        <member name="M:ScientificResearch.Business.WorkFlowBusinessOfTeachingManagement.InitFlow``1(System.Int32,``0,System.String,System.Int32,System.Boolean,System.Int32,System.String,System.Nullable{System.Int32})">
-            <summary>
-            执行一个将返回新建项目编号的sp,同时生成一个流程,再根据这个流程返回的步骤编号完成第一个步骤;
-            如果不完成第一个步骤,其实就相当于暂存;
-            </summary>
-            <param name="FlowTemplateId"></param>
-            <param name="model"></param>
-            <param name="OperatorType"></param>
-            <param name="OperatorId"></param>
-            <param name="isHold"></param>
-            <param name="State"></param>
-            <param name="CreatorType"></param>
-            <param name="CreatorId">不是有项目发起人发起的流程时,需要填写一下发起人,比如纵向立项登记时</param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Business.WorkFlowBusinessOfTeachingManagement.DoneStep(ScientificResearch.Models.StepDone,System.String,System.Int32)">
-            <summary>
-            没有附加动作的完成步骤
-            </summary>
-            <param name="step"></param>
-            <param name="OperatorType"></param>
-            <param name="OperatorId"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Business.WorkFlowBusinessOfTeachingManagement.DoneStep(ScientificResearch.Models.StepDone,System.String,System.Int32,System.Collections.Generic.List{ScientificResearch.Infrastucture.PredefindedSPStructure},System.Boolean)">
-            <summary>
-            完成一个步骤,返回下一个步骤的id,返回0则表示没有下一步了;
-            可以多个附加动作;
-            </summary>
-            <param name="step"></param>
-            <param name="OperatorType"></param>
-            <param name="OperatorId"></param>
-            <param name="SPList"></param>
-            <param name="isHold"></param>
-            <returns></returns>
-        </member>
         <member name="M:ScientificResearch.Controllers.AcademicActivitiesController.发起一个主办讲座流程(ScientificResearch.Models.主办讲座申请增改)">
             <summary>
             发起一个主办讲座流程
@@ -21329,6 +21339,14 @@
             <summary>
             url和文件系统的路径都可处理,文件系统指的是windows的而不是mac os 或者linus(这两个下分割符是/)
             </summary>
+            <param name="paths"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MyLib.MyPath.CombineUrl(System.String[])">
+            <summary>
+            2019-5-30 指定是http相对路径;
+            </summary>
+            <param name="isHttp"></param>
             <param name="paths"></param>
             <returns></returns>
         </member>

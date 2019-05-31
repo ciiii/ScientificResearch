@@ -314,7 +314,7 @@ namespace ScientificResearch.Controllers
             httpClient.DefaultRequestHeaders.Add("Cache-Control", "max-age=0");
             httpClient.DefaultRequestHeaders.Add("Upgrade-Insecure-Requests", "1");
             httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.80 Safari/537.36");
-            httpClient.DefaultRequestHeaders.Add("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
+            httpClient.DefaultRequestHeaders.Add("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
             httpClient.DefaultRequestHeaders.Add("Referer", "https://www.baidu.com/");
             httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
             httpClient.DefaultRequestHeaders.Add("Cookie", "BD_UPN=12314753; ispeed_lsm=2; BAIDUID=6D149D5512AA8DD7F19ACEEB5966E39F:FG=1; PSTM=1555032264; H_PS_PSSID=1457_21096_18560_28769_28722_28557_28835_28585_26350_28603_28625_28605; BIDUPSID=8A865DD04526B3D71CC0F2D52EFAC4EC; BDORZ=B490B5EBF6F3CD402E515D22BCDA1598; delPer=0; BD_CK_SAM=1; PSINO=3; H_PS_645EC=bf5emVTwLUbIYx0ujrAjhpprhjqEm8FX67T4bMeU5GEYsK3E0vj3npqNg1k; BDUSS=DdYWGRjM2JqOVJPVnJ3a3ZiaU9qM1M2SW9GSmFlaEtUTzJZRFBJM3Z4SkcxTmRjRVFBQUFBJCQAAAAAAAAAAAEAAAApDGqCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEZHsFxGR7BcS; BD_HOME=1");
@@ -361,7 +361,7 @@ namespace ScientificResearch.Controllers
         async public Task<object> 测试获取整个知网页面的html(params object[] param)
         {
             var httpClient = new HttpClient();
-           
+
             //请求并,如果验证非200返回则报错;
             var response = await httpClient.GetAsync(@"http://www.cnki.net/" + MyHttpLib.ObjToQueryParam(param));
 
@@ -535,7 +535,7 @@ namespace ScientificResearch.Controllers
         }
 
         [HttpPost]
-        async public  Task<object> 测试发送微信模板消息([FromBody]MyWxTemplate myData)
+        async public Task<object> 测试发送微信模板消息([FromBody]MyWxTemplate myData)
         {
             var appId = Config.GetValue<string>(Env.IsDevelopment() == true ? "WechatSetting:TestappId" : "WechatSetting:appId");
             var appSecret = Config.GetValue<string>(Env.IsDevelopment() == true ? "WechatSetting:TestappSecret" : "WechatSetting:appSecret");
@@ -548,7 +548,7 @@ namespace ScientificResearch.Controllers
                 data = new MyWxData()
                 {
                     first = new MyWxFirst() { value = "小贾同志" },
-                    keyword1 = new MyWxKeynote() { value = "你的模板消息" ,color = "red"},
+                    keyword1 = new MyWxKeynote() { value = "你的模板消息", color = "red" },
                     keyword2 = new MyWxKeynote() { value = "老子" },
                     keyword3 = new MyWxKeynote() { value = "给你搞定了" },
                     keyword4 = new MyWxKeynote() { value = "你要请我吃饭" },
@@ -604,6 +604,17 @@ namespace ScientificResearch.Controllers
         public object 测试取得enum中具体某个值的中文名()
         {
             return 教学轮转状态.已出科.ToString();
+        }
+
+        [HttpGet]
+        public object 测试combine()
+        {
+            return new
+            {
+                path = Path.Combine("/", "upload", $"123.txt"),
+                myPath1 = MyPath.CombineUrl("/", "upload", $"123.txt"),
+                myPath2 = MyPath.CombineUrl("http://www.baidu.com", "upload", $"123.txt")
+            };
         }
     }
 }

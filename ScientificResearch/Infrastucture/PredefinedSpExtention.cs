@@ -45,6 +45,12 @@ namespace ScientificResearch.Infrastucture
         public IEnumerable<TList> List { get; set; }
     }
 
+    public class Predefinded2Models<T1, T2>
+    {
+        public T1 FirstModel { get; set; }
+        public T2 SecondModel { get; set; }
+    }
+
     /// <summary>
     /// 用一个Name+一个Object表示一个可执行的SP的数据;
     /// </summary>

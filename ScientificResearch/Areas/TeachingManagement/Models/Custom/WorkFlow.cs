@@ -1,12 +1,22 @@
-﻿using System;
+﻿using ScientificResearch.Infrastucture;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ScientificResearch.Models
 {
+
+    public class FlowInit<T>
+    {
+        public bool IsHold { get; set; } = false;
+        public T Data { get; set; }
+    }
+
     /// <summary>
     /// 完成步骤时,提交的数据
+    /// 2019-5-30作废,因为增加了Predefinded2Models类型
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class StepDone<T>
@@ -41,17 +51,17 @@ namespace ScientificResearch.Models
         /// 
         /// </summary>
         /// <returns></returns>
-        public StepDone ToSimple(int state)
+        public StepDone ToSimple()
         {
             return new StepDone()
             {
                 StepId = this.StepId,
-                State = state,
+                //State = state,
+                IsHold = this.IsHold,
                 Remark = this.Remark
             };
         }
     }
-
 
     /// <summary>
     /// 完成步骤时,提交的数据,只是这个没有附加数据,没有IsHold
@@ -98,8 +108,14 @@ namespace ScientificResearch.Models
         /// 完整的状态值,步骤类型状态
         /// 设为Obsolete仅仅是为了swagger上不可见;
         /// </summary>
-        [Obsolete]
-        public int State { get; set; }
+        //[Obsolete]
+        //public int State { get; set; }
+        /// <summary>
+        /// 需要暂存=true,不暂存=false
+        /// 注意这个和ModelWithIsHold中的IsHold是完全一样的
+        /// </summary>
+        public bool IsHold { get; set; } = false;
+
         /// <summary>
         /// 
         /// </summary>
@@ -110,5 +126,113 @@ namespace ScientificResearch.Models
     public class StepTemplateFilter
     {
         public int FlowTemplateId { get; set; }
+    }
+
+    /// <summary>
+    /// 操作流程中步骤的代号
+    /// </summary>
+    public enum StepState
+    {
+        Stay = 0, Forward = 1, Back = -1, Quit = -2
+    }
+
+    public static class WorkFlow
+    {
+        private const string _nextStepIdPropName = "NextStepId";
+
+        #region flow
+        /// <summary>
+        /// 注意这个方法一定要放到一个ExecuteTransaction事务里面
+        /// 额外的事情都在自定义的事务里面自己写;
+        /// 接收指定的FlowTemplateId和SourceId,同时生成一个流程,再根据这个流程返回的步骤编号完成第一个步骤;
+        /// 如果不完成第一个步骤,其实就相当于暂存;
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dbForTransaction"></param>
+        /// <param name="transaction"></param>
+        /// <param name="FlowTemplateId"></param>
+        /// <param name="SourceId"></param>
+        /// <param name="CreatorType">流程发起人类型</param>
+        /// <param name="CreatorId">流程发起人id</param>
+        /// <param name="OperatorType">流程第一步操作人类型</param>
+        /// <param name="OperatorId">流程第一步操作人id</param>
+        /// <param name="isHold"></param>
+        /// <returns></returns>
+        async static public Task InitFlow(
+            SqlConnection dbForTransaction,
+            SqlTransaction transaction,
+            int FlowTemplateId,
+            int SourceId,
+            string CreatorType,
+            int CreatorId,
+            string OperatorType = null,
+            int? OperatorId = null,
+            bool isHold = false)
+        {
+            //发起流程 
+            var StepId = await dbForTransaction.QueryFirstSpAsync<SPFlowInit, int>(new SPFlowInit
+            {
+                FlowTemplateId = FlowTemplateId,
+                SourceId = SourceId,
+                CreatorId = CreatorId,
+                CreatorType = CreatorType
+            }, transaction);
+            if (StepId == 0)
+            {
+                throw new Exception("发起流程出错:流程生成失败");
+            }
+
+            if (!isHold)
+            {
+                //完成这个步骤
+                await dbForTransaction.ExecuteSpAsync(new SPStepDone
+                {
+                    StepId = StepId,
+                    State = (int)StepState.Forward,
+                    OperatorType = OperatorType ?? CreatorType,
+                    OperatorId = OperatorId ?? CreatorId,
+                    Remark = string.Empty
+                }, transaction);
+            }
+        }
+
+        #endregion
+
+        #region step
+        /// <summary>
+        /// 完成一个步骤,返回下一个步骤的id,返回0则表示没有下一步了;
+        /// 可以多个附加动作;
+        /// </summary>
+        /// <param name="dbForTransaction"></param>
+        /// <param name="transaction"></param>
+        /// <param name="step"></param>
+        /// <param name="OperatorType"></param>
+        /// <param name="OperatorId"></param>
+        /// <returns></returns>
+        async static public Task<int> DoneStep(
+            SqlConnection dbForTransaction,
+            SqlTransaction transaction,
+            StepDone step,
+            int state,
+            string OperatorType,
+            int OperatorId)
+        {
+            var NextStepId = 0;
+            if (!step.IsHold)
+            {
+                NextStepId = await dbForTransaction.QueryFirstSpAsync<SPStepDone, int>(new SPStepDone
+                {
+                    StepId = step.StepId,
+                    State = state,
+                    Remark = step.Remark,
+                    OperatorType = OperatorType,
+                    OperatorId = OperatorId
+                }, transaction);
+            }
+            // 0 表示没有下一步
+            return NextStepId;
+        }
+
+        #endregion
     }
 }

@@ -88,6 +88,7 @@ namespace MyLib
             //relativePath = Path.Combine(relativePath, DateTime.Now.ToString("yyyyMMdd"));
 
             //wwwroot的绝对路径\测试路径\2018-1-1
+            //这里是window路径.但其实absolutePath是url形式,也就是反斜杠/也可以根据此认出本地文件;
             var path = Path.Combine(absolutePath, relativePath);
             if (!Directory.Exists(path))
             {
@@ -118,7 +119,8 @@ namespace MyLib
                     fs.Flush();
                 }
 
-                filesNameList.Add(Path.Combine("/", relativePath, $"{fileName}"));
+                filesNameList.Add(MyPath.CombineUrl("/", relativePath, $"{fileName}"));
+                
             }
             return filesNameList;
         }

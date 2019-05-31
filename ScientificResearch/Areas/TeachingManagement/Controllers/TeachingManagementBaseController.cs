@@ -24,12 +24,12 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         /// <summary>
         /// MyWorkFlowBusiness的实例不采用注入
         /// </summary>
-        protected Business.WorkFlowBusinessOfTeachingManagement MyWorkFlowBusiness
-        {
-            get
-            {
-                return new Business.WorkFlowBusinessOfTeachingManagement(DbConnectionString);
-            }
-        }
+        //protected Business.WorkFlowBusinessOfTeachingManagement MyWorkFlowBusiness
+        //{
+        //    get
+        //    {
+        //        return new Business.WorkFlowBusinessOfTeachingManagement(DbConnectionString);
+        //    }
+        //}
     }
 }

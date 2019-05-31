@@ -27,6 +27,10 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        public int SourceId { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
         public int StepTemplateId { get; set; }
         /// <summary>
 		/// 
