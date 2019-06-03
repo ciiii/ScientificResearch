@@ -129,13 +129,29 @@ namespace ScientificResearch.Models
     }
 
     /// <summary>
-    /// 操作流程中步骤的代号
+    /// 流程状态的enum
+    /// 步骤状态应该是每个具体的stepTemplate有各自的状态
+    /// 如果在前端写死不需要从后端获取的话,没啥用....
+    /// </summary>
+    //public enum 流程状态
+    //{
+    //    未完成 =0,
+    //    已完成 =1,
+    //    作废 = -2,
+    //    已过期 = -3
+    //}
+
+    /// <summary>
+    /// 操作流程中步骤的代号,这个代表的是"动作"
     /// </summary>
     public enum StepState
     {
         Stay = 0, Forward = 1, Back = -1, Quit = -2
     }
 
+    /// <summary>
+    /// 工作流的动作
+    /// </summary>
     public static class WorkFlow
     {
         private const string _nextStepIdPropName = "NextStepId";

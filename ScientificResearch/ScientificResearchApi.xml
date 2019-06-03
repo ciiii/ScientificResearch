@@ -529,7 +529,6 @@
         </member>
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.分页获取学员报到情况(ScientificResearch.Models.Paging,ScientificResearch.Models.教学学员报到Filter)">
             <summary>
-            注意:Null报到时间 = true是所有未报到的学员; = false 是所有已报到的学员;
             </summary>
             <param name="paging"></param>
             <param name="filter"></param>
@@ -583,6 +582,24 @@
             <param name="data"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.更新教学学员培训计划日期(System.Collections.Generic.IEnumerable{ScientificResearch.Models.教学轮转},System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="data"></param>
+            <param name="dbForTransaction"></param>
+            <param name="transaction"></param>
+            <param name="是否最终结果">真:传入的是最终的轮转数据,假:传入的是新增的部分轮转数据</param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.批量删除教学轮转(System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            为什么要单独删除,而不是传入某学员轮转的最终安排,后台删除不在传入的数据呢?
+            1 可能传入很多人的教学轮转
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.获取某学员的教学轮转(System.Int32)">
             <summary>
             看某个学员的所有轮转
@@ -611,60 +628,10 @@
             <param name="data"></param>
             <returns></returns>
         </member>
-        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.学员发起退培申请(ScientificResearch.Models.FlowInit{ScientificResearch.Models.教学退培申请})">
-            <summary>
-            这个应该是在学员端,目前为了测试方便放在这里,人员类型和编号都是写死的;
-            data是教学退培申请
-            </summary>
-            <param name="date"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.通过退培申请(ScientificResearch.Models.StepDone{System.Int32})">
-            <summary>
-            Data填申请退培的学员编号
-            </summary>
-            <param name="data"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.不通过退培申请(ScientificResearch.Models.StepDone)">
-             <summary>
-            
-             </summary>
-             <param name="data"></param>
-             <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.终止退培申请(ScientificResearch.Models.StepDone)">
-             <summary>
-            
-             </summary>
-             <param name="data"></param>
-             <returns></returns>
-        </member>
         <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController">
             <summary>
             工作流相关的接口
             </summary>
-        </member>
-        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.步骤通过审核(ScientificResearch.Models.StepDone)">
-            <summary>
-            审核等不需要附加动作的操作,可以直接调用这个接口;
-            </summary>
-            <param name="data"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.步骤不通过审核(ScientificResearch.Models.StepDone)">
-            <summary>
-            
-            </summary>
-            <param name="data"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.终止流程(ScientificResearch.Models.StepDone)">
-            <summary>
-            
-            </summary>
-            <param name="data"></param>
-            <returns></returns>
         </member>
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.分页获取办事流程列表(ScientificResearch.Models.Paging)">
             <summary>
@@ -679,6 +646,43 @@
             </summary>
             <param name="办事流程编号"></param>
             <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.学员分页查看退培申请(ScientificResearch.Models.Paging,ScientificResearch.Models.v_tfn_教学退培申请Filter)">
+            <summary>
+            这个应该是在学员端,目前为了测试方便放在这里,人员类型和编号都是写死的;
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.学员发起退培申请(ScientificResearch.Models.FlowInit{ScientificResearch.Models.教学退培申请})">
+            <summary>
+            这个应该是在学员端,目前为了测试方便放在这里,人员类型和编号都是写死的;
+            data是教学退培申请
+            </summary>
+            <param name="date"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.通过退培申请(ScientificResearch.Models.StepDone{System.Int32})">
+            <summary>
+            Data填申请退培的学员编号
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.不通过退培申请(ScientificResearch.Models.StepDone)">
+             <summary>
+            
+             </summary>
+             <param name="data"></param>
+             <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.终止退培申请(ScientificResearch.Models.StepDone)">
+             <summary>
+            
+             </summary>
+             <param name="data"></param>
+             <returns></returns>
         </member>
         <member name="T:ScientificResearch.Models.CurrentUserOfManage">
             <summary>
@@ -1372,6 +1376,11 @@
             未入科,在科,已出科
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请Filter.StateName">
+            <summary>
+            流程状态有:未完成,已完成,作废,
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.StepDone`1">
             <summary>
             完成步骤时,提交的数据
@@ -1429,7 +1438,12 @@
         </member>
         <member name="T:ScientificResearch.Models.StepState">
             <summary>
-            操作流程中步骤的代号
+            操作流程中步骤的代号,这个代表的是"动作"
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.WorkFlow">
+            <summary>
+            工作流的动作
             </summary>
         </member>
         <member name="M:ScientificResearch.Models.WorkFlow.InitFlow(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction,System.Int32,System.Int32,System.String,System.Int32,System.String,System.Nullable{System.Int32},System.Boolean)">
@@ -16898,7 +16912,7 @@
             VFlow[类]
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.VFlow.Id">
+        <member name="P:ScientificResearch.Models.VFlow.FlowId">
             <summary>
             
             </summary>
@@ -17194,6 +17208,281 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.VTFN某医院购买的服务.是否启用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_tfn_教学退培申请">
+            <summary>
+            v_tfn_教学退培申请[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.学员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.说明">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.申请退培日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.学员类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.学员类型名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.工号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.头像路径">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.性别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.学员培训年界">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.学员培训年限">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.往届应届">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.专业编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.专业名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.送培方式">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.状态">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.报到时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.教学本院策略编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.教学本院策略名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.计划开始培训日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.计划结束培训日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.实际开始培训日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.实际结束培训日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.退培日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.结业日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.证书">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.FlowId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.FlowTemplateId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.FlowTemplateName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.FlowTemplateComponentName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.SourceId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.State">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.StateName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.CreatorType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.CreatorId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.CreatorInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.CreateDateTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.Remark">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.LastStepId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.LastStepTemplateId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.LastStepTemplateName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.LastViewStepComponentName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.LastEditStepComponentName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.LastStepTemplateStyle">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.LastStepState">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.LastStepStateName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.LastStepOperatorType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.LastStepOperatorId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.LastStepOpeartorInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.LastStepOperatorDatetime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请.IsCanOperate">
             <summary>
             
             </summary>
@@ -18093,106 +18382,6 @@
             
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.v_教学学员培训情况.民族">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员培训情况.证件类型">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员培训情况.证件号码">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员培训情况.出生日期">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员培训情况.手机号码">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员培训情况.政治面貌">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员培训情况.电子邮箱">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员培训情况.QQ号码">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员培训情况.微信号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员培训情况.家庭住址">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员培训情况.取得执业证书日期">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员培训情况.执业证书编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员培训情况.取得医师资格证书日期">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员培训情况.医师资格证书编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员培训情况.最高学历">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员培训情况.毕业年份">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员培训情况.毕业学校">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员培训情况.毕业专业">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员培训情况.毕业证编码">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员培训情况.学位证编码">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="P:ScientificResearch.Models.v_教学学员培训情况.学员培训年界">
             <summary>
             
@@ -18223,26 +18412,6 @@
             
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.v_教学学员培训情况.工作单位">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员培训情况.医疗卫生机构">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员培训情况.建立时间">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员培训情况.备注">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="P:ScientificResearch.Models.v_教学学员培训情况.状态">
             <summary>
             
@@ -18254,6 +18423,11 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_教学学员培训情况.教学本院策略编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.教学本院策略名称">
             <summary>
             
             </summary>
@@ -18333,106 +18507,6 @@
             
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.民族">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.证件类型">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.证件号码">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.出生日期">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.手机号码">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.政治面貌">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.电子邮箱">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.QQ号码">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.微信号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.家庭住址">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.取得执业证书日期">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.执业证书编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.取得医师资格证书日期">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.医师资格证书编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.最高学历">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.毕业年份">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.毕业学校">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.毕业专业">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.毕业证编码">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.学位证编码">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.学员培训年界">
             <summary>
             
@@ -18459,16 +18533,6 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.送培方式">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.工作单位">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学学员宿舍安排.医疗卫生机构">
             <summary>
             
             </summary>
@@ -18634,6 +18698,11 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_教学学员报到.教学本院策略编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员报到.教学本院策略名称">
             <summary>
             
             </summary>

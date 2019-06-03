@@ -79,6 +79,10 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        public string 教学本院策略名称 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
         public DateTime? 计划开始培训日期 { get; set; }
         /// <summary>
 		/// 

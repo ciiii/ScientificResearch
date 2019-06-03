@@ -27,11 +27,11 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         [HttpGet]
         public async Task<object> 分页获取我的学员(Paging paging, 教学学员培训情况Filter filter)
         {
-            return await Db.GetPagingListSpAsync<v_教学学员培训情况, 教学学员培训情况Filter>(paging, filter, $"tfn_我的学员({CurrentUser.编号})");
+            return await Db.GetPagingListSpAsync<v_教学学员培训情况, 教学学员培训情况Filter>
+                (paging, filter, $"tfn_我的学员('{CurrentUser.人员类型}',{CurrentUser.编号})");
         }
 
         /// <summary>
-        /// 注意:Null报到时间 = true是所有未报到的学员; = false 是所有已报到的学员;
         /// </summary>
         /// <param name="paging"></param>
         /// <param name="filter"></param>
@@ -51,6 +51,10 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         /// <returns></returns>
         [HttpPost]
         public async Task<object> 增改学员报到([FromBody]教学学员培训 data) =>
+            await Db.Merge(data);
+
+        [HttpPost]
+        public async Task<object> 批量增改学员报到([FromBody]IEnumerable<教学学员培训> data) =>
             await Db.Merge(data);
 
         /// <summary>
@@ -221,40 +225,19 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         [HttpPost]
         async public Task 增改教学轮转([FromBody]IEnumerable<教学轮转> data)
         {
+            var 要更新的v轮转 = await Db.GetListSpAsync<v_教学轮转, 教学轮转Filter>(new 教学轮转Filter()
+            {
+                WhereIn编号 = data.Where(i => i.编号 != 0).Select(j => j.编号).ToStringIdWithSpacer()
+            });
+
+            if (要更新的v轮转.Any(i => i.状态 == 教学轮转状态.已出科.ToString()))
+            {
+                throw new Exception("已出科的轮状不能再修改");
+            }
 
             async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
             {
-
-                var 按学员分组的教学轮转 = from item in data
-                                 group item by item.学员编号 into g
-                                 select new 学员最小开始和最大结束计划培训时间()
-                                 {
-                                     学员编号 = g.Key,
-                                     最小计划入科日期 = g.Min(i => (DateTime)i.计划入科日期),
-                                     最大计划出科日期 = g.Max(i => (DateTime)i.计划出科日期)
-                                 };
-
-                var 将要更新的教学学员培训列表 = await dbForTransaction.GetListSpAsync<教学学员培训, 教学学员培训情况Filter>
-                    (new 教学学员培训情况Filter()
-                    {
-                        WhereIn编号 = 按学员分组的教学轮转.Select(i => i.学员编号).ToStringIdWithSpacer()
-                    }, transaction: transaction);
-
-                await dbForTransaction.Merge(将要更新的教学学员培训列表.Select(i =>
-                {
-                    var 某学员最小开始和最大结束计划培训时间 = 按学员分组的教学轮转.Where(j => j.学员编号 == i.编号).FirstOrDefault();
-                    if (i.计划开始培训日期 == null || i.计划开始培训日期 > 某学员最小开始和最大结束计划培训时间.最小计划入科日期)
-                    {
-                        i.计划开始培训日期 = 某学员最小开始和最大结束计划培训时间.最小计划入科日期;
-                    }
-
-                    if (i.计划结束培训日期 == null || i.计划结束培训日期 < 某学员最小开始和最大结束计划培训时间.最大计划出科日期)
-                    {
-                        i.计划结束培训日期 = 某学员最小开始和最大结束计划培训时间.最大计划出科日期;
-                    }
-
-                    return i;
-                }), transaction);
+                await 更新教学学员培训计划日期(data, dbForTransaction, transaction, false);
 
                 var 将增加的教学轮转任务列表 = new List<教学轮转任务>();
                 foreach (var item in data.Where(i => i.编号 == 0))
@@ -292,14 +275,99 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
                 await dbForTransaction.Merge(data.Where(i => i.编号 != 0), transaction);
 
             }
-
             await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="dbForTransaction"></param>
+        /// <param name="transaction"></param>
+        /// <param name="是否最终结果">真:传入的是最终的轮转数据,假:传入的是新增的部分轮转数据</param>
+        /// <returns></returns>
+        private static async Task 更新教学学员培训计划日期(
+            IEnumerable<教学轮转> data,
+            SqlConnection dbForTransaction,
+            SqlTransaction transaction,
+            bool 是否最终结果)
+        {
+            var 按学员分组的教学轮转 = from item in data
+                             group item by item.学员编号 into g
+                             select new 学员最小开始和最大结束计划培训时间()
+                             {
+                                 学员编号 = g.Key,
+                                 最小计划入科日期 = g.Min(i => (DateTime)i.计划入科日期),
+                                 最大计划出科日期 = g.Max(i => (DateTime)i.计划出科日期)
+                             };
 
+            var 将要更新的教学学员培训列表 = await dbForTransaction.GetListSpAsync<教学学员培训, 教学学员培训情况Filter>
+                (new 教学学员培训情况Filter()
+                {
+                    WhereIn编号 = 按学员分组的教学轮转.Select(i => i.学员编号).ToStringIdWithSpacer()
+                }, transaction: transaction);
+
+            await dbForTransaction.Merge(将要更新的教学学员培训列表.Select(i =>
+            {
+                var 某学员最小开始和最大结束计划培训时间 = 按学员分组的教学轮转.Where(j => j.学员编号 == i.编号).FirstOrDefault();
+
+                if (是否最终结果 == true)
+                {
+                    i.计划开始培训日期 = 某学员最小开始和最大结束计划培训时间.最小计划入科日期;
+                    i.计划结束培训日期 = 某学员最小开始和最大结束计划培训时间.最大计划出科日期;
+                }
+                else
+                {
+                    if (i.计划开始培训日期 == null || i.计划开始培训日期 > 某学员最小开始和最大结束计划培训时间.最小计划入科日期)
+                    {
+                        i.计划开始培训日期 = 某学员最小开始和最大结束计划培训时间.最小计划入科日期;
+                    }
+
+                    if (i.计划结束培训日期 == null || i.计划结束培训日期 < 某学员最小开始和最大结束计划培训时间.最大计划出科日期)
+                    {
+                        i.计划结束培训日期 = 某学员最小开始和最大结束计划培训时间.最大计划出科日期;
+                    }
+                }
+
+                return i;
+            }), transaction);
+        }
+
+        /// <summary>
+        /// 为什么要单独删除,而不是传入某学员轮转的最终安排,后台删除不在传入的数据呢?
+        /// 1 可能传入很多人的教学轮转
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         [HttpPost]
-        async public Task 批量删除教学轮转([FromBody]IEnumerable<int> data) =>
-            await Db.Delete<教学轮转>(data);
+        async public Task 批量删除教学轮转([FromBody]IEnumerable<int> data)
+        {
+            var 要删除的教学轮转 = await Db.GetListSpAsync<v_教学轮转, 教学轮转Filter>(new 教学轮转Filter()
+            {
+                WhereIn编号 = data.ToStringIdWithSpacer()
+            });
+
+            if (要删除的教学轮转.Any(i => i.状态 != 教学轮转状态.未入科.ToString()))
+            {
+                throw new Exception("只有未入科的轮转才能被删除");
+            }
+
+            var 要删除轮转的学员编号 = 要删除的教学轮转.Select(i => i.学员编号).Distinct();
+
+            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+            {
+
+                await Db.Delete<教学轮转>(data);
+
+                var 删除之后的这些学员的教学轮转 = await Db.GetListSpAsync<教学轮转, 教学轮转Filter>(new 教学轮转Filter()
+                {
+                    WhereIn学员编号 = 要删除轮转的学员编号.ToStringIdWithSpacer()
+                });
+
+                await 更新教学学员培训计划日期(删除之后的这些学员的教学轮转, dbForTransaction, transaction, true);
+            }
+            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+        }
 
         [HttpPost]
         async public Task 增改教学轮转任务([FromBody]IEnumerable<教学轮转任务> data) =>
@@ -338,7 +406,8 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         [HttpGet]
         public async Task<object> 分页获取我的学员的教学轮转(Paging paging, 教学学员培训情况Filter filter)
         {
-            var 分页的学员 = await Db.GetPagingListSpAsync<v_教学学员培训情况, 教学学员培训情况Filter>(paging, filter, $"tfn_我的学员({CurrentUser.编号})");
+            var 分页的学员 = await Db.GetPagingListSpAsync<v_教学学员培训情况, 教学学员培训情况Filter>
+                (paging, filter, $"tfn_我的学员('{CurrentUser.人员类型}',{CurrentUser.编号})");
 
             var 学员的轮转 = await Db.GetListSpAsync<v_教学轮转, 教学轮转Filter>(new 教学轮转Filter()
             {
@@ -358,7 +427,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         }
 
         [HttpGet]
-        public async Task<object> 按科室统计轮转(DateTime beginDate, DateTime endDate)
+        public async Task<object> 按科室统计轮转([Required]DateTime beginDate, [Required]DateTime endDate)
         {
             var 教学科室 = await Db.GetListSpAsync<v_教学科室, 教学科室Filter>(new 教学科室Filter() { 是否教学科室 = true });
 
@@ -402,7 +471,6 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         [HttpGet]
         async public Task<object> 分页获取教学补轮转(Paging paging, v_教学补轮转Filter filter) =>
             await Db.GetPagingListSpAsync<v_教学补轮转, v_教学补轮转Filter>(paging, filter);
-
         /// <summary>
         /// 教学补轮转
         /// 在某个未入科或者在科的教学轮转上增加计划出科日期;
@@ -471,151 +539,6 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
         }
 
-        /// <summary>
-        /// 这个应该是在学员端,目前为了测试方便放在这里,人员类型和编号都是写死的;
-        /// data是教学退培申请
-        /// </summary>
-        /// <param name="date"></param>
-        /// <returns></returns>
-        [HttpPost]
-        async public Task 学员发起退培申请([FromBody]FlowInit<教学退培申请> data)
-        {
-            //这里是伪数据
-            data.IsHold = false;
-            var 人员类型 = "教学学员";
-            var 学员编号 = 1; //王苏麻子
 
-            //只有已报到且未退培且未结业的学员可以退培;
-            var 学员培训情况 = await Db.GetModelByIdSpAsync<v_教学学员培训情况>(学员编号);
-            if (学员培训情况.状态 == 教学学员培训状态.未报到.ToString() ||
-                学员培训情况.状态 == 教学学员培训状态.退培.ToString() ||
-                学员培训情况.状态 == 教学学员培训状态.结业.ToString())
-            {
-                throw new Exception("未报到,已退培,已结业的学员不能再发起退培");
-            }
-
-            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
-            {
-                var 发起的退培申请 = await dbForTransaction.Merge(data.Data, transaction);
-
-                await WorkFlow.InitFlow(
-                    dbForTransaction,
-                    transaction,
-                    Config.GetValue<int>("教学流程模板编号:教学退培申请"),
-                    发起的退培申请.编号,
-                    人员类型,
-                    学员编号,
-                    isHold: data.IsHold);
-            }
-
-            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
-        }
-
-        [HttpPost]
-        async public Task 学员提交退培申请([FromBody]StepDone<教学退培申请> data)
-        {
-            //这里是伪数据
-            data.IsHold = false;
-            var 人员类型 = "教学学员";
-            var 学员编号 = 1; //王苏麻子
-
-            //只有已报到且未退培且未结业的学员可以退培;
-            var 学员培训情况 = await Db.GetModelByIdSpAsync<v_教学学员培训情况>(学员编号);
-            if (学员培训情况.状态 == 教学学员培训状态.未报到.ToString() ||
-                学员培训情况.状态 == 教学学员培训状态.退培.ToString() ||
-                学员培训情况.状态 == 教学学员培训状态.结业.ToString())
-            {
-                throw new Exception("未报到,已退培,已结业的学员不能再发起退培");
-            }
-
-            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
-            {
-                var 发起的退培申请 = await dbForTransaction.Merge(data.Data, transaction);
-
-                await WorkFlow.DoneStep(
-                    dbForTransaction, 
-                    transaction, 
-                    data.ToSimple(), 
-                    (int)StepState.Forward, 人员类型,
-                    学员编号);
-            }
-
-            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
-        }
-
-        /// <summary>
-        /// Data填申请退培的学员编号
-        /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        [HttpPost]
-        async public Task 通过退培申请([FromBody]StepDone<int> data)
-        {
-            var 学员编号 = data.Data;
-            //var 步骤详情 = await Db.GetModelByIdSpAsync<VStep>(data.StepId,);
-            //var 退培申请详情 = await Db.GetModelByIdSpAsync<教学退培申请>(步骤详情.SourceId);
-            var 学员培训情况详情 = await Db.GetModelByIdSpAsync<v_教学学员培训情况>(学员编号);
-
-            if (学员培训情况详情.状态 == 教学学员培训状态.未报到.ToString() ||
-                学员培训情况详情.状态 == 教学学员培训状态.退培.ToString() ||
-                学员培训情况详情.状态 == 教学学员培训状态.结业.ToString())
-            {
-                throw new Exception("已退培,已结业的学员不能退培");
-            }
-
-            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
-            {
-                //流程上通过申请
-                await WorkFlow.DoneStep(dbForTransaction, transaction, data.ToSimple(), (int)StepState.Forward, CurrentUser.人员类型, CurrentUser.编号);
-
-                //教学学员培训状态要改为退培
-                var 学员培训情况 = await Db.GetModelByIdSpAsync<教学学员培训>(学员编号);
-                学员培训情况.退培日期 = DateTime.Now;
-                await dbForTransaction.Merge(学员培训情况, transaction);
-
-                //该学员轮转中,未入科的和在科的都删掉;
-                var 该学员未入科和在科的轮转 = await dbForTransaction.GetListSpAsync<v_教学轮转, 教学轮转Filter>(new 教学轮转Filter()
-                {
-                    学员编号 = 学员编号,
-                    NotEqual状态 = 教学轮转状态.已出科.ToString()
-                }, transaction: transaction);
-
-                await dbForTransaction.Delete<教学轮转>(该学员未入科和在科的轮转.Select(i => i.编号), transaction);
-            }
-
-            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        [HttpPost]
-        async public Task 不通过退培申请([FromBody]StepDone data)
-        {
-            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
-            {
-                await WorkFlow.DoneStep(dbForTransaction, transaction, data, (int)StepState.Back, CurrentUser.人员类型, CurrentUser.编号);
-            }
-
-            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        [HttpPost]
-        async public Task 终止退培申请([FromBody]StepDone data)
-        {
-            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
-            {
-                await WorkFlow.DoneStep(dbForTransaction, transaction, data, (int)StepState.Quit, CurrentUser.人员类型, CurrentUser.编号);
-            }
-
-            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
-        }
     }
 }

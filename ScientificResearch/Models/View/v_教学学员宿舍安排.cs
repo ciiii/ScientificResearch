@@ -43,86 +43,6 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        public string 民族 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public string 证件类型 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public string 证件号码 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public DateTime? 出生日期 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public string 手机号码 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public string 政治面貌 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public string 电子邮箱 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public string QQ号码 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public string 微信号 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public string 家庭住址 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public DateTime? 取得执业证书日期 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public string 执业证书编号 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public DateTime? 取得医师资格证书日期 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public string 医师资格证书编号 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public string 最高学历 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public int? 毕业年份 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public string 毕业学校 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public string 毕业专业 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public string 毕业证编码 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public string 学位证编码 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
         public int 学员培训年界 { get; set; }
         /// <summary>
 		/// 
@@ -144,14 +64,6 @@ namespace ScientificResearch.Models
 		/// 
 		/// </summary>
         public string 送培方式 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public string 工作单位 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public string 医疗卫生机构 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>

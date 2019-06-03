@@ -15,7 +15,7 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        public int Id { get; set; }
+        public int FlowId { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
