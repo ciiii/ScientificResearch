@@ -54,6 +54,12 @@ namespace ScientificResearch.Models
         [DisplayName("姓名")]
         public string 姓名 { get; set; }
 
+        [DisplayName("专业编号")]
+        public int 专业编号 { get; set; }
+
+        [DisplayName("专业名称")]
+        public string 专业名称 { get; set; }
+
         [DisplayName("性别")]
         public string 性别 { get; set; }
 
@@ -118,9 +124,6 @@ namespace ScientificResearch.Models
 
         [DisplayName("往届应届")]
         public string 往届应届 { get; set; }
-
-        [DisplayName("专业编号")]
-        public int 专业编号 { get; set; }
 
         [DisplayName("送培方式")]
         public string 送培方式 { get; set; }

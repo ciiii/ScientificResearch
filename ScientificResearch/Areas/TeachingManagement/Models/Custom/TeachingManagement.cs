@@ -34,6 +34,13 @@ namespace ScientificResearch.Models
     public class 教学学员宿舍楼安排Filter
     {
         public bool? 是否已安排宿舍 { get; set; }
+        public DateTime? Begin入住日期 { get; set; }
+        public DateTime? End入住日期 { get; set; }
+        //Like学员类型名称，Like姓名，Like工号，专业编号
+        public string Like学员类型名称 { get; set; }
+        public string Like姓名 { get; set; }
+        public string Like工号 { get; set; }
+        public int? 专业编号 { get; set; }
     }
 
     public class 自动设置轮转
@@ -44,6 +51,9 @@ namespace ScientificResearch.Models
         [Required(ErrorMessage = "请指定教学本院策略编号")]
         public int? 教学本院策略编号 { get; set; }
 
+        /// <summary>
+        /// 这些个学员应该是没有设置过轮转的学员;
+        /// </summary>
         [Required(ErrorMessage = "请指定学员编号列表")]
         public List<int> 学员编号列表 { get; set; }
     }
@@ -124,5 +134,28 @@ namespace ScientificResearch.Models
         ///// 建立者的人员编号,查询时不用填,后台来指定
         ///// </summary>
         //public int? CreatorId { get; set; }
+    }
+
+    public class v_tfn_教学考试成绩Filter : 教学轮转Filter
+    {
+        public int? Begin理论考试成绩 { get; set; }
+        public int? End理论考试成绩 { get; set; }
+        public int? Begin技能考试成绩 { get; set; }
+        public int? End技能考试成绩 { get; set; }
+    }
+
+    public class v_tfn_教学医疗差错及事故记录Filter : 教学轮转Filter
+    {
+        public DateTime? Begin处理日期 { get; set; }
+        public DateTime? End处理日期 { get; set; }
+        public string 处理类别 { get; set; }
+    }
+
+    public class 学员入科
+    {
+        [Required]
+        public int 教学轮转编号 { get; set; }
+        [Required]
+        public int 带教老师编号 { get; set; }
     }
 }

@@ -539,6 +539,111 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
         }
 
+        /// <summary>
+        /// 各自只能看到自己可以看到的学员的成绩
+        /// </summary>
+        /// <param name="paging"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        [HttpGet]
+        async public Task<object> 分页获取我的学员的教学考试成绩(Paging paging, v_tfn_教学考试成绩Filter filter) =>
+            await Db.GetPagingListSpAsync<v_tfn_教学考试成绩, v_tfn_教学考试成绩Filter>
+            (paging, filter, $"tfn_教学考试成绩('{CurrentUser.人员类型}',{CurrentUser.编号})");
 
+        /// <summary>
+        /// 针对一个轮转来记录;
+        /// 一个轮转只有一条考试成绩
+        /// 考试成绩的编号就是轮转的编号
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task 增改教学考试成绩([FromBody]教学考试成绩 data)
+        {
+            var 轮转情况 = await Db.GetModelByIdSpAsync<v_教学轮转>(data.编号);
+            if (轮转情况.状态 == 教学轮转状态.未入科.ToString())
+            {
+                throw new Exception("未入科的轮转不能填写考试成绩");
+            }
+            await Db.Merge(data);
+        }
+
+        [HttpGet]
+        async public Task<object> 分页获取我的学员的教学医疗差错及事故记录(Paging paging, v_tfn_教学医疗差错及事故记录Filter filter) =>
+            await Db.GetPagingListSpAsync<v_tfn_教学医疗差错及事故记录, v_tfn_教学医疗差错及事故记录Filter>
+            (paging, filter, $"tfn_教学医疗差错及事故记录('{CurrentUser.人员类型}',{CurrentUser.编号})");
+
+        /// <summary>
+        /// 针对一个轮转来记录;
+        /// 一个轮转可以有多次该记录
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task 增改教学医疗差错及事故记录([FromBody]教学医疗差错及事故记录 data) =>
+            await Db.Merge(data);
+
+        [HttpPost]
+        async public Task<object> 上传教学医疗差错及事故记录附件()
+        {
+            var filesNameList = await MyLib.UploadFile.Upload(
+                Request.Form.Files,
+                Env.WebRootPath,
+                "upload/教学/培训/教学医疗差错及事故记录附件",
+                Config.GetValue<int>("uploadFileMaxSize"));
+            return filesNameList;
+        }
+
+        /// <summary>
+        /// 也应该是从一个轮转图点进来
+        /// 该学员该轮转之前的轮转都出科,才能入科
+        /// 该轮转未入科,才能入科
+        /// 当前时间小于计划入科日期,不能入科
+        /// 当前时间大于计划出科日期,不能入科,提示去延期;
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task 学员入科([FromBody]学员入科 data)
+        {
+            var 要入科的轮转视图 = await Db.GetModelByIdSpAsync<v_教学轮转>(data.教学轮转编号);
+            if (要入科的轮转视图 == null)
+            {
+                throw new Exception("没有找到该教学轮转");
+            }
+
+            if (要入科的轮转视图.状态 != 教学轮转状态.未入科.ToString())
+            {
+                throw new Exception("该教学轮转已入科");
+            }
+
+            if (DateTime.Now < 要入科的轮转视图.计划入科日期)
+            {
+                throw new Exception("还未到入科日期");
+            }
+
+            if (要入科的轮转视图.计划出科日期 < DateTime.Now)
+            {
+                throw new Exception("已超过该教学轮转计划出科日期,请申请补轮转或修改轮转计划");
+            }
+
+            var 该学员所有的轮转 = await Db.GetListSpAsync<v_教学轮转, 教学轮转Filter>(new 教学轮转Filter()
+            {
+                学员编号 = 要入科的轮转视图.学员编号
+            });
+
+            if (该学员所有的轮转
+                .Where(i => i.计划出科日期 < 要入科的轮转视图.计划入科日期)
+                .Any(j => j.状态 != 教学轮转状态.已出科.ToString()))
+            {
+                throw new Exception("该教学轮转之前还有未出科的轮转");
+            }
+
+            要入科的轮转视图.实际入科日期 = DateTime.Now;
+            要入科的轮转视图.带教老师编号 = data.带教老师编号;
+
+            var 要入科的轮转 = MyLib.Tool.ModelToModel<教学轮转, v_教学轮转>(要入科的轮转视图);
+            await Db.Merge(要入科的轮转);
+        }
     }
 }

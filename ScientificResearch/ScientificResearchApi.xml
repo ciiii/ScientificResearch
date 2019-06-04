@@ -628,6 +628,42 @@
             <param name="data"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.分页获取我的学员的教学考试成绩(ScientificResearch.Models.Paging,ScientificResearch.Models.v_tfn_教学考试成绩Filter)">
+            <summary>
+            各自只能看到自己可以看到的学员的成绩
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.增改教学考试成绩(ScientificResearch.Models.教学考试成绩)">
+            <summary>
+            针对一个轮转来记录;
+            一个轮转只有一条考试成绩
+            考试成绩的编号就是轮转的编号
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.增改教学医疗差错及事故记录(ScientificResearch.Models.教学医疗差错及事故记录)">
+            <summary>
+            针对一个轮转来记录;
+            一个轮转可以有多次该记录
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.学员入科(ScientificResearch.Models.学员入科)">
+            <summary>
+            也应该是从一个轮转图点进来
+            该学员该轮转之前的轮转都出科,才能入科
+            该轮转未入科,才能入科
+            当前时间小于计划入科日期,不能入科
+            当前时间大于计划出科日期,不能入科,提示去延期;
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
         <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController">
             <summary>
             工作流相关的接口
@@ -1369,6 +1405,11 @@
         <member name="P:ScientificResearch.Models.教学学员培训情况Filter.状态">
             <summary>
             有:未报到,退培,已报到,轮转计划已安排,在培,待结业,结业
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.自动设置轮转.学员编号列表">
+            <summary>
+            这些个学员应该是没有设置过轮转的学员;
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.教学轮转Filter.状态">
@@ -6447,11 +6488,6 @@
             
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.教学学员宿舍安排.宿舍编号">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="P:ScientificResearch.Models.教学学员宿舍安排.门禁卡卡号">
             <summary>
             
@@ -7252,17 +7288,12 @@
             
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.教学考试成绩.教学轮转编号">
+        <member name="P:ScientificResearch.Models.教学考试成绩.理论考试成绩">
             <summary>
             
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.教学考试成绩.考试类型">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学考试成绩.成绩">
+        <member name="P:ScientificResearch.Models.教学考试成绩.技能考试成绩">
             <summary>
             
             </summary>
@@ -17208,6 +17239,266 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.VTFN某医院购买的服务.是否启用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_tfn_教学医疗差错及事故记录">
+            <summary>
+            v_tfn_教学医疗差错及事故记录[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学医疗差错及事故记录.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学医疗差错及事故记录.学员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学医疗差错及事故记录.学员姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学医疗差错及事故记录.教学轮转编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学医疗差错及事故记录.计划入科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学医疗差错及事故记录.计划出科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学医疗差错及事故记录.实际入科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学医疗差错及事故记录.实际出科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学医疗差错及事故记录.教学本院科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学医疗差错及事故记录.教学本院策略编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学医疗差错及事故记录.教学本院策略名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学医疗差错及事故记录.教学专业科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学医疗差错及事故记录.教学专业科室名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学医疗差错及事故记录.本院科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学医疗差错及事故记录.本院科室名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学医疗差错及事故记录.科室管理员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学医疗差错及事故记录.科室管理员姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学医疗差错及事故记录.带教老师编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学医疗差错及事故记录.带教老师姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学医疗差错及事故记录.状态">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学医疗差错及事故记录.处理日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学医疗差错及事故记录.处理类别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学医疗差错及事故记录.处理原因">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学医疗差错及事故记录.处理意见">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学医疗差错及事故记录.附件">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学医疗差错及事故记录.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_tfn_教学考试成绩">
+            <summary>
+            v_tfn_教学考试成绩[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学考试成绩.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学考试成绩.学员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学考试成绩.学员姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学考试成绩.计划入科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学考试成绩.计划出科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学考试成绩.实际入科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学考试成绩.实际出科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学考试成绩.教学本院科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学考试成绩.教学本院策略编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学考试成绩.教学本院策略名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学考试成绩.教学专业科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学考试成绩.教学专业科室名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学考试成绩.本院科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学考试成绩.本院科室名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学考试成绩.科室管理员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学考试成绩.科室管理员姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学考试成绩.带教老师编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学考试成绩.带教老师姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学考试成绩.状态">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学考试成绩.理论考试成绩">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学考试成绩.技能考试成绩">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学考试成绩.建立人">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学考试成绩.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学考试成绩.备注">
             <summary>
             
             </summary>

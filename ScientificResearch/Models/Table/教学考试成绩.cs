@@ -20,19 +20,11 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        [Required(ErrorMessage ="请提供[教学轮转编号]")]
-		public int 教学轮转编号 { get; set; }
+		public int? 理论考试成绩 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        [Required(ErrorMessage ="请提供[考试类型]")]
-        [MaxLength(50,ErrorMessage ="考试类型不能超过[25]字")]
-		public string 考试类型 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        [Required(ErrorMessage ="请提供[成绩]")]
-		public int 成绩 { get; set; }
+		public int? 技能考试成绩 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>

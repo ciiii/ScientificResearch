@@ -152,6 +152,9 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             var 教学学员类型list = await Db.GetListSpAsync<教学学员类型>();
             var 教学学员类型dic = 教学学员类型list.ToDictionary(i => i.名称, i => i.编号);
 
+            var 教学专业list = await Db.GetListSpAsync<教学专业>();
+            var 教学专业dic = 教学专业list.ToDictionary(i => i.名称, i => i.编号);
+
             var data = new List<教学学员>();
             foreach (var item in inputData)
             {
@@ -159,6 +162,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
                 //item.学员类型编号 = 教学学员类型list.Where(i => i.名称 == item.学员类型名称).FirstOrDefault()?.编号??0;
                 //如果学员类型名称不对怎么办?
                 item.学员类型编号 = 教学学员类型dic.ContainsKey(item.学员类型名称 ?? "") ? 教学学员类型dic[item.学员类型名称] : 1;
+                item.专业编号 = 教学专业dic.ContainsKey(item.专业名称 ?? "") ? 教学专业dic[item.专业名称] : 1;
                 data.Add(MyLib.Tool.ModelToModel<教学学员, 学员导入>(item));
             }
 

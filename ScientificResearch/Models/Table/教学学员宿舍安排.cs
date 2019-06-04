@@ -25,12 +25,6 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        [Required(ErrorMessage ="请提供[宿舍编号]")]
-        [MaxLength(50,ErrorMessage ="宿舍编号不能超过[25]字")]
-		public string 宿舍编号 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
         [MaxLength(50,ErrorMessage ="门禁卡卡号不能超过[25]字")]
 		public string 门禁卡卡号 { get; set; }
         /// <summary>
