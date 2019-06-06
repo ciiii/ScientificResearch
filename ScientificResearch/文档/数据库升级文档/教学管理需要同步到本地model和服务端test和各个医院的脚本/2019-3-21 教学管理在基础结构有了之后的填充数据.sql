@@ -36,7 +36,7 @@ INSERT  dbo.字典
         ( 分类, 值, 上级编号, 级别, 排序, 备注 )
 VALUES  ( N'送培方式', N'社会人', 0, 0, 0, N'' ),
         ( N'送培方式', N'单位人', 0, 0, 0, N'' ),
-		( N'送培方式', N'研究生', 0, 0, 0, N'' );
+        ( N'送培方式', N'研究生', 0, 0, 0, N'' );
 
 --医疗卫生机构类型新搞一个
 SELECT  *
@@ -50,7 +50,7 @@ INSERT  dbo.字典
         ( 分类, 值, 上级编号, 级别, 排序, 备注 )
 VALUES  ( N'医疗卫生机构类型', N'医院', 0, 0, 0, N'' ),
         ( N'医疗卫生机构类型', N'专业公共卫生机构', 0, 0, 0, N'' ),
-		( N'医疗卫生机构类型', N'基层医疗卫生机构', 0, 0, 0, N'' );
+        ( N'医疗卫生机构类型', N'基层医疗卫生机构', 0, 0, 0, N'' );
 
 --职称新搞一个
 SELECT  *
@@ -112,7 +112,7 @@ INSERT  dbo.字典
         ( 分类, 值, 上级编号, 级别, 排序, 备注 )
 VALUES  ( N'宿舍职位', N'室长', 0, 0, 0, N'' ),
         ( N'宿舍职位', N'管理员', 0, 0, 0, N'' ),
-        ( N'宿舍职位', N'室员', 0, 0, 0, N'' )
+        ( N'宿舍职位', N'室员', 0, 0, 0, N'' );
 
 GO
 --培训专业
@@ -363,11 +363,12 @@ FROM    dbo.教学角色;
 TRUNCATE TABLE dbo.教学角色;
 
 INSERT  dbo.教学角色
-        ( 编号, 名称,能否直接配置人员, 备注 )
-VALUES  ( 1, N'系统管理员',1, N'' ),
-        ( 2, N'医院管理员',1, N'' ),
-        ( 3, N'科室管理员',0, N'' ),
-        ( 4, N'带教老师',0, N'' ),(5,N'护士',1,N'');
+        ( 编号, 名称, 能否直接配置人员, 备注 )
+VALUES  ( 1, N'系统管理员', 1, N'' ),
+        ( 2, N'医院管理员', 1, N'' ),
+        ( 3, N'科室管理员', 0, N'' ),
+        ( 4, N'带教老师', 0, N'' ),
+        ( 5, N'护士', 1, N'' );
 GO
 
 --教学人员角色,这个在应用到云服务器数据库时不应有;
@@ -524,13 +525,15 @@ VALUES  ( 1, 0, 1, 1, N'教学办公', N'', N'', 1, N'office', N'' ),
         ( 101, 1, 2, 1, N'通知公告', N'notice', N'', 1, N'', N'' ),
         ( 102, 1, 2, 2, N'下载中心', N'download', N'', 1, N'', N'' ),
         ( 103, 1, 2, 3, N'个人资料', N'personal', N'', 1, N'', N'' ),
-        ( 2, 0, 1, 2, N'审核管理', N'', N'', 1, N'audit', N'流程中的审核,提炼到这块一起展现;但不包括发起申请.' ),
+        ( 2, 0, 1, 2, N'审核管理', N'', N'', 1, N'audit',
+          N'流程中的审核,提炼到这块一起展现;但不包括发起申请.' ),
         ( 201, 2, 2, 1, N'请假审核', N'leaveAudit', N'', 1, N'',
           N'学员的申请请假和请假一览在另一个系统,这里只有老师们的审核管理;学员申请请假都可以放在具体的轮转图形里面,打回后修改申请不行.' ),
         ( 202, 2, 2, 2, N'出科审核', N'auditSection', N'', 1, N'', N'' ),
         ( 203, 2, 2, 3, N'轮转手册审核', N'rotationAudit', N'', 1, N'', N'' ),
         ( 204, 2, 2, 4, N'结业审核', N'completionAudit', N'', 1, N'', N'' ),
-        ( 205, 2, 2, 5, N'教学活动反馈审核', N'activityFeedbackAudit', N'', 1, N'', N'' ),
+        ( 205, 2, 2, 5, N'教学活动反馈审核', N'activityFeedbackAudit', N'', 1, N'',
+          N'' ),
         ( 3, 0, 1, 3, N'培训管理', N'', N'', 1, N'trainingManage', N'' ),
         ( 301, 3, 2, 1, N'导录学员', N'studentFiles', N'', 1, N'', N'' ),
         ( 302, 3, 2, 2, N'我的学员', N'myStudent', N'', 1, N'', N'这里应该有各种导入导出' ),
@@ -558,18 +561,28 @@ VALUES  ( 1, 0, 1, 1, N'教学办公', N'', N'', 1, N'office', N'' ),
 			
 			--大家分角色拥有的:
         ( 404, 4, 2, 4, N'学员互评', N'studentCommentary', N'', 1, N'', N'' ),
-        ( 405, 4, 2, 5, N'学员对医院管理员', N'studentToHospitalAdmin', N'', 1, N'', N'' ),
-        ( 406, 4, 2, 6, N'学员对科室管理员', N'studentToDepartmentAdmin', N'', 1, N'', N'' ),
+        ( 405, 4, 2, 5, N'学员对医院管理员', N'studentToHospitalAdmin', N'', 1, N'',
+          N'' ),
+        ( 406, 4, 2, 6, N'学员对科室管理员', N'studentToDepartmentAdmin', N'', 1, N'',
+          N'' ),
         ( 407, 4, 2, 7, N'学员对带教老师', N'studentToTeacher', N'', 1, N'', N'' ),
-        ( 408, 4, 2, 8, N'医院管理员对学员', N'hospitalAdminToStudent', N'', 1, N'', N'' ),
-        ( 409, 4, 2, 9, N'医院管理员对科室管理员', N'hospitalAdminToDepartmentAdmin', N'', 1, N'', N'' ),
-        ( 410, 4, 2, 10, N'医院管理员对带教老师', N'hospitalAdminToTeacher', N'', 1, N'', N'' ),
-        ( 411, 4, 2, 11, N'科室管理员对学员', N'departmentAdminToStudent', N'', 1, N'', N'' ),
-        ( 412, 4, 2, 12, N'科室管理员对医院管理员', N'departmentAdminToHospitalAdmin', N'', 1, N'', N'' ),
-        ( 413, 4, 2, 13, N'科室管理员对带教老师', N'departmentAdminToTeacher', N'', 1, N'', N'' ),
+        ( 408, 4, 2, 8, N'医院管理员对学员', N'hospitalAdminToStudent', N'', 1, N'',
+          N'' ),
+        ( 409, 4, 2, 9, N'医院管理员对科室管理员', N'hospitalAdminToDepartmentAdmin', N'',
+          1, N'', N'' ),
+        ( 410, 4, 2, 10, N'医院管理员对带教老师', N'hospitalAdminToTeacher', N'', 1, N'',
+          N'' ),
+        ( 411, 4, 2, 11, N'科室管理员对学员', N'departmentAdminToStudent', N'', 1, N'',
+          N'' ),
+        ( 412, 4, 2, 12, N'科室管理员对医院管理员', N'departmentAdminToHospitalAdmin',
+          N'', 1, N'', N'' ),
+        ( 413, 4, 2, 13, N'科室管理员对带教老师', N'departmentAdminToTeacher', N'', 1,
+          N'', N'' ),
         ( 414, 4, 2, 14, N'带教老师对学员', N'teacherToStudent', N'', 1, N'', N'' ),
-        ( 415, 4, 2, 15, N'带教老师对医院管理员', N'teacherToHospitalAdmin', N'', 1, N'', N'' ),
-        ( 416, 4, 2, 16, N'带教老师对科室管理员', N'teacherToDepartmentAdmin', N'', 1, N'', N'' ),
+        ( 415, 4, 2, 15, N'带教老师对医院管理员', N'teacherToHospitalAdmin', N'', 1, N'',
+          N'' ),
+        ( 416, 4, 2, 16, N'带教老师对科室管理员', N'teacherToDepartmentAdmin', N'', 1,
+          N'', N'' ),
         ( 5, 0, 1, 5, N'教学活动', N'', N'', 1, N'teachingActivities', N'' ), 
 			
 			--可以在这里针对各个教学活动类型:发布活动,查看,修改;查看/审核该类型的学员反馈;
@@ -584,13 +597,18 @@ VALUES  ( 1, 0, 1, 1, N'教学办公', N'', N'', 1, N'office', N'' ),
 
 			--统计这一块先不管
         ( 6, 0, 1, 6, N'查询统计', N'', N'', 1, N'statistics', N'' ),
-        ( 601, 6, 2, 1, N'学员招录统计', N'studentRecruitingStatistics', N'', 1, N'', N'' ),
-        ( 602, 6, 2, 2, N'学员报到统计', N'studentReportStatistics', N'', 1, N'', N'' ),
-        ( 603, 6, 2, 3, N'学员培训统计', N'studentTrainingStatistics', N'', 1, N'', N'' ),
-        ( 604, 6, 2, 4, N'学员考勤统计', N'studentSignInStatistics', N'', 1, N'', N'' ), --这个是否应该集成到学员培训统计里面?
+        ( 601, 6, 2, 1, N'学员招录统计', N'studentRecruitingStatistics', N'', 1, N'',
+          N'' ),
+        ( 602, 6, 2, 2, N'学员报到统计', N'studentReportStatistics', N'', 1, N'',
+          N'' ),
+        ( 603, 6, 2, 3, N'学员培训统计', N'studentTrainingStatistics', N'', 1, N'',
+          N'' ),
+        ( 604, 6, 2, 4, N'学员考勤统计', N'studentSignInStatistics', N'', 1, N'',
+          N'' ), --这个是否应该集成到学员培训统计里面?
         ( 605, 6, 2, 5, N'科室工作统计', N'dormitoryJobStatistics', N'', 1, N'', N'' ),
         ( 606, 6, 2, 6, N'带教老师工作统计', N'teacherJobStatistics', N'', 1, N'', N'' ),
-        ( 607, 6, 2, 7, N'教学活动统计', N'teachingActivitiesStatistics', N'', 1, N'', N'' ),
+        ( 607, 6, 2, 7, N'教学活动统计', N'teachingActivitiesStatistics', N'', 1,
+          N'', N'' ),
         ( 608, 6, 2, 8, N'360评价统计', N'360EvaluateStatistics', N'', 1, N'', N'' ),
         ( 7, 0, 1, 7, N'组织机构', N'', N'', 1, N'organization', N'' ),
         ( 701, 7, 2, 1, N'部门人员信息维护', N'departmentInfo', N'', 1, N'', N'' ),
@@ -604,25 +622,31 @@ VALUES  ( 1, 0, 1, 1, N'教学办公', N'', N'', 1, N'office', N'' ),
         ( 804, 8, 2, 4, N'培训设置', N'', N'', 1, N'', N'' ),
         ( 80401, 804, 3, 1, N'标准培训专业设置', N'trainingMajorSettings', N'', 1, N'',
           N'标准规培专业配置,年份作为一个属性.而不是每年不同的专业配置' ),
-        ( 80402, 804, 3, 2, N'标准规培科室设置', N'trainingDepartmentSettings', N'', 1, N'',
-          N'属于哪个标准培训专业,基本信息,任务' ),
+        ( 80402, 804, 3, 2, N'标准规培科室设置', N'trainingDepartmentSettings', N'', 1,
+          N'', N'属于哪个标准培训专业,基本信息,任务' ),
         ( 80403, 804, 3, 3, N'教学策略', N'teachingStrategies', N'', 1, N'',
           N'比如本科实习生培训策略这样的,一个策略+一个专业,对应多个本院科室轮转安排.' ),
         ( 80404, 804, 3, 4, N'本院科室对应', N'departmentMatching', N'', 1, N'', N'' ),
         ( 805, 8, 2, 5, N'教学活动设置', N'', N'', 1, N'', N'' ),
-        ( 80501, 805, 3, 1, N'教学活动分类', N'activitiesClassify', N'', 1, N'', N'这个就查看一下' ),
-        ( 80502, 805, 3, 2, N'教学活动评价项目设置', N'activitiesEvaluateSettings', N'', 1, N'', N'' ),
+        ( 80501, 805, 3, 1, N'教学活动分类', N'activitiesClassify', N'', 1, N'',
+          N'这个就查看一下' ),
+        ( 80502, 805, 3, 2, N'教学活动评价项目设置', N'activitiesEvaluateSettings', N'',
+          1, N'', N'' ),
         ( 806, 8, 2, 6, N'360评价设置', N'', N'', 1, N'', N'' ),
-        ( 80601, 806, 3, 1, N'360评价方向', N'360EvaluateDirection', N'', 1, N'', N'' ),
-        ( 80602, 806, 3, 2, N'360评价分类', N'360EvaluateClassify', N'', 1, N'', N'' ),
-        ( 80603, 806, 3, 3, N'360评价项目', N'360EvaluateProject', N'', 1, N'', N'' ),
+        ( 80601, 806, 3, 1, N'360评价方向', N'360EvaluateDirection', N'', 1, N'',
+          N'' ),
+        ( 80602, 806, 3, 2, N'360评价分类', N'360EvaluateClassify', N'', 1, N'',
+          N'' ),
+        ( 80603, 806, 3, 3, N'360评价项目', N'360EvaluateProject', N'', 1, N'',
+          N'' ),
         ( 807, 8, 2, 7, N'基础信息设置', N'', N'', 1, N'', N'' ),
         ( 80701, 807, 3, 1, N'学员类型', N'studentType', N'', 1, N'', N'' ),
         ( 80702, 807, 3, 2, N'宿舍', N'dormitory', N'', 1, N'', N'' ),
         ( 80703, 807, 3, 3, N'学历', N'basicInfo?type=学历', N'', 1, N'', N'' ),
         ( 80704, 807, 3, 4, N'往届应届', N'basicInfo?type=往届应届', N'', 1, N'', N'' ),
         ( 80705, 807, 3, 5, N'送培方式', N'basicInfo?type=送培方式', N'', 1, N'', N'' ),
-        ( 80706, 807, 3, 6, N'医疗卫生机构类型', N'basicInfo?type=医疗卫生机构类型', N'', 1, N'', N'' ),
+        ( 80706, 807, 3, 6, N'医疗卫生机构类型', N'basicInfo?type=医疗卫生机构类型', N'', 1,
+          N'', N'' ),
         ( 80707, 807, 3, 7, N'职称', N'basicInfo?type=职称', N'', 1, N'', N'' ),
         ( 80708, 807, 3, 8, N'学科', N'basicInfo?type=学科', N'', 1, N'', N'' ),
         ( 80709, 807, 3, 9, N'民族', N'basicInfo?type=民族', N'', 1, N'', N'' );
@@ -796,6 +820,19 @@ VALUES  ( 21011, -- StepTemplateStateChoiceId - int
           );
 
 GO
-         
 
+TRUNCATE TABLE dbo.教学考勤类型;         
+INSERT  dbo.教学考勤类型
+        ( 编号, 名称, 备注 )
+VALUES  ( 1, N'正常白班', N'' ),
+        ( 2, N'正常休假', N'' ),
+        ( 3, N'迟到', N'' ),
+        ( 4, N'早退', N'' ),
+        ( 5, N'脱岗', N'' ),
+        ( 6, N'旷工', N'' ),
+        ( 7, N'夜班', N'' ),
+        ( 8, N'请假', N'' );
+
+GO
+        
 

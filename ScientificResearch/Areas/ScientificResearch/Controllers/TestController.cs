@@ -616,5 +616,31 @@ namespace ScientificResearch.Controllers
                 myPath2 = MyPath.CombineUrl("http://www.baidu.com", "upload", $"123.txt")
             };
         }
+
+        /// <summary>
+        /// 麻烦的是tfn的model要自己写,生成不了
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        async public Task<object> 测试用querysp来请求tfn()
+        {
+            //这样是错误的,他执行了:exec tfn_教学获取PersonTypeAndId @Id=3100,@PersonType=N'人员',没有找到存储过程
+            //return await Db.QuerySpAsync<tfn_教学获取PersonTypeAndId, object>(new tfn_教学获取PersonTypeAndId()
+            //{
+            //    PersonType = "人员",
+            //    Id = 3100
+            //});
+
+            //用getlist也不完全行,有的tfn要求传tt进去,但getlist的参数都是nvarchar的.
+            //return await Db.GetListSpAsync
+
+             return await Task.FromResult("还没有好办法");
+        }
+
+        class tfn_教学获取PersonTypeAndId
+        {
+            public string PersonType { get; set; }
+            public int Id { get; set; }
+        }
     }
 }

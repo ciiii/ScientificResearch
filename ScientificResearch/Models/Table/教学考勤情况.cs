@@ -6,10 +6,10 @@ using System.ComponentModel.DataAnnotations;
 namespace ScientificResearch.Models
 {
     /// <summary>
-    /// 教学出勤情况[类]
+    /// 教学考勤情况[类]
     /// </summary>
     [Serializable]
-	public partial class 教学出勤情况 
+	public partial class 教学考勤情况 
 	{       
         #region 属性
         /// <summary>
@@ -20,6 +20,7 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        [Obsolete]
         [Required(ErrorMessage ="请提供[教学轮转编号]")]
 		public int 教学轮转编号 { get; set; }
         /// <summary>
@@ -30,8 +31,8 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        [Required(ErrorMessage ="请提供[教学出勤类型编号]")]
-		public int 教学出勤类型编号 { get; set; }
+        [Required(ErrorMessage ="请提供[教学考勤类型编号]")]
+		public int 教学考勤类型编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>

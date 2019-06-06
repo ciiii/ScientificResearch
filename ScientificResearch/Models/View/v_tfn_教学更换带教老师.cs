@@ -5,10 +5,10 @@ using System.ComponentModel;
 namespace ScientificResearch.Models
 {
     /// <summary>
-    /// v_教学学员培训情况[类]
+    /// v_tfn_教学更换带教老师[类]
     /// </summary>
     [Serializable]
-	public partial class v_教学学员培训情况 
+	public partial class v_tfn_教学更换带教老师 
 	{       
               
         #region 属性
@@ -19,59 +19,35 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        public int 学员类型编号 { get; set; }
+        public int 学员编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public string 学员类型名称 { get; set; }
+        public string 学员姓名 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public string 工号 { get; set; }
+        public int 教学轮转编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public string 头像路径 { get; set; }
+        public DateTime 计划入科日期 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public string 姓名 { get; set; }
+        public DateTime 计划出科日期 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public string 性别 { get; set; }
+        public DateTime? 实际入科日期 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public int 学员培训年界 { get; set; }
+        public DateTime? 实际出科日期 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public int 学员培训年限 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public string 往届应届 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public int 专业编号 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public string 专业名称 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public string 送培方式 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public string 状态 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public DateTime? 报到时间 { get; set; }
+        public int 教学本院科室编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
@@ -83,43 +59,67 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        public DateTime? 计划开始培训日期 { get; set; }
+        public int? 教学专业科室编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public DateTime? 计划结束培训日期 { get; set; }
+        public string 教学专业科室名称 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public DateTime? 实际开始培训日期 { get; set; }
+        public int? 本院科室编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public DateTime? 实际结束培训日期 { get; set; }
+        public string 本院科室名称 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public DateTime? 退培日期 { get; set; }
+        public int? 科室管理员编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public DateTime? 结业日期 { get; set; }
+        public string 科室管理员姓名 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public string 证书 { get; set; }
+        public int? 带教老师编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public int? 当前教学轮转编号 { get; set; }
+        public string 带教老师姓名 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public int? 当前教学轮转本院科室编号 { get; set; }
+        public string 状态 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public string 当前教学轮转本院科室名称 { get; set; }
+        public int 原带教老师编号 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public string 原带教老师姓名 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int 新带教老师编号 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public string 新带教老师姓名 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int 建立人 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public DateTime 建立时间 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public string 备注 { get; set; }
         
           
         #endregion

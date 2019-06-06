@@ -6,10 +6,10 @@ using System.ComponentModel.DataAnnotations;
 namespace ScientificResearch.Models
 {
     /// <summary>
-    /// 教学出勤类型[类]
+    /// 教学考勤类型[类]
     /// </summary>
     [Serializable]
-	public partial class 教学出勤类型 
+	public partial class 教学考勤类型 
 	{       
         #region 属性
         /// <summary>

@@ -19,6 +19,10 @@ namespace ScientificResearch.Models
         public string Like姓名 { get; set; }
         public string 民族 { get; set; }
         public string Like医师资格证书编号 { get; set; }
+        public DateTime? Begin计划开始培训日期 { get; set; }
+        public DateTime? End计划开始培训日期 { get; set; }
+        public int? 专业编号 { get; set; }
+
     }
 
     public class 教学学员报到Filter
@@ -157,5 +161,18 @@ namespace ScientificResearch.Models
         public int 教学轮转编号 { get; set; }
         [Required]
         public int 带教老师编号 { get; set; }
+    }
+
+    public class v_tfn_教学更换带教老师Filter : 教学轮转Filter
+    {
+        public int? 原带教老师编号 { get; set; }
+        public string Like原带教老师姓名 { get; set; }
+        public int? 新带教老师编号 { get; set; }
+        public string Like新带教老师姓名 { get; set; }
+    }
+
+    public class 教学考勤情况Filter
+    {
+        public int? 教学轮转编号 { get; set; }
     }
 }

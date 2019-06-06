@@ -664,6 +664,20 @@
             <param name="data"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.增改教学更换带教老师(ScientificResearch.Models.教学更换带教老师)">
+            <summary>
+            已出科的轮转不能更换带教老师
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.增改教学考勤情况(ScientificResearch.Infrastucture.PredefindedIdList{ScientificResearch.Models.教学考勤情况})">
+            <summary>
+            考勤日期指哪一天的考勤.必须在该轮转的开始结束日期之内;
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
         <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController">
             <summary>
             工作流相关的接口
@@ -2754,6 +2768,41 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_教学结业申请_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学考勤情况_增改">
+            <summary>
+            sp_教学考勤情况_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学考勤情况_增改.fId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学考勤情况_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学考勤统计">
+            <summary>
+            sp_教学考勤统计[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学考勤统计.学员编号列表">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学考勤统计.开始日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学考勤统计.结束日期">
             <summary>
             
             </summary>
@@ -6068,71 +6117,6 @@
             
             </summary>
         </member>
-        <member name="T:ScientificResearch.Models.教学出勤情况">
-            <summary>
-            教学出勤情况[类]
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学出勤情况.编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学出勤情况.教学轮转编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学出勤情况.考勤日期">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学出勤情况.教学出勤类型编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学出勤情况.说明">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学出勤情况.建立人">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学出勤情况.建立时间">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学出勤情况.备注">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="T:ScientificResearch.Models.教学出勤类型">
-            <summary>
-            教学出勤类型[类]
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学出勤类型.编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学出勤类型.名称">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学出勤类型.备注">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="T:ScientificResearch.Models.教学出科申请">
             <summary>
             教学出科申请[类]
@@ -7274,6 +7258,71 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.教学结业申请.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学考勤情况">
+            <summary>
+            教学考勤情况[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学考勤情况.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学考勤情况.教学轮转编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学考勤情况.考勤日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学考勤情况.教学考勤类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学考勤情况.说明">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学考勤情况.建立人">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学考勤情况.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学考勤情况.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学考勤类型">
+            <summary>
+            教学考勤类型[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学考勤类型.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学考勤类型.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学考勤类型.备注">
             <summary>
             
             </summary>
@@ -17243,6 +17292,56 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.v_sp_教学考勤统计">
+            <summary>
+            v_sp_教学考勤统计[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_sp_教学考勤统计.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_sp_教学考勤统计.正常白班">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_sp_教学考勤统计.正常休假">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_sp_教学考勤统计.迟到">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_sp_教学考勤统计.早退">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_sp_教学考勤统计.脱岗">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_sp_教学考勤统计.旷工">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_sp_教学考勤统计.夜班">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_sp_教学考勤统计.请假">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v_tfn_教学医疗差错及事故记录">
             <summary>
             v_tfn_教学医疗差错及事故记录[类]
@@ -17374,6 +17473,146 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_tfn_教学医疗差错及事故记录.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_tfn_教学更换带教老师">
+            <summary>
+            v_tfn_教学更换带教老师[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学更换带教老师.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学更换带教老师.学员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学更换带教老师.学员姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学更换带教老师.教学轮转编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学更换带教老师.计划入科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学更换带教老师.计划出科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学更换带教老师.实际入科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学更换带教老师.实际出科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学更换带教老师.教学本院科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学更换带教老师.教学本院策略编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学更换带教老师.教学本院策略名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学更换带教老师.教学专业科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学更换带教老师.教学专业科室名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学更换带教老师.本院科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学更换带教老师.本院科室名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学更换带教老师.科室管理员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学更换带教老师.科室管理员姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学更换带教老师.带教老师编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学更换带教老师.带教老师姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学更换带教老师.状态">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学更换带教老师.原带教老师编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学更换带教老师.原带教老师姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学更换带教老师.新带教老师编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学更换带教老师.新带教老师姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学更换带教老师.建立人">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学更换带教老师.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学更换带教老师.备注">
             <summary>
             
             </summary>
@@ -18758,6 +18997,21 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.当前教学轮转编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.当前教学轮转本院科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.当前教学轮转本院科室名称">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v_教学学员宿舍安排">
             <summary>
             v_教学学员宿舍安排[类]
@@ -19404,6 +19658,56 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_教学科室.带教老师数量">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_教学考勤情况">
+            <summary>
+            v_教学考勤情况[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学考勤情况.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学考勤情况.教学轮转编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学考勤情况.考勤日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学考勤情况.教学考勤类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学考勤情况.教学考勤类型名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学考勤情况.说明">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学考勤情况.建立人">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学考勤情况.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学考勤情况.备注">
             <summary>
             
             </summary>
@@ -21001,6 +21305,12 @@
         <member name="M:ScientificResearch.Controllers.TestController.测试取得enum中具体某个值的中文名">
             <summary>
             教学轮转状态.已出科.ToString()这样就可以得到了;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.TestController.测试用querysp来请求tfn">
+            <summary>
+            麻烦的是tfn的model要自己写,生成不了
             </summary>
             <returns></returns>
         </member>

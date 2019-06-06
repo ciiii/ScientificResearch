@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using MyLib;
 using ScientificResearch.Business;
 using ScientificResearch.Infrastucture;
 using ScientificResearch.Models;
@@ -152,6 +153,11 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             var 一个完整轮转容纳人数 = 存放策略组合的列表.Count() * 最小的最大学员人数;
             var 一个完整轮转的总时长 = (int)选定教学本院策略.培训总时长;
 
+            var 学员信息 = (await Db.GetListSpAsync<v_教学学员, 教学学员Filter>(new 教学学员Filter()
+            {
+                WhereIn编号 = data.学员编号列表.ToStringIdWithSpacer()
+            })).ToList();
+
             //循环每个学员
             var 学员轮转安排列表 = new List<v_教学轮转>();
             for (int i = 0, length = data.学员编号列表.Count(); i < length; i++)
@@ -167,10 +173,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
                 var 开始日期 = ((DateTime)data.计划开始培训日期).AddDays(一个完整轮转的总时长 * 该学员在第几个完整轮转 * 7);
                 var 结束日期 = ((DateTime)data.计划开始培训日期).AddDays(一个完整轮转的总时长 * 该学员在第几个完整轮转 * 7 - 1);
 
-                var 学员信息 = (await Db.GetListSpAsync<v_教学学员, 教学学员Filter>(new 教学学员Filter()
-                {
-                    WhereIn编号 = data.学员编号列表.ToStringIdWithSpacer()
-                })).ToList();
+
 
                 for (int j = 0, lengthj = 对应的策略.Count(); j < lengthj; j++)
                 {
@@ -204,7 +207,20 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             //这个策略组合不能马上存库,而是要返给前台,让用户确认甚至修改后再保存;
 
             //data.学员编号列表.ToList().
-            return 学员轮转安排列表;
+            //return 学员轮转安排列表;
+
+            return new
+            {
+                total = 学员信息.Count(),
+                最小日期 = 学员轮转安排列表.Min(i => (DateTime?)i.计划入科日期),
+                最大日期 = 学员轮转安排列表.Max(i => (DateTime?)i.计划出科日期),
+                list = from item in 学员信息
+                       select new
+                       {
+                           学员信息 = item,
+                           轮转信息 = from item2 in 学员轮转安排列表 where item2.学员编号 == item.编号 select item2
+                       }
+            };
         }
 
         class 学员最小开始和最大结束计划培训时间
@@ -417,6 +433,8 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             return new
             {
                 分页的学员.total,
+                最小日期 = 学员的轮转.Min(i => (DateTime?)i.计划入科日期),
+                最大日期 = 学员的轮转.Max(i => (DateTime?)i.计划出科日期),
                 list = from item in 分页的学员.list
                        select new
                        {
@@ -644,6 +662,95 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
 
             var 要入科的轮转 = MyLib.Tool.ModelToModel<教学轮转, v_教学轮转>(要入科的轮转视图);
             await Db.Merge(要入科的轮转);
+        }
+
+        [HttpGet]
+        async public Task<object> 分页获取我的学员的教学更换带教老师(Paging paging, v_tfn_教学更换带教老师Filter filter) =>
+            await Db.GetPagingListSpAsync<v_tfn_教学更换带教老师, v_tfn_教学更换带教老师Filter>
+            (paging, filter, $"tfn_教学更换带教老师('{CurrentUser.人员类型}',{CurrentUser.编号})");
+
+        /// <summary>
+        /// 已出科的轮转不能更换带教老师
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task 增改教学更换带教老师([FromBody]教学更换带教老师 data)
+        {
+            var v教学轮转 = await Db.GetModelByIdSpAsync<v_教学轮转>(data.教学轮转编号);
+            if (v教学轮转.状态 == 教学轮转状态.已出科.ToString())
+            {
+                throw new Exception("已出科的轮转不能更换带教老师");
+            }
+            await Db.Merge(data);
+        }
+
+        [HttpGet]
+        public async Task<object> 获取教学考勤类型()
+        {
+            return await Db.GetListSpAsync<教学考勤类型>();
+        }
+
+        [HttpGet]
+        public async Task<object> 分页获取我的学员的考勤统计(
+            Paging paging,
+            教学学员培训情况Filter filter,
+            [Required]DateTime 开始日期,
+            [Required]DateTime 结束日期)
+        {
+            var 分页的学员 = await Db.GetPagingListSpAsync<v_教学学员培训情况, 教学学员培训情况Filter>
+                (paging, filter, $"tfn_我的学员('{CurrentUser.人员类型}',{CurrentUser.编号})");
+
+            var 学员的考勤统计 = await Db.QuerySpAsync<sp_教学考勤统计, v_sp_教学考勤统计>(new sp_教学考勤统计()
+            {
+                学员编号列表 = 分页的学员.list.Select(i => i.编号).ToPredefindedKeyFieldsList().ToDataTable(),
+                开始日期 = 开始日期,
+                结束日期 = 结束日期
+            });
+
+            return new
+            {
+                分页的学员.total,
+                list = from item in 分页的学员.list
+                       select new
+                       {
+                           学员信息 = item,
+                           考勤统计 = (from item2 in 学员的考勤统计 where item2.编号 == item.编号 select item2).FirstOrDefault()
+                       }
+            };
+        }
+
+        [HttpGet]
+        async public Task<object> 获取某教学轮转的考勤(int 教学轮转编号)
+        {
+            var 教学轮转 = await Db.GetModelByIdSpAsync<v_教学轮转>(教学轮转编号);
+            var 教学考勤情况列表 = await Db.GetListSpAsync<v_教学考勤情况, 教学考勤情况Filter>(new 教学考勤情况Filter()
+            {
+                教学轮转编号 = 教学轮转编号
+            });
+
+            return new { 教学轮转, 教学考勤情况列表 };
+        }
+
+        /// <summary>
+        /// 考勤日期指哪一天的考勤.必须在该轮转的开始结束日期之内;
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task 增改教学考勤情况([FromBody]PredefindedIdList<教学考勤情况> data)
+        {
+            var 教学轮转 = await Db.GetModelByIdSpAsync<教学轮转>(data.Id);
+            if(data.List.Any(i=>i.考勤日期<教学轮转.计划入科日期 || i.考勤日期 > 教学轮转.计划出科日期))
+            {
+                throw new Exception("考勤日期不能超出该轮转的计划开始/结束日期范围");
+            }
+
+            if (data.List.GroupBy(i => i.考勤日期).Any(j => j.Count() > 1))
+            {
+                throw new Exception("不能对同一天多次打考勤");
+            }
+            await Db.Merge(data.Id, data.List);
         }
     }
 }

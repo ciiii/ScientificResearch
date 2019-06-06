@@ -5,10 +5,10 @@ using System.ComponentModel;
 namespace ScientificResearch.Models
 {
     /// <summary>
-    /// v_教学角色[类]
+    /// v_sp_教学考勤统计[类]
     /// </summary>
     [Serializable]
-	public partial class v_教学角色 
+	public partial class v_sp_教学考勤统计 
 	{       
               
         #region 属性
@@ -19,23 +19,35 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        public string 名称 { get; set; }
+        public int 正常白班 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public bool 能否直接配置人员 { get; set; }
+        public int 正常休假 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public string 备注 { get; set; }
+        public int 迟到 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public int? 人数 { get; set; }
+        public int 早退 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public int? 功能数 { get; set; }
+        public int 脱岗 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int 旷工 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int 夜班 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int 请假 { get; set; }
         
           
         #endregion
