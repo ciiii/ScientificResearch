@@ -18,6 +18,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
     public class TeachingManagementController : TeachingManagementBaseController
     {
         /// <summary>
+        /// 学员可以看到自己,不过学员不用这个接口看自己的信息
         /// 医院管理员可以看到所有学员;
         /// 科室管理员只能看到轮转科室有自己管理的科室的学员;
         /// 带教老师只能看到自己带教的学员;
@@ -413,8 +414,11 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             await Db.GetListSpAsync<v_教学轮转, 教学轮转Filter>(new 教学轮转Filter() { 学员编号 = 学员编号 }, orderType: true);
 
         /// <summary>
-        /// 分页获取多个我的学员,以及每个学员的所有轮转
-        /// 注意:我的学员不一定是所有学员,这是根据权限来的;
+        /// 通过"tfn_我的学员":
+        /// 学员可以看到自己的轮转;
+        /// 医院管理员可以看到所有;
+        /// 科室管理员可以看到自己管理的科室相关轮转的轮转;
+        /// 带教老师可以看到自己带教的轮转的轮转
         /// </summary>
         /// <param name="paging"></param>
         /// <param name="filter"></param>
@@ -428,7 +432,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             var 学员的轮转 = await Db.GetListSpAsync<v_教学轮转, 教学轮转Filter>(new 教学轮转Filter()
             {
                 WhereIn学员编号 = 分页的学员.list.Select(i => i.编号).ToStringIdWithSpacer()
-            }, orderType: true);
+            }, $"tfn_我的轮转('{CurrentUser.人员类型}',{CurrentUser.编号})", orderType: true);
 
             return new
             {
@@ -586,6 +590,16 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             await Db.Merge(data);
         }
 
+        /// <summary>
+        /// 通过"tfn_我的轮转":
+        /// 学员可以看到自己的教学医疗差错及事故记录;
+        /// 医院管理员可以看到所有;
+        /// 科室管理员可以看到自己管理的科室相关轮转的教学医疗差错及事故记录;
+        /// 带教老师可以看到自己带教的轮转的教学医疗差错及事故记录
+        /// </summary>
+        /// <param name="paging"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
         [HttpGet]
         async public Task<object> 分页获取我的学员的教学医疗差错及事故记录(Paging paging, v_tfn_教学医疗差错及事故记录Filter filter) =>
             await Db.GetPagingListSpAsync<v_tfn_教学医疗差错及事故记录, v_tfn_教学医疗差错及事故记录Filter>
@@ -624,11 +638,17 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         [HttpPost]
         async public Task 学员入科([FromBody]学员入科 data)
         {
+            
             var 要入科的轮转视图 = await Db.GetModelByIdSpAsync<v_教学轮转>(data.教学轮转编号);
             if (要入科的轮转视图 == null)
             {
                 throw new Exception("没有找到该教学轮转");
             }
+
+            //if(要入科的轮转视图.科室管理员编号 != CurrentUser.编号)
+            //{
+            //    throw new Exception("科室管理员才能操作入科");
+            //}
 
             if (要入科的轮转视图.状态 != 教学轮转状态.未入科.ToString())
             {
@@ -664,8 +684,18 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             await Db.Merge(要入科的轮转);
         }
 
+        /// <summary>
+        /// 通过"tfn_我的轮转":
+        /// 学员可以看到自己的更换带教老师记录;
+        /// 医院管理员可以看到所有;
+        /// 科室管理员可以看到自己管理的科室相关轮转的更换老师记录;
+        /// 带教老师可以看到自己带教的轮转的更换老师记录
+        /// </summary>
+        /// <param name="paging"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
         [HttpGet]
-        async public Task<object> 分页获取我的学员的教学更换带教老师(Paging paging, v_tfn_教学更换带教老师Filter filter) =>
+        async public Task<object> 分页获取我的教学更换带教老师(Paging paging, v_tfn_教学更换带教老师Filter filter) =>
             await Db.GetPagingListSpAsync<v_tfn_教学更换带教老师, v_tfn_教学更换带教老师Filter>
             (paging, filter, $"tfn_教学更换带教老师('{CurrentUser.人员类型}',{CurrentUser.编号})");
 
@@ -685,12 +715,24 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             await Db.Merge(data);
         }
 
+        /// <summary>
+        /// 考勤的可选类型
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<object> 获取教学考勤类型()
         {
             return await Db.GetListSpAsync<教学考勤类型>();
         }
 
+        /// <summary>
+        /// 这个统计时针对时间范围内所有轮转来的,而不是某科室管理员只看自己科室的学员的考勤统计;
+        /// </summary>
+        /// <param name="paging"></param>
+        /// <param name="filter"></param>
+        /// <param name="开始日期"></param>
+        /// <param name="结束日期"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<object> 分页获取我的学员的考勤统计(
             Paging paging,
@@ -720,6 +762,11 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             };
         }
 
+        /// <summary>
+        /// 这个不是统计
+        /// </summary>
+        /// <param name="教学轮转编号"></param>
+        /// <returns></returns>
         [HttpGet]
         async public Task<object> 获取某教学轮转的考勤(int 教学轮转编号)
         {
@@ -741,7 +788,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         async public Task 增改教学考勤情况([FromBody]PredefindedIdList<教学考勤情况> data)
         {
             var 教学轮转 = await Db.GetModelByIdSpAsync<教学轮转>(data.Id);
-            if(data.List.Any(i=>i.考勤日期<教学轮转.计划入科日期 || i.考勤日期 > 教学轮转.计划出科日期))
+            if (data.List.Any(i => i.考勤日期 < 教学轮转.计划入科日期 || i.考勤日期 > 教学轮转.计划出科日期))
             {
                 throw new Exception("考勤日期不能超出该轮转的计划开始/结束日期范围");
             }

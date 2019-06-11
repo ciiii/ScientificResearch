@@ -1,12 +1,15 @@
 <template>
   <div>
     <ul>
-      <li v-for="(item,index) in iocnList" :key="index">
-        <a v-if="item.手机链接地址 && item.手机链接地址.indexOf('http')==0" :href="item.手机链接地址">
+      <li v-for="(item,index) in iocnList"
+          :key="index">
+        <a v-if="item.手机链接地址 && item.手机链接地址.indexOf('http')==0"
+           :href="item.手机链接地址">
           <img :src="url+ item.Logo">
           <p>{{item.名称}}</p>
         </a>
-        <a v-else @click="path(item)">
+        <a v-else
+           @click="path(item)">
           <img :src="url+item.Logo">
           <p>{{item.名称}}</p>
         </a>
@@ -16,7 +19,7 @@
 </template>
 <script>
 export default {
-  data() {
+  data () {
     return {
       iocnList: [],
       url:
@@ -25,15 +28,15 @@ export default {
           : ""
     };
   },
-  mounted() {
+  mounted () {
     this.login();
     // let urlNow = encodeURIComponent("http://192.168.0.157:8080/login?name=ScientificResearch_Test");
-    // console.log(urlNow,"eee")
-    // let urlNow = encodeURIComponent("http://192.168.0.157:8080/#/");
-    // console.log(urlNow,"eee")
+    // console.log(urlNow, "eee")
+    // let urlNow = encodeURIComponent("http://192.168.0.157:8080");
+    // console.log(urlNow, "eee")
   },
   methods: {
-    getUrlKey(name) {
+    getUrlKey (name) {
       //获取url 参数
       return (
         decodeURIComponent(
@@ -107,7 +110,7 @@ export default {
     //     return;
     //   }
     // },
-    async login() {
+    async login () {
       //本地存储
       let personnel = JSON.parse(localStorage.getItem("personnel"));
       let flag = this.$route.params.item;
@@ -123,7 +126,7 @@ export default {
             localStorage.personnel = JSON.stringify(res.data.人员);
             localStorage.token = `${res.data.token_type} ${
               res.data.access_token
-            }`;
+              }`;
             this.$emit("getPersonnel");
             this.$emit("getKYNews");
           }
@@ -152,7 +155,7 @@ export default {
       }
     },
 
-    path(item) {
+    path (item) {
       if (item.手机链接地址 === null) {
         // this.$toast.fail({
         //   duration: 1000,
@@ -163,6 +166,11 @@ export default {
           message: "你还没有权限，请先联系医院管理员!"
         });
       } else {
+        if (process.env.NODE_ENV === 'development') {
+          if (item.手机链接地址 == 'TeachingManagementWeChat') {
+            window.location.replace('http://192.168.0.157:8081/#/TeachingManagementWeChat')
+          }
+        }
         this.$router.push({
           path: item.手机链接地址,
           query: {

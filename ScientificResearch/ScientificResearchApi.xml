@@ -519,6 +519,7 @@
         </member>
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.分页获取我的学员(ScientificResearch.Models.Paging,ScientificResearch.Models.教学学员培训情况Filter)">
             <summary>
+            学员可以看到自己,不过学员不用这个接口看自己的信息
             医院管理员可以看到所有学员;
             科室管理员只能看到轮转科室有自己管理的科室的学员;
             带教老师只能看到自己带教的学员;
@@ -609,8 +610,11 @@
         </member>
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.分页获取我的学员的教学轮转(ScientificResearch.Models.Paging,ScientificResearch.Models.教学学员培训情况Filter)">
             <summary>
-            分页获取多个我的学员,以及每个学员的所有轮转
-            注意:我的学员不一定是所有学员,这是根据权限来的;
+            通过"tfn_我的学员":
+            学员可以看到自己的轮转;
+            医院管理员可以看到所有;
+            科室管理员可以看到自己管理的科室相关轮转的轮转;
+            带教老师可以看到自己带教的轮转的轮转
             </summary>
             <param name="paging"></param>
             <param name="filter"></param>
@@ -645,6 +649,18 @@
             <param name="data"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.分页获取我的学员的教学医疗差错及事故记录(ScientificResearch.Models.Paging,ScientificResearch.Models.v_tfn_教学医疗差错及事故记录Filter)">
+            <summary>
+            通过"tfn_我的轮转":
+            学员可以看到自己的教学医疗差错及事故记录;
+            医院管理员可以看到所有;
+            科室管理员可以看到自己管理的科室相关轮转的教学医疗差错及事故记录;
+            带教老师可以看到自己带教的轮转的教学医疗差错及事故记录
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.增改教学医疗差错及事故记录(ScientificResearch.Models.教学医疗差错及事故记录)">
             <summary>
             针对一个轮转来记录;
@@ -664,11 +680,46 @@
             <param name="data"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.分页获取我的教学更换带教老师(ScientificResearch.Models.Paging,ScientificResearch.Models.v_tfn_教学更换带教老师Filter)">
+            <summary>
+            通过"tfn_我的轮转":
+            学员可以看到自己的更换带教老师记录;
+            医院管理员可以看到所有;
+            科室管理员可以看到自己管理的科室相关轮转的更换老师记录;
+            带教老师可以看到自己带教的轮转的更换老师记录
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.增改教学更换带教老师(ScientificResearch.Models.教学更换带教老师)">
             <summary>
             已出科的轮转不能更换带教老师
             </summary>
             <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.获取教学考勤类型">
+            <summary>
+            考勤的可选类型
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.分页获取我的学员的考勤统计(ScientificResearch.Models.Paging,ScientificResearch.Models.教学学员培训情况Filter,System.DateTime,System.DateTime)">
+            <summary>
+            这个统计时针对时间范围内所有轮转来的,而不是某科室管理员只看自己科室的学员的考勤统计;
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <param name="开始日期"></param>
+            <param name="结束日期"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.获取某教学轮转的考勤(System.Int32)">
+            <summary>
+            这个不是统计
+            </summary>
+            <param name="教学轮转编号"></param>
             <returns></returns>
         </member>
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.增改教学考勤情况(ScientificResearch.Infrastucture.PredefindedIdList{ScientificResearch.Models.教学考勤情况})">
@@ -700,6 +751,7 @@
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.学员分页查看退培申请(ScientificResearch.Models.Paging,ScientificResearch.Models.v_tfn_教学退培申请Filter)">
             <summary>
             这个应该是在学员端,目前为了测试方便放在这里,人员类型和编号都是写死的;
+            虽然它和老师端的这个接口其实是一样的;
             </summary>
             <param name="paging"></param>
             <param name="filter"></param>
@@ -711,6 +763,14 @@
             data是教学退培申请
             </summary>
             <param name="date"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.分页查看退培申请(ScientificResearch.Models.Paging,ScientificResearch.Models.v_tfn_教学退培申请Filter)">
+            <summary>
+            这里就是"老师端"的接口;
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
             <returns></returns>
         </member>
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.通过退培申请(ScientificResearch.Models.StepDone{System.Int32})">
@@ -728,6 +788,52 @@
              <returns></returns>
         </member>
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.终止退培申请(ScientificResearch.Models.StepDone)">
+             <summary>
+            
+             </summary>
+             <param name="data"></param>
+             <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.学员分页查看请假申请(ScientificResearch.Models.Paging,ScientificResearch.Models.v_tfn_教学请假申请Filter)">
+            <summary>
+            这个应该是在学员端,目前为了测试方便放在这里,人员类型和编号都是写死的;
+            虽然它和老师端的这个接口其实是一样的;
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.学员发起请假申请(ScientificResearch.Models.FlowInit{ScientificResearch.Models.教学请假申请})">
+            <summary>
+            这个应该是在学员端,目前为了测试方便放在这里,人员类型和编号都是写死的;
+            data是教学请假申请
+            </summary>
+            <param name="date"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.分页查看请假申请(ScientificResearch.Models.Paging,ScientificResearch.Models.v_tfn_教学请假申请Filter)">
+            <summary>
+            这里就是"老师端"的接口;
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.通过请假申请(ScientificResearch.Models.StepDone{System.Int32})">
+            <summary>
+            Data填申请退培的学员编号
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.不通过请假申请(ScientificResearch.Models.StepDone)">
+             <summary>
+            
+             </summary>
+             <param name="data"></param>
+             <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.终止请假申请(ScientificResearch.Models.StepDone)">
              <summary>
             
              </summary>
@@ -1432,6 +1538,11 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_tfn_教学退培申请Filter.StateName">
+            <summary>
+            流程状态有:未完成,已完成,作废,
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请Filter.StateName">
             <summary>
             流程状态有:未完成,已完成,作废,
             </summary>
@@ -7503,16 +7614,6 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.教学请假申请.请假事由">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学请假申请.轮转延期开始日期">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学请假申请.轮转延期结束日期">
             <summary>
             
             </summary>
@@ -17738,6 +17839,266 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_tfn_教学考试成绩.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_tfn_教学请假申请">
+            <summary>
+            v_tfn_教学请假申请[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.学员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.学员姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.教学轮转编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.计划入科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.计划出科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.实际入科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.实际出科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.教学本院科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.教学本院策略编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.教学本院策略名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.教学专业科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.教学专业科室名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.本院科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.本院科室名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.科室管理员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.科室管理员姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.带教老师编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.带教老师姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.状态">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.请假开始日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.请假天数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.请假事由">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.建立人">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.FlowId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.FlowTemplateId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.FlowTemplateName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.FlowTemplateComponentName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.SourceId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.State">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.StateName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.CreatorType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.CreatorId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.CreatorInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.CreateDateTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.Remark">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.LastStepId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.LastStepTemplateId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.LastStepTemplateName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.LastViewStepComponentName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.LastEditStepComponentName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.LastStepTemplateStyle">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.LastStepState">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.LastStepStateName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.LastStepOperatorType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.LastStepOperatorId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.LastStepOpeartorInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.LastStepOperatorDatetime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请.IsCanOperate">
             <summary>
             
             </summary>

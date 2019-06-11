@@ -41,14 +41,6 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-		public DateTime? 轮转延期开始日期 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-		public DateTime? 轮转延期结束日期 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
         [Required(ErrorMessage ="请提供[建立人]")]
 		public int 建立人 { get; set; }
         /// <summary>

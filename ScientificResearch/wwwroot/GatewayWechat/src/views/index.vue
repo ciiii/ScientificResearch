@@ -16,8 +16,12 @@
             <i class="icon iconfont icon-you"></i>
           </span>
         </div>
-        <van-swipe :autoplay="3000" vertical :show-indicators="false" class="backlogContent">
-          <van-swipe-item v-for="(item,key) in KYList" :key="key">
+        <van-swipe :autoplay="3000"
+                   vertical
+                   :show-indicators="false"
+                   class="backlogContent">
+          <van-swipe-item v-for="(item,key) in KYList"
+                          :key="key">
             <span @click="newsItem(item.编号)">
               <i class="iocn iconfont icon-tongzhi"></i>
               {{item.通知名称}}
@@ -70,10 +74,10 @@
             <span>我的待办</span>
           </span>
         </div>
-        <toDoList ref="toDoList"/>
+        <toDoList ref="toDoList" />
       </div>
     </section>
-    <navFooter/>
+    <navFooter />
   </div>
 </template>
 <script>
@@ -85,7 +89,7 @@ export default {
     toDoList,
     navFooter
   },
-  data() {
+  data () {
     return {
       isLoading: false,
       index: 1,
@@ -102,7 +106,7 @@ export default {
       defaultImg: require("@/assets/images/iocn/logo.png")
     };
   },
-  created() {
+  created () {
     this.Logo = this.HospitalInformation.Logo;
     if (!localStorage.token) {
       let code = this.getUrlKey("code");
@@ -112,7 +116,7 @@ export default {
           localStorage.personnel = JSON.stringify(res.data.人员);
           localStorage.token = `${res.data.token_type} ${
             res.data.access_token
-          }`;
+            }`;
           // console.log(localStorage.token, "localStorage.token  ????????");
           this.$refs.toDoList.getBacklog();
         });
@@ -122,7 +126,7 @@ export default {
       }
     }
   },
-  mounted() {
+  mounted () {
     var code = JSON.parse(localStorage.getItem("personnel"));
     var para = {
       人员编号: code.编号,
@@ -134,7 +138,7 @@ export default {
     });
   },
   methods: {
-    getUrlKey(name) {
+    getUrlKey (name) {
       //获取url 参数 解码
       return (
         decodeURIComponent(
@@ -144,10 +148,10 @@ export default {
         ) || null
       );
     },
-    more() {
+    more () {
       this.$router.push("/KYMoreList");
     },
-    newsItem(item) {
+    newsItem (item) {
       this.$router.push({
         path: "/KYNewsDetails",
         name: "KYNewsDetails",

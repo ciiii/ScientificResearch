@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace ScientificResearch.Models
 {
+    public class StepFilter
+    {
+        public int? Id { get; set; }
+    }
 
     public class FlowInit<T>
     {

@@ -175,4 +175,13 @@ namespace ScientificResearch.Models
     {
         public int? 教学轮转编号 { get; set; }
     }
+
+    public class v_tfn_教学请假申请Filter
+    {
+        public string Like姓名 { get; set; }
+        /// <summary>
+        /// 流程状态有:未完成,已完成,作废,
+        /// </summary>
+        public string StateName { get; set; }
+    }
 }
