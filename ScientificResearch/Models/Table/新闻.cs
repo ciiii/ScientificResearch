@@ -20,6 +20,11 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        [MaxLength(200,ErrorMessage ="分类不能超过[100]字")]
+		public string 分类 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
         [Required(ErrorMessage ="请提供[标题]")]
         [MaxLength(200,ErrorMessage ="标题不能超过[100]字")]
 		public string 标题 { get; set; }

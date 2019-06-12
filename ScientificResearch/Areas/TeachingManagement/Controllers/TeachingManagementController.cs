@@ -212,7 +212,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
 
             return new
             {
-                total = 学员信息.Count(),
+                //total = 学员信息.Count(),
                 最小日期 = 学员轮转安排列表.Min(i => (DateTime?)i.计划入科日期),
                 最大日期 = 学员轮转安排列表.Max(i => (DateTime?)i.计划出科日期),
                 list = from item in 学员信息

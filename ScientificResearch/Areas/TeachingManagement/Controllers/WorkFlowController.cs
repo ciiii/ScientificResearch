@@ -20,16 +20,16 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
     public class WorkFlowController : TeachingManagementBaseController
     {
         #region 这几个暂时不需要
-        //private async Task 完成步骤(StepDone step,int state)
+        //private async task 完成步骤(stepdone step,int state)
         //{
-        //    //await MyWorkFlowBusiness.DoneStep(data, CurrentUser.人员类型, CurrentUser.编号);
+        //    //await myworkflowbusiness.donestep(data, currentuser.人员类型, currentuser.编号);
 
-        //    Task<int> myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+        //    task<int> mytran(sqlconnection dbfortransaction, sqltransaction transaction)
         //    {
-        //        return WorkFlow.DoneStep(dbForTransaction, transaction, step, state, CurrentUser.人员类型, CurrentUser.编号);
+        //        return workflow.donestep(dbfortransaction, transaction, step, state, currentuser.人员类型, currentuser.编号);
         //    }
 
-        //    await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+        //    await predefinedspextention.executetransaction(dbconnectionstring, mytran);
         //}
 
         ///// <summary>
@@ -37,10 +37,10 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         ///// </summary>
         ///// <param name="data"></param>
         ///// <returns></returns>
-        //[HttpPost]
-        //async public Task 步骤通过审核([FromBody]StepDone data)
+        //[httppost]
+        //async public task 步骤通过审核([frombody]stepdone data)
         //{
-        //    await 完成步骤(data, (int)StepState.Forward);
+        //    await 完成步骤(data, (int)stepstate.forward);
         //}
 
         ///// <summary>
@@ -48,10 +48,10 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         ///// </summary>
         ///// <param name="data"></param>
         ///// <returns></returns>
-        //[HttpPost]
-        //async public Task 步骤不通过审核([FromBody]StepDone data)
+        //[httppost]
+        //async public task 步骤不通过审核([frombody]stepdone data)
         //{
-        //    await 完成步骤(data, (int)StepState.Back);
+        //    await 完成步骤(data, (int)stepstate.back);
         //}
 
         ///// <summary>
@@ -59,13 +59,14 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         ///// </summary>
         ///// <param name="data"></param>
         ///// <returns></returns>
-        //[HttpPost]
-        //async public Task 终止流程([FromBody]StepDone data)
+        //[httppost]
+        //async public task 终止流程([frombody]stepdone data)
         //{
-        //    await 完成步骤(data, (int)StepState.Quit);
+        //    await 完成步骤(data, (int)stepstate.quit);
         //}
         #endregion
 
+        #region 查看流程和步骤设定
         /// <summary>
         /// 首页上查看"更多办事流程"时,列举出所有的办事流程
         /// </summary>
@@ -88,6 +89,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             var filter = new StepTemplateFilter() { FlowTemplateId = 办事流程编号 };
             return await Db.GetListSpAsync<VStepTemplate, StepTemplateFilter>(filter, orderType: true);
         }
+        #endregion
 
         #region 退培
         /// <summary>
@@ -376,8 +378,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         [HttpPost]
         async public Task 通过请假申请([FromBody]StepDone<int> data)
         {
-            //TODO:这一块就是因为step的pk为id而不是这里预定义的"编号",四不像了
-            var vstep = (await Db.GetListSpAsync<VStep, StepFilter>(new StepFilter() { Id = data.StepId},keyFields:"Id")).FirstOrDefault();
+            var vstep = await Db.GetModelByIdSpAsync<VStep>(data.StepId, keyFields: "Id");
 
             var 教学请假申请 = await Db.GetModelByIdSpAsync<教学请假申请>(vstep.SourceId);
             await 检查请假数据(教学请假申请);
@@ -385,11 +386,14 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
             {
                 //流程上通过申请
-                var nextStepId = await WorkFlow.DoneStep(dbForTransaction, transaction, data.ToSimple(), (int)StepState.Forward, CurrentUser.人员类型, CurrentUser.编号);
+                var nextStepId = await WorkFlow.DoneStep
+                    (dbForTransaction, transaction, data.ToSimple(), (int)StepState.Forward, CurrentUser.人员类型, CurrentUser.编号);
 
-                if(nextStepId == 0)
+                //没有下一步,或者说下一步id=0
+                if (nextStepId == 0)
                 {
                     var 学员编号 = data.Data;
+                    var 请假的轮转编号 = 教学请假申请.教学轮转编号;
                     var 请假开始日期 = 教学请假申请.请假开始日期;
                     var 请假天数 = 教学请假申请.请假天数;
                     ///造成轮转时间拉长
@@ -402,12 +406,12 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
 
                     foreach (var item in 将要延长的轮转)
                     {
-                        if(item.实际入科日期 > 请假开始日期)
+                        if (item.实际入科日期 > 请假开始日期 && item.实际入科日期 != null)
                         {
                             ((DateTime)item.实际入科日期).AddDays(请假天数);
                         }
 
-                        if (item.实际出科日期 > 请假开始日期)
+                        if (item.实际出科日期 > 请假开始日期 && item.实际出科日期 != null)
                         {
                             ((DateTime)item.实际出科日期).AddDays(请假天数);
                         }
@@ -416,7 +420,28 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
                     await dbForTransaction.Merge(将要延长的轮转, transaction);
 
                     ///会让这几天的考勤变成请假
+                    var 教学考勤情况列表 = await dbForTransaction.GetListSpAsync<教学考勤情况, 教学考勤情况Filter>(new 教学考勤情况Filter()
+                    {
+                        教学轮转编号 = 请假的轮转编号,
+                    }, transaction: transaction);
 
+                    var 将要改变的考勤 = Enumerable.Range(0, 请假天数).Select(i => new 教学考勤情况()
+                    {
+                        编号 = 0,
+                        教学考勤类型编号 = Config.GetValue<int>("教学考勤类型编号:请假"),
+                        建立时间 = DateTime.Now,
+                        建立人 = CurrentUser.编号,
+                        教学轮转编号 = 请假的轮转编号,
+                        考勤日期 = ((DateTime)请假开始日期).AddDays(i),
+                        说明 = $"{DateTime.Now.ToShortDateString()}请假:{教学请假申请.请假事由}",
+                        备注 = null
+                    });
+
+                    var 最终的考勤情况列表 = 教学考勤情况列表
+                        .Where(i => i.考勤日期 < 请假开始日期 || i.考勤日期 > ((DateTime)请假开始日期).AddDays(请假天数))
+                        .Union(将要改变的考勤);
+
+                    await dbForTransaction.Merge(请假的轮转编号, 最终的考勤情况列表, transaction);
                 }
             }
 
@@ -424,7 +449,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         }
 
         /// <summary>
-        ///
+        /// 不通过xxx,是可以写一个通用的.但目前先不
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
@@ -439,7 +464,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         }
 
         /// <summary>
-        ///
+        /// 终止xxx,是可以写一个通用的.但目前先不
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
@@ -450,6 +475,63 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             {
                 await WorkFlow.DoneStep(dbForTransaction, transaction, data, (int)StepState.Quit, CurrentUser.人员类型, CurrentUser.编号);
             }
+            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+        }
+        #endregion
+
+        #region 教学病例,或者叫轮转手册审核
+        /// <summary>
+        /// 这个应该是在学员端,目前为了测试方便放在这里,人员类型和编号都是写死的;
+        /// 虽然它和老师端的这个接口其实是一样的;
+        /// </summary>
+        /// <param name="paging"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        [HttpGet]
+        async public Task<object> 学员分页查看轮转手册申请(Paging paging, v_tfn_教学轮转手册申请Filter filter)
+        {
+            var 人员类型 = "教学学员";
+            var 学员编号 = 1; //王苏麻子
+            return await Db.GetPagingListSpAsync<v_tfn_教学轮转手册申请, v_tfn_教学轮转手册申请Filter>
+                (paging, filter, $"tfn_教学轮转手册申请('{人员类型}',{学员编号})");
+        }
+
+        /// <summary>
+        /// 这个应该是在学员端,目前为了测试方便放在这里,人员类型和编号都是写死的;
+        /// data是教学轮转手册申请,包括轮转手册数据和所选的完成任务的数据;
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task 学员发起轮转手册申请([FromBody]FlowInit<教学轮转手册申请> data)
+        {
+            //这里是伪数据
+            data.IsHold = false;
+            var 人员类型 = "教学学员";
+            var 学员编号 = 1; //王苏麻子
+
+            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+            {
+                //请假申请
+                var 提交的轮转手册 = await dbForTransaction.Merge(data.Data.轮转手册, transaction);
+                //保存教学轮转手册完成的任务
+                var 将提交的完成任务 = data.Data.完成任务编号列表.Select(i => new 教学轮转手册完成任务()
+                {
+                    教学轮转任务编号 = i
+                });
+
+                var 提交的轮转手册完成任务 = await dbForTransaction.Merge(提交的轮转手册.编号, 提交的轮转手册, transaction);
+
+                await WorkFlow.InitFlow(
+                    dbForTransaction,
+                    transaction,
+                    Config.GetValue<int>("教学流程模板编号:教学轮转手册"),
+                    提交的轮转手册.编号,
+                    人员类型,
+                    学员编号,
+                    isHold: data.IsHold);
+            }
+
             await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
         }
         #endregion

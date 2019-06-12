@@ -836,3 +836,41 @@ VALUES  ( 1, N'正常白班', N'' ),
 GO
         
 
+
+--教学轮转手册类型分类
+SELECT  *
+FROM    字典
+WHERE   分类 = '教学轮转手册类型分类';
+
+DELETE  字典
+WHERE   分类 = '教学轮转手册类型分类';
+
+INSERT  dbo.字典
+        ( 分类, 值, 上级编号, 级别, 排序, 备注 )
+VALUES  ( N'教学轮转手册类型分类', N'病种病例', 0, 0, 0, N'' ),
+        ( N'教学轮转手册类型分类', N'技能操作', 0, 0, 0, N'' );
+
+GO
+
+--
+TRUNCATE TABLE 教学轮转手册类型;
+INSERT dbo.教学轮转手册类型
+        ( 编号 ,
+          分类 ,
+          名称 ,
+          是否门诊 ,
+          是否病床 ,
+          是否医技 ,
+          内容模板 ,
+          备注
+        )
+VALUES  ( 1 , N'病种病例' , N'大病历'  , NULL ,NULL ,NULL ,N'' ,N''),
+ ( 2 , N'病种病例' , N'门诊诊治'  , 1 ,NULL ,NULL ,N'' ,N''),
+ ( 3 , N'病种病例' , N'急诊诊治'  , NULL ,NULL ,NULL ,N'' ,N''),
+ ( 4 , N'病种病例' , N'抢救记录'  , NULL ,NULL ,NULL ,N'' ,N''),
+ ( 5 , N'病种病例' , N'会诊记录'  , NULL ,NULL ,NULL ,N'' ,N''),
+ ( 6 , N'技能操作' , N'操作记录'  , NULL ,NULL ,NULL ,N'' ,N''),
+ ( 7 , N'技能操作' , N'手术记录'  , NULL ,NULL ,NULL ,N'' ,N''),
+ ( 8 , N'技能操作' , N'门诊记录'  , NULL ,NULL ,NULL ,N'' ,N''),
+ ( 9 , N'技能操作' , N'门诊手术'  , NULL ,NULL ,NULL ,N'' ,N''),
+ ( 10 , N'技能操作' , N'医技报告'  , NULL ,NULL ,NULL ,N'' ,N'')

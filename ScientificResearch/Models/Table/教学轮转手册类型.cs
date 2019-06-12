@@ -20,8 +20,9 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        [Required(ErrorMessage ="请提供[任务类型编号]")]
-		public int 任务类型编号 { get; set; }
+        [Required(ErrorMessage ="请提供[分类]")]
+        [MaxLength(50,ErrorMessage ="分类不能超过[25]字")]
+		public string 分类 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
@@ -40,6 +41,10 @@ namespace ScientificResearch.Models
 		/// 
 		/// </summary>
 		public bool? 是否医技 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+		public string 内容模板 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>

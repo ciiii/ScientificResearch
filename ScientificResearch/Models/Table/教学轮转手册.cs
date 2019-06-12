@@ -25,13 +25,16 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        [MaxLength(50,ErrorMessage ="文献类型不能超过[25]字")]
-		public string 文献类型 { get; set; }
+        [Required(ErrorMessage ="请提供[教学轮转手册类型编号]")]
+		public int 教学轮转手册类型编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        [Required(ErrorMessage ="请提供[教学轮转手册类型编号]")]
-		public int 教学轮转手册类型编号 { get; set; }
+		public int? 教学专业科室任务类型编号 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+		public DateTime? 操作时间 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
@@ -39,8 +42,12 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        [MaxLength(2000,ErrorMessage ="病例内容不能超过[1000]字")]
-		public string 病例内容 { get; set; }
+        [MaxLength(200,ErrorMessage ="概要不能超过[100]字")]
+		public string 概要 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+		public string 内容 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>

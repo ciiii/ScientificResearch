@@ -827,22 +827,44 @@
             <returns></returns>
         </member>
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.不通过请假申请(ScientificResearch.Models.StepDone)">
-             <summary>
-            
-             </summary>
-             <param name="data"></param>
-             <returns></returns>
+            <summary>
+            不通过xxx,是可以写一个通用的.但目前先不
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
         </member>
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.终止请假申请(ScientificResearch.Models.StepDone)">
-             <summary>
-            
-             </summary>
-             <param name="data"></param>
-             <returns></returns>
+            <summary>
+            终止xxx,是可以写一个通用的.但目前先不
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.学员分页查看轮转手册申请(ScientificResearch.Models.Paging,ScientificResearch.Models.v_tfn_教学轮转手册申请Filter)">
+            <summary>
+            这个应该是在学员端,目前为了测试方便放在这里,人员类型和编号都是写死的;
+            虽然它和老师端的这个接口其实是一样的;
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.学员发起轮转手册申请(ScientificResearch.Models.FlowInit{ScientificResearch.Models.教学轮转手册申请})">
+            <summary>
+            这个应该是在学员端,目前为了测试方便放在这里,人员类型和编号都是写死的;
+            data是教学轮转手册申请,包括轮转手册数据和所选的完成任务的数据;
+            </summary>
+            <param name="date"></param>
+            <returns></returns>
         </member>
         <member name="T:ScientificResearch.Models.CurrentUserOfManage">
             <summary>
             当前总库登录人的信息
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.总库新闻Filter.分类">
+            <summary>
+            目前写死:前沿,视听,公告 这三种
             </summary>
         </member>
         <member name="M:ScientificResearch.Models.RestoreModelDb.GetSql(System.String,Microsoft.AspNetCore.Hosting.IHostingEnvironment)">
@@ -1542,11 +1564,6 @@
             流程状态有:未完成,已完成,作废,
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请Filter.StateName">
-            <summary>
-            流程状态有:未完成,已完成,作废,
-            </summary>
-        </member>
         <member name="T:ScientificResearch.Models.StepDone`1">
             <summary>
             完成步骤时,提交的数据
@@ -1642,6 +1659,16 @@
             <param name="OperatorType"></param>
             <param name="OperatorId"></param>
             <returns></returns>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学请假申请Filter.StateName">
+            <summary>
+            流程状态有:未完成,已完成,作废,
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请Filter.StateName">
+            <summary>
+            流程状态有:未完成,已完成,作废,
+            </summary>
         </member>
         <member name="T:ScientificResearch.Models.GET_DeleteScript_MSSQL">
             <summary>
@@ -7763,12 +7790,17 @@
             
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.教学轮转手册.文献类型">
+        <member name="P:ScientificResearch.Models.教学轮转手册.教学轮转手册类型编号">
             <summary>
             
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.教学轮转手册.教学轮转手册类型编号">
+        <member name="P:ScientificResearch.Models.教学轮转手册.教学专业科室任务类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转手册.操作时间">
             <summary>
             
             </summary>
@@ -7778,7 +7810,12 @@
             
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.教学轮转手册.病例内容">
+        <member name="P:ScientificResearch.Models.教学轮转手册.概要">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转手册.内容">
             <summary>
             
             </summary>
@@ -7828,7 +7865,7 @@
             
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.教学轮转手册类型.任务类型编号">
+        <member name="P:ScientificResearch.Models.教学轮转手册类型.分类">
             <summary>
             
             </summary>
@@ -7849,6 +7886,11 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.教学轮转手册类型.是否医技">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学轮转手册类型.内容模板">
             <summary>
             
             </summary>
@@ -8014,6 +8056,11 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.新闻.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.新闻.分类">
             <summary>
             
             </summary>
@@ -18103,6 +18150,281 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.v_tfn_教学轮转手册申请">
+            <summary>
+            v_tfn_教学轮转手册申请[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.学员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.学员姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.教学轮转编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.计划入科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.计划出科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.实际入科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.实际出科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.教学本院科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.教学本院策略编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.教学本院策略名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.教学专业科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.教学专业科室名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.本院科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.本院科室名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.科室管理员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.科室管理员姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.带教老师编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.带教老师姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.状态">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.教学轮转手册类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.教学轮转手册类型名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.操作时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.病人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.概要">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.内容">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.附件">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.FlowId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.FlowTemplateId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.FlowTemplateName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.FlowTemplateComponentName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.SourceId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.State">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.StateName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.CreatorType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.CreatorId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.CreatorInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.CreateDateTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.Remark">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.LastStepId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.LastStepTemplateId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.LastStepTemplateName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.LastViewStepComponentName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.LastEditStepComponentName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.LastStepTemplateStyle">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.LastStepState">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.LastStepStateName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.LastStepOperatorType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.LastStepOperatorId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.LastStepOpeartorInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.LastStepOperatorDatetime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.IsCanOperate">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v_tfn_教学退培申请">
             <summary>
             v_tfn_教学退培申请[类]
@@ -22065,7 +22387,7 @@
             <param name="Spacer"></param>
             <returns></returns>
         </member>
-        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.GetModelByIdSpAsync``1(System.Data.IDbConnection,System.Int32,System.Data.IDbTransaction)">
+        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.GetModelByIdSpAsync``1(System.Data.IDbConnection,System.Int32,System.String,System.Data.IDbTransaction)">
             <summary>
             通过主键获得对象,或者null
             T为表映射而来的类
