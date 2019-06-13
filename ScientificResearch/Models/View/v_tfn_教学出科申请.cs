@@ -5,10 +5,10 @@ using System.ComponentModel;
 namespace ScientificResearch.Models
 {
     /// <summary>
-    /// v_tfn_教学轮转手册申请[类]
+    /// v_tfn_教学出科申请[类]
     /// </summary>
     [Serializable]
-	public partial class v_tfn_教学轮转手册申请 
+	public partial class v_tfn_教学出科申请 
 	{       
               
         #region 属性
@@ -95,43 +95,11 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        public int 教学轮转手册类型编号 { get; set; }
+        public DateTime 申请出科日期 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public string 教学轮转手册类型名称 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public DateTime? 操作时间 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public int? 病人编号 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public string 病人姓名 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public string 住院号 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public string 住院床号 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public string 概要 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public string 内容 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public string 附件 { get; set; }
+        public string 出科小结 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>

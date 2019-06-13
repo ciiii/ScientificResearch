@@ -280,6 +280,14 @@ namespace ScientificResearch.Models
         public 教学轮转手册 轮转手册 { get; set; }
         public IEnumerable<int> 完成任务编号列表{ get; set; }
         //public 教学病人 病人 { get; set; }
+    }
 
+    public class v_tfn_教学出科申请Filter
+    {
+        public string Like学员姓名 { get; set; }
+        /// <summary>
+        /// 流程状态有:未完成,已完成,作废,
+        /// </summary>
+        public string StateName { get; set; }
     }
 }

@@ -51,6 +51,16 @@ namespace ScientificResearch.Models
         public string Like项目名称 { get; set; }
     }
 
+    public class 教学轮转任务Filter
+    {
+        public int 教学轮转编号 { get; set; }
+        public int? 任务类型编号 { get; set; }
+        public bool? 是否门诊 { get; set; }
+        public bool? 是否病房 { get; set; }
+        public bool? 是否医技 { get; set; }
+
+    }
+
     public class 教学活动评价项目Filter
     {
         [Required(ErrorMessage = "请输入教学活动类型编号")]
@@ -71,4 +81,10 @@ namespace ScientificResearch.Models
         public bool? 是否启用 { get; set; }
     }
 
+    public class 教学病人Filter
+    {
+        public string Like姓名 { get; set; }
+        public string Like住院号 { get; set; }
+        public string Like住院床号 { get; set; }
+    }
 }

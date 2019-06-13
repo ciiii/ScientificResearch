@@ -849,12 +849,67 @@
             <param name="filter"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.获取某教学轮转手册可选任务(System.Int32,System.Int32,System.Nullable{System.Int32})">
+            <summary>
+            学员提交轮转手册时需要选择的
+            </summary>
+            <param name="教学轮转编号"></param>
+            <param name="教学轮转手册类型编号"></param>
+            <returns></returns>
+        </member>
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.学员发起轮转手册申请(ScientificResearch.Models.FlowInit{ScientificResearch.Models.教学轮转手册申请})">
             <summary>
             这个应该是在学员端,目前为了测试方便放在这里,人员类型和编号都是写死的;
             data是教学轮转手册申请,包括轮转手册数据和所选的完成任务的数据;
             </summary>
             <param name="date"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.分页查看轮转手册申请(ScientificResearch.Models.Paging,ScientificResearch.Models.v_tfn_教学轮转手册申请Filter)">
+            <summary>
+            这里就是"老师端"的接口;
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.不通过轮转手册申请(ScientificResearch.Models.StepDone)">
+            <summary>
+            这几行代码是与其他不通过重复了的.暂时先这样.以免彼此有不同; 
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.学员分页查看出科申请(ScientificResearch.Models.Paging,ScientificResearch.Models.v_tfn_教学出科申请Filter)">
+            <summary>
+            这个应该是在学员端,目前为了测试方便放在这里,人员类型和编号都是写死的;
+            虽然它和老师端的这个接口其实是一样的;
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.学员发起出科申请(ScientificResearch.Models.FlowInit{ScientificResearch.Models.教学出科申请})">
+            <summary>
+            这个应该是在学员端,目前为了测试方便放在这里,人员类型和编号都是写死的;
+            data是教学出科申请
+            </summary>
+            <param name="date"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.分页查看出科申请(ScientificResearch.Models.Paging,ScientificResearch.Models.v_tfn_教学出科申请Filter)">
+            <summary>
+            这里就是"老师端"的接口;
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.通过出科申请(ScientificResearch.Models.StepDone{System.Int32})">
+            <summary>
+            data里面附件数据为出科申请编号
+            </summary>
+            <param name="data"></param>
             <returns></returns>
         </member>
         <member name="T:ScientificResearch.Models.CurrentUserOfManage">
@@ -1666,6 +1721,11 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请Filter.StateName">
+            <summary>
+            流程状态有:未完成,已完成,作废,
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请Filter.StateName">
             <summary>
             流程状态有:未完成,已完成,作废,
             </summary>
@@ -3063,6 +3123,11 @@
         <member name="T:ScientificResearch.Models.sp_教学轮转手册完成任务_增改">
             <summary>
             sp_教学轮转手册完成任务_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学轮转手册完成任务_增改.fId">
+            <summary>
+            
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_教学轮转手册完成任务_增改.tt">
@@ -17490,6 +17555,256 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.v_tfn_教学出科申请">
+            <summary>
+            v_tfn_教学出科申请[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.学员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.学员姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.教学轮转编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.计划入科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.计划出科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.实际入科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.实际出科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.教学本院科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.教学本院策略编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.教学本院策略名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.教学专业科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.教学专业科室名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.本院科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.本院科室名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.科室管理员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.科室管理员姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.带教老师编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.带教老师姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.状态">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.申请出科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.出科小结">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.FlowId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.FlowTemplateId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.FlowTemplateName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.FlowTemplateComponentName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.SourceId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.State">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.StateName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.CreatorType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.CreatorId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.CreatorInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.CreateDateTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.Remark">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.LastStepId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.LastStepTemplateId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.LastStepTemplateName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.LastViewStepComponentName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.LastEditStepComponentName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.LastStepTemplateStyle">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.LastStepState">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.LastStepStateName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.LastStepOperatorType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.LastStepOperatorId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.LastStepOpeartorInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.LastStepOperatorDatetime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学出科申请.IsCanOperate">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v_tfn_教学医疗差错及事故记录">
             <summary>
             v_tfn_教学医疗差错及事故记录[类]
@@ -18271,6 +18586,21 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.病人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.病人姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.住院号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学轮转手册申请.住院床号">
             <summary>
             
             </summary>

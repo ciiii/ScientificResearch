@@ -19,7 +19,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
     /// </summary>
     public class WorkFlowController : TeachingManagementBaseController
     {
-        #region 这几个暂时不需要
+        #region 无附加动作的操作步骤
         //private async task 完成步骤(stepdone step,int state)
         //{
         //    //await myworkflowbusiness.donestep(data, currentuser.人员类型, currentuser.编号);
@@ -64,6 +64,29 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         //{
         //    await 完成步骤(data, (int)stepstate.quit);
         //}
+        private async Task 无附加动作通过步骤(StepDone data)
+        {
+            await 基本操作步骤(data, (int)StepState.Forward);
+        }
+
+        private async Task 无附加动作不通过步骤(StepDone data)
+        {
+            await 基本操作步骤(data, (int)StepState.Back);
+        }
+
+        private async Task 无附加动作终止步骤(StepDone data)
+        {
+            await 基本操作步骤(data, (int)StepState.Quit);
+        }
+
+        private async Task 基本操作步骤(StepDone data, int state)
+        {
+            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+            {
+                await WorkFlow.DoneStep(dbForTransaction, transaction, data, state, CurrentUser.人员类型, CurrentUser.编号);
+            }
+            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+        }
         #endregion
 
         #region 查看流程和步骤设定
@@ -244,11 +267,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         [HttpPost]
         async public Task 不通过退培申请([FromBody]StepDone data)
         {
-            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
-            {
-                await WorkFlow.DoneStep(dbForTransaction, transaction, data, (int)StepState.Back, CurrentUser.人员类型, CurrentUser.编号);
-            }
-            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+            await 无附加动作不通过步骤(data);
         }
 
         /// <summary>
@@ -259,11 +278,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         [HttpPost]
         async public Task 终止退培申请([FromBody]StepDone data)
         {
-            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
-            {
-                await WorkFlow.DoneStep(dbForTransaction, transaction, data, (int)StepState.Quit, CurrentUser.人员类型, CurrentUser.编号);
-            }
-            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+            await 无附加动作终止步骤(data);
         }
         #endregion
 
@@ -456,11 +471,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         [HttpPost]
         async public Task 不通过请假申请([FromBody]StepDone data)
         {
-            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
-            {
-                await WorkFlow.DoneStep(dbForTransaction, transaction, data, (int)StepState.Back, CurrentUser.人员类型, CurrentUser.编号);
-            }
-            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+            await 无附加动作不通过步骤(data);
         }
 
         /// <summary>
@@ -471,11 +482,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         [HttpPost]
         async public Task 终止请假申请([FromBody]StepDone data)
         {
-            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
-            {
-                await WorkFlow.DoneStep(dbForTransaction, transaction, data, (int)StepState.Quit, CurrentUser.人员类型, CurrentUser.编号);
-            }
-            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+            await 无附加动作终止步骤(data);
         }
         #endregion
 
@@ -497,6 +504,28 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         }
 
         /// <summary>
+        /// 学员提交轮转手册时需要选择的
+        /// </summary>
+        /// <param name="教学轮转编号"></param>
+        /// <param name="教学轮转手册类型编号"></param>
+        /// <returns></returns>
+        [HttpGet]
+        async public Task<object> 获取某教学轮转手册可选任务(
+            [Required]int 教学轮转编号,
+            [Required]int 教学轮转手册类型编号,
+            int? 教学专业科室任务类型编号)
+        {
+            var 教学轮转手册类型 = await Db.GetModelByIdSpAsync<教学轮转手册类型>(教学轮转手册类型编号);
+            return await Db.GetListSpAsync<教学轮转任务, 教学轮转任务Filter>(new 教学轮转任务Filter()
+            {
+                教学轮转编号 = 教学轮转编号,
+                任务类型编号 = 教学专业科室任务类型编号,
+                是否门诊 = 教学轮转手册类型.是否门诊,
+                是否病房 = 教学轮转手册类型.是否病床,
+                是否医技 = 教学轮转手册类型.是否医技
+            });
+        }
+        /// <summary>
         /// 这个应该是在学员端,目前为了测试方便放在这里,人员类型和编号都是写死的;
         /// data是教学轮转手册申请,包括轮转手册数据和所选的完成任务的数据;
         /// </summary>
@@ -512,7 +541,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
 
             async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
             {
-                //请假申请
+                //轮转手册
                 var 提交的轮转手册 = await dbForTransaction.Merge(data.Data.轮转手册, transaction);
                 //保存教学轮转手册完成的任务
                 var 将提交的完成任务 = data.Data.完成任务编号列表.Select(i => new 教学轮转手册完成任务()
@@ -520,7 +549,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
                     教学轮转任务编号 = i
                 });
 
-                var 提交的轮转手册完成任务 = await dbForTransaction.Merge(提交的轮转手册.编号, 提交的轮转手册, transaction);
+                var 提交的轮转手册完成任务 = await dbForTransaction.Merge(提交的轮转手册.编号, 将提交的完成任务, transaction);
 
                 await WorkFlow.InitFlow(
                     dbForTransaction,
@@ -533,6 +562,224 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             }
 
             await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+        }
+
+        [HttpPost]
+        async public Task 学员提交轮转手册申请([FromBody]StepDone<教学轮转手册申请> data)
+        {
+            //这里是伪数据
+            data.IsHold = false;
+            var 人员类型 = "教学学员";
+            var 学员编号 = 1; //王苏麻子
+
+            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+            {
+                //轮转手册
+                var 提交的轮转手册 = await dbForTransaction.Merge(data.Data.轮转手册, transaction);
+                //保存教学轮转手册完成的任务
+                var 将提交的完成任务 = data.Data.完成任务编号列表.Select(i => new 教学轮转手册完成任务()
+                {
+                    教学轮转任务编号 = i
+                });
+
+                await WorkFlow.DoneStep(
+                    dbForTransaction,
+                    transaction,
+                    data.ToSimple(),
+                    (int)StepState.Forward, 人员类型,
+                    学员编号);
+            }
+
+            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+        }
+
+        /// <summary>
+        /// 这里就是"老师端"的接口;
+        /// </summary>
+        /// <param name="paging"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        [HttpGet]
+        async public Task<object> 分页查看轮转手册申请(Paging paging, v_tfn_教学轮转手册申请Filter filter)
+        {
+            return await Db.GetPagingListSpAsync<v_tfn_教学轮转手册申请, v_tfn_教学轮转手册申请Filter>
+                (paging, filter, $"tfn_教学轮转手册申请('{CurrentUser.人员类型}',{CurrentUser.编号})");
+        }
+
+        [HttpPost]
+        async public Task 通过轮转手册申请([FromBody]StepDone data)
+        {
+            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+            {
+                //流程上通过申请
+                await WorkFlow.DoneStep
+                    (dbForTransaction, transaction, data, (int)StepState.Forward, CurrentUser.人员类型, CurrentUser.编号);
+            }
+            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+        }
+
+        /// <summary>
+        /// 这几行代码是与其他不通过重复了的.暂时先这样.以免彼此有不同; 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task 不通过轮转手册申请([FromBody]StepDone data)
+        {
+            await 无附加动作不通过步骤(data);
+        }
+
+        [HttpPost]
+        async public Task 终止轮转手册申请([FromBody]StepDone data)
+        {
+            await 无附加动作终止步骤(data);
+        }
+
+        #endregion
+
+        #region 教学出科申请
+        /// <summary>
+        /// 这个应该是在学员端,目前为了测试方便放在这里,人员类型和编号都是写死的;
+        /// 虽然它和老师端的这个接口其实是一样的;
+        /// </summary>
+        /// <param name="paging"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        [HttpGet]
+        async public Task<object> 学员分页查看出科申请(Paging paging, v_tfn_教学出科申请Filter filter)
+        {
+            var 人员类型 = "教学学员";
+            var 学员编号 = 1; //王苏麻子
+            return await Db.GetPagingListSpAsync<v_tfn_教学出科申请, v_tfn_教学出科申请Filter>
+                (paging, filter, $"tfn_教学出科申请('{人员类型}',{学员编号})");
+        }
+
+        /// <summary>
+        /// 这个应该是在学员端,目前为了测试方便放在这里,人员类型和编号都是写死的;
+        /// data是教学出科申请
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task 学员发起出科申请([FromBody]FlowInit<教学出科申请> data)
+        {
+            //这里是伪数据
+            data.IsHold = false;
+            var 人员类型 = "教学学员";
+            var 学员编号 = 1; //王苏麻子
+
+            await 验证出科申请数据(data.Data);
+
+            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+            {
+                //出科申请
+                var 提交的出科申请 = await dbForTransaction.Merge(data.Data, transaction);
+
+                await WorkFlow.InitFlow(
+                    dbForTransaction,
+                    transaction,
+                    Config.GetValue<int>("教学流程模板编号:教学出科申请"),
+                    提交的出科申请.编号,
+                    人员类型,
+                    学员编号,
+                    isHold: data.IsHold);
+            }
+
+            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+        }
+
+        [HttpPost]
+        async public Task 学员提交出科申请([FromBody]StepDone<教学出科申请> data)
+        {
+            //这里是伪数据
+            data.IsHold = false;
+            var 人员类型 = "教学学员";
+            var 学员编号 = 1; //王苏麻子
+
+            await 验证出科申请数据(data.Data);
+
+            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+            {
+                //出科申请
+                var 提交的出科申请 = await dbForTransaction.Merge(data.Data, transaction);
+
+                await WorkFlow.DoneStep(
+                    dbForTransaction,
+                    transaction,
+                    data.ToSimple(),
+                    (int)StepState.Forward, 人员类型,
+                    学员编号);
+            }
+
+            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+        }
+
+        private async Task<v_教学轮转> 验证出科申请数据(教学出科申请 data)
+        {
+            //申请出科的轮转应该是在科状态,且申请出科日期应该在计划之内
+            var 申请出科的轮转 = await Db.GetModelByIdSpAsync<v_教学轮转>(data.教学轮转编号);
+
+            if (申请出科的轮转.状态 != 教学轮转状态.在科.ToString())
+            {
+                throw new Exception("在科的轮转才能申请出科");
+            }
+
+            if (data.申请出科日期 < 申请出科的轮转.计划入科日期 || data.申请出科日期 > 申请出科的轮转.计划出科日期)
+            {
+                throw new Exception("申请出科日期超过了计划日期范围");
+            }
+
+            申请出科的轮转.实际出科日期 = data.申请出科日期;
+            return 申请出科的轮转;
+        }
+
+        /// <summary>
+        /// 这里就是"老师端"的接口;
+        /// </summary>
+        /// <param name="paging"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        [HttpGet]
+        async public Task<object> 分页查看出科申请(Paging paging, v_tfn_教学出科申请Filter filter)
+        {
+            return await Db.GetPagingListSpAsync<v_tfn_教学出科申请, v_tfn_教学出科申请Filter>
+                (paging, filter, $"tfn_教学出科申请('{CurrentUser.人员类型}',{CurrentUser.编号})");
+        }
+
+        /// <summary>
+        /// data里面附件数据为出科申请编号
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task 通过出科申请([FromBody]StepDone<int> data)
+        {
+            var 出科申请 = await Db.GetModelByIdSpAsync<教学出科申请>(data.Data);
+
+            //出科日期已经加上了
+            var 新的教学轮转 = MyLib.Tool.ModelToModel<教学轮转, v_教学轮转>(await 验证出科申请数据(出科申请));
+
+            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+            {
+                await dbForTransaction.Merge(新的教学轮转, transaction);
+
+                //流程上通过申请
+                await WorkFlow.DoneStep
+                    (dbForTransaction, transaction, data.ToSimple(), (int)StepState.Forward, CurrentUser.人员类型, CurrentUser.编号);
+            }
+            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+        }
+
+        [HttpPost]
+        async public Task 不通过出科申请([FromBody]StepDone data)
+        {
+            await 无附加动作不通过步骤(data);
+        }
+
+        [HttpPost]
+        async public Task 终止出科申请([FromBody]StepDone data)
+        {
+            await 无附加动作终止步骤(data);
         }
         #endregion
     }

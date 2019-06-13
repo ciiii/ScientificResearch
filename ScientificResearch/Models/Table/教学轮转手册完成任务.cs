@@ -15,6 +15,7 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        [Obsolete]
         [Required(ErrorMessage ="请提供[教学轮转手册编号]")]
 		public int 教学轮转手册编号 { get; set; }
         /// <summary>
