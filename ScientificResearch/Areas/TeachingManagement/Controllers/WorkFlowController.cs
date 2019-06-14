@@ -146,13 +146,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             var 学员编号 = 1; //王苏麻子
 
             //只有已报到且未退培且未结业的学员可以退培;
-            var 学员培训情况 = await Db.GetModelByIdSpAsync<v_教学学员培训情况>(学员编号);
-            if (学员培训情况.状态 == 教学学员培训状态.未报到.ToString() ||
-                学员培训情况.状态 == 教学学员培训状态.退培.ToString() ||
-                学员培训情况.状态 == 教学学员培训状态.结业.ToString())
-            {
-                throw new Exception("未报到,已退培,已结业的学员不能再发起退培");
-            }
+            await 验证学员为已报到且未退培未结业(学员编号);
 
             async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
             {
@@ -171,6 +165,17 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
         }
 
+        private async Task 验证学员为已报到且未退培未结业(int 学员编号)
+        {
+            v_教学学员培训情况 学员培训情况 = await Db.GetModelByIdSpAsync<v_教学学员培训情况>(学员编号);
+            if (学员培训情况.状态 == 教学学员培训状态.未报到.ToString() ||
+                学员培训情况.状态 == 教学学员培训状态.退培.ToString() ||
+                学员培训情况.状态 == 教学学员培训状态.结业.ToString())
+            {
+                throw new Exception("未报到,已退培,已结业的学员不能再发起退培");
+            }
+        }
+
         [HttpPost]
         async public Task 学员提交退培申请([FromBody]StepDone<教学退培申请> data)
         {
@@ -180,13 +185,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             var 学员编号 = 1; //王苏麻子
 
             //只有已报到且未退培且未结业的学员可以退培;
-            var 学员培训情况 = await Db.GetModelByIdSpAsync<v_教学学员培训情况>(学员编号);
-            if (学员培训情况.状态 == 教学学员培训状态.未报到.ToString() ||
-                学员培训情况.状态 == 教学学员培训状态.退培.ToString() ||
-                学员培训情况.状态 == 教学学员培训状态.结业.ToString())
-            {
-                throw new Exception("未报到,已退培,已结业的学员不能再发起退培");
-            }
+            await 验证学员为已报到且未退培未结业(学员编号);
 
             async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
             {
@@ -227,14 +226,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             var 学员编号 = data.Data;
             //var 步骤详情 = await Db.GetModelByIdSpAsync<VStep>(data.StepId,);
             //var 退培申请详情 = await Db.GetModelByIdSpAsync<教学退培申请>(步骤详情.SourceId);
-            var 学员培训情况详情 = await Db.GetModelByIdSpAsync<v_教学学员培训情况>(学员编号);
-
-            if (学员培训情况详情.状态 == 教学学员培训状态.未报到.ToString() ||
-                学员培训情况详情.状态 == 教学学员培训状态.退培.ToString() ||
-                学员培训情况详情.状态 == 教学学员培训状态.结业.ToString())
-            {
-                throw new Exception("该学员已已退培或已结业");
-            }
+            await 验证学员为已报到且未退培未结业(学员编号);
 
             async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
             {
@@ -758,10 +750,26 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
 
             //出科日期已经加上了
             var 新的教学轮转 = MyLib.Tool.ModelToModel<教学轮转, v_教学轮转>(await 验证出科申请数据(出科申请));
+            var 学员编号 = 新的教学轮转.学员编号;
 
             async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
             {
                 await dbForTransaction.Merge(新的教学轮转, transaction);
+
+                //检查该学员的轮转是否都已经出科了
+                var 该学员还没有出科的轮转 = await dbForTransaction.GetListSpAsync<v_教学轮转, 教学轮转Filter>(new 教学轮转Filter()
+                {
+                    学员编号 = 学员编号,
+                    NotEqual状态 = 教学轮转状态.已出科.ToString()
+                }, transaction: transaction);
+                if (该学员还没有出科的轮转 == null)
+                {
+                    //如果都出科了,就没有状态不是"已出科"的了
+                    //更新该学员的教学培训情况 
+                    var 教学学员培训情况 = await dbForTransaction.GetModelByIdSpAsync<教学学员培训>(学员编号, transaction: transaction);
+                    教学学员培训情况.实际结束培训日期 = 出科申请.申请出科日期;
+                    await dbForTransaction.Merge(教学学员培训情况, transaction: transaction);
+                }
 
                 //流程上通过申请
                 await WorkFlow.DoneStep
@@ -778,6 +786,155 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
 
         [HttpPost]
         async public Task 终止出科申请([FromBody]StepDone data)
+        {
+            await 无附加动作终止步骤(data);
+        }
+        #endregion
+
+        #region 结业
+        /// <summary>
+        /// 这个应该是在学员端,目前为了测试方便放在这里,人员类型和编号都是写死的;
+        /// 虽然它和老师端的这个接口其实是一样的;
+        /// </summary>
+        /// <param name="paging"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        [HttpGet]
+        async public Task<object> 学员分页查看结业申请(Paging paging, v_tfn_教学结业申请Filter filter)
+        {
+            var 人员类型 = "教学学员";
+            var 学员编号 = 1; //王苏麻子
+            return await Db.GetPagingListSpAsync<v_tfn_教学结业申请, v_tfn_教学结业申请Filter>
+                (paging, filter, $"tfn_教学结业申请('{人员类型}',{学员编号})");
+        }
+
+        /// <summary>
+        /// 这个应该是在学员端,目前为了测试方便放在这里,人员类型和编号都是写死的;
+        /// data是教学结业申请
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task 学员发起结业申请([FromBody]FlowInit<教学结业申请> data)
+        {
+            //这里是伪数据
+            data.IsHold = false;
+            var 人员类型 = "教学学员";
+            var 学员编号 = 1; //王苏麻子
+
+            //只有待结业的学员可以结业;
+            await 验证学员为待结业(学员编号);
+
+            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+            {
+                var 发起的结业申请 = await dbForTransaction.Merge(data.Data, transaction);
+
+                await WorkFlow.InitFlow(
+                    dbForTransaction,
+                    transaction,
+                    Config.GetValue<int>("教学流程模板编号:教学结业申请"),
+                    发起的结业申请.编号,
+                    人员类型,
+                    学员编号,
+                    isHold: data.IsHold);
+            }
+
+            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+        }
+
+        private async Task 验证学员为待结业(int 学员编号)
+        {
+            var 学员培训情况 = await Db.GetModelByIdSpAsync<v_教学学员培训情况>(学员编号);
+            if (学员培训情况.状态 != 教学学员培训状态.待结业.ToString())
+            {
+                throw new Exception("只有待结业的学员才能发起结业");
+            }
+        }
+
+        [HttpPost]
+        async public Task 学员提交结业申请([FromBody]StepDone<教学结业申请> data)
+        {
+            //这里是伪数据
+            data.IsHold = false;
+            var 人员类型 = "教学学员";
+            var 学员编号 = 1; //王苏麻子
+
+            //只有待结业的学员可以结业;
+            await 验证学员为待结业(学员编号);
+
+            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+            {
+                var 发起的结业申请 = await dbForTransaction.Merge(data.Data, transaction);
+
+                await WorkFlow.DoneStep(
+                    dbForTransaction,
+                    transaction,
+                    data.ToSimple(),
+                    (int)StepState.Forward, 人员类型,
+                    学员编号);
+            }
+
+            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+        }
+
+
+        /// <summary>
+        /// 这里就是"老师端"的接口;
+        /// </summary>
+        /// <param name="paging"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        [HttpGet]
+        async public Task<object> 分页查看结业申请(Paging paging, v_tfn_教学结业申请Filter filter)
+        {
+            return await Db.GetPagingListSpAsync<v_tfn_教学结业申请, v_tfn_教学结业申请Filter>
+                (paging, filter, $"tfn_教学结业申请('{CurrentUser.人员类型}',{CurrentUser.编号})");
+        }
+
+
+        /// <summary>
+        /// Data填申请结业的学员编号
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task 通过结业申请([FromBody]StepDone<int> data)
+        {
+            var 学员编号 = data.Data;
+            await 验证学员为待结业(学员编号);
+
+            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+            {
+                //流程上通过申请
+                await WorkFlow.DoneStep(dbForTransaction, transaction, data.ToSimple(), (int)StepState.Forward, CurrentUser.人员类型, CurrentUser.编号);
+
+                //教学学员培训状态要改为结业
+                var 学员培训情况 = await Db.GetModelByIdSpAsync<教学学员培训>(学员编号);
+                学员培训情况.结业日期 = DateTime.Now;
+                await dbForTransaction.Merge(学员培训情况, transaction);
+
+            }
+            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task 不通过结业申请([FromBody]StepDone data)
+        {
+            await 无附加动作不通过步骤(data);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task 终止结业申请([FromBody]StepDone data)
         {
             await 无附加动作终止步骤(data);
         }

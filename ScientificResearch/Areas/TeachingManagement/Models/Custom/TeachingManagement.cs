@@ -121,24 +121,6 @@ namespace ScientificResearch.Models
         public string Like学员姓名 { get; set; }
     }
 
-    public class v_tfn_教学退培申请Filter
-    {
-        public string Like姓名 { get; set; }
-        /// <summary>
-        /// 流程状态有:未完成,已完成,作废,
-        /// </summary>
-        public string StateName { get; set; }
-
-        ///// <summary>
-        ///// 建立者的人员类型,查询时不用填,后台来指定
-        ///// </summary>
-        //public string CreatorType { get; set; }
-
-        ///// <summary>
-        ///// 建立者的人员编号,查询时不用填,后台来指定
-        ///// </summary>
-        //public int? CreatorId { get; set; }
-    }
 
     public class v_tfn_教学考试成绩Filter : 教学轮转Filter
     {

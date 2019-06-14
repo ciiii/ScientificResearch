@@ -912,6 +912,52 @@
             <param name="data"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.学员分页查看结业申请(ScientificResearch.Models.Paging,ScientificResearch.Models.v_tfn_教学结业申请Filter)">
+            <summary>
+            这个应该是在学员端,目前为了测试方便放在这里,人员类型和编号都是写死的;
+            虽然它和老师端的这个接口其实是一样的;
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.学员发起结业申请(ScientificResearch.Models.FlowInit{ScientificResearch.Models.教学结业申请})">
+            <summary>
+            这个应该是在学员端,目前为了测试方便放在这里,人员类型和编号都是写死的;
+            data是教学结业申请
+            </summary>
+            <param name="date"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.分页查看结业申请(ScientificResearch.Models.Paging,ScientificResearch.Models.v_tfn_教学结业申请Filter)">
+            <summary>
+            这里就是"老师端"的接口;
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.通过结业申请(ScientificResearch.Models.StepDone{System.Int32})">
+            <summary>
+            Data填申请结业的学员编号
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.不通过结业申请(ScientificResearch.Models.StepDone)">
+             <summary>
+            
+             </summary>
+             <param name="data"></param>
+             <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.终止结业申请(ScientificResearch.Models.StepDone)">
+             <summary>
+            
+             </summary>
+             <param name="data"></param>
+             <returns></returns>
+        </member>
         <member name="T:ScientificResearch.Models.CurrentUserOfManage">
             <summary>
             当前总库登录人的信息
@@ -1614,11 +1660,6 @@
             未入科,在科,已出科
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请Filter.StateName">
-            <summary>
-            流程状态有:未完成,已完成,作废,
-            </summary>
-        </member>
         <member name="T:ScientificResearch.Models.StepDone`1">
             <summary>
             完成步骤时,提交的数据
@@ -1715,6 +1756,11 @@
             <param name="OperatorId"></param>
             <returns></returns>
         </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学退培申请Filter.StateName">
+            <summary>
+            流程状态有:未完成,已完成,作废,
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.v_tfn_教学请假申请Filter.StateName">
             <summary>
             流程状态有:未完成,已完成,作废,
@@ -1726,6 +1772,11 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_tfn_教学出科申请Filter.StateName">
+            <summary>
+            流程状态有:未完成,已完成,作废,
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请Filter.StateName">
             <summary>
             流程状态有:未完成,已完成,作废,
             </summary>
@@ -18080,6 +18131,281 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.v_tfn_教学结业申请">
+            <summary>
+            v_tfn_教学结业申请[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.学员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.说明">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.申请结业日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.学员类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.学员类型名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.工号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.头像路径">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.性别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.学员培训年界">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.学员培训年限">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.往届应届">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.专业编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.专业名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.送培方式">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.状态">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.报到时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.教学本院策略编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.教学本院策略名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.计划开始培训日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.计划结束培训日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.实际开始培训日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.实际结束培训日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.退培日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.结业日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.证书">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.FlowId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.FlowTemplateId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.FlowTemplateName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.FlowTemplateComponentName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.SourceId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.State">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.StateName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.CreatorType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.CreatorId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.CreatorInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.CreateDateTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.Remark">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.LastStepId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.LastStepTemplateId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.LastStepTemplateName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.LastViewStepComponentName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.LastEditStepComponentName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.LastStepTemplateStyle">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.LastStepState">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.LastStepStateName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.LastStepOperatorType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.LastStepOperatorId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.LastStepOpeartorInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.LastStepOperatorDatetime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学结业申请.IsCanOperate">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v_tfn_教学考试成绩">
             <summary>
             v_tfn_教学考试成绩[类]
@@ -20921,6 +21247,11 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_教学轮转.本院科室名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转.最大学员人数">
             <summary>
             
             </summary>
