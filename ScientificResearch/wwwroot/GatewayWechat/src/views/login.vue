@@ -67,17 +67,6 @@ export default {
     this.DbKey = this.getUrlKey("name");
     this.getLogo();
   },
-  mounted() {
-    // 获取医院列表
-    // this.$http
-    //   .getHospitalList()
-    //   .then(res => {
-    //     this.columns = res.data;
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
-  },
   methods: {
     getUrlKey(name) {
       //获取url 参数
@@ -89,13 +78,13 @@ export default {
         ) || null
       );
     },
-    async getLogo() {
-      let para = {
-        k: this.DbKey
-      };
-      let res = await this.$http.getHospitalInformation(para);
-      this.Logo = res.data.Logo;
-      this.HospitalInformation = res.data;
+      getLogo:async function() {
+          let para = {
+            k: this.DbKey
+          };
+          let res = await this.$http.getHospitalInformation(para);
+          this.Logo = res.data.Logo;
+          this.HospitalInformation = res.data;
     },
     // 登录 防抖
     bind: _debounce(function() {

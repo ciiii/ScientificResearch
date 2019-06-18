@@ -9,12 +9,24 @@
                       :header-cell-style="{'text-align':'center'}">
                 <el-table-column label="序号" type="index" show-overflow-tooltip width="50"
                                  align="center"></el-table-column>
-                <el-table-column prop="名称" label="名称"></el-table-column>
-                <el-table-column prop="代码" label="代码" align="center"></el-table-column>
-                <el-table-column prop="联系人" label="联系人" align="center"></el-table-column>
-                <el-table-column prop="联系电话" label="联系电话" align="center"></el-table-column>
+                <el-table-column prop="名称" label="名称">
+                    <template slot-scope="scope">
+                        <span class="title">{{scope.row.名称}}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="logo" label="logo" align="center">
+                    <template slot-scope="scope">
+                        <span class="logo-img">
+                            <img v-if="scope.row.Logo" :src="http+scope.row.Logo" alt="logo">
+                            <img v-else src="@/assets/images/hospital.png" alt="logo">
+                        </span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="代码" label="代码" align="center" width="150"></el-table-column>
+                <el-table-column prop="联系人" label="联系人" align="center" width="150"></el-table-column>
+                <el-table-column prop="联系电话" label="联系电话" align="center" width="150"></el-table-column>
                 <el-table-column prop="地址" label="地址" align="center"></el-table-column>
-                <el-table-column label="是否启用" property="是否启用" align="center">
+                <el-table-column label="是否启用" property="是否启用" align="center" width="150">
                     <template slot-scope="scope">
                         <el-switch class="switch"
                                    style="display: block"
@@ -46,7 +58,7 @@
     </div>
 </template>
 <script>
-    import {URL_HOSPITAL} from "@/assets/js/connect/ConSysUrl";
+    import {HTTP_URL_HOST,URL_HOSPITAL} from "@/assets/js/connect/ConSysUrl";
     import AddHospital from "@/components/hospital/AddHospital";
     import HospitalService from "@/components/hospital/HospitalService";
 
@@ -65,6 +77,7 @@
                 isAddDialog: false,
                 item: {},
                 isService: false,
+                http:HTTP_URL_HOST
             }
         },
         mounted() {
@@ -78,12 +91,14 @@
                 this.getHospital();
                 this.isAddDialog = val;
             },
+            closeDialog(val) {
+                this.isAddDialog = val;
+            },
             btnAdd() {
                 this.title = '添加医院';
                 this.isAdd = true;
                 this.isService = false;
                 this.isAddDialog = true;
-
             },
             btnEdit(data) {
                 this.title = '修改医院';
@@ -143,5 +158,10 @@
 <style lang="less" type='text/less' scoped>
     .el-switch {
         height: 23px;
+    }
+    .el-table{
+        .logo-img{
+            float: none;
+        }
     }
 </style>

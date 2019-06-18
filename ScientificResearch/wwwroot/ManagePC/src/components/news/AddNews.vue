@@ -1,14 +1,20 @@
 <template>
     <div class="addNews">
         <el-form ref="form" :model="form" :rules="rules" label-width="100px" size="small">
-            <el-form-item label="标题" prop="标题">
+            <el-form-item label="标题" prop="标题" class="el-form-item-title">
                 <el-input v-model="form.标题"></el-input>
             </el-form-item>
-            <el-form-item label="内容" prop="内容">
+            <el-form-item label="分类" prop="分类" >
+                <el-select v-model="form.分类" placeholder="请选择">
+                    <el-option v-for="item in types" :key="item" :label="item" :value="item"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="内容" prop="内容" class="el-form-item-block">
                 <!--<VueQuilEditor ref="umeditor" :content="form.内容" @myContent="myContent"></VueQuilEditor>-->
 
-                <template><tinymce id="tinymce" v-model="form.内容" :value="form.内容" ref="tm"></tinymce></template>
-                <!--<tinymce2 id="tinymce" v-model="form.内容" ref="editor" @on-destroy="onEditorDestroy"></tinymce2>-->
+                <template>
+                    <tinymce id="tinymce" v-model="form.内容" :value="form.内容" ref="tm"></tinymce>
+                </template>
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -22,7 +28,7 @@
     import {HTTP_URL_HOST, URL_NEWS} from "@/assets/js/connect/ConSysUrl";
     import VueQuilEditor from '../quilEditor/VueQuilEditor';
     import tinymce from '@/components/tinymce/Tinymce';
-    import {_debounce} from "@/assets/js/Common";
+    import {_debounce, deepCopy} from "@/assets/js/Common";
 
     export default {
         name: "AddNews",
@@ -36,6 +42,7 @@
                 form: {
                     编号: 0,
                     标题: '',
+                    分类: '',
                     内容: '',
                 },
                 rules: {  //表单验证
@@ -46,11 +53,12 @@
                         {required: true, message: '内容不能为空！', trigger: 'blur'}
                     ],
                 },
+                types: ['前沿', '视听', '公告']
             }
         },
         mounted() {
             if (!this.isAdd) {
-                this.form = this.item;
+                this.form = deepCopy(this.item);
             }
         },
         methods: {
@@ -87,5 +95,17 @@
 <style lang="less" type='text/less' scoped>
     .el-switch {
         padding-top: 5px;
+    }
+    .addNews{
+        .el-form-item{
+            width: 40%;
+            display: inline-block;
+        }
+        .el-form-item-title{
+            width: 60%;
+        }
+       .el-form-item-block{
+           width: 100%;
+       }
     }
 </style>

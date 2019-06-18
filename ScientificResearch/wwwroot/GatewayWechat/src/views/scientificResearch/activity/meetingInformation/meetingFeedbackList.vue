@@ -254,7 +254,7 @@ export default {
   }
 };
 </script>
-<style lang="less" scoped>
+<style lang="less" scoped type="text/less">
 .box {
   padding: 12px;
   text-align: left;
@@ -355,9 +355,9 @@ export default {
   }
   .backtrack {
     line-height: 1.6;
-    font-size: 14px;
+    font-size: 13px;
     color: #fff;
-    width: 80px;
+    width: 60px;
     height: 26px;
     padding: 6px;
     text-align: center;
@@ -366,6 +366,10 @@ export default {
     right: 20px;
     border-radius: 20px;
     background-color: rgba(28, 134, 238, 0.5);
+    i{
+      margin-right: 2px;
+      font-size: 14px;
+    }
   }
 }
 </style>

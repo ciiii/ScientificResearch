@@ -1,15 +1,12 @@
 <template>
   <div>
     <ul>
-      <li v-for="(item,index) in iocnList"
-          :key="index">
-        <a v-if="item.手机链接地址 && item.手机链接地址.indexOf('http')==0"
-           :href="item.手机链接地址">
+      <li v-for="(item,index) in iocnList" :key="index">
+        <a v-if="item.手机链接地址 && item.手机链接地址.indexOf('http')==0" :href="item.手机链接地址">
           <img :src="url+ item.Logo">
           <p>{{item.名称}}</p>
         </a>
-        <a v-else
-           @click="path(item)">
+        <a v-else @click="path(item)">
           <img :src="url+item.Logo">
           <p>{{item.名称}}</p>
         </a>
@@ -19,7 +16,7 @@
 </template>
 <script>
 export default {
-  data () {
+  data() {
     return {
       iocnList: [],
       url:
@@ -28,15 +25,15 @@ export default {
           : ""
     };
   },
-  mounted () {
+  mounted() {
     this.login();
     // let urlNow = encodeURIComponent("http://192.168.0.157:8080/login?name=ScientificResearch_Test");
-    // console.log(urlNow, "eee")
-    // let urlNow = encodeURIComponent("http://192.168.0.157:8080");
-    // console.log(urlNow, "eee")
+    // console.log(urlNow,"eee")
+    // let urlNow = encodeURIComponent("http://192.168.0.157:8080/#/");
+    // console.log(urlNow,"eee")
   },
   methods: {
-    getUrlKey (name) {
+    getUrlKey(name) {
       //获取url 参数
       return (
         decodeURIComponent(
@@ -46,71 +43,7 @@ export default {
         ) || null
       );
     },
-    // getCodeApi(state) {
-    //   //获取code
-    //   // 授权后重定向的回调链接地址
-    //   let urlNow = encodeURIComponent(window.location.href);
-    //   console.log(urlNow,"67677")
-    //   let scope = "snsapi_base"; //snsapi_userinfo   //静默授权 用户无感知
-    //   // 测试号 appid
-    //   let appid = "wx5e45aca8fcb270f1";
-    //   if (process.env.NODE_ENV === "production") {
-    //     // 正式号 appid
-    //     appid = "wxfcbe1c0c36e2f97c";
-    //   }
-    //   let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${urlNow}&response_type=code&scope=${scope}&state=${state}&connect_redirect=1#wechat_redirect`;
-    //   window.location.replace(url);
-    // },
-    // getServiceName() {
-    //   var personnel = localStorage.getItem("personnel");
-    //   if (personnel === null) {
-    //     let code = this.getUrlKey("code");
-    //     if (code) {
-    //       this.$http.LoginWithOpenId(code).then(res => {
-    //         console.log(res, "111");
-    //         if (res !== undefined) {
-    //           localStorage.personnel = JSON.stringify(res.data.人员);
-    //           localStorage.token = `${res.data.token_type} ${
-    //             res.data.access_token
-    //           }`;
-    //           this.$emit("getPersonnel");
-    //           var name = res.data.人员.DbKey;
-    //           var para = {
-    //             医院名称: name
-    //           };
-    //           this.$http.getServiceList(para).then(res => {
-    //             this.iocnList = res.data;
-    //             this.$emit("getKYNews");
-    //           });
-    //           return;
-    //         } else {
-    //           var para = {
-    //             医院名称: ""
-    //           };
-    //           this.$http.getServiceList(para).then(res => {
-    //             this.iocnList = res.data;
-    //           });
-    //           return;
-    //         }
-    //       });
-    //     } else {
-    //       // this.getCodeApi("123");
-    //     }
-    //   } else {
-    //     var personnel = JSON.parse(localStorage.getItem("personnel"));
-    //     var para = {
-    //       医院名称: personnel.DbKey
-    //     };
-    //     this.$http.getServiceList(para).then(res => {
-    //       console.log(res, "222");
-    //       this.iocnList = res.data;
-    //     });
-    //     this.$emit("getPersonnel");
-    //     this.$emit("getKYNews");
-    //     return;
-    //   }
-    // },
-    async login () {
+    async login() {
       //本地存储
       let personnel = JSON.parse(localStorage.getItem("personnel"));
       let flag = this.$route.params.item;
@@ -126,7 +59,7 @@ export default {
             localStorage.personnel = JSON.stringify(res.data.人员);
             localStorage.token = `${res.data.token_type} ${
               res.data.access_token
-              }`;
+            }`;
             this.$emit("getPersonnel");
             this.$emit("getKYNews");
           }
@@ -155,7 +88,7 @@ export default {
       }
     },
 
-    path (item) {
+    path(item) {
       if (item.手机链接地址 === null) {
         // this.$toast.fail({
         //   duration: 1000,
@@ -166,11 +99,6 @@ export default {
           message: "你还没有权限，请先联系医院管理员!"
         });
       } else {
-        if (process.env.NODE_ENV === 'development') {
-          if (item.手机链接地址 == 'TeachingManagementWeChat') {
-            window.location.replace('http://192.168.0.157:8081/#/TeachingManagementWeChat')
-          }
-        }
         this.$router.push({
           path: item.手机链接地址,
           query: {
@@ -188,16 +116,17 @@ ul {
   flex-wrap: wrap;
   padding: 8px;
   li {
-    width: 25%;
+    width: 20%;
     padding: 10px 0;
     img {
-      width: 40px;
-      height: 40px;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
     }
     p {
       margin: 0;
-      font-size: 14px;
-      color: #000;
+      font-size: 11px;
+      color: #333;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;

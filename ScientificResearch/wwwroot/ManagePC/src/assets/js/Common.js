@@ -113,3 +113,7 @@ export function clearSpecialChar(e) {
     e.target.value = e.target.value.replace(/[^[0-9a-zA-Z\-]/g, ''); //清除"字母、数字"以外的字符
 }
 
+// 对象深拷贝
+export function deepCopy(data) {
+    return JSON.parse(JSON.stringify(data))
+}

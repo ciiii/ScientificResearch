@@ -17,18 +17,22 @@
                     <!--至-->
                     <!--<el-date-picker type="date" placeholder="选择结束日期" v-model="req.endTime"></el-date-picker>-->
                     <!--</el-form-item>-->
-                    <el-button plain @click="search" >查询</el-button>
+                    <el-button plain @click="search">查询</el-button>
                 </el-form>
             </div>
             <el-table class="tableone" border :data="tableData" stripe :header-cell-style="{'text-align':'center'}">
-                <el-table-column label="序号" type="index" show-overflow-tooltip width="50"
-                                 align="center"></el-table-column>
+                <el-table-column label="序号" width="50" align="center" prop="number"></el-table-column>
                 <el-table-column label="标题">
                     <template slot-scope="scope">
                         <a href="javascript:;" @click="btnDetails(scope.row)" v-text="scope.row.标题"></a>
                     </template>
                 </el-table-column>
-                <el-table-column prop="建立时间" label="建立时间" align="center"></el-table-column>
+                <el-table-column label="分类" align="center" width="100">
+                    <template slot-scope="scope">
+                        <el-tag v-if="scope.row.分类" :type="scope.row.type">{{scope.row.分类}}</el-tag>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="建立时间" label="建立时间" align="center" width="200"></el-table-column>
                 <el-table-column label="操作" align="center" width="200">
                     <template slot-scope="scope">
                         <el-tooltip content="详情" placement="bottom" effect="light">
@@ -56,7 +60,8 @@
                 </el-pagination>
             </div>
         </div>
-        <el-dialog class="big-dialog" :title="title" :visible.sync="isAddDialog" v-if='isAddDialog' :close-on-click-modal="false">
+        <el-dialog class="big-dialog" :title="title" :visible.sync="isAddDialog" v-if='isAddDialog'
+                   :close-on-click-modal="false">
             <div v-if="isDetails">
                 <NewsDetails ref="child" @myEvent="closeDialog" :item="item"></NewsDetails>
             </div>
@@ -99,14 +104,32 @@
             this.getNews();
         },
         methods: {
+            getType(state) {
+                switch (state) {
+                    case '前沿':
+                        return 'warning';
+                    case '视听':
+                        return 'success';
+                    case '公告':
+                        return 'primary';
+                }
+            },
             search: async function () {
                 this.req.Index = 1;
                 await this.getNews();
             },
             getNews: async function () {
                 let data = await this.$http.myGet(URL_NEWS.GET_PANGING_NEWS, this.req);
-                this.tableData = data.list;
                 this.total = data.total;
+                data = data.list;
+                let number = (this.req.Index - 1) * this.req.Size + 1;
+                data.forEach((item) => {
+                    item.number = number;
+                    item.type = this.getType(item.分类);
+                    number++;
+                });
+                this.tableData = data;
+
             },
             getMyEvent(val) {
                 this.getNews();

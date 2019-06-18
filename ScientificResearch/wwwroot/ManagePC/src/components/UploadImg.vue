@@ -7,7 +7,7 @@
                 :on-success="handleAvatarSuccess"
                 :before-upload="beforeAvatarUpload"
                 :headers="Authorization">
-            <img v-if="image" :src="image" class="avatar">
+            <img v-if="image" :src="http+image" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
     </div>
@@ -43,28 +43,39 @@
 </style>
 
 <script>
-    import {HTTP_URL_HOST, URL_NEWS} from "@/assets/js/connect/ConSysUrl";
+    import {HTTP_URL_HOST, URL_NEWS, URL_HOSPITAL} from "@/assets/js/connect/ConSysUrl";
     import {getUrl} from "@/assets/js/Common";
 
     export default {
         name: "UploadImg",
-        props: ['logo'],
+        props: ['logo', 'UploadType'],
         data() {
             return {
                 image: '',
-                postUrl: getUrl(HTTP_URL_HOST + URL_NEWS.POST_UPLOAD_LOGO_IMG),
+                postUrl: '',
                 Authorization: {
                     Authorization: sessionStorage.getItem('Authorization')
                 },
                 isImage: true,
+                http:HTTP_URL_HOST
             };
         },
         mounted() {
             this.image = this.logo;
+            let url;
+            switch (this.UploadType) {
+                case 1:
+                    url = URL_NEWS.POST_UPLOAD_LOGO_IMG
+                    break;
+                case 2:
+                    url = URL_HOSPITAL.POST_UPLOAD_HOSPITAL_LOGO_IMG
+                    break;
+            }
+            this.postUrl = getUrl(HTTP_URL_HOST + url);
         },
         methods: {
             handleAvatarSuccess(res, file) {
-                this.image = HTTP_URL_HOST + res.data[0];
+                this.image = res.data[0];
                 this.$emit('myEvent', this.image);
             },
             beforeAvatarUpload(file) {

@@ -20,7 +20,7 @@
                 <el-input v-model="form.备注" type="textarea" :rows="5" maxLength="2000"></el-input>
             </el-form-item>
             <el-form-item label="图标" prop="logo">
-                <UploadImg v-model="form.Logo" @myEvent="myEvent" :logo="this.item.Logo" ref="img"></UploadImg>
+                <UploadImg v-model="form.Logo" @myEvent="myEvent" :logo="this.item.Logo" :UploadType="1" ref="img"></UploadImg>
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -33,7 +33,7 @@
 <script>
     import {validateChineseEnglish} from "@/assets/js/Validate";
     import {URL_SERVICE} from "@/assets/js/connect/ConSysUrl";
-    import {_debounce} from "@/assets/js/Common";
+    import {_debounce,deepCopy} from "@/assets/js/Common";
     import UploadImg from '@/components/UploadImg';
 
     export default {
@@ -61,7 +61,7 @@
         },
         mounted() {
             if (!this.isAdd) {
-                this.form = this.item;
+                this.form = deepCopy(this.item);
             }
         },
         methods: {
@@ -82,13 +82,13 @@
                 });
             }, 300),
             AddOrEdit: async function () {
-                this.form.Logo = this.Logo;
                 await this.$http.myPost(URL_SERVICE.POST_ADD_OR_EDIT_SERVICE, this.form);
                 this.$message.success('提交成功！');
                 this.$emit('myEvent', false);
             },
             myEvent(imageUrl) {
-                this.Logo = imageUrl;
+                this.form.Logo = imageUrl;
+                console.info(this.form.Logo)
             }
 
         }

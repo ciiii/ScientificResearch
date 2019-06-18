@@ -38,6 +38,10 @@
                     </el-switch>
                 </template>
             </el-form-item>
+            <el-form-item label="图标" prop="logo">
+                <UploadImg v-model="form.Logo" @myEvent="myEvent" :logo="this.item.Logo" :UploadType="2"
+                           ref="img"></UploadImg>
+            </el-form-item>
             <el-form-item label="备注" prop="备注">
                 <el-input v-model="form.备注" type="textarea" :rows="3"></el-input>
             </el-form-item>
@@ -50,13 +54,15 @@
 </template>
 
 <script>
-    import {validateNumberLetter, validateChineseEnglish} from "../../assets/js/Validate";
-    import {URL_HOSPITAL} from "../../assets/js/connect/ConSysUrl";
-    import {_debounce} from "@/assets/js/Common";
+    import {validateNumberLetter, validateChineseEnglish} from "@/assets/js/Validate";
+    import {URL_HOSPITAL} from "@/assets/js/connect/ConSysUrl";
+    import {_debounce,deepCopy} from "@/assets/js/Common";
+    import UploadImg from '@/components/UploadImg';
 
     export default {
         name: "AddHospital",
         props: ['item', 'isAdd', 'isAddDialog'],
+        components: {UploadImg},
         data() {
             return {
                 form: {
@@ -67,7 +73,8 @@
                     联系电话: '',
                     地址: '',
                     是否启用: true,
-                    备注: ''
+                    备注: '',
+                    Logo: ''
                 },
                 rules: {  //表单验证
                     名称: [
@@ -77,11 +84,12 @@
                         {required: true, message: '代码只能是英文或数字！', trigger: 'blur'}, {validator: validateNumberLetter}
                     ],
                 },
+                Logo:''
             }
         },
         mounted() {
             if (!this.isAdd) {
-                this.form = this.item;
+                this.form = deepCopy(this.item);
             }
         },
         methods: {
@@ -97,11 +105,14 @@
                         return false;
                     }
                 });
-            },300),
+            }, 300),
             AddOrEdit: async function () {
                 await this.$http.myPost(URL_HOSPITAL.POST_ADD_OR_EDIT_HOSPITA, this.form);
                 this.$message.success('提交成功！');
                 this.$emit('myEvent', false);
+            },
+            myEvent(imageUrl) {
+                this.form.Logo = imageUrl;
             }
         }
     }

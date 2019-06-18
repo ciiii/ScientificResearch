@@ -48,9 +48,9 @@ export default {
 <style lang="less" scoped>
 .backtrack {
   line-height: 1.6;
-  font-size: 14px;
+  font-size: 13px;
   color: #fff;
-  width: 80px;
+  width: 60px;
   padding: 6px;
   text-align: center;
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
@@ -58,5 +58,9 @@ export default {
   position: fixed;
   border-radius: 20px;
   background-color: rgba(28, 134, 238, 0.5);
+  i{
+    margin-right: 2px;
+    font-size: 14px;
+  }
 }
 </style>

@@ -12,8 +12,8 @@
                 <el-table-column prop="名称" label="名称">
                     <template slot-scope="scope">
                         <span class="logo-img">
-                            <img v-if="scope.row.Logo" :src="scope.row.Logo" alt="logo">
-                            <img v-else src="../../assets/images/service-logo.jpg" alt="logo">
+                            <img v-if="scope.row.Logo" :src="http+scope.row.Logo" alt="logo">
+                            <img v-else src="@/assets/images/moren.png" alt="logo">
                         </span>
                         <span class="title">{{scope.row.名称}}</span>
                     </template>
@@ -57,7 +57,7 @@
     </div>
 </template>
 <script>
-    import {URL_SERVICE} from "@/assets/js/connect/ConSysUrl";
+    import {URL_SERVICE, HTTP_URL_HOST} from "@/assets/js/connect/ConSysUrl";
     import AddService from "@/components/service/AddService"
     import ServiceDetails from "@/components/service/ServiceDetails"
 
@@ -75,7 +75,8 @@
                 isAdd: true,
                 isAddDialog: false,
                 isDetails: false,
-                item: {}
+                item: {},
+                http: HTTP_URL_HOST
             }
         },
         mounted() {
@@ -160,6 +161,7 @@
 
     .el-table td {
         overflow: hidden;
+
         p {
             display: -webkit-box !important;
             overflow: hidden;

@@ -1,4 +1,7 @@
-const HTTP_URL_HOST = '';
+let HTTP_URL_HOST = 'http://192.168.0.99:63739';
+if (process.env.NODE_ENV === 'production') {
+    HTTP_URL_HOST = '';
+}
 
 const URL_USER = {
 
@@ -67,6 +70,9 @@ const URL_HOSPITAL = {
 
     //增改医院服务
     POST_ADD_OR_EDIT_HOSPITAL_SERVICE: '/Manage/Service/增改医院服务',
+
+    //上传医院Logo图片
+    POST_UPLOAD_HOSPITAL_LOGO_IMG: '/Manage/Service/上传医院Logo图片',
 
 }
 

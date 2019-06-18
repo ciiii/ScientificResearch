@@ -42,18 +42,18 @@ axios.interceptors.response.use(response => {
 });
 
 function setHeaders() {
-    if (localStorage.Authorization) {
+    if (localStorage.Authorization && localStorage.Authorization != 'undefined') {
         axios.defaults.headers.common['Authorization'] = JSON.parse(localStorage.Authorization);
     }
 }
 
 axios.myGet = async (url, data) => {
     setHeaders();
-    return await axios.get(getUrl(HTTP_URL_HOST + url), {params: data}).then(response => response.data.data)
+    return await axios.get(getUrl(url), {params: data}).then(response => response.data.data)
 };
 
 axios.myPost = async (url, data) => {
     setHeaders();
-    return await axios.post(getUrl(HTTP_URL_HOST + url), data).then(response => response.data.data);
+    return await axios.post(getUrl(url), data).then(response => response.data.data);
 };
 export default axios;

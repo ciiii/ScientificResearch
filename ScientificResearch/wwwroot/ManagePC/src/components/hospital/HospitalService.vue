@@ -38,8 +38,8 @@
     </div>
 </template>
 <script>
-    import {URL_HOSPITAL, URL_SERVICE} from "../../assets/js/connect/ConSysUrl";
-    import {matchingProperty, _debounce} from "../../assets/js/Common";
+    import {URL_HOSPITAL, URL_SERVICE} from "@/assets/js/connect/ConSysUrl";
+    import {matchingProperty, _debounce} from "@/assets/js/Common";
 
     export default {
         name: 'HospitalService',

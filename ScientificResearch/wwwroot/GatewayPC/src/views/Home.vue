@@ -11,14 +11,17 @@
             </el-carousel>
             <div class="search-box">
                 <ul>
-                    <li :class="{ active: isActive==index }" v-for="(item, index)  in list" :key="index"
+                    <!--<li :class="{ active: isActive==index }" v-for="(item, index)  in list" :key="index"
                         @click="clickLi(index)">
                         <a href="javascript:;">{{item}}</a>
+                    </li>-->
+                    <li class="active" @click="clickLi(index)">
+                        <a href="javascript:;">知网CHKD</a>
                     </li>
                 </ul>
                 <div class="search">
-                    <el-input type="text" placeholder="请输入内容" v-model="search"></el-input>
-                    <el-button class="btn-search">检索</el-button>
+                    <el-input type="text" v-model="search" readonly></el-input>
+                    <!--<el-button class="btn-search" >检索</el-button>-->
                 </div>
             </div>
         </div>
@@ -30,17 +33,19 @@
                         <div class="grid-content bg-purple">
                             <div class="item-header">
                                 <h5><i class="icon iconfont icon-shu2"></i> 文献数据库</h5>
-                                <el-tooltip class="more item" effect="dark" content="更多" placement="top-start">
+                                <el-tooltip class="more item" effect="dark" content="更多" placement="top-start"
+                                            v-if="isLogin">
                                     <a href="javascript:;" @click="moreService"><i
                                             class="icon iconfont icon-gengduo"></i></a>
                                 </el-tooltip>
                             </div>
                             <ul class="list">
-                                <li v-for="el in serviceList" :key="el.编号">
+                                <li v-for="el in serviceList" :key="el.名称" v-if="el.是否启用">
                                     <a href="javascript:;" @click="clickUrl(el)">
                                         <span class="btn-icon"><i class="icon iconfont icon-yuandianxiao"></i></span>
-                                        <img class="img-logo" v-if="el.Logo" :src="el.Logo" alt="服务logo" height="20"/>
-                                        <img class="img-logo" v-else src="../assets/images/service-logo.jpg"
+                                        <img class="img-logo" v-if="el.Logo" :src="http+el.Logo"
+                                             height="20"/>
+                                        <img class="img-logo" v-else src="@/assets/images/moren.png"
                                              alt="服务logo" height="20"/>
                                         <span class="title">{{el.名称}}</span>
                                         <span class="time"><i class="icon iconfont icon-right"></i></span>
@@ -186,8 +191,9 @@
     </div>
 </template>
 <script>
-    import {URL_HOSPITAL, URL_NEWS} from "@/assets/js/connect/ConSysUrl";
+    import {HTTP_URL_HOST, URL_HOSPITAL, URL_NEWS, HTTP_URL_HOST_SERVE, URL_SERVE} from "@/assets/js/connect/ConSysUrl";
     import NewsDetails from "@/components/NewsDetails"
+    import {getUrlParam} from "@/assets/js/Common";
 
     export default {
         name: 'Home',
@@ -292,13 +298,16 @@
                         name: '中国科技论文在线',
                         url: 'http://www.paper.edu.cn/'
                     },
-                ]
+                ],
+                http: HTTP_URL_HOST,
+                mykey: this.$route.query.name
             }
         },
         mounted() {
             this.getHospitalService();
             this.getNews();
-            if (localStorage.myUserInfo) {
+            sessionStorage.setItem('myKey', this.mykey);
+            if (localStorage.myUserInfo && sessionStorage.getItem('isLogin')) {
                 let myUserInfo = JSON.parse(localStorage.getItem('myUserInfo'));
                 this.reqTwo.人员编号 = myUserInfo.人员.编号;
                 this.isLogin = true;
@@ -313,21 +322,48 @@
                 this.isActive = index;
             },
             moreService() {
-                this.$router.push({path: '/Service'});
+                this.$router.push({path: '/service'});
             },
+
             clickUrl(el) {
-                if (localStorage.myUserInfo) {
-                    if (!el.电脑链接地址) {
-                        this.$message.warning('您没有订购该服务！');
+                if (this.mykey) {
+                    if (this.isLogin) {
+                        if (!el.电脑链接地址) {
+                            this.$message.warning('您没有订购该服务！');
+                        } else {
+                            console.info(el)
+                            switch (el.名称) {
+                                case '万方医学':
+                                    this.logoinServe(URL_SERVE.POST_LOGIN_WANFANG);
+                                case '中国知网':
+                                    console.info('中国知网')
+                                    this.logoinServe(URL_SERVE.POST_LOGIN_CNKI);
+                                case '知网CHKD':
+                                    this.logoinServe(URL_SERVE.POST_LOGIN_CNKI);
+                                case 'UpToDate':
+                                    this.logoinServe(URL_SERVE.POST_LOGIN_UPTODATE);
+                                case '科研系统':
+                                    this.isOpen(el.电脑链接地址);
+                                case '教学管理':
+                                    this.isOpen(el.电脑链接地址);
+                            }
+                        }
                     } else {
-                        localStorage.setItem('gatewayUrl', window.location.href);
-                        localStorage.setItem('isEntryLogin',true);
-                        window.open(el.电脑链接地址);
+                        this.$message.error('请先登录！');
+                        this.$router.push({path: '/login'});
                     }
-                } else {
-                    this.$message.error('请先登录！');
-                    this.$router.push({path: '/login'});
                 }
+            },
+            isOpen(url) {
+                /*localStorage.setItem('gatewayUrl', window.location.href);
+                localStorage.setItem('isEntryLogin', true);
+                window.open(url);*/
+            },
+            logoinServe: async function (type) {
+                let postData = {
+                    loginType: type
+                }
+                await this.$http.myPost(HTTP_URL_HOST_SERVE, postData);
             },
             getHospitalService: async function () {
                 let postData = {
@@ -401,10 +437,14 @@
         .el-tabs__content {
             min-height: 250px;
             max-height: 410px;
+            z-index: 99;
         }
     }
-
 </style>
 <style lang="less" type='text/less' scoped>
     @import '../assets/less/Home';
+
+    .home {
+        background: #fff;
+    }
 </style>

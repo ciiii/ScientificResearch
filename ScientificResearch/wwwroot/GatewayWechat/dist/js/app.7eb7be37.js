@@ -1,1 +1,0 @@
-e:\scientific-research\dist\js\app.7eb7be37.js
