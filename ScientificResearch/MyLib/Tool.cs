@@ -339,12 +339,12 @@ namespace MyLib
         /// 将对象值转换给另一个对象
         /// 这个可以用MyObject中的修改一下
         /// </summary>
-        /// <typeparam name="Tout"></typeparam>
-        /// <typeparam name="Tin"></typeparam>
+        /// <typeparam name="Tin">这个是出去的</typeparam>
+        /// <typeparam name="Tout">这个是进来的!!</typeparam>
         /// <param name="objIn"></param>
         /// <param name="objOut"></param>
         /// <returns></returns>
-        public static Tout ModelToModel<Tout, Tin>(Tin objIn, Tout objOut = null) where Tout : class, new()
+        public static Tout ModelToModel< Tin, Tout>(Tin objIn, Tout objOut = null) where Tout : class, new()
         {
             objOut = objOut ?? new Tout();
             Type type = typeof(Tout);

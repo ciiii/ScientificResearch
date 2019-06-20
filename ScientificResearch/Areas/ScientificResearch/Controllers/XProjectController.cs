@@ -239,7 +239,7 @@ namespace ScientificResearch.Controllers
 
         private v2_横向项目_详情 获取变更详情中的项目详情数据(v2_横向项目变更_详情 model)
         {
-            var 项目详情 = Tool.ModelToModel<v2_横向项目_详情, v2_横向项目变更_详情>(model);
+            var 项目详情 = Tool.ModelToModel< v2_横向项目变更_详情, v2_横向项目_详情>(model);
             项目详情.编号 = model.横向项目编号;
             return 项目详情;
         }

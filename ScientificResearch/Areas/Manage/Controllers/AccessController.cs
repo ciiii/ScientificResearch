@@ -134,7 +134,7 @@ namespace ScientificResearch.Areas.Manage.Controllers
             //到相对应的从库取用户信息并转为CurrentUser
             var dbWhenLogin = new SqlConnection(DbConnectionStringLack.Replace("{0}", 绑定信息.DbKey));
             var user = await dbWhenLogin.GetModelByIdSpAsync<v1_人员_带部门名>(绑定信息.人员编号);
-            var currentUser = Tool.ModelToModel<CurrentUser, v1_人员_带部门名>(user);
+            var currentUser = Tool.ModelToModel<v1_人员_带部门名, CurrentUser>(user);
             //
             currentUser.DbKey = 绑定信息.DbKey;
 
@@ -167,7 +167,7 @@ namespace ScientificResearch.Areas.Manage.Controllers
             //这里登录用户名叫"工号"只是为了复用LoginInfo类而已;
             if (!MyObject.Compare(model, loginSetting)) throw new Exception("登录信息错误");
 
-            var user = Tool.ModelToModel<CurrentUserOfManage, LoginInfo>(loginSetting);
+            var user = Tool.ModelToModel< LoginInfo, CurrentUserOfManage>(loginSetting);
             return await Task.FromResult(getJwt(user, Config.GetValue<string>("Roles:ManageUser")));
         }
 

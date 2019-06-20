@@ -351,6 +351,47 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         }
 
         /// <summary>
+        /// data是状态为"轮转计划已安排"的学员编号数组
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task 删除学员教学轮转安排([FromBody]IEnumerable<int> data)
+        {
+            var 要删除的学员培训情况 = await Db.GetListSpAsync<v_教学学员培训情况, 教学学员培训情况Filter>(new 教学学员培训情况Filter()
+            {
+                WhereIn编号 = data.ToStringIdWithSpacer()
+            });
+
+            //如果有任何一个的状态不是"已安排轮转计划"则不能删除
+            if (要删除的学员培训情况.Any(i => i.状态 != 教学学员培训状态.轮转计划已安排.ToString()))
+            {
+                throw new Exception("只有已安排轮转计划且没有实际入科的学员才能撤销轮转安排");
+            }
+
+            var 要删除的学员的所有轮转 = await Db.GetListSpAsync<教学轮转, 教学轮转Filter>(new 教学轮转Filter()
+            {
+                WhereIn学员编号 = data.ToStringIdWithSpacer()
+            });
+
+            var 要删除的学员培训 = new List<教学学员培训>();
+            foreach (var item in 要删除的学员培训情况)
+            {
+                var 对应的学员培训 = Tool.ModelToModel<v_教学学员培训情况, 教学学员培训>(item);
+                对应的学员培训.计划开始培训日期 = null;
+                对应的学员培训.计划结束培训日期 = null;
+                要删除的学员培训.Add(对应的学员培训);
+            }
+
+            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+            {
+                await dbForTransaction.Merge(要删除的学员培训.AsEnumerable(), transaction: transaction);
+                await dbForTransaction.Delete<教学轮转>(要删除的学员的所有轮转.Select(i => i.编号), transaction: transaction);
+            }
+            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+        }
+
+        /// <summary>
         /// 为什么要单独删除,而不是传入某学员轮转的最终安排,后台删除不在传入的数据呢?
         /// 1 可能传入很多人的教学轮转
         /// </summary>
@@ -374,12 +415,12 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
             {
 
-                await Db.Delete<教学轮转>(data);
+                await dbForTransaction.Delete<教学轮转>(data, transaction);
 
-                var 删除之后的这些学员的教学轮转 = await Db.GetListSpAsync<教学轮转, 教学轮转Filter>(new 教学轮转Filter()
+                var 删除之后的这些学员的教学轮转 = await dbForTransaction.GetListSpAsync<教学轮转, 教学轮转Filter>(new 教学轮转Filter()
                 {
                     WhereIn学员编号 = 要删除轮转的学员编号.ToStringIdWithSpacer()
-                });
+                }, transaction: transaction);
 
                 await 更新教学学员培训计划日期(删除之后的这些学员的教学轮转, dbForTransaction, transaction, true);
             }
@@ -515,10 +556,11 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             {
                 throw new Exception("已出科轮转不能补轮转");
             }
-            var 要补轮转的教学轮转 = MyLib.Tool.ModelToModel<教学轮转, v_教学轮转>(要补轮转的教学轮转视图);
+            var 要补轮转的教学轮转 = MyLib.Tool.ModelToModel<v_教学轮转, 教学轮转>(要补轮转的教学轮转视图);
 
             var 将连带受到影响的教学轮转 = await Db.GetListSpAsync<教学轮转, 教学轮转Filter>(new 教学轮转Filter()
             {
+                学员编号 = 要补轮转的教学轮转.学员编号,
                 Begin计划入科日期 = 要补轮转的教学轮转.计划出科日期
             });
 
@@ -568,9 +610,12 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         /// <param name="filter"></param>
         /// <returns></returns>
         [HttpGet]
-        async public Task<object> 分页获取我的学员的教学考试成绩(Paging paging, v_tfn_教学考试成绩Filter filter) =>
-            await Db.GetPagingListSpAsync<v_tfn_教学考试成绩, v_tfn_教学考试成绩Filter>
-            (paging, filter, $"tfn_教学考试成绩('{CurrentUser.人员类型}',{CurrentUser.编号})");
+        async public Task<object> 分页获取我的学员的教学考试成绩(Paging paging, v_tfn_教学考试成绩Filter filter)
+        {
+            filter.NotEqual状态 = 教学轮转状态.未入科.ToString();
+            return await Db.GetPagingListSpAsync<v_tfn_教学考试成绩, v_tfn_教学考试成绩Filter>
+               (paging, filter, $"tfn_教学考试成绩('{CurrentUser.人员类型}',{CurrentUser.编号})");
+        }
 
         /// <summary>
         /// 针对一个轮转来记录;
@@ -638,7 +683,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         [HttpPost]
         async public Task 学员入科([FromBody]学员入科 data)
         {
-            
+
             var 要入科的轮转视图 = await Db.GetModelByIdSpAsync<v_教学轮转>(data.教学轮转编号);
             if (要入科的轮转视图 == null)
             {
@@ -680,7 +725,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             要入科的轮转视图.实际入科日期 = DateTime.Now;
             要入科的轮转视图.带教老师编号 = data.带教老师编号;
 
-            var 要入科的轮转 = MyLib.Tool.ModelToModel<教学轮转, v_教学轮转>(要入科的轮转视图);
+            var 要入科的轮转 = MyLib.Tool.ModelToModel<v_教学轮转, 教学轮转>(要入科的轮转视图);
             await Db.Merge(要入科的轮转);
         }
 

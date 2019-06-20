@@ -15,8 +15,8 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        [Required(ErrorMessage ="请提供[编码]")]
-		public int 编码 { get; set; }
+        [Required(ErrorMessage ="请提供[编号]")]
+		public int 编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>

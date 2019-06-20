@@ -163,7 +163,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
                 //如果学员类型名称不对怎么办?
                 item.学员类型编号 = 教学学员类型dic.ContainsKey(item.学员类型名称 ?? "") ? 教学学员类型dic[item.学员类型名称] : 1;
                 item.专业编号 = 教学专业dic.ContainsKey(item.专业名称 ?? "") ? 教学专业dic[item.专业名称] : 1;
-                data.Add(MyLib.Tool.ModelToModel<教学学员, 学员导入>(item));
+                data.Add(MyLib.Tool.ModelToModel< 学员导入, 教学学员>(item));
             }
 
             TryValidateModel(data);

@@ -679,7 +679,7 @@ namespace ScientificResearch.Controllers
 
         private v2_纵向项目立项_详情 获取变更详情中的立项详情数据(v2_纵向项目变更_详情 model)
         {
-            var 立项详情 = Tool.ModelToModel<v2_纵向项目立项_详情, v2_纵向项目变更_详情>(model);
+            var 立项详情 = Tool.ModelToModel< v2_纵向项目变更_详情, v2_纵向项目立项_详情>(model);
             立项详情.编号 = model.纵向项目编号;
             return 立项详情;
         }

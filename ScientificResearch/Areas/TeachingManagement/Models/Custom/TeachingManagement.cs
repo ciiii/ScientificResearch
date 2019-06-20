@@ -82,7 +82,7 @@ namespace ScientificResearch.Models
         public int? 本院科室编号 { get; set; }
         public string Like本院科室名称 { get; set; }
         public int? 科室管理员编号 { get; set; }
-        public string Like科室管理员名称 { get; set; }
+        public string Like科室管理员姓名 { get; set; }
         /// <summary>
         /// 未入科,在科,已出科
         /// </summary>

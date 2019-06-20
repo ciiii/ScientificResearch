@@ -175,6 +175,44 @@
             登录相关的接口,
             </summary>
         </member>
+        <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.ActivityController">
+            <summary>
+            教学活动
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.ActivityController.分页获取教学活动(ScientificResearch.Models.Paging,ScientificResearch.Models.v_教学活动Filter)">
+            <summary>
+            管理时用,会返回所有的教学活动
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.ActivityController.获取某教学活动的评价(System.Int32,System.Int32)">
+            <summary>
+            返回某个类型下某个教学活动的评价的统计数据,注意这里不必返回一条一条的详情
+            不过仍然需要点开新页面查看
+            </summary>
+            <param name="教学活动类型编号"></param>
+            <param name="教学活动编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.ActivityController.分页获取某教学活动的反馈(ScientificResearch.Models.Paging,ScientificResearch.Models.v_教学活动反馈Filter)">
+            <summary>
+            一定记得指定教学活动编号
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.ActivityController.分页获取我的教学活动(ScientificResearch.Models.Paging,ScientificResearch.Models.v_教学活动Filter)">
+            <summary>
+            这里开始应该是学员端的东东了
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
         <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.BaseInfoController">
             <summary>
             和基础信息维护功能对应
@@ -591,6 +629,13 @@
             <param name="dbForTransaction"></param>
             <param name="transaction"></param>
             <param name="是否最终结果">真:传入的是最终的轮转数据,假:传入的是新增的部分轮转数据</param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.删除学员教学轮转安排(System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            data是状态为"轮转计划已安排"的学员编号数组
+            </summary>
+            <param name="data"></param>
             <returns></returns>
         </member>
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.批量删除教学轮转(System.Collections.Generic.IEnumerable{System.Int32})">
@@ -2924,6 +2969,11 @@
         <member name="T:ScientificResearch.Models.sp_教学活动可参与者_增改">
             <summary>
             sp_教学活动可参与者_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学活动可参与者_增改.fId">
+            <summary>
+            
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_教学活动可参与者_增改.tt">
@@ -7121,7 +7171,7 @@
             教学活动[类]
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.教学活动.编码">
+        <member name="P:ScientificResearch.Models.教学活动.编号">
             <summary>
             
             </summary>
@@ -18131,6 +18181,56 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.v_tfn_教学活动评价_按项目统计">
+            <summary>
+            v_tfn_教学活动评价_按项目统计[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学活动评价_按项目统计.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学活动评价_按项目统计.教学活动类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学活动评价_按项目统计.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学活动评价_按项目统计.标准分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学活动评价_按项目统计.是否启用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学活动评价_按项目统计.说明">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学活动评价_按项目统计.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学活动评价_按项目统计.平均得分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学活动评价_按项目统计.评价人数">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v_tfn_教学结业申请">
             <summary>
             v_tfn_教学结业申请[类]
@@ -20926,6 +21026,186 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.v_教学活动">
+            <summary>
+            v_教学活动[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.活动主题">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.活动开始时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.活动结束时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.活动地点">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.教学活动类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.教学活动类型名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.主讲人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.主讲人姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.主讲人职称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.活动内容">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.教学病例">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.病人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.建立人">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.反馈数量">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.评价次数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_教学活动反馈">
+            <summary>
+            v_教学活动反馈[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动反馈.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动反馈.教学活动编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动反馈.学员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动反馈.学员姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动反馈.反馈内容">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动反馈.附件">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动反馈.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动反馈.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_教学活动评价">
+            <summary>
+            v_教学活动评价[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动评价.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动评价.评价人类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动评价.评价人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动评价.教学活动编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动评价.教学活动评价项目编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动评价.评分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动评价.备注">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v_教学科室">
             <summary>
             v_教学科室[类]
@@ -23701,13 +23981,13 @@
             <param name="row"></param>
             <returns></returns>
         </member>
-        <member name="M:MyLib.Tool.ModelToModel``2(``1,``0)">
+        <member name="M:MyLib.Tool.ModelToModel``2(``0,``1)">
             <summary>
             将对象值转换给另一个对象
             这个可以用MyObject中的修改一下
             </summary>
-            <typeparam name="Tout"></typeparam>
-            <typeparam name="Tin"></typeparam>
+            <typeparam name="Tin">这个是出去的</typeparam>
+            <typeparam name="Tout">这个是进来的!!</typeparam>
             <param name="objIn"></param>
             <param name="objOut"></param>
             <returns></returns>

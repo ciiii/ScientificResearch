@@ -749,7 +749,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             var 出科申请 = await Db.GetModelByIdSpAsync<教学出科申请>(data.Data);
 
             //出科日期已经加上了
-            var 新的教学轮转 = MyLib.Tool.ModelToModel<教学轮转, v_教学轮转>(await 验证出科申请数据(出科申请));
+            var 新的教学轮转 = MyLib.Tool.ModelToModel< v_教学轮转, 教学轮转>(await 验证出科申请数据(出科申请));
             var 学员编号 = 新的教学轮转.学员编号;
 
             async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
