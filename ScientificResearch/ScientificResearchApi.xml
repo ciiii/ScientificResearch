@@ -213,6 +213,20 @@
             <param name="filter"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.ActivityController.获取我对某个教学活动的反馈(ScientificResearch.Models.v_教学活动反馈Filter)">
+            <summary>
+            这里教学活动编号和学员编号都需要填;
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.ActivityController.增改教学活动评价(System.Collections.Generic.IEnumerable{ScientificResearch.Models.教学活动评价})">
+            <summary>
+            评价人类型暂时不用管,评价人编号就是自己的编号
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
         <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.BaseInfoController">
             <summary>
             和基础信息维护功能对应
@@ -251,6 +265,43 @@
             如果业务上是打分,可以用此来说明其"掌握程度"
             如果业务上是评等级,实际上是将取对应评分等级中的最大分值保存;
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.Evaluation360Controller.分页获取我做出的评价(ScientificResearch.Models.Paging,ScientificResearch.Models.v_教学360评价Filter)">
+            <summary>
+            对应多个页面;
+            对于"对学员评价到对科室管理员评价"等等页面,固定搜索条件为
+                "1 老师端:NotEqual来源类型 = 0 且 评价人编号=自己的编号 且 目标类型 = 该页面的目标类型" 
+                "2 学员端:来源类型 = 0 且 评价人编号=自己的编号 且 目标类型 = 该页面的目标类型"
+            对于"评价查询"页面,没有什么需要固定的条件,只是要注意:"来源类型和目标类型就是0代表学员,其他是角色编号"
+            对于"对我的评价",固定搜索条件为
+                "1 老师端:NotEqual目标类型 = 0 且 被评价人编号=自己的编号"
+                "2 学员端:目标类型=0 且 被评价人编号=自己的编号"
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.Evaluation360Controller.获取评价评分(ScientificResearch.Models.v_tfn_教学360评价评分Filter)">
+            <summary>
+            只能针对一个教学360评价看其具体的评分
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.Evaluation360Controller.获取教学360评价方向编号(System.Int32,System.Int32)">
+            <summary>
+            如果=0则没找到
+            </summary>
+            <param name="来源类型"></param>
+            <param name="目标类型"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.Evaluation360Controller.增改360评价(ScientificResearch.Infrastucture.PredefindedModelList{ScientificResearch.Models.教学360评价,ScientificResearch.Models.教学360评价评分})">
+            <summary>
+            其中的教学360评价方向编号用上面的接口获取
+            </summary>
+            <param name="data"></param>
             <returns></returns>
         </member>
         <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.HomePageController">
@@ -739,7 +790,7 @@
         </member>
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.增改教学更换带教老师(ScientificResearch.Models.教学更换带教老师)">
             <summary>
-            已出科的轮转不能更换带教老师
+            在科的轮转才能更换带教老师
             </summary>
             <param name="data"></param>
             <returns></returns>
@@ -769,7 +820,9 @@
         </member>
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.增改教学考勤情况(ScientificResearch.Infrastucture.PredefindedIdList{ScientificResearch.Models.教学考勤情况})">
             <summary>
+            id是轮转id
             考勤日期指哪一天的考勤.必须在该轮转的开始结束日期之内;
+            TODO:这里是否应该加上对打考勤的人的判断??还是应该放到别处???
             </summary>
             <param name="data"></param>
             <returns></returns>
@@ -1647,6 +1700,16 @@
         <member name="T:ScientificResearch.Models.CurrentUserOfTeachingManagement">
             <summary>
             当前教学管理的医院方登录人的信息
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价Filter.来源类型">
+            <summary>
+            就是 评价人类型
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价Filter.目标类型">
+            <summary>
+            就是 被评价人类型
             </summary>
         </member>
         <member name="T:ScientificResearch.Models.PersonInfoByType">
@@ -2587,6 +2650,31 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_按部门对指定字段统计人员.字段名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学360评价_增改">
+            <summary>
+            sp_教学360评价_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学360评价_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学360评价评分_增改">
+            <summary>
+            sp_教学360评价评分_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学360评价评分_增改.fId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学360评价评分_增改.tt">
             <summary>
             
             </summary>
@@ -6072,6 +6160,11 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.教学360评价.评价内容">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学360评价.评价时间">
             <summary>
             
             </summary>
@@ -17656,6 +17749,51 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.v_tfn_教学360评价评分">
+            <summary>
+            v_tfn_教学360评价评分[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学360评价评分.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学360评价评分.教学360评价编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学360评价评分.教学360评价项目编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学360评价评分.教学360评价项目名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学360评价评分.标准分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学360评价评分.教学360评价项目备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学360评价评分.评分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学360评价评分.备注">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v_tfn_教学出科申请">
             <summary>
             v_tfn_教学出科申请[类]
@@ -18177,6 +18315,66 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_tfn_教学更换带教老师.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_tfn_教学活动评价">
+            <summary>
+            v_tfn_教学活动评价[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学活动评价.评价项目名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学活动评价.标准分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学活动评价.是否启用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学活动评价.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学活动评价.评价人类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学活动评价.评价人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学活动评价.评价人姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学活动评价.教学活动编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学活动评价.教学活动评价项目编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学活动评价.评分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学活动评价.备注">
             <summary>
             
             </summary>
@@ -19586,6 +19784,81 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.v_教学360评价">
+            <summary>
+            v_教学360评价[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价.教学360评价方向名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价.来源类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价.评价人类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价.评价人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价.评价人姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价.目标类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价.被评价人类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价.被评价人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价.被评价人姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价.评价内容">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价.评价时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价.平均评分">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v_教学360评价分类">
             <summary>
             v_教学360评价分类[类]
@@ -20447,6 +20720,16 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_教学学员培训情况.当前教学轮转本院科室名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.当前科室管理员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.当前科室管理员姓名">
             <summary>
             
             </summary>

@@ -657,8 +657,16 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         /// <param name="data"></param>
         /// <returns></returns>
         [HttpPost]
-        async public Task 增改教学医疗差错及事故记录([FromBody]教学医疗差错及事故记录 data) =>
+        async public Task 增改教学医疗差错及事故记录([FromBody]教学医疗差错及事故记录 data)
+        {
+            var v教学轮转 = await Db.GetModelByIdSpAsync<v_教学轮转>(data.教学轮转编号);
+            if (v教学轮转.状态 == 教学轮转状态.未入科.ToString())
+            {
+                throw new Exception("未入科轮转不能添加医疗差错及事故记录");
+            }
+
             await Db.Merge(data);
+        }
 
         [HttpPost]
         async public Task<object> 上传教学医疗差错及事故记录附件()
@@ -745,7 +753,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             (paging, filter, $"tfn_教学更换带教老师('{CurrentUser.人员类型}',{CurrentUser.编号})");
 
         /// <summary>
-        /// 已出科的轮转不能更换带教老师
+        /// 在科的轮转才能更换带教老师
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
@@ -753,11 +761,22 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         async public Task 增改教学更换带教老师([FromBody]教学更换带教老师 data)
         {
             var v教学轮转 = await Db.GetModelByIdSpAsync<v_教学轮转>(data.教学轮转编号);
-            if (v教学轮转.状态 == 教学轮转状态.已出科.ToString())
+            if (v教学轮转.状态 != 教学轮转状态.在科.ToString())
             {
-                throw new Exception("已出科的轮转不能更换带教老师");
+                throw new Exception("在科的轮转才能更换带教老师");
             }
-            await Db.Merge(data);
+            //await Db.Merge(data);
+
+            var 教学轮转 = Tool.ModelToModel<v_教学轮转, 教学轮转>(v教学轮转);
+            教学轮转.带教老师编号 = data.新带教老师编号;
+
+            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+            {
+                await dbForTransaction.Merge(data, transaction: transaction);
+                await dbForTransaction.Merge(教学轮转, transaction: transaction);
+            }
+
+            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
         }
 
         /// <summary>
@@ -802,7 +821,8 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
                        select new
                        {
                            学员信息 = item,
-                           考勤统计 = (from item2 in 学员的考勤统计 where item2.编号 == item.编号 select item2).FirstOrDefault()
+                           考勤统计 = ((from item2 in 学员的考勤统计 where item2.编号 == item.编号 select item2).FirstOrDefault()) 
+                           ?? new v_sp_教学考勤统计()
                        }
             };
         }
@@ -825,7 +845,9 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         }
 
         /// <summary>
+        /// id是轮转id
         /// 考勤日期指哪一天的考勤.必须在该轮转的开始结束日期之内;
+        /// TODO:这里是否应该加上对打考勤的人的判断??还是应该放到别处???
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>

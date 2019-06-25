@@ -74,6 +74,11 @@ namespace ScientificResearch.Models
         public int? 目标类型 { get; set; }
     }
 
+    public class v_教学360评价方向Filter
+    {
+        public int? 来源类型 { get; set; }
+        public int? 目标类型 { get; set; }
+    }
     public class 教学360评价项目Filter
     {
         [Required(ErrorMessage = "教学360评价分类编号")]

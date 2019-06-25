@@ -120,6 +120,14 @@ namespace ScientificResearch.Models
 		/// 
 		/// </summary>
         public string 当前教学轮转本院科室名称 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int? 当前科室管理员编号 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public string 当前科室管理员姓名 { get; set; }
         
           
         #endregion

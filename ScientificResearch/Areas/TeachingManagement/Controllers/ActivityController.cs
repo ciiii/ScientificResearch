@@ -82,7 +82,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         async public Task<object> 分页获取我的教学活动(Paging paging, v_教学活动Filter filter)
         {
             return await Db.GetPagingListSpAsync<v_教学活动, v_教学活动Filter>
-                (paging, filter, $"tfn_教学某学员可查看的教学活动('{CurrentUser.编号})");
+                (paging, filter, $"tfn_教学某学员可查看的教学活动('{CurrentUser.编号}')");
 
         }
 

@@ -40,6 +40,11 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        [Required(ErrorMessage ="请提供[评价时间]")]
+		public DateTime? 评价时间 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
         [MaxLength(500,ErrorMessage ="备注不能超过[250]字")]
 		public string 备注 { get; set; }
         
