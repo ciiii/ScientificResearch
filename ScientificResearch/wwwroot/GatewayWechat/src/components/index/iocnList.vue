@@ -84,7 +84,7 @@
             },
             path(item) {
                 if (item.手机链接地址 && item.手机链接地址.indexOf('http') == 0) {
-                    if (item.名称 == 'UpToDate') {
+                    if (item.手机链接地址.indexOf('aiyisheng.com/Login') > -1) {
                         this.logoinServe(item.手机链接地址)
                     } else {
                         window.location = item.手机链接地址;

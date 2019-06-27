@@ -126,7 +126,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         async public Task<object> 学员分页查看退培申请(Paging paging, v_tfn_教学退培申请Filter filter)
         {
             var 人员类型 = "教学学员";
-            var 学员编号 = 1; //王苏麻子
+            var 学员编号 = 10; //菲菲
             return await Db.GetPagingListSpAsync<v_tfn_教学退培申请, v_tfn_教学退培申请Filter>
                 (paging, filter, $"tfn_教学退培申请('{人员类型}',{学员编号})");
         }
@@ -143,7 +143,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             //这里是伪数据
             data.IsHold = false;
             var 人员类型 = "教学学员";
-            var 学员编号 = 1; //王苏麻子
+            var 学员编号 = 10; //菲菲
 
             //只有已报到且未退培且未结业的学员可以退培;
             await 验证学员为已报到且未退培未结业(学员编号);
@@ -182,7 +182,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             //这里是伪数据
             data.IsHold = false;
             var 人员类型 = "教学学员";
-            var 学员编号 = 1; //王苏麻子
+            var 学员编号 = 10; //菲菲
 
             //只有已报到且未退培且未结业的学员可以退培;
             await 验证学员为已报到且未退培未结业(学员编号);

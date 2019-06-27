@@ -855,7 +855,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         async public Task 增改教学考勤情况([FromBody]PredefindedIdList<教学考勤情况> data)
         {
             var 教学轮转 = await Db.GetModelByIdSpAsync<教学轮转>(data.Id);
-            if (data.List.Any(i => i.考勤日期 < 教学轮转.计划入科日期 || i.考勤日期 > 教学轮转.计划出科日期))
+            if (data.List.Any(i => i.考勤日期 < 教学轮转.实际入科日期 || i.考勤日期 > 教学轮转.计划出科日期))
             {
                 throw new Exception("考勤日期不能超出该轮转的计划开始/结束日期范围");
             }
