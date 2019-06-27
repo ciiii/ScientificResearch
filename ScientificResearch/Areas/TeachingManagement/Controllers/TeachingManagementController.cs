@@ -754,6 +754,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
 
         /// <summary>
         /// 在科的轮转才能更换带教老师
+        /// 1111
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
