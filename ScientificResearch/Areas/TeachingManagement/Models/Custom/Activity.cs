@@ -13,6 +13,11 @@ namespace ScientificResearch.Models
         public string Like活动主题 { get; set; }
     }
 
+    public class v_教学活动可参与者Filter
+    {
+        public int? 教学活动编号 { get; set; }
+    }
+
     public class v_教学活动反馈Filter
     {
         public int? 教学活动编号 { get; set; }

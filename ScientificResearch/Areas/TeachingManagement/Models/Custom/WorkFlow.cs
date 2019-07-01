@@ -256,6 +256,11 @@ namespace ScientificResearch.Models
         #endregion
     }
 
+    public class VStepFilter
+    {
+        public int? FlowId { get; set; }
+    }
+
     public class v_tfn_教学退培申请Filter
     {
         public string Like姓名 { get; set; }

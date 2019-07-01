@@ -75,6 +75,10 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+		public string 附件 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
         [Required(ErrorMessage ="请提供[建立人]")]
 		public int 建立人 { get; set; }
         /// <summary>

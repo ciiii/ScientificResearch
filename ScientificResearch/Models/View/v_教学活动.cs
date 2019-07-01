@@ -67,6 +67,46 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        public string 病人姓名 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public string 病人性别 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public DateTime? 病人出生日期 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public string 病人住院号 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public string 病人住院床号 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public string 病人主要诊断 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public string 病人次要诊断 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public DateTime? 病人入院日期 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public DateTime? 病人出院日期 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public string 附件 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
         public int 建立人 { get; set; }
         /// <summary>
 		/// 

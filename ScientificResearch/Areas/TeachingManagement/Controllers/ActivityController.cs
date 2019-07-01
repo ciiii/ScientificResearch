@@ -32,6 +32,20 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             return await Db.GetPagingListSpAsync<v_教学活动, v_教学活动Filter>(paging, filter);
         }
 
+        [HttpGet]
+        async public Task<object> 获取教学活动详情([Required]int 教学活动编号)
+        {
+            return new
+            {
+                教学活动 = await Db.GetModelByIdSpAsync<v_教学活动>(教学活动编号),
+                可参与者 = await Db.GetListSpAsync<v_教学活动可参与者, v_教学活动可参与者Filter>(
+                    new v_教学活动可参与者Filter()
+                    {
+                        教学活动编号 = 教学活动编号
+                    })
+            };
+        }
+
         /// <summary>
         /// 返回某个类型下某个教学活动的评价的统计数据,注意这里不必返回一条一条的详情
         /// 不过仍然需要点开新页面查看
@@ -58,6 +72,17 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         async public Task<object> 分页获取某教学活动的反馈(Paging paging, v_教学活动反馈Filter filter)
         {
             return await Db.GetPagingListSpAsync<v_教学活动反馈, v_教学活动反馈Filter>(paging, filter);
+        }
+
+        [HttpPost]
+        async public Task<object> 上传教学活动附件()
+        {
+            var filesNameList = await MyLib.UploadFile.Upload(
+                Request.Form.Files,
+                Env.WebRootPath,
+                "upload/教学/教学活动/活动附件",
+                Config.GetValue<int>("uploadFileMaxSize"));
+            return filesNameList;
         }
 
         [HttpPost]
@@ -102,6 +127,17 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         async public Task<object> 获取我对某个教学活动的反馈(v_教学活动反馈Filter filter)
         {
             return await Db.GetListSpAsync<v_教学活动反馈, v_教学活动反馈Filter>(filter);
+        }
+
+        [HttpPost]
+        async public Task<object> 上传教学活动反馈附件()
+        {
+            var filesNameList = await MyLib.UploadFile.Upload(
+                Request.Form.Files,
+                Env.WebRootPath,
+                "upload/教学/教学活动/反馈附件",
+                Config.GetValue<int>("uploadFileMaxSize"));
+            return filesNameList;
         }
 
         [HttpPost]

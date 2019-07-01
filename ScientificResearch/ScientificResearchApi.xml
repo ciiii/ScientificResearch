@@ -672,16 +672,6 @@
             <param name="data"></param>
             <returns></returns>
         </member>
-        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.更新教学学员培训计划日期(System.Collections.Generic.IEnumerable{ScientificResearch.Models.教学轮转},System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction,System.Boolean)">
-            <summary>
-            
-            </summary>
-            <param name="data"></param>
-            <param name="dbForTransaction"></param>
-            <param name="transaction"></param>
-            <param name="是否最终结果">真:传入的是最终的轮转数据,假:传入的是新增的部分轮转数据</param>
-            <returns></returns>
-        </member>
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.删除学员教学轮转安排(System.Collections.Generic.IEnumerable{System.Int32})">
             <summary>
             data是状态为"轮转计划已安排"的学员编号数组
@@ -791,6 +781,7 @@
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementController.增改教学更换带教老师(ScientificResearch.Models.教学更换带教老师)">
             <summary>
             在科的轮转才能更换带教老师
+            1111
             </summary>
             <param name="data"></param>
             <returns></returns>
@@ -841,9 +832,16 @@
         </member>
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.获取某办事流程步骤列表(System.Int32)">
             <summary>
-            根据某个办事流程编号,获取该流程规定的步骤
+            根据某个办事流程模板编号,获取该流程规定的步骤
             </summary>
             <param name="办事流程编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.获取某流程审核记录(System.Int32)">
+            <summary>
+            流程编号就是flowid
+            </summary>
+            <param name="流程编号"></param>
             <returns></returns>
         </member>
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.WorkFlowController.学员分页查看退培申请(ScientificResearch.Models.Paging,ScientificResearch.Models.v_tfn_教学退培申请Filter)">
@@ -6809,16 +6807,6 @@
             
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.教学学员培训.计划开始培训日期">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员培训.计划结束培训日期">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="P:ScientificResearch.Models.教学学员培训.实际开始培训日期">
             <summary>
             
@@ -7320,6 +7308,11 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.教学活动.病人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学活动.附件">
             <summary>
             
             </summary>
@@ -20709,6 +20702,16 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.备注">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.v_教学学员培训情况.当前教学轮转编号">
             <summary>
             
@@ -21379,6 +21382,56 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.病人姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.病人性别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.病人出生日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.病人住院号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.病人住院床号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.病人主要诊断">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.病人次要诊断">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.病人入院日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.病人出院日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.附件">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.v_教学活动.建立人">
             <summary>
             
@@ -21445,6 +21498,26 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_教学活动反馈.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_教学活动可参与者">
+            <summary>
+            v_教学活动可参与者[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动可参与者.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动可参与者.教学活动编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动可参与者.学员姓名">
             <summary>
             
             </summary>

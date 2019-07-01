@@ -105,7 +105,13 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
 
             //得到该教学本院策略下的"v_教学本院科室"列表,
             var 选定教学本院策略下的科室 = (await Db.GetListSpAsync<v_教学本院科室, 教学本院科室Filter>
-                (new 教学本院科室Filter() { 教学本院策略编号 = data.教学本院策略编号 }, orderStr: nameof(v_教学本院科室.排序值), orderType: true)).ToList();
+                (new 教学本院科室Filter()
+                {
+                    教学本院策略编号 = data.教学本院策略编号
+                },
+                orderStr: nameof(v_教学本院科室.排序值),
+                orderType: true))
+                .ToList();
             var 科室数量 = 选定教学本院策略下的科室.Count();
 
             //得到列表中最小的"最大学员人数"作为每一个策略组合的可重复数量;
@@ -154,10 +160,16 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             var 一个完整轮转容纳人数 = 存放策略组合的列表.Count() * 最小的最大学员人数;
             var 一个完整轮转的总时长 = (int)选定教学本院策略.培训总时长;
 
-            var 学员信息 = (await Db.GetListSpAsync<v_教学学员, 教学学员Filter>(new 教学学员Filter()
+            var 学员培训情况 = (await Db.GetListSpAsync<v_教学学员培训情况, 教学学员培训情况Filter>(new 教学学员培训情况Filter()
             {
                 WhereIn编号 = data.学员编号列表.ToStringIdWithSpacer()
             })).ToList();
+
+            //只有已报到状态的才能自动安排轮转
+            if(学员培训情况.Any(i=>i.状态 != 教学学员培训状态.已报到.ToString()))
+            {
+                throw new Exception("只有已报到且未安排轮转的学员可以被安排轮转");
+            }
 
             //循环每个学员
             var 学员轮转安排列表 = new List<v_教学轮转>();
@@ -184,7 +196,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
                     {
                         编号 = 0,
                         学员编号 = data.学员编号列表[i],
-                        学员姓名 = 学员信息.Find(k => k.编号 == data.学员编号列表[i]).姓名,
+                        学员姓名 = 学员培训情况.Find(k => k.编号 == data.学员编号列表[i]).姓名,
                         计划入科日期 = 开始日期,
                         计划出科日期 = 结束日期,
                         教学本院科室编号 = 教学专业科室对应本院科室关系.编号,
@@ -215,7 +227,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
                 //total = 学员信息.Count(),
                 最小日期 = 学员轮转安排列表.Min(i => (DateTime?)i.计划入科日期),
                 最大日期 = 学员轮转安排列表.Max(i => (DateTime?)i.计划出科日期),
-                list = from item in 学员信息
+                list = from item in 学员培训情况
                        select new
                        {
                            学员信息 = item,
@@ -224,12 +236,12 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             };
         }
 
-        class 学员最小开始和最大结束计划培训时间
-        {
-            public int 学员编号 { get; set; }
-            public DateTime 最小计划入科日期 { get; set; }
-            public DateTime 最大计划出科日期 { get; set; }
-        }
+        //class 学员最小开始和最大结束计划培训时间
+        //{
+        //    public int 学员编号 { get; set; }
+        //    public DateTime 最小计划入科日期 { get; set; }
+        //    public DateTime 最大计划出科日期 { get; set; }
+        //}
 
         /// <summary>
         /// 1 更新相应学员的计划开始结束培训日期
@@ -254,7 +266,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
 
             async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
             {
-                await 更新教学学员培训计划日期(data, dbForTransaction, transaction, false);
+                //await 更新教学学员培训计划日期(data, dbForTransaction, transaction, false);
 
                 var 将增加的教学轮转任务列表 = new List<教学轮转任务>();
                 foreach (var item in data.Where(i => i.编号 == 0))
@@ -296,59 +308,60 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         }
 
         /// <summary>
-        /// 
+        /// 2019-7-1 因为表"教学学员培训"中的"计划开始培训日期 和 计划结束培训日期"被移到了"v_教学学员培训情况"中计算而得到,
+        /// 所以这里就不需要这个过程了
         /// </summary>
         /// <param name="data"></param>
         /// <param name="dbForTransaction"></param>
         /// <param name="transaction"></param>
         /// <param name="是否最终结果">真:传入的是最终的轮转数据,假:传入的是新增的部分轮转数据</param>
         /// <returns></returns>
-        private static async Task 更新教学学员培训计划日期(
-            IEnumerable<教学轮转> data,
-            SqlConnection dbForTransaction,
-            SqlTransaction transaction,
-            bool 是否最终结果)
-        {
-            var 按学员分组的教学轮转 = from item in data
-                             group item by item.学员编号 into g
-                             select new 学员最小开始和最大结束计划培训时间()
-                             {
-                                 学员编号 = g.Key,
-                                 最小计划入科日期 = g.Min(i => (DateTime)i.计划入科日期),
-                                 最大计划出科日期 = g.Max(i => (DateTime)i.计划出科日期)
-                             };
+        //private static async Task 更新教学学员培训计划日期(
+        //    IEnumerable<教学轮转> data,
+        //    SqlConnection dbForTransaction,
+        //    SqlTransaction transaction,
+        //    bool 是否最终结果)
+        //{
+        //    var 按学员分组的教学轮转 = from item in data
+        //                     group item by item.学员编号 into g
+        //                     select new 学员最小开始和最大结束计划培训时间()
+        //                     {
+        //                         学员编号 = g.Key,
+        //                         最小计划入科日期 = g.Min(i => (DateTime)i.计划入科日期),
+        //                         最大计划出科日期 = g.Max(i => (DateTime)i.计划出科日期)
+        //                     };
 
-            var 将要更新的教学学员培训列表 = await dbForTransaction.GetListSpAsync<教学学员培训, 教学学员培训情况Filter>
-                (new 教学学员培训情况Filter()
-                {
-                    WhereIn编号 = 按学员分组的教学轮转.Select(i => i.学员编号).ToStringIdWithSpacer()
-                }, transaction: transaction);
+        //    var 将要更新的教学学员培训列表 = await dbForTransaction.GetListSpAsync<教学学员培训, 教学学员培训情况Filter>
+        //        (new 教学学员培训情况Filter()
+        //        {
+        //            WhereIn编号 = 按学员分组的教学轮转.Select(i => i.学员编号).ToStringIdWithSpacer()
+        //        }, transaction: transaction);
 
-            await dbForTransaction.Merge(将要更新的教学学员培训列表.Select(i =>
-            {
-                var 某学员最小开始和最大结束计划培训时间 = 按学员分组的教学轮转.Where(j => j.学员编号 == i.编号).FirstOrDefault();
+        //    await dbForTransaction.Merge(将要更新的教学学员培训列表.Select(i =>
+        //    {
+        //        var 某学员最小开始和最大结束计划培训时间 = 按学员分组的教学轮转.Where(j => j.学员编号 == i.编号).FirstOrDefault();
 
-                if (是否最终结果 == true)
-                {
-                    i.计划开始培训日期 = 某学员最小开始和最大结束计划培训时间.最小计划入科日期;
-                    i.计划结束培训日期 = 某学员最小开始和最大结束计划培训时间.最大计划出科日期;
-                }
-                else
-                {
-                    if (i.计划开始培训日期 == null || i.计划开始培训日期 > 某学员最小开始和最大结束计划培训时间.最小计划入科日期)
-                    {
-                        i.计划开始培训日期 = 某学员最小开始和最大结束计划培训时间.最小计划入科日期;
-                    }
+        //        if (是否最终结果 == true)
+        //        {
+        //            i.计划开始培训日期 = 某学员最小开始和最大结束计划培训时间.最小计划入科日期;
+        //            i.计划结束培训日期 = 某学员最小开始和最大结束计划培训时间.最大计划出科日期;
+        //        }
+        //        else
+        //        {
+        //            if (i.计划开始培训日期 == null || i.计划开始培训日期 > 某学员最小开始和最大结束计划培训时间.最小计划入科日期)
+        //            {
+        //                i.计划开始培训日期 = 某学员最小开始和最大结束计划培训时间.最小计划入科日期;
+        //            }
 
-                    if (i.计划结束培训日期 == null || i.计划结束培训日期 < 某学员最小开始和最大结束计划培训时间.最大计划出科日期)
-                    {
-                        i.计划结束培训日期 = 某学员最小开始和最大结束计划培训时间.最大计划出科日期;
-                    }
-                }
+        //            if (i.计划结束培训日期 == null || i.计划结束培训日期 < 某学员最小开始和最大结束计划培训时间.最大计划出科日期)
+        //            {
+        //                i.计划结束培训日期 = 某学员最小开始和最大结束计划培训时间.最大计划出科日期;
+        //            }
+        //        }
 
-                return i;
-            }), transaction);
-        }
+        //        return i;
+        //    }), transaction);
+        //}
 
         /// <summary>
         /// data是状态为"轮转计划已安排"的学员编号数组
@@ -374,18 +387,18 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
                 WhereIn学员编号 = data.ToStringIdWithSpacer()
             });
 
-            var 要删除的学员培训 = new List<教学学员培训>();
-            foreach (var item in 要删除的学员培训情况)
-            {
-                var 对应的学员培训 = Tool.ModelToModel<v_教学学员培训情况, 教学学员培训>(item);
-                对应的学员培训.计划开始培训日期 = null;
-                对应的学员培训.计划结束培训日期 = null;
-                要删除的学员培训.Add(对应的学员培训);
-            }
+            //var 要删除的学员培训 = new List<教学学员培训>();
+            //foreach (var item in 要删除的学员培训情况)
+            //{
+            //    var 对应的学员培训 = Tool.ModelToModel<v_教学学员培训情况, 教学学员培训>(item);
+            //    对应的学员培训.计划开始培训日期 = null;
+            //    对应的学员培训.计划结束培训日期 = null;
+            //    要删除的学员培训.Add(对应的学员培训);
+            //}
 
             async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
             {
-                await dbForTransaction.Merge(要删除的学员培训.AsEnumerable(), transaction: transaction);
+                //await dbForTransaction.Merge(要删除的学员培训.AsEnumerable(), transaction: transaction);
                 await dbForTransaction.Delete<教学轮转>(要删除的学员的所有轮转.Select(i => i.编号), transaction: transaction);
             }
             await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
@@ -417,12 +430,12 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
 
                 await dbForTransaction.Delete<教学轮转>(data, transaction);
 
-                var 删除之后的这些学员的教学轮转 = await dbForTransaction.GetListSpAsync<教学轮转, 教学轮转Filter>(new 教学轮转Filter()
-                {
-                    WhereIn学员编号 = 要删除轮转的学员编号.ToStringIdWithSpacer()
-                }, transaction: transaction);
+                //var 删除之后的这些学员的教学轮转 = await dbForTransaction.GetListSpAsync<教学轮转, 教学轮转Filter>(new 教学轮转Filter()
+                //{
+                //    WhereIn学员编号 = 要删除轮转的学员编号.ToStringIdWithSpacer()
+                //}, transaction: transaction);
 
-                await 更新教学学员培训计划日期(删除之后的这些学员的教学轮转, dbForTransaction, transaction, true);
+                //await 更新教学学员培训计划日期(删除之后的这些学员的教学轮转, dbForTransaction, transaction, true);
             }
             await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
         }
@@ -578,8 +591,8 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
                 将受到影响的教学轮转.Add(item);
             };
 
-            var 将受影响的教学学员培训 = await Db.GetModelByIdSpAsync<教学学员培训>(要补轮转的教学轮转视图.学员编号);
-            将受影响的教学学员培训.计划结束培训日期 = ((DateTime)将受影响的教学学员培训.计划结束培训日期).AddDays(data.补轮转天数);
+            //var 将受影响的教学学员培训 = await Db.GetModelByIdSpAsync<教学学员培训>(要补轮转的教学轮转视图.学员编号);
+            //将受影响的教学学员培训.计划结束培训日期 = ((DateTime)将受影响的教学学员培训.计划结束培训日期).AddDays(data.补轮转天数);
 
             var 教学补轮转 = new 教学补轮转()
             {
@@ -595,7 +608,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
 
             async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
             {
-                await dbForTransaction.Merge(将受影响的教学学员培训, transaction);
+                //await dbForTransaction.Merge(将受影响的教学学员培训, transaction);
                 await dbForTransaction.Merge(将受到影响的教学轮转.AsEnumerable(), transaction);
                 await dbForTransaction.Merge(教学补轮转, transaction);
             }
@@ -735,6 +748,14 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
 
             var 要入科的轮转 = MyLib.Tool.ModelToModel<v_教学轮转, 教学轮转>(要入科的轮转视图);
             await Db.Merge(要入科的轮转);
+
+            //如果是第一个入科,那么学员培训情况的实际入科时间要修改
+            if (该学员所有的轮转.All(i => i.状态 == 教学轮转状态.未入科.ToString()))
+            {
+                var 教学学员培训情况 = await Db.GetModelByIdSpAsync<教学学员培训>(要入科的轮转.学员编号);
+                教学学员培训情况.实际开始培训日期 = DateTime.Now;
+                await Db.Merge(教学学员培训情况);
+            }
         }
 
         /// <summary>
@@ -822,7 +843,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
                        select new
                        {
                            学员信息 = item,
-                           考勤统计 = ((from item2 in 学员的考勤统计 where item2.编号 == item.编号 select item2).FirstOrDefault()) 
+                           考勤统计 = ((from item2 in 学员的考勤统计 where item2.编号 == item.编号 select item2).FirstOrDefault())
                            ?? new v_sp_教学考勤统计()
                        }
             };

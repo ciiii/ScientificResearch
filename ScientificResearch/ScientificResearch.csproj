@@ -104,6 +104,8 @@
     <Folder Include="wwwroot\upload\报销\相关文件\" />
     <Folder Include="wwwroot\upload\教学\办公\通知公告文件和图片\" />
     <Folder Include="wwwroot\upload\教学\培训\教学医疗差错及事故记录附件\" />
+    <Folder Include="wwwroot\upload\教学\教学活动\反馈附件\" />
+    <Folder Include="wwwroot\upload\教学\教学活动\活动附件\" />
     <Folder Include="wwwroot\upload\教学\组织机构\导入学员\" />
     <Folder Include="wwwroot\upload\教学\组织机构\学员头像\" />
     <Folder Include="wwwroot\upload\横向项目\合同文件\" />

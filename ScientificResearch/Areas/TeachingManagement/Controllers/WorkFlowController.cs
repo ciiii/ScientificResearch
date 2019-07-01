@@ -102,7 +102,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         }
 
         /// <summary>
-        /// 根据某个办事流程编号,获取该流程规定的步骤
+        /// 根据某个办事流程模板编号,获取该流程规定的步骤
         /// </summary>
         /// <param name="办事流程编号"></param>
         /// <returns></returns>
@@ -111,6 +111,18 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         {
             var filter = new StepTemplateFilter() { FlowTemplateId = 办事流程编号 };
             return await Db.GetListSpAsync<VStepTemplate, StepTemplateFilter>(filter, orderType: true);
+        }
+
+        /// <summary>
+        /// 流程编号就是flowid
+        /// </summary>
+        /// <param name="流程编号"></param>
+        /// <returns></returns>
+        [HttpGet]
+        async public Task<object> 获取某流程审核记录([Required]int 流程编号)
+        {
+            var filter = new VStepFilter() { FlowId = 流程编号 };
+            return await Db.GetListSpAsync<VStep, VStepFilter>(filter,orderType:true);
         }
         #endregion
 
@@ -746,7 +758,9 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         [HttpPost]
         async public Task 通过出科申请([FromBody]StepDone<int> data)
         {
-            var 出科申请 = await Db.GetModelByIdSpAsync<教学出科申请>(data.Data);
+            var vstep = await Db.GetModelByIdSpAsync<VStep>(data.StepId, nameof(VStep.Id));
+
+            var 出科申请 = await Db.GetModelByIdSpAsync<教学出科申请>(vstep.SourceId);
 
             //出科日期已经加上了
             var 新的教学轮转 = MyLib.Tool.ModelToModel< v_教学轮转, 教学轮转>(await 验证出科申请数据(出科申请));
@@ -820,7 +834,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             //这里是伪数据
             data.IsHold = false;
             var 人员类型 = "教学学员";
-            var 学员编号 = 1; //王苏麻子
+            var 学员编号 = 2; 
 
             //只有待结业的学员可以结业;
             await 验证学员为待结业(学员编号);
@@ -857,7 +871,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             //这里是伪数据
             data.IsHold = false;
             var 人员类型 = "教学学员";
-            var 学员编号 = 1; //王苏麻子
+            var 学员编号 = 2; 
 
             //只有待结业的学员可以结业;
             await 验证学员为待结业(学员编号);

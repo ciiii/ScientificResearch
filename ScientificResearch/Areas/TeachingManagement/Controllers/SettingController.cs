@@ -335,11 +335,13 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             await Db.Disable<教学360评价项目>(data);
         }
 
+        [HttpPost]
         async public Task<object> 增改病人([FromBody]教学病人 data)
         {
             return await Db.Merge(data);
         }
 
+        [HttpGet]
         async public Task<object> 分页获取病人(Paging paging, 教学病人Filter filter) =>
             await Db.GetPagingListSpAsync<教学病人, 教学病人Filter>(paging, filter);
     }

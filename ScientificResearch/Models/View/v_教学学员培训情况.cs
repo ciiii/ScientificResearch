@@ -111,6 +111,14 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        public DateTime? 建立时间 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public string 备注 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
         public int? 当前教学轮转编号 { get; set; }
         /// <summary>
 		/// 
