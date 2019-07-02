@@ -251,7 +251,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
                 await dbForTransaction.Merge(学员培训情况, transaction);
 
                 //该学员轮转中,未入科的和在科的都删掉;
-                var 该学员未入科和在科的轮转 = await dbForTransaction.GetListSpAsync<v_教学轮转, 教学轮转Filter>(new 教学轮转Filter()
+                var 该学员未入科和在科的轮转 = await dbForTransaction.GetListSpAsync<v_教学轮转, v_教学轮转Filter>(new v_教学轮转Filter()
                 {
                     学员编号 = 学员编号,
                     NotEqual状态 = 教学轮转状态.已出科.ToString()
@@ -417,7 +417,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
                     var 请假天数 = 教学请假申请.请假天数;
                     ///造成轮转时间拉长
                     //选择该学员的轮转中,计划结束日期大于请假日期的轮转
-                    var 将要延长的轮转 = await dbForTransaction.GetListSpAsync<教学轮转, 教学轮转Filter>(new 教学轮转Filter()
+                    var 将要延长的轮转 = await dbForTransaction.GetListSpAsync<教学轮转, v_教学轮转Filter>(new v_教学轮转Filter()
                     {
                         学员编号 = 学员编号,
                         Begin计划出科日期 = 请假开始日期
@@ -771,7 +771,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
                 await dbForTransaction.Merge(新的教学轮转, transaction);
 
                 //检查该学员的轮转是否都已经出科了
-                var 该学员还没有出科的轮转 = await dbForTransaction.GetListSpAsync<v_教学轮转, 教学轮转Filter>(new 教学轮转Filter()
+                var 该学员还没有出科的轮转 = await dbForTransaction.GetListSpAsync<v_教学轮转, v_教学轮转Filter>(new v_教学轮转Filter()
                 {
                     学员编号 = 学员编号,
                     NotEqual状态 = 教学轮转状态.已出科.ToString()

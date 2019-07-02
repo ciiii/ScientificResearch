@@ -111,13 +111,41 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
 
         }
 
+        /// <summary>
+        /// 这个应该是学员端的
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
         [HttpGet]
-        async public Task<object> 获取我对某个教学活动的评价(v_tfn_教学活动评价Filter filter)
+        async public Task<object> 获取我对某个教学活动的评价(
+            v_tfn_教学活动评价Filter filter,
+            int 教学活动类型编号,
+            int 教学活动编号,
+            int 教学学员编号)
         {
             filter.是否启用 = true;
-            return await Db.GetListSpAsync<v_tfn_教学活动评价, v_tfn_教学活动评价Filter>(filter);
+            return await Db.GetListSpAsync<v_tfn_教学活动评价, v_tfn_教学活动评价Filter>(
+                filter,
+                $"tfn_教学活动评价({教学活动类型编号},{教学活动编号},{教学学员编号})");
         }
 
+        /// <summary>
+        /// 评价人类型暂时不用管,评价人编号就是自己的编号
+        /// 这个应该放到学员端
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task 增改教学活动评价([FromBody] IEnumerable<教学活动评价> data)
+        {
+            foreach (var item in data)
+            {
+                item.评价人类型 = CurrentUser.人员类型;
+                item.评价人编号 = CurrentUser.编号;
+            }
+
+            await Db.Merge(data);
+        }
         /// <summary>
         /// 这里教学活动编号和学员编号都需要填;
         /// </summary>
@@ -144,22 +172,6 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         async public Task 增改教学活动反馈([FromBody] 教学活动反馈 data) =>
             await Db.Merge(data);
 
-        /// <summary>
-        /// 评价人类型暂时不用管,评价人编号就是自己的编号
-        /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        [HttpPost]
-        async public Task 增改教学活动评价([FromBody] IEnumerable<教学活动评价> data)
-        {
-            foreach (var item in data)
-            {
-                item.评价人类型 = CurrentUser.人员类型;
-                item.评价人编号 = CurrentUser.编号;
-            }
-
-            await Db.Merge(data);
-        }
 
     }
 }

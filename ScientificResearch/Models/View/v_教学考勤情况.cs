@@ -19,6 +19,10 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        public int 学员编号 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
         public int 教学轮转编号 { get; set; }
         /// <summary>
 		/// 

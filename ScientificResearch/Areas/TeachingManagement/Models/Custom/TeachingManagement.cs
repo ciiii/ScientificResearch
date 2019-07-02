@@ -62,7 +62,7 @@ namespace ScientificResearch.Models
         public List<int> 学员编号列表 { get; set; }
     }
 
-    public class 教学轮转Filter
+    public class v_教学轮转Filter
     {
         public int? 学员编号 { get; set; }
         public string WhereIn编号 { get; set; }
@@ -118,11 +118,12 @@ namespace ScientificResearch.Models
 
     public class v_教学补轮转Filter
     {
+        public int? 学员编号 { get; set; }
         public string Like学员姓名 { get; set; }
     }
 
 
-    public class v_tfn_教学考试成绩Filter : 教学轮转Filter
+    public class v_tfn_教学考试成绩Filter : v_教学轮转Filter
     {
         public int? Begin理论考试成绩 { get; set; }
         public int? End理论考试成绩 { get; set; }
@@ -130,11 +131,16 @@ namespace ScientificResearch.Models
         public int? End技能考试成绩 { get; set; }
     }
 
-    public class v_tfn_教学医疗差错及事故记录Filter : 教学轮转Filter
+    public class v_tfn_教学医疗差错及事故记录Filter : v_教学轮转Filter
     {
         public DateTime? Begin处理日期 { get; set; }
         public DateTime? End处理日期 { get; set; }
         public string 处理类别 { get; set; }
+    }
+
+    public class v_tfn_教学管床病人Filter:v_教学轮转Filter
+    {
+
     }
 
     public class 学员入科
@@ -145,7 +151,7 @@ namespace ScientificResearch.Models
         public int 带教老师编号 { get; set; }
     }
 
-    public class v_tfn_教学更换带教老师Filter : 教学轮转Filter
+    public class v_tfn_教学更换带教老师Filter : v_教学轮转Filter
     {
         public int? 原带教老师编号 { get; set; }
         public string Like原带教老师姓名 { get; set; }

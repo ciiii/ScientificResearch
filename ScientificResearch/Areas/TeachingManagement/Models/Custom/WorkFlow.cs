@@ -263,6 +263,7 @@ namespace ScientificResearch.Models
 
     public class v_tfn_教学退培申请Filter
     {
+        public int? 学员编号 { get; set; }
         public string Like姓名 { get; set; }
         /// <summary>
         /// 流程状态有:未完成,已完成,作废,
@@ -282,6 +283,7 @@ namespace ScientificResearch.Models
 
     public class v_tfn_教学请假申请Filter
     {
+        public int? 学员编号 { get; set; }
         public string Like学员姓名 { get; set; }
         /// <summary>
         /// 流程状态有:未完成,已完成,作废,
@@ -291,6 +293,7 @@ namespace ScientificResearch.Models
 
     public class v_tfn_教学轮转手册申请Filter
     {
+        public int? 学员编号 { get; set; }
         public string Like学员姓名 { get; set; }
         /// <summary>
         /// 流程状态有:未完成,已完成,作废,
@@ -307,6 +310,7 @@ namespace ScientificResearch.Models
 
     public class v_tfn_教学出科申请Filter
     {
+        public int? 学员编号 { get; set; }
         public string Like学员姓名 { get; set; }
         /// <summary>
         /// 流程状态有:未完成,已完成,作废,
@@ -316,6 +320,7 @@ namespace ScientificResearch.Models
 
     public class v_tfn_教学结业申请Filter
     {
+        public int? 学员编号 { get; set; }
         public string Like姓名 { get; set; }
         /// <summary>
         /// 流程状态有:未完成,已完成,作废,

@@ -11,6 +11,10 @@ namespace ScientificResearch.Models
     {
         public int? 教学活动类型编号 { get; set; }
         public string Like活动主题 { get; set; }
+        public string Like主讲人姓名 { get; set; }
+        public DateTime? Begin活动开始时间 { get; set; }
+        public DateTime? End活动开始时间 { get; set; }
+
     }
 
     public class v_教学活动可参与者Filter

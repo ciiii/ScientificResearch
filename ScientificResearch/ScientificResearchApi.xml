@@ -213,9 +213,9 @@
             <param name="filter"></param>
             <returns></returns>
         </member>
-        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.ActivityController.获取我对某个教学活动的反馈(ScientificResearch.Models.v_教学活动反馈Filter)">
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.ActivityController.获取我对某个教学活动的评价(ScientificResearch.Models.v_tfn_教学活动评价Filter,System.Int32,System.Int32,System.Int32)">
             <summary>
-            这里教学活动编号和学员编号都需要填;
+            这个应该是学员端的
             </summary>
             <param name="filter"></param>
             <returns></returns>
@@ -223,8 +223,16 @@
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.ActivityController.增改教学活动评价(System.Collections.Generic.IEnumerable{ScientificResearch.Models.教学活动评价})">
             <summary>
             评价人类型暂时不用管,评价人编号就是自己的编号
+            这个应该放到学员端
             </summary>
             <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.ActivityController.获取我对某个教学活动的反馈(ScientificResearch.Models.v_教学活动反馈Filter)">
+            <summary>
+            这里教学活动编号和学员编号都需要填;
+            </summary>
+            <param name="filter"></param>
             <returns></returns>
         </member>
         <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.BaseInfoController">
@@ -1761,7 +1769,7 @@
             这些个学员应该是没有设置过轮转的学员;
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.教学轮转Filter.状态">
+        <member name="P:ScientificResearch.Models.v_教学轮转Filter.状态">
             <summary>
             未入科,在科,已出科
             </summary>
@@ -18422,6 +18430,171 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.v_tfn_教学管床病人">
+            <summary>
+            v_tfn_教学管床病人[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.学员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.学员姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.教学轮转编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.计划入科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.计划出科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.实际入科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.实际出科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.教学本院科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.教学本院策略编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.教学本院策略名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.教学专业科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.教学专业科室名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.本院科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.本院科室名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.科室管理员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.科室管理员姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.带教老师编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.带教老师姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.状态">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.病人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.病人姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.病人性别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.病人出生日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.病人住院号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.病人住院床号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.病人主要诊断">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.病人次要诊断">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.病人入院日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.病人出院日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.是否全程陪护">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_教学管床病人.备注">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v_tfn_教学结业申请">
             <summary>
             v_tfn_教学结业申请[类]
@@ -21517,47 +21690,12 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.v_教学活动可参与者.学员编号">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.v_教学活动可参与者.学员姓名">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="T:ScientificResearch.Models.v_教学活动评价">
-            <summary>
-            v_教学活动评价[类]
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学活动评价.编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学活动评价.评价人类型">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学活动评价.评价人编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学活动评价.教学活动编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学活动评价.教学活动评价项目编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学活动评价.评分">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学活动评价.备注">
             <summary>
             
             </summary>
@@ -21643,6 +21781,11 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_教学考勤情况.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学考勤情况.学员编号">
             <summary>
             
             </summary>

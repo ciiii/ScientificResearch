@@ -23,6 +23,10 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        public int 学员编号 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
         public string 学员姓名 { get; set; }
         
           
