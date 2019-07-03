@@ -70,16 +70,24 @@
             总库的新闻管理,这个应该是云中漫步自己的新闻,针对所有受众
             </summary>
         </member>
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.NewsController.获取总库标签(ScientificResearch.Models.总库标签Filter)">
+            <summary>
+            新闻分类编号 这个条件一般是必须的;
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
         <member name="M:ScientificResearch.Areas.Manage.Controllers.NewsController.分页获取总库新闻(ScientificResearch.Models.Paging,ScientificResearch.Models.总库新闻Filter)">
             <summary>
-            分页获取总库新闻
+            分页获取总库新闻,列表,不包括内容
+            注意,标签传名称即可;
             </summary>
             <param name="paging"></param>
             <returns></returns>
         </member>
-        <member name="M:ScientificResearch.Areas.Manage.Controllers.NewsController.增改总库新闻(ScientificResearch.Models.新闻)">
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.NewsController.增改总库新闻(ScientificResearch.Infrastucture.PredefindedModelList{ScientificResearch.Models.新闻,System.Int32})">
             <summary>
-            增改总库新闻,老规矩.编号=0为新增;
+            model是新闻,list是标签编号列表
             </summary>
             <param name="model"></param>
             <returns></returns>
@@ -1067,7 +1075,7 @@
             当前总库登录人的信息
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.总库新闻Filter.分类">
+        <member name="P:ScientificResearch.Models.总库新闻Filter.新闻分类编号">
             <summary>
             目前写死:前沿,视听,公告 这三种
             </summary>
@@ -3426,6 +3434,21 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_新闻_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_新闻标签_增改">
+            <summary>
+            sp_新闻标签_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_新闻标签_增改.fId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_新闻标签_增改.tt">
             <summary>
             
             </summary>
@@ -8320,7 +8343,7 @@
             
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.新闻.分类">
+        <member name="P:ScientificResearch.Models.新闻.新闻分类编号">
             <summary>
             
             </summary>
@@ -8336,6 +8359,46 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.新闻.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.新闻分类">
+            <summary>
+            新闻分类[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.新闻分类.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.新闻分类.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.新闻分类.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.新闻标签">
+            <summary>
+            新闻标签[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.新闻标签.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.新闻标签.新闻编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.新闻标签.标签编号">
             <summary>
             
             </summary>
@@ -8561,6 +8624,31 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.来源表.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.标签">
+            <summary>
+            标签[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.标签.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.标签.新闻分类编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.标签.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.标签.备注">
             <summary>
             
             </summary>
@@ -22356,6 +22444,81 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_教学通知公告接收条件.接收者名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_新闻_列表">
+            <summary>
+            v_新闻_列表[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_新闻_列表.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_新闻_列表.新闻分类编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_新闻_列表.新闻分类名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_新闻_列表.标题">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_新闻_列表.标签">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_新闻_列表.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_新闻_详情">
+            <summary>
+            v_新闻_详情[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_新闻_详情.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_新闻_详情.新闻分类编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_新闻_详情.新闻分类名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_新闻_详情.标题">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_新闻_详情.标签">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_新闻_详情.内容">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_新闻_详情.建立时间">
             <summary>
             
             </summary>

@@ -20,8 +20,8 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        [MaxLength(200,ErrorMessage ="分类不能超过[100]字")]
-		public string 分类 { get; set; }
+        [Required(ErrorMessage ="请提供[新闻分类编号]")]
+		public int 新闻分类编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
@@ -35,7 +35,6 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        [Obsolete]
 		public DateTime? 建立时间 { get; set; }
         
         

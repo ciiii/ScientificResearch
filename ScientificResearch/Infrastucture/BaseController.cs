@@ -62,7 +62,7 @@ namespace ScientificResearch.Infrastucture
         /// </summary>
         public string DbConnectionString => DbConnectionStringLack.Replace("{0}", CurrentUser.DbKey);
 
-
+        public string Db_ManageConnectionString =>Config.GetValue<string>("connectionString:ScientificResearch_Manage");
         /// <summary>
         /// 获取当前登录者的数据库链接;可能在login方法中另做一个
         /// 也可以这么写: public IDbConnection Db => new SqlConnection(DbConnectionString);
@@ -78,7 +78,7 @@ namespace ScientificResearch.Infrastucture
         /// <summary>
         /// 主库
         /// </summary>
-        public SqlConnection Db_Manage => new SqlConnection(Config.GetValue<string>("connectionString:ScientificResearch_Manage"));
+        public SqlConnection Db_Manage => new SqlConnection(Db_ManageConnectionString);
 
         ///// <summary>
         ///// redis服务的db对象 
