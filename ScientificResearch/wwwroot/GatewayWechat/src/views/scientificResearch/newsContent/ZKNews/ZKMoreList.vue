@@ -1,5 +1,14 @@
 <template>
-    <div>
+    <div v-if="isLoad">
+        <div class="screen-box">
+            <van-tabs v-model="active" @click="clickTab">
+                <van-tab title="指南"></van-tab>
+                <van-tab title="前沿"></van-tab>
+            </van-tabs>
+            <van-dropdown-menu>
+                <van-dropdown-item v-model="req.Like标签" :options="tags" @change="changeTage"/>
+            </van-dropdown-menu>
+        </div>
         <van-pull-refresh v-model="isDownLoading" @refresh="onDownRefresh">
             <van-list
                     v-model="loading"
@@ -7,15 +16,16 @@
                     offset:10
                     finished-text="没有更多了"
                     @load="onLoad"
-                    class="box"
+                    class="box list"
             >
-                <h3 v-if="!type">新闻 News</h3>
-                <h3 v-else>{{type}} News</h3>
-                <ul class="A_News" v-for="(item, key) in list" :key="key">
-                    <li class="time">{{item.建立时间}}</li>
-                    <li class="title" @click="newsDetails(item)">
-                        <i class="icon iconfont icon-tongzhi"></i>
-                        <p>{{item.标题}}</p>
+                <ul class="A_News ">
+                    <li @click="newsDetails(item)" v-for="(item, key) in list" :key="key">
+                        <p class="title">{{item.标题}}</p>
+                        <p class="type">【新闻类型】{{item.新闻分类名称}}</p>
+                        <p class="time">【发表时间】{{item.建立时间}}</p>
+                        <p class="tags">
+                            <van-tag plain round type="primary" v-for="el in item.tags" :key="el">{{el}}</van-tag>
+                        </p>
                     </li>
                 </ul>
             </van-list>
@@ -30,58 +40,117 @@
         data() {
             return {
                 loading: false, //是否处于加载状态
-                finished: false, //是否已加载完所有数据
-                index: 1,
-                size: 15,
+                finished: false, //是否已加载完所有数据,
+                req: {
+                    Index: 1,
+                    Size: 5,
+                    新闻分类编号: null,
+                    Like标题: '',
+                    Like标签: ''
+                },
                 total: 0,
                 isDownLoading: false,
+                isLoad: false,
                 list: [],
-                total: null,
-                type: null
+                type: null,
+                types: [],
+                tags: [],
+                active: null
             };
         },
-        mounted() {
-            this.getType();
-        },
-        watch: {
-            '$route': 'getType'
+        created() {
+            this.type = this.$route.query.type;
+            if (!this.type || this.type == 1) {
+                this.active = 0;
+                this.req.新闻分类编号 = 1
+            } else {
+                this.active = 1
+                this.req.新闻分类编号 = 2
+            }
+            this.getNewsTags(this.req.新闻分类编号);
+            this.isLoad = true;
         },
         methods: {
-            getType() {
-                this.type = this.$route.params.type
-                /*if (this.type) {
-                    // this.$route.meta.title = this.type + '新闻';
-                    console.info(111)
-                    console.info(this.type)
-                    console.info(this.$route.meta.title)
-                } else {
-                    this.$route.meta.title = '总库新闻'
-                    console.info(222)
-                    console.info(this.type)
-                    console.info(this.$route.meta.title)
-                }*/
+            onSearch() {
+                this.req.Index = 1;
+                this.finished = false;
+                this.loading = true;
+                this.backTop();
+                this.list = [];
+                this.getList();
             },
             onLoad() {
-                var para = {
-                    index: this.index,
-                    size: this.size,
-                    分类: this.type
-                };
-                this.$http.getNewsList(para).then(res => {
-                    this.total = res.data.total;
-                    const data = this.list;
-                    this.list = data.concat(res.data.list);
-                    this.loading = false;
-                    this.index++;
-                    if (this.list.length >= this.total) {
-                        this.finished = true;
+                this.getList();
+            },
+            getNewsTags(id) {
+                let postData = {
+                    新闻分类编号: id
+                }
+                this.$http.getNewsTags(postData).then(res => {
+                    if (res.data.length > 0) {
+                        this.tags = [];
+                        this.tags.push({text: '全部标签', value: ''});
+                        res.data.forEach((item) => {
+                            let data = {
+                                text: item.名称,
+                                value: item.名称
+                            }
+                            this.tags.push(data)
+                        })
+                    } else {
+                        this.tags = [];
+                        this.tags.push({text: '全部标签', value: ''});
                     }
+                })
+            },
+            getList() {
+                this.$http.getNewsList(this.req).then(res => {
+                    this.total = res.data.total;
+                    let data = res.data.list
+                    if (data && data != []) {
+                        if (Array.isArray(data)) {
+                            this.req.Index++;
+                            if (data.length < this.req.Index) {
+                                this.finished = true;
+                            }
+                            data.forEach((item) => {
+                                if (item.标签 && item.标签 != '') {
+                                    item.tags = item.标签.split(',')
+                                }
+                            })
+                            this.list = this.list.concat(data);
+                        } else {
+                            this.finished = true;
+                            this.list = [];
+                        }
+                    } else {
+                        this.finished = true;
+                        this.list = [];
+                    }
+                    this.isDownLoading = false;
+                    this.loading = false;
                 });
+            },
+            clickTab(index, title) {
+                if (title == '指南') {
+                    this.req.新闻分类编号 = 1;
+
+                } else {
+                    this.req.新闻分类编号 = 2;
+                    this.req.Like标签 = '';
+                }
+                this.getNewsTags(this.req.新闻分类编号);
+                this.onSearch();
+            },
+            changeTage() {
+                this.onSearch();
             },
             onDownRefresh() {
                 setTimeout(() => {
-                    this.reload();
-                    this.isDownLoading = false;
+                    this.finished = false;
+                    this.req.Index = 1;
+                    this.list = [];
+                    this.getList();
                 }, 1000);
             },
             newsDetails(item) {
@@ -98,13 +167,82 @@
                 if (item != null) {
                     return item.slice(0, 10);
                 }
-            }
+            },
+            backTop() {
+                document.documentElement.scrollTop = 0;
+                document.body.scrollTop = 0;
+            },
         }
     };
 </script>
+<style lang="less" type="text/less">
+    .screen-box {
+        .van-dropdown-menu {
+            height: 40px;
+        }
+
+        .van-dropdown-menu__item {
+            .van-dropdown-menu__title {
+                font-size: 13px;
+                color: #333;
+            }
+        }
+
+        .van-popup {
+            overflow: hidden;
+        }
+
+        .van-cell {
+            width: 50%;
+            float: left;
+            text-align: left;
+        }
+    }
+
+</style>
 <style lang="less" scoped type="text/less">
-    .box {
-        background-color: #fff;
+    .van-pull-refresh {
+        margin-top: 95px;
+    }
+
+    .screen-box {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        z-index: 999;
+
+        .van-tabs__content {
+            z-index: 2002;
+            position: absolute;
+            width: 100%;
+        }
+
+        .van-collapse {
+            display: flex;
+        }
+
+        .van-collapse-item {
+            flex: 1;
+            font-size: 14px;
+        }
+
+        .van-tab {
+            .active {
+                .van-icon {
+                    transform: rotate(180deg);
+                    transition: 0.5s;
+                }
+            }
+
+            .van-icon {
+                font-size: 14px;
+            }
+        }
+    }
+
+    .list {
+        text-align: left;
 
         h3 {
             text-align: left;
@@ -112,59 +250,50 @@
             padding: 10px;
             margin: 0 0 10px;
             color: #444;
-            /*color: #1296db;*/
             background: #f5f5f5;
         }
 
-        .A_News {
-            border-bottom: 1px solid #ccc;
-            padding: 10px 20px;
-            display: flex;
-            border: none;
-            margin: 0 10px 10px;
-            padding: 0;
-            color: #333;
+        .van-cell {
+            margin-bottom: 5px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+        }
 
-            .time {
-                width: 75px;
-                background: #7cb0ff;
-                padding: 10px 0 0;
-                color: #fff;
-                height: 55px;
-                text-align: center !important;
-                line-height: 18px;
-                box-sizing: border-box;
-                margin-top: 0 !important;
-                font-size: 12px;
+        li {
+            margin-bottom: 10px;
+            font-size: 12px;
+            box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            background: #fff;
+
+            p {
+                margin-top: 0;
+                margin-bottom: 5px;
             }
 
             .title {
-                flex: 1;
-                background: #f5f5f5;
-                height: 55px;
-                padding: 10px 5px 5px;
-                margin-top: 0 !important;
-                display: flex !important;
-                box-sizing: border-box;
-                max-height: 55px !important;
+                font-size: 14px;
+                font-weight: bold;
+                margin-bottom: 10px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                color: #333;
+            }
 
-                i {
-                    margin-right: 5px;
-                    color: #7cb0ff;
-                    padding-top: 1px;
-                }
+            .time, .type {
+                color: #666;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                font-size: 12px;
+            }
 
-                p {
-                    margin: 0 !important;
-                    flex: 1 !important;
-                    font-size: 12px;
-                    display: -webkit-box !important;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    word-break: break-all;
-                    -webkit-box-orient: vertical;
-                    -webkit-line-clamp: 2;
-                    text-align: left;
+            .tags {
+                padding-left: 3px;
+
+                .van-tag {
+                    margin: 3px;
                 }
             }
         }

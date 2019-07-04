@@ -1,10 +1,10 @@
 <template>
     <div class="page-news page-common">
         <div class="main wrapper">
-                <el-breadcrumb separator="/" class="nav">
-                    <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                    <el-breadcrumb-item>科研新闻</el-breadcrumb-item>
-                </el-breadcrumb>
+            <div class="btn-back-box">
+                <el-button class="btn-back" type="primary" size="mini" plain @click="$router.go(-1)" icon="el-icon-back"> 返回
+                </el-button>
+            </div>
             <h4 class="title">科研新闻 News</h4>
             <div class="screen-box">
                 <el-form ref="form" :model="req" :inline="true" class="demo-form-inline">
@@ -49,19 +49,19 @@
                 </el-pagination>
             </div>
         </div>
-        <el-dialog class="big-dialog" title="新闻详情" :visible.sync="isDetailsDialog" v-if='isDetailsDialog'>
-            <NewsDetails ref="child" @myEvent="getMyEvent" :item="item" :isShow="isShow"></NewsDetails>
+        <el-dialog class="big-dialog connom-dialog" title="新闻详情" :visible.sync="isDetailsDialog" v-if='isDetailsDialog'>
+            <IMISNewsDetails ref="child" @myEvent="getMyEvent" :item="item"></IMISNewsDetails>
         </el-dialog>
     </div>
 </template>
 <script>
     import {URL_NEWS} from "@/assets/js/connect/ConSysUrl";
-    import NewsDetails from "@/components/NewsDetails"
+    import IMISNewsDetails from "@/components/IMISNewsDetails"
 
     export default {
         name: 'news',
         components: {
-            NewsDetails
+            IMISNewsDetails
         },
         data() {
             return {
@@ -78,10 +78,12 @@
                 isDetailsDialog: false,
                 isShow: false,
                 item: {},
+                key:''
             }
         },
         mounted() {
             this.getNews();
+            this.key = sessionStorage.getItem('myKey');
         },
         methods: {
             search: async function () {
@@ -99,24 +101,6 @@
             btnDetails(item) {
                 this.isShow = false;
                 this.isDetailsDialog = true;
-                this.getIMISNewsDetails(item.编号);
-            },
-            getIMISNewsDetails: async function (id) {
-                let postData = {
-                    编号: id
-                }
-                let data = await this.$http.myGet(URL_NEWS.GET_IMIS_NEWS_DETAILS, postData);
-                let files = []
-                if (data.通知公告.相关文件路径 != null && data.通知公告.相关文件路径 != '') {
-                    files = data.通知公告.相关文件路径.split(',');
-                }
-                this.item = {
-                    标题: data.通知公告.通知名称,
-                    建立时间: data.通知公告.建立时间,
-                    内容: data.通知公告.通知内容,
-                    文件: files,
-                    发布人: data.通知公告.发送人姓名
-                };
             },
             handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);

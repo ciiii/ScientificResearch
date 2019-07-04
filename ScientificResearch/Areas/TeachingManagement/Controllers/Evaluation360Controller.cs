@@ -31,7 +31,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         /// <param name="filter"></param>
         /// <returns></returns>
         [HttpGet]
-        async public Task<object> 分页获取我做出的评价(Paging paging, v_教学360评价Filter filter)
+        async public Task<object> 分页获取评价(Paging paging, v_教学360评价Filter filter)
         {
             return await Db.GetPagingListSpAsync<v_教学360评价, v_教学360评价Filter>(paging, filter);
         }
@@ -42,9 +42,9 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         /// <param name="filter"></param>
         /// <returns></returns>
         [HttpGet]
-        async public Task<object> 获取评价评分(v_tfn_教学360评价评分Filter filter)
+        async public Task<object> 获取评价评分(教学360评价评分Filter filter)
         {
-            return await Db.GetListSpAsync<v_tfn_教学360评价评分, v_tfn_教学360评价评分Filter>(filter);
+            return await Db.GetListSpAsync<教学360评价评分, 教学360评价评分Filter>(filter);
         }
 
         /// <summary>
@@ -53,21 +53,21 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         /// <param name="来源类型"></param>
         /// <param name="目标类型"></param>
         /// <returns></returns>
-        [HttpGet]
-        async public Task<int> 获取教学360评价方向编号([Required]int 来源类型, [Required]int 目标类型)
-        {
-            var v_教学360评价方向 = (await Db.GetListSpAsync<v_教学360评价方向, v_教学360评价方向Filter>
-                (new v_教学360评价方向Filter()
-                {
-                    来源类型 = 来源类型,
-                    目标类型 = 目标类型
-                })).FirstOrDefault();
-            if (v_教学360评价方向 == null) return 0;
-            return v_教学360评价方向.编号;
-        }
+        //[HttpGet]
+        //async public Task<int> 获取教学360评价方向编号([Required]int 来源类型, [Required]int 目标类型)
+        //{
+        //    var v_教学360评价方向 = (await Db.GetListSpAsync<v_教学360评价方向, v_教学360评价方向Filter>
+        //        (new v_教学360评价方向Filter()
+        //        {
+        //            来源类型 = 来源类型,
+        //            目标类型 = 目标类型
+        //        })).FirstOrDefault();
+        //    if (v_教学360评价方向 == null) return 0;
+        //    return v_教学360评价方向.编号;
+        //}
 
         /// <summary>
-        /// 其中的教学360评价方向编号用上面的接口获取
+        /// 其中的教学360评价分类,项目,在setting那里的接口取.
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>

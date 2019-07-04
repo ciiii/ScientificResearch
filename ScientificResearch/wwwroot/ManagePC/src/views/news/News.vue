@@ -2,23 +2,28 @@
     <div class="page-news page-common">
         <div class="main wrapper">
             <h4 class="title">新闻 News</h4>
-            <div class="screen-box">
-                <el-button type="primary" class="btn-add" @click="btnAdd">
-                    <i class="el-icon-circle-plus-outline"></i> 添加新闻
+            <div class="filter-container">
+                <el-button class="filter-item" type="success" @click="btnAdd">
+                    <i class="iconfont icontianjia"></i> 添加新闻
                 </el-button>
-                <el-form ref="form" :model="req" :inline="true" class="demo-form-inline">
-                    <el-form-item>
-                        <el-input v-model="req.Like标题" placeholder="请输入标题" @keyup.enter.native="search">
-                            <i slot="prefix" class="el-input__icon el-icon-search"></i>
-                        </el-input>
-                    </el-form-item>
-                    <!--<el-form-item label="建立时间">-->
-                    <!--<el-date-picker type="date" placeholder="选择开始日期" v-model="req.beginTime"></el-date-picker>-->
-                    <!--至-->
-                    <!--<el-date-picker type="date" placeholder="选择结束日期" v-model="req.endTime"></el-date-picker>-->
-                    <!--</el-form-item>-->
-                    <el-button plain @click="search">查询</el-button>
-                </el-form>
+                <el-input v-model="req.Like标题" placeholder="请输入标题" style="width: 200px;" class="filter-item"
+                          @keyup.enter.native="search" prefix-icon="el-icon-search"/>
+                <div class="filter-item">
+                    新闻类型
+                    <el-select v-model="req.新闻分类编号" placeholder="请选择" @change="changeType">
+                        <el-option label="全部" value=""></el-option>
+                        <el-option v-for="item in types" :key="item.编号" :label="item.名称" :value="item.编号"></el-option>
+                    </el-select>
+                </div>
+                <div class="filter-item">
+                    标签
+                    <el-select v-model="req.Like标签" placeholder="请选择" @change="search">
+                        <el-option label="全部" value=""></el-option>
+                        <el-option v-for="item in tags" :key="item.编号" :label="item.名称" :value="item.名称"></el-option>
+                    </el-select>
+                </div>
+                <el-button class="filter-item" type="primary" size="small" icon="el-icon-search" @click="search">查询
+                </el-button>
             </div>
             <el-table class="tableone" border :data="tableData" stripe :header-cell-style="{'text-align':'center'}">
                 <el-table-column label="序号" width="50" align="center" prop="number"></el-table-column>
@@ -27,12 +32,17 @@
                         <a href="javascript:;" @click="btnDetails(scope.row)" v-text="scope.row.标题"></a>
                     </template>
                 </el-table-column>
-                <el-table-column label="分类" align="center" width="100">
+                <el-table-column label="新闻分类" align="center" width="100" prop="新闻分类名称"></el-table-column>
+                <el-table-column label="标签">
                     <template slot-scope="scope">
-                        <el-tag v-if="scope.row.分类" :type="scope.row.type">{{scope.row.分类}}</el-tag>
+                        <el-tag class="tag" v-if="scope.row.tags" size="small" v-for="el in scope.row.tags" :key="el">{{el}}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column prop="建立时间" label="建立时间" align="center" width="200"></el-table-column>
+                <el-table-column label="建立时间" align="center" width="150">
+                    <template slot-scope="scope">
+                        {{scope.row.建立时间|dataFormat('yyyy-MM-dd')}}
+                    </template>
+                </el-table-column>
                 <el-table-column label="操作" align="center" width="200">
                     <template slot-scope="scope">
                         <el-tooltip content="详情" placement="bottom" effect="light">
@@ -66,7 +76,7 @@
                 <NewsDetails ref="child" @myEvent="closeDialog" :item="item"></NewsDetails>
             </div>
             <div v-else>
-                <AddNews ref="child" @myEvent="getMyEvent" :item="item" :isAddDialog="isAddDialog"
+                <AddNews ref="child" @myEvent="getMyEvent" :item="item" :isAddDialog="isAddDialog" :types="types"
                          :isAdd="isAdd"></AddNews>
             </div>
         </el-dialog>
@@ -90,6 +100,8 @@
                     Size: 16,
                     OrderType: false,
                     Like标题: '',
+                    新闻分类编号: '',
+                    Like标签: '',
                 },
                 tableData: [],
                 total: 0,
@@ -98,25 +110,57 @@
                 isAddDialog: false,
                 item: {},
                 isDetails: false,
+                types: [],
+                tags: [],
             }
         },
         mounted() {
             this.getNews();
+            this.getTypes();
         },
         methods: {
-            getType(state) {
+            getTypeClass(state) {
                 switch (state) {
-                    case '前沿':
-                        return 'warning';
-                    case '视听':
-                        return 'success';
-                    case '公告':
+                    case '指南':
                         return 'primary';
+                        break;
+                    case '前沿':
+                        return 'success';
+                        break;
                 }
             },
             search: async function () {
                 this.req.Index = 1;
                 await this.getNews();
+            },
+            changeType(id) {
+                if (id) {
+                    this.getTags(id);
+                } else {
+                    this.tags = [];
+                    this.req.Like标签 = '';
+                }
+                this.search();
+            },
+            getTypes: async function () {
+                let data = await this.$http.myGet(URL_NEWS.GET_NEWS_TYPE, '');
+                if (data && data.length > 0) {
+                    this.types = data;
+                } else {
+                    this.types = []
+                }
+            },
+            getTags: async function (id) {
+                let postData = {
+                    新闻分类编号: id
+                }
+                let data = await this.$http.myGet(URL_NEWS.GET_NEWS_TAGS, postData);
+                if (data && data.length > 0) {
+                    this.tags = data;
+                } else {
+                    this.tags = [];
+                    this.req.Like标签 = '';
+                }
             },
             getNews: async function () {
                 let data = await this.$http.myGet(URL_NEWS.GET_PANGING_NEWS, this.req);
@@ -125,7 +169,9 @@
                 let number = (this.req.Index - 1) * this.req.Size + 1;
                 data.forEach((item) => {
                     item.number = number;
-                    item.type = this.getType(item.分类);
+                    if (item.标签 && item.标签 != '') {
+                        item.tags = item.标签.split(',')
+                    }
                     number++;
                 });
                 this.tableData = data;
@@ -186,4 +232,10 @@
 </script>
 <style lang="less" type='text/less' scoped>
     @import '../../assets/less/News';
+
+    td {
+        .tag {
+            margin: 0 5px 5px;
+        }
+    }
 </style>

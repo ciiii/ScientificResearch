@@ -11,19 +11,20 @@ const URL_USER = {
 }
 const URL_NEWS = {
 
-    //分页获取总库新闻
     GET_PANGING_NEWS: '/Manage/News/分页获取总库新闻',
 
-    //增改总库新闻
+    GET_NEWS_TYPE: '/Manage/News/获取总库新闻分类',
+
+    GET_NEWS_TAGS: '/Manage/News/获取总库标签',
+
+    GET_NEWS_DETAILS: '/Manage/News/获取总库新闻详情',
+
     POST_ADD_OR_EDIT_NEWS: '/Manage/News/增改总库新闻',
 
-    //删除总库新闻
     POST_DELETE_NEWS: '/Manage/News/删除总库新闻',
 
-    //上传总库新闻图片
     POST_UPLOAD_NEWS_IMG: '/Manage/News/上传总库新闻图片',
 
-    //上传总库Logo图片
     POST_UPLOAD_LOGO_IMG: '/Manage/News/上传总库Logo图片',
 
 

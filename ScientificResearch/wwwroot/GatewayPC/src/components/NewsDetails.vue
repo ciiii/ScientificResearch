@@ -1,16 +1,13 @@
 <template>
     <div class="NewsDetails">
-        <div class="content-box">
-            <h4 class="title">{{item.标题}}</h4>
-            <p class="time"><span v-if="!isShow">【{{item.发布人}}】 </span>{{item.建立时间}}</p>
+        <div class="content-box" v-if="isLoad">
+            <h4 class="title">{{form.新闻.标题}}</h4>
+            <p class="time">新闻分类：{{form.新闻.新闻分类名称}}；{{form.新闻.建立时间}}</p>
+            <p class="tags">
+                <el-tag class="tag" v-if="tags" size="small" v-for="el in tags" :key="el">{{el}}</el-tag>
+            </p>
             <div class="ql-container ql-snow">
-                <div class="ql-editor" v-html="item.内容"></div>
-                <div class="file-list" v-if="!isShow&&item.文件!=''">
-                    <label>附件：</label>
-                    <ul>
-                        <li v-for="el in item.文件"><a :href="item.文件" download="">{{getHtmlDocName(el)}}</a></li>
-                    </ul>
-                </div>
+                <div class="ql-editor" v-html="form.新闻.内容"></div>
             </div>
         </div>
         <div slot="footer" class="dialog-footer">
@@ -20,9 +17,21 @@
 </template>
 
 <script>
+    import {URL_NEWS} from "@/assets/js/connect/ConSysUrl";
+
     export default {
         name: "NewsDetails",
         props: ['item', 'isShow'],
+        data() {
+            return {
+                form: {},
+                tags: [],
+                isLoad: false
+            }
+        },
+        mounted() {
+            this.getDetails(this.item.编号)
+        },
         methods: {
             cancelHandler() {
                 this.$emit('myEvent', false);
@@ -31,6 +40,35 @@
                 let arr = url.split('\\');
                 return arr[arr.length - 1];
             },
+            getDetails: async function (id) {
+                let postData = {
+                    新闻编号: id
+                }
+                let data = await this.$http.myGet(URL_NEWS.GET_NEWS_DETAILS, postData);
+                if (data) {
+                    this.form = data;
+                    if (this.form.新闻.标签 && this.form.新闻.标签 != '') {
+                        this.tags = this.form.新闻.标签.split(',')
+                    }
+                }
+                this.isLoad = true;
+            },
         }
     }
 </script>
+<style lang="less" type='text/less' scoped>
+    .NewsDetails {
+        .time {
+            margin-bottom: 10px !important;
+        }
+
+        .tags {
+            text-align: center;
+            margin-top: 0px;
+        }
+
+        .el-tag {
+            margin: 0 5px 5px !important;
+        }
+    }
+</style>

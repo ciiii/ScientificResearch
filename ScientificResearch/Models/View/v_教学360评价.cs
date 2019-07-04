@@ -19,10 +19,6 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        public string 教学360评价方向名称 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
         public int 来源类型 { get; set; }
         /// <summary>
 		/// 

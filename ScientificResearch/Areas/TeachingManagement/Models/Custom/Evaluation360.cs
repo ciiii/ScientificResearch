@@ -28,7 +28,7 @@ namespace ScientificResearch.Models
         public string Like被评价人姓名 { get; set; }
     }
 
-    public class v_tfn_教学360评价评分Filter
+    public class 教学360评价评分Filter
     {
         [Required]
         public int 教学360评价编号 { get; set; }

@@ -20,13 +20,18 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        [Required(ErrorMessage ="请提供[教学360评价方向编号]")]
-		public int 教学360评价方向编号 { get; set; }
+        [Required(ErrorMessage ="请提供[来源类型]")]
+		public int 来源类型 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
         [Required(ErrorMessage ="请提供[评价人编号]")]
 		public int 评价人编号 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        [Required(ErrorMessage ="请提供[目标类型]")]
+		public int 目标类型 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>

@@ -2,9 +2,9 @@
     <footer class="footer_nav">
         <van-tabbar v-model="active" active-color="#1296db">
             <van-tabbar-item icon="home-o" to="/">首页</van-tabbar-item>
-            <van-tabbar-item icon="hot-o" @click="clickZKNews('前沿')">前沿</van-tabbar-item>
-            <van-tabbar-item icon="service-o" @click="clickZKNews('视听')">视听</van-tabbar-item>
-            <van-tabbar-item icon="volume-o" @click="clickZKNews('公告')">公告</van-tabbar-item>
+            <van-tabbar-item icon="hot-o" @click="clickKYNews">服务</van-tabbar-item>
+            <van-tabbar-item icon="service-o" @click="clickZKNews(1)">指南</van-tabbar-item>
+            <van-tabbar-item icon="volume-o" @click="clickZKNews(2)">前沿</van-tabbar-item>
             <van-tabbar-item icon="user-o" to="/homePersonal">我的</van-tabbar-item>
         </van-tabbar>
         <div class="empty"></div>
@@ -23,8 +23,11 @@
         },
 
         methods: {
+            clickKYNews() {
+                this.$router.push({name: 'KYMoreList'})
+            },
             clickZKNews(type) {
-                this.$router.push({name: 'ZKMoreList', params: {type: type}})
+                this.$router.push({path: '/ZKMoreList', query: {type: type}})
             }
         }
     };

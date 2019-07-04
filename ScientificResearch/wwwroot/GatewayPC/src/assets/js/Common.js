@@ -100,6 +100,13 @@ export function getUrl(url){
     return decodeURI(encodeURI(encodeURI(url)))
 }
 
+//获取文件名，也不要参数
+export function getHtmlDocName(url) {
+    let urlArr = url.split('?');
+    let k = urlArr[0], arr = k.split('/');
+    return arr[arr.length - 1];
+}
+
 //只能输入中文、字母、数字格式，不能有特殊字符
 export function chineseEnglishNumber(e) {
     e.target.value = e.target.value.replace(/[^\w\u4E00-\u9FA5]/g, ''); //清除"字母、数字"以外的字符
@@ -110,3 +117,13 @@ export function chineseEnglishNumber(e) {
 export function clearSpecialChar(e) {
     e.target.value = e.target.value.replace(/[^[0-9a-zA-Z\-]/g, ''); //清除"字母、数字"以外的字符
 }
+
+
+export function getUrlParam (key) {
+    key = key.replace(/[\[\]]/g, "\\$&");
+    let regex = new RegExp("[?&]" + key + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(window.location.href);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }

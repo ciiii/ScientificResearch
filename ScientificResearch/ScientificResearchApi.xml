@@ -283,7 +283,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.Evaluation360Controller.分页获取我做出的评价(ScientificResearch.Models.Paging,ScientificResearch.Models.v_教学360评价Filter)">
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.Evaluation360Controller.分页获取评价(ScientificResearch.Models.Paging,ScientificResearch.Models.v_教学360评价Filter)">
             <summary>
             对应多个页面;
             对于"对学员评价到对科室管理员评价"等等页面,固定搜索条件为
@@ -298,24 +298,16 @@
             <param name="filter"></param>
             <returns></returns>
         </member>
-        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.Evaluation360Controller.获取评价评分(ScientificResearch.Models.v_tfn_教学360评价评分Filter)">
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.Evaluation360Controller.获取评价评分(ScientificResearch.Models.教学360评价评分Filter)">
             <summary>
             只能针对一个教学360评价看其具体的评分
             </summary>
             <param name="filter"></param>
             <returns></returns>
         </member>
-        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.Evaluation360Controller.获取教学360评价方向编号(System.Int32,System.Int32)">
-            <summary>
-            如果=0则没找到
-            </summary>
-            <param name="来源类型"></param>
-            <param name="目标类型"></param>
-            <returns></returns>
-        </member>
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.Evaluation360Controller.增改360评价(ScientificResearch.Infrastucture.PredefindedModelList{ScientificResearch.Models.教学360评价,ScientificResearch.Models.教学360评价评分})">
             <summary>
-            其中的教学360评价方向编号用上面的接口获取
+            其中的教学360评价分类,项目,在setting那里的接口取.
             </summary>
             <param name="data"></param>
             <returns></returns>
@@ -6173,12 +6165,17 @@
             
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.教学360评价.教学360评价方向编号">
+        <member name="P:ScientificResearch.Models.教学360评价.来源类型">
             <summary>
             
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.教学360评价.评价人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学360评价.目标类型">
             <summary>
             
             </summary>
@@ -17838,51 +17835,6 @@
             
             </summary>
         </member>
-        <member name="T:ScientificResearch.Models.v_tfn_教学360评价评分">
-            <summary>
-            v_tfn_教学360评价评分[类]
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_tfn_教学360评价评分.编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_tfn_教学360评价评分.教学360评价编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_tfn_教学360评价评分.教学360评价项目编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_tfn_教学360评价评分.教学360评价项目名称">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_tfn_教学360评价评分.标准分">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_tfn_教学360评价评分.教学360评价项目备注">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_tfn_教学360评价评分.评分">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_tfn_教学360评价评分.备注">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="T:ScientificResearch.Models.v_tfn_教学出科申请">
             <summary>
             v_tfn_教学出科申请[类]
@@ -20044,11 +19996,6 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_教学360评价.编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_教学360评价.教学360评价方向名称">
             <summary>
             
             </summary>

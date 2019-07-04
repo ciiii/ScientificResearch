@@ -13,9 +13,11 @@ Vue.use(router);
 
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+// axios.defaults.withCredentials = true  //允许携带cookie
 
 
 //  响应拦截
+
 axios.interceptors.response.use(response => {
     if (response.data.error) {
         Notification.error({
@@ -49,11 +51,15 @@ function setHeaders() {
 
 axios.myGet = async (url, data) => {
     setHeaders();
-    return await axios.get(getUrl(url), {params: data}).then(response => response.data.data)
+    return await axios.get(getUrl(HTTP_URL_HOST + url), {params: data}).then(response => response.data.data)
 };
 
 axios.myPost = async (url, data) => {
     setHeaders();
-    return await axios.post(getUrl(url), data).then(response => response.data.data);
+    return await axios.post(getUrl(HTTP_URL_HOST + url), data).then(response => response.data.data);
+};
+axios.myPostServe = async (url, data) => {
+    setHeaders();
+    return await axios.post(getUrl(url), data).then(response => response.data);
 };
 export default axios;

@@ -40,7 +40,7 @@
                                 </el-tooltip>
                             </div>
                             <ul class="list">
-                                <li v-for="el in serviceList" :key="el.名称" v-if="el.是否启用">
+                                <li v-for="el in serviceList" :key="el.名称">
                                     <a href="javascript:;" @click="clickUrl(el)">
                                         <span class="btn-icon"><i class="icon iconfont icon-yuandianxiao"></i></span>
                                         <img class="img-logo" v-if="el.Logo" :src="http+el.Logo"
@@ -102,15 +102,15 @@
                     <el-col :span="8" class="item">
                         <div class="grid-content bg-purple">
                             <div class="item-header">
-                                <h5><i class="icon iconfont icon-quanbuxinwen"></i> 爱医生新闻</h5>
+                                <h5><i class="icon iconfont icon-quanbuxinwen"></i> 指南新闻</h5>
                                 <el-tooltip class="more item" effect="dark" content="更多" placement="top-start">
-                                    <a v-if="total>6" class="more" href="javascript:;" @click="moreNews('news')">
+                                    <a v-if="totalOne>6" class="more" href="javascript:;" @click="moreNews(1)">
                                         更多<i class="el-icon-d-arrow-right"></i>
                                     </a>
                                 </el-tooltip>
                             </div>
                             <ul class="list">
-                                <li v-for="el in newsList" :key="el.编号">
+                                <li v-for="el in newsListOne" :key="el.编号">
                                     <a href="javascript:;" @click="btnDetails(el)">
                                         <span class="time">{{el.建立时间}}</span>
                                         <div class="content">
@@ -121,10 +121,37 @@
                                     </a>
                                 </li>
                             </ul>
-                            <div v-if="total==0" align="center">
+                            <div v-if="totalOne==0" align="center">
                                 <p class="text-center">暂无数据</p>
                             </div>
                         </div>
+                    </el-col>
+                    <el-col :span="8" class="item">
+                    <div class="grid-content bg-purple">
+                        <div class="item-header">
+                            <h5><i class="icon iconfont icon-quanbuxinwen"></i> 前沿新闻</h5>
+                            <el-tooltip class="more item" effect="dark" content="更多" placement="top-start">
+                                <a v-if="totalTwo>6" class="more" href="javascript:;" @click="moreNews(2)">
+                                    更多<i class="el-icon-d-arrow-right"></i>
+                                </a>
+                            </el-tooltip>
+                        </div>
+                        <ul class="list">
+                            <li v-for="el in newsListTwo" :key="el.编号">
+                                <a href="javascript:;" @click="btnDetails(el)">
+                                    <span class="time">{{el.建立时间}}</span>
+                                    <div class="content">
+                                            <span class="btn-icon"><i
+                                                    class="icon iconfont icon-yuandianxiao"></i></span>
+                                        <span class="title">{{el.标题}} </span>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                        <div v-if="totalTwo==0" align="center">
+                            <p class="text-center">暂无数据</p>
+                        </div>
+                    </div>
                     </el-col>
                     <el-col :span="8" class="item" v-if="IMISNewsTotal">
                         <div class="grid-content bg-purple">
@@ -132,7 +159,7 @@
                                 <h5><i class="icon iconfont icon-quanbuxinwen"></i> 科研新闻</h5>
                                 <el-tooltip class="more item" effect="dark" content="更多" placement="top-start">
                                     <a v-if="IMISNewsTotal>6" class="more" href="javascript:;"
-                                       @click="moreNews('IMISNews')">
+                                       @click="moreIMISNews">
                                         更多<i class="el-icon-d-arrow-right"></i>
                                     </a>
                                 </el-tooltip>
@@ -154,60 +181,40 @@
                             </div>
                         </div>
                     </el-col>
-                    <el-col :span="8" class="item">
-                        <div class="grid-content bg-purple">
-                            <div class="item-header">
-                                <h5><i class="icon iconfont icon-quanbuxinwen"></i> 其他新闻</h5>
-                                <el-tooltip class="more item" effect="dark" content="更多" placement="top-start">
-                                    <a v-if="otherTotal>6" class="more" href="javascript:;"
-                                       @click="moreNews('otherNews')">
-                                        更多<i class="el-icon-d-arrow-right"></i>
-                                    </a>
-                                </el-tooltip>
-                            </div>
-                            <ul class="list">
-                                <li v-for="el in otherNews" :key="el.编号">
-                                    <a href="javascript:;" @click="btnOtherDetails(el)">
-                                        <span class="time">{{el.建立时间}}</span>
-                                        <div class="content">
-                                            <span class="btn-icon"><i
-                                                    class="icon iconfont icon-yuandianxiao"></i></span>
-                                            <span class="title">{{el.标题}} </span>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
-                            <div v-if="otherTotal==0" align="center">
-                                <p class="text-center" style="color: #666">暂无数据</p>
-                            </div>
-                        </div>
-                    </el-col>
                 </div>
             </el-row>
         </div>
-        <el-dialog class="big-dialog" title="新闻详情" :visible.sync="isDetailsDialog" v-if='isDetailsDialog'>
-            <NewsDetails ref="child" @myEvent="getMyEvent" :item="item" :isShow="isShow"></NewsDetails>
+        <el-dialog class="big-dialog connom-dialog" title="新闻详情" :visible.sync="isDetailsDialog" v-if='isDetailsDialog'>
+            <IMISNewsDetails ref="child" @myEvent="getMyEvent" :item="item" v-if="isIMIS"></IMISNewsDetails>
+            <NewsDetails ref="child" @myEvent="getMyEvent" :item="item" v-else></NewsDetails>
         </el-dialog>
     </div>
 </template>
 <script>
-    import {HTTP_URL_HOST, URL_HOSPITAL, URL_NEWS, HTTP_URL_HOST_SERVE, URL_SERVE} from "@/assets/js/connect/ConSysUrl";
+    import {HTTP_URL_HOST, URL_HOSPITAL, URL_NEWS, SERVE_TYPE, URL_SERVE} from "@/assets/js/connect/ConSysUrl";
     import NewsDetails from "@/components/NewsDetails"
-    import {getUrlParam} from "@/assets/js/Common";
+    import IMISNewsDetails from "@/components/IMISNewsDetails"
 
     export default {
         name: 'Home',
         components: {
-            NewsDetails,
+            NewsDetails,IMISNewsDetails
         },
         data() {
             return {
-                req: {
+                reqOne: {
                     Index: 1,
                     Size: 6,
                     OrderType: false,
+                    新闻分类编号:1
                 },
                 reqTwo: {
+                    Index: 1,
+                    Size: 6,
+                    OrderType: false,
+                    新闻分类编号:2
+                },
+                reqIMIS: {
                     Index: 1,
                     Size: 6,
                     OrderType: false,
@@ -218,8 +225,10 @@
                     '万方医学'
                 ],
                 isActive: 0,
-                newsList: [],
-                total: 0,
+                newsListOne: [],
+                newsListTwo: [],
+                totalOne: 0,
+                totalTwo: 0,
                 search: '',
                 isDetailsDialog: false,
                 item: {},
@@ -228,21 +237,8 @@
                 IMISNewsList: [],
                 IMISNewsTotal: 0,
                 isLogin: false,
-                isShow: false,
+                isIMIS: false,
                 activeName: 'tab-one',
-                otherTotal: 2,
-                otherNews: [
-                    {
-                        编号: 1,
-                        建立时间: '2019-03-14 15:58:27',
-                        标题: '测试公告新闻，测试测试新闻'
-                    },
-                    {
-                        编号: 0,
-                        建立时间: '2019-03-13 10:12:52',
-                        标题: '测试新闻，测试其他新闻'
-                    }
-                ],
                 englishResources: [
                     {
                         name: 'JoVE (Journal of Visualized Experiments)',
@@ -305,7 +301,8 @@
         },
         mounted() {
             this.getHospitalService();
-            this.getNews();
+            this.getNewsOne();
+            this.getNewsTwo();
             sessionStorage.setItem('myKey', this.mykey);
             if (localStorage.myUserInfo && sessionStorage.getItem('isLogin')) {
                 let myUserInfo = JSON.parse(localStorage.getItem('myUserInfo'));
@@ -322,30 +319,34 @@
                 this.isActive = index;
             },
             moreService() {
-                this.$router.push({path: '/service'});
+                this.$router.push({path: '/service',query: {name: this.mykey}});
             },
-
             clickUrl(el) {
                 if (this.mykey) {
                     if (this.isLogin) {
                         if (!el.电脑链接地址) {
                             this.$message.warning('您没有订购该服务！');
                         } else {
-                            console.info(el)
                             switch (el.名称) {
                                 case '万方医学':
-                                    this.logoinServe(URL_SERVE.POST_LOGIN_WANFANG);
+                                    this.logoinServe(el.电脑链接地址, SERVE_TYPE.WANFANG);
+                                    break;
                                 case '中国知网':
-                                    console.info('中国知网')
-                                    this.logoinServe(URL_SERVE.POST_LOGIN_CNKI);
+                                    this.logoinServe(el.电脑链接地址, SERVE_TYPE.CNKI);
+                                    break;
                                 case '知网CHKD':
-                                    this.logoinServe(URL_SERVE.POST_LOGIN_CNKI);
+                                    window.open(el.电脑链接地址);
+                                    break;
                                 case 'UpToDate':
-                                    this.logoinServe(URL_SERVE.POST_LOGIN_UPTODATE);
+                                    this.logoinServe(el.电脑链接地址, SERVE_TYPE.UPTODATE);
+                                    break;
                                 case '科研系统':
                                     this.isOpen(el.电脑链接地址);
+                                    break;
                                 case '教学管理':
-                                    this.isOpen(el.电脑链接地址);
+                                    this.$message.warning('暂未开启,敬请期待！');
+                                    // this.isOpen(el.电脑链接地址);
+                                    break;
                             }
                         }
                     } else {
@@ -355,15 +356,16 @@
                 }
             },
             isOpen(url) {
-                /*localStorage.setItem('gatewayUrl', window.location.href);
+                localStorage.setItem('gatewayUrl', window.location.href);
                 localStorage.setItem('isEntryLogin', true);
-                window.open(url);*/
+                window.open(url);
             },
-            logoinServe: async function (type) {
+            logoinServe: async function (url, type) {
                 let postData = {
                     loginType: type
                 }
-                await this.$http.myPost(HTTP_URL_HOST_SERVE, postData);
+                let data = await this.$http.myPostServe(url, postData);
+                window.open(data.url)
             },
             getHospitalService: async function () {
                 let postData = {
@@ -374,33 +376,22 @@
                 }
                 this.serviceList = await this.$http.myGet(URL_HOSPITAL.GET_HOSPITAL_BUY_SERVICE, postData);
             },
-            getNews: async function () {
-                let data = await this.$http.myGet(URL_NEWS.GET_PANGING_NEWS, this.req);
-                this.newsList = data.list;
-                this.total = data.total;
+            getNewsOne: async function () {
+                let data = await this.$http.myGet(URL_NEWS.GET_PANGING_NEWS, this.reqOne);
+                this.newsListOne = data.list;
+                this.totalOne = data.total;
+            },
+            getNewsTwo: async function () {
+                let data = await this.$http.myGet(URL_NEWS.GET_PANGING_NEWS, this.reqTwo);
+                this.newsListTwo = data.list;
+                this.totalTwo = data.total;
             },
             getIMISNews: async function () {
-                let data = await this.$http.myGet(URL_NEWS.GET_IMIS_NEWS, this.reqTwo);
+                let data = await this.$http.myGet(URL_NEWS.GET_IMIS_NEWS, this.reqIMIS);
                 this.IMISNewsList = data.list;
                 this.IMISNewsTotal = data.total;
             },
-            getIMISNewsDetails: async function (id) {
-                let postData = {
-                    编号: id
-                }
-                let data = await this.$http.myGet(URL_NEWS.GET_IMIS_NEWS_DETAILS, postData);
-                let files = []
-                if (data.通知公告.相关文件路径 != null && data.通知公告.相关文件路径 != '') {
-                    files = data.通知公告.相关文件路径.split(',');
-                }
-                this.item = {
-                    标题: data.通知公告.通知名称,
-                    建立时间: data.通知公告.建立时间,
-                    内容: data.通知公告.通知内容,
-                    文件: files,
-                    发布人: data.通知公告.发送人姓名
-                };
-            },
+
             handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);
             },
@@ -412,20 +403,20 @@
                 this.isDetailsDialog = val;
             },
             btnDetails(item) {
-                this.isShow = true;
+                this.isIMIS = false;
                 this.item = item;
                 this.isDetailsDialog = true;
             },
             btnIMISDetails(item) {
-                this.isShow = false;
+                this.isIMIS = true;
+                this.item = item;
                 this.isDetailsDialog = true;
-                this.getIMISNewsDetails(item.编号)
             },
-            btnOtherDetails(item) {
-
+            moreNews(value) {
+                this.$router.push({path: '/news', query:{name:this.mykey,type:value}});
             },
-            moreNews(name) {
-                this.$router.push({path: '/' + name});
+            moreIMISNews() {
+                this.$router.push({path: '/IMISNews',query:{name:this.mykey}});
             }
         }
     }

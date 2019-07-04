@@ -1,19 +1,29 @@
 <template>
     <div class="addNews">
-        <el-form ref="form" :model="form" :rules="rules" label-width="100px" size="small">
-            <el-form-item label="标题" prop="标题" class="el-form-item-title">
-                <el-input v-model="form.标题"></el-input>
+        <el-form ref="form" :model="form" :rules="rules" label-width="100px" size="small" v-if="isLoad">
+            <el-form-item label="标题" prop="Model.标题" class="el-form-item-block">
+                <el-input v-model="form.Model.标题"></el-input>
             </el-form-item>
-            <el-form-item label="分类" prop="分类" >
-                <el-select v-model="form.分类" placeholder="请选择">
-                    <el-option v-for="item in types" :key="item" :label="item" :value="item"></el-option>
+            <el-form-item label="分类" prop="Model.新闻分类编号">
+                <el-select v-model="form.Model.新闻分类编号" placeholder="请选择" @change="changeType">
+                    <el-option v-for="item in types" :key="item.编号" :label="item.名称" :value="item.编号"></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="内容" prop="内容" class="el-form-item-block">
+            <el-form-item label="标签" class="el-form-item-title">
+                <el-select v-model="newTags" multiple placeholder="请选择(多个)">
+                    <el-option
+                            v-for="item in tags"
+                            :key="item.编号"
+                            :label="item.名称"
+                            :value="item.编号">
+                    </el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="内容" prop="Model.内容" class="el-form-item-block">
                 <!--<VueQuilEditor ref="umeditor" :content="form.内容" @myContent="myContent"></VueQuilEditor>-->
 
                 <template>
-                    <tinymce id="tinymce" v-model="form.内容" :value="form.内容" ref="tm"></tinymce>
+                    <tinymce id="tinymce" v-model="form.Model.内容" :value="form.Model.内容" ref="tm"></tinymce>
                 </template>
             </el-form-item>
         </el-form>
@@ -28,11 +38,11 @@
     import {HTTP_URL_HOST, URL_NEWS} from "@/assets/js/connect/ConSysUrl";
     import VueQuilEditor from '../quilEditor/VueQuilEditor';
     import tinymce from '@/components/tinymce/Tinymce';
-    import {_debounce, deepCopy} from "@/assets/js/Common";
+    import {_debounce, deepCopy, formatDate} from "@/assets/js/Common";
 
     export default {
         name: "AddNews",
-        props: ['item', 'isAdd'],
+        props: ['item', 'isAdd', 'types'],
         components: {
             VueQuilEditor,
             tinymce,
@@ -40,39 +50,79 @@
         data() {
             return {
                 form: {
-                    编号: 0,
-                    标题: '',
-                    分类: '',
-                    内容: '',
+                    Model: {
+                        编号: 0,
+                        标题: '',
+                        新闻分类编号: '',
+                        内容: '',
+                        建立时间: formatDate(new Date(), 'yyyy-MM-dd'),
+                    },
+                    List: []
                 },
                 rules: {  //表单验证
                     标题: [
                         {required: true, message: '标题不能为空！', trigger: 'blur'}
                     ],
+                    新闻分类编号: [
+                        {required: true, message: '请选择新闻分类！', trigger: 'blur'}
+                    ],
                     内容: [
                         {required: true, message: '内容不能为空！', trigger: 'blur'}
                     ],
                 },
-                types: ['前沿', '视听', '公告']
+                newTags: [],
+                tags: [],
+                isLoad: false
             }
         },
         mounted() {
             if (!this.isAdd) {
-                this.form = deepCopy(this.item);
+                this.getDetails(this.item.编号)
+            } else {
+                this.isLoad = true
             }
         },
         methods: {
             cancelHandler() {
                 this.$emit('myEvent', false);
             },
+            changeType(id) {
+                this.getTags(id);
+            },
+            getTags: async function (id) {
+                let postData = {
+                    新闻分类编号: id
+                }
+                let data = await this.$http.myGet(URL_NEWS.GET_NEWS_TAGS, postData);
+                if (data && data.length > 0) {
+                    this.tags = data;
+                } else {
+                    this.tags = []
+                }
+            },
+            getDetails: async function (id) {
+                let postData = {
+                    新闻编号: id
+                }
+                let data = await this.$http.myGet(URL_NEWS.GET_NEWS_DETAILS, postData);
+                if (data) {
+                    this.form.Model = data.新闻;
+                    this.getTags(this.form.Model.新闻分类编号);
+                    this.newTags = [];
+                    data.标签.forEach((item) => {
+                        this.newTags.push(item.标签编号);
+                    })
+                }
+                this.isLoad = true
+            },
             myContent(data) {
-                this.form.内容 = data;
+                this.form.Model.内容 = data;
             },
             confirmHandler: _debounce(function () {
                 this.$refs.form.validate((valid) => {
                     if (valid) {
-                        this.form.内容 = this.$refs.tm.getContent();
-                        console.info(this.form.内容);
+                        this.form.Model.内容 = this.$refs.tm.getContent();
+                        this.form.List = this.newTags;
                         this.AddOrEdit();
                     } else {
                         this.$message.error('信息有误！');
@@ -93,19 +143,24 @@
 </script>
 
 <style lang="less" type='text/less' scoped>
+    @import "../../assets/less/Variable.less";
+
     .el-switch {
         padding-top: 5px;
     }
-    .addNews{
-        .el-form-item{
+
+    .addNews {
+        .el-form-item {
             width: 40%;
             display: inline-block;
         }
-        .el-form-item-title{
+
+        .el-form-item-title {
             width: 60%;
         }
-       .el-form-item-block{
-           width: 100%;
-       }
+
+        .el-form-item-block {
+            width: 100%;
+        }
     }
 </style>
