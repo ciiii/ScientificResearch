@@ -286,10 +286,12 @@
         <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.Evaluation360Controller.分页获取评价(ScientificResearch.Models.Paging,ScientificResearch.Models.v_教学360评价Filter)">
             <summary>
             对应多个页面;
-            对于"对学员评价到对科室管理员评价"等等页面,固定搜索条件为
-                "1 老师端:NotEqual来源类型 = 0 且 评价人编号=自己的编号 且 目标类型 = 该页面的目标类型" 
+            对于"对学员评价 到 对科室管理员评价"(即我发起的评价)等等页面,固定搜索条件为
+                "1 老师端:来源类型 = 页面的from参数 且 评价人编号=自己的编号 且 目标类型 = 该页面的to参数" 
                 "2 学员端:来源类型 = 0 且 评价人编号=自己的编号 且 目标类型 = 该页面的目标类型"
+                
             对于"评价查询"页面,没有什么需要固定的条件,只是要注意:"来源类型和目标类型就是0代表学员,其他是角色编号"
+            
             对于"对我的评价",固定搜索条件为
                 "1 老师端:NotEqual目标类型 = 0 且 被评价人编号=自己的编号"
                 "2 学员端:目标类型=0 且 被评价人编号=自己的编号"
@@ -604,6 +606,20 @@
             这个只有修改,没有增加的功能,如果来个编号=0的不会发生任何事情;
             </summary>
             <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.StatisticalController.获取学员招录统计(ScientificResearch.Models.教学学员培训情况Filter)">
+            <summary>
+            搜索条件里面的状态暂时不要用;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.StatisticalController.获取学员培训统计(ScientificResearch.Models.v_教学轮转Filter)">
+            <summary>
+            即对轮转和轮转中的任务的统计
+            条件里面的状态暂时不要用;时间范围条件比较常用;
+            </summary>
+            <param name="filter"></param>
             <returns></returns>
         </member>
         <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementBaseController">
@@ -2320,6 +2336,31 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.sp_分类统计数量">
+            <summary>
+            sp_分类统计数量[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_分类统计数量.structureName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_分类统计数量.tableName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_分类统计数量.whereStr">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_分类统计数量.groupStr">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_区域_删">
             <summary>
             sp_区域_删[类]
@@ -2911,6 +2952,21 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_教学学员类型_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学学员统计">
+            <summary>
+            sp_教学学员统计[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学学员统计.whereStr">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学学员统计.groupStr">
             <summary>
             
             </summary>
@@ -20821,6 +20877,11 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_教学学员培训情况.性别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学学员培训情况.最高学历">
             <summary>
             
             </summary>

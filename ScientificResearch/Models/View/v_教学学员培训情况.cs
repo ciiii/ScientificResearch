@@ -43,6 +43,10 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        public string 最高学历 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
         public int 学员培训年界 { get; set; }
         /// <summary>
 		/// 

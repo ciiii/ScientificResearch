@@ -81,9 +81,10 @@ namespace ScientificResearch.Models
     }
     public class 教学360评价项目Filter
     {
-        [Required(ErrorMessage = "教学360评价分类编号")]
+        public string WhereIn教学360评价分类编号 { get; set; }
+        //[Required(ErrorMessage = "教学360评价分类编号")]
         public int? 教学360评价分类编号 { get; set; }
-        public bool? 是否启用 { get; set; }
+        public bool? 是否启用 { get; set; } = true;
     }
 
     public class 教学病人Filter
