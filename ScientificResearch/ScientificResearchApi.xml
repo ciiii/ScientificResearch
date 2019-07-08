@@ -622,6 +622,20 @@
             <param name="filter"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.StatisticalController.获取学员培训任务统计(ScientificResearch.Models.v_教学轮转Filter)">
+            <summary>
+            这个用sp_分类统计数量 不能满足要求,所以特定了一个"sp_教学统计轮转任务数量"来完成;
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagement.Controllers.StatisticalController.获取360评价统计(ScientificResearch.Models.v_教学360评价Filter)">
+            <summary>
+            条件里面指定目标类型/被评价人类型即可
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
         <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.TeachingManagementBaseController">
             <summary>
             2019-1-9
@@ -1773,6 +1787,16 @@
         <member name="P:ScientificResearch.Models.教学人员Filter.LikeAllName">
             <summary>
             同时对姓名和部门名称做搜索
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_sp_分类统计轮转任务数量">
+            <summary>
+            这些个sp的结果的model,不在view里面写死,而是在vs里面写死;
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_sp_教学考勤统计">
+            <summary>
+            v_sp_教学考勤统计[类]
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.教学学员培训情况Filter.状态">
@@ -2956,21 +2980,6 @@
             
             </summary>
         </member>
-        <member name="T:ScientificResearch.Models.sp_教学学员统计">
-            <summary>
-            sp_教学学员统计[类]
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.sp_教学学员统计.whereStr">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.sp_教学学员统计.groupStr">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="T:ScientificResearch.Models.sp_教学宿舍楼_增改">
             <summary>
             sp_教学宿舍楼_增改[类]
@@ -3217,6 +3226,16 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_教学结业申请_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学统计轮转任务数量">
+            <summary>
+            sp_教学统计轮转任务数量[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学统计轮转任务数量.strWnere">
             <summary>
             
             </summary>
@@ -17841,56 +17860,6 @@
             
             </summary>
         </member>
-        <member name="T:ScientificResearch.Models.v_sp_教学考勤统计">
-            <summary>
-            v_sp_教学考勤统计[类]
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_sp_教学考勤统计.编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_sp_教学考勤统计.正常白班">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_sp_教学考勤统计.正常休假">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_sp_教学考勤统计.迟到">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_sp_教学考勤统计.早退">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_sp_教学考勤统计.脱岗">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_sp_教学考勤统计.旷工">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_sp_教学考勤统计.夜班">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.v_sp_教学考勤统计.请假">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="T:ScientificResearch.Models.v_tfn_教学出科申请">
             <summary>
             v_tfn_教学出科申请[类]
@@ -20111,7 +20080,17 @@
             
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.v_教学360评价.平均评分">
+        <member name="P:ScientificResearch.Models.v_教学360评价.所有项目满分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价.所有项目总得分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价.得分星数">
             <summary>
             
             </summary>
@@ -21631,6 +21610,16 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.主讲人部门编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.主讲人部门名称">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.v_教学活动.主讲人职称">
             <summary>
             
@@ -21722,6 +21711,21 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_教学活动.评价次数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.所有项目满分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.所有项目总得分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学活动.得分星数">
             <summary>
             
             </summary>
@@ -24293,9 +24297,16 @@
         </member>
         <member name="M:MyLib.MyObject.CreateDeepCopy``1(``0)">
             <summary>
-            深拷贝
+            深拷贝,需要T有[Serializable]特性
             </summary>
             <typeparam name="T"></typeparam>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MyLib.MyObject.DeepCopyMine(System.Object)">
+            <summary>
+            没有T,仅做参考;
+            </summary>
             <param name="obj"></param>
             <returns></returns>
         </member>

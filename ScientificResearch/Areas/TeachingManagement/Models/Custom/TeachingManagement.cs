@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace ScientificResearch.Models
 {
+    [Serializable]
     public class 教学学员培训情况Filter
     {
         public string WhereIn编号 { get; set; }

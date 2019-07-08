@@ -63,7 +63,15 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        public int? 平均评分 { get; set; }
+        public int? 所有项目满分 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int? 所有项目总得分 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public decimal? 得分星数 { get; set; }
         
           
         #endregion

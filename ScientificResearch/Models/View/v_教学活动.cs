@@ -51,6 +51,14 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        public int? 主讲人部门编号 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public string 主讲人部门名称 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
         public string 主讲人职称 { get; set; }
         /// <summary>
 		/// 
@@ -124,6 +132,18 @@ namespace ScientificResearch.Models
 		/// 
 		/// </summary>
         public int? 评价次数 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int? 所有项目满分 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int? 所有项目总得分 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public decimal? 得分星数 { get; set; }
         
           
         #endregion

@@ -140,8 +140,8 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         {
             foreach (var item in data)
             {
-                item.评价人类型 = CurrentUser.人员类型;
-                item.评价人编号 = CurrentUser.编号;
+                item.评价人类型 = "教学学员";
+                item.评价人编号 = 1;
             }
 
             await Db.Merge(data);

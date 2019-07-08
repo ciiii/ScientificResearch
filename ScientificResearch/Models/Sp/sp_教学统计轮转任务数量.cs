@@ -4,21 +4,17 @@ using System.Data;
 namespace ScientificResearch.Models
 {
     /// <summary>
-    /// sp_教学学员统计[类]
+    /// sp_教学统计轮转任务数量[类]
     /// </summary>
     [Serializable]
-	public class sp_教学学员统计 
+	public class sp_教学统计轮转任务数量 
 	{       
               
         #region 属性
         /// <summary>
 		/// 
 		/// </summary>
-		public string whereStr { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-		public string groupStr { get; set; }
+		public string strWnere { get; set; }
         
           
         #endregion
