@@ -127,10 +127,6 @@ namespace ScientificResearch.Models
 
     }
 
-    public class StepTemplateFilter
-    {
-        public int FlowTemplateId { get; set; }
-    }
 
     /// <summary>
     /// 流程状态的enum
@@ -254,6 +250,17 @@ namespace ScientificResearch.Models
         }
 
         #endregion
+    }
+
+    public class VTFNFLowFilter
+    {
+        public bool? IsCanOperate { get; set; }
+    }
+
+
+    public class StepTemplateFilter
+    {
+        public int FlowTemplateId { get; set; }
     }
 
     public class VStepFilter

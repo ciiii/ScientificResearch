@@ -109,5 +109,15 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             //    接收条件 = list
             //};
         }
+
+        [HttpGet]
+        async public Task<object> 分页获取待办事宜(Paging paging)
+        {
+            var filter = new VTFNFLowFilter() { IsCanOperate = true };
+            return await Db.GetPagingListSpAsync<VTFNFLow, VTFNFLowFilter>(
+                paging,
+                filter,
+                $"TFNFlow(null,null,'{CurrentUser.人员类型}',{CurrentUser.编号})");
+        }
     }
 }

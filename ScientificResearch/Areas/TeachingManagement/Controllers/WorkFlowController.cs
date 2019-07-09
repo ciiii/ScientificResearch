@@ -834,7 +834,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             //这里是伪数据
             data.IsHold = false;
             var 人员类型 = "教学学员";
-            var 学员编号 = 2; 
+            var 学员编号 = data.Data.学员编号; 
 
             //只有待结业的学员可以结业;
             await 验证学员为待结业(学员编号);
@@ -871,7 +871,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             //这里是伪数据
             data.IsHold = false;
             var 人员类型 = "教学学员";
-            var 学员编号 = 2; 
+            var 学员编号 = data.Data.学员编号; 
 
             //只有待结业的学员可以结业;
             await 验证学员为待结业(学员编号);
