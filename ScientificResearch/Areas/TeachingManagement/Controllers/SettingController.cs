@@ -301,6 +301,10 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         }
 
         [HttpGet]
+        async public Task<object> 获取教学360评价目标类型() =>
+            await Db.GetListSpAsync<v_教学360评价目标类型>();
+
+        [HttpGet]
         async public Task<object> 获取教学360评价方向(v_教学360评价方向Filter filter) =>
             await Db.GetListSpAsync<v_教学360评价方向, v_教学360评价方向Filter>(filter, orderType: true);
 

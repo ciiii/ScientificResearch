@@ -229,7 +229,15 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
                     groupStr = nameof(v_教学360评价.评价人类型)
                 });
 
-            return new { 按评价人类型统计360评价 };
+            var 按得分星数统计360评价 = await Db.QuerySpAsync<sp_分类统计数量, v_sp_分类统计数量>(
+                new sp_分类统计数量
+                {
+                    tableName = nameof(v_教学360评价),
+                    whereStr = SqlWhereMapper.toWhere(filter),
+                    groupStr = nameof(v_教学360评价.得分星数)
+                });
+
+            return new { 按评价人类型统计360评价 , 按得分星数统计360评价 };
         }
     }
 }

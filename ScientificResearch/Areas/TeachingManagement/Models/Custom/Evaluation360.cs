@@ -26,6 +26,9 @@ namespace ScientificResearch.Models
 
         public int? 被评价人编号 { get; set; }
         public string Like被评价人姓名 { get; set; }
+
+        public DateTime? Begin评价开始时间 { get; set; }
+        public DateTime? End评价开始时间 { get; set; }
     }
 
     public class 教学360评价评分Filter

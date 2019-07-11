@@ -127,7 +127,6 @@ namespace ScientificResearch.Models
 
     }
 
-
     /// <summary>
     /// 流程状态的enum
     /// 步骤状态应该是每个具体的stepTemplate有各自的状态
@@ -257,7 +256,6 @@ namespace ScientificResearch.Models
         public bool? IsCanOperate { get; set; }
     }
 
-
     public class StepTemplateFilter
     {
         public int FlowTemplateId { get; set; }
@@ -333,6 +331,5 @@ namespace ScientificResearch.Models
         /// 流程状态有:未完成,已完成,作废,
         /// </summary>
         public string StateName { get; set; }
-
     }
 }

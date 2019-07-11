@@ -20295,6 +20295,21 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.v_教学360评价目标类型">
+            <summary>
+            v_教学360评价目标类型[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价目标类型.目标类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学360评价目标类型.目标类型名称">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v_教学专业科室">
             <summary>
             v_教学专业科室[类]
