@@ -24,7 +24,7 @@ a:focus {
 }
 
 a:hover {
-  color:@colorActive;
+  color: @colorActive;
   text-decoration: none;
 }
 
@@ -65,8 +65,67 @@ input:focus, a:focus, button:focus {
   }
 }
 
+.zw-search-box table {
+  position: absolute;
+  left: 50%;
+  width: 695px;
+  margin-left: -347px;
+  top: 256px;
+  z-index: 9;
+
+  td {
+    padding: 0 !important;
+
+    input {
+      height: 38px !important;
+      line-height: 38px !important;
+      color: #666;
+    }
+
+    #q2 {
+      background: none !important;
+      border: none !important;
+      padding: 0 10px !important;
+    }
+  }
+}
+
 .tableone th {
   background: #eff2f7 !important;
+}
+
+table.mailTable {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-collapse: collapse;
+  font-size: 13px;
+
+  td {
+    .td-title {
+      &:hover {
+        color: @colorActive;
+      }
+    }
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+  }
+
+  td {
+    background: #FFF;
+  }
+
+  th {
+    background: #f5f5f5;
+    width: 125px;
+    text-align: right;
+  }
+
+  .name {
+    font-weight: bold;
+  }
 }
 
 .page-common {
@@ -74,8 +133,17 @@ input:focus, a:focus, button:focus {
     position: relative;
   }
 
+  .btn-back-box {
+    text-align: right;
+    margin: 10px 0;
+
+    button {
+      border-radius: 15px;
+    }
+  }
+
   h4.title {
-    font-size: 28px;
+    font-size: 24px;
     text-align: center;
     font-weight: normal;
     margin-bottom: 25px;
@@ -128,6 +196,11 @@ input:focus, a:focus, button:focus {
   }
 
   .el-dialog {
+    .el-dialog__body {
+      padding: 15px 20px;
+      font-size: 13px;
+    }
+
     form.el-form {
       max-height: 500px;
       overflow-y: auto;
@@ -220,6 +293,120 @@ input:focus, a:focus, button:focus {
           }
         }
       }
+    }
+    .details {
+      .el-form-item {
+        margin-bottom: 10px;
+      }
+
+      .item-box {
+        h5.title {
+          background: #eceff4;
+          color: @colorActive;
+          margin: 0 0 10px;
+          padding: 5px 10px;
+          font-size: 14px;
+        }
+
+        .mailTable {
+          margin-bottom: 10px;
+        }
+
+        .item-title {
+          float: left;
+          padding-top: 8px;
+          font-size: 18px;
+
+          i {
+            font-size: 20px;
+            color: #f60;
+          }
+        }
+      }
+
+      .files-list {
+        li {
+          margin-bottom: 5px;
+
+          a {
+            color: @colorActive;
+          }
+
+          &:hover a {
+            color: @loginColor;
+          }
+        }
+      }
+
+      .content-box {
+        position: relative;
+        max-height: 500px;
+        overflow-y: auto;
+
+
+        h4.title {
+          font-size: 18px;
+          font-weight: bold;
+          margin: 10px 0 15px;
+        }
+
+        .tiem {
+          color: #999;
+          font-size: 12px;
+          text-align: center;
+        }
+
+        .steps-box {
+          height: 300px;
+        }
+      }
+
+      .ql-container {
+        border: none;
+
+        p {
+          line-height: 24px;
+          margin-bottom: 10px;
+          font-size: 12px;
+        }
+
+        img {
+          margin: 10px 0;
+          max-width: 100%;
+        }
+      }
+    }
+  }
+
+  .connom-dialog {
+    .el-tabs {
+      .el-tabs__content {
+        height: 100%;
+        overflow-y: auto;
+      }
+
+      .el-tabs__header {
+        margin: 0 0 10px;
+      }
+    }
+
+    .content-box {
+      min-height: 450px;
+      overflow-y: auto;
+
+      .el-select {
+        display: block;
+      }
+    }
+
+    .el-tabs__item.is-active {
+      background: @colorActive;
+      color: #fff !important;
+      border-bottom: 1px solid @colorActive;
+    }
+
+    .el-tabs--card > .el-tabs__header {
+      border-color: @colorActive;
     }
   }
 }

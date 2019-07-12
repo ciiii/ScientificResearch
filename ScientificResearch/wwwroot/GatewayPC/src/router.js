@@ -18,7 +18,8 @@ export default new Router({
             name: 'index',
             component: Index,
             meta: {title: '入口首页'},
-            redirect: 'home',
+            redirect: '/home',
+            query: {name: 'ScientificResearch_Test'},
             children: [
                 {
                     path: '/home',

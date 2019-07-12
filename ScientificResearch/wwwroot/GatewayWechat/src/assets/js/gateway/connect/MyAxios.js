@@ -12,4 +12,8 @@ axios.myGet = async (url, data) => {
 axios.myPost = async (url, data) => {
     return await axios.post(HTTP_URL_HOST + url, data).then(response => response.data.data);
 };
+
+axios.myPostServe = async (url, data) => {
+    return await axios.post( url, data).then(response => response.data);
+};
 export default axios;

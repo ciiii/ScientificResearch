@@ -16,6 +16,7 @@
     "vue": "^2.5.17",
     "vue-quill-editor": "^3.0.6",
     "vue-router": "^3.0.1",
+    "vue-tinymce-editor": "^1.6.2",
     "vue-wechat-title": "^2.0.5",
     "vuex": "^3.0.1"
   },

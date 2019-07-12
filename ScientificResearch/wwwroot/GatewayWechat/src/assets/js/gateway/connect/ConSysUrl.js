@@ -1,12 +1,13 @@
 // let HTTP_URL_HOST = 'http://192.168.0.22:20001';
-let HTTP_URL_HOST = 'http://192.168.0.72:20003';
+// let HTTP_URL_HOST = 'http://192.168.0.72:20003';
+let HTTP_URL_HOST = 'http://a.aiyisheng.com:89';
 if (process.env.NODE_ENV === 'production') {
     HTTP_URL_HOST = 'http://a.aiyisheng.com:89';
 }
 const META_ONE = 'width=device-width,initial-scale=1.0';
 const META_TWO = 'width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no';
 
-const URL_DOWNLOAD_FILE = HTTP_URL_HOST + '/Lib/FileMgrController/DownLoadFile';
+const URL_DOWNLOAD_FILE =  HTTP_URL_HOST+'/Lib/FileMgrController/DownLoadFile';
 
 const URL_WAN_FANG = {
 

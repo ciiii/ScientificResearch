@@ -253,6 +253,8 @@ namespace ScientificResearch.Models
 
     public class VTFNFLowFilter
     {
+        public string LikeCreatorInfo { get; set; }
+        public string LikeFlowTemplateName { get; set; }
         public bool? IsCanOperate { get; set; }
     }
 

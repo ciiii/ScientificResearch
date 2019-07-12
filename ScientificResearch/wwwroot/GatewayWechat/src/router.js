@@ -5,7 +5,8 @@ Vue.use(Router);
 
 export default new Router({
     // mode: 'history',
-    routes: [{ // 入口
+    routes: [
+        { // 入口
             path: "/",
             name: "home",
             component: () =>
@@ -48,6 +49,13 @@ export default new Router({
             meta: { title: '知网检索' },
         },
         {
+            path: '/zhiWangCHKDSearch',
+            name: 'zhiWangCHKDSearch',
+            component: () =>
+                import ('./views/gateway/zhiWang/zhiWangCHKDSearch.vue'),
+            meta: { title: '知网CHKD检索' },
+        },
+        {
             path: '/zhiWangList',
             name: 'zhiWangList',
             component: () =>
@@ -57,9 +65,11 @@ export default new Router({
         {
             path: '/pdfPreview',
             name: 'pdfPreview',
-            component: () =>
-                import ('./views/gateway/pdf/pdfPreview.vue'),
-            meta: { title: 'PDF预览', content: META_ONE },
+            component: ()=>import('./views/gateway/pdf/pdfPreview.vue'),
+            meta: {
+                title: 'PDF预览',
+                content: META_ONE
+            },
         },
         {
             path: '/zhiWangDetails',
@@ -74,12 +84,6 @@ export default new Router({
             component: () =>
                 import ("./views/index.vue"),
             meta: { title: '科研管理' }
-        },
-        { // 跳转引导页面
-            path: "/guidance",
-            name: "guidance",
-            component: () =>
-                import ("./components/guidance.vue")
         },
         { // 空页面
             path: "/alternative",
@@ -214,7 +218,7 @@ export default new Router({
                 import ("./views/scientificResearch/activity/meetingInformation/reimbursementDetails.vue"),
             meta: { title: '报销详情' }
         },
-        { // 导入认领 
+        { // 导入认领
             path: "/paperClaim",
             name: "paperClaim",
             component: () =>

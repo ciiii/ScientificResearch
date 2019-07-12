@@ -52,7 +52,7 @@ export default {
   line-height: 1.6;
   font-size: 14px;
   color: #fff;
-  width: 80px;
+  width: 60px;
   height: 26px;
   padding: 6px;
   text-align: center;

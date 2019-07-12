@@ -311,6 +311,7 @@ namespace ScientificResearch
             provider.Mappings[".txt"] = "application/txt";      //手动设置对应MIME
             //provider.Mappings[".txt"] = "application/octet-stream";      //手动设置对应MIME
             staticfile.ContentTypeProvider = provider;
+            
             app.UseStaticFiles(staticfile);
 
             #region Session

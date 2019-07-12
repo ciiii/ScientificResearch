@@ -14,7 +14,7 @@
                 </div>
                 <div class="A_News_box News_box">
                     <div class="newsTitle">
-                        <h3>新闻 News</h3>
+                        <h3>总库新闻</h3>
                         <span @click="ZKMore">更多<i class="icon iconfont icon-you"></i></span>
                     </div>
                     <ul class="A_News" v-for="(item, key) in list" :key="key" @click="ZKNewsDetails(item)">

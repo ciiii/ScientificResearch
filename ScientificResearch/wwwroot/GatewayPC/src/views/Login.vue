@@ -11,7 +11,7 @@
         <div class="content">
             <el-form :model="account" :rules="rules" ref="ruleForm" class="ruleForm">
                 <h3 class="form-title">账号密码登录</h3>
-                <el-form-item prop="dbKey">
+                <!--<el-form-item prop="dbKey">
                     <img src="../assets/images/login-hospital.png"/>
                     <el-select v-model="account.dbKey" placeholder="请选择医院">
                         <el-option
@@ -19,7 +19,7 @@
                                 :key="item" :label="item" :value="item">
                         </el-option>
                     </el-select>
-                </el-form-item>
+                </el-form-item>-->
                 <el-form-item prop="userId">
                     <img src="../assets/images/login-user.png"/>
                     <el-input v-model="account.userId" type="text" placeholder="用户名"></el-input>
@@ -70,12 +70,14 @@
                         {required: true, message: '请输选择医院！', trigger: 'blur'}
                     ]
                 },
-                isDownload: false
+                isDownload: false,
+                key: ''
             }
         },
         mounted() {
             this.getlocalStorage();
             this.getHospita();
+            this.key = sessionStorage.getItem('myKey');
         },
         methods: {
             isLogin: _debounce(function () {
@@ -95,21 +97,20 @@
                 let postData = {
                     工号: this.account.userId,
                     密码: this.account.password,
-                    dbKey: this.account.dbKey
+                    dbKey: this.key
                 }
                 let data = await this.$http.myPost(URL_USER.POST_LOGIN, postData);
                 this.$message.success('登录成功！');
 
                 localStorage.setItem('myUserInfo', JSON.stringify(data));
                 localStorage.setItem('Authorization', JSON.stringify(data.token_type + ' ' + data.access_token));
-                localStorage.setItem('gatewayUrl',window.location.href);
-                localStorage.setItem('isEntryLogin',true);
+                sessionStorage.setItem('isLogin', true);
                 if (this.checked) {
                     localStorage.setItem('myLoginInfo', JSON.stringify(this.account));
                 } else {
                     localStorage.removeItem('myLoginInfo');
                 }
-                this.$router.push({path: '/'});
+                this.$router.push({path: '/', query: {name: this.key}});
             },
             //获取html文件名
             getHtmlDocName() {

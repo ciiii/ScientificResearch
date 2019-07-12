@@ -1,11 +1,9 @@
 <template>
     <div id="notFound">
-        <img src="../../assets/logo.png" class="center-block logo">
-
         <div class="text-center col-sm-12">
-            <h1>You are lost.</h1>
-            <h4>This page doesn't exist.</h4>
-            <router-link to="/" class="vertical-5p lead">Take me home.</router-link>
+            <!--<h1 align="center">404</h1>-->
+            <!--<h4 align="center">Opps...page not found.</h4>-->
+            <img src="@/assets/images/404.jpg" alt="">
         </div>
     </div>
 </template>
@@ -15,9 +13,31 @@
     }
 </script>
 
-<style>
+<style type="text/less" lang="less">
     #notFound {
         padding: 10em;
-        color: white;
+        z-index: 99;
+        height: 500px;
+        background: #FEA918;
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        text-align: center;
+
+        h1 {
+            font-size: 70px;
+        }
+
+        h4 {
+            font-size: 16px;
+            color: #999;
+        }
+
+        img {
+            margin: 10px auto;
+            width: 158px;
+            height: 235px;
+        }
+
     }
 </style>

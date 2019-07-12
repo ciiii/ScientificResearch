@@ -19,9 +19,6 @@
                 active: 0
             };
         },
-        mounted() {
-        },
-
         methods: {
             clickKYNews() {
                 this.$router.push({name: 'KYMoreList'})

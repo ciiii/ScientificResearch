@@ -111,9 +111,9 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         }
 
         [HttpGet]
-        async public Task<object> 分页获取待办事宜(Paging paging)
+        async public Task<object> 分页获取待办事宜(Paging paging, VTFNFLowFilter filter)
         {
-            var filter = new VTFNFLowFilter() { IsCanOperate = true };
+            filter.IsCanOperate = true;
             return await Db.GetPagingListSpAsync<VTFNFLow, VTFNFLowFilter>(
                 paging,
                 filter,

@@ -24147,7 +24147,7 @@
             <param name="Spacer"></param>
             <returns></returns>
         </member>
-        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.GetModelByIdSpAsync``1(System.Data.IDbConnection,System.Int32,System.String,System.Data.IDbTransaction)">
+        <member name="M:ScientificResearch.Infrastucture.PredefinedSpExtention.GetModelByIdSpAsync``1(System.Data.IDbConnection,System.Int32,System.String,System.Data.IDbTransaction,System.String)">
             <summary>
             通过主键获得对象,或者null
             T为表映射而来的类

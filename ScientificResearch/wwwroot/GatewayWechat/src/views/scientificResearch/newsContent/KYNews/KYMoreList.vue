@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="list">
         <van-pull-refresh v-model="isDownLoading" @refresh="onDownRefresh">
             <van-list
                     v-model="loading"
@@ -7,8 +7,7 @@
                     finished-text="没有更多了"
                     @load="onLoad"
                     class="box">
-                <h3>科研新闻</h3>
-                <ul class="A_News" v-for="(item, key) in list" :key="key" @click="newsDetails(item.编号)">
+                <ul class="A_News" v-for="(item, key) in list" :key="key" @click="newsDetails(item.编号)" v-if="isShow">
                     <li class="time">
                         {{startTime(item.建立时间)}}
                         <p>({{item.通知类型}})</p>
@@ -18,6 +17,7 @@
                         <p>{{item.通知名称}}</p>
                     </li>
                 </ul>
+                <p v-else><van-icon name="info-o" />暂无订购服务！</p>
             </van-list>
         </van-pull-refresh>
         <ReturnBtn/>
@@ -35,6 +35,7 @@
                 size: 15,
                 total: 0,
                 isDownLoading: false,
+                isShow: false,
                 list: [],
                 total: null
             };
@@ -50,12 +51,18 @@
                 this.$http.getToViewNewsList(para).then(res => {
                     this.total = res.data.total;
                     const data = this.list;
+                    console.info(res.data.list)
+                    if (res.data.list.length != 0) {
+                        this.isShow = true;
+                    }
+
                     this.list = data.concat(res.data.list);
                     this.loading = false;
                     this.index++;
                     if (this.list.length >= this.total) {
                         this.finished = true;
                     }
+
                 });
             },
             onDownRefresh() {
@@ -85,6 +92,7 @@
 <style lang="less" scoped type="text/less">
     .box {
         background-color: #fff;
+        padding-top: 10px;
     }
 
     h3 {
@@ -92,8 +100,6 @@
         font-size: 14px;
         padding: 10px 20px;
         margin: 0;
-        /*color: #1296db;*/
-        /*background-color: #e7e7e7;*/
     }
 
     .A_News {

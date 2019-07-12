@@ -122,7 +122,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         async public Task<object> 获取某流程审核记录([Required]int 流程编号)
         {
             var filter = new VStepFilter() { FlowId = 流程编号 };
-            return await Db.GetListSpAsync<VStep, VStepFilter>(filter,orderType:true);
+            return await Db.GetListSpAsync<VStep, VStepFilter>(filter, orderType: true);
         }
         #endregion
 
@@ -225,6 +225,12 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         {
             return await Db.GetPagingListSpAsync<v_tfn_教学退培申请, v_tfn_教学退培申请Filter>
                 (paging, filter, $"tfn_教学退培申请('{CurrentUser.人员类型}',{CurrentUser.编号})");
+        }
+
+        [HttpGet]
+        async public Task<object> 获取退培详情(int 退培编号)
+        {
+            return await Db.GetModelByIdSpAsync<v_tfn_教学退培申请>(退培编号, tableName: $"tfn_教学退培申请('{CurrentUser.人员类型}',{CurrentUser.编号})");
         }
 
         /// <summary>
@@ -387,6 +393,12 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         {
             return await Db.GetPagingListSpAsync<v_tfn_教学请假申请, v_tfn_教学请假申请Filter>
                 (paging, filter, $"tfn_教学请假申请('{CurrentUser.人员类型}',{CurrentUser.编号})");
+        }
+
+        [HttpGet]
+        async public Task<object> 获取请假详情(int 请假编号)
+        {
+            return await Db.GetModelByIdSpAsync<v_tfn_教学请假申请>(请假编号, tableName: $"tfn_教学请假申请('{CurrentUser.人员类型}',{CurrentUser.编号})");
         }
 
         /// <summary>
@@ -610,6 +622,14 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
                 (paging, filter, $"tfn_教学轮转手册申请('{CurrentUser.人员类型}',{CurrentUser.编号})");
         }
 
+        [HttpGet]
+        async public Task<object> 获取轮转手册详情(int 轮转手册编号)
+        {
+            return await Db.GetModelByIdSpAsync<v_tfn_教学轮转手册申请>(
+                轮转手册编号,
+                tableName: $"tfn_教学轮转手册申请('{CurrentUser.人员类型}',{CurrentUser.编号})");
+        }
+
         [HttpPost]
         async public Task 通过轮转手册申请([FromBody]StepDone data)
         {
@@ -750,6 +770,14 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
                 (paging, filter, $"tfn_教学出科申请('{CurrentUser.人员类型}',{CurrentUser.编号})");
         }
 
+        [HttpGet]
+        async public Task<object> 获取出科详情(int 出科编号)
+        {
+            return await Db.GetModelByIdSpAsync<v_tfn_教学出科申请>(
+                出科编号,
+                tableName: $"tfn_教学出科申请('{CurrentUser.人员类型}',{CurrentUser.编号})");
+        }
+
         /// <summary>
         /// data里面附件数据为出科申请编号
         /// </summary>
@@ -763,7 +791,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             var 出科申请 = await Db.GetModelByIdSpAsync<教学出科申请>(vstep.SourceId);
 
             //出科日期已经加上了
-            var 新的教学轮转 = MyLib.Tool.ModelToModel< v_教学轮转, 教学轮转>(await 验证出科申请数据(出科申请));
+            var 新的教学轮转 = MyLib.Tool.ModelToModel<v_教学轮转, 教学轮转>(await 验证出科申请数据(出科申请));
             var 学员编号 = 新的教学轮转.学员编号;
 
             async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
@@ -834,7 +862,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             //这里是伪数据
             data.IsHold = false;
             var 人员类型 = "教学学员";
-            var 学员编号 = data.Data.学员编号; 
+            var 学员编号 = data.Data.学员编号;
 
             //只有待结业的学员可以结业;
             await 验证学员为待结业(学员编号);
@@ -871,7 +899,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             //这里是伪数据
             data.IsHold = false;
             var 人员类型 = "教学学员";
-            var 学员编号 = data.Data.学员编号; 
+            var 学员编号 = data.Data.学员编号;
 
             //只有待结业的学员可以结业;
             await 验证学员为待结业(学员编号);
@@ -905,6 +933,13 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
                 (paging, filter, $"tfn_教学结业申请('{CurrentUser.人员类型}',{CurrentUser.编号})");
         }
 
+        [HttpGet]
+        async public Task<object> 获取结业详情(int 结业编号)
+        {
+            return await Db.GetModelByIdSpAsync<v_tfn_教学结业申请>(
+                结业编号,
+                tableName: $"tfn_教学结业申请('{CurrentUser.人员类型}',{CurrentUser.编号})");
+        }
 
         /// <summary>
         /// Data填申请结业的学员编号

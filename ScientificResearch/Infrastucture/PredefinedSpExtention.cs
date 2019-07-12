@@ -172,11 +172,11 @@ namespace ScientificResearch.Infrastucture
         /// <param name="cnn"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        async public static Task<T> GetModelByIdSpAsync<T>(this IDbConnection cnn, int id, string keyFields = PredefindedKeyFields, IDbTransaction transaction = null)
+        async public static Task<T> GetModelByIdSpAsync<T>(this IDbConnection cnn, int id, string keyFields = PredefindedKeyFields, IDbTransaction transaction = null,string tableName = null)
         {
             var result = await cnn.QuerySpAsync<sp_GetList, T>(new sp_GetList()
             {
-                tbName = typeof(T).Name,
+                tbName = tableName??typeof(T).Name,
                 strWhere = $"{keyFields}={id}",
                 keyFields = PredefindedKeyFields,
                 OrderStr = "",

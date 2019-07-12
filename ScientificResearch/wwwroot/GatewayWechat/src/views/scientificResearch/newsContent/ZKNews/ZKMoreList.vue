@@ -13,8 +13,9 @@
             <van-list
                     v-model="loading"
                     :finished="finished"
-                    offset:10
+                    offset:500
                     finished-text="没有更多了"
+                    loading-text="加载中..."
                     @load="onLoad"
                     class="box list"
             >
@@ -43,7 +44,7 @@
                 finished: false, //是否已加载完所有数据,
                 req: {
                     Index: 1,
-                    Size: 5,
+                    Size: 10,
                     新闻分类编号: null,
                     Like标题: '',
                     Like标签: ''
@@ -106,7 +107,7 @@
             getList() {
                 this.$http.getNewsList(this.req).then(res => {
                     this.total = res.data.total;
-                    let data = res.data.list
+                    let data = res.data.list;
                     if (data && data != []) {
                         if (Array.isArray(data)) {
                             this.req.Index++;
@@ -146,12 +147,7 @@
                 this.onSearch();
             },
             onDownRefresh() {
-                setTimeout(() => {
-                    this.finished = false;
-                    this.req.Index = 1;
-                    this.list = [];
-                    this.getList();
-                }, 1000);
+                this.reload()
             },
             newsDetails(item) {
                 this.$router.push({
@@ -190,6 +186,8 @@
 
         .van-popup {
             overflow: hidden;
+            height: 350px;
+            overflow-y: auto;
         }
 
         .van-cell {
