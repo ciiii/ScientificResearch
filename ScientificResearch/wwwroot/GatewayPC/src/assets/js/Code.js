@@ -1,4 +1,4 @@
-const getApiHost = 'http://192.168.0.99:63739';
+const getApiHost = 'http://localhost:63739';
 
 const Code = {
 

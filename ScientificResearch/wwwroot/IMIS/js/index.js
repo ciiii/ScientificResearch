@@ -2,7 +2,7 @@ $(function () {
     var ParentIndex;
     var TwoIndex;
     window.vm = null;
-    avalon.config({debug: false});
+    avalon.config({ debug: false });
     avalon.ready(function () {
         window.vm = avalon.define({
             $id: 'root',
@@ -23,6 +23,7 @@ $(function () {
             onload: function () {
                 getMenuPermissions(function (success) {
                     if (success) {
+                        console.log('localStorage.info', localStorage.info);
                         var info = JSON.parse(localStorage.info);
                         window.mUserInfo = info.data;
                         window.mUserId = info.data.人员.编号;
@@ -32,6 +33,8 @@ $(function () {
                         vm.jurisdiction = info.data.权限;
                         vm.userInfo = info.data.人员;
                         vm.req.人员编号 = mUserId;
+                        vm.getUserNoticeMustReadList();
+
                         vm.getUserNoticeMustReadList();
                     } else {
                         console.info('获取菜单权限失败！')
