@@ -62,7 +62,6 @@
     <Content Remove="wwwroot\GatewayWechat\README.md" />
     <Content Remove="wwwroot\GatewayWechat\vue.config.js" />
     <Content Remove="wwwroot\GatewayWechat\yarn.lock" />
-    <Content Remove="wwwroot\IMIS\views\login.html" />
     <Content Remove="wwwroot\云中漫步总库管理后台前端.code-workspace" />
     <Content Remove="wwwroot\云中漫步科研手机微信前端.code-workspace" />
   </ItemGroup>

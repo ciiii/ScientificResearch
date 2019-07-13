@@ -139,11 +139,11 @@ $(function () {
                 break;
             default:
         }
-        this.notify.css({position: "absolute", top: top, left: left});
+        this.notify.css({ position: "absolute", top: top, left: left });
     }
 
     function createNotify(content, options, state) {
-        return new notify($.extend({}, {content: content, state: state}, options));
+        return new notify($.extend({}, { content: content, state: state }, options));
     }
 
     $.oaNotify = {
@@ -160,7 +160,7 @@ $(function () {
 
     $.fn.oaNotify = function (content, options) {
         $(this).each(function () {
-            new notify($.extend({}, {element: $(this), content: content}, options));
+            new notify($.extend({}, { element: $(this), content: content }, options));
         });
         return this;
     }
@@ -616,7 +616,7 @@ function fileChange(oneself, inputUpload) {
 }
 
 //去掉调试打印
-avalon.config({debug: false});
+avalon.config({ debug: false });
 
 (function () {
     window.Common = {};
@@ -1000,5 +1000,4 @@ function numberDX(n) {
     }
     return head + s.replace(/(零.)*零元/, '元').replace(/(零.)+/g, '零').replace(/^整$/, '零元整');
 }
-
 

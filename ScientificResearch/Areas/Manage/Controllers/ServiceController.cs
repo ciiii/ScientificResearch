@@ -153,7 +153,8 @@ namespace ScientificResearch.Areas.Manage.Controllers
             if (model.编号 == 0)
             {
                 await Db.ExecuteAsync(RestoreModelDb.GetSql(model.名称, Env));
-                await RestoreModelDb.CopyLoginHtmlForScientificResearch(model.名称, model.代码, Env);
+                //2019-7-13 login页面统一为一个,这个复制新的login页面就暂时不用了;
+                //await RestoreModelDb.CopyLoginHtmlForScientificResearch(model.名称, model.代码, Env);
             }
             return result;
         }
