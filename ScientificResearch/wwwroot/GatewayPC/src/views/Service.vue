@@ -52,6 +52,9 @@
                 if (this.isLogin) {
                     if (!el.电脑链接地址) {
                         this.$message.warning('您没有订购该服务！');
+                    }else{
+                        //2019-7-13 在service页面打开科研这些都设置isEntryLogin = true
+                        localStorage.setItem('isEntryLogin', true);
                     }
                 } else {
                     this.$message.error('请先登录！');

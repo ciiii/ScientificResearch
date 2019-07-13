@@ -28,8 +28,10 @@ $(function () {
                         window.mUserInfo = info.data;
                         window.mUserId = info.data.人员.编号;
                         vm.hospital = info.dbKey;
-                        vm.loginUrl = info.url;
-                        vm.newUrl = info.url.slice(7, 11);
+                        vm.loginUrl = 'login.html?name='+info.dbKey;
+                        //2019-7-13pc入口过来出错,先注释
+                        //vm.loginUrl = info.url;
+                        //vm.newUrl = info.url.slice(7, 11);
                         vm.jurisdiction = info.data.权限;
                         vm.userInfo = info.data.人员;
                         vm.req.人员编号 = mUserId;
