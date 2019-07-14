@@ -44,25 +44,20 @@ module.exports = {
   },
 
   build: {
+    // Paths
     // Template for index.html
     index: path.resolve(__dirname, '../dist/index.html'),
-
-    // Paths
-    // assetsRoot: path.resolve(__dirname),
-    // assetsSubDirectory: '/static',
-
+    //打包后文件要存放的路径:在当前目录的上一级 的 dist目录下输出资源文件
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'static',
 
-    /**
-     * You can set by youself according to actual condition
-     * You will need to set this if you plan to deploy your site under a sub path,
-     * for example GitHub pages. If you plan to deploy your site to https://foo.github.io/bar/,
-     * then assetsPublicPath should be set to "/bar/".
-     * In most cases please use '/' !!!
-     */
-    //assetsPublicPath: '../dist/',
-    assetsPublicPath: '../dist/',
+    //除了 index.html 之外的静态资源要存放的路径:把所有的静态资源打包到 dist下的 assets文件夹下
+    assetsSubDirectory: './',
+    //assetsSubDirectory: './assets/',
+    //代表打包后，index.html里面引用资源的的相对地址
+    //代表生成的index.html文件，里面引入资源时，路径前面要加上 ./,也就是assetsPublicPath的值 ``
+    //assetsPublicPath: './static/',
+    // assetsPublicPath: '../dist/',
+    assetsPublicPath: './',
     /**
      * Source Maps
      */
