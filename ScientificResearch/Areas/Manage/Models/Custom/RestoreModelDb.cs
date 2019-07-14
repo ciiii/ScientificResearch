@@ -24,6 +24,7 @@ namespace ScientificResearch.Models
             //存放模板bak文件的路径+文件名
             var pathFileNameOfBak = MyPath.Combine(Env.WebRootPath, @"\upload\Db_Model\db_model.bak");
             //恢复后新的数据库数据文件存放的路径,不包括文件名;
+            //var dbFilePath = @"d:\Program Files\Microsoft SQL Server\MSSQL14.MSSQLSERVER\MSSQL\DATA";
             var dbFilePath = @"C:\Program Files\Microsoft SQL Server\MSSQL11.MSSQLSERVER\MSSQL\DATA";
             return $@"restore database {dbName} 
                         from disk = '{pathFileNameOfBak}' 

@@ -94,7 +94,7 @@
         let postData = {
           工号: this.account.userId,
           密码: this.account.password,
-          dbKey: 'ScientificResearch_Test'
+          dbKey: '教学管理演示'
         };
         let data = await this.$http.myPost(URL_USER.POST_LOGIN, postData);
         this.$message.success('登录成功！');
