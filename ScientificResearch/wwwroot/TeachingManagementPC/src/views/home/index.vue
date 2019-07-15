@@ -67,14 +67,18 @@
         }
       };
     },
+    created(){
+        this.getData();
+        this.getRotateData();
+    },
     mounted() {
       if (localStorage.getItem('userInfo')) {
         if (getObjArr('userInfo').人员.编号 != sessionStorage.mUserId) {
           sessionStorage.mUserId = getObjArr('userInfo').人员.编号;
           parent.location.reload();
         }
-        this.getData();
-        this.getRotateData();
+        // this.getData();
+        // this.getRotateData();
       }
     },
     methods: {

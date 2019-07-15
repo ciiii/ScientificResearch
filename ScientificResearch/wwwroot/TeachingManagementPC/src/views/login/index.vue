@@ -47,7 +47,7 @@
 <script>
   // import { isvalidUsername } from '@/utils/validate';
   import { URL_USER } from '@/assets/js/connect/ConSysUrl';
-  import { _debounce, setObjArr, getObjArr, removeLocalStorage } from '@/assets/js/Common';
+  import { _debounce, setObjArr, getObjArr, removeLocalStorage,getQueryString } from '@/assets/js/Common';
 
   export default {
     name: 'Login',
@@ -94,7 +94,7 @@
         let postData = {
           工号: this.account.userId,
           密码: this.account.password,
-          dbKey: '教学管理演示'
+          dbKey: getQueryString('name')//'ScientificResearch_Test' 
         };
         let data = await this.$http.myPost(URL_USER.POST_LOGIN, postData);
         this.$message.success('登录成功！');

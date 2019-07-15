@@ -57,7 +57,8 @@ module.exports = {
     //代表生成的index.html文件，里面引入资源时，路径前面要加上 ./,也就是assetsPublicPath的值 ``
     //assetsPublicPath: './static/',
     // assetsPublicPath: '../dist/',
-    assetsPublicPath: './',
+    //这地方搞了1小时,一般都用个相对于根的半绝对路径,因为生成的静态文件一般是相对根固定的;不能用相对路径,比如上面的'./static/','../dist/','./'之类的,那样需要引用静态文件的html路径一变,就找不到静态文件了
+    assetsPublicPath: '/TeachingManagementPC/dist/',
     /**
      * Source Maps
      */

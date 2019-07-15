@@ -30,13 +30,13 @@ function padLeftZero(str) {
 export function _debounce(fn, delay) {
   let newDelay = delay || 200;
   let timer;
-  return function() {
+  return function () {
     let th = this;
     let args = arguments;
     if (timer) {
       clearTimeout(timer);
     }
-    timer = setTimeout(function() {
+    timer = setTimeout(function () {
       timer = null;
       fn.apply(th, args);
     }, newDelay);
@@ -48,13 +48,13 @@ export function _throttle(fn, interval) {
   let last;
   let timer;
   let newInterval = interval || 200;
-  return function() {
+  return function () {
     let th = this;
     let args = arguments;
     let now = +new Date();
     if (last && now - last < newInterval) {
       clearTimeout(timer);
-      timer = setTimeout(function() {
+      timer = setTimeout(function () {
         last = now;
         fn.apply(th, args);
       }, newInterval);
@@ -102,14 +102,14 @@ export function clearSpecialChar(e) {
  * @param decPoint：小数点符号 默认.
  * @param thousandsSep：千分位符号 默认为,
  */
-Vue.filter('formatMoney', function(number, decimals = 2, decPoint = '.', thousandsSep = ',') {
+Vue.filter('formatMoney', function (number, decimals = 2, decPoint = '.', thousandsSep = ',') {
   number = (number + '').replace(/[^0-9+-Ee.]/g, '');
   let n = !isFinite(+number) ? 0 : +number;
   let prec = !isFinite(+decimals) ? 0 : Math.abs(decimals);
   let sep = (typeof thousandsSep === 'undefined') ? ',' : thousandsSep;
   let dec = (typeof decPoint === 'undefined') ? '.' : decPoint;
   let s = '';
-  let toFixedFix = function(n, prec) {
+  let toFixedFix = function (n, prec) {
     let k = Math.pow(10, prec);
     return '' + Math.ceil(n * k) / k;
   };
@@ -126,7 +126,7 @@ Vue.filter('formatMoney', function(number, decimals = 2, decPoint = '.', thousan
 });
 
 //时间格式化 'yyyy/MM/dd hh:mm:ss'
-Vue.filter('dataFormat', function(value, fmt) {
+Vue.filter('dataFormat', function (value, fmt) {
   if (!value) {
     return value;
   }
@@ -151,7 +151,7 @@ Vue.filter('dataFormat', function(value, fmt) {
   return fmt;
 });
 
-Vue.filter('operatorState', function(state) {
+Vue.filter('operatorState', function (state) {
   switch (state) {
     case '待完善':
       return '';
@@ -168,7 +168,7 @@ Vue.filter('operatorState', function(state) {
   }
 });
 
-Vue.filter('studentStates', function(state) {
+Vue.filter('studentStates', function (state) {
   switch (state) {
     case '未报到':
       return 'warning';
@@ -251,7 +251,7 @@ export function arrayToJson(treeArray, id, pid) {
 }
 
 //成=树结构递归成数组
-export let jsonToArray = function(nodes) {
+export let jsonToArray = function (nodes) {
   let r = [];
   if (Array.isArray(nodes)) {
     for (let i = 0, l = nodes.length; i < l; i++) {
@@ -270,7 +270,8 @@ export let jsonToArray = function(nodes) {
 //获取文件名，也不要参数
 export function getHtmlDocName(url) {
   let urlArr = url.split('?');
-  let k = urlArr[0], arr = k.split('/');
+  let k = urlArr[0],
+    arr = k.split('/');
   return arr[arr.length - 1];
 }
 
@@ -294,8 +295,7 @@ export const clickoutside = {
     el.__vueClickOutside__ = documentHandler;
     document.addEventListener('click', documentHandler);
   },
-  update() {
-  },
+  update() {},
   unbind(el, binding) {
     // 解除事件监听
     document.removeEventListener('click', el.__vueClickOutside__);
@@ -354,7 +354,7 @@ export function isSelected(data, arr, _this) {
     if (arr.length > 0) {
       arr.forEach((itemB) => {
         if (item.编号 == itemB.编号) {
-          _this.$nextTick(function() {
+          _this.$nextTick(function () {
             _this.$refs.multipleTable.toggleRowSelection(data[index], true);
           });
         }
@@ -392,3 +392,11 @@ export function timeStamp(date) {
   return new Date(date).getTime();
 }
 
+//获取url中特定参数
+export function getQueryString(name) {
+  var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+  var search = decodeURIComponent(window.location.search);
+  var r = search.substr(1).match(reg);
+  if (r != null) return unescape(r[2]);
+  return null;
+}
