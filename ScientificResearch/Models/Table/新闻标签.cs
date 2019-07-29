@@ -20,7 +20,6 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        [Obsolete]
         [Required(ErrorMessage ="请提供[新闻编号]")]
 		public int 新闻编号 { get; set; }
         /// <summary>

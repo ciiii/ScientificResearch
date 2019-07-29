@@ -1,0 +1,182 @@
+﻿<%@ CodeTemplate Language="C#" TargetLanguage="C#" Src="" Inherits="" Debug="False" CompilerVersion="v3.5" ResponseEncoding="UTF-8"%>
+<%@ Assembly Name="SchemaExplorer" %>
+<%@ Import Namespace="SchemaExplorer" %>
+
+<%@ Property Name="SourceCommand" Type="SchemaExplorer.CommandSchema" Category="Context" %>
+<%@ Property Name="NameSpace" Type="System.String" Category="Context" %>
+<%@ Property Name="ModelName" Type="System.String" Category="Context" %>
+<script runat="template">
+
+public enum NeedType
+{
+    ColType, ParseFun, DefaultValue,Description
+}
+
+public string GetColType(ParameterSchema column, NeedType rType)
+{
+	string ProType = "string";
+    string ParseFun = "GetString";
+    string DefaultValue = "null";
+    string Description=column.Description;
+   
+	switch (column.DataType)
+	{
+		case DbType.Int32:
+			{
+				ProType = "int";
+                ParseFun = "GetInt";
+                DefaultValue = "0";
+				break;
+			}
+		case DbType.Decimal:
+			{
+				ProType = "decimal";
+                ParseFun = "GetDecimal";
+                DefaultValue = "0";
+				break;
+			}
+		case DbType.String:
+			{
+				ProType = "string";
+                ParseFun = "GetString";
+                DefaultValue = "";
+				break;
+            }
+		case DbType.Boolean:
+			{
+				ProType = "bool";
+                ParseFun = "GetBool";
+                DefaultValue = "";
+				break;
+            }
+		case DbType.DateTime:
+			{
+				ProType = "DateTime";
+                ParseFun = "GetDateTime";
+                DefaultValue = "DateTime.Now";
+				break;
+            }
+        case DbType.Binary:
+			{
+				ProType = "byte[]";
+                ParseFun = "GetByte";
+                DefaultValue =null;
+				break;               
+            }
+	}
+    if(rType == NeedType.ColType) return ProType;
+    else if(rType == NeedType.ParseFun) return ParseFun;
+    else if(rType == NeedType.DefaultValue) return DefaultValue;
+    else if(rType==NeedType.Description) return Description;
+	else return ProType;
+}
+
+public string GetCSharpVariableType(ParameterSchema column, string str)
+{
+ if (column.Name.EndsWith("TypeCode")) return str;
+ 
+ switch (column.DataType)
+ {
+  case DbType.AnsiString: return str + ".ToString()";
+  case DbType.AnsiStringFixedLength: return str + ".ToString()";
+  case DbType.Binary: return "((" + str + ")==DBNull.Value)?new byte[0]:(((byte[])" + str + "))";
+  case DbType.Boolean: return "(bool)" + str;
+  case DbType.Byte: return "((" + str + ")==DBNull.Value)?Convert.ToByte(0):Convert.ToByte(" + str + ")";
+  case DbType.Currency: return "((" + str + ")==DBNull.Value)?0:Convert.ToDecimal(" + str + ")";
+  case DbType.Date: return "((" + str + ")==DBNull.Value)?Convert.ToDateTime(\"1900-1-1\"):Convert.ToDateTime(" + str + ")";
+  case DbType.DateTime: return "((" + str + ")==DBNull.Value)?Convert.ToDateTime(\"1900-1-1\"):Convert.ToDateTime(" + str + ")";
+  case DbType.Decimal: return "((" + str + ")==DBNull.Value)?0:Convert.ToDecimal(" + str + ")";
+  case DbType.Double: return "((" + str + ")==DBNull.Value)?0:Convert.ToDouble(" + str + ")";
+  case DbType.Guid: return "(Guid)"+ str;
+  case DbType.Int16: return "(short)" + str;
+  case DbType.Int32: return "((" + str + ")==DBNull.Value)?0:Convert.ToInt32(" + str + ")";
+  case DbType.Int64: return "(long)" + str;
+  case DbType.Object: return "(object)" + str;
+  case DbType.SByte: return "Convert.ToSByte(" + str + ")";
+  case DbType.Single: return "(float)" + str;
+  case DbType.String: return str + ".ToString()";
+  case DbType.StringFixedLength: return str + ".ToString()";
+  case DbType.Time: return "(DateTime)" + str;
+  case DbType.UInt16: return "(ushort)" + str;
+  case DbType.UInt32: return "(uint)" + str;
+  case DbType.UInt64: return "(ulong)" + str;
+  case DbType.VarNumeric: return "Convert.ToDecimal(" + str + ")";
+  default:
+  {
+   return "__UNKNOWN__" + str;
+  }
+ }
+}
+
+public string GetCSharpVariableType(ParameterSchema  column)
+{
+ if (column.Name.EndsWith("TypeCode")) return column.Name;
+ 
+ switch (column.DataType)
+ {
+  case DbType.Guid: return "Guid";
+  
+  case DbType.SByte: return "sbyte";
+  case DbType.Single: return "float";
+  
+  case DbType.Int16: return "short";
+  case DbType.Int32: return "int";
+  case DbType.Int64: return "long";
+  case DbType.Double: return "double";
+  
+  case DbType.UInt16: return "ushort";
+  case DbType.UInt32: return "uint";
+  case DbType.UInt64: return "ulong";
+  
+  case DbType.AnsiString: 
+  case DbType.String: 
+  case DbType.StringFixedLength:
+  case DbType.AnsiStringFixedLength: return "string";
+  
+  case DbType.Binary: return "byte[]";
+  case DbType.Boolean: return "bool";
+  case DbType.Byte: return "byte";
+  
+  case DbType.VarNumeric:
+  case DbType.Decimal: 
+  case DbType.Currency: return "decimal";
+  
+  case DbType.Date:
+  case DbType.DateTime: return "DateTime";
+  
+//  case DbType.Object: return "object";
+         case DbType.Object: return "DataTable";
+  case DbType.Time: return "TimeSpan";  
+  
+  default:
+  {
+   return "__UNKNOWN__" + column.NativeType;
+  }
+ }
+}
+</script>
+using System;
+using System.Data;
+
+namespace <%= NameSpace %>
+{
+    /// <summary>
+    /// <%=SourceCommand.Name%>[<%=SourceCommand.Description.Replace("表","").Replace("\r\n","").Replace("\r","").Replace("\n","")+"类" %>]
+    /// </summary>
+    [Serializable]
+	public class <%= ModelName %> 
+	{       
+              
+        #region 属性
+        <% for (int i = 0; i < SourceCommand.Parameters.Count; i++) { %>
+        <%if(!SourceCommand.Parameters[i].Name.Equals("@RETURN_VALUE")){ %>
+        /// <summary>
+		/// <%= GetColType(SourceCommand. Parameters[i], NeedType.Description).Replace("\r\n","").Replace("\r","").Replace("\n","") %>
+		/// </summary>
+		public <%= GetCSharpVariableType(SourceCommand.Parameters[i]) %> <%= SourceCommand.Parameters[i].Name.Replace("@","") %> { get; set; }
+		<% }} %>
+        
+          
+        #endregion
+	}
+}
