@@ -1,65 +1,117 @@
-import Vue from 'vue'
-import VeLine from 'v-charts/lib/line.common'
-import App from './App.vue'
-import router from './router'
-import http from './assets/js/http/http'
-import 'amfe-flexible'
-import 'lib-flexible/flexible.js'
-import './assets/iconfont/iconfont.css'
-import VueWechatTitle from 'vue-wechat-title'
-import ReturnBtn from './components/returnBtn/index'
-import ReturnTop from './components/returnTop/index'
-
+import Vue from 'vue';
+import App from './App';
+import router from './router';
+import store from './store';
+import config from '@/config';
+import Vuerify from 'vuerify';
+import '@/libs/var.less';
 import {
+    Toast,
+    Dialog,
     Icon,
-    Tabbar,
-    TabbarItem,
-    Notify,
     Button,
     Cell,
     CellGroup,
-    Dialog,
-    Swipe,
-    SwipeItem,
-    List,
-    Field,
-    PullRefresh,
-    Tab,
-    Tabs,
-    Toast,
-    Actionsheet,
-    RadioGroup,
-    Radio,
-    Checkbox
-} from 'vant'
-Vue.use(ReturnBtn)
-Vue.use(ReturnTop)
-
-Vue.component(VeLine.name, VeLine)
-
-Vue.config.productionTip = false
-
-Vue.use(Icon)
-Vue.use(Notify)
-Vue.use(Button)
-Vue.use(Tabbar).use(TabbarItem)
-Vue.use(Cell).use(CellGroup)
-Vue.use(Dialog)
-Vue.use(Swipe).use(SwipeItem)
-Vue.use(List)
-Vue.use(Field)
-Vue.use(PullRefresh)
-Vue.use(Tab).use(Tabs)
+    Row,
+    Col
+} from 'vant';
+/*
+vant 文档
+https://youzan.github.io/vant/#/zh-CN/intro
+*/
 Vue.use(Toast)
-Vue.use(Actionsheet)
-Vue.use(RadioGroup)
-Vue.use(Radio)
-Vue.use(Checkbox)
+    .use(Dialog)
+    .use(Icon)
+    .use(Button)
+    .use(Cell)
+    .use(CellGroup)
+    .use(Row).use(Col);
+Vue.use(Vuerify);
+// 实际打包时应该不引入mock
+/* eslint-disable */
+if (process.env.NODE_ENV !== 'production') require('@/mock')
+    //Vue.prototype.$api = api;
+    /**
+     * @description 全局注册应用配置
+     */
+Vue.prototype.$config = config;
 
-Vue.use(VueWechatTitle)
-Vue.prototype.$http = http
+import FastClick from 'fastclick';
+FastClick.attach(document.body);
+
+const history = window.sessionStorage
+history.clear()
+let historyCount = history.getItem('count') * 1 || 0
+history.setItem('/', 0)
+let isPush = false
+let isTouchStart = false
+let endTime = Date.now()
+let methods = ['push', 'go', 'replace', 'forward', 'back']
+
+document.addEventListener('touchend', () => {
+    isTouchStart = false
+    endTime = Date.now()
+})
+document.addEventListener('touchstart', () => {
+    isTouchStart = true
+})
+methods.forEach(key => {
+    let method = router[key].bind(router)
+    router[key] = function(...args) {
+        isPush = true
+        method.apply(null, args)
+    }
+})
+
+router.beforeEach(function(to, from, next) {
+    store.commit('updateLoadingStatus', { isLoading: true })
+    store.commit('updateShowTabnav', to.path);
+    store.commit('updateTitle', to.meta.title);
+    const toIndex = history.getItem(to.path)
+    const fromIndex = history.getItem(from.path)
+    let direction
+
+    if (toIndex) {
+        if (!fromIndex || parseInt(toIndex, 10) > parseInt(fromIndex, 10) || (toIndex === '0' && fromIndex === '0')) {
+            direction = 'forward'
+        } else {
+            direction = 'reverse'
+        }
+    } else {
+        ++historyCount
+        history.setItem('count', historyCount)
+        to.path !== '/' && history.setItem(to.path, historyCount)
+        direction = 'forward'
+    }
+
+    // 判断是否是ios左滑返回 或者 右滑前进
+    if (toIndex && toIndex !== '0' && !isPush && (((Date.now() - endTime) < 377) || isTouchStart)) {
+        store.commit('updateDirection', { direction: '' })
+    } else {
+        store.commit('updateDirection', { direction: direction })
+    }
+    isTouchStart = false
+
+    if (/\/http/.test(to.path)) {
+        let url = to.path.split('http')[1]
+        window.location.href = `http${url}`
+    } else {
+        next()
+    }
+})
+
+router.afterEach(function(to) {
+    isPush = false
+    store.commit('updateLoadingStatus', { isLoading: false })
+    if (process.env.NODE_ENV === 'production') {
+        ga && ga('set', 'page', to.fullPath)
+        ga && ga('send', 'pageview')
+    }
+})
 
 new Vue({
     router,
+    store,
+    el: '#app',
     render: h => h(App)
-}).$mount('#app')
+});

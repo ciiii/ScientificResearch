@@ -1,1 +1,0 @@
-e:\teachingmanagementwechat\index.js

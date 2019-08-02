@@ -1,34 +1,53 @@
-module.exports = {
-    // 基本路径
-    // publicPath
-    publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
-    // 输出文件目录
-    outputDir: 'dist',
-    // eslint-loader 是否在保存的时候校验格式
-    lintOnSave: false,
-    runtimeCompiler: true,
+const autoprefixer = require('autoprefixer');
+const pxtoviewport = require('postcss-px-to-viewport');
+const pxtorem = require('postcss-pxtorem');
+const VantCss = require('./src/libs/van-custom-theme');
 
-    chainWebpack: () => {},
-    configureWebpack: config => {
-        if (process.env.NODE_ENV === 'production') {
-            // 为生产环境修改配置...
-            config.mode = 'production'
-        } else {
-            // 为开发环境修改配置...
-            config.mode = 'development'
+
+module.exports = {
+    outputDir: 'docs',
+    lintOnSave: true,
+    productionSourceMap: false,
+    publicPath: process.env.NODE_ENV === 'production' ? '/' : '/',
+    pages: {
+        index: {
+            // entry for the pages
+            entry: 'src/main.js',
+            // the source template
+            template: 'src/index.html',
+            // output as dist/index.html
+            filename: 'index.html',
+            // when using title option,
+            // template title tag needs to be <title><%= htmlWebpackPlugin.options.title %></title>
+            title: '首页',
+            // chunks to include on this pages, by default includes
+            // extracted common chunks and vendor chunks.
+            chunks: ['chunk-vendors', 'chunk-common', 'index']
         }
     },
-    productionSourceMap: false, // 生产环境是否生成 SourceMap
-    // "indent": [1, 4]
-    // webpack-dev-server 相关配置
-    devServer: {
-        port: 8080
-    },
-    // 第三方插件配置
-    pluginOptions: {
-        'style-resources-loader': {
-            preProcessor: 'less',
-            patterns: []
+    css: {
+        loaderOptions: {
+            less: {
+                modifyVars: VantCss
+            },
+            postcss: {
+                plugins: [
+                    autoprefixer(),
+                    pxtoviewport({
+                        viewportWidth: 375,
+                        // 该项仅在使用 Circle 组件时需要
+                        // 原因参见 https://github.com/youzan/vant/issues/1948
+                        selectorBlackList: ['van-circle__layer']
+                    }),
+                    pxtorem({
+                        rootValue: 37.5,
+                        propList: ['*'],
+                        // 该项仅在使用 Circle 组件时需要
+                        // 原因参见 https://github.com/youzan/vant/issues/1948
+                        selectorBlackList: ['van-circle__layer']
+                    })
+                ]
+            }
         }
     }
-}
+};
