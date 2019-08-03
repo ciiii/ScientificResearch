@@ -23,6 +23,11 @@ namespace ScientificResearch.Models
         public string OpenId { get; set; }
     }
 
+    public class 教学学员OpenIdFilter
+    {
+        public string OpenId { get; set; }
+    }
+
     /// <summary>
     /// 当前总库登录人的信息
     /// </summary>

@@ -58,8 +58,8 @@ namespace ScientificResearch.Areas.Manage.Controllers
             }
 
             var ApiMpHost = Config.GetValue<string>("WechatSetting:ApiMpHost");
-            var appId = Config.GetValue<string>(Env.IsDevelopment() == true ? "WechatSetting:TestappId":"WechatSetting:appId"); 
-            var appSecret = Config.GetValue<string>(Env.IsDevelopment() == true ? "WechatSetting:TestappSecret": "WechatSetting:appSecret");
+            var appId = Config.GetValue<string>(Env.IsDevelopment() == true ? "WechatSetting:TestappId" : "WechatSetting:appId");
+            var appSecret = Config.GetValue<string>(Env.IsDevelopment() == true ? "WechatSetting:TestappSecret" : "WechatSetting:appSecret");
             var grantType = Config.GetValue<string>("WechatSetting:grantType");
 
             //通过，用code换取access_token
@@ -110,6 +110,29 @@ namespace ScientificResearch.Areas.Manage.Controllers
         }
 
         /// <summary>
+        /// 2019-8-3 为了教学学员端登录而新增的,绑定用
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task<LoginReturn<CurrentStudentOfTeachingManagement>> BindOpenIdOfStudent([FromBody]LoginInfoWithCode model)
+        {
+            //验证用户,并记录为一次登录
+            var result = await loginOfStudent(model);
+
+            //获取openid
+            var openId = await getOpenId(model.Code);
+
+            //绑定openid到用户
+            var 绑定关系 = new 教学学员OpenId() { OpenId = openId, DbKey = model.DbKey, 教学学员编号 = result.人员.编号 };
+
+            //注意是管理库;
+            await Db_Manage.Merge(绑定关系);
+
+            return result;
+        }
+
+        /// <summary>
         /// 使用OpenId登录
         /// </summary>
         /// <param name="code">其中dbKey请先填"ScientificResearch_Test"</param>
@@ -144,6 +167,39 @@ namespace ScientificResearch.Areas.Manage.Controllers
         }
 
         /// <summary>
+        /// 2019-8-3 为了学员端登录而新增
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task<object> LoginWithOpenIdOfStudent([FromBody]Code code)
+        {
+            //获取openid
+            var openId = await getOpenId(code.Value);
+
+            //从主库获取该openid对应的dbkey和人员编号;
+            var 绑定信息 = (await Db_Manage.GetListSpAsync<教学学员OpenId, 教学学员OpenIdFilter>(new 教学学员OpenIdFilter()
+            {
+                OpenId = openId
+            })).FirstOrDefault();
+
+            if (绑定信息 == null)
+            {
+                HttpContext.Response.StatusCode = 401;
+                return Content("没有绑定用户！");
+            }
+
+            //到相对应的从库取用户信息并转为CurrentUser
+            var dbWhenLogin = new SqlConnection(DbConnectionStringLack.Replace("{0}", 绑定信息.DbKey));
+            var student = await dbWhenLogin.GetModelByIdSpAsync<教学学员>(绑定信息.教学学员编号);
+            var currentStudentOfTeachingManagement = Tool.ModelToModel<教学学员, CurrentStudentOfTeachingManagement>(student);
+            //
+            currentStudentOfTeachingManagement.DbKey = 绑定信息.DbKey;
+
+            return getJwt(currentStudentOfTeachingManagement, Config.GetValue<string>("Roles:TeachingManagementStudentFromManage"));
+        }
+
+        /// <summary>
         /// 使用用户名密码登录分库,此时不需要提供code
         /// </summary>
         /// <param name="model">其中dbKey请先填"ScientificResearch_Test"</param>
@@ -153,6 +209,12 @@ namespace ScientificResearch.Areas.Manage.Controllers
         async public Task<LoginReturn<CurrentUser>> Login([FromBody]LoginInfo model)
         {
             return await login(model);
+        }
+
+        [HttpPost]
+        async public Task<LoginReturn<CurrentStudentOfTeachingManagement>> LoginOfStudent([FromBody]LoginInfo model)
+        {
+            return await loginOfStudent(model);
         }
 
         /// <summary>
@@ -167,7 +229,7 @@ namespace ScientificResearch.Areas.Manage.Controllers
             //这里登录用户名叫"工号"只是为了复用LoginInfo类而已;
             if (!MyObject.Compare(model, loginSetting)) throw new Exception("登录信息错误");
 
-            var user = Tool.ModelToModel< LoginInfo, CurrentUserOfManage>(loginSetting);
+            var user = Tool.ModelToModel<LoginInfo, CurrentUserOfManage>(loginSetting);
             return await Task.FromResult(getJwt(user, Config.GetValue<string>("Roles:ManageUser")));
         }
 
@@ -192,6 +254,29 @@ namespace ScientificResearch.Areas.Manage.Controllers
             await 记录登录日志(dbWhenLogin, user);
 
             return getJwt(user, Config.GetValue<string>("Roles:UserFromManage"));
+            //return getJwt(user, Config.GetValue<string>("Roles:ScientificResearchUser"));
+        }
+
+        /// <summary>
+        /// 2019-8-3 教学学员在总库的登录
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        private async Task<LoginReturn<CurrentStudentOfTeachingManagement>> loginOfStudent(LoginInfo model)
+        {
+            var dbWhenLogin = new SqlConnection(DbConnectionStringLack.Replace("{0}", model.DbKey));
+            var result = (await dbWhenLogin.GetListSpAsync<教学学员, 教学学员登录Filter>(
+                new 教学学员登录Filter()
+                {
+                    工号 = model.工号,
+                    密码 = model.密码
+                })).FirstOrDefault();
+            if (result == null) throw new Exception("登录信息错误");
+
+            var student = MyLib.Tool.ModelToModel<教学学员, CurrentStudentOfTeachingManagement>(result);
+            student.DbKey = model.DbKey;
+
+            return getJwt(student, Config.GetValue<string>("Roles:TeachingManagementStudentFromManage"));
             //return getJwt(user, Config.GetValue<string>("Roles:ScientificResearchUser"));
         }
 

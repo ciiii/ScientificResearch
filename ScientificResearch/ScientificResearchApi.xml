@@ -21,11 +21,25 @@
             <param name="model">其中dbKey请先填"ScientificResearch_Test"</param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.BindOpenIdOfStudent(ScientificResearch.Models.LoginInfoWithCode)">
+            <summary>
+            2019-8-3 为了教学学员端登录而新增的,绑定用
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
         <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.LoginWithOpenId(ScientificResearch.Models.Code)">
             <summary>
             使用OpenId登录
             </summary>
             <param name="code">其中dbKey请先填"ScientificResearch_Test"</param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.LoginWithOpenIdOfStudent(ScientificResearch.Models.Code)">
+            <summary>
+            2019-8-3 为了学员端登录而新增
+            </summary>
+            <param name="code"></param>
             <returns></returns>
         </member>
         <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.Login(ScientificResearch.Models.LoginInfo)">
@@ -45,6 +59,13 @@
         <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.login(ScientificResearch.Models.LoginInfo)">
             <summary>
             除了"使用登录名密码登录"要用,"绑定openid到用户"也要用,因为后者其实也有一个"使用登录名密码登录"的过程;
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.loginOfStudent(ScientificResearch.Models.LoginInfo)">
+            <summary>
+            2019-8-3 教学学员在总库的登录
             </summary>
             <param name="model"></param>
             <returns></returns>
@@ -177,6 +198,43 @@
             </summary>
             <param name="model">id为医院编号,list为最终保留的医院服务列表</param>
             <returns></returns>
+        </member>
+        <member name="T:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.HomePageController">
+            <summary>
+            主页相关的接口
+            获取权限也在这里面
+            这个不能抽象为一个独立的area/架构/微服务,因为各自不同;
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.HomePageController.Login(ScientificResearch.Models.LoginInfo)">
+            <summary>
+            login 用manage里面的,这个作废了
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.HomePageController.分页获取可查看的教学通知公告(ScientificResearch.Models.Paging,ScientificResearch.Models.教学某人员可查看的通知公告Filter)">
+            <summary>
+            如果要获取必读且未读的通知公告,使用条件"是否必读=true 且 是否已接收=false"
+            </summary>
+            <param name="人员编号"></param>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.HomePageController.获取教学通知公告详情(System.Int32)">
+            <summary>
+            首页上查看教学通知公告详情会设置为"已接收"
+            不需要看到接收条件
+            </summary>
+            <param name="编号"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.TeachingManagementOfStudentBaseController">
+            <summary>
+            2019-8-3
+            教学学员端的
+            </summary>
         </member>
         <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.AccessController">
             <summary>
@@ -1733,6 +1791,11 @@
             需要暂存=true,不暂存=false
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.CurrentStudentOfTeachingManagement">
+            <summary>
+            当前教学管理的医院方登录人的信息
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.CurrentUserOfTeachingManagement">
             <summary>
             当前教学管理的医院方登录人的信息
@@ -2781,6 +2844,16 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_教学医疗差错及事故记录_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学学员OpenId_增改">
+            <summary>
+            sp_教学学员OpenId_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学学员OpenId_增改.tt">
             <summary>
             
             </summary>
@@ -6751,6 +6824,31 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.教学学员.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.教学学员OpenId">
+            <summary>
+            教学学员OpenId[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员OpenId.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员OpenId.OpenId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员OpenId.DbKey">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员OpenId.教学学员编号">
             <summary>
             
             </summary>
