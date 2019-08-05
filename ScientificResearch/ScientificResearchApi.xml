@@ -199,6 +199,77 @@
             <param name="model">id为医院编号,list为最终保留的医院服务列表</param>
             <returns></returns>
         </member>
+        <member name="T:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.ActivityController">
+            <summary>
+            教学活动
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.ActivityController.分页获取我的教学活动(ScientificResearch.Models.Paging,ScientificResearch.Models.v_教学活动Filter)">
+            <summary>
+            
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.ActivityController.获取我对某个教学活动的评价(ScientificResearch.Models.v_tfn_教学活动评价Filter,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.ActivityController.增改教学活动评价(System.Collections.Generic.IEnumerable{ScientificResearch.Models.教学活动评价})">
+            <summary>
+            评价人类型暂时不用管,评价人编号就是自己的编号
+            这个应该放到学员端
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.ActivityController.获取我对某个教学活动的反馈(ScientificResearch.Models.v_教学活动反馈Filter)">
+            <summary>
+            这里教学活动编号和学员编号都需要填;
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.Evaluation360Controller">
+            <summary>
+            2019-8-5 对于接口来说,这一块复制自老师端也情有可原吧...
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.Evaluation360Controller.分页获取评价(ScientificResearch.Models.Paging,ScientificResearch.Models.v_教学360评价Filter)">
+            <summary>
+            对应多个页面;
+            对于"对学员评价 到 对科室管理员评价"(即我发起的评价)等等页面,固定搜索条件为
+                "1 老师端:来源类型 = 页面的from参数 且 评价人编号=自己的编号 且 目标类型 = 该页面的to参数" 
+                "2 学员端:来源类型 = 0 且 评价人编号=自己的编号 且 目标类型 = 该页面的目标类型"
+                
+            对于"评价查询"页面,没有什么需要固定的条件,只是要注意:"来源类型和目标类型就是0代表学员,其他是角色编号"
+            
+            对于"对我的评价",固定搜索条件为
+                "1 老师端:NotEqual目标类型 = 0 且 被评价人编号=自己的编号"
+                "2 学员端:目标类型=0 且 被评价人编号=自己的编号"
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.Evaluation360Controller.获取评价评分(ScientificResearch.Models.教学360评价评分Filter)">
+            <summary>
+            只能针对一个教学360评价看其具体的评分
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.Evaluation360Controller.增改360评价(ScientificResearch.Infrastucture.PredefindedModelList{ScientificResearch.Models.教学360评价,ScientificResearch.Models.教学360评价评分})">
+            <summary>
+            其中的教学360评价分类,项目,在setting那里的接口取.
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
         <member name="T:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.HomePageController">
             <summary>
             主页相关的接口
@@ -230,11 +301,174 @@
             <param name="编号"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.HomePageController.获取学员培训任务统计(ScientificResearch.Models.v_教学轮转Filter)">
+            <summary>
+            灵活指定条件,其中"学员编号"已经在后台固定为了当前登录学员;
+            一般来说学员要看当前轮转的完成任务情况,要传入轮转的"编号"来进一步筛选;
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.OfficeController">
+            <summary>
+            办公类接口
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.OfficeController.ChangePassword(ScientificResearch.Models.ChangePassword)">
+            <summary>
+            修改密码
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.TeachingManagementController">
+            <summary>
+            培训相关的接口
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.TeachingManagementController.分页获取我的教学管床病人(ScientificResearch.Models.Paging,ScientificResearch.Models.v_tfn_教学管床病人Filter)">
+            <summary>
+            
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.TeachingManagementController.增改教学管床病人(ScientificResearch.Models.教学管床病人)">
+            <summary>
+            注意轮转编号一定不能填错了
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.TeachingManagementController.分页获取病人(ScientificResearch.Models.Paging,ScientificResearch.Models.教学病人Filter)">
+            <summary>
+            增改教学管床病人时用
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.TeachingManagementController.增改病人(ScientificResearch.Models.教学病人)">
+            <summary>
+            增改教学管床病人时用
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
         <member name="T:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.TeachingManagementOfStudentBaseController">
             <summary>
             2019-8-3
             教学学员端的
             </summary>
+        </member>
+        <member name="T:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.WorkFlowController">
+            <summary>
+            工作流相关的接口
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.WorkFlowController.分页获取办事流程列表(ScientificResearch.Models.Paging)">
+            <summary>
+            首页上查看"更多办事流程"时,列举出所有的办事流程
+            </summary>
+            <param name="paging"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.WorkFlowController.获取某办事流程步骤列表(System.Int32)">
+            <summary>
+            根据某个办事流程模板编号,获取该流程规定的步骤
+            </summary>
+            <param name="办事流程编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.WorkFlowController.获取某流程审核记录(System.Int32)">
+            <summary>
+            流程编号就是flowid
+            </summary>
+            <param name="流程编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.WorkFlowController.学员分页查看退培申请(ScientificResearch.Models.Paging,ScientificResearch.Models.v_tfn_教学退培申请Filter)">
+            <summary>
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.WorkFlowController.学员发起退培申请(ScientificResearch.Models.FlowInit{ScientificResearch.Models.教学退培申请})">
+            <summary>
+            data是教学退培申请
+            </summary>
+            <param name="date"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.WorkFlowController.学员分页查看请假申请(ScientificResearch.Models.Paging,ScientificResearch.Models.v_tfn_教学请假申请Filter)">
+            <summary>
+            这个应该是在学员端,目前为了测试方便放在这里,人员类型和编号都是写死的;
+            虽然它和老师端的这个接口其实是一样的;
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.WorkFlowController.学员发起请假申请(ScientificResearch.Models.FlowInit{ScientificResearch.Models.教学请假申请})">
+            <summary>
+            这个应该是在学员端,目前为了测试方便放在这里,人员类型和编号都是写死的;
+            data是教学请假申请
+            </summary>
+            <param name="date"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.WorkFlowController.学员分页查看轮转手册申请(ScientificResearch.Models.Paging,ScientificResearch.Models.v_tfn_教学轮转手册申请Filter)">
+            <summary>
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.WorkFlowController.获取某教学轮转手册可选任务(System.Int32,System.Int32,System.Nullable{System.Int32})">
+            <summary>
+            学员提交轮转手册时需要选择的
+            </summary>
+            <param name="教学轮转编号"></param>
+            <param name="教学轮转手册类型编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.WorkFlowController.学员发起轮转手册申请(ScientificResearch.Models.FlowInit{ScientificResearch.Models.教学轮转手册申请})">
+            <summary>
+            这个应该是在学员端,目前为了测试方便放在这里,人员类型和编号都是写死的;
+            data是教学轮转手册申请,包括轮转手册数据和所选的完成任务的数据;
+            </summary>
+            <param name="date"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.WorkFlowController.学员分页查看出科申请(ScientificResearch.Models.Paging,ScientificResearch.Models.v_tfn_教学出科申请Filter)">
+            <summary>
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.WorkFlowController.学员发起出科申请(ScientificResearch.Models.FlowInit{ScientificResearch.Models.教学出科申请})">
+            <summary>
+            这个应该是在学员端,目前为了测试方便放在这里,人员类型和编号都是写死的;
+            data是教学出科申请
+            </summary>
+            <param name="date"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.WorkFlowController.学员分页查看结业申请(ScientificResearch.Models.Paging,ScientificResearch.Models.v_tfn_教学结业申请Filter)">
+            <summary>
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.WorkFlowController.学员发起结业申请(ScientificResearch.Models.FlowInit{ScientificResearch.Models.教学结业申请})">
+            <summary>
+            </summary>
+            <param name="date"></param>
+            <returns></returns>
         </member>
         <member name="T:ScientificResearch.Areas.TeachingManagement.Controllers.AccessController">
             <summary>
@@ -1998,6 +2232,223 @@
             流程状态有:未完成,已完成,作废,
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.教学学员">
+            <summary>
+            教学学员[类]
+            </summary>
+            <summary>
+            教学学员[类]
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Models.教学学员.获取某教学学员档案(System.Data.IDbConnection,System.Int32)">
+            <summary>
+            2019-8-5 原来还要传入个"人员类型",但如果只是看一个学员的,可以固定为"教学学员"
+            </summary>
+            <param name="Db"></param>
+            <param name="学员编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Models.教学学员.获取学员培训任务统计(System.Data.IDbConnection,ScientificResearch.Models.v_教学轮转Filter)">
+            <summary>
+            2019-8-5 来自StatisticalController.cs中的获取学员培训任务统计
+            TODO: 应该统一用这个;
+            本方法本来应该集成到v_教学轮转任务,进一步体现到v_教学轮转,但目前不宜影响v_教学轮转这个核心视图;
+            所以这里先单独调用;
+            </summary>
+            <param name="Db"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.来源学校编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.来源学生编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.学员类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.工号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.密码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.头像路径">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.性别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.民族">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.证件类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.证件号码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.出生日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.手机号码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.政治面貌">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.电子邮箱">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.QQ号码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.微信号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.家庭住址">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.取得执业证书日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.执业证书编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.取得医师资格证书日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.医师资格证书编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.最高学历">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.毕业年份">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.毕业学校">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.毕业专业">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.毕业证编码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.学位证编码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.学员培训年界">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.学员培训年限">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.往届应届">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.专业编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.送培方式">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.工作单位">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.医疗卫生机构">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.教学学员.备注">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.SPFlowInit">
             <summary>
             SPFlowInit[类]
@@ -2854,6 +3305,26 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_教学学员OpenId_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_教学学员_修改密码">
+            <summary>
+            sp_教学学员_修改密码[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学学员_修改密码.工号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学学员_修改密码.旧密码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_教学学员_修改密码.新密码">
             <summary>
             
             </summary>
@@ -6629,201 +7100,6 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.教学医疗差错及事故记录.备注">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="T:ScientificResearch.Models.教学学员">
-            <summary>
-            教学学员[类]
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.来源学校编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.来源学生编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.学员类型编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.工号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.密码">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.头像路径">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.姓名">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.性别">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.民族">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.证件类型">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.证件号码">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.出生日期">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.手机号码">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.政治面貌">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.电子邮箱">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.QQ号码">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.微信号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.家庭住址">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.取得执业证书日期">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.执业证书编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.取得医师资格证书日期">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.医师资格证书编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.最高学历">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.毕业年份">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.毕业学校">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.毕业专业">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.毕业证编码">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.学位证编码">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.学员培训年界">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.学员培训年限">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.往届应届">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.专业编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.送培方式">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.工作单位">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.医疗卫生机构">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.建立时间">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.教学学员.备注">
             <summary>
             
             </summary>

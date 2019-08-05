@@ -65,6 +65,7 @@ namespace ScientificResearch.Models
 
     public class v_教学轮转Filter
     {
+        public int? 编号 { get; set; }
         public int? 学员编号 { get; set; }
         public string WhereIn编号 { get; set; }
         public string WhereIn学员编号 { get; set; }

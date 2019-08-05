@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using MyLib;
 using ScientificResearch.Infrastucture;
 using ScientificResearch.Models;
 
@@ -28,7 +28,7 @@ namespace ScientificResearch.Areas.TeachingManagementOfStudent.Controllers
         [HttpPost]
         async public Task<object> Login([FromBody]LoginInfo model)
         {
-            return await Task.FromResult(Content("请使用总库的login接口"));
+            return await Task.FromResult(Content("请使用总库的绑定,用openid登录等接口"));
             //return CurrentUser;
         }
 
@@ -83,6 +83,25 @@ namespace ScientificResearch.Areas.TeachingManagementOfStudent.Controllers
                 paging,
                 filter,
                 $"TFNFlow(null,null,'{CurrentUser.人员类型}',{CurrentUser.编号})");
+        }
+
+        [HttpGet]
+        async public Task<object> 获取自己的教学学员档案()
+        {
+            return await 教学学员.获取某教学学员档案(Db, CurrentUser.编号);
+        }
+
+        /// <summary>
+        /// 灵活指定条件,其中"学员编号"已经在后台固定为了当前登录学员;
+        /// 一般来说学员要看当前轮转的完成任务情况,要传入轮转的"编号"来进一步筛选;
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        [HttpGet]
+        async public Task<object> 获取学员培训任务统计(v_教学轮转Filter filter)
+        {
+            filter.学员编号 = CurrentUser.编号;
+            return await 教学学员.获取学员培训任务统计(Db, filter);
         }
     }
 }
