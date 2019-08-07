@@ -486,7 +486,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             var 学员的轮转 = await Db.GetListSpAsync<v_教学轮转, v_教学轮转Filter>(new v_教学轮转Filter()
             {
                 WhereIn学员编号 = 分页的学员.list.Select(i => i.编号).ToStringIdWithSpacer()
-            }, $"tfn_我的轮转('{CurrentUser.人员类型}',{CurrentUser.编号})", orderType: true);
+            }, $"tfn_我的轮转('{CurrentUser.人员类型}',{CurrentUser.编号})", orderType: true,orderStr:nameof(v_教学轮转.计划入科日期));
 
             return new
             {

@@ -229,7 +229,7 @@
         </member>
         <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.ActivityController.获取我对某个教学活动的反馈(ScientificResearch.Models.v_教学活动反馈Filter)">
             <summary>
-            这里教学活动编号和学员编号都需要填;
+            这里教学活动编号需要填;
             </summary>
             <param name="filter"></param>
             <returns></returns>

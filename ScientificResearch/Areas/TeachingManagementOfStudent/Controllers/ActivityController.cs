@@ -63,20 +63,21 @@ namespace ScientificResearch.Areas.TeachingManagementOfStudent.Controllers
         {
             foreach (var item in data)
             {
-                item.评价人类型 = "教学学员";
-                item.评价人编号 = 1;
+                item.评价人类型 = CurrentUser.人员类型;
+                item.评价人编号 = CurrentUser.编号;
             }
 
             await Db.Merge(data);
         }
         /// <summary>
-        /// 这里教学活动编号和学员编号都需要填;
+        /// 这里教学活动编号需要填;
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
         [HttpGet]
         async public Task<object> 获取我对某个教学活动的反馈(v_教学活动反馈Filter filter)
         {
+            filter.学员编号 = CurrentUser.编号;
             return await Db.GetListSpAsync<v_教学活动反馈, v_教学活动反馈Filter>(filter);
         }
 
@@ -92,8 +93,11 @@ namespace ScientificResearch.Areas.TeachingManagementOfStudent.Controllers
         }
 
         [HttpPost]
-        async public Task 增改教学活动反馈([FromBody] 教学活动反馈 data) =>
+        async public Task 增改教学活动反馈([FromBody] 教学活动反馈 data)
+        {
+            data.学员编号 = CurrentUser.编号;
             await Db.Merge(data);
-        
+        }
+
     }
 }

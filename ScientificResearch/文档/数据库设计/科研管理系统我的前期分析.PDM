@@ -1574,7 +1574,9 @@ Custom text mode=0
 Pen=1 0 0 0 255
 Shadow color=192 192 192
 Shadow=0</a:DisplayPreferences>
+<a:PaperSize>(8268, 11693)</a:PaperSize>
 <a:PageMargins>((124,139), (170,139))</a:PageMargins>
+<a:PaperSource>15</a:PaperSource>
 <c:Symbols>
 <o:NoteLinkSymbol Id="o5">
 <a:CreationDate>1524722039</a:CreationDate>
