@@ -26,10 +26,12 @@
       };
     },
     mounted() {
+      if(this.chartData){
       this.chartData.forEach((item) => {
         this.total += item.数量;
       });
       this.isLoad = true;
+      }
     },
     computed: {
       ...mapGetters([

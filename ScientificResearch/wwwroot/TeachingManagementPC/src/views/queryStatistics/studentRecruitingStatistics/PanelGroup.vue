@@ -58,6 +58,8 @@
             return 'icontuichu3';
           case '未报到':
             return 'iconicon1';
+            case '已报到':
+            return 'iconicon1';
           case '在培':
             return 'iconicon-edit';
         }
@@ -73,6 +75,8 @@
           case '退培':
             return 'icon-money';
           case '未报到':
+            return 'icon-not';
+            case '已报到':
             return 'icon-not';
           case '在培':
             return 'icon-people';

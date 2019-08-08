@@ -14,8 +14,10 @@
     <div slot="footer" class="dialog-footer">
       <el-button @click="cancelHandler" size="small">返 回</el-button>
       <el-button type="success" @click="btnPass" size="small">通 过</el-button>
-      <el-button type="warning" @click="btnNoPass" size="small">不通过</el-button>
-      <el-button type="danger" @click="btnStop" size="small">作 废</el-button>
+      <!-- <el-button type="warning" @click="btnNoPass" size="small">不通过</el-button>
+      <el-button type="danger" @click="btnStop" size="small">作 废</el-button> -->
+     
+      <el-button type="danger" @click="btnStop" size="small">不通过</el-button>
     </div>
   </div>
 </template>

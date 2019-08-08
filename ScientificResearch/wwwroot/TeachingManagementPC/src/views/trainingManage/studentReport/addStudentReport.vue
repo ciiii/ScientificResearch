@@ -96,8 +96,9 @@
                 备注: this.form.备注
               };
               arr.push(data);
-              this.addEditStudentReport(arr);
+             
             });
+             this.addEditStudentReport(arr);
           } else {
             this.$message.error('信息有误！');
             return false;
