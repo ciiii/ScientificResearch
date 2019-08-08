@@ -315,6 +315,36 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
         }
 
         [HttpGet]
+        async public Task<object> 获取教学360评价方向和分类()
+        {
+            var 教学360评价方向 = await Db.GetListSpAsync<v_教学360评价方向>(orderType: true);
+            var 教学360评价分类 = await Db.GetListSpAsync<v_教学360评价分类>(orderType: true);
+            return from item in 教学360评价方向
+                   select new
+                   {
+                       编号 = item.编号,
+                       名称 = item.名称,
+                       来源类型 = item.来源类型,
+                       评价人类型 = item.评价人类型,
+                       目标类型 = item.目标类型,
+                       被评价人类型 = item.被评价人类型,
+                       备注 = item.备注,
+                       types = from item2 in 教学360评价分类
+                               where item2.目标类型 == item.目标类型
+                               select new
+                               {
+                                   编号 = $"{item.编号}-{item2.编号}",
+                                   目标类型 = item2.目标类型,
+                                   被评价人类型 = item2.被评价人类型,
+                                   名称 = item2.名称,
+                                   备注 = item2.备注
+                               }
+
+                   };
+        }
+
+
+        [HttpGet]
         async public Task<object> 获取某教学360评价分类下的评价项目(教学360评价项目Filter filter)
         {
             //filter.教学360评价分类编号 = 教学360评价分类编号;
