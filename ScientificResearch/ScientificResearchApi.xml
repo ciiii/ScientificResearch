@@ -22584,6 +22584,176 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.v_教学轮转_任务完成情况">
+            <summary>
+            v_教学轮转_任务完成情况[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.学员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.学员姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.计划入科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.计划出科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.实际入科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.实际出科日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.教学本院科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.教学本院策略编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.教学本院策略名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.教学专业科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.教学专业科室名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.本院科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.本院科室名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.最大学员人数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.科室管理员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.科室管理员姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.带教老师编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.带教老师姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.最低管床数量">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.最低全程管理数量">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.状态">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.技能病例数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.疾病病例数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.门诊病例数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.住院病例数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.医技病例数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.已完成技能病例数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.已完成疾病病例数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.已完成门诊病例数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.已完成病房病例数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_教学轮转_任务完成情况.已完成医技病例数">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v_教学轮转任务">
             <summary>
             v_教学轮转任务[类]

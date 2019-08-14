@@ -6,6 +6,7 @@ using ScientificResearch.Infrastucture;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using MyLib;
+using System.Linq;
 
 namespace ScientificResearch.Models
 {
@@ -24,9 +25,11 @@ namespace ScientificResearch.Models
         {
             var 人员类型 = nameof(教学学员);
 
+            var 基本信息 = await Db.GetModelByIdSpAsync<v_教学学员>(学员编号);
+
             var 培训情况 = await Db.GetModelByIdSpAsync<v_教学学员培训情况>(学员编号);
 
-            var 轮转 = await Db.GetListSpAsync<v_教学轮转, v_教学轮转Filter>(
+            var 轮转 = await Db.GetListSpAsync<v_教学轮转_任务完成情况, v_教学轮转Filter>(
                 new v_教学轮转Filter() { 学员编号 = 学员编号 },
                 orderStr: nameof(教学轮转.计划入科日期),
                 orderType: true);
@@ -81,20 +84,44 @@ namespace ScientificResearch.Models
                 (new v_tfn_教学退培申请Filter() { 学员编号 = 学员编号 },
                 $"tfn_教学退培申请('{人员类型}',{学员编号})");
 
+            //return new
+            //{
+            //    基本信息,
+            //    培训情况,
+            //    轮转,
+            //    //下面的都应该挂载到具体的轮转里面
+            //    更换带教老师,
+            //    补轮转,
+            //    考勤统计,
+            //    出科申请,
+            //    请假申请,
+            //    考试成绩,
+            //    医疗差错及事故记录,
+            //    管床病人,
+            //    轮转手册,
+
+            //    教学活动反馈,
+            //    结业申请,
+            //    退培申请
+            //};
             return new
             {
+                基本信息,
                 培训情况,
-                轮转,
-                //下面的都应该挂载到具体的轮转里面
-                更换带教老师,
-                补轮转,
+
+                轮转 = from item in 轮转 select new {
+                    轮转基本信息 = item,
+                    更换带教老师 = 更换带教老师.Where(i=>i.教学轮转编号 == item.编号),
+                    补轮转 = 补轮转.Where(i => i.教学轮转编号 == item.编号),
+                    出科申请 = 出科申请.Where(i => i.教学轮转编号 == item.编号),
+                    请假申请 = 请假申请.Where(i => i.教学轮转编号 == item.编号),
+                    考试成绩 = 考试成绩.Where(i=>i.编号 == item.编号).FirstOrDefault(),
+                    医疗差错及事故记录 = 医疗差错及事故记录.Where(i=>i.教学轮转编号 == item.编号),
+                    管床病人 = 管床病人.Where(i=>i.教学轮转编号 == item.编号),
+                    轮转手册 = 轮转手册.Where(i=>i.教学轮转编号 == item.编号)
+                },
+
                 考勤统计,
-                出科申请,
-                请假申请,
-                考试成绩,
-                医疗差错及事故记录,
-                管床病人,
-                轮转手册,
 
                 教学活动反馈,
                 结业申请,

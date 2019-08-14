@@ -804,7 +804,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
                     学员编号 = 学员编号,
                     NotEqual状态 = 教学轮转状态.已出科.ToString()
                 }, transaction: transaction);
-                if (该学员还没有出科的轮转 == null)
+                if (该学员还没有出科的轮转.Count()==0)
                 {
                     //如果都出科了,就没有状态不是"已出科"的了
                     //更新该学员的教学培训情况 

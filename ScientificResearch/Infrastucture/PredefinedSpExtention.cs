@@ -327,6 +327,7 @@ namespace ScientificResearch.Infrastucture
             T model = null,
             IDbTransaction transaction = null) where T : class
         {
+            //return await cnn.QueryAsync(typeof(TOut), typeof(T).Name, model, transaction, commandType: CommandType.StoredProcedure);
             return await cnn.QueryAsync<TOut>(typeof(T).Name, model, transaction, commandType: CommandType.StoredProcedure);
         }
 

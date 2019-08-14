@@ -642,5 +642,13 @@ namespace ScientificResearch.Controllers
             public string PersonType { get; set; }
             public int Id { get; set; }
         }
+
+        [HttpGet]
+        public object 根据类名获取一个类()
+        {
+            var name = "ScientificResearch.Models.人员";
+            Type type = Type.GetType(name);
+            return type.Assembly.CreateInstance(type.FullName);
+        }
     }
 }
