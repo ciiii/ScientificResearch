@@ -1,3 +1,7 @@
+--千万注意在本地测试/演示库是全部运行,会生成一些基本的测试数据
+--而在model.正式库不能全部运行,到该到的地方即可;
+
+
 --SELECT * FROM 教学学员类型;
 TRUNCATE TABLE  教学学员类型;
 INSERT  dbo.教学学员类型
@@ -368,8 +372,9 @@ VALUES  ( 1, 0, 1, 1, N'教学办公', N'', N'', 1, N'office', N'' ),
         ( 3, 0, 1, 3, N'培训管理', N'', N'', 1, N'trainingManage', N'' ),
         ( 301, 3, 2, 1, N'导录学员', N'studentFiles', N'studentFiles', 1, N'', N'' ),
         ( 302, 3, 2, 2, N'我的学员', N'myStudent', N'myStudent', 1, N'', N'这里应该有各种导入导出' ),
-        ( 303, 3, 2, 3, N'学员报到', N'studentReport', N'studentReport', 1, N'', N'' ),
-        ( 304, 3, 2, 4, N'学员宿舍安排', N'dormitoryArrangement', N'dormitoryArrangement', 1, N'', N'' ), 
+		( 3021, 3, 2, 3, N'我的学员轮转', N'myStudentRotation', N'myStudentRotation', 1, N'', N'' ),
+        ( 303, 3, 2, 4, N'学员报到', N'studentReport', N'studentReport', 1, N'', N'' ),
+        ( 304, 3, 2, 5, N'学员宿舍安排', N'dormitoryArrangement', N'dormitoryArrangement', 1, N'', N'' ), 
 			--学员轮转管理是这里的核心,主要的操作有:
 			--新增学员轮转计划,就是从一个指定的轮转策略,指定要轮转的科室和时长,指定要轮转的学员,自动安排轮转计划;
 			--对于在科的(有实际入科时间,且无实际出科时间的,为在科)科室管理员以上可以补轮转,查看补轮转在306
@@ -379,15 +384,15 @@ VALUES  ( 1, 0, 1, 1, N'教学办公', N'', N'', 1, N'office', N'' ),
 			--对于可以入科但未入科的,科室管理员可以入科,查看在310
 			--对于在科的,科室管理员可以更换带教老师,查看在311
 			--对于在科的,科室管理员可以打考勤,查看在312;
-        ( 305, 3, 2, 5, N'学员轮转管理', N'studentRotationManage', N'studentRotationManage', 1, N'', N'' ),
-        ( 306, 3, 2, 6, N'学员补轮转', N'repairRotation', N'repairRotation', 1, N'', N'' ),
-        ( 307, 3, 2, 7, N'学员退培', N'retireTraining', N'retireTraining', 1, N'', N'' ),
-        ( 308, 3, 2, 8, N'学员考试成绩', N'testScores', N'testScores', 1, N'', N'' ),
-        ( 309, 3, 2, 9, N'医疗差错及事故记录', N'medicalErrorRecord', N'medicalErrorRecord', 1, N'', N'' ),
-        ( 310, 3, 2, 10, N'学员入科', N'studentEntry', N'studentEntry', 1, N'',
+        ( 305, 3, 2, 6, N'学员轮转管理', N'studentRotationManage', N'studentRotationManage', 1, N'', N'' ),
+        ( 306, 3, 2, 7, N'学员补轮转', N'repairRotation', N'repairRotation', 1, N'', N'' ),
+        ( 307, 3, 2, 8, N'学员退培', N'retireTraining', N'retireTraining', 1, N'', N'' ),
+        ( 308, 3, 2, 9, N'学员考试成绩', N'testScores', N'testScores', 1, N'', N'' ),
+        ( 309, 3, 2, 10, N'医疗差错及事故记录', N'medicalErrorRecord', N'medicalErrorRecord', 1, N'', N'' ),
+        ( 310, 3, 2, 11, N'学员入科', N'studentEntry', N'studentEntry', 1, N'',
           N'属于科室管理员.学员科室报到及带教老师安排;选择带教老师时,带教老师当前带了几个学生还做了提示;' ),
-        ( 311, 3, 2, 11, N'更换带教老师', N'changeTeacher', N'changeTeacher', 1, N'', N'' ),
-        ( 312, 3, 2, 12, N'考勤', N'signIn', N'signIn', 1, N'', N'' ),
+        ( 311, 3, 2, 12, N'更换带教老师', N'changeTeacher', N'changeTeacher', 1, N'', N'' ),
+        ( 312, 3, 2, 13, N'考勤', N'signIn', N'signIn', 1, N'', N'' ),
 
 		--
         ( 4, 0, 1, 4, N'360评价', N'', N'', 1, N'360Evaluate', N'' ), 
@@ -495,7 +500,20 @@ TRUNCATE TABLE dbo.教学角色权限;
 --系统管理员
 INSERT  dbo.教学角色权限
         ( 教学角色编号, 教学权限编号 )
-        VALUES(1,1),(1,101),(1,102),(1,103);
+        VALUES(1,1),(1,101),(1,102),(1,103),
+		(1,2),(1,201),(1,202),(1,203),(1,204),
+		(1,3),(1,301),(1,302),(1,3021),(1,303),(1,304),(1,305),(1,306),(1,307),
+		(1,4),(1,408),(1,409),(1,410),(1,417),(1,418),
+		(1,5),(1,502),(1,503),(1,504),(1,505),(1,506),(1,507),(1,508),(1,509),
+		(1,6),(1,601),(1,603),(1,607),(1,608),
+		(1,7),(1,701),(1,702),
+		(1,8),(1,801),
+			(1,802),(1,80202),
+			(1,803),
+			(1,804),(1,80401),(1,80402),(1,80403),(1,80404),
+			(1,805),(1,80501),(1,80502),
+			(1,806),(1,80601),(1,80602),(1,80603),
+			(1,807),(1,80701),(1,80702),(1,80703),(1,80704),(1,80705),(1,80706),(1,80707),(1,80708),(1,80709);
 --医院管理员
 INSERT  dbo.教学角色权限
         ( 教学角色编号, 教学权限编号 )
@@ -518,7 +536,7 @@ INSERT  dbo.教学角色权限
         ( 教学角色编号, 教学权限编号 )
         VALUES(3,1),(3,103),
 		(3,2),(3,201),(3,202),(3,203),(3,204),
-		(3,3),(3,302),(3,307),(3,308),(3,309),(3,310),(3,311),(3,312),
+		(3,3),(3,302),(3,3021),(3,307),(3,308),(3,309),(3,310),(3,311),(3,312),
 		(3,4),(3,411),(3,412),(3,413),(3,418),
 		(3,5),(3,502),(3,503),(3,504),(3,505),(3,506),(3,507),(3,508),(3,509),
 		(3,6),(3,601),(3,603),(3,607),(3,608),
@@ -529,7 +547,7 @@ INSERT  dbo.教学角色权限
         ( 教学角色编号, 教学权限编号 )
         VALUES(4,1),(4,103),
 		(4,2),(4,201),(4,202),(4,203),(4,204),
-		(4,3),(4,302),(4,307),(4,308),(4,309),
+		(4,3),(4,302),(4,3021),(4,307),(4,308),(4,309),
 		(4,4),(4,414),(4,415),(4,416),(4,418),
 		(4,5),(4,502),(4,503),(4,504),(4,505),(4,506),(4,507),(4,508),(4,509),
 		(4,6),(4,601),(4,603),(4,607),(4,608),
@@ -748,7 +766,38 @@ VALUES  ( 1 , N'病种病例' , N'大病历'  , NULL ,NULL ,NULL ,N'' ,N''),
  ( 10 , N'技能操作' , N'医技报告'  , NULL ,NULL ,NULL ,N'' ,N'')
 
  GO
- 
+ TRUNCATE TABLE 教学人员角色;
+ INSERT  dbo.教学人员角色
+        ( 教学角色编号, 人员编号 )
+VALUES ( 1, 2 );
+ TRUNCATE TABLE dbo.教学专业;
+ TRUNCATE TABLE dbo.教学专业科室;
+ TRUNCATE TABLE 教学专业科室要求;
+TRUNCATE TABLE 教学专业科室任务;
+TRUNCATE TABLE 教学本院策略;
+TRUNCATE TABLE 教学科室;
+TRUNCATE TABLE 教学本院科室;
+TRUNCATE TABLE dbo.教学本院科室任务;
+
+TRUNCATE TABLE 教学结业申请;
+TRUNCATE TABLE 教学退培申请;
+TRUNCATE TABLE dbo.教学学员培训;
+TRUNCATE TABLE dbo.教学轮转;
+TRUNCATE TABLE dbo.教学出科申请;
+TRUNCATE TABLE dbo.教学更换带教老师;
+TRUNCATE TABLE dbo.教学补轮转;
+TRUNCATE TABLE dbo.教学考勤情况
+TRUNCATE TABLE dbo.教学轮转任务;
+TRUNCATE TABLE dbo.教学轮转手册完成任务;
+TRUNCATE TABLE dbo.教学轮转手册;
+TRUNCATE TABLE 教学医疗差错及事故记录;
+TRUNCATE TABLE dbo.教学考试成绩;
+TRUNCATE TABLE dbo.教学请假申请;
+
+TRUNCATE TABLE dbo.Flow;
+TRUNCATE TABLE dbo.Step;
+TRUNCATE TABLE dbo.StepAssignedPerson;
+
  --------------------------------------------------------------------------------------------------------------------
  --下面是在云服务器上不一定要放置的,或者说,要进一步整理才可以放置
  --------------------------------------------------------------------------------------------------------------------
@@ -948,22 +997,3 @@ INSERT  dbo.教学本院科室任务
         FROM    dbo.教学专业科室任务
         WHERE   教学专业科室编号 = 1;
 GO
-
-TRUNCATE TABLE 教学结业申请;
-TRUNCATE TABLE 教学退培申请;
-TRUNCATE TABLE dbo.教学学员培训;
-TRUNCATE TABLE dbo.教学轮转;
-TRUNCATE TABLE dbo.教学出科申请;
-TRUNCATE TABLE dbo.教学更换带教老师;
-TRUNCATE TABLE dbo.教学补轮转;
-TRUNCATE TABLE dbo.教学考勤情况
-TRUNCATE TABLE dbo.教学轮转任务;
-TRUNCATE TABLE dbo.教学轮转手册完成任务;
-TRUNCATE TABLE dbo.教学轮转手册;
-TRUNCATE TABLE 教学医疗差错及事故记录;
-TRUNCATE TABLE dbo.教学考试成绩;
-TRUNCATE TABLE dbo.教学请假申请;
-
-TRUNCATE TABLE dbo.Flow;
-TRUNCATE TABLE dbo.Step;
-TRUNCATE TABLE dbo.StepAssignedPerson;

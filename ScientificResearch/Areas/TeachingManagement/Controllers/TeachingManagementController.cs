@@ -173,6 +173,8 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
 
             //循环每个学员
             var 学员轮转安排列表 = new List<v_教学轮转>();
+
+            //2019-8-19 这里的是优先填满某个科室,再下一个;
             for (int i = 0, length = data.学员编号列表.Count(); i < length; i++)
             {
                 //当前学员的index/可重复数的商,再对"存放策略组合的列表"的数量取商取余,余对应元素对总周期*商,就是该学员对应的策略组合
@@ -180,7 +182,14 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
                 var 该学员在第几个完整轮转 = i / 一个完整轮转容纳人数; // 下标以0开始
 
                 //对应的策略
-                var 对应的策略 = 存放策略组合的列表[i / 最小的最大学员人数];
+                //var 对应的策略 = 存放策略组合的列表[i / 最小的最大学员人数];
+
+                //(i % 一个完整轮转容纳人数)表示这个学员在一个完整轮转里面处于第几个;
+                //(i % 一个完整轮转容纳人数) / 最小的最大学员人数,表示用学员先填满一个完整轮转里面的a计划,满了再b计划
+                //var 对应的策略 = 存放策略组合的列表[(i % 一个完整轮转容纳人数) / 最小的最大学员人数];
+
+                //(i % 一个完整轮转容纳人数) % 存放策略组合的列表.Count()表示用学员平均放到abc计划里面去.第一个去a,第二个去b,完了再从a开始;
+                var 对应的策略 = 存放策略组合的列表[(i % 一个完整轮转容纳人数) % 存放策略组合的列表.Count()];
 
                 //该学员最初的开始结束日期, 要考虑该学员在第几个完整轮转
                 var 开始日期 = ((DateTime)data.计划开始培训日期).AddDays(一个完整轮转的总时长 * 该学员在第几个完整轮转 * 7);
@@ -217,6 +226,8 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
                 }
 
             }
+
+
             //这个策略组合不能马上存库,而是要返给前台,让用户确认甚至修改后再保存;
 
             //data.学员编号列表.ToList().
@@ -486,7 +497,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             var 学员的轮转 = await Db.GetListSpAsync<v_教学轮转, v_教学轮转Filter>(new v_教学轮转Filter()
             {
                 WhereIn学员编号 = 分页的学员.list.Select(i => i.编号).ToStringIdWithSpacer()
-            }, $"tfn_我的轮转('{CurrentUser.人员类型}',{CurrentUser.编号})", orderType: true,orderStr:nameof(v_教学轮转.计划入科日期));
+            }, $"tfn_我的轮转('{CurrentUser.人员类型}',{CurrentUser.编号})", orderType: true, orderStr: nameof(v_教学轮转.计划入科日期));
 
             return new
             {
@@ -568,7 +579,7 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             }
             if (要补轮转的教学轮转视图.状态 == 教学轮转状态.已出科.ToString())
             {
-                throw new Exception("已出科轮转不能补轮转");
+                throw new Exception("已出科轮转 不能补轮转");
             }
             var 要补轮转的教学轮转 = MyLib.Tool.ModelToModel<v_教学轮转, 教学轮转>(要补轮转的教学轮转视图);
 
