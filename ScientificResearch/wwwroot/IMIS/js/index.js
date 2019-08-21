@@ -1,9 +1,9 @@
-$(function () {
+$(function() {
     var ParentIndex;
     var TwoIndex;
     window.vm = null;
     avalon.config({ debug: false });
-    avalon.ready(function () {
+    avalon.ready(function() {
         window.vm = avalon.define({
             $id: 'root',
             userInfo: '',
@@ -20,15 +20,15 @@ $(function () {
                 是否必读: true,
             },
             total: '',
-            onload: function () {
-                getMenuPermissions(function (success) {
+            onload: function() {
+                getMenuPermissions(function(success) {
                     if (success) {
                         console.log('localStorage.info', localStorage.info);
                         var info = JSON.parse(localStorage.info);
                         window.mUserInfo = info.data;
                         window.mUserId = info.data.人员.编号;
                         vm.hospital = info.dbKey;
-                        vm.loginUrl = 'login.html?name='+info.dbKey;
+                        vm.loginUrl = 'login.html?name=' + info.dbKey;
                         //2019-7-13pc入口过来出错,先注释
                         //vm.loginUrl = info.url;
                         //vm.newUrl = info.url.slice(7, 11);
@@ -43,7 +43,7 @@ $(function () {
                     }
                 });
             },
-            ClickLiParent: function (index, el) {
+            ClickLiParent: function(index, el) {
                 ParentIndex = index + 1;
                 var li = $('.nav-sidebar .parent-li:eq(' + ParentIndex + ')');
                 var siblings = li.siblings().removeClass('active');
@@ -58,7 +58,7 @@ $(function () {
                     return false;
                 }
             },
-            ClickLiTwo: function (index, aa) {
+            ClickLiTwo: function(index, aa) {
                 TwoIndex = index;
                 var li = $('.parent-li:eq(' + ParentIndex + ') .treeview-menu >li:eq(' + TwoIndex + ')');
                 var siblings = li.siblings().removeClass('active');
@@ -73,7 +73,7 @@ $(function () {
                     return false;
                 }
             },
-            ClickLiThree: function (index, bb) {
+            ClickLiThree: function(index, bb) {
                 var li = $('.parent-li:eq(' + ParentIndex + ') .treeview-menu >li:eq(' + TwoIndex + ') .treeview-menu-sub >li:eq(' + (index) + ')');
                 li.addClass('active').siblings().removeClass('active');
                 var url = bb.菜单.路径;
@@ -88,7 +88,7 @@ $(function () {
                     return false;
                 }
             },
-            hoverLi: function (index, el) {
+            hoverLi: function(index, el) {
                 if ($('body').hasClass('mini-sidebar')) {
                     ParentIndex = index + 1;
                     var li = $('.nav-sidebar .parent-li:eq(' + ParentIndex + ')');
@@ -103,7 +103,7 @@ $(function () {
                     }
                 }
             },
-            clickBtnEdit: function (val) {
+            clickBtnEdit: function(val) {
                 sessionStorage.addUerType = JSON.stringify(0);
                 var userType = {
                     type: true,
@@ -113,17 +113,17 @@ $(function () {
                 sessionStorage.userType = JSON.stringify(userType);
                 vm.getUserDetail(mUserInfo.人员.编号);
             },
-            changeUrlNew: function (url) {
+            changeUrlNew: function(url) {
                 $.ajax({
                     url: url,
                     type: 'get',
-                    success: function (data) {
+                    success: function(data) {
                         $('.modal-choice .modal-dialog').html('');
                         $('.modal-choice .modal-dialog').append(data);
                     }
                 });
             },
-            getUserNoticeMustReadList: function () {
+            getUserNoticeMustReadList: function() {
                 Notice.getUserNoticeList('get', vm.req.$model, function getUserNoticeListListener(success, obj, strErro) {
                     if (success) {
                         vm.total = obj.total;
@@ -139,11 +139,11 @@ $(function () {
                     }
                 });
             },
-            clickPassWord: function () {
+            clickPassWord: function() {
                 sessionStorage.mkeyandetails = true;
                 $('.subpage #subpage').attr('src', vm.getUrl('/IMIS/views/科研办公/科研办公/修改密码.html'));
             },
-            getUserDetail: function (userId) {
+            getUserDetail: function(userId) {
                 User.getUsersDetails('get', userId, function getUsersDetailsListener(success, obj, strErro) {
                     if (success) {
                         sessionStorage.mUsers = JSON.stringify(obj);
@@ -154,13 +154,13 @@ $(function () {
                     }
                 });
             },
-            noticeDetails: function (id) {
+            noticeDetails: function(id) {
                 sessionStorage.noticeId = JSON.stringify(id);
             },
-            getUrl: function (url) {
+            getUrl: function(url) {
                 return decodeURI(encodeURI(encodeURI(url)));
             },
-            logOut: function () {
+            logOut: function() {
                 localStorage.removeItem('info');
                 sessionStorage.removeItem('userInfo');
                 sessionStorage.removeItem('Authorization');
@@ -169,7 +169,7 @@ $(function () {
             }
         });
         //左边导航
-        $('.sidebar .parent-li a:first').on('click', function () {
+        $('.sidebar .parent-li a:first').on('click', function() {
             var li = $(this).parent();
             var siblings = li.addClass('active').siblings().removeClass('active');
             siblings.find('.treeview-menu').slideUp().find('li.active').removeClass('active');
@@ -186,7 +186,7 @@ $(function () {
 
 
     //顶部菜单
-    $('.sidebar-toggle').on('click', function () {
+    $('.sidebar-toggle').on('click', function() {
         $('body').toggleClass('mini-sidebar');
         $('.parent-li ul').hide();
 
@@ -200,7 +200,7 @@ $(function () {
     }
 
     layout();
-    $(window).resize(function () {
+    $(window).resize(function() {
         var width = $(window).width();
         layout();
         if (width <= 1280) {
@@ -232,7 +232,7 @@ $(function () {
     });
 
     //头部导航
-    $('.user-info .dropdown-menu a').on('click', function () {
+    $('.user-info .dropdown-menu a').on('click', function() {
         $('.dropdown-menu li').removeClass('active');
         $(this).parents('li').addClass('active').siblings().removeClass('active');
 
@@ -251,7 +251,7 @@ $(function () {
         themeInit(cookieStyle);
     }
 
-    $('.theme li').on('click', function () {
+    $('.theme li').on('click', function() {
         var style = $(this).attr('id');
         sessionStorage.mystyle = style;
         if (style == 'default') {
@@ -291,7 +291,7 @@ $(function () {
 
     $('.dropdown-toggle').dropdown();
 
-    $('body').on('click', function () {
+    $('body').on('click', function() {
         $('.dropdown-toggle').dropdown();
     });
 

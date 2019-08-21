@@ -1,6 +1,6 @@
 //用户
 var User = {
-    userLogin: function (type, options, userLoginListener) {
+    userLogin: function(type, options, userLoginListener) {
         var url = Code.URL_POST_LOGIN;
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
             if (success) {
@@ -12,7 +12,7 @@ var User = {
             }
         });
     },
-    userChangePassword: function (type, options, userChangePasswordListener) {
+    userChangePassword: function(type, options, userChangePasswordListener) {
         var url = Code.URL_POST_CHANGE_PASSWORD;
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
             if (success) {
@@ -24,7 +24,7 @@ var User = {
             }
         });
     },
-    getUsersList: function (type, options, getUsersListListener) {
+    getUsersList: function(type, options, getUsersListListener) {
         var url = Code.URL_GET_USERS_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -35,7 +35,7 @@ var User = {
             }
         });
     },
-    getPagingUsersList: function (type, options, getPagingUsersListListener) {
+    getPagingUsersList: function(type, options, getPagingUsersListListener) {
         var url = Code.URL_GET_PAGING_USERS_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -46,7 +46,7 @@ var User = {
             }
         });
     },
-    getEnableUsersList: function (type, options, getEnableUsersListListener) {
+    getEnableUsersList: function(type, options, getEnableUsersListListener) {
         var url = Code.URL_GET_PAGING_ENABLE_USERS_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -57,7 +57,7 @@ var User = {
             }
         });
     },
-    addOrEditUsers: function (type, options, addOrEditUsersListener) {
+    addOrEditUsers: function(type, options, addOrEditUsersListener) {
         var url = Code.URL_POST_ADD_OR_EDIT_USERS;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -68,7 +68,7 @@ var User = {
             }
         });
     },
-    enableUsers: function (type, id, enableDepartmentListener) {
+    enableUsers: function(type, id, enableDepartmentListener) {
         var url = Code.URL_POST_ENABLE_USERS;
 
         Connect_Http.httpDatas(type, url, id, function getBackListener(success, obj, strErro) {
@@ -79,7 +79,7 @@ var User = {
             }
         });
     },
-    DisableUsers: function (type, id, DisableDepartmentListener) {
+    DisableUsers: function(type, id, DisableDepartmentListener) {
         var url = Code.URL_POST_DISABLE_USERS;
 
         Connect_Http.httpDatas(type, url, id, function getBackListener(success, obj, strErro) {
@@ -90,7 +90,7 @@ var User = {
             }
         });
     },
-    getUsersDetails: function (type, id, getUsersDetailsListener) {
+    getUsersDetails: function(type, id, getUsersDetailsListener) {
         var url = Code.URL_GET_USER_DETAILS;
         var postDat = {
             人员编号: id
@@ -104,7 +104,7 @@ var User = {
             }
         });
     },
-    getUsersDetailsAuxiliaryData: function (type, getUsersDetailsAuxiliaryDataListener) {
+    getUsersDetailsAuxiliaryData: function(type, getUsersDetailsAuxiliaryDataListener) {
         var url = Code.URL_GET_USER_DETAILS_AUXILIARY_DATA;
 
         Connect_Http.httpDatas(type, url, '', function getBackListener(success, obj, strErro) {
@@ -119,7 +119,7 @@ var User = {
 
 //角色
 var Menu = {
-    getMenuPermissions: function (type, getMenuPermissionsListener) {
+    getMenuPermissions: function(type, getMenuPermissionsListener) {
         var url = Code.URL_GET_MENU_PERMISSIONS;
 
         Connect_Http.httpDatas(type, url, '', function getBackListener(success, obj, strErro) {
@@ -135,7 +135,7 @@ var Menu = {
 
 //角色
 var Role = {
-    getRoleList: function (type, getRoleListListener) {
+    getRoleList: function(type, getRoleListListener) {
         var url = Code.URL_GET_ROLE_LIST;
 
         Connect_Http.httpDatas(type, url, '', function getBackListener(success, obj, strErro) {
@@ -146,7 +146,7 @@ var Role = {
             }
         });
     },
-    addRole: function (type, options, addRoleListener) {
+    addRole: function(type, options, addRoleListener) {
         var url = Code.URL_POST_ADD_ROLE;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -157,7 +157,7 @@ var Role = {
             }
         });
     },
-    editRole: function (type, options, editRoleListener) {
+    editRole: function(type, options, editRoleListener) {
         var url = Code.URL_POST_ADD_ROLE;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -168,7 +168,7 @@ var Role = {
             }
         });
     },
-    getRoleUsers: function (type, options, getRoleUsersListener) {
+    getRoleUsers: function(type, options, getRoleUsersListener) {
         var url = Code.URL_GET_ROLE_USERS;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -179,7 +179,7 @@ var Role = {
             }
         });
     },
-    getRoleNotUsers: function (type, options, getRoleNotUsersListener) {
+    getRoleNotUsers: function(type, options, getRoleNotUsersListener) {
         var url = Code.URL_GET_ROLE_NOT_USERS;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -190,7 +190,7 @@ var Role = {
             }
         });
     },
-    editRoleUsers: function (type, options, editRoleUsersListener) {
+    editRoleUsers: function(type, options, editRoleUsersListener) {
         var url = Code.URL_POST_EDIT_ROLE_USERS;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -201,7 +201,7 @@ var Role = {
             }
         });
     },
-    addAndDelRoleUsers: function (type, options, addAndDelRoleUsersListener) {
+    addAndDelRoleUsers: function(type, options, addAndDelRoleUsersListener) {
         var url = Code.URL_POST_ADD_AND_DEL_ROLE_USERS;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -212,7 +212,7 @@ var Role = {
             }
         });
     },
-    getRoleJurisdiction: function (type, number, getRoleJurisdictionListener) {
+    getRoleJurisdiction: function(type, number, getRoleJurisdictionListener) {
         var url = Code.URL_GET_ROLE_JURISDICTION;
         var postData = {
             角色编号: number
@@ -226,7 +226,7 @@ var Role = {
             }
         });
     },
-    editRoleJurisdiction: function (type, options, editRoleJurisdictionListener) {
+    editRoleJurisdiction: function(type, options, editRoleJurisdictionListener) {
         var url = Code.URL_POST_EDIT_ROLE_JURISDICTION;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -241,7 +241,7 @@ var Role = {
 
 //日志
 var Log = {
-    getLoginLog: function (type, options, getLoginLogListener) {
+    getLoginLog: function(type, options, getLoginLogListener) {
         var url = Code.URL_GET_LOGIN_LOG;
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
             if (success) {
@@ -257,7 +257,7 @@ var Log = {
 
 //部门
 var Department = {
-    getDepartmentList: function (type, name, getDepartmentListListener) {
+    getDepartmentList: function(type, name, getDepartmentListListener) {
         var url = Code.URL_GET_DEPARTMENT_LIST;
         var postData = {
             Like名称: name
@@ -271,7 +271,7 @@ var Department = {
             }
         });
     },
-    getEnableDepartmentList: function (type, name, getEnableDepartmentListListener) {
+    getEnableDepartmentList: function(type, name, getEnableDepartmentListListener) {
         var url = Code.URL_GET_ENABLE_DEPARTMENT_LIST;
         var postData = {
             Like名称: name
@@ -285,7 +285,7 @@ var Department = {
             }
         });
     },
-    addOrEditDepartment: function (type, options, addOrEditDepartmentListener) {
+    addOrEditDepartment: function(type, options, addOrEditDepartmentListener) {
         var url = Code.URL_POST_ADD_OR_EDIT_DEPARTMENT;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -296,7 +296,7 @@ var Department = {
             }
         });
     },
-    enableDepartment: function (type, id, enableDepartmentListener) {
+    enableDepartment: function(type, id, enableDepartmentListener) {
         var url = Code.URL_POST_ENABLE_DEPARTMENT;
 
         Connect_Http.httpDatas(type, url, id, function getBackListener(success, obj, strErro) {
@@ -307,7 +307,7 @@ var Department = {
             }
         });
     },
-    DisableDepartment: function (type, id, DisableDepartmentListener) {
+    DisableDepartment: function(type, id, DisableDepartmentListener) {
         var url = Code.URL_POST_DISABLE_DEPARTMENT;
 
         Connect_Http.httpDatas(type, url, id, function getBackListener(success, obj, strErro) {
@@ -323,7 +323,7 @@ var Department = {
 
 //字典
 var Dictionary = {
-    getPagingDictionaryList: function (type, options, getPagingDictionaryListListener) {
+    getPagingDictionaryList: function(type, options, getPagingDictionaryListListener) {
         var url = Code.URL_GET_PAGING_CATEGORY_DICTIONARY;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -334,7 +334,7 @@ var Dictionary = {
             }
         });
     },
-    getDictionaryList: function (type, name, getDictionaryListListener) {
+    getDictionaryList: function(type, name, getDictionaryListListener) {
         var url = Code.URL_GET_CATEGORY_DICTIONARY;
         var postData = {
             分类: name
@@ -348,7 +348,7 @@ var Dictionary = {
             }
         });
     },
-    addDictionary: function (type, options, addDictionaryListener) {
+    addDictionary: function(type, options, addDictionaryListener) {
         var url = Code.URL_POST_ADD_DICTIONARY;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -359,7 +359,7 @@ var Dictionary = {
             }
         });
     },
-    editDictionary: function (type, options, editDictionaryListener) {
+    editDictionary: function(type, options, editDictionaryListener) {
         var url = Code.URL_POST_EDIT_DICTIONARY;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -370,7 +370,7 @@ var Dictionary = {
             }
         });
     },
-    delDictionary: function (type, options, delDictionaryListener) {
+    delDictionary: function(type, options, delDictionaryListener) {
         var url = Code.URL_POST_DEL_DICTIONARY;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -381,7 +381,7 @@ var Dictionary = {
             }
         });
     },
-    getPagingDictionaryChild: function (type, options, getPagingDictionaryChildListener) {
+    getPagingDictionaryChild: function(type, options, getPagingDictionaryChildListener) {
         var url = Code.URL_GET_PAGING_DICTIONARY_CHILD;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -392,7 +392,7 @@ var Dictionary = {
             }
         });
     },
-    getDictionaryChild: function (type, id, getDictionaryChildListener) {
+    getDictionaryChild: function(type, id, getDictionaryChildListener) {
         var url = Code.URL_GET_DICTIONARY_CHILD;
 
         var postData = {
@@ -411,7 +411,7 @@ var Dictionary = {
 
 //学科
 var Subject = {
-    getSubjectList: function (type, options, getSubjectListListener) {
+    getSubjectList: function(type, options, getSubjectListListener) {
         var url = Code.URL_GET_SUBJECT_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -422,7 +422,7 @@ var Subject = {
             }
         });
     },
-    addSubject: function (type, options, addSubjectListener) {
+    addSubject: function(type, options, addSubjectListener) {
         var url = Code.URL_POST_ADD_SUBJECT;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -433,7 +433,7 @@ var Subject = {
             }
         });
     },
-    editSubject: function (type, options, editSubjectListener) {
+    editSubject: function(type, options, editSubjectListener) {
         var url = Code.URL_POST_EDIT_SUBJECT;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -444,7 +444,7 @@ var Subject = {
             }
         });
     },
-    delSubject: function (type, options, delSubjectListener) {
+    delSubject: function(type, options, delSubjectListener) {
         var url = Code.URL_POST_DEL_SUBJECT;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -459,7 +459,7 @@ var Subject = {
 
 //国民行业代码
 var IndustryCode = {
-    getIndustryCodeList: function (type, options, getIndustryCodeListListener) {
+    getIndustryCodeList: function(type, options, getIndustryCodeListListener) {
         var url = Code.URL_GET_INDUSTRY_CODE_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -470,7 +470,7 @@ var IndustryCode = {
             }
         });
     },
-    addIndustryCode: function (type, options, addIndustryCodeListener) {
+    addIndustryCode: function(type, options, addIndustryCodeListener) {
         var url = Code.URL_POST_ADD_INDUSTRY_CODE;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -481,7 +481,7 @@ var IndustryCode = {
             }
         });
     },
-    editIndustryCode: function (type, options, editIndustryCodeListener) {
+    editIndustryCode: function(type, options, editIndustryCodeListener) {
         var url = Code.URL_POST_EDIT_INDUSTRY_CODE;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -492,7 +492,7 @@ var IndustryCode = {
             }
         });
     },
-    delIndustryCode: function (type, options, delIndustryCodeListener) {
+    delIndustryCode: function(type, options, delIndustryCodeListener) {
         var url = Code.URL_POST_DEL_INDUSTRY_CODE;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -507,7 +507,7 @@ var IndustryCode = {
 
 //合同买方性质
 var ContractBuyer = {
-    getContractBuyerList: function (type, options, getContractBuyerListListener) {
+    getContractBuyerList: function(type, options, getContractBuyerListListener) {
         var url = Code.URL_GET_CONTRACT_BUYER_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -518,7 +518,7 @@ var ContractBuyer = {
             }
         });
     },
-    addContractBuyer: function (type, options, addContractBuyerListener) {
+    addContractBuyer: function(type, options, addContractBuyerListener) {
         var url = Code.URL_POST_ADD_CONTRACT_BUYER;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -529,7 +529,7 @@ var ContractBuyer = {
             }
         });
     },
-    editContractBuyer: function (type, options, editContractBuyerListener) {
+    editContractBuyer: function(type, options, editContractBuyerListener) {
         var url = Code.URL_POST_EDIT_CONTRACT_BUYER;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -540,7 +540,7 @@ var ContractBuyer = {
             }
         });
     },
-    delContractBuyer: function (type, options, delContractBuyerListener) {
+    delContractBuyer: function(type, options, delContractBuyerListener) {
         var url = Code.URL_POST_DEL_CONTRACT_BUYER;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -555,7 +555,7 @@ var ContractBuyer = {
 
 //技术领域
 var TechnicalField = {
-    getTechnicalFieldList: function (type, options, getTechnicalFieldListListener) {
+    getTechnicalFieldList: function(type, options, getTechnicalFieldListListener) {
         var url = Code.URL_GET_TECHNICAL_FIELD_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -566,7 +566,7 @@ var TechnicalField = {
             }
         });
     },
-    addTechnicalField: function (type, options, addTechnicalFieldListener) {
+    addTechnicalField: function(type, options, addTechnicalFieldListener) {
         var url = Code.URL_POST_ADD_TECHNICAL_FIELD;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -577,7 +577,7 @@ var TechnicalField = {
             }
         });
     },
-    editTechnicalField: function (type, options, editTechnicalFieldListener) {
+    editTechnicalField: function(type, options, editTechnicalFieldListener) {
         var url = Code.URL_POST_EDIT_TECHNICAL_FIELD;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -588,7 +588,7 @@ var TechnicalField = {
             }
         });
     },
-    delTechnicalField: function (type, options, delTechnicalFieldListener) {
+    delTechnicalField: function(type, options, delTechnicalFieldListener) {
         var url = Code.URL_POST_DEL_TECHNICAL_FIELD;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -603,7 +603,7 @@ var TechnicalField = {
 
 //区域
 var Area = {
-    getAreaList: function (type, options, getAreaListListener) {
+    getAreaList: function(type, options, getAreaListListener) {
         var url = Code.URL_GET_AREA_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -614,7 +614,7 @@ var Area = {
             }
         });
     },
-    addArea: function (type, options, addAreaListener) {
+    addArea: function(type, options, addAreaListener) {
         var url = Code.URL_POST_ADD_AREA;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -625,7 +625,7 @@ var Area = {
             }
         });
     },
-    editArea: function (type, options, editAreaListener) {
+    editArea: function(type, options, editAreaListener) {
         var url = Code.URL_POST_EDIT_AREA;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -636,7 +636,7 @@ var Area = {
             }
         });
     },
-    delArea: function (type, options, delAreaListener) {
+    delArea: function(type, options, delAreaListener) {
         var url = Code.URL_POST_DEL_AREA;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -651,7 +651,7 @@ var Area = {
 
 //经费模版
 var ExpenditureTemplate = {
-    getTemplateList: function (type, options, getTemplateListListener) {
+    getTemplateList: function(type, options, getTemplateListListener) {
         var url = Code.URL_GET_EXPENDITURE_TEMPLATE_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -662,7 +662,7 @@ var ExpenditureTemplate = {
             }
         });
     },
-    getTemplateTypesAndContent: function (type, id, getTemplateTypesAndContentListener) {
+    getTemplateTypesAndContent: function(type, id, getTemplateTypesAndContentListener) {
         var url = Code.URL_GET_EXPENDITURE_TEMPLATE_TYPES_AND_CONTENT;
         var postData = {
             经费模版编号: id
@@ -676,7 +676,7 @@ var ExpenditureTemplate = {
             }
         });
     },
-    addOrEditTemplate: function (type, options, addOrEditTemplateListener) {
+    addOrEditTemplate: function(type, options, addOrEditTemplateListener) {
         var url = Code.URL_POST_ADD_OR_EDIT_EXPENDITURE_TEMPLATE;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -687,7 +687,7 @@ var ExpenditureTemplate = {
             }
         });
     },
-    delTemplate: function (type, options, delTemplateListener) {
+    delTemplate: function(type, options, delTemplateListener) {
         var url = Code.URL_POST_DEL_EXPENDITURE_TEMPLATE;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -698,7 +698,7 @@ var ExpenditureTemplate = {
             }
         });
     },
-    getExpenditureType: function (type, options, getExpenditureTypeListener) {
+    getExpenditureType: function(type, options, getExpenditureTypeListener) {
         var url = Code.URL_GET_EXPENDITURE_TYPE_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -709,7 +709,7 @@ var ExpenditureTemplate = {
             }
         });
     },
-    addOrEditExpenditureType: function (type, options, addOrEditExpenditureTypeListener) {
+    addOrEditExpenditureType: function(type, options, addOrEditExpenditureTypeListener) {
         var url = Code.URL_POST_ADD_OR_EDIT_EXPENDITURE_TYPE;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -720,7 +720,7 @@ var ExpenditureTemplate = {
             }
         });
     },
-    delExpenditureType: function (type, options, delExpenditureTypeListener) {
+    delExpenditureType: function(type, options, delExpenditureTypeListener) {
         var url = Code.URL_POST_DEL_EXPENDITURE_TYPE;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -731,7 +731,7 @@ var ExpenditureTemplate = {
             }
         });
     },
-    getExpenditureTypeDetail: function (type, id, getExpenditureTypeDetailListener) {
+    getExpenditureTypeDetail: function(type, id, getExpenditureTypeDetailListener) {
         var url = Code.URL_GET_EXPENDITURE_TYPE_DETAIL;
         var postData = {
             经费模版项目支出类型编号: id
@@ -749,7 +749,7 @@ var ExpenditureTemplate = {
 
 //项目分类
 var ProjectType = {
-    getProjectTypeList: function (type, options, getProjectTypeListListener) {
+    getProjectTypeList: function(type, options, getProjectTypeListListener) {
         var url = Code.URL_GET_PROJECT_TYPE_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -760,7 +760,7 @@ var ProjectType = {
             }
         });
     },
-    getProjectType: function (type, id, getProjectTypeListListener) {
+    getProjectType: function(type, id, getProjectTypeListListener) {
         var url = Code.URL_GET_PROJECT_TYPE_LIST;
         var postData = {
             上级编号: id
@@ -774,7 +774,7 @@ var ProjectType = {
             }
         });
     },
-    addOrEditProjectType: function (type, options, addOrEditProjectTypeListener) {
+    addOrEditProjectType: function(type, options, addOrEditProjectTypeListener) {
         var url = Code.URL_POST_ADD_OR_EDIT_PROJECT_TYPE;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -785,7 +785,7 @@ var ProjectType = {
             }
         });
     },
-    delProjectType: function (type, options, delProjectTypeListener) {
+    delProjectType: function(type, options, delProjectTypeListener) {
         var url = Code.URL_POST_DEL_PROJECT_TYPE;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -800,7 +800,7 @@ var ProjectType = {
 
 //期刊
 var Periodical = {
-    getPeriodicalList: function (type, options, getPeriodicalListListener) {
+    getPeriodicalList: function(type, options, getPeriodicalListListener) {
         var url = Code.URL_GET_PERIODICAL_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -811,7 +811,7 @@ var Periodical = {
             }
         });
     },
-    addOrEditPeriodical: function (type, options, addOrEditPeriodicalListener) {
+    addOrEditPeriodical: function(type, options, addOrEditPeriodicalListener) {
         var url = Code.URL_POST_ADD_OR_EDIT_PERIODICAL;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -822,7 +822,7 @@ var Periodical = {
             }
         });
     },
-    delPeriodical: function (type, options, delPeriodicalListener) {
+    delPeriodical: function(type, options, delPeriodicalListener) {
         var url = Code.URL_POST_DEL_PERIODICAL;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -833,7 +833,7 @@ var Periodical = {
             }
         });
     },
-    getPeriodicalSeries: function (type, classify, getPeriodicalSeriesListener) {
+    getPeriodicalSeries: function(type, classify, getPeriodicalSeriesListener) {
         var url = Code.URL_GET_CATEGORY_DICTIONARY;
         var postData = {
             分类: classify
@@ -851,7 +851,7 @@ var Periodical = {
 
 //学术任职
 var Learning = {
-    getPagingLearning: function (type, options, getPagingLearningListener) {
+    getPagingLearning: function(type, options, getPagingLearningListener) {
         var url = Code.URL_GET_PAGING_LEARNING;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -862,7 +862,7 @@ var Learning = {
             }
         });
     },
-    getLearningDetails: function (type, id, getLearningDetailsListener) {
+    getLearningDetails: function(type, id, getLearningDetailsListener) {
         var url = Code.URL_GET_LEARNING_DETAILS;
         var postData = {
             任职编号: id
@@ -876,7 +876,7 @@ var Learning = {
             }
         });
     },
-    addLearningUser: function (type, options, addLearningUserUserListener) {
+    addLearningUser: function(type, options, addLearningUserUserListener) {
         var url = Code.URL_POST_ADD_LEARNING_USER;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -887,7 +887,7 @@ var Learning = {
             }
         });
     },
-    editLearningUser: function (type, options, editLearningUserUserListener) {
+    editLearningUser: function(type, options, editLearningUserUserListener) {
         var url = Code.URL_POST_EDIT_LEARNING_USER;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -898,7 +898,7 @@ var Learning = {
             }
         });
     },
-    uploadLearningFile: function (type, options, uploadLearningFileListener) {
+    uploadLearningFile: function(type, options, uploadLearningFileListener) {
         var url = Code.URL_POST_EDIT_LEARNING_USER;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -913,7 +913,7 @@ var Learning = {
 
 //专家人员
 var ExpertTalents = {
-    getExpertTalentshUsers: function (type, options, getExpertTalentshUsersListener) {
+    getExpertTalentshUsers: function(type, options, getExpertTalentshUsersListener) {
         var url = Code.URL_GET_PAGING_EXPERTALENTS_USER;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -924,7 +924,7 @@ var ExpertTalents = {
             }
         });
     },
-    addExpertTalentsUsers: function (type, options, addExpertTalentsUsersListener) {
+    addExpertTalentsUsers: function(type, options, addExpertTalentsUsersListener) {
         var url = Code.URL_POST_ADD_EXPERTALENTS_USER;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -935,7 +935,7 @@ var ExpertTalents = {
             }
         });
     },
-    haveAddExpertTalentsUsers: function (type, options, haveAddExpertTalentsUsersListener) {
+    haveAddExpertTalentsUsers: function(type, options, haveAddExpertTalentsUsersListener) {
         var url = Code.URL_POST_HAVE_ADD_EXPERTALENTS_USER;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -946,7 +946,7 @@ var ExpertTalents = {
             }
         });
     },
-    delExpertTalentsUsers: function (type, options, delExpertTalentsUsersListener) {
+    delExpertTalentsUsers: function(type, options, delExpertTalentsUsersListener) {
         var url = Code.URL_POST_DEL_EXPERTALENTS_USER;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -962,7 +962,7 @@ var ExpertTalents = {
 
 //科研
 var ScientificResearch = {
-    getScientificResearchDetails: function (type, id, getScientificResearchDetailsListener) {
+    getScientificResearchDetails: function(type, id, getScientificResearchDetailsListener) {
         var url = Code.URL_GET_SCIENTIFICRESARCH_DETAILS;
         var postData = {
             当前登录人编号: id
@@ -976,7 +976,7 @@ var ScientificResearch = {
             }
         });
     },
-    getScientificResearchUsers: function (type, options, getScientificResearchUsersListener) {
+    getScientificResearchUsers: function(type, options, getScientificResearchUsersListener) {
         var url = Code.URL_GET_PAGING_SCIENTIFICRESARCH_USER;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -987,7 +987,7 @@ var ScientificResearch = {
             }
         });
     },
-    addScientificResearchUsers: function (type, options, addScientificResearchUsersListener) {
+    addScientificResearchUsers: function(type, options, addScientificResearchUsersListener) {
         var url = Code.URL_POST_ADD_SCIENTIFICRESARCH_USER;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -998,7 +998,7 @@ var ScientificResearch = {
             }
         });
     },
-    haveAddScientificResearchUsers: function (type, options, haveAddScientificResearchUsersListener) {
+    haveAddScientificResearchUsers: function(type, options, haveAddScientificResearchUsersListener) {
         var url = Code.URL_POST_HAVE_ADD_SCIENTIFICRESARCH_USER;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1009,7 +1009,7 @@ var ScientificResearch = {
             }
         });
     },
-    delScientificResearchUsers: function (type, options, delScientificResearchUsersListener) {
+    delScientificResearchUsers: function(type, options, delScientificResearchUsersListener) {
         var url = Code.URL_POST_DEL_SCIENTIFICRESARCH_USER;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1020,7 +1020,7 @@ var ScientificResearch = {
             }
         });
     },
-    getScientificResearchUntreated: function (type, options, getScientificResearchUntreatedListener) {
+    getScientificResearchUntreated: function(type, options, getScientificResearchUntreatedListener) {
         var url = Code.URL_GET_SCIENTIFICRESARCH_UNTREATED;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1035,7 +1035,7 @@ var ScientificResearch = {
 
 //工作流程
 var WorkFlow = {
-    WorkFlowTotalList: function (type, options, WorkFlowTotalListListener) {
+    WorkFlowTotalList: function(type, options, WorkFlowTotalListListener) {
         var url = Code.URL_GET_WORKFLOW_TOTAL_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1047,7 +1047,7 @@ var WorkFlow = {
 
         });
     },
-    WorkFlowList: function (type, id, WorkFlowListListener) {
+    WorkFlowList: function(type, id, WorkFlowListListener) {
         var url = Code.URL_GET_WORKFLOW_LIST;
         var postData = {
             办事流程编号: id
@@ -1062,7 +1062,7 @@ var WorkFlow = {
 
         });
     },
-    WorkFlow: function (type, options, WorkFlowListener) {
+    WorkFlow: function(type, options, WorkFlowListener) {
         var url = Code.URL_POST_WORKFLOW;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1074,7 +1074,7 @@ var WorkFlow = {
 
         });
     },
-    WorkFlowAssignor: function (type, options, WorkFlowAssignorListener) {
+    WorkFlowAssignor: function(type, options, WorkFlowAssignorListener) {
         var url = Code.URL_POST_WORKFLOW_ASSIGNOR;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1090,7 +1090,7 @@ var WorkFlow = {
 
 //通知公告
 var Notice = {
-    getUserNoticeList: function (type, options, getUserNoticeListListener) {
+    getUserNoticeList: function(type, options, getUserNoticeListListener) {
         var url = Code.URL_GET_PAGING_USER_NOTICE_LIST;
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
             if (success) {
@@ -1100,7 +1100,7 @@ var Notice = {
             }
         });
     },
-    getNoticeList: function (type, options, getNoticeListListener) {
+    getNoticeList: function(type, options, getNoticeListListener) {
         var url = Code.URL_GET_PAGING_NOTICE_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1111,7 +1111,7 @@ var Notice = {
             }
         });
     },
-    getNoticeDetails: function (type, id, getNoticeDetailsListener) {
+    getNoticeDetails: function(type, id, getNoticeDetailsListener) {
         var url = Code.URL_GET_NOTICE_DETAILS;
         var postData = {
             编号: id,
@@ -1126,7 +1126,7 @@ var Notice = {
             }
         });
     },
-    enableOrDisableNotice: function (type, options, enableOrDisableNoticeListener) {
+    enableOrDisableNotice: function(type, options, enableOrDisableNoticeListener) {
         var url = Code.URL_POST_ENABLE_OR_DISABLE_NOTICE;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1138,7 +1138,7 @@ var Notice = {
 
         });
     },
-    addNotice: function (type, options, addNoticeListener) {
+    addNotice: function(type, options, addNoticeListener) {
         var url = Code.URL_POST_ADD_NOTICE;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1154,7 +1154,7 @@ var Notice = {
 
 //下载中心
 var Download = {
-    getDownloadList: function (type, options, getDownloadListListener) {
+    getDownloadList: function(type, options, getDownloadListListener) {
         var url = Code.URL_GET_DOWNLOAD_CENTER;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1165,7 +1165,7 @@ var Download = {
             }
         });
     },
-    getEnableDownloadList: function (type, options, getEnableDownloadListListener) {
+    getEnableDownloadList: function(type, options, getEnableDownloadListListener) {
         var url = Code.URL_GET_ENABLE_DOWNLOAD_CENTER;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1176,7 +1176,7 @@ var Download = {
             }
         });
     },
-    addOrEditDownload: function (type, options, addOrEditDownloadListener) {
+    addOrEditDownload: function(type, options, addOrEditDownloadListener) {
         var url = Code.URL_POST_ADD_OR_DOWNLOAD;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1188,7 +1188,7 @@ var Download = {
 
         });
     },
-    enableOrDisableDownload: function (type, options, enableOrDisableDownloadListener) {
+    enableOrDisableDownload: function(type, options, enableOrDisableDownloadListener) {
         var url = Code.URL_POST_ENABLE_OR_DISABLE_DOWNLOAD;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1204,7 +1204,7 @@ var Download = {
 
 //讲座
 var Lecture = {
-    getHostLectureList: function (type, options, getHostLectureListListener) {
+    getHostLectureList: function(type, options, getHostLectureListListener) {
         var url = Code.URL_GET_HOST_LECTURE_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1215,7 +1215,7 @@ var Lecture = {
             }
         });
     },
-    getHostLectureDetails: function (type, id, getHostLectureDetailsListener) {
+    getHostLectureDetails: function(type, id, getHostLectureDetailsListener) {
         var url = Code.URL_GET_HOST_LECTURE_DETAILS;
         var postData = {
             主办讲座编号: id
@@ -1230,7 +1230,7 @@ var Lecture = {
         });
 
     },
-    addHostLecture: function (type, options, addHostLectureListener) {
+    addHostLecture: function(type, options, addHostLectureListener) {
         var url = Code.URL_POST_ADD_HOST_LECTURE;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1242,7 +1242,7 @@ var Lecture = {
 
         });
     },
-    editHostLecture: function (type, options, editHostLectureListener) {
+    editHostLecture: function(type, options, editHostLectureListener) {
         var url = Code.URL_POST_EDIT_HOST_LECTURE;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1254,7 +1254,7 @@ var Lecture = {
 
         });
     },
-    getFeedbackLecture: function (type, options, getFeedbackLectureListener) {
+    getFeedbackLecture: function(type, options, getFeedbackLectureListener) {
         var url = Code.URL_GET_FEEDBACK_LECTURE;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1265,7 +1265,7 @@ var Lecture = {
             }
         });
     },
-    getLectureFeedbackDetails: function (type, id, getLectureFeedbackDetailsListener) {
+    getLectureFeedbackDetails: function(type, id, getLectureFeedbackDetailsListener) {
         var url = Code.URL_GET_LECTURE_FEEDBACK_DETAILS;
         var postData = {
             讲座反馈编号: id
@@ -1280,7 +1280,7 @@ var Lecture = {
         });
 
     },
-    addLectureFeedback: function (type, options, addLectureFeedbackListener) {
+    addLectureFeedback: function(type, options, addLectureFeedbackListener) {
         var url = Code.URL_POST_ADD_LECTURE_FEEDBACK;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1292,7 +1292,7 @@ var Lecture = {
 
         });
     },
-    editLectureFeedback: function (type, options, editLectureFeedbackListener) {
+    editLectureFeedback: function(type, options, editLectureFeedbackListener) {
         var url = Code.URL_POST_EDIT_LECTURE_FEEDBACK;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1308,7 +1308,7 @@ var Lecture = {
 
 //会议
 var Meeting = {
-    getMeetingList: function (type, options, getMeetingListListener) {
+    getMeetingList: function(type, options, getMeetingListListener) {
         var url = Code.URL_GET_MEETING_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1319,7 +1319,7 @@ var Meeting = {
             }
         });
     },
-    getMeetingDetails: function (type, id, getMeetingDetailsListener) {
+    getMeetingDetails: function(type, id, getMeetingDetailsListener) {
         var url = Code.URL_GET_MEETING_DETAILS;
         var postData = {
             参加会议编号: id
@@ -1334,7 +1334,7 @@ var Meeting = {
         });
 
     },
-    addMeeting: function (type, options, addMeetingListener) {
+    addMeeting: function(type, options, addMeetingListener) {
         var url = Code.URL_POST_ADD_MEETING;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1346,7 +1346,7 @@ var Meeting = {
 
         });
     },
-    editMeeting: function (type, options, editMeetingListener) {
+    editMeeting: function(type, options, editMeetingListener) {
         var url = Code.URL_POST_EDIT_MEETING;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1358,7 +1358,7 @@ var Meeting = {
 
         });
     },
-    getMeetingFeedbackList: function (type, options, getMeetingFeedbackListListener) {
+    getMeetingFeedbackList: function(type, options, getMeetingFeedbackListListener) {
         var url = Code.URL_GET_MEETING_FEEDBACK_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1369,7 +1369,7 @@ var Meeting = {
             }
         });
     },
-    getMeetingFeedbackDetails: function (type, id, getMeetingFeedbackDetailsListener) {
+    getMeetingFeedbackDetails: function(type, id, getMeetingFeedbackDetailsListener) {
         var url = Code.URL_GET_MEETING_FEEDBACK_DETAILS;
         var postData = {
             参加会议反馈编号: id
@@ -1384,7 +1384,7 @@ var Meeting = {
         });
 
     },
-    addMeetingFeedback: function (type, options, addMeetingFeedbackListener) {
+    addMeetingFeedback: function(type, options, addMeetingFeedbackListener) {
         var url = Code.URL_POST_ADD_MEETING_FEEDBACK;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1396,7 +1396,7 @@ var Meeting = {
 
         });
     },
-    editMeetingFeedback: function (type, options, editMeetingFeedbackListener) {
+    editMeetingFeedback: function(type, options, editMeetingFeedbackListener) {
         var url = Code.URL_POST_EDIT_MEETING_FEEDBACK;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1412,7 +1412,7 @@ var Meeting = {
 
 //论文
 var Paper = {
-    getPaperList: function (type, options, getPaperListListener) {
+    getPaperList: function(type, options, getPaperListListener) {
         var url = Code.URL_GET_PAPER_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1423,7 +1423,7 @@ var Paper = {
             }
         });
     },
-    getPaperDetails: function (type, id, getPaperDetailsListener) {
+    getPaperDetails: function(type, id, getPaperDetailsListener) {
         var url = Code.URL_GET_PAPER_DETAILS;
         var postData = {
             论文编号: id
@@ -1437,7 +1437,7 @@ var Paper = {
             }
         });
     },
-    getPaperAuxiliaryData: function (type, getPaperAuxiliaryDataListener) {
+    getPaperAuxiliaryData: function(type, getPaperAuxiliaryDataListener) {
         var url = Code.URL_GET_PAPER_AUXILIARY_DATA;
 
         Connect_Http.httpDatas(type, url, '', function getBackListener(success, obj, strErro) {
@@ -1449,7 +1449,7 @@ var Paper = {
         });
 
     },
-    addPaper: function (type, options, addPaperListener) {
+    addPaper: function(type, options, addPaperListener) {
         var url = Code.URL_POST_ADD_PAPER;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1461,7 +1461,7 @@ var Paper = {
 
         });
     },
-    editPaper: function (type, options, editPaperListener) {
+    editPaper: function(type, options, editPaperListener) {
         var url = Code.URL_POST_EDIT_PAPER;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1473,7 +1473,7 @@ var Paper = {
 
         });
     },
-    delPaper: function (type, options, delPaperListener) {
+    delPaper: function(type, options, delPaperListener) {
         var url = Code.URL_POST_DEL_PAPER;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1485,7 +1485,7 @@ var Paper = {
 
         });
     },
-    getReceivePaperList: function (type, options, getReceivePaperListListener) {
+    getReceivePaperList: function(type, options, getReceivePaperListListener) {
         var url = Code.URL_GET_RECEIVE_PAPER_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1496,7 +1496,7 @@ var Paper = {
             }
         });
     },
-    examinePaperAllPass: function (type, examinePaperAllPassListener) {
+    examinePaperAllPass: function(type, examinePaperAllPassListener) {
         var url = Code.URL_POST_EXAMINE_PAPER_ALL_PASS;
 
         Connect_Http.httpDatas(type, url, '', function getBackListener(success, obj, strErro) {
@@ -1512,7 +1512,7 @@ var Paper = {
 
 //成果
 var Fruit = {
-    getFruitList: function (type, options, getFruitListListener) {
+    getFruitList: function(type, options, getFruitListListener) {
         var url = Code.URL_GET_ALL_FRUIT_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1527,69 +1527,69 @@ var Fruit = {
 
 //著作
 var Work = {
-    getWorkList: function (type, options, getWorkListListener) {
-        var url = Code.URL_GET_WORK_LIST;
+        getWorkList: function(type, options, getWorkListListener) {
+            var url = Code.URL_GET_WORK_LIST;
 
-        Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
-            if (success) {
-                getWorkListListener(true, obj.data, '')
-            } else {
-                getWorkListListener(false, '', strErro)
+            Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
+                if (success) {
+                    getWorkListListener(true, obj.data, '')
+                } else {
+                    getWorkListListener(false, '', strErro)
+                }
+            });
+        },
+        getWorkDetails: function(type, id, getWorkDetailsListener) {
+            var url = Code.URL_GET_WORK_DETAILS;
+            var postData = {
+                著作编号: id
             }
-        });
-    },
-    getWorkDetails: function (type, id, getWorkDetailsListener) {
-        var url = Code.URL_GET_WORK_DETAILS;
-        var postData = {
-            著作编号: id
-        }
 
-        Connect_Http.httpDatas(type, url, postData, function getBackListener(success, obj, strErro) {
-            if (success) {
-                getWorkDetailsListener(true, obj.data, '')
-            } else {
-                getWorkDetailsListener(false, '', strErro)
-            }
-        });
-    },
-    getWorkAuxiliaryData: function (type, getWorkAuxiliaryDataListener) {
-        var url = Code.URL_GET_WORK_AUXILIARY_DATA;
+            Connect_Http.httpDatas(type, url, postData, function getBackListener(success, obj, strErro) {
+                if (success) {
+                    getWorkDetailsListener(true, obj.data, '')
+                } else {
+                    getWorkDetailsListener(false, '', strErro)
+                }
+            });
+        },
+        getWorkAuxiliaryData: function(type, getWorkAuxiliaryDataListener) {
+            var url = Code.URL_GET_WORK_AUXILIARY_DATA;
 
-        Connect_Http.httpDatas(type, url, '', function getBackListener(success, obj, strErro) {
-            if (success) {
-                getWorkAuxiliaryDataListener(true, obj.data, '')
-            } else {
-                getWorkAuxiliaryDataListener(false, '', strErro)
-            }
-        });
-    },
-    addWork: function (type, options, addWorkListener) {
-        var url = Code.URL_POST_ADD_WORK;
+            Connect_Http.httpDatas(type, url, '', function getBackListener(success, obj, strErro) {
+                if (success) {
+                    getWorkAuxiliaryDataListener(true, obj.data, '')
+                } else {
+                    getWorkAuxiliaryDataListener(false, '', strErro)
+                }
+            });
+        },
+        addWork: function(type, options, addWorkListener) {
+            var url = Code.URL_POST_ADD_WORK;
 
-        Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
-            if (success) {
-                addWorkListener(true, obj, '')
-            } else {
-                addWorkListener(false, '', strErro)
-            }
-        });
-    },
-    editWork: function (type, options, editWorkListener) {
-        var url = Code.URL_POST_EDIT_WORK;
+            Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
+                if (success) {
+                    addWorkListener(true, obj, '')
+                } else {
+                    addWorkListener(false, '', strErro)
+                }
+            });
+        },
+        editWork: function(type, options, editWorkListener) {
+            var url = Code.URL_POST_EDIT_WORK;
 
-        Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
-            if (success) {
-                editWorkListener(true, obj, '')
-            } else {
-                editWorkListener(false, '', strErro)
-            }
-        });
-    },
+            Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
+                if (success) {
+                    editWorkListener(true, obj, '')
+                } else {
+                    editWorkListener(false, '', strErro)
+                }
+            });
+        },
 
-}
-//专利
+    }
+    //专利
 var Patent = {
-    getPatentList: function (type, options, getPatentListListener) {
+    getPatentList: function(type, options, getPatentListListener) {
         var url = Code.URL_GET_PATENT_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1600,7 +1600,7 @@ var Patent = {
             }
         });
     },
-    getPatentDetails: function (type, id, getPatentDetailsListener) {
+    getPatentDetails: function(type, id, getPatentDetailsListener) {
         var url = Code.URL_GET_PATENT_DETAILS;
         var postData = {
             专利编号: id
@@ -1614,7 +1614,7 @@ var Patent = {
             }
         });
     },
-    getPatentAuxiliaryData: function (type, getPatentAuxiliaryDataListener) {
+    getPatentAuxiliaryData: function(type, getPatentAuxiliaryDataListener) {
         var url = Code.URL_GET_PATENT_AUXILIARY_DATA;
 
         Connect_Http.httpDatas(type, url, '', function getBackListener(success, obj, strErro) {
@@ -1625,7 +1625,7 @@ var Patent = {
             }
         });
     },
-    addPatent: function (type, options, addPatentListener) {
+    addPatent: function(type, options, addPatentListener) {
         var url = Code.URL_POST_ADD_PATENT;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1636,7 +1636,7 @@ var Patent = {
             }
         });
     },
-    editPatent: function (type, options, editPatentListener) {
+    editPatent: function(type, options, editPatentListener) {
         var url = Code.URL_POST_EDIT_PATENT;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1651,7 +1651,7 @@ var Patent = {
 
 //获奖
 var Award = {
-    getAwardList: function (type, options, getAwardListListener) {
+    getAwardList: function(type, options, getAwardListListener) {
         var url = Code.URL_GET_AWARD_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1662,7 +1662,7 @@ var Award = {
             }
         });
     },
-    getAwardDetails: function (type, id, getAwardDetailsListener) {
+    getAwardDetails: function(type, id, getAwardDetailsListener) {
         var url = Code.URL_GET_AWARD_DETAILS;
         var postData = {
             获奖编号: id
@@ -1676,7 +1676,7 @@ var Award = {
             }
         });
     },
-    getAwardAuxiliaryData: function (type, getAwardAuxiliaryDataListener) {
+    getAwardAuxiliaryData: function(type, getAwardAuxiliaryDataListener) {
         var url = Code.URL_GET_AWARD_AUXILIARY_DATA;
 
         Connect_Http.httpDatas(type, url, '', function getBackListener(success, obj, strErro) {
@@ -1687,7 +1687,7 @@ var Award = {
             }
         });
     },
-    addAward: function (type, options, addAwardListener) {
+    addAward: function(type, options, addAwardListener) {
         var url = Code.URL_POST_ADD_AWARD;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1698,7 +1698,7 @@ var Award = {
             }
         });
     },
-    editAward: function (type, options, editAwardListener) {
+    editAward: function(type, options, editAwardListener) {
         var url = Code.URL_POST_EDIT_AWARD;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1713,7 +1713,7 @@ var Award = {
 
 //纵向项目-项目申报
 var Declare = {
-    getYSRDeclareList: function (type, options, getgetYSRDeclareListListener) {
+    getYSRDeclareList: function(type, options, getgetYSRDeclareListListener) {
         var url = Code.URL_GET_Y_SR_DECLARE_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1724,7 +1724,7 @@ var Declare = {
             }
         });
     },
-    getYSubjectDeclareList: function (type, options, getYSubjectDeclareListListener) {
+    getYSubjectDeclareList: function(type, options, getYSubjectDeclareListListener) {
         var url = Code.URL_GET_Y_SUBJECT_DECLARE_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1735,7 +1735,7 @@ var Declare = {
             }
         });
     },
-    getYPersonnelDeclareList: function (type, options, getYPersonnelDeclareListListener) {
+    getYPersonnelDeclareList: function(type, options, getYPersonnelDeclareListListener) {
         var url = Code.URL_GET_Y_PERSONNEL_DECLARE_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1746,7 +1746,7 @@ var Declare = {
             }
         });
     },
-    getYDeclareDetails: function (type, id, getYDeclareDetailsListener) {
+    getYDeclareDetails: function(type, id, getYDeclareDetailsListener) {
         var url = Code.URL_GET_Y_DECLARE_DETAILS;
         var postData = {
             纵向项目申报编号: id
@@ -1759,7 +1759,7 @@ var Declare = {
             }
         });
     },
-    getYDeclareAuxiliaryData: function (type, getYDeclareAuxiliaryDataListener) {
+    getYDeclareAuxiliaryData: function(type, getYDeclareAuxiliaryDataListener) {
         var url = Code.URL_GET_Y_DECLARE_AUXILIARY_DATA;
 
         Connect_Http.httpDatas(type, url, '', function getBackListener(success, obj, strErro) {
@@ -1770,7 +1770,7 @@ var Declare = {
             }
         });
     },
-    addYSRDeclare: function (type, options, addYSRDeclareListener) {
+    addYSRDeclare: function(type, options, addYSRDeclareListener) {
         var url = Code.URL_POST_ADD_Y_SR_DECLARE;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1781,7 +1781,7 @@ var Declare = {
             }
         });
     },
-    addYSubjectDeclare: function (type, options, addYSubjectDeclareListener) {
+    addYSubjectDeclare: function(type, options, addYSubjectDeclareListener) {
         var url = Code.URL_POST_ADD_Y_SUBJECT_DECLARE;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1792,7 +1792,7 @@ var Declare = {
             }
         });
     },
-    addYPersonnelDeclare: function (type, options, addYPersonnelDeclareListener) {
+    addYPersonnelDeclare: function(type, options, addYPersonnelDeclareListener) {
         var url = Code.URL_POST_ADD_Y_PERSONNEL_DECLARE;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1803,7 +1803,7 @@ var Declare = {
             }
         });
     },
-    editYDeclare: function (type, options, editYDeclareListener) {
+    editYDeclare: function(type, options, editYDeclareListener) {
         var url = Code.URL_POST_EDIT_Y_DECLARE;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1814,7 +1814,7 @@ var Declare = {
             }
         });
     },
-    expertReview: function (type, options, expertReviewListener) {
+    expertReview: function(type, options, expertReviewListener) {
         var url = Code.URL_POST_EXPERT_REVIEW;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1825,7 +1825,7 @@ var Declare = {
             }
         });
     },
-    getYSRCanDeclareList: function (type, options, getgetYSRCanDeclareListListener) {
+    getYSRCanDeclareList: function(type, options, getgetYSRCanDeclareListListener) {
         var url = Code.URL_GET_Y_SR_CAN_DECLARE_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1836,7 +1836,7 @@ var Declare = {
             }
         });
     },
-    getYCanSubjectDeclareList: function (type, options, getYCanSubjectDeclareListListener) {
+    getYCanSubjectDeclareList: function(type, options, getYCanSubjectDeclareListListener) {
         var url = Code.URL_POST_ADD_Y_CAN_SUBJECT_DECLARE;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1847,7 +1847,7 @@ var Declare = {
             }
         });
     },
-    getYCanPersonnelDeclareList: function (type, options, getYCanPersonnelDeclareListListener) {
+    getYCanPersonnelDeclareList: function(type, options, getYCanPersonnelDeclareListListener) {
         var url = Code.URL_POST_ADD_Y_CAN_PERSONNEL_DECLARE;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1858,7 +1858,7 @@ var Declare = {
             }
         });
     },
-    getYCanDeclareDetails: function (type, id, getYCanDeclareDetailsListener) {
+    getYCanDeclareDetails: function(type, id, getYCanDeclareDetailsListener) {
         var url = Code.URL_GET_Y_CAN_DECLARE_DETAILS;
         var postData = {
             纵向项目申报编号: id
@@ -1871,7 +1871,7 @@ var Declare = {
             }
         });
     },
-    addYCanDeclare: function (type, options, addYCanDeclareListener) {
+    addYCanDeclare: function(type, options, addYCanDeclareListener) {
         var url = Code.URL_POST_ADD_Y_CAN_DECLARE;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1886,7 +1886,7 @@ var Declare = {
 
 //纵向项目-项目立项
 var ProjectEstablish = {
-    getYProjectEstablishList: function (type, options, getYProjectEstablishListListener) {
+    getYProjectEstablishList: function(type, options, getYProjectEstablishListListener) {
         var url = Code.URL_GET_Y_PROJECT_ESTABLISH_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1897,7 +1897,7 @@ var ProjectEstablish = {
             }
         });
     },
-    getYSRProjectEstablishList: function (type, options, getgetYSRProjectEstablishListListener) {
+    getYSRProjectEstablishList: function(type, options, getgetYSRProjectEstablishListListener) {
         var url = Code.URL_GET_Y_SR_PROJECT_ESTABLISH_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1908,7 +1908,7 @@ var ProjectEstablish = {
             }
         });
     },
-    getYSubjectProjectEstablishList: function (type, options, getYSubjectProjectEstablishListener) {
+    getYSubjectProjectEstablishList: function(type, options, getYSubjectProjectEstablishListener) {
         var url = Code.URL_GET_Y_SUBJECT_PROJECT_ESTABLISH;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1919,7 +1919,7 @@ var ProjectEstablish = {
             }
         });
     },
-    getYPersonnelProjectEstablishList: function (type, options, getYPersonnelProjectEstablishListListener) {
+    getYPersonnelProjectEstablishList: function(type, options, getYPersonnelProjectEstablishListListener) {
         var url = Code.URL_GET_Y_PERSONNEL_PROJECT_ESTABLISH;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1930,7 +1930,7 @@ var ProjectEstablish = {
             }
         });
     },
-    getYProjectEstablishDetails: function (type, id, getYProjectEstablishDetailsListener) {
+    getYProjectEstablishDetails: function(type, id, getYProjectEstablishDetailsListener) {
         var url = Code.URL_GET_Y_PROJECT_ESTABLISH_DETAILS;
         var postData = {
             纵向项目立项编号: id
@@ -1943,7 +1943,7 @@ var ProjectEstablish = {
             }
         });
     },
-    getYProjectAuxiliaryData: function (type, getYProjectAuxiliaryDataListener) {
+    getYProjectAuxiliaryData: function(type, getYProjectAuxiliaryDataListener) {
         var url = Code.URL_GET_Y_PROJECT_AUXILIARY_DATA;
 
         Connect_Http.httpDatas(type, url, '', function getBackListener(success, obj, strErro) {
@@ -1954,7 +1954,7 @@ var ProjectEstablish = {
             }
         });
     },
-    addYSRProjectEstablish: function (type, options, addYSRProjectEstablishListener) {
+    addYSRProjectEstablish: function(type, options, addYSRProjectEstablishListener) {
         var url = Code.URL_POST_ADD_Y_SR_PROJECT_ESTABLISH;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1965,7 +1965,7 @@ var ProjectEstablish = {
             }
         });
     },
-    addYSubjectProjectEstablish: function (type, options, addYSubjectProjectEstablishListener) {
+    addYSubjectProjectEstablish: function(type, options, addYSubjectProjectEstablishListener) {
         var url = Code.URL_POST_ADD_Y_SUBJECT_PROJECT_ESTABLISH;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1976,7 +1976,7 @@ var ProjectEstablish = {
             }
         });
     },
-    addYPersonnelProjectEstablish: function (type, options, addYPersonnelProjectEstablishListener) {
+    addYPersonnelProjectEstablish: function(type, options, addYPersonnelProjectEstablishListener) {
         var url = Code.URL_POST_ADD_Y_PERSONNEL_PROJECT_ESTABLISH;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -1987,7 +1987,7 @@ var ProjectEstablish = {
             }
         });
     },
-    editYProjectEstablish: function (type, options, editYProjectEstablishListener) {
+    editYProjectEstablish: function(type, options, editYProjectEstablishListener) {
         var url = Code.URL_POST_EDIT_Y_PROJECT_ESTABLISH;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2002,7 +2002,7 @@ var ProjectEstablish = {
 
 //纵向项目-在研项目
 var ResearchProject = {
-    getYProjectMiddleInspection: function (type, options, getYProjectMiddleInspectionListener) {
+    getYProjectMiddleInspection: function(type, options, getYProjectMiddleInspectionListener) {
         var url = Code.URL_GET_Y_PROJECT_MIDDLE_INSPECTION;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2013,7 +2013,7 @@ var ResearchProject = {
             }
         });
     },
-    getYProjectMiddleInspectionDetails: function (type, id, getYProjectMiddleInspectionDetailsListener) {
+    getYProjectMiddleInspectionDetails: function(type, id, getYProjectMiddleInspectionDetailsListener) {
         var url = Code.URL_GET_Y_PROJECT_MIDDLE_INSPECTION_DETAILS;
         var postData = {
             纵向项目中检编号: id
@@ -2026,7 +2026,7 @@ var ResearchProject = {
             }
         });
     },
-    addYProjectMiddleInspection: function (type, options, addYProjectMiddleInspectionListener) {
+    addYProjectMiddleInspection: function(type, options, addYProjectMiddleInspectionListener) {
         var url = Code.URL_POST_ADD_Y_PROJECT_MIDDLE_INSPECTION;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2037,7 +2037,7 @@ var ResearchProject = {
             }
         });
     },
-    editYProjectMiddleInspection: function (type, options, editProjectMiddleInspectionListener) {
+    editYProjectMiddleInspection: function(type, options, editProjectMiddleInspectionListener) {
         var url = Code.URL_POST_EDIT_Y_PROJECT_MIDDLE_INSPECTION;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2048,7 +2048,7 @@ var ResearchProject = {
             }
         });
     },
-    getYProjectAlterationList: function (type, options, getYProjectAlterationListListener) {
+    getYProjectAlterationList: function(type, options, getYProjectAlterationListListener) {
         var url = Code.URL_GET_Y_PROJECT_ALTERATION_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2059,7 +2059,7 @@ var ResearchProject = {
             }
         });
     },
-    getYProjectAlterationDetails: function (type, id, getYProjectAlterationDetailsListener) {
+    getYProjectAlterationDetails: function(type, id, getYProjectAlterationDetailsListener) {
         var url = Code.URL_GET_Y_PROJECT_ALTERATION_DETAILS;
         var postData = {
             纵向项目变更编号: id,
@@ -2072,7 +2072,7 @@ var ResearchProject = {
             }
         });
     },
-    addYProjectAlteration: function (type, options, addYProjectAlterationListener) {
+    addYProjectAlteration: function(type, options, addYProjectAlterationListener) {
         var url = Code.URL_POST_ADD_Y_PROJECT_ALTERATION;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2083,7 +2083,7 @@ var ResearchProject = {
             }
         });
     },
-    editYProjectAlteration: function (type, options, editProjectAlterationListener) {
+    editYProjectAlteration: function(type, options, editProjectAlterationListener) {
         var url = Code.URL_POST_EDIT_Y_PROJECT_ALTERATION;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2094,7 +2094,7 @@ var ResearchProject = {
             }
         });
     },
-    auditYProjectAlteration: function (type, options, auditYProjectAlterationListener) {
+    auditYProjectAlteration: function(type, options, auditYProjectAlterationListener) {
         var url = Code.URL_POST_AUDIT_Y_PROJECT_ALTERATION;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2105,7 +2105,7 @@ var ResearchProject = {
             }
         });
     },
-    getYProjectConclusionList: function (type, options, getYProjectConclusionListListener) {
+    getYProjectConclusionList: function(type, options, getYProjectConclusionListListener) {
         var url = Code.URL_GET_Y_PROJECT_CONCLUSION_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2116,7 +2116,7 @@ var ResearchProject = {
             }
         });
     },
-    getYProjectConclusionDetails: function (type, id, getYProjectConclusionDetailsListener) {
+    getYProjectConclusionDetails: function(type, id, getYProjectConclusionDetailsListener) {
         var url = Code.URL_GET_Y_PROJECT_CONCLUSION_DETAILS;
         var postData = {
             纵向项目结题编号: id
@@ -2129,7 +2129,7 @@ var ResearchProject = {
             }
         });
     },
-    addYProjectConclusion: function (type, options, addYProjectConclusionListener) {
+    addYProjectConclusion: function(type, options, addYProjectConclusionListener) {
         var url = Code.URL_POST_ADD_Y_PROJECT_CONCLUSION;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2140,7 +2140,7 @@ var ResearchProject = {
             }
         });
     },
-    editYProjectConclusion: function (type, options, editProjectConclusionListener) {
+    editYProjectConclusion: function(type, options, editProjectConclusionListener) {
         var url = Code.URL_POST_EDIT_Y_PROJECT_CONCLUSION;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2155,7 +2155,7 @@ var ResearchProject = {
 
 //横向项目
 var XProject = {
-    getXProjectList: function (type, options, getXProjectListListener) {
+    getXProjectList: function(type, options, getXProjectListListener) {
         var url = Code.URL_GET_X_PROJECT_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2166,7 +2166,7 @@ var XProject = {
             }
         });
     },
-    getXProjectDetails: function (type, id, getXProjectDetailsListener) {
+    getXProjectDetails: function(type, id, getXProjectDetailsListener) {
         var url = Code.URL_GET_X_PROJECT_DETAILS;
         var postData = {
             横向项目编号: id,
@@ -2179,7 +2179,7 @@ var XProject = {
             }
         });
     },
-    getXProjectAuxiliaryData: function (type, getXProjectAuxiliaryDataListener) {
+    getXProjectAuxiliaryData: function(type, getXProjectAuxiliaryDataListener) {
         var url = Code.URL_GET_X_PROJECT_AUXILIARY_DATA;
 
         Connect_Http.httpDatas(type, url, '', function getBackListener(success, obj, strErro) {
@@ -2190,7 +2190,7 @@ var XProject = {
             }
         });
     },
-    addXProject: function (type, options, addXProjectListener) {
+    addXProject: function(type, options, addXProjectListener) {
         var url = Code.URL_POST_ADD_X_PROJECT;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2201,7 +2201,7 @@ var XProject = {
             }
         });
     },
-    editXProject: function (type, options, editXProjectListener) {
+    editXProject: function(type, options, editXProjectListener) {
         var url = Code.URL_POST_EDIT_X_PROJECT;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2212,7 +2212,7 @@ var XProject = {
             }
         });
     },
-    getXProjectAlterationList: function (type, options, getXProjectAlterationListListener) {
+    getXProjectAlterationList: function(type, options, getXProjectAlterationListListener) {
         var url = Code.URL_GET_X_PROJECT_ALTERATION_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2223,7 +2223,7 @@ var XProject = {
             }
         });
     },
-    getXProjectAlterationDetails: function (type, id, getXProjectAlterationDetailsListener) {
+    getXProjectAlterationDetails: function(type, id, getXProjectAlterationDetailsListener) {
         var url = Code.URL_GET_X_PROJECT_ALTERATION_DETAILS;
         var postData = {
             横向项目变更编号: id,
@@ -2236,7 +2236,7 @@ var XProject = {
             }
         });
     },
-    addXProjectAlteration: function (type, options, addXProjectAlterationListener) {
+    addXProjectAlteration: function(type, options, addXProjectAlterationListener) {
         var url = Code.URL_POST_ADD_X_PROJECT_ALTERATION;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2247,7 +2247,7 @@ var XProject = {
             }
         });
     },
-    editXProjectAlteration: function (type, options, editXProjectAlterationListener) {
+    editXProjectAlteration: function(type, options, editXProjectAlterationListener) {
         var url = Code.URL_POST_EDIT_X_PROJECT_ALTERATION;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2258,7 +2258,7 @@ var XProject = {
             }
         });
     },
-    auditXProjectAlteration: function (type, options, auditXProjectAlterationListener) {
+    auditXProjectAlteration: function(type, options, auditXProjectAlterationListener) {
         var url = Code.URL_POST_AUDIT_X_PROJECT_ALTERATION;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2269,7 +2269,7 @@ var XProject = {
             }
         });
     },
-    getXProjectConclusionList: function (type, options, getXProjectConclusionListListener) {
+    getXProjectConclusionList: function(type, options, getXProjectConclusionListListener) {
         var url = Code.URL_GET_X_PROJECT_CONCLUSION_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2280,7 +2280,7 @@ var XProject = {
             }
         });
     },
-    getXProjectConclusionDetails: function (type, id, getXProjectConclusionDetailsListener) {
+    getXProjectConclusionDetails: function(type, id, getXProjectConclusionDetailsListener) {
         var url = Code.URL_GET_X_PROJECT_CONCLUSION_DETAILS;
         var postData = {
             横向项目结题编号: id
@@ -2293,7 +2293,7 @@ var XProject = {
             }
         });
     },
-    addXProjectConclusion: function (type, options, addXProjectConclusionListener) {
+    addXProjectConclusion: function(type, options, addXProjectConclusionListener) {
         var url = Code.URL_POST_ADD_X_PROJECT_CONCLUSION;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2304,7 +2304,7 @@ var XProject = {
             }
         });
     },
-    editXProjectConclusion: function (type, options, editXProjectConclusionListener) {
+    editXProjectConclusion: function(type, options, editXProjectConclusionListener) {
         var url = Code.URL_POST_EDIT_X_PROJECT_CONCLUSION;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2319,7 +2319,7 @@ var XProject = {
 
 //经费到账
 var FundsIncoming = {
-    getYFundsIncomingTotalList: function (type, options, getYFundsIncomingTotalListListener) {
+    getYFundsIncomingTotalList: function(type, options, getYFundsIncomingTotalListListener) {
         var url = Code.URL_GET_Y_FUNDS_INCOMING_TOTAL_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2330,7 +2330,7 @@ var FundsIncoming = {
             }
         });
     },
-    getYFundsIncomingPagingList: function (type, options, getYFundsIncomingPagingListListener) {
+    getYFundsIncomingPagingList: function(type, options, getYFundsIncomingPagingListListener) {
         var url = Code.URL_GET_Y_FUNDS_INCOMING_PAGING_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2341,7 +2341,7 @@ var FundsIncoming = {
             }
         });
     },
-    getYFundsIncomingList: function (type, id, getYFundsIncomingListListener) {
+    getYFundsIncomingList: function(type, id, getYFundsIncomingListListener) {
         var url = Code.URL_GET_Y_FUNDS_INCOMING_LIST;
         var postData = {
             纵向项目立项编号: id
@@ -2355,7 +2355,7 @@ var FundsIncoming = {
             }
         });
     },
-    getYFundsIncomingDetails: function (type, id, getYFundsIncomingDetailsListener) {
+    getYFundsIncomingDetails: function(type, id, getYFundsIncomingDetailsListener) {
         var url = Code.URL_GET_Y_FUNDS_INCOMING_DETAILS;
         var postData = {
             纵向项目到账编号: id
@@ -2369,7 +2369,7 @@ var FundsIncoming = {
             }
         });
     },
-    addYFundsIncoming: function (type, options, addYFundsIncomingListener) {
+    addYFundsIncoming: function(type, options, addYFundsIncomingListener) {
         var url = Code.URL_POST_ADD_Y_FUNDS_INCOMING;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2380,7 +2380,7 @@ var FundsIncoming = {
             }
         });
     },
-    editYFundsIncoming: function (type, options, editYFundsIncomingListener) {
+    editYFundsIncoming: function(type, options, editYFundsIncomingListener) {
         var url = Code.URL_POST_EDIT_Y_FUNDS_INCOMING;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2391,7 +2391,7 @@ var FundsIncoming = {
             }
         });
     },
-    getXFundsIncomingTotalList: function (type, options, getXFundsIncomingTotalListListener) {
+    getXFundsIncomingTotalList: function(type, options, getXFundsIncomingTotalListListener) {
         var url = Code.URL_GET_X_FUNDS_INCOMING_TOTAL_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2402,7 +2402,7 @@ var FundsIncoming = {
             }
         });
     },
-    getXFundsIncomingPagingList: function (type, options, getXFundsIncomingPagingListListener) {
+    getXFundsIncomingPagingList: function(type, options, getXFundsIncomingPagingListListener) {
         var url = Code.URL_GET_X_FUNDS_INCOMING_PAGING_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2413,7 +2413,7 @@ var FundsIncoming = {
             }
         });
     },
-    getXFundsIncomingList: function (type, id, getXFundsIncomingListListener) {
+    getXFundsIncomingList: function(type, id, getXFundsIncomingListListener) {
         var url = Code.URL_GET_X_FUNDS_INCOMING_LIST;
         var postData = {
             横向项目编号: id
@@ -2427,7 +2427,7 @@ var FundsIncoming = {
             }
         });
     },
-    getXFundsIncomingDetails: function (type, id, getXFundsIncomingDetailsListener) {
+    getXFundsIncomingDetails: function(type, id, getXFundsIncomingDetailsListener) {
         var url = Code.URL_GET_X_FUNDS_INCOMING_DETAILS;
         var postData = {
             横向项目到账编号: id
@@ -2441,7 +2441,7 @@ var FundsIncoming = {
             }
         });
     },
-    addXFundsIncoming: function (type, options, addXFundsIncomingListener) {
+    addXFundsIncoming: function(type, options, addXFundsIncomingListener) {
         var url = Code.URL_POST_ADD_X_FUNDS_INCOMING;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2452,7 +2452,7 @@ var FundsIncoming = {
             }
         });
     },
-    editXFundsIncoming: function (type, options, editXFundsIncomingListener) {
+    editXFundsIncoming: function(type, options, editXFundsIncomingListener) {
         var url = Code.URL_POST_EDIT_X_FUNDS_INCOMING;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2468,7 +2468,7 @@ var FundsIncoming = {
 
 //经费报销
 var FundsReimbursement = {
-    getYFundsReimbursementTotalList: function (type, options, getYFundsReimbursementTotalListListener) {
+    getYFundsReimbursementTotalList: function(type, options, getYFundsReimbursementTotalListListener) {
         var url = Code.URL_GET_Y_FUNDS_REIMBURSEMENT_TOTAL_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2479,7 +2479,7 @@ var FundsReimbursement = {
             }
         });
     },
-    getYFundsReimbursementList: function (type, id, getYFundsReimbursementListListener) {
+    getYFundsReimbursementList: function(type, id, getYFundsReimbursementListListener) {
         var url = Code.URL_GET_Y_FUNDS_REIMBURSEMENT_LIST;
         var postData = {
             纵向项目立项编号: id
@@ -2493,7 +2493,7 @@ var FundsReimbursement = {
             }
         });
     },
-    getFundsReimbursementDetails: function (type, id, getFundsReimbursementDetailsListener) {
+    getFundsReimbursementDetails: function(type, id, getFundsReimbursementDetailsListener) {
         var url = Code.URL_GET_FUNDS_REIMBURSEMENT_DETAILS;
         var postData = {
             报销编号: id
@@ -2507,7 +2507,7 @@ var FundsReimbursement = {
             }
         });
     },
-    getYFundsReimbursementDetails: function (type, id, getYFundsReimbursementDetailsListener) {
+    getYFundsReimbursementDetails: function(type, id, getYFundsReimbursementDetailsListener) {
         var url = Code.URL_GET_Y_FUNDS_REIMBURSEMENT_DETAILS;
         var postData = {
             纵向项目立项编号: id
@@ -2521,7 +2521,7 @@ var FundsReimbursement = {
             }
         });
     },
-    addYFundsReimbursement: function (type, options, addYFundsReimbursementListener) {
+    addYFundsReimbursement: function(type, options, addYFundsReimbursementListener) {
         var url = Code.URL_POST_ADD_Y_FUNDS_REIMBURSEMENT;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2532,7 +2532,7 @@ var FundsReimbursement = {
             }
         });
     },
-    editFundsReimbursement: function (type, options, editFundsReimbursementListener) {
+    editFundsReimbursement: function(type, options, editFundsReimbursementListener) {
         var url = Code.URL_POST_EDIT_FUNDS_REIMBURSEMENT;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2543,7 +2543,7 @@ var FundsReimbursement = {
             }
         });
     },
-    getXFundsReimbursementTotalList: function (type, options, getXFundsReimbursementTotalListListener) {
+    getXFundsReimbursementTotalList: function(type, options, getXFundsReimbursementTotalListListener) {
         var url = Code.URL_GET_X_FUNDS_REIMBURSEMENT_TOTAL_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2554,7 +2554,7 @@ var FundsReimbursement = {
             }
         });
     },
-    getXFundsReimbursementList: function (type, id, getXFundsReimbursementListListener) {
+    getXFundsReimbursementList: function(type, id, getXFundsReimbursementListListener) {
         var url = Code.URL_GET_X_FUNDS_REIMBURSEMENT_LIST;
         var postData = {
             横向项目编号: id
@@ -2568,7 +2568,7 @@ var FundsReimbursement = {
             }
         });
     },
-    getXFundsReimbursementDetails: function (type, id, getXFundsReimbursementDetailsListener) {
+    getXFundsReimbursementDetails: function(type, id, getXFundsReimbursementDetailsListener) {
         var url = Code.URL_GET_X_FUNDS_REIMBURSEMENT_DETAILS;
         var postData = {
             横向项目编号: id
@@ -2582,7 +2582,7 @@ var FundsReimbursement = {
             }
         });
     },
-    addXFundsReimbursement: function (type, options, addXFundsReimbursementListener) {
+    addXFundsReimbursement: function(type, options, addXFundsReimbursementListener) {
         var url = Code.URL_POST_ADD_X_FUNDS_REIMBURSEMENT;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2593,7 +2593,7 @@ var FundsReimbursement = {
             }
         });
     },
-    getMeetingFundsReimbursementTotalList: function (type, options, getMeetingFundsReimbursementTotalListListener) {
+    getMeetingFundsReimbursementTotalList: function(type, options, getMeetingFundsReimbursementTotalListListener) {
         var url = Code.URL_GET_MEETING_FUNDS_REIMBURSEMENT_TOTAL_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2604,7 +2604,7 @@ var FundsReimbursement = {
             }
         });
     },
-    getMeetingFundsReimbursementList: function (type, id, getMeetingFundsReimbursementListListener) {
+    getMeetingFundsReimbursementList: function(type, id, getMeetingFundsReimbursementListListener) {
         var url = Code.URL_GET_MEETING_FUNDS_REIMBURSEMENT_LIST;
         var postData = {
             参加会议编号: id
@@ -2618,7 +2618,7 @@ var FundsReimbursement = {
             }
         });
     },
-    getMeetingFundsReimbursementDetails: function (type, id, getMeetingFundsReimbursementDetailsListener) {
+    getMeetingFundsReimbursementDetails: function(type, id, getMeetingFundsReimbursementDetailsListener) {
         var url = Code.URL_GET_MEETING_FUNDS_REIMBURSEMENT_DETAILS;
         var postData = {
             参加会议编号: id
@@ -2632,7 +2632,7 @@ var FundsReimbursement = {
             }
         });
     },
-    addMeetingFundsReimbursement: function (type, options, addMeetingFundsReimbursementListener) {
+    addMeetingFundsReimbursement: function(type, options, addMeetingFundsReimbursementListener) {
         var url = Code.URL_POST_ADD_MEETING_FUNDS_REIMBURSEMENT;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2643,7 +2643,7 @@ var FundsReimbursement = {
             }
         });
     },
-    editMeetingFundsReimbursement: function (type, options, editMeetingFundsReimbursementListener) {
+    editMeetingFundsReimbursement: function(type, options, editMeetingFundsReimbursementListener) {
         var url = Code.URL_POST_EDIT_MEETING_FUNDS_REIMBURSEMENT;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2654,7 +2654,7 @@ var FundsReimbursement = {
             }
         });
     },
-    getHostLectureReimbursementTotalList: function (type, options, getHostLectureReimbursementTotalListListener) {
+    getHostLectureReimbursementTotalList: function(type, options, getHostLectureReimbursementTotalListListener) {
         var url = Code.URL_GET_HOST_LECTURE_REIMBURSEMENT_TOTAL_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2665,7 +2665,7 @@ var FundsReimbursement = {
             }
         });
     },
-    getHostLectureReimbursementList: function (type, id, getHostLectureReimbursementListListener) {
+    getHostLectureReimbursementList: function(type, id, getHostLectureReimbursementListListener) {
         var url = Code.URL_GET_HOST_LECTURE_REIMBURSEMENT_LIST;
         var postData = {
             主办讲座编号: id
@@ -2679,7 +2679,7 @@ var FundsReimbursement = {
             }
         });
     },
-    getHostLectureReimbursementDetails: function (type, id, getHostLectureReimbursementDetailsListener) {
+    getHostLectureReimbursementDetails: function(type, id, getHostLectureReimbursementDetailsListener) {
         var url = Code.URL_GET_HOST_LECTURE_REIMBURSEMENT_DETAILS;
         var postData = {
             主办讲座编号: id
@@ -2693,7 +2693,7 @@ var FundsReimbursement = {
             }
         });
     },
-    addHostLectureReimbursement: function (type, options, addHostLectureReimbursementListener) {
+    addHostLectureReimbursement: function(type, options, addHostLectureReimbursementListener) {
         var url = Code.URL_POST_ADD_HOST_LECTURE_REIMBURSEMENT;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2708,7 +2708,7 @@ var FundsReimbursement = {
 
 //成果统计
 var FruitStatistics = {
-    getPaperFruitStatisticsList: function (type, options, getPaperFruitStatisticsListListener) {
+    getPaperFruitStatisticsList: function(type, options, getPaperFruitStatisticsListListener) {
         var url = Code.URL_GET_PAPER_FRUIT_STATISTICS_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2719,7 +2719,7 @@ var FruitStatistics = {
             }
         });
     },
-    getAwardFruitStatisticsList: function (type, options, getAwardFruitStatisticsListListener) {
+    getAwardFruitStatisticsList: function(type, options, getAwardFruitStatisticsListListener) {
         var url = Code.URL_GET_AWARD_FRUIT_STATISTICS_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2730,7 +2730,7 @@ var FruitStatistics = {
             }
         });
     },
-    getWorkFruitStatisticsList: function (type, options, getWorkFruitStatisticsListListener) {
+    getWorkFruitStatisticsList: function(type, options, getWorkFruitStatisticsListListener) {
         var url = Code.URL_GET_WORK_FRUIT_STATISTICS_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2741,7 +2741,7 @@ var FruitStatistics = {
             }
         });
     },
-    getPatentFruitStatisticsList: function (type, options, getPatentFruitStatisticsListListener) {
+    getPatentFruitStatisticsList: function(type, options, getPatentFruitStatisticsListListener) {
         var url = Code.URL_GET_PATENT_FRUIT_STATISTICS_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2752,7 +2752,7 @@ var FruitStatistics = {
             }
         });
     },
-    getDepartmentFruitStatisticsList: function (type, options, getDepartmentFruitStatisticsListListener) {
+    getDepartmentFruitStatisticsList: function(type, options, getDepartmentFruitStatisticsListListener) {
         var url = Code.URL_GET_DEPARTMENT_FRUIT_STATISTICS_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2763,7 +2763,7 @@ var FruitStatistics = {
             }
         });
     },
-    getPostFruitStatisticsList: function (type, options, getPostFruitStatisticsListListener) {
+    getPostFruitStatisticsList: function(type, options, getPostFruitStatisticsListListener) {
         var url = Code.URL_GET_POST_FRUIT_STATISTICS_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2774,7 +2774,7 @@ var FruitStatistics = {
             }
         });
     },
-    getMajorLevelFruitStatisticsList: function (type, options, getMajorLevelFruitStatisticsListListener) {
+    getMajorLevelFruitStatisticsList: function(type, options, getMajorLevelFruitStatisticsListListener) {
         var url = Code.URL_GET_MAJOR_LEVEL_FRUIT_STATISTICS_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2785,7 +2785,7 @@ var FruitStatistics = {
             }
         });
     },
-    getPostTypeFruitStatisticsList: function (type, options, getPostTypeFruitStatisticsListListener) {
+    getPostTypeFruitStatisticsList: function(type, options, getPostTypeFruitStatisticsListListener) {
         var url = Code.URL_GET_POST_TYPE_FRUIT_STATISTICS_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2796,7 +2796,7 @@ var FruitStatistics = {
             }
         });
     },
-    getEducationFruitStatisticsList: function (type, options, getEducationFruitStatisticsListListener) {
+    getEducationFruitStatisticsList: function(type, options, getEducationFruitStatisticsListListener) {
         var url = Code.URL_GET_EDUCATION_FRUIT_STATISTICS_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2811,7 +2811,7 @@ var FruitStatistics = {
 
 //横向项目统计
 var XProjectStatistics = {
-    getXFundsStatisticsList: function (type, options, getXFundsStatisticsListListener) {
+    getXFundsStatisticsList: function(type, options, getXFundsStatisticsListListener) {
         var url = Code.URL_GET_X_FUNDS_STATISTICS_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2822,7 +2822,7 @@ var XProjectStatistics = {
             }
         });
     },
-    getXProjectSummary: function (type, options, getXProjectSummaryListener) {
+    getXProjectSummary: function(type, options, getXProjectSummaryListener) {
         var url = Code.URL_GET_X_PROJECT_SUMMARY_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2838,7 +2838,7 @@ var XProjectStatistics = {
 
 //纵向项目统计
 var YProjectStatistics = {
-    getYFundsStatisticsList: function (type, options, getYFundsStatisticsListListener) {
+    getYFundsStatisticsList: function(type, options, getYFundsStatisticsListListener) {
         var url = Code.URL_GET_Y_FUNDS_STATISTICS_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2849,7 +2849,7 @@ var YProjectStatistics = {
             }
         });
     },
-    getYProjectSummary: function (type, options, getYProjectSummaryListener) {
+    getYProjectSummary: function(type, options, getYProjectSummaryListener) {
         var url = Code.URL_GET_Y_PROJECT_SUMMARY_LIST;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2865,7 +2865,7 @@ var YProjectStatistics = {
 
 //人员统计
 var UsersStatistics = {
-    getMajorLevelStatisticsUsers: function (type, options, getMajorLevelStatisticsUsersListener) {
+    getMajorLevelStatisticsUsers: function(type, options, getMajorLevelStatisticsUsersListener) {
         var url = Code.URL_GET_MAJOR_LEVEL_STATISTICS_USERS;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2876,7 +2876,7 @@ var UsersStatistics = {
             }
         });
     },
-    getPostTypeStatisticsUsers: function (type, options, getPostTypeStatisticsUsersListener) {
+    getPostTypeStatisticsUsers: function(type, options, getPostTypeStatisticsUsersListener) {
         var url = Code.URL_GET_POST_TYPE_STATISTICS_USERS;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2887,7 +2887,7 @@ var UsersStatistics = {
             }
         });
     },
-    getEducationStatisticsUsers: function (type, options, getEducationStatisticsUsersListener) {
+    getEducationStatisticsUsers: function(type, options, getEducationStatisticsUsersListener) {
         var url = Code.URL_GET_EDUCATION_STATISTICS_USERS;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {
@@ -2898,7 +2898,7 @@ var UsersStatistics = {
             }
         });
     },
-    getSubjectStatisticsUsers: function (type, options, getSubjectStatisticsUsersListener) {
+    getSubjectStatisticsUsers: function(type, options, getSubjectStatisticsUsersListener) {
         var url = Code.URL_GET_SUBJECT_STATISTICS_USERS;
 
         Connect_Http.httpDatas(type, url, options, function getBackListener(success, obj, strErro) {

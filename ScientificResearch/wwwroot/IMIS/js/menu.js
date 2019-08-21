@@ -5,7 +5,13 @@ function getMenuPermissions(getMenuPermissions) {
             if (success) {
                 var curTime = new Date().getTime();
                 var url = localStorage.getItem('gatewayUrl');
-                var personnel = JSON.parse(localStorage.myUserInfo).人员;
+                let personnel;
+                if (localStorage.myUserInfo) {
+                    personnel = JSON.parse(localStorage.myUserInfo).人员;
+                }
+                if (localStorage.userInfo) {
+                    personnel = JSON.parse(localStorage.userInfo).人员;
+                }
                 var postData = {
                     data: {
                         人员: personnel,
@@ -29,7 +35,7 @@ function getMenuPermissions(getMenuPermissions) {
     } else {
         //手动登录
         console.info(222)
-        localStorage.setItem('Authorization',sessionStorage.Authorization);
+        localStorage.setItem('Authorization', sessionStorage.Authorization);
         getMenuPermissions(true);
     }
 }

@@ -234,6 +234,35 @@
             <param name="filter"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.BaseInfoController.获取某类字典(System.String)">
+            <summary>
+            根据分类名称,获取某类字典,包括一个层次的和两个层次的字典数据,具体有哪些见基本信息整理文档.xlsx
+            </summary>
+            <param name="分类"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.BaseInfoController.获取教学活动类型">
+            <summary>
+            目前只有查看,且没有分页;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.BaseInfoController.获取某教学活动分类下的评价项目(ScientificResearch.Models.教学活动评价项目Filter)">
+            <summary>
+            本来是在老师端的setting下,现在在学生端,都放到了baseinfo了
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.BaseInfoController.分页获取教学角色中的人员(System.Int32,ScientificResearch.Models.Paging,ScientificResearch.Models.教学人员Filter)">
+            <summary>
+            
+            </summary>
+            <param name="教学角色编号"></param>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
         <member name="T:ScientificResearch.Areas.TeachingManagementOfStudent.Controllers.Evaluation360Controller">
             <summary>
             2019-8-5 对于接口来说,这一块复制自老师端也情有可原吧...
