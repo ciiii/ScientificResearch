@@ -20,6 +20,26 @@ namespace ScientificResearch.Areas.TeachingManagementOfStudent.Controllers
     /// </summary>
     public class ActivityController : TeachingManagementOfStudentBaseController
     {
+
+        /// <summary>
+        /// 目前只有查看,且没有分页;
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        async public Task<object> 获取教学活动类型() =>
+            await Db.GetListSpAsync<教学活动类型>(orderType: true);
+
+        /// <summary>
+        /// 本来是在老师端的setting下,现在在学生端,都放到了baseinfo了
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        [HttpGet]
+        async public Task<object> 获取某教学活动分类下的评价项目(教学活动评价项目Filter filter)
+        {
+            return await Db.GetListSpAsync<教学活动评价项目, 教学活动评价项目Filter>(filter, orderType: true);
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -32,6 +52,21 @@ namespace ScientificResearch.Areas.TeachingManagementOfStudent.Controllers
             return await Db.GetPagingListSpAsync<v_教学活动, v_教学活动Filter>
                 (paging, filter, $"tfn_教学某学员可查看的教学活动('{CurrentUser.编号}')");
 
+        }
+
+
+        [HttpGet]
+        async public Task<object> 获取教学活动详情([Required]int 教学活动编号)
+        {
+            return new
+            {
+                教学活动 = await Db.GetModelByIdSpAsync<v_教学活动>(教学活动编号),
+                可参与者 = await Db.GetListSpAsync<v_教学活动可参与者, v_教学活动可参与者Filter>(
+                    new v_教学活动可参与者Filter()
+                    {
+                        教学活动编号 = 教学活动编号
+                    })
+            };
         }
 
         /// <summary>

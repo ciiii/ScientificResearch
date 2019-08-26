@@ -29,44 +29,9 @@ namespace ScientificResearch.Areas.TeachingManagementOfStudent.Controllers
             return await Db.GetListSpAsync<字典, 字典Filter>(filter);
         }
 
-        /// <summary>
-        /// 目前只有查看,且没有分页;
-        /// </summary>
-        /// <returns></returns>
         [HttpGet]
-        async public Task<object> 获取教学活动类型() =>
-            await Db.GetListSpAsync<教学活动类型>(orderType: true);
-
-        /// <summary>
-        /// 本来是在老师端的setting下,现在在学生端,都放到了baseinfo了
-        /// </summary>
-        /// <param name="filter"></param>
-        /// <returns></returns>
-        [HttpGet]
-        async public Task<object> 获取某教学活动分类下的评价项目(教学活动评价项目Filter filter)
-        {
-            return await Db.GetListSpAsync<教学活动评价项目, 教学活动评价项目Filter>(filter, orderType: true);
-        }
-
-
-        [HttpGet]
-        async public Task<object> 获取教学360评价方向(v_教学360评价方向Filter filter) =>
-            await Db.GetListSpAsync<v_教学360评价方向, v_教学360评价方向Filter>(filter, orderType: true);
-
-        [HttpGet]
-        async public Task<object> 获取某目标类型的教学360评价分类和项目(教学360评价分类Filter filter)
-        {
-            var 分类 = await Db.GetListSpAsync<v_教学360评价分类, 教学360评价分类Filter>(filter, orderType: true);
-            var 项目filter = new 教学360评价项目Filter() { WhereIn教学360评价分类编号 = 分类.Select(i => i.编号).ToStringIdWithSpacer() };
-            var 项目 = await Db.GetListSpAsync<教学360评价项目, 教学360评价项目Filter>(项目filter, orderType: true);
-
-            return from item in 分类
-                   select new
-                   {
-                       分类信息 = item,
-                       分类下的项目 = from item项目 in 项目 where item项目.教学360评价分类编号 == item.编号 select item项目
-                   };
-        }
+        async public Task<object> 获取教学专业科室任务类型() =>
+            await Db.GetListSpAsync<教学专业科室任务类型>();
 
         /// <summary>
         /// 
@@ -84,5 +49,6 @@ namespace ScientificResearch.Areas.TeachingManagementOfStudent.Controllers
         {
             return await Db.GetPagingListSpAsync<v_教学学员, 教学学员Filter>(paging, filter, orderType: true);
         }
+
     }
 }

@@ -68,6 +68,12 @@ namespace ScientificResearch.Areas.TeachingManagementOfStudent.Controllers
                 (paging, filter, $"tfn_教学退培申请('{CurrentUser.人员类型}',{CurrentUser.编号})");
         }
 
+        [HttpGet]
+        async public Task<object> 获取退培详情(int 退培编号)
+        {
+            return await Db.GetModelByIdSpAsync<v_tfn_教学退培申请>(退培编号, tableName: $"tfn_教学退培申请('{CurrentUser.人员类型}',{CurrentUser.编号})");
+        }
+
         /// <summary>
         /// data是教学退培申请
         /// </summary>
@@ -153,6 +159,12 @@ namespace ScientificResearch.Areas.TeachingManagementOfStudent.Controllers
             var 学员编号 = CurrentUser.编号;
             return await Db.GetPagingListSpAsync<v_tfn_教学请假申请, v_tfn_教学请假申请Filter>
                 (paging, filter, $"tfn_教学请假申请('{人员类型}',{学员编号})");
+        }
+
+        [HttpGet]
+        async public Task<object> 获取请假详情(int 请假编号)
+        {
+            return await Db.GetModelByIdSpAsync<v_tfn_教学请假申请>(请假编号, tableName: $"tfn_教学请假申请('{CurrentUser.人员类型}',{CurrentUser.编号})");
         }
 
         /// <summary>
@@ -241,6 +253,31 @@ namespace ScientificResearch.Areas.TeachingManagementOfStudent.Controllers
             var 学员编号 = CurrentUser.编号;
             return await Db.GetPagingListSpAsync<v_tfn_教学轮转手册申请, v_tfn_教学轮转手册申请Filter>
                 (paging, filter, $"tfn_教学轮转手册申请('{人员类型}',{学员编号})");
+        }
+
+        [HttpPost]
+        async public Task<object> 上传教学轮转手册附件()
+        {
+            var filesNameList = await MyLib.UploadFile.Upload(
+                Request.Form.Files,
+                Env.WebRootPath,
+                "upload/教学/培训/教学轮转手册附件",
+                Config.GetValue<int>("uploadFileMaxSize"));
+            return filesNameList;
+        }
+
+        [HttpGet]
+        async public Task<object> 获取轮转手册详情(int 轮转手册编号)
+        {
+            return await Db.GetModelByIdSpAsync<v_tfn_教学轮转手册申请>(
+                轮转手册编号,
+                tableName: $"tfn_教学轮转手册申请('{CurrentUser.人员类型}',{CurrentUser.编号})");
+        }
+
+        [HttpGet]
+        async public Task<object> 获取教学轮转手册类型()
+        {
+            return await Db.GetListSpAsync<教学轮转手册类型>(orderType:true);
         }
 
         /// <summary>
@@ -348,6 +385,14 @@ namespace ScientificResearch.Areas.TeachingManagementOfStudent.Controllers
                 (paging, filter, $"tfn_教学出科申请('{人员类型}',{学员编号})");
         }
 
+        [HttpGet]
+        async public Task<object> 获取出科详情(int 出科编号)
+        {
+            return await Db.GetModelByIdSpAsync<v_tfn_教学出科申请>(
+                出科编号,
+                tableName: $"tfn_教学出科申请('{CurrentUser.人员类型}',{CurrentUser.编号})");
+        }
+
         /// <summary>
         /// 这个应该是在学员端,目前为了测试方便放在这里,人员类型和编号都是写死的;
         /// data是教学出科申请
@@ -440,6 +485,14 @@ namespace ScientificResearch.Areas.TeachingManagementOfStudent.Controllers
             var 学员编号 = CurrentUser.编号;
             return await Db.GetPagingListSpAsync<v_tfn_教学结业申请, v_tfn_教学结业申请Filter>
                 (paging, filter, $"tfn_教学结业申请('{人员类型}',{学员编号})");
+        }
+
+        [HttpGet]
+        async public Task<object> 获取结业详情(int 结业编号)
+        {
+            return await Db.GetModelByIdSpAsync<v_tfn_教学结业申请>(
+                结业编号,
+                tableName: $"tfn_教学结业申请('{CurrentUser.人员类型}',{CurrentUser.编号})");
         }
 
         /// <summary>
