@@ -1216,6 +1216,9 @@
     <None Update="ScientificResearchApi.xml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
+    <None Update="wwwroot\upload\Db_Model\db_model.bak">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties Properties_4launchSettings_1json__JSONSchema="" /></VisualStudio></ProjectExtensions>

@@ -1,4 +1,4 @@
-let HTTP_URL_HOST = 'http://localhost:63739';
+let HTTP_URL_HOST = 'http://192.168.3.3:63739';
 if (process.env.NODE_ENV === 'production') {
     HTTP_URL_HOST = '';
 }
