@@ -249,6 +249,7 @@ namespace ScientificResearch.Areas.Manage.Controllers
                });
 
             var user = result.Read<CurrentUser>().FirstOrDefault();
+            //2019-9-2只要在这里给student的"人员类型"具体给赋值,就可以统一CurrentStudentOfTeachingManagement,CurrentUser
             user.DbKey = model.DbKey;
 
             await 记录登录日志(dbWhenLogin, user);
@@ -272,8 +273,8 @@ namespace ScientificResearch.Areas.Manage.Controllers
                     密码 = model.密码
                 })).FirstOrDefault();
             if (result == null) throw new Exception("登录信息错误");
-
             var student = MyLib.Tool.ModelToModel<教学学员, CurrentStudentOfTeachingManagement>(result);
+            //2019-9-2只要在这里给student的"人员类型"具体给赋值,就可以统一CurrentStudentOfTeachingManagement,CurrentUser
             student.DbKey = model.DbKey;
 
             return getJwt(student, Config.GetValue<string>("Roles:TeachingManagementStudentFromManage"));

@@ -956,6 +956,7 @@
     <Folder Include="wwwroot\upload\纵向项目\结题资料\" />
     <Folder Include="wwwroot\upload\纵向项目\项目申报书\" />
     <Folder Include="wwwroot\upload\组织架构\学术任职\" />
+    <Folder Include="wwwroot\upload\继教\组织结构\" />
     <Folder Include="wwwroot\upload\项目经费到账\到账凭证\" />
   </ItemGroup>
 
@@ -1217,6 +1218,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="wwwroot\upload\Db_Model\db_model.bak">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="wwwroot\upload\继教\组织结构\导入继教人员模板.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

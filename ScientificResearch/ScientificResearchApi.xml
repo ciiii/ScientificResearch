@@ -4,6 +4,97 @@
         <name>ScientificResearch</name>
     </assembly>
     <members>
+        <member name="T:ScientificResearch.Areas.ContinuousTraining.Controllers.ContinuousTrainingBaseController">
+            <summary>
+            2019-1-9
+            为所有教学管理的控制器加一个分组,加一个路由的area前缀;
+            应该用area区分不同的服务;方便以后用微服务分开;
+            但是目前models还无法分开;
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Areas.ContinuousTraining.Controllers.OrganizationController">
+            <summary>
+            和组织架构功能对应;
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.OrganizationController.获取部门列表(ScientificResearch.Models.部门Filter)">
+            <summary>
+            获取全部部门,维护部门时用
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.OrganizationController.获取启用的部门列表(ScientificResearch.Models.部门Filter)">
+            <summary>
+            获取启用的部门列表,使用部门时用
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.OrganizationController.增改部门(ScientificResearch.Models.部门)">
+            <summary>
+            新增部门
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.OrganizationController.启用部门(System.Int32)">
+            <summary>
+            启用某部门
+            </summary>
+            <param name="编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.OrganizationController.禁用部门(System.Int32)">
+            <summary>
+            禁用某部门
+            </summary>
+            <param name="编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.OrganizationController.分页获取人员列表(ScientificResearch.Models.Paging,ScientificResearch.Models.继教人员Filter)">
+            <summary>
+            分页获取继教人员列表,人员管理时候用
+            注意,这里面并非所有的都需要,参考原系统做取舍
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.OrganizationController.获取人员详情辅助数据">
+            <summary>
+            注意,这里面并非所有的都需要,参考原系统做取舍
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.OrganizationController.增改人员(ScientificResearch.Models.增改继教人员)">
+            <summary>
+            增改人员,包括了人员的基本信息和继教人员的信息;
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.OrganizationController.导入继教人员">
+            <summary>
+            这里是复制科研里面相关功能,然后增加了一个能级属性.以后要统一 
+            模板在 upload/继教/组织结构/导入继教人员模板.xlsx
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.OrganizationController.启用人员(System.Int32)">
+            <summary>
+            启用人员
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.OrganizationController.禁用人员(System.Int32)">
+            <summary>
+            禁用人员
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.getOpenId(System.String)">
             <summary>
             根据code取openid,接着取该openid绑定的用户信息;
@@ -1412,6 +1503,16 @@
              </summary>
              <param name="data"></param>
              <returns></returns>
+        </member>
+        <member name="P:ScientificResearch.Models.继教人员Filter.LikeAllName">
+            <summary>
+            同时对姓名和部门名称做搜索
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.增改继教人员">
+            <summary>
+            包含了人员表和继教人员表的两个表的字段
+            </summary>
         </member>
         <member name="T:ScientificResearch.Models.CurrentUserOfManage">
             <summary>
@@ -4319,6 +4420,16 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_经费模版项目支出类型_增改.tt_经费模版项目支出内容">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教人员_导入">
+            <summary>
+            sp_继教人员_导入[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教人员_导入.tt">
             <summary>
             
             </summary>
@@ -10654,6 +10765,1561 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.经费模版项目支出类型.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教人员">
+            <summary>
+            继教人员[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教人员.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教人员.能级编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教人员角色">
+            <summary>
+            继教人员角色[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教人员角色.继培角色编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教人员角色.人员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教培训计划">
+            <summary>
+            继教培训计划[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教培训计划.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教培训计划.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教培训计划.年份">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教培训计划.所属部门编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教培训计划.简介">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教培训计划.附件">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教培训计划.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教微信权限">
+            <summary>
+            继教微信权限[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教微信权限.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教微信权限.上级编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教微信权限.深度">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教微信权限.排序值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教微信权限.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教微信权限.组件名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教微信权限.是否菜单">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教微信权限.图标">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教微信权限.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教微信端角色权限">
+            <summary>
+            继教微信端角色权限[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教微信端角色权限.继培角色编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教微信端角色权限.继培微信端权限编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教慕课">
+            <summary>
+            继教慕课[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教慕课.编号啊">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教慕课素材">
+            <summary>
+            继教慕课素材[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教慕课素材.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教慕课素材.文件夹编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教慕课素材.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教慕课素材.路径">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教慕课素材.大小">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教慕课素材.时长">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教慕课素材.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教慕课素材.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教慕课课时课件">
+            <summary>
+            继教慕课课时课件[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教慕课课时课件.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教慕课课时课件.活动内容编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教慕课课时课件.慕课素材编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教慕课课时课件.是否允许下载">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教慕课课时课件.通过时长">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教慕课课时课件.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教慕课课时课件学习情况">
+            <summary>
+            继教慕课课时课件学习情况[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教慕课课时课件学习情况.学习人类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教慕课课时课件学习情况.学习人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教慕课课时课件学习情况.课时课件编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教慕课课时课件学习情况.学习时长">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教操作考试">
+            <summary>
+            继教操作考试[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教操作考试.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教操作考试.及格分数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教操作考试.描述">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教操作考试.是否允许考生查看成绩">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教操作考试.是否允许考生查看评分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教操作考试.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教操作考试助教老师">
+            <summary>
+            继教操作考试助教老师[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教操作考试助教老师.操作考试编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教操作考试助教老师.助教老师编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教操作考试参与情况">
+            <summary>
+            继教操作考试参与情况[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教操作考试参与情况.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教操作考试参与情况.考试批次编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教操作考试参与情况.助教老师编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教操作考试参与情况.参与人类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教操作考试参与情况.参与人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教操作考试参与情况.开始操作时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教操作考试参与情况.结束操作时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教操作考试参与情况.得分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教操作考试参与情况.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教操作考试打分情况">
+            <summary>
+            继教操作考试打分情况[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教操作考试打分情况.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教操作考试打分情况.操作考试参与情况编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教操作考试打分情况.操作考试评分项目要求编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教操作考试打分情况.打分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教操作考试打分情况.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教操作考试评分表">
+            <summary>
+            继教操作考试评分表[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教操作考试评分表.操作考试编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教操作考试评分表.评分表编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教操作考试评分表项目要求">
+            <summary>
+            继教操作考试评分表项目要求[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教操作考试评分表项目要求.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教操作考试评分表项目要求.评分表项目编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教操作考试评分表项目要求.要求">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教操作考试评分表项目要求.标准分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教操作考试评分表项目要求.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教文件夹">
+            <summary>
+            继教文件夹[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教文件夹.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教文件夹.父编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教文件夹.类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教文件夹.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教文件夹.完整路径名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教文件夹.排序值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教文件夹.层级">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教文件夹.归属人类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教文件夹.归属人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教文件夹.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教文件夹.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教文件夹可使用人">
+            <summary>
+            继教文件夹可使用人[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教文件夹可使用人.文件夹编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教文件夹可使用人.可使用人类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教文件夹可使用人.可使用人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教权限">
+            <summary>
+            继教权限[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教权限.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教权限.上级编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教权限.深度">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教权限.排序值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教权限.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教权限.组件名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教权限.是否菜单">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教权限.图标">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教权限.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教标签">
+            <summary>
+            继教标签[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教标签.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教标签.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教标签.首字母">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教标签.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教活动">
+            <summary>
+            继教活动[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动.类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动.文件夹编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动.培训计划编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动.项目分类编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动.开始时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动.结束时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动.学分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动.封面">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动.简介">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动.必须按顺序学习">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教活动内容">
+            <summary>
+            继教活动内容[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动内容.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动内容.活动编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动内容.类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动内容.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动内容.排序值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动内容.开始时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动内容.结束时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动内容.地点">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动内容.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教活动可参与人">
+            <summary>
+            继教活动可参与人[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动可参与人.活动编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动可参与人.可参与人类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动可参与人.可参与人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教活动项目分类">
+            <summary>
+            继教活动项目分类[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动项目分类.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动项目分类.父编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动项目分类.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动项目分类.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教理论考试">
+            <summary>
+            继教理论考试[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教理论考试.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教理论考试.是否允许任何人参与">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教理论考试.试卷编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教理论考试.时长">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教理论考试.及格分数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教理论考试.是否试题乱序">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教理论考试.是否允许考生查看成绩">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教理论考试.是否允许考生查看答案">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教理论考试.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教理论考试参与情况">
+            <summary>
+            继教理论考试参与情况[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教理论考试参与情况.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教理论考试参与情况.考试批次编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教理论考试参与情况.参与人类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教理论考试参与情况.参与人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教理论考试参与情况.答题开始时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教理论考试参与情况.答题结束时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教理论考试参与情况.得分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教理论考试答题情况">
+            <summary>
+            继教理论考试答题情况[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教理论考试答题情况.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教理论考试答题情况.理论考试参与情况编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教理论考试答题情况.试题编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教理论考试答题情况.显示排序值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教理论考试答题情况.纠错">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教理论考试答题情况.答题时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教理论考试答题情况.是否正确">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教理论考试答题情况.得分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教理论考试答题情况.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教理论考试答题答案">
+            <summary>
+            继教理论考试答题答案[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教理论考试答题答案.理论考试答题情况编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教理论考试答题答案.答题答案编码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教签到">
+            <summary>
+            继教签到[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教签到.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教签到参与情况">
+            <summary>
+            继教签到参与情况[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教签到参与情况.签到规定编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教签到参与情况.参与人类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教签到参与情况.参与人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教签到参与情况.签到时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教签到规定">
+            <summary>
+            继教签到规定[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教签到规定.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教签到规定.签到编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教签到规定.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教签到规定.签到开始时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教签到规定.签到结束时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教签到规定.二维码变化秒数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教签到规定.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教考试批次">
+            <summary>
+            继教考试批次[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教考试批次.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教考试批次.考试编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教考试批次.排序值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教考试批次.考试开始时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教考试批次.考试结束时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教考试批次.考试地点">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教考试批次.人数上限">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教考试批次.二维码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教考试批次.口令">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教考试批次.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教考试批次可参与人">
+            <summary>
+            继教考试批次可参与人[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教考试批次可参与人.考试批次编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教考试批次可参与人.可参与人类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教考试批次可参与人.可参与人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教能级">
+            <summary>
+            继教能级[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教能级.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教能级.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教能级.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教角色">
+            <summary>
+            继教角色[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教角色.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教角色.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教角色.能否直接配置人员">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教角色.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教角色权限">
+            <summary>
+            继教角色权限[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教角色权限.继教角色编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教角色权限.继教权限编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教设置">
+            <summary>
+            继教设置[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教设置.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教设置.课时课件通过时长百分比">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教设置.理论考试及格分百分比">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教设置.最大允许离开界面次数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教评分表">
+            <summary>
+            继教评分表[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教评分表.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教评分表.文件夹编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教评分表.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教评分表.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教评分表项目">
+            <summary>
+            继教评分表项目[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教评分表项目.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教评分表项目.评分表编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教评分表项目.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教评分表项目.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教试卷">
+            <summary>
+            继教试卷[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试卷.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试卷.文件夹编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试卷.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试卷.描述">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试卷.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试卷.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教试卷结构">
+            <summary>
+            继教试卷结构[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试卷结构.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试卷结构.试卷编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试卷结构.类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试卷结构.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试卷结构.排序值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试卷结构.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教试卷试题">
+            <summary>
+            继教试卷试题[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试卷试题.试卷结构编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试卷试题.试题编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试卷试题.分值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试卷试题.排序值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试卷试题.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教试题">
+            <summary>
+            继教试题[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试题.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试题.类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试题.题干">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试题.题目解析">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试题.难易度">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试题.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试题.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教试题备选答案">
+            <summary>
+            继教试题备选答案[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试题备选答案.试题编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试题备选答案.备选答案编码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试题备选答案.备选答案内容">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试题备选答案.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教试题标签">
+            <summary>
+            继教试题标签[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试题标签.标签编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试题标签.试题编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教试题正确答案">
+            <summary>
+            继教试题正确答案[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试题正确答案.试题编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试题正确答案.正确答案编码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教试题类型">
+            <summary>
+            继教试题类型[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试题类型.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试题类型.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试题类型.最小答案数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试题类型.最大答案数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试题类型.分值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试题类型.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教课后练习">
+            <summary>
+            继教课后练习[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教课后练习.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教课后练习.及格分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教课后练习参与情况">
+            <summary>
+            继教课后练习参与情况[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教课后练习参与情况.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教课后练习参与情况.课后练习编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教课后练习参与情况.参与人类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教课后练习参与情况.参与人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教课后练习参与情况.参与时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教课后练习答题情况">
+            <summary>
+            继教课后练习答题情况[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教课后练习答题情况.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教课后练习答题情况.课后练习参与情况编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教课后练习答题情况.试题编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教课后练习答题情况.显示排序值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教课后练习答题情况.纠错">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教课后练习答题情况.答题时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教课后练习答题情况.是否正确">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教课后练习答题情况.得分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教课后练习答题情况.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教课后练习答题答案">
+            <summary>
+            继教课后练习答题答案[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教课后练习答题答案.课后练习答题情况编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教课后练习答题答案.答题答案编码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教课后练习试题">
+            <summary>
+            继教课后练习试题[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教课后练习试题.课后练习编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教课后练习试题.试题编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教课后练习试题.分值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教课后练习试题.排序值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教课后练习试题.备注">
             <summary>
             
             </summary>
@@ -23144,6 +24810,301 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.V_服务_启用.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_继教人员_带部门名">
+            <summary>
+            v_继教人员_带部门名[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.工号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.密码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.部门编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.英文名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.性别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.身份证">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.出生日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.入职日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.手机">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.QQ">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.邮箱">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.籍贯">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.毕业日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.合同开始日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.合同结束日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.参加工作日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.专业技术获得日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.职务任职日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.学位">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.学历">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.政治面貌">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.技术职称类别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.技术职称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.第二技术职称类别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.第二技术职称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.婚姻情况">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.学制">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.学历性质">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.学习形式">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.人员类别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.个人身份">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.民族">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.专业技术级别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.所学专业名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.岗位性质">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.职务名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.职务级别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.岗位名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.岗位类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.学科门类">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.一级学科">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.二级学科">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.三级学科">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.人员类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.获得最高学历的院校">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.获得最高学位的院校">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.住宅地址">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.学术特长">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.研究方向">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.个人获得的荣誉和奖项">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.是否启用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.部门名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.能级编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.能级名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员_带部门名.AllName">
             <summary>
             
             </summary>
