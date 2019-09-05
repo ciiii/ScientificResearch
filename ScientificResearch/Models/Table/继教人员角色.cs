@@ -16,8 +16,8 @@ namespace ScientificResearch.Models
 		/// 
 		/// </summary>
         [Obsolete]
-        [Required(ErrorMessage ="请提供[继培角色编号]")]
-		public int 继培角色编号 { get; set; }
+        [Required(ErrorMessage ="请提供[继教角色编号]")]
+		public int 继教角色编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>

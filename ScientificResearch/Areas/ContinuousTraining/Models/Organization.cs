@@ -7,6 +7,25 @@ using System.Threading.Tasks;
 
 namespace ScientificResearch.Models
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    public class 继教科室Filter
+    {
+        public string Like名称 { get; set; }
+        public bool? 是否启用 { get; set; }
+        public bool? 是否教学科室 { get; set; }
+        public int? 上级部门编号 { get; set; }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class 继教助教老师Filter
+    {
+        public int 科室编号 { get; set; }
+    }
+
     public class 继教人员Filter
     {
         public int? 编号 { get; set; }

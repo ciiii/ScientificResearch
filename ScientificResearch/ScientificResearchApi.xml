@@ -4,6 +4,20 @@
         <name>ScientificResearch</name>
     </assembly>
     <members>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.BaseInfoController.获取某类字典(System.String)">
+            <summary>
+            字典相关的接口,都使用ScientificResearch-baseinfo中相关的接口,教学管理不再单独提供;
+            涉及的字典分类有:学历;职称;学科;民族
+            </summary>
+            <param name="分类"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.BaseInfoController.获取继教能级">
+            <summary>
+            能级不应该被修改;
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:ScientificResearch.Areas.ContinuousTraining.Controllers.ContinuousTrainingBaseController">
             <summary>
             2019-1-9
@@ -11,6 +25,34 @@
             应该用area区分不同的服务;方便以后用微服务分开;
             但是目前models还无法分开;
             </summary>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.HomePageController.获取继教权限菜单">
+            <summary>
+            获取教学管理pc端的功能菜单;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.HomePageController.RecursivePermission(System.Collections.Generic.IEnumerable{ScientificResearch.Models.v_继教人员的权限},System.Int32)">
+            <summary>
+            权限分层次
+            </summary>
+            <param name="permission"></param>
+            <param name="topId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.HomePageController.获取继教微信端权限菜单">
+            <summary>
+            获取教学管理微信端的功能菜单;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.HomePageController.RecursivePermission(System.Collections.Generic.IEnumerable{ScientificResearch.Models.v_继教人员微信的权限},System.Int32)">
+            <summary>
+            权限分层次
+            </summary>
+            <param name="permission"></param>
+            <param name="topId"></param>
+            <returns></returns>
         </member>
         <member name="T:ScientificResearch.Areas.ContinuousTraining.Controllers.OrganizationController">
             <summary>
@@ -50,6 +92,21 @@
             禁用某部门
             </summary>
             <param name="编号"></param>
+            <returns></returns>
+        </member>
+        <!-- 对于成员“M:ScientificResearch.Areas.ContinuousTraining.Controllers.OrganizationController.获取某继教科室信息及助教老师(System.Int32)”忽略有格式错误的 XML 注释 -->
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.OrganizationController.获取某科室的继教助教老师(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="科室编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.OrganizationController.增改继教科室及助教老师(ScientificResearch.Infrastucture.PredefindedModelList{ScientificResearch.Models.继教科室,ScientificResearch.Models.继教助教老师})">
+            <summary>
+            
+            </summary>
+            <param name="data"></param>
             <returns></returns>
         </member>
         <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.OrganizationController.分页获取人员列表(ScientificResearch.Models.Paging,ScientificResearch.Models.继教人员Filter)">
@@ -93,6 +150,79 @@
             禁用人员
             </summary>
             <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ScientificResearch.Areas.ContinuousTraining.Controllers.PermissionController">
+            <summary>
+            基本上,和系统管理-权限管理功能对应;
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.PermissionController.分页获取登录日志(ScientificResearch.Models.Paging,ScientificResearch.Models.登录日志Filter)">
+            <summary>
+            分页获取登录日志
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.PermissionController.获取继教角色列表">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.PermissionController.增改继教角色(ScientificResearch.Models.继教角色)">
+            <summary>
+            暂时不对外提供
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.PermissionController.分页获取继教人员角色(ScientificResearch.Models.Paging,ScientificResearch.Models.继教角色人员Filter)">
+            <summary>
+            如果要获取"某角色中的人员",则搜索条件为:角色编号 = 该角色编号,该人员是否属于该角色=true
+            如果要获取"某角色中没有的人员",则搜索条件为:角色编号 = 该角色编号,该人员是否属于该角色=false
+            如果要获取"某人员的角色",则搜索条件为:编号 = 该人员编号,该人员是否属于该角色=true
+            如果要获取"某人员没有的角色",则搜索条件为:编号 = 该人员编号,该人员是否属于该角色=false
+            </summary>
+            <param name="继教角色编号"></param>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.PermissionController.增改某继教角色中的人员(ScientificResearch.Infrastucture.PredefindedIdList{ScientificResearch.Models.继教人员角色})">
+            <summary>
+            
+            </summary>
+            <param name="data">id表示继教角色编号</param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.PermissionController.获取继教角色的权限(ScientificResearch.Models.继教角色权限Filter)">
+            <summary>
+            没有的权限也会获取出来,以"该角色是否拥有该权限" = flase 来标识;
+            </summary>
+            <param name="继教角色编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.PermissionController.增改继教某角色的权限(ScientificResearch.Infrastucture.PredefindedIdList{ScientificResearch.Models.继教角色权限})">
+            <summary>
+            
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.PermissionController.获取继教微信端角色的权限(ScientificResearch.Models.继教微信角色权限Filter)">
+            <summary>
+            没有的权限也会获取出来,以"该角色是否拥有该权限" = flase 来标识;
+            </summary>
+            <param name="继教角色编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.PermissionController.增改继教微信端某角色的权限(ScientificResearch.Infrastucture.PredefindedIdList{ScientificResearch.Models.继教微信角色权限})">
+            <summary>
+            
+            </summary>
+            <param name="data"></param>
             <returns></returns>
         </member>
         <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.getOpenId(System.String)">
@@ -1504,6 +1634,16 @@
              <param name="data"></param>
              <returns></returns>
         </member>
+        <member name="T:ScientificResearch.Models.继教科室Filter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教助教老师Filter">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.继教人员Filter.LikeAllName">
             <summary>
             同时对姓名和部门名称做搜索
@@ -1512,6 +1652,11 @@
         <member name="T:ScientificResearch.Models.增改继教人员">
             <summary>
             包含了人员表和继教人员表的两个表的字段
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教角色人员Filter.编号">
+            <summary>
+            人员编号
             </summary>
         </member>
         <member name="T:ScientificResearch.Models.CurrentUserOfManage">
@@ -4430,6 +4575,76 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_继教人员_导入.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教人员角色_增改">
+            <summary>
+            sp_继教人员角色_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教人员角色_增改.fId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教人员角色_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教助教老师_增改">
+            <summary>
+            sp_继教助教老师_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教助教老师_增改.fId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教助教老师_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教微信角色权限_增改">
+            <summary>
+            sp_继教微信角色权限_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教微信角色权限_增改.fId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教微信角色权限_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教科室_增改">
+            <summary>
+            sp_继教科室_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教科室_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教角色权限_增改">
+            <summary>
+            sp_继教角色权限_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教角色权限_增改.fId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教角色权限_增改.tt">
             <summary>
             
             </summary>
@@ -10789,12 +11004,27 @@
             继教人员角色[类]
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.继教人员角色.继培角色编号">
+        <member name="P:ScientificResearch.Models.继教人员角色.继教角色编号">
             <summary>
             
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.继教人员角色.人员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教助教老师">
+            <summary>
+            继教助教老师[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教助教老师.科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教助教老师.助教老师编号">
             <summary>
             
             </summary>
@@ -10900,6 +11130,21 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.继教微信端角色权限.继培微信端权限编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教微信角色权限">
+            <summary>
+            继教微信角色权限[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教微信角色权限.继教角色编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教微信角色权限.继教微信权限编号">
             <summary>
             
             </summary>
@@ -11665,6 +11910,26 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.继教理论考试答题答案.答题答案编码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教科室">
+            <summary>
+            继教科室[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教科室.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教科室.科室管理员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教科室.备注">
             <summary>
             
             </summary>
@@ -25105,6 +25370,696 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_继教人员_带部门名.AllName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_继教人员微信的权限">
+            <summary>
+            v_继教人员微信的权限[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员微信的权限.人员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员微信的权限.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员微信的权限.上级编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员微信的权限.深度">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员微信的权限.排序值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员微信的权限.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员微信的权限.组件名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员微信的权限.是否菜单">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员微信的权限.图标">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员微信的权限.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_继教人员的权限">
+            <summary>
+            v_继教人员的权限[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员的权限.人员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员的权限.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员的权限.上级编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员的权限.深度">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员的权限.排序值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员的权限.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员的权限.组件名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员的权限.是否菜单">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员的权限.图标">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教人员的权限.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_继教助教老师">
+            <summary>
+            v_继教助教老师[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教助教老师.科室编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教助教老师.助教老师编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教助教老师.姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教助教老师.部门编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教助教老师.英文名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教助教老师.性别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教助教老师.手机">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教助教老师.是否启用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_继教微信角色权限">
+            <summary>
+            v_继教微信角色权限[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教微信角色权限.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教微信角色权限.上级编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教微信角色权限.深度">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教微信角色权限.排序值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教微信角色权限.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教微信角色权限.组件名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教微信角色权限.是否菜单">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教微信角色权限.图标">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教微信角色权限.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教微信角色权限.角色编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教微信角色权限.该角色是否拥有该权限">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_继教科室">
+            <summary>
+            v_继教科室[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教科室.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教科室.上级部门编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教科室.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教科室.负责人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教科室.负责人姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教科室.排序值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教科室.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教科室.是否启用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教科室.是否存在下级">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教科室.是否教学科室">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教科室.科室管理员编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教科室.科室管理员姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教科室.助教老师数量">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_继教角色">
+            <summary>
+            v_继教角色[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色.能否直接配置人员">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色.人数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色.功能数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色.微信功能数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_继教角色人员">
+            <summary>
+            v_继教角色人员[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.工号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.密码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.部门编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.英文名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.性别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.身份证">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.出生日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.入职日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.手机">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.QQ">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.邮箱">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.籍贯">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.毕业日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.合同开始日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.合同结束日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.参加工作日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.专业技术获得日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.职务任职日期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.学位">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.学历">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.政治面貌">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.技术职称类别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.技术职称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.第二技术职称类别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.第二技术职称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.婚姻情况">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.学制">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.学历性质">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.学习形式">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.人员类别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.个人身份">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.民族">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.专业技术级别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.所学专业名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.岗位性质">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.职务名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.职务级别">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.岗位名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.岗位类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.学科门类">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.一级学科">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.二级学科">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.三级学科">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.人员类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.获得最高学历的院校">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.获得最高学位的院校">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.住宅地址">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.学术特长">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.研究方向">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.个人获得的荣誉和奖项">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.是否启用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.部门名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.能级编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.能级名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.AllName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.角色编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色人员.该人员是否属于该角色">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_继教角色权限">
+            <summary>
+            v_继教角色权限[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色权限.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色权限.上级编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色权限.深度">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色权限.排序值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色权限.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色权限.组件名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色权限.是否菜单">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色权限.图标">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色权限.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色权限.角色编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教角色权限.该角色是否拥有该权限">
             <summary>
             
             </summary>

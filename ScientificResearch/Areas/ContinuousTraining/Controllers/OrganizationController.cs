@@ -78,6 +78,80 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
             });
         #endregion
 
+        #region 继教科室
+        /// <summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        [HttpGet]
+        async public Task<object> 获取某继教科室信息及助教老师(int 科室编号)
+        {
+            var filter = new 继教助教老师Filter() { 科室编号 = 科室编号 };
+
+            return new
+            {
+                继教科室 = await Db.GetModelByIdSpAsync<v_继教科室>(科室编号),
+                助教老师 = await Db.GetListSpAsync<v_继教助教老师, 继教助教老师Filter>(filter)
+            };
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="科室编号"></param>
+        /// <returns></returns>
+        [HttpGet]
+        async public Task<object> 获取某科室的继教助教老师(int 科室编号)
+        {
+            var filter = new 继教助教老师Filter() { 科室编号 = 科室编号 };
+            return await Db.GetListSpAsync<v_继教助教老师, 继教助教老师Filter>(filter);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task 增改继教科室及助教老师([FromBody] PredefindedModelList<继教科室, 继教助教老师> data)
+        {
+            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+            {
+                var 继教科室 = await dbForTransaction.Merge<继教科室>(data.Model, transaction);
+
+                var 现有的继教科室 = await dbForTransaction.GetListSpAsync<继教科室>();
+
+                var 科室管理员角色编号 = (int)继教角色enum.科室管理员;
+
+                var 现有的科室管理员人员角色 = 现有的继教科室.Select(i => i.科室管理员编号).Distinct().Select(i => new 继教人员角色()
+                {
+                    继教角色编号 = 科室管理员角色编号,
+                    人员编号 = i
+                });
+
+                //更新"继教人员角色"中的 科室管理员角色 所包含的科室管理员;
+                await dbForTransaction.Merge(科室管理员角色编号, 现有的科室管理员人员角色, transaction);
+
+                var 继教助教老师 = await dbForTransaction.Merge(继教科室.编号, data.List, transaction);
+
+                var 现有的继教助教老师 = await dbForTransaction.GetListSpAsync<继教助教老师>();
+
+                var 助教老师角色编号 = (int)继教角色enum.助教老师;
+
+                var 现有的助教老师人员角色 = 现有的继教助教老师.Select(i => i.助教老师编号).Distinct().Select(i => new 继教人员角色()
+                {
+                    继教角色编号 = 助教老师角色编号,
+                    人员编号 = i
+                });
+
+                //更新"继教人员角色"中的 助教老师角色 所包含的助教老师;
+                await dbForTransaction.Merge(助教老师角色编号, 现有的助教老师人员角色, transaction);
+            }
+
+            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+        }
+        #endregion
+
         #region 人员
         /// <summary>
         /// 分页获取继教人员列表,人员管理时候用
