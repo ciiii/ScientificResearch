@@ -18,6 +18,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.BaseInfoController.获取继教设置">
+            <summary>
+            慕课设置,考试设置,签到设置,这些都放到一起的
+            应该是用json串来存储,这里还是用了表.....
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:ScientificResearch.Areas.ContinuousTraining.Controllers.ContinuousTrainingBaseController">
             <summary>
             2019-1-9
@@ -27109,6 +27116,22 @@
             <summary>
             麻烦的是tfn的model要自己写,生成不了
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.TestController.测试七牛云私有文件的下载">
+            <summary>
+            每个文件单独都需要生成这个token
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Controllers.TestController.测试获取七牛云上传私有文件的token(System.String)">
+            <summary>
+            在上传之前,要请求下后台判断下是否用重复文件
+            如果本"文件夹"中有重名,则提示是否覆盖
+            如果不是本文件夹中有重名,则不允许上传
+            如果没有重名,可以上传
+            </summary>
+            <param name="fileName">必填,为文件名,带后缀,比如a.jpg,它等于前端上传时用到的key参数,也就是文件名</param>
             <returns></returns>
         </member>
         <member name="M:ScientificResearch.Controllers.WorkFlowController.审核步骤(ScientificResearch.Models.完成步骤)">

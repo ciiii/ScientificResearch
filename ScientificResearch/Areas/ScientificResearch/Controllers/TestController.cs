@@ -22,6 +22,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using System.ComponentModel.DataAnnotations;
 
+using Qiniu.Util;
+using Qiniu.IO;
+using Qiniu.IO.Model;
+
 namespace ScientificResearch.Controllers
 {
     /// <summary>
@@ -649,6 +653,66 @@ namespace ScientificResearch.Controllers
             var name = "ScientificResearch.Models.人员";
             Type type = Type.GetType(name);
             return type.Assembly.CreateInstance(type.FullName);
+        }
+
+        /// <summary>
+        /// 每个文件单独都需要生成这个token
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public object 测试七牛云私有文件的下载()
+        {
+            var AccessKey = "lrbUKrn8nlWyp18MFyGT0hk3SawV8FFDBWNJLwb3";
+            var SecretKey = "0c6kSqy-W8btOeNOxuEdFsI7sBs1Oja_d4joRWEa";
+
+            Mac mac = new Mac(AccessKey, SecretKey);
+
+            string domain = "http://pxcir8aio.bkt.clouddn.com";
+            string key = "a.jpg";
+            //string url = "http://pxcir8aio.bkt.clouddn.com/p.jpg";
+            string url = MyPath.Combine(domain, key);
+
+            string privateUrl = DownloadManager.CreateSignedUrl(mac, url);
+
+            return privateUrl;
+        }
+
+        /// <summary>
+        /// 在上传之前,要请求下后台判断下是否用重复文件
+        /// 如果本"文件夹"中有重名,则提示是否覆盖
+        /// 如果不是本文件夹中有重名,则不允许上传
+        /// 如果没有重名,可以上传
+        /// </summary>
+        /// <param name="fileName">必填,为文件名,带后缀,比如a.jpg,它等于前端上传时用到的key参数,也就是文件名</param>
+        /// <returns></returns>
+        [HttpGet]
+        public object 测试获取七牛云上传私有文件的token(string fileName)
+        {
+            // 生成(上传)凭证时需要使用此Mac
+            // 这个示例单独使用了一个Settings类，其中包含AccessKey和SecretKey
+            // 实际应用中，请自行设置您的AccessKey和SecretKey
+            var AccessKey = "lrbUKrn8nlWyp18MFyGT0hk3SawV8FFDBWNJLwb3";
+            var SecretKey = "0c6kSqy-W8btOeNOxuEdFsI7sBs1Oja_d4joRWEa";
+            Mac mac = new Mac(AccessKey, SecretKey);
+
+            string bucket = "http://pxcir8aio.bkt.clouddn.com";
+            string saveKey = fileName;
+            // 上传策略，参见 
+            // https://developer.qiniu.com/kodo/manual/put-policy
+            PutPolicy putPolicy = new PutPolicy();
+            // 如果需要设置为"覆盖"上传(如果云端已有同名文件则覆盖)，请使用 SCOPE = "BUCKET:KEY"
+            putPolicy.Scope = bucket + ":" + saveKey;
+            //putPolicy.Scope = bucket;
+            // 上传策略有效期(对应于生成的凭证的有效期)          
+            putPolicy.SetExpires(3600);
+            // 上传到云端多少天后自动删除该文件，如果不设置（即保持默认默认）则不删除
+            //putPolicy.DeleteAfterDays = 1;
+            // 生成上传凭证，参见
+            // https://developer.qiniu.com/kodo/manual/upload-token            
+            string jstr = putPolicy.ToJsonString();
+            string token = Auth.CreateUploadToken(mac, jstr);
+
+            return token;
         }
     }
 }
