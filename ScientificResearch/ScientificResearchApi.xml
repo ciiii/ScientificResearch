@@ -33,6 +33,24 @@
             但是目前models还无法分开;
             </summary>
         </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.FolderController.获取登录人可用的文件夹(ScientificResearch.Models.继教文件夹Filter)">
+            <summary>
+            继教文件夹类型,是定死的,有下面几种
+            继教慕课, 继教理论考试, 继教操作考试, 继教签到, 继教慕课素材, 继教试题, 继教试卷, 继教品分表
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.FolderController.增改某个文件夹(ScientificResearch.Infrastucture.PredefindedModelList{ScientificResearch.Models.继教文件夹,ScientificResearch.Models.继教文件夹可使用人})">
+            <summary>
+            父文件夹编号不等于0时,父文件夹必须归属当前登录人;
+            该文件夹编号等于0时,后台填写"归属人类型"和"归属人编号"
+            该文件夹编号不等于0时,该文件夹必须归属当前登录人;
+            继教文件夹可使用人类型:人员, 继教角色, 部门,如果可使用人编号=0,则表示该类型的所有人;
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
         <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.HomePageController.获取继教权限菜单">
             <summary>
             获取教学管理pc端的功能菜单;
@@ -4631,12 +4649,47 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.sp_继教文件夹_增改">
+            <summary>
+            sp_继教文件夹_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教文件夹_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教文件夹可使用人_增改">
+            <summary>
+            sp_继教文件夹可使用人_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教文件夹可使用人_增改.fId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教文件夹可使用人_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_继教科室_增改">
             <summary>
             sp_继教科室_增改[类]
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_继教科室_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教能级_增改">
+            <summary>
+            sp_继教能级_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教能级_增改.tt">
             <summary>
             
             </summary>
@@ -22221,6 +22274,71 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.v_tfn_继教某人可查看的文件夹">
+            <summary>
+            v_tfn_继教某人可查看的文件夹[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可查看的文件夹.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可查看的文件夹.父编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可查看的文件夹.类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可查看的文件夹.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可查看的文件夹.完整路径名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可查看的文件夹.排序值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可查看的文件夹.层级">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可查看的文件夹.归属人类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可查看的文件夹.归属人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可查看的文件夹.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可查看的文件夹.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可查看的文件夹.是否归属自己">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.V_医院_启用">
             <summary>
             V_医院_启用[类]
@@ -25592,6 +25710,31 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_继教微信角色权限.该角色是否拥有该权限">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_继教文件夹可使用人">
+            <summary>
+            v_继教文件夹可使用人[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教文件夹可使用人.文件夹编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教文件夹可使用人.可使用人类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教文件夹可使用人.可使用人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教文件夹可使用人.可使用人">
             <summary>
             
             </summary>

@@ -37,7 +37,6 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        [Required(ErrorMessage ="请提供[完整路径名]")]
         [MaxLength(1000,ErrorMessage ="完整路径名不能超过[500]字")]
 		public string 完整路径名 { get; set; }
         /// <summary>

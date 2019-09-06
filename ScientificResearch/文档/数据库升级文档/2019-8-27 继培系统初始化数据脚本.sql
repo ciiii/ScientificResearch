@@ -1,3 +1,70 @@
+
+ALTER FUNCTION [dbo].[FNGetPersonInfoByType]
+    (
+      @PersonType NVARCHAR(50) ,
+      @PersonId INT 
+    )
+RETURNS NVARCHAR(500)
+AS
+    BEGIN
+
+        DECLARE @result NVARCHAR(500);
+
+        IF ( @PersonType IS NULL )
+            BEGIN
+
+                IF ( @PersonId = 0 )
+                    SELECT  @result = '发起人或负责人';
+            END;
+
+        IF ( @PersonType = '人员' )
+            BEGIN
+                IF ( @PersonId = 0 )
+                    SELECT  @result = '所有医院员工';
+                ELSE
+                    SELECT  @result = 姓名
+                    FROM    dbo.人员
+                    WHERE   编号 = @PersonId;
+            END;
+            
+        IF ( @PersonType = '教学学员' )
+            BEGIN
+                IF ( @PersonId = 0 )
+                    SELECT  @result = '所有教学学员';
+                ELSE
+                    SELECT  @result = 姓名
+                    FROM    dbo.教学学员
+                    WHERE   编号 = @PersonId;
+            END;
+
+        IF ( @PersonType = '教学角色' )
+            SELECT  @result = 名称
+            FROM    dbo.教学角色
+            WHERE   编号 = @PersonId;
+
+		IF ( @PersonType = '继教角色' )
+            SELECT  @result = 名称
+            FROM    dbo.继教角色
+            WHERE   编号 = @PersonId;
+
+        IF ( @PersonType = '部门'
+             OR @PersonType = '教学科室'
+           )
+            BEGIN
+                IF ( @PersonId = 0 )
+                    SELECT  @result = '所有部门';
+                ELSE
+                    SELECT  @result = 名称
+                    FROM    dbo.部门
+                    WHERE   编号 = @PersonId;
+            END;
+            
+        RETURN @result;
+
+    END;
+GO
+
+
 TRUNCATE TABLE dbo.继教能级;
 INSERT dbo.继教能级
         ( 名称, 备注 )
@@ -10,34 +77,34 @@ TRUNCATE TABLE dbo.继教权限;
 --首页是谁都有的
 INSERT dbo.继教权限
         ( 编号, 上级编号, 深度, 排序值, 名称, 组件名, 是否菜单, 图标, 备注 )
-VALUES  ( 1,0,1,0,N'慕课',N'', 1,N'',N'' ),
-( 101,1,2,1,N'慕课活动',N'', 1,N'',N'' ),
-( 102,1,2,2,N'素材库',N'', 1,N'',N'' ),
-( 103,1,2,3,N'题库',N'', 1,N'',N'' ),
+VALUES  ( 1,0,1,0,N'慕课',N'ForClass', 1,N'',N'' ),
+( 101,1,2,1,N'慕课活动',N'ForClassActivity', 1,N'',N'' ),
+( 102,1,2,2,N'素材库',N'ForClassMaterial', 1,N'',N'' ),
+( 103,1,2,3,N'题库',N'ForClassQuestionBank', 1,N'',N'' ),
 
-( 2,0,1,0,N'考试',N'', 1,N'',N'' ),
-( 201,2,2,1,N'理论考试',N'', 1,N'',N'' ),
-( 202,2,2,2,N'试卷',N'', 1,N'',N'' ),
-( 203,2,2,3,N'题库',N'', 1,N'',N'' ),
-( 204,2,2,4,N'操作考试',N'', 1,N'',N'' ),
-( 205,2,2,5,N'评分表',N'', 1,N'',N'' ),
+( 2,0,1,0,N'考试',N'Test', 1,N'',N'' ),
+( 201,2,2,1,N'理论考试',N'TestTheory', 1,N'',N'' ),
+( 202,2,2,2,N'试卷',N'TestExaminationPaper', 1,N'',N'' ),
+( 203,2,2,3,N'题库',N'TestQuestionBank', 1,N'',N'' ),
+( 204,2,2,4,N'操作考试',N'TestOperation', 1,N'',N'' ),
+( 205,2,2,5,N'评分表',N'TestScoreTable', 1,N'',N'' ),
 
-( 3,0,1,0,N'签到',N'', 1,N'',N'' ),
+( 3,0,1,0,N'签到',N'SignIn', 1,N'',N'' ),
 
-( 4,0,1,0,N'组织机构',N'', 1,N'',N'' ),
-( 401,4,2,1,N'部门人员信息',N'', 1,N'',N'' ),
+( 4,0,1,0,N'组织机构',N'Organization', 1,N'',N'' ),
+( 401,4,2,1,N'部门人员信息',N'OrganizationPersonnelInformation', 1,N'',N'' ),
 
-( 5,0,1,0,N'系统设置',N'', 1,N'',N'' ),
-( 501,5,2,1,N'登录日志',N'', 1,N'',N'' ),
-( 502,5,2,2,N'权限管理',N'', 1,N'',N'' ),
-	( 50201,502,3,1,N'角色及权限',N'', 1,N'',N'' ),
-( 503,5,2,3,N'设置',N'', 1,N'',N'' ),
-( 504,5,2,4,N'基础信息',N'', 1,N'',N'' ),
-	( 50401,505,3,1,N'学历',N'', 1,N'',N'' ),
-	( 50402,505,3,2,N'职称',N'', 1,N'',N'' ),
-	( 50403,505,3,3,N'学科',N'', 1,N'',N'' ),
-	( 50404,505,3,4,N'民族',N'', 1,N'',N'' ),
-	( 50405,505,3,5,N'能级',N'', 1,N'',N'' );
+( 5,0,1,0,N'系统设置',N'SystemSettings', 1,N'',N'' ),
+( 501,5,2,1,N'登录日志',N'SystemSettingsLoginLog', 1,N'',N'' ),
+( 502,5,2,2,N'权限管理',N'SystemSettingsRightsManagement', 1,N'',N'' ),
+ ( 50201,502,3,1,N'角色及权限',N'', 1,N'',N'' ),
+( 503,5,2,3,N'设置',N'SystemSettingsSetUp', 1,N'',N'' ),
+( 504,5,2,4,N'基础信息',N'SystemSettingsBasicInformation', 1,N'',N'' ),
+ ( 50401,505,3,1,N'学历',N'', 1,N'',N'' ),
+ ( 50402,505,3,2,N'职称',N'', 1,N'',N'' ),
+ ( 50403,505,3,3,N'学科',N'', 1,N'',N'' ),
+ ( 50404,505,3,4,N'民族',N'', 1,N'',N'' ),
+ ( 50405,505,3,5,N'能级',N'', 1,N'',N'' );
 
 GO
 
