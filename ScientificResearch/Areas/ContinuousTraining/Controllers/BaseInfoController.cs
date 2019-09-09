@@ -54,5 +54,65 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
             await Db.Merge(data);
         }
 
+        [HttpGet]
+        async public Task<object> 分页获取继教培训计划(Paging paging, 继教培训计划Filter filter)
+        {
+            return await Db.GetPagingListSpAsync<v_继教培训计划, 继教培训计划Filter>(paging, filter);
+        }
+
+        [HttpPost]
+        async public Task 增改继教培训计划([FromBody]继教培训计划 data)
+        {
+            await Db.Merge(data);
+        }
+
+        /// <summary>
+        /// 培训计划是可以随便删除的,活动属于哪个培训计划也不是必填的;
+        /// </summary>
+        /// <param name="编号列表"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task 删除继教培训计划([FromBody]IEnumerable<int> 编号列表) =>
+            await Db_Manage.Delete<继教培训计划>(编号列表);
+
+        /// <summary>
+        /// 前端从父编号=0开始组织树结构,中间有断层的数据就不管他
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        async public Task<object> 获取继教活动项目分类()
+        {
+            return await Db.GetListSpAsync<v_继教活动项目分类>();
+        }
+
+        [HttpPost]
+        async public Task 增改继教活动项目分类([FromBody]继教活动项目分类 data)
+        {
+            await Db.Merge(data);
+        }
+
+        /// <summary>
+        /// 继教活动项目分类的删除:只要有关联活动,就不能删除;
+        /// </summary>
+        /// <param name="编号列表"></param>
+        /// <returns></returns>
+        /// 
+        [HttpPost]
+        async public Task 删除继教活动项目分类([FromBody]IEnumerable<int> 编号列表)
+        {
+            var 相关的继教活动项目分类 = await Db.GetListSpAsync<v_继教活动项目分类, 继教活动项目分类Filter>(
+                new 继教活动项目分类Filter()
+                {
+                    WhereIn编号 = 编号列表.ToStringIdWithSpacer()
+                });
+
+            if (相关的继教活动项目分类.Any(i => i.未发布活动数量 > 0 || i.未开始活动数量 > 0 || i.进行中活动数量 > 0 || i.已结束活动数量 > 0))
+            {
+                throw new Exception("将删除的项目分类中,已包含活动,请删除所有已包含活动后再执行此操作.");
+            }
+
+            await Db_Manage.Delete<继教培训计划>(编号列表);
+        }
+
     }
 }

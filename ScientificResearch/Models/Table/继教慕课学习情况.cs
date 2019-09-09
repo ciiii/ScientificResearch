@@ -6,12 +6,17 @@ using System.ComponentModel.DataAnnotations;
 namespace ScientificResearch.Models
 {
     /// <summary>
-    /// 继教慕课课时课件学习情况[类]
+    /// 继教慕课学习情况[类]
     /// </summary>
     [Serializable]
-	public partial class 继教慕课课时课件学习情况 
+	public partial class 继教慕课学习情况 
 	{       
         #region 属性
+        /// <summary>
+		/// 
+		/// </summary>
+        [Required(ErrorMessage ="请提供[慕课编号]")]
+		public int 慕课编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
@@ -23,11 +28,6 @@ namespace ScientificResearch.Models
 		/// </summary>
         [Required(ErrorMessage ="请提供[学习人编号]")]
 		public int 学习人编号 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        [Required(ErrorMessage ="请提供[课时课件编号]")]
-		public int 课时课件编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
