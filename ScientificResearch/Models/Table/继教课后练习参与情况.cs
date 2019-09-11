@@ -38,6 +38,11 @@ namespace ScientificResearch.Models
 		/// </summary>
         [Required(ErrorMessage ="请提供[参与时间]")]
 		public DateTime? 参与时间 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        [Required(ErrorMessage ="请提供[得分]")]
+		public int 得分 { get; set; }
         
         
         #endregion

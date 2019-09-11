@@ -20,12 +20,6 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        [Required(ErrorMessage ="请提供[类型]")]
-        [MaxLength(100,ErrorMessage ="类型不能超过[50]字")]
-		public string 类型 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
         [Required(ErrorMessage ="请提供[文件夹编号]")]
 		public int 文件夹编号 { get; set; }
         /// <summary>

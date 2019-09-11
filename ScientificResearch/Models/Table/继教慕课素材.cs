@@ -31,7 +31,6 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        [Required(ErrorMessage ="请提供[路径]")]
         [MaxLength(500,ErrorMessage ="路径不能超过[250]字")]
 		public string 路径 { get; set; }
         /// <summary>

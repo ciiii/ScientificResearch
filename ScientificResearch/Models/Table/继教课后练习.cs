@@ -20,8 +20,8 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        [Required(ErrorMessage ="请提供[及格分]")]
-		public int 及格分 { get; set; }
+        [Required(ErrorMessage ="请提供[及格分数]")]
+		public int 及格分数 { get; set; }
         
         
         #endregion

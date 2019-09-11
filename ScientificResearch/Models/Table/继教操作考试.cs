@@ -37,11 +37,6 @@ namespace ScientificResearch.Models
 		/// </summary>
         [Required(ErrorMessage ="请提供[是否允许考生查看评分]")]
 		public bool 是否允许考生查看评分 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        [MaxLength(1000,ErrorMessage ="备注不能超过[500]字")]
-		public string 备注 { get; set; }
         
         
         #endregion

@@ -6,10 +6,10 @@ using System.ComponentModel.DataAnnotations;
 namespace ScientificResearch.Models
 {
     /// <summary>
-    /// 继教慕课学习情况[类]
+    /// 继教慕课参与情况[类]
     /// </summary>
     [Serializable]
-	public partial class 继教慕课学习情况 
+	public partial class 继教慕课参与情况 
 	{       
         #region 属性
         /// <summary>
@@ -20,14 +20,14 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        [Required(ErrorMessage ="请提供[学习人类型]")]
-        [MaxLength(50,ErrorMessage ="学习人类型不能超过[25]字")]
-		public string 学习人类型 { get; set; }
+        [Required(ErrorMessage ="请提供[参与人类型]")]
+        [MaxLength(50,ErrorMessage ="参与人类型不能超过[25]字")]
+		public string 参与人类型 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        [Required(ErrorMessage ="请提供[学习人编号]")]
-		public int 学习人编号 { get; set; }
+        [Required(ErrorMessage ="请提供[参与人编号]")]
+		public int 参与人编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>

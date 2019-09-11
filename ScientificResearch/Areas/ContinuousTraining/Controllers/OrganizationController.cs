@@ -119,7 +119,7 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
             {
                 var 继教科室 = await dbForTransaction.Merge<继教科室>(data.Model, transaction);
 
-                var 现有的继教科室 = await dbForTransaction.GetListSpAsync<继教科室>();
+                var 现有的继教科室 = await dbForTransaction.GetListSpAsync<继教科室>(transaction:transaction);
 
                 var 科室管理员角色编号 = (int)继教角色enum.科室管理员;
 
@@ -134,7 +134,7 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
 
                 var 继教助教老师 = await dbForTransaction.Merge(继教科室.编号, data.List, transaction);
 
-                var 现有的继教助教老师 = await dbForTransaction.GetListSpAsync<继教助教老师>();
+                var 现有的继教助教老师 = await dbForTransaction.GetListSpAsync<继教助教老师>(transaction:transaction);
 
                 var 助教老师角色编号 = (int)继教角色enum.助教老师;
 

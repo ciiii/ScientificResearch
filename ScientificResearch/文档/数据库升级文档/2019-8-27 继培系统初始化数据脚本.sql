@@ -97,17 +97,17 @@ VALUES  ( 1,0,1,0,N'慕课',N'ForClass', 1,N'',N'' ),
 ( 5,0,1,0,N'系统设置',N'SystemSettings', 1,N'',N'' ),
 ( 501,5,2,1,N'登录日志',N'SystemSettingsLoginLog', 1,N'',N'' ),
 ( 502,5,2,2,N'权限管理',N'SystemSettingsRightsManagement', 1,N'',N'' ),
- ( 50201,502,3,1,N'角色及权限',N'', 1,N'',N'' ),
+ ( 50201,502,3,1,N'角色及权限',N'SystemSettingsRightsManagementRole', 1,N'',N'' ),
 ( 503,5,2,3,N'业务设置',N'SystemSettingsBusiness', 1,N'',N'' ),
  ( 50301,503,3,1,N'基本规则',N'SystemSettingsBasicRules', 1,N'',N'' ),
  ( 50302,503,3,2,N'培训计划',N'SystemSettingStrainingPlan', 1,N'',N'' ),
- ( 50303,503,3,3,N'活动项目分类',N'SystemSettingProjectClassification', 1,N'',N'' ),
+ ( 50303,503,3,3,N'活动项目分类',N'SystemSettingsSetUpActiveItemClass', 1,N'',N'' ),
 ( 504,5,2,4,N'基础信息',N'SystemSettingsBasicInformation', 1,N'',N'' ),
- ( 50401,505,3,1,N'学历',N'', 1,N'',N'' ),
- ( 50402,505,3,2,N'职称',N'', 1,N'',N'' ),
- ( 50403,505,3,3,N'学科',N'', 1,N'',N'' ),
- ( 50404,505,3,4,N'民族',N'', 1,N'',N'' ),
- ( 50405,505,3,5,N'能级',N'', 1,N'',N'' );
+ ( 50401,504,3,1,N'学历',N'SystemSettingsBasicInformationBasic?type=学历', 1,N'',N'' ),
+ ( 50402,504,3,2,N'职称',N'SystemSettingsBasicInformationBasic?type=职称', 1,N'',N'' ),
+ ( 50403,504,3,3,N'学科',N'SystemSettingsBasicInformationBasic?type=学科', 1,N'',N'' ),
+ ( 50404,504,3,4,N'民族',N'SystemSettingsBasicInformationBasic?type=民族', 1,N'',N'' ),
+ ( 50405,504,3,5,N'能级',N'SystemSettingsBasicInformationLevels', 1,N'',N'' );
 
 GO
 
@@ -171,18 +171,18 @@ VALUES  ( 3,1),
 --助教老师没有pc端的权限;
 GO
 
-TRUNCATE TABLE dbo.继教微信端角色权限;
+TRUNCATE TABLE dbo.继教微信角色权限;
 
 --微信端
 --系统管理员拥有所有权限
-INSERT dbo.继教微信端角色权限
-        ( 继培角色编号, 继培微信端权限编号 )
+INSERT dbo.继教微信角色权限
+        ( 继教角色编号, 继教微信权限编号 )
 SELECT 1,编号 FROM dbo.继教微信权限;
 
 --医院管理员和科室管理员拥有"管理员"菜单的权限
 --助教老师有"操作评分"的权限;
-INSERT dbo.继教微信端角色权限
-        ( 继培角色编号, 继培微信端权限编号 )
+INSERT dbo.继教微信角色权限
+        ( 继教角色编号, 继教微信权限编号 )
 VALUES  ( 2,2),(3,2),(4,1);
 
 GO
