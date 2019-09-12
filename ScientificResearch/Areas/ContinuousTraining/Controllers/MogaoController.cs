@@ -19,6 +19,7 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
     /// </summary>
     public class MogaoController : ContinuousTrainingBaseController
     {
+        #region 获取
         /// <summary>
         /// 必填条件:文件夹编号,
         /// 该文件夹必须是"继教慕课"类型的,这个在后台没有验证了..
@@ -27,6 +28,7 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
         /// <param name="paging"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
+        [HttpGet]
         async public Task<object> 分页获取某文件夹下的慕课活动(Paging paging, 继教活动Filter filter)
         {
             return await Db.GetPagingListSpAsync<v_继教活动, 继教活动Filter>(paging, filter);
@@ -39,6 +41,7 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
         /// </summary>
         /// <param name="活动编号"></param>
         /// <returns></returns>
+        [HttpGet]
         async public Task<object> 获取某慕课活动详情(int 活动编号)
         {
             return await 继教活动.获取某活动详情(活动编号, Db);
@@ -49,16 +52,18 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
         /// </summary>
         /// <param name="活动内容编号"></param>
         /// <returns></returns>
+        [HttpGet]
         async public Task<object> 获取某慕课活动内容详情(int 活动内容编号)
         {
             return await 继教慕课.获取某慕课活动内容详情(
                 活动内容编号,
                 Config.GetValue<string>("七牛:AccessKey"),
-                Config.GetValue<string>("七牛:SecretKey"), 
+                Config.GetValue<string>("七牛:SecretKey"),
                 Config.GetValue<string>("七牛:Domain"),
                 Db);
         }
 
+        [HttpGet]
         async public Task<object> 获取某课后练习活动内容详情(int 活动内容编号)
         {
             return await 继教课后练习.获取某课后练习活动内容详情(活动内容编号, Db);
@@ -70,19 +75,128 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
         /// </summary>
         /// <param name="活动内容编号"></param>
         /// <returns></returns>
+        [HttpGet]
         async public Task<object> 获取某签到活动内容详情(int 活动内容编号)
         {
             return await 继教签到.获取某签到活动内容详情(活动内容编号, Db);
         }
 
+        [HttpGet]
         async public Task<object> 获取某理论考试活动内容详情(int 活动内容编号)
         {
             return await 继教理论考试.获取某理论考试活动内容详情(活动内容编号, Db);
         }
 
+        [HttpGet]
         async public Task<object> 获取某操作考试活动内容详情(int 活动内容编号)
         {
             return await 继教操作考试.获取某操作考试活动内容详情(活动内容编号, Db);
         }
+
+        #endregion
+
+        #region 增改
+        /// <summary>
+        /// 继教活动的基本信息增改
+        /// 只能在状态 = 未发布时增改
+        /// 开始/结束时间一定为null
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task 增改继教活动基本信息([FromBody]继教活动 data)
+        {
+            await 继教活动.增改继教活动(data, Db);
+        }
+
+        /// <summary>
+        /// 同时更新"继教活动内容","继教慕课"
+        /// 第一个第二个分别是"继教活动内容","继教慕课"
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task 增改继教慕课活动内容([FromBody]增改继教慕课 data)
+        {
+            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+            {
+                await 继教慕课.增改继教慕课(data, dbForTransaction, transaction);
+            }
+
+            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+        }
+
+        /// <summary>
+        /// 增改继教课后练习需要同时更新三部分内容:
+        /// 1 继教活动内容
+        /// 2 继教课后练习
+        /// 3 继教课后练习试题
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task 增改继教课后练习活动内容([FromBody]增改继教课后练习 data)
+        {
+            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+            {
+                await 继教课后练习.增改继教课后练习(data, dbForTransaction, transaction);
+            }
+
+            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+        }
+
+        /// <summary>
+        /// 增改继教理论考试需要同时更新这么几个东东
+        /// 1 继教活动内容
+        /// 2 继教理论考试,也是理论考试的基本信息
+        /// 3 继教考试批次,一个理论考试可能会有1-N个批次
+        /// 4 每个批次对应的多个可参与人
+        /// 
+        /// 各个时间应该验证一下
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task 增改继教理论考试活动内容([FromBody]增改继教理论考试 data)
+        {
+            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+            {
+                await 继教理论考试.增改继教理论考试(data, dbForTransaction, transaction);
+            }
+
+            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+        }
+
+        [HttpPost]
+        async public Task 增改继教操作考试活动内容([FromBody]增改继教操作考试 data)
+        {
+            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+            {
+                await 继教操作考试.增改继教操作考试(data, dbForTransaction, transaction);
+            }
+
+            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+        }
+
+        /// <summary>
+        /// 理论考试和操作考试的批次删除都在这里;
+        /// 没有特别的业务,就不用写到model里面了
+        /// </summary>
+        /// <param name="编号列表"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task 删除继教考试批次([FromBody]IEnumerable<int> 编号列表)
+        {
+            await Db.Delete<继教考试批次>(编号列表);
+        }
+
+        [HttpPost]
+        async public Task 设置继教活动学分([FromBody]设置继教活动学分 data)
+        {
+            var model = await Db.GetModelByIdSpAsync<继教活动>(data.活动编号);
+            model.学分 = data.学分;
+            await 继教活动.增改继教活动(model, Db);
+        }
+        #endregion
     }
 }

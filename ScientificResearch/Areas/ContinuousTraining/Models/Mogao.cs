@@ -10,20 +10,27 @@ using System.Threading.Tasks;
 
 namespace ScientificResearch.Models
 {
+    public class 增改继教慕课
+    {
+        public 继教活动内容 活动内容 { get; set; }
+        public 继教慕课 慕课 { get; set; }
+    }
+
+
     public partial class 继教慕课
     {
         async static public Task<object> 获取某慕课活动内容详情(
-            int 活动内容编号, 
-            string accessKey, 
-            string secretKey, 
-            string domain, 
-            IDbConnection db, 
+            int 活动内容编号,
+            string accessKey,
+            string secretKey,
+            string domain,
+            IDbConnection db,
             IDbTransaction transaction = null)
         {
             var 基本信息 = await db.GetModelByIdSpAsync<v_继教慕课>(活动内容编号, transaction: transaction);
 
             //v_继教慕课 的 慕课素材路径,是在这里计算出来的;
-            基本信息.慕课素材路径 = MyQiniu.GetPrivateUrl(accessKey, secretKey, domain,基本信息.慕课素材名称);
+            基本信息.慕课素材路径 = MyQiniu.GetPrivateUrl(accessKey, secretKey, domain, 基本信息.慕课素材名称);
 
             var 参与情况 = await db.GetListSpAsync<v_继教慕课参与情况, 继教慕课参与情况Filter>(
                 new 继教慕课参与情况Filter()
@@ -36,6 +43,30 @@ namespace ScientificResearch.Models
                 参与情况
             };
         }
+
+        /// <summary>
+        /// 应该在控制器放到一个事务.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="db"></param>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
+        async static public Task 增改继教慕课(
+            增改继教慕课 data, 
+            IDbConnection db, 
+            IDbTransaction transaction = null)
+        {
+            data.活动内容.类型 = 活动内容类型.继教慕课.ToString();
+            data.活动内容 = await 继教活动内容.增改继教活动内容(data.活动内容,db,transaction);
+            data.慕课.编号 = data.活动内容.编号;
+            data.慕课 = await db.Merge(data.慕课,transaction:transaction);
+        }
+    }
+
+    public class 设置继教活动学分
+    {
+        public int 活动编号 { get; set; }
+        public int 学分 { get; set; }
     }
 
     public class 继教活动Filter

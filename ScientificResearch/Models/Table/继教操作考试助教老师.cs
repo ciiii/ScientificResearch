@@ -15,6 +15,7 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        [Obsolete]
         [Required(ErrorMessage ="请提供[操作考试编号]")]
 		public int 操作考试编号 { get; set; }
         /// <summary>

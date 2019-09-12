@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.Extensions.Configuration;
 using ScientificResearch.Infrastucture;
 using ScientificResearch.Models;
 
@@ -61,6 +61,17 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
         }
 
         [HttpPost]
+        async public Task<object> 上传继教培训计划附件()
+        {
+            var filesNameList = await MyLib.UploadFile.Upload(
+                Request.Form.Files,
+                Env.WebRootPath,
+                "upload/继培/培训计划附件",
+                Config.GetValue<int>("uploadFileMaxSize"));
+            return filesNameList;
+        }
+
+        [HttpPost]
         async public Task 增改继教培训计划([FromBody]继教培训计划 data)
         {
             await Db.Merge(data);
@@ -73,7 +84,7 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
         /// <returns></returns>
         [HttpPost]
         async public Task 删除继教培训计划([FromBody]IEnumerable<int> 编号列表) =>
-            await Db_Manage.Delete<继教培训计划>(编号列表);
+            await Db.Delete<继教培训计划>(编号列表);
 
         /// <summary>
         /// 前端从父编号=0开始组织树结构,中间有断层的数据就不管他
@@ -111,7 +122,7 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
                 throw new Exception("将删除的项目分类中,已包含活动,请删除所有已包含活动后再执行此操作.");
             }
 
-            await Db_Manage.Delete<继教培训计划>(编号列表);
+            await Db.Delete<继教活动项目分类>(编号列表);
         }
 
     }

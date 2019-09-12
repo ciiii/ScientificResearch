@@ -125,12 +125,67 @@
             <param name="活动编号"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.MogaoController.获取某慕课活动内容详情(System.Int32)">
+            <summary>
+            返回的基本信息里面的"慕课素材路径",是计算出来的私有路径,可用来直接下载/查看
+            </summary>
+            <param name="活动内容编号"></param>
+            <returns></returns>
+        </member>
         <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.MogaoController.获取某签到活动内容详情(System.Int32)">
             <summary>
             注意,这里返回数据的第二部分:"参与情况",是签到流水账,而不是按某个参与人统计出的通过/不通过签到的数据
             通过/不通过的数据要从"tfn_继教签到参与情况"拿才对
             </summary>
             <param name="活动内容编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.MogaoController.增改继教活动基本信息(ScientificResearch.Models.继教活动)">
+            <summary>
+            继教活动的基本信息增改
+            只能在状态 = 未发布时增改
+            开始/结束时间一定为null
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.MogaoController.增改继教慕课活动内容(ScientificResearch.Models.增改继教慕课)">
+            <summary>
+            同时更新"继教活动内容","继教慕课"
+            第一个第二个分别是"继教活动内容","继教慕课"
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.MogaoController.增改继教课后练习活动内容(ScientificResearch.Models.增改继教课后练习)">
+            <summary>
+            增改继教课后练习需要同时更新三部分内容:
+            1 继教活动内容
+            2 继教课后练习
+            3 继教课后练习试题
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.MogaoController.增改继教理论考试活动内容(ScientificResearch.Models.增改继教理论考试)">
+            <summary>
+            增改继教理论考试需要同时更新这么几个东东
+            1 继教活动内容
+            2 继教理论考试,也是理论考试的基本信息
+            3 继教考试批次,一个理论考试可能会有1-N个批次
+            4 每个批次对应的多个可参与人
+            
+            各个时间应该验证一下
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.MogaoController.删除继教考试批次(System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            理论考试和操作考试的批次删除都在这里;
+            没有特别的业务,就不用写到model里面了
+            </summary>
+            <param name="编号列表"></param>
             <returns></returns>
         </member>
         <member name="T:ScientificResearch.Areas.ContinuousTraining.Controllers.OrganizationController">
@@ -1713,10 +1768,25 @@
              <param name="data"></param>
              <returns></returns>
         </member>
+        <member name="T:ScientificResearch.Models.活动内容类型">
+            <summary>
+            "继教文件夹类型"是个类似的enum
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.继教活动">
             <summary>
             继教活动[类]
             </summary>
+        </member>
+        <member name="M:ScientificResearch.Models.继教活动.增改继教活动(ScientificResearch.Models.继教活动,System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            继教活动的基本信息增改
+            只能在状态 = 未发布时增改
+            </summary>
+            <param name="model"></param>
+            <param name="db"></param>
+            <param name="transaction"></param>
+            <returns></returns>
         </member>
         <member name="P:ScientificResearch.Models.继教活动.编号">
             <summary>
@@ -1778,10 +1848,78 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.继教活动内容">
+            <summary>
+            继教活动内容[类]
+            </summary>
+        </member>
+        <member name="M:ScientificResearch.Models.继教活动内容.增改继教活动内容(ScientificResearch.Models.继教活动内容,System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            一般情况下都应该放到具体的活动内容的一个事务性增改中去;
+            </summary>
+            <param name=""></param>
+            <param name="db"></param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动内容.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动内容.活动编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动内容.类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动内容.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动内容.排序值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动内容.开始时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动内容.结束时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动内容.地点">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动内容.备注">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.继教课后练习">
             <summary>
             继教课后练习[类]
             </summary>
+        </member>
+        <member name="M:ScientificResearch.Models.继教课后练习.增改继教课后练习(ScientificResearch.Models.增改继教课后练习,System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            应该在控制器放到一个事务.
+            </summary>
+            <param name="data"></param>
+            <param name="db"></param>
+            <param name="transaction"></param>
+            <returns></returns>
         </member>
         <member name="P:ScientificResearch.Models.继教课后练习.编号">
             <summary>
@@ -1868,10 +2006,74 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.继教考试批次">
+            <summary>
+            继教考试批次[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教考试批次.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教考试批次.考试编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教考试批次.排序值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教考试批次.考试开始时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教考试批次.考试结束时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教考试批次.考试地点">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教考试批次.人数上限">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教考试批次.二维码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教考试批次.口令">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教考试批次.备注">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.继教慕课">
             <summary>
             继教慕课[类]
             </summary>
+        </member>
+        <member name="M:ScientificResearch.Models.继教慕课.增改继教慕课(ScientificResearch.Models.增改继教慕课,System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            应该在控制器放到一个事务.
+            </summary>
+            <param name="model"></param>
+            <param name="db"></param>
+            <param name="transaction"></param>
+            <returns></returns>
         </member>
         <member name="P:ScientificResearch.Models.继教慕课.编号">
             <summary>
@@ -4930,6 +5132,41 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.sp_继教慕课_增改">
+            <summary>
+            sp_继教慕课_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教慕课_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教操作考试_增改">
+            <summary>
+            sp_继教操作考试_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教操作考试_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教操作考试助教老师_增改">
+            <summary>
+            sp_继教操作考试助教老师_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教操作考试助教老师_增改.fId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教操作考试助教老师_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_继教文件夹_增改">
             <summary>
             sp_继教文件夹_增改[类]
@@ -4955,6 +5192,26 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.sp_继教活动_增改">
+            <summary>
+            sp_继教活动_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教活动_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教活动内容_增改">
+            <summary>
+            sp_继教活动内容_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教活动内容_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_继教活动项目分类_删">
             <summary>
             sp_继教活动项目分类_删[类]
@@ -4975,12 +5232,57 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.sp_继教理论考试_增改">
+            <summary>
+            sp_继教理论考试_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教理论考试_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_继教科室_增改">
             <summary>
             sp_继教科室_增改[类]
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_继教科室_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教考试批次_删">
+            <summary>
+            sp_继教考试批次_删[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教考试批次_删.tt_编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教考试批次_增改">
+            <summary>
+            sp_继教考试批次_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教考试批次_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教考试批次可参与人_增改">
+            <summary>
+            sp_继教考试批次可参与人_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教考试批次可参与人_增改.fId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教考试批次可参与人_增改.tt">
             <summary>
             
             </summary>
@@ -5016,6 +5318,31 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_继教设置_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教课后练习_增改">
+            <summary>
+            sp_继教课后练习_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教课后练习_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教课后练习试题_增改">
+            <summary>
+            sp_继教课后练习试题_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教课后练习试题_增改.fId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教课后练习试题_增改.tt">
             <summary>
             
             </summary>
@@ -11885,56 +12212,6 @@
             
             </summary>
         </member>
-        <member name="T:ScientificResearch.Models.继教活动内容">
-            <summary>
-            继教活动内容[类]
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.继教活动内容.编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.继教活动内容.活动编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.继教活动内容.类型">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.继教活动内容.名称">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.继教活动内容.排序值">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.继教活动内容.开始时间">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.继教活动内容.结束时间">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.继教活动内容.地点">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.继教活动内容.备注">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="T:ScientificResearch.Models.继教活动可参与人">
             <summary>
             继教活动可参与人[类]
@@ -12166,61 +12443,6 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.继教签到规定.备注">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="T:ScientificResearch.Models.继教考试批次">
-            <summary>
-            继教考试批次[类]
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.继教考试批次.编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.继教考试批次.考试编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.继教考试批次.排序值">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.继教考试批次.考试开始时间">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.继教考试批次.考试结束时间">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.继教考试批次.考试地点">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.继教考试批次.人数上限">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.继教考试批次.二维码">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.继教考试批次.口令">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.继教考试批次.备注">
             <summary>
             
             </summary>
@@ -26166,6 +26388,36 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_继教操作考试.通过人数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_继教操作考试助教老师">
+            <summary>
+            v_继教操作考试助教老师[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教操作考试助教老师.操作考试编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教操作考试助教老师.助教老师编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教操作考试助教老师.姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教操作考试助教老师.部门编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教操作考试助教老师.部门名称">
             <summary>
             
             </summary>
