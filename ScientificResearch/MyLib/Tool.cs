@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-//using Microsoft.International.Converters.PinYinConverter;
+using Microsoft.International.Converters.PinYinConverter;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -344,7 +344,7 @@ namespace MyLib
         /// <param name="objIn"></param>
         /// <param name="objOut"></param>
         /// <returns></returns>
-        public static Tout ModelToModel< Tin, Tout>(Tin objIn, Tout objOut = null) where Tout : class, new()
+        public static Tout ModelToModel<Tin, Tout>(Tin objIn, Tout objOut = null) where Tout : class, new()
         {
             objOut = objOut ?? new Tout();
             Type type = typeof(Tout);
@@ -601,30 +601,30 @@ namespace MyLib
         #endregion
 
         #region 汉字转换为拼音
-        ///// <summary>  
-        ///// 从字符串中获取汉字拼音首字母，不是汉字则原样输出  
-        ///// 原来在在Microsoft.International.Converters.PinYinConverter这包
-        ///// </summary>  
-        ///// <param name="transName"></param>  
-        ///// <returns></returns>  
-        //public static string GetFirstPYLetter(string transName)
-        //{
-        //    string r = string.Empty;
-        //    foreach (char obj in transName)
-        //    {
-        //        try
-        //        {
-        //            ChineseChar chineseChar = new ChineseChar(obj);
-        //            string t = chineseChar.Pinyins[0].ToString();
-        //            r += t.Substring(0, 1);
-        //        }
-        //        catch
-        //        {
-        //            r += obj.ToString();
-        //        }
-        //    }
-        //    return r.ToUpper();
-        //}
+        /// <summary>  
+        /// 从字符串中获取汉字拼音首字母，不是汉字则原样输出  
+        /// 原来在在Microsoft.International.Converters.PinYinConverter这包
+        /// </summary>  
+        /// <param name="transName"></param>  
+        /// <returns></returns>  
+        public static string GetFirstPYLetter(string transName)
+        {
+            string r = string.Empty;
+            foreach (char obj in transName)
+            {
+                try
+                {
+                    ChineseChar chineseChar = new ChineseChar(obj);
+                    string t = chineseChar.Pinyins[0].ToString();
+                    r += t.Substring(0, 1);
+                }
+                catch
+                {
+                    r += obj.ToString();
+                }
+            }
+            return r.ToUpper();
+        }
 
         ///// <summary>  
         ///// 把汉字转换成拼音(全拼)  
@@ -825,5 +825,40 @@ namespace MyLib
             return true;
         }
 
+        /// <summary>
+        /// 时间交叉校验
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns>true表示有重叠,false表示无重叠</returns>
+        public static bool CheckDate(DateTime a, DateTime b, DateTime x, DateTime y)
+        {
+            //讨论取a[B,E]与b1[B,E]不重叠部分：
+            //2.a)当 (a.E<=b1.B)||(b1.E<=a.B) 时，无重叠，保留原先的a
+            //时间无重叠                 
+            if ((b < x) || (y < a))
+            {
+                return false;
+            }
+            //2.b)否则有重叠，去掉原先的a；
+            //当 (a.B<b1.B)&&(b1.B<=a.E) 时，留下左边非重复段 a1[a.B,b1.B]
+            //当 (a.B<=b1.E)&&(b1.E<a.E) 时，留下右边非重复段 a2[b1.E,a.E]
+            //重叠
+            if ((a < x) && (x <= b))
+            {
+                return true;
+            }
+            if ((a <= y) && (y < b))
+            {
+                return true;
+            }
+            if ((a < y) && (b == x))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

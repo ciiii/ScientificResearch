@@ -20,6 +20,7 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        [Obsolete]
         [Required(ErrorMessage ="请提供[签到编号]")]
 		public int 签到编号 { get; set; }
         /// <summary>

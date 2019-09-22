@@ -7,6 +7,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Qiniu.Util;
+using Qiniu.IO.Model;
 
 namespace ScientificResearch.Models
 {
@@ -42,6 +44,30 @@ namespace ScientificResearch.Models
                 基本信息,
                 参与情况
             };
+        }
+
+        static public string 获取某素材的上传token(
+            string accessKey,
+            string secretKey,
+            string bucket,
+            string fileName)
+        {
+            Mac mac = new Mac(accessKey, secretKey);
+
+            PutPolicy putPolicy = new PutPolicy();
+            // 如果需要设置为"覆盖"上传(如果云端已有同名文件则覆盖)，请使用 SCOPE = "BUCKET:KEY"
+            //putPolicy.Scope = bucket + ":" + fileName;
+            putPolicy.Scope = bucket;
+            // 上传策略有效期(对应于生成的凭证的有效期)          
+            putPolicy.SetExpires(3600*24);
+            // 上传到云端多少天后自动删除该文件，如果不设置（即保持默认默认）则不删除
+            //putPolicy.DeleteAfterDays = 1;
+            // 生成上传凭证，参见
+            // https://developer.qiniu.com/kodo/manual/upload-token            
+            string jstr = putPolicy.ToJsonString();
+            string token = Auth.CreateUploadToken(mac, jstr);
+
+            return token;
         }
 
         /// <summary>
@@ -126,6 +152,7 @@ namespace ScientificResearch.Models
 
     public class 继教考试批次可参与人Filter
     {
+        public int? 活动编号 { get; set; }
         public int? 考试编号 { get; set; }
     }
 
@@ -137,5 +164,13 @@ namespace ScientificResearch.Models
     public class 继教操作考试参与情况Filter
     {
         public int? 考试编号 { get; set; }
+    }
+
+    public class 继教慕课素材Filter
+    {
+        [Required(ErrorMessage ="请提供文件件编号")]
+        public int 文件夹编号 { get; set; }
+
+        public string Like名称 { get; set; }
     }
 }

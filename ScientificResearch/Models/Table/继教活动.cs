@@ -67,6 +67,16 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        [Required(ErrorMessage ="请提供[建立时间]")]
+		public DateTime? 建立时间 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        [Required(ErrorMessage ="请提供[建立人]")]
+		public int 建立人 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
         [MaxLength(1000,ErrorMessage ="备注不能超过[500]字")]
 		public string 备注 { get; set; }
         

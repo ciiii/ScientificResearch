@@ -15,6 +15,10 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        public int 活动编号 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
         public int 考试编号 { get; set; }
         /// <summary>
 		/// 

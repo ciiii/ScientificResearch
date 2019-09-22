@@ -125,5 +125,34 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
             await Db.Delete<继教活动项目分类>(编号列表);
         }
 
+        [HttpGet]
+        async public Task<object> 获取继教标签(继教标签Filter filter)
+        {
+            return await Db.GetListSpAsync<继教标签, 继教标签Filter>(filter);
+        }
+
+        [HttpPost]
+        async public Task 增改继教标签([FromBody]IEnumerable<继教标签> data)
+        {
+            foreach (var item in data)
+            {
+                item.首字母 = MyLib.Tool.GetFirstPYLetter(item.名称);
+            }
+
+            await Db.Merge(data);
+        }
+
+        /// <summary>
+        /// 删除标签,会让设置了该标签的试题,丢失标签
+        /// </summary>
+        /// <param name="编号列表"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task 删除继教标签([FromBody]IEnumerable<int> 编号列表)
+        {
+            await Db.Delete<继教标签>(编号列表);
+        }
+
+
     }
 }

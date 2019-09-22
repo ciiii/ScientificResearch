@@ -20,6 +20,11 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        [Required(ErrorMessage ="请提供[文件夹编号]")]
+		public int 文件夹编号 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
         [Required(ErrorMessage ="请提供[类型编号]")]
 		public int 类型编号 { get; set; }
         /// <summary>

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using MyLib;
 using ScientificResearch.Infrastucture;
 using ScientificResearch.Models;
 
@@ -19,7 +20,7 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
     /// </summary>
     public class MogaoController : ContinuousTrainingBaseController
     {
-        #region 获取
+        #region 获取慕课活动/活动内容
         /// <summary>
         /// 必填条件:文件夹编号,
         /// 该文件夹必须是"继教慕课"类型的,这个在后台没有验证了..
@@ -95,7 +96,19 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
 
         #endregion
 
-        #region 增改
+        #region 增改慕课活动/活动内容
+
+        [HttpPost]
+        async public Task<object> 上传活动封面()
+        {
+            var filesNameList = await MyLib.UploadFile.Upload(
+                Request.Form.Files,
+                Env.WebRootPath,
+                "upload/继培/活动/封面",
+                Config.GetValue<int>("uploadFileMaxSize"));
+            return filesNameList;
+        }
+
         /// <summary>
         /// 继教活动的基本信息增改
         /// 只能在状态 = 未发布时增改
@@ -104,9 +117,43 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
         /// <param name="data"></param>
         /// <returns></returns>
         [HttpPost]
-        async public Task 增改继教活动基本信息([FromBody]继教活动 data)
+        async public Task<int> 增改继教活动基本信息([FromBody]继教活动 data)
         {
-            await 继教活动.增改继教活动(data, Db);
+            data.建立人 = CurrentUser.编号;
+            var 活动 = await 继教活动.增改继教活动(data, Db);
+            return 活动.编号;
+
+        }
+
+        /// <summary>
+        /// 仅修改获取到的活动内容列表中的"排序值",然后原样返回;
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task 调整活动内容顺序([FromBody]IEnumerable<继教活动内容> data)
+        {
+            await Db.Merge(data);
+        }
+
+        /// <summary>
+        /// 只有未发布的活动才可以发布
+        /// 开始时间必须小于结束时间
+        /// 当前时间必须小于结束时间
+        /// 必须要有活动内容
+        /// 如果有考试,由于考试时分批次指定了参与人,所以考试的参与人必须被包含在活动的可参与人中;
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task 发布继教活动([FromBody]发布继教活动 data)
+        {
+            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+            {
+                await 继教活动.发布继教活动(data, dbForTransaction, transaction);
+            }
+
+            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
         }
 
         /// <summary>
@@ -178,6 +225,17 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
             await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
         }
 
+        [HttpPost]
+        async public Task 增改继教签到活动内容([FromBody]增改继教签到 data)
+        {
+            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+            {
+                await 继教签到.增改继教签到(data, dbForTransaction, transaction);
+            }
+
+            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+        }
+
         /// <summary>
         /// 理论考试和操作考试的批次删除都在这里;
         /// 没有特别的业务,就不用写到model里面了
@@ -191,12 +249,58 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
         }
 
         [HttpPost]
+        async public Task 删除继教活动内容([FromBody]IEnumerable<int> 编号列表)
+        {
+            await Db.Delete<继教活动内容>(编号列表);
+        }
+
+        [HttpPost]
         async public Task 设置继教活动学分([FromBody]设置继教活动学分 data)
         {
             var model = await Db.GetModelByIdSpAsync<继教活动>(data.活动编号);
             model.学分 = data.学分;
             await 继教活动.增改继教活动(model, Db);
         }
+        #endregion
+
+        #region 慕课素材
+
+        [HttpGet]
+        async public Task<object> 分页获取素材(Paging paging, 继教慕课素材Filter filter)
+        {
+            var result = await Db.GetPagingListSpAsync<继教慕课素材, 继教慕课素材Filter>(paging, filter);
+            foreach (var item in result.list)
+            {
+                item.路径 = MyQiniu.GetPrivateUrl(
+                    Config.GetValue<string>("七牛:AccessKey"),
+                Config.GetValue<string>("七牛:SecretKey"),
+                Config.GetValue<string>("七牛:Domain"), item.名称);  
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// 已有重复的文件名,会上传失败;
+        /// </summary>
+        /// <param name="id">素材id,新增时填0</param>
+        /// <param name="fileName">文件名,可以不提供</param>
+        /// <returns></returns>
+        [HttpGet]
+        public object 获取上传文件到七牛云所需的token()
+        {
+            return 继教慕课.获取某素材的上传token(
+                Config.GetValue<string>("七牛:AccessKey"),
+                Config.GetValue<string>("七牛:SecretKey"),
+                Config.GetValue<string>("七牛:Bucket"), null);
+        }
+
+        [HttpPost]
+        async public Task 增改素材([FromBody]继教慕课素材 data)
+        {
+            await Db.Merge(data);
+        }
+
         #endregion
     }
 }

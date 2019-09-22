@@ -17,4 +17,9 @@ namespace ScientificResearch.Models
     {
         public string WhereIn编号 { get; set; }
     }
+
+    public class 继教标签Filter
+    {
+        public string Like名称 { get; set; }
+    }
 }

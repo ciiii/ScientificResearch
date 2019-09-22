@@ -259,4 +259,71 @@ namespace ScientificResearch.Models
     {
         public int? 操作考试编号 { get; set; }
     }
+
+
+    #region 试题管理
+
+    public class 增改试题
+    {
+        public 继教试题 试题 { get; set; }
+        public IEnumerable<继教试题标签> 试题标签 { get; set; }
+        public IEnumerable<继教试题备选答案> 试题备选答案 { get; set; }
+        public IEnumerable<继教试题正确答案> 试题正确答案 { get; set; }
+    }
+
+    public partial class 继教试题
+    {
+        async public static Task 增改继教试题(
+            IEnumerable<增改试题> data, 
+            IDbConnection db,
+            IDbTransaction transaction = null)
+        {
+            foreach (var item in data)
+            {
+                //这里是可以验证一下正确答案的数量是否符合试题类型的;
+
+                var 试题 = await db.Merge(item.试题, transaction: transaction);
+
+                await db.Merge(试题.编号, item.试题标签, transaction: transaction);
+                await db.Merge(试题.编号, item.试题备选答案, transaction: transaction);
+                await db.Merge(试题.编号, item.试题正确答案, transaction: transaction);
+
+            }
+        }
+    }
+
+    public class 继教试题Filter
+    {
+        [Required(ErrorMessage ="请提供文件夹编号")]
+        public int 文件夹编号 { get; set; }
+        public int? 类型编号 { get; set; }
+        public string Like题干 { get; set; }
+        public string 难易度 { get; set; }
+        public int? Begin答题次数 { get; set; }
+        public int? End答题次数 { get; set; }
+        public int? Begin正确答题次数 { get; set; }
+        public int? End正确答题次数 { get; set; }
+        public int? Begin答题正确率 { get; set; }
+        public int? End答题正确率 { get; set; }
+    }
+
+    public class 继教试题标签Filter
+    {
+        public string WhereIn试题编号 { get; set; }
+        public int? 试题编号 { get; set; }
+    }
+
+    public class 继教试题备选答案Filter
+    {
+        public string WhereIn试题编号 { get; set; }
+        public int? 试题编号 { get; set; }
+    }
+
+    public class 继教试题正确答案Filter
+    {
+        public string WhereIn试题编号 { get; set; }
+        public int? 试题编号 { get; set; }
+    }
+
+    #endregion
 }

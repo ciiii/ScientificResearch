@@ -46,6 +46,13 @@
             <returns></returns>
             
         </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.BaseInfoController.删除继教标签(System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            删除标签,会让设置了该标签的试题,丢失标签
+            </summary>
+            <param name="编号列表"></param>
+            <returns></returns>
+        </member>
         <member name="T:ScientificResearch.Areas.ContinuousTraining.Controllers.ContinuousTrainingBaseController">
             <summary>
             2019-1-9
@@ -70,6 +77,15 @@
             继教文件夹可使用人类型:人员, 继教角色, 部门,如果可使用人编号=0,则表示该类型的所有人;
             </summary>
             <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.HomePageController.获取上传文件到七牛云所需的token">
+            <summary>
+            已有重复的文件名,会上传失败;
+            登录的时候获取一次即可,不需要每次要上传的时候来获取;
+            </summary>
+            <param name="id">素材id,新增时填0</param>
+            <param name="fileName">文件名</param>
             <returns></returns>
         </member>
         <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.HomePageController.获取继教权限菜单">
@@ -149,6 +165,24 @@
             <param name="data"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.MogaoController.调整活动内容顺序(System.Collections.Generic.IEnumerable{ScientificResearch.Models.继教活动内容})">
+            <summary>
+            仅修改获取到的活动内容列表中的"排序值",然后原样返回;
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.MogaoController.发布继教活动(ScientificResearch.Models.发布继教活动)">
+            <summary>
+            只有未发布的活动才可以发布
+            开始时间必须小于结束时间
+            当前时间必须小于结束时间
+            必须要有活动内容
+            如果有考试,由于考试时分批次指定了参与人,所以考试的参与人必须被包含在活动的可参与人中;
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
         <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.MogaoController.增改继教慕课活动内容(ScientificResearch.Models.增改继教慕课)">
             <summary>
             同时更新"继教活动内容","继教慕课"
@@ -186,6 +220,14 @@
             没有特别的业务,就不用写到model里面了
             </summary>
             <param name="编号列表"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.MogaoController.获取上传文件到七牛云所需的token">
+            <summary>
+            已有重复的文件名,会上传失败;
+            </summary>
+            <param name="id">素材id,新增时填0</param>
+            <param name="fileName">文件名,可以不提供</param>
             <returns></returns>
         </member>
         <member name="T:ScientificResearch.Areas.ContinuousTraining.Controllers.OrganizationController">
@@ -1788,6 +1830,17 @@
             <param name="transaction"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Models.继教活动.发布继教活动(ScientificResearch.Models.发布继教活动,System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            只有未发布的活动才可以发布
+            必须要有活动内容
+            如果有考试,由于考试时分批次指定了参与人,所以考试的参与人必须被包含在活动的可参与人中;
+            </summary>
+            <param name="data"></param>
+            <param name="db"></param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
         <member name="P:ScientificResearch.Models.继教活动.编号">
             <summary>
             
@@ -1839,6 +1892,16 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.继教活动.必须按顺序学习">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教活动.建立人">
             <summary>
             
             </summary>
@@ -2057,6 +2120,51 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.继教考试批次.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教试题">
+            <summary>
+            继教试题[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试题.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试题.文件夹编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试题.类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试题.题干">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试题.题目解析">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试题.难易度">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试题.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教试题.备注">
             <summary>
             
             </summary>
@@ -5142,6 +5250,16 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.sp_继教慕课素材_增改">
+            <summary>
+            sp_继教慕课素材_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教慕课素材_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_继教操作考试_增改">
             <summary>
             sp_继教操作考试_增改[类]
@@ -5192,6 +5310,26 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.sp_继教标签_删">
+            <summary>
+            sp_继教标签_删[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教标签_删.tt_编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教标签_增改">
+            <summary>
+            sp_继教标签_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教标签_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_继教活动_增改">
             <summary>
             sp_继教活动_增改[类]
@@ -5202,12 +5340,37 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.sp_继教活动内容_删">
+            <summary>
+            sp_继教活动内容_删[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教活动内容_删.tt_编号">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_继教活动内容_增改">
             <summary>
             sp_继教活动内容_增改[类]
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_继教活动内容_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教活动可参与人_增改">
+            <summary>
+            sp_继教活动可参与人_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教活动可参与人_增改.fId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教活动可参与人_增改.tt">
             <summary>
             
             </summary>
@@ -5248,6 +5411,31 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_继教科室_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教签到_增改">
+            <summary>
+            sp_继教签到_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教签到_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教签到规定_增改">
+            <summary>
+            sp_继教签到规定_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教签到规定_增改.fId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教签到规定_增改.tt">
             <summary>
             
             </summary>
@@ -5318,6 +5506,61 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_继教设置_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教试题_增改">
+            <summary>
+            sp_继教试题_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教试题_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教试题备选答案_增改">
+            <summary>
+            sp_继教试题备选答案_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教试题备选答案_增改.fId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教试题备选答案_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教试题标签_增改">
+            <summary>
+            sp_继教试题标签_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教试题标签_增改.fId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教试题标签_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教试题正确答案_增改">
+            <summary>
+            sp_继教试题正确答案_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教试题正确答案_增改.fId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教试题正确答案_增改.tt">
             <summary>
             
             </summary>
@@ -12698,46 +12941,6 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.继教试卷试题.备注">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="T:ScientificResearch.Models.继教试题">
-            <summary>
-            继教试题[类]
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.继教试题.编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.继教试题.类型编号">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.继教试题.题干">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.继教试题.题目解析">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.继教试题.难易度">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.继教试题.建立时间">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.继教试题.备注">
             <summary>
             
             </summary>
@@ -26572,6 +26775,21 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.v_继教活动.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教活动.建立人">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教活动.建立人姓名">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.v_继教活动.备注">
             <summary>
             
@@ -27037,6 +27255,11 @@
             v_继教考试批次可参与人[类]
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.v_继教考试批次可参与人.活动编号">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.v_继教考试批次可参与人.考试编号">
             <summary>
             
@@ -27463,6 +27686,101 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_继教角色权限.该角色是否拥有该权限">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_继教试题">
+            <summary>
+            v_继教试题[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试题.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试题.文件夹编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试题.类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试题.类型名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试题.题干">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试题.题目解析">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试题.难易度">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试题.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试题.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试题.答题次数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试题.正确答题次数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试题.答题正确率">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试题.被引次数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_继教试题标签">
+            <summary>
+            v_继教试题标签[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试题标签.试题编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试题标签.标签编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试题标签.标签名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试题标签.标签首字母">
             <summary>
             
             </summary>
@@ -29743,6 +30061,14 @@
             <param name="model"></param>
             <returns></returns>
         </member>
+        <member name="M:MyLib.Tool.GetFirstPYLetter(System.String)">
+            <summary>  
+            从字符串中获取汉字拼音首字母，不是汉字则原样输出  
+            原来在在Microsoft.International.Converters.PinYinConverter这包
+            </summary>  
+            <param name="transName"></param>  
+            <returns></returns>  
+        </member>
         <member name="M:MyLib.Tool.PostData(System.String,System.String)">
             <summary>
             http方式提交数据方法(HTTP接口公用方法)
@@ -29793,6 +30119,16 @@
             </summary>
             <param name="eStr"></param>
             <returns></returns>
+        </member>
+        <member name="M:MyLib.Tool.CheckDate(System.DateTime,System.DateTime,System.DateTime,System.DateTime)">
+            <summary>
+            时间交叉校验
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="x"></param>
+            <param name="y"></param>
+            <returns>true表示有重叠,false表示无重叠</returns>
         </member>
         <member name="T:MyLib.UploadFile">
             <summary>

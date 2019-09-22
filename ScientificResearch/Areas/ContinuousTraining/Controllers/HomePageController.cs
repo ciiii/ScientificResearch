@@ -14,6 +14,23 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
 {
     public class HomePageController : ContinuousTrainingBaseController
     {
+
+        /// <summary>
+        /// 已有重复的文件名,会上传失败;
+        /// 登录的时候获取一次即可,不需要每次要上传的时候来获取;
+        /// </summary>
+        /// <param name="id">素材id,新增时填0</param>
+        /// <param name="fileName">文件名</param>
+        /// <returns></returns>
+        [HttpGet]
+        public object 获取上传文件到七牛云所需的token()
+        {
+            return 继教慕课.获取某素材的上传token(
+                Config.GetValue<string>("七牛:AccessKey"),
+                Config.GetValue<string>("七牛:SecretKey"),
+                Config.GetValue<string>("七牛:Domain"), null);
+        }
+
         /// <summary>
         /// 获取教学管理pc端的功能菜单;
         /// </summary>

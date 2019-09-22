@@ -15,6 +15,7 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        [Obsolete]
         [Required(ErrorMessage ="请提供[活动编号]")]
 		public int 活动编号 { get; set; }
         /// <summary>
