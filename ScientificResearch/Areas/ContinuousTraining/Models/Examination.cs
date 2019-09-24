@@ -294,8 +294,12 @@ namespace ScientificResearch.Models
 
     public class 继教试题Filter
     {
-        [Required(ErrorMessage ="请提供文件夹编号")]
-        public int 文件夹编号 { get; set; }
+        /// <summary>
+        /// 随机选择一系列试题后,根据这些分页的试题的编号,来获取试题信息
+        /// </summary>
+        public string WhereIn编号 { get; set; }
+        //[Required(ErrorMessage ="请提供文件夹编号")]
+        public int? 文件夹编号 { get; set; }
         public int? 类型编号 { get; set; }
         public string Like题干 { get; set; }
         public string 难易度 { get; set; }
@@ -324,6 +328,59 @@ namespace ScientificResearch.Models
         public string WhereIn试题编号 { get; set; }
         public int? 试题编号 { get; set; }
     }
+
+
+    public class 增改试卷
+    {
+        public 继教试卷 试卷 { get; set; }
+        public IEnumerable<增改继教试卷结构> 试卷结构列表 { get; set; }
+    }
+
+    public class 增改继教试卷结构
+    {
+        public 继教试卷结构 试卷结构 { get; set; }
+        public IEnumerable<继教试卷试题> 试卷试题列表 { get; set; }
+    }
+
+    public partial class 继教试卷
+    {
+        async public static Task 增改继教试卷(
+            增改试卷 data,
+            IDbConnection db,
+            IDbTransaction transaction = null)
+        {
+            var 试卷 = await db.Merge(data.试卷,transaction:transaction);
+            foreach (var item in data.试卷结构列表)
+            {
+                //验证一下试题的类型,和试卷结构的类型一致;
+
+                item.试卷结构.试卷编号 = 试卷.编号;
+                var 试卷结构 = await db.Merge(试卷.编号, item.试卷结构, transaction: transaction);
+                await db.Merge(试卷结构.编号, item.试卷试题列表, transaction: transaction);
+            }
+        }
+    }
+
+    public class 继教试卷Filter
+    {
+        [Required(ErrorMessage ="请提供文件夹编号")]
+        public int? 文件夹编号 { get; set; }
+
+        public string  Like名称 { get; set; }
+    }
+
+    public class 继教试卷结构Filter
+    {
+        public string WhereIn试卷编号 { get; set; }
+    }
+
+    public class 继教试卷试题Filter: 继教试题Filter
+    {
+        public int? 试卷编号 { get; set; }
+        [Required(ErrorMessage ="请提供试卷结构编号")]
+        public int? 试卷结构编号 { get; set; }
+    }
+
 
     #endregion
 }

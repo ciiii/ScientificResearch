@@ -107,7 +107,9 @@ VALUES  ( 1,0,1,0,N'慕课',N'ForClass', 1,N'',N'' ),
  ( 50402,504,3,2,N'职称',N'SystemSettingsBasicInformationBasic?type=职称', 1,N'',N'' ),
  ( 50403,504,3,3,N'学科',N'SystemSettingsBasicInformationBasic?type=学科', 1,N'',N'' ),
  ( 50404,504,3,4,N'民族',N'SystemSettingsBasicInformationBasic?type=民族', 1,N'',N'' ),
- ( 50405,504,3,5,N'能级',N'SystemSettingsBasicInformationLevels', 1,N'',N'' );
+ ( 50405,504,3,5,N'能级',N'SystemSettingsBasicInformationLevels', 1,N'',N'' ),
+ ( 50406,504,3,6,N'标签',N'SystemSettingsBasicInformationLabel', 1,N'',N'' ),
+ ( 50407,504,3,7,N'难易度',N'SystemSettingsBasicInformationBasic?type=难易度', 1,N'',N'' );
 
 GO
 
