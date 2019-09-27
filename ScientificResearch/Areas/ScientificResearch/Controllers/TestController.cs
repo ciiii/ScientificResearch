@@ -714,5 +714,14 @@ namespace ScientificResearch.Controllers
 
             return token;
         }
+
+        [HttpGet]
+        public object 获取一个随机数字字符串()
+        {
+            Random random = new Random();
+            //Random random = new Random(Guid.NewGuid().GetHashCode());
+            //string intString = random.Next(1000, 9999).ToString();
+            return random.Next(100000, 999999).ToString();
+        }
     }
 }

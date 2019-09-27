@@ -148,6 +148,8 @@ namespace ScientificResearch.Models
     public class 继教考试批次Filter
     {
         public int? 考试编号 { get; set; }
+        public string WhereNotIn编号 { get; set; }
+        public string WhereIn考试编号 { get; set; }
     }
 
     public class 继教考试批次可参与人Filter

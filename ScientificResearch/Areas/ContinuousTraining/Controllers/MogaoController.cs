@@ -236,17 +236,17 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
             await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
         }
 
-        /// <summary>
-        /// 理论考试和操作考试的批次删除都在这里;
-        /// 没有特别的业务,就不用写到model里面了
-        /// </summary>
-        /// <param name="编号列表"></param>
-        /// <returns></returns>
-        [HttpPost]
-        async public Task 删除继教考试批次([FromBody]IEnumerable<int> 编号列表)
-        {
-            await Db.Delete<继教考试批次>(编号列表);
-        }
+        ///// <summary>
+        ///// 理论考试和操作考试的批次删除都在这里;
+        ///// 没有特别的业务,就不用写到model里面了
+        ///// </summary>
+        ///// <param name="编号列表"></param>
+        ///// <returns></returns>
+        //[HttpPost]
+        //async public Task 删除继教考试批次([FromBody]IEnumerable<int> 编号列表)
+        //{
+        //    await Db.Delete<继教考试批次>(编号列表);
+        //}
 
         [HttpPost]
         async public Task 删除继教活动内容([FromBody]IEnumerable<int> 编号列表)

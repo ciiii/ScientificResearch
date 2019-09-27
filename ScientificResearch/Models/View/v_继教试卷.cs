@@ -56,6 +56,14 @@ namespace ScientificResearch.Models
 		/// 
 		/// </summary>
         public int? 总得分 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int? 总分值 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int? 试题数量 { get; set; }
         
           
         #endregion

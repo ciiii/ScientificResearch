@@ -25,8 +25,7 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        [Required(ErrorMessage ="请提供[培训计划编号]")]
-		public int 培训计划编号 { get; set; }
+		public int? 培训计划编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>

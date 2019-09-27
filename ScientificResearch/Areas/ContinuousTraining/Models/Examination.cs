@@ -77,12 +77,16 @@ namespace ScientificResearch.Models
         }
     }
 
-
     public partial class 继教理论考试
     {
         async static public Task<object> 获取某理论考试活动内容详情(int 活动内容编号, IDbConnection db, IDbTransaction transaction = null)
         {
-            var 基本信息 = await db.GetModelByIdSpAsync<v_继教理论考试>(活动内容编号, transaction: transaction);
+            return await 获取某理论考试活动或活动内容详情<v_继教理论考试>(活动内容编号, db, transaction);
+        }
+
+        private static async Task<object> 获取某理论考试活动或活动内容详情<T>(int 活动内容编号, IDbConnection db, IDbTransaction transaction)
+        {
+            var 基本信息 = await db.GetModelByIdSpAsync<T>(活动内容编号, transaction: transaction);
             var 批次 = await db.GetListSpAsync<继教考试批次, 继教考试批次Filter>(new 继教考试批次Filter()
             {
                 考试编号 = 活动内容编号
@@ -110,6 +114,11 @@ namespace ScientificResearch.Models
             };
         }
 
+        async static public Task<object> 获取某理论考试活动详情(int 活动内容编号, IDbConnection db, IDbTransaction transaction = null)
+        {
+            return await 获取某理论考试活动或活动内容详情<v_继教理论考试活动>(活动内容编号, db, transaction);
+        }
+
         async static public Task 增改继教理论考试(
             增改继教理论考试 data,
             IDbConnection db,
@@ -121,6 +130,17 @@ namespace ScientificResearch.Models
             data.活动内容.类型 = 活动内容类型.继教理论考试.ToString();
             data.活动内容 = await 继教活动内容.增改继教活动内容(data.活动内容, db, transaction);
 
+            //删除该理论考试中,在db中存在,在提交上来的批次中不存在的批次
+            //var 要删除的批次 = await db.GetListSpAsync<继教考试批次, 继教考试批次Filter>(new 继教考试批次Filter()
+            //{
+            //    考试编号 = data.理论考试.编号,
+            //    WhereNotIn编号 = data.增改继教考试批次.Select(i => i.考试批次.编号).ToStringIdWithSpacer()
+            //}, transaction: transaction);
+
+            //await db.Delete<继教考试批次>(要删除的批次.Select(i => i.编号), transaction: transaction);
+
+            await 继教考试批次.删除某考试中不需要的考试批次(data.理论考试.编号, data.增改继教考试批次, db, transaction);
+
             data.理论考试.编号 = data.活动内容.编号;
             data.理论考试 = await db.Merge(data.理论考试, transaction: transaction);
 
@@ -129,15 +149,36 @@ namespace ScientificResearch.Models
                 var 考试批次 = item.考试批次;
                 考试批次.考试编号 = data.理论考试.编号;
 
+                if (string.IsNullOrEmpty(考试批次.口令))
+                {
+                    //Random random = new Random();
+                    //string intString = random.Next(1000, 9999).ToString();
+                    考试批次.口令 = new Random().Next(100000, 999999).ToString();
+                }
+
                 考试批次 = await db.Merge(考试批次, transaction: transaction);
 
                 await db.Merge(考试批次.编号, item.可参与人, transaction: transaction);
             }
         }
 
+        async public static Task<string> 为特定批次生成一个新口令(int 批次编号, IDbConnection db,
+            IDbTransaction transaction = null)
+        {
+            var 批次 = await db.GetModelByIdSpAsync<继教考试批次>(批次编号, transaction: transaction);
+            if(批次 == null)
+            {
+                throw new Exception("没有找到指定的批次");
+            }
+            else
+            {
+                var 新口令 =new Random().Next(100000, 999999).ToString();
+                批次.口令 = 新口令;
+                await db.Merge(批次,transaction:transaction);
+                return 新口令;
+            }
+        }
     }
-
-
 
     public partial class 继教操作考试
     {
@@ -191,6 +232,8 @@ namespace ScientificResearch.Models
 
             data.活动内容.类型 = 活动内容类型.继教操作考试.ToString();
             data.活动内容 = await 继教活动内容.增改继教活动内容(data.活动内容, db, transaction);
+
+            await 继教考试批次.删除某考试中不需要的考试批次(data.操作考试.编号, data.增改继教考试批次, db, transaction);
 
             data.操作考试.编号 = data.活动内容.编号;
             data.操作考试 = await db.Merge(data.操作考试, transaction: transaction);
@@ -253,6 +296,22 @@ namespace ScientificResearch.Models
                 throw new Exception("考试批次的开始结束时间,与排序不符");
             }
         }
+
+        async public static Task 删除某考试中不需要的考试批次(
+            int 考试编号,
+            IEnumerable<增改继教考试批次> 增改继教考试批次,
+            IDbConnection db,
+            IDbTransaction transaction = null)
+        {
+            //删除该理论考试中,在db中存在,在提交上来的批次中不存在的批次
+            var 要删除的批次 = await db.GetListSpAsync<继教考试批次, 继教考试批次Filter>(new 继教考试批次Filter()
+            {
+                考试编号 = 考试编号,
+                WhereNotIn编号 = 增改继教考试批次.Select(i => i.考试批次.编号).ToStringIdWithSpacer()
+            }, transaction: transaction);
+
+            await db.Delete<继教考试批次>(要删除的批次.Select(i => i.编号), transaction: transaction);
+        }
     }
 
     public class 继教操作考试助教老师Filter
@@ -261,12 +320,13 @@ namespace ScientificResearch.Models
     }
 
 
-    #region 试题管理
+    #region 试题 试卷管理
 
     public class 增改试题
     {
         public 继教试题 试题 { get; set; }
-        public IEnumerable<继教试题标签> 试题标签 { get; set; }
+        public IEnumerable<string> 标签名列表 { get; set; }
+        //public IEnumerable<继教试题标签> 试题标签 { get; set; }
         public IEnumerable<继教试题备选答案> 试题备选答案 { get; set; }
         public IEnumerable<继教试题正确答案> 试题正确答案 { get; set; }
     }
@@ -274,7 +334,7 @@ namespace ScientificResearch.Models
     public partial class 继教试题
     {
         async public static Task 增改继教试题(
-            IEnumerable<增改试题> data, 
+            IEnumerable<增改试题> data,
             IDbConnection db,
             IDbTransaction transaction = null)
         {
@@ -284,7 +344,18 @@ namespace ScientificResearch.Models
 
                 var 试题 = await db.Merge(item.试题, transaction: transaction);
 
-                await db.Merge(试题.编号, item.试题标签, transaction: transaction);
+                var 标签列表 = item.标签名列表.Select(i => new 继教标签()
+                {
+                    编号 = 0,
+                    名称 = i,
+                    首字母 = MyLib.Tool.GetFirstPYLetter(i)
+                });
+
+                标签列表 = await db.Merge(标签列表, transaction: transaction);
+                var 试题标签列表 = 标签列表.Select(i => new 继教试题标签() { 试题编号 = 试题.编号, 标签编号 = i.编号 });
+
+                await db.Merge(试题.编号, 试题标签列表, transaction: transaction);
+
                 await db.Merge(试题.编号, item.试题备选答案, transaction: transaction);
                 await db.Merge(试题.编号, item.试题正确答案, transaction: transaction);
 
@@ -349,13 +420,29 @@ namespace ScientificResearch.Models
             IDbConnection db,
             IDbTransaction transaction = null)
         {
-            var 试卷 = await db.Merge(data.试卷,transaction:transaction);
+            if (data.试卷结构列表.Count() <= 0)
+            {
+                throw new Exception("试卷至少包含一个结构");
+            }
+
+            //删除某试卷中,存在于db,但不存在与提交上来的数据的试卷结构
+            var 要删除的试卷结构 = await db.GetListSpAsync<继教试卷结构, 继教试卷结构Filter>(new 继教试卷结构Filter()
+            {
+                试卷编号 = data.试卷.编号,
+                WhereNotIn编号 = data.试卷结构列表.Select(i => i.试卷结构.编号).ToStringIdWithSpacer()
+            }, transaction: transaction);
+
+            await db.Delete<继教试卷结构>(要删除的试卷结构.Select(i => i.编号), transaction: transaction);
+
+            var 试卷 = await db.Merge(data.试卷, transaction: transaction);
+
+            //var 试卷结构 = await db.Merge(试卷.编号, data.试卷结构列表.Select(i=>i.试卷结构), transaction: transaction);
+
             foreach (var item in data.试卷结构列表)
             {
                 //验证一下试题的类型,和试卷结构的类型一致;
-
                 item.试卷结构.试卷编号 = 试卷.编号;
-                var 试卷结构 = await db.Merge(试卷.编号, item.试卷结构, transaction: transaction);
+                var 试卷结构 = await db.Merge(item.试卷结构, transaction: transaction);
                 await db.Merge(试卷结构.编号, item.试卷试题列表, transaction: transaction);
             }
         }
@@ -363,24 +450,49 @@ namespace ScientificResearch.Models
 
     public class 继教试卷Filter
     {
-        [Required(ErrorMessage ="请提供文件夹编号")]
+        [Required(ErrorMessage = "请提供文件夹编号")]
         public int? 文件夹编号 { get; set; }
 
-        public string  Like名称 { get; set; }
+        public string Like名称 { get; set; }
     }
 
     public class 继教试卷结构Filter
     {
+        public int? 试卷编号 { get; set; }
         public string WhereIn试卷编号 { get; set; }
+        public string WhereNotIn编号 { get; set; }
     }
 
-    public class 继教试卷试题Filter: 继教试题Filter
+    public class 继教试卷试题Filter : 继教试题Filter
     {
         public int? 试卷编号 { get; set; }
-        [Required(ErrorMessage ="请提供试卷结构编号")]
+        [Required(ErrorMessage = "请提供试卷结构编号")]
         public int? 试卷结构编号 { get; set; }
     }
 
 
     #endregion
+
+    #region 继教理论考试 继教理论考试活动
+    public class 继教理论考试Filter
+    {
+        public string Like名称 { get; set; }
+    }
+
+    public class 继教理论考试活动Filter : 继教理论考试Filter
+    {
+        [Required(ErrorMessage = "请提供文件夹编号")]
+        public int? 文件夹编号 { get; set; }
+
+    }
+    #endregion
+
+    public class 增改继教理论考试活动 : 增改继教理论考试
+    {
+        public int 文件夹编号 { get; set; }
+        public int 学分 { get; set; }
+        //public 继教活动内容 活动内容 { get; set; }
+        //public 继教理论考试 理论考试 { get; set; }
+        //public IEnumerable<增改继教考试批次> 增改继教考试批次 { get; set; }
+    }
 }

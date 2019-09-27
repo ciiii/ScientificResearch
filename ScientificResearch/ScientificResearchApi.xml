@@ -87,6 +87,28 @@
             <param name="filter"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.ExaminationController.分页获取某文件夹下的理论考试活动(ScientificResearch.Models.Paging,ScientificResearch.Models.继教理论考试活动Filter)">
+            <summary>
+            文件夹编号必填,而且必然是"理论考试"的文件夹
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.ExaminationController.生成新口令(System.Int32)">
+            <summary>
+            为特定批次生成一个新口令
+            </summary>
+            <param name="批次编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.ExaminationController.发布继教理论考试活动(ScientificResearch.Models.发布继教活动)">
+            <summary>
+            其实和慕课活动的发布是一个意思
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
         <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.FolderController.获取登录人可用的文件夹(ScientificResearch.Models.继教文件夹Filter)">
             <summary>
             继教文件夹类型,是定死的,有下面几种
@@ -238,14 +260,6 @@
             各个时间应该验证一下
             </summary>
             <param name="data"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.MogaoController.删除继教考试批次(System.Collections.Generic.IEnumerable{System.Int32})">
-            <summary>
-            理论考试和操作考试的批次删除都在这里;
-            没有特别的业务,就不用写到model里面了
-            </summary>
-            <param name="编号列表"></param>
             <returns></returns>
         </member>
         <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.MogaoController.获取上传文件到七牛云所需的token">
@@ -5586,14 +5600,19 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.sp_继教试卷结构_删">
+            <summary>
+            sp_继教试卷结构_删[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教试卷结构_删.tt_编号">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_继教试卷结构_增改">
             <summary>
             sp_继教试卷结构_增改[类]
-            </summary>
-        </member>
-        <member name="P:ScientificResearch.Models.sp_继教试卷结构_增改.fId">
-            <summary>
-            
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_继教试卷结构_增改.tt">
@@ -27071,6 +27090,11 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试.试卷名称">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.v_继教理论考试.时长">
             <summary>
             
@@ -27152,6 +27176,141 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_继教理论考试参与情况.是否通过">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_继教理论考试活动">
+            <summary>
+            v_继教理论考试活动[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试活动.文件夹编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试活动.学分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试活动.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试活动.活动编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试活动.类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试活动.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试活动.排序值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试活动.开始时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试活动.结束时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试活动.地点">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试活动.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试活动.是否允许任何人参与">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试活动.试卷编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试活动.试卷名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试活动.时长">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试活动.及格分数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试活动.是否试题乱序">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试活动.是否允许考生查看成绩">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试活动.是否允许考生查看答案">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试活动.参与人数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试活动.通过人数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试活动.状态">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试活动.应考人数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试活动.建立人">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试活动.建立人姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试活动.建立时间">
             <summary>
             
             </summary>
@@ -27821,6 +27980,16 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.v_继教试卷.总分值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试卷.试题数量">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v_继教试卷结构">
             <summary>
             v_继教试卷结构[类]
@@ -27852,6 +28021,11 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_继教试卷结构.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试卷结构.总分值">
             <summary>
             
             </summary>

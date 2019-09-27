@@ -21,5 +21,6 @@ namespace ScientificResearch.Models
     public class 继教标签Filter
     {
         public string Like名称 { get; set; }
+        public string 名称 { get; set; }
     }
 }

@@ -59,6 +59,10 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        public string 试卷名称 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
         public int 时长 { get; set; }
         /// <summary>
 		/// 
