@@ -470,6 +470,11 @@ namespace ScientificResearch.Models
         public int? 试卷结构编号 { get; set; }
     }
 
+    public class 继教考试时试题Filter
+    {
+        public int? 试卷编号 { get; set; }
+    }
+
 
     #endregion
 

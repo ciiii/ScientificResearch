@@ -205,6 +205,35 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
         }
 
         /// <summary>
+        /// 考试前预约,或者考试时获取整个试卷的试题;
+        /// </summary>
+        /// <param name="试卷编号"></param>
+        /// <returns></returns>
+        [HttpGet]
+        async public Task<object> 获取考试试题(int 试卷编号)
+        {
+            var result = await Db.GetListSpAsync<v_继教试题_考试时, 继教考试时试题Filter>(
+                new 继教考试时试题Filter()
+                {
+                    试卷编号 = 试卷编号
+                });
+            var 试题编号字串 = result.Select(i => i.编号).ToStringIdWithSpacer();
+
+            var 试题备选答案列表 = await Db.GetListSpAsync<继教试题备选答案, 继教试题备选答案Filter>(new 继教试题备选答案Filter()
+            {
+                WhereIn试题编号 = 试题编号字串
+            });
+
+            return from item in result
+                   select new
+                   {
+                       试题基本信息 = item,
+                       备选答案列表 = from item2 in 试题备选答案列表 where item2.试题编号 == item.编号 select item2,
+
+                   };
+        }
+
+        /// <summary>
         /// 文件夹编号必填,而且必然是"理论考试"的文件夹
         /// </summary>
         /// <param name="paging"></param>

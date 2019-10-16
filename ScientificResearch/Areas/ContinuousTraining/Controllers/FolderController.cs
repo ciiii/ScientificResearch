@@ -17,7 +17,7 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
     {
         /// <summary>
         /// 继教文件夹类型,是定死的,有下面几种
-        /// 继教慕课, 继教理论考试, 继教操作考试, 继教签到, 继教慕课素材, 继教试题, 继教试卷, 继教品分表
+        /// 继教慕课, 继教理论考试, 继教操作考试, 继教签到, 继教慕课素材, 继教试题, 继教试卷, 继教评分表
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>

@@ -24,6 +24,7 @@ namespace ScientificResearch.Models
 
     public partial class 继教活动
     {
+        #region Pc管理端
         async static public Task<object> 获取某活动详情(int 活动编号, IDbConnection db, IDbTransaction transaction = null)
         {
             var 活动基本信息 = await db.GetModelByIdSpAsync<v_继教活动>(活动编号, transaction: transaction);
@@ -74,7 +75,6 @@ namespace ScientificResearch.Models
                 throw new Exception("已发布的活动不能修改");
             }
         }
-
         /// <summary>
         /// 只有未发布的活动才可以发布
         /// 必须要有活动内容
@@ -131,6 +131,29 @@ namespace ScientificResearch.Models
             await db.Merge(data.活动编号, data.活动可参与人, transaction: transaction);
 
         }
+        #endregion
+
+        #region 微信端参与者
+        async static public Task<object> 获取某人可参与的活动详情(int 活动编号,string 人员类型,int 人员编号 ,IDbConnection db, IDbTransaction transaction = null)
+        {
+            var 活动基本信息 = await db.GetModelByIdSpAsync<v_tfn_继教某人可参与的活动>(
+                活动编号,
+                tableName: $"tfn_继教某人可参与的活动('{人员类型}',{人员编号})", 
+                transaction: transaction);
+
+            var 活动内容列表 = await db.GetListSpAsync<v_tfn_继教某人可参与的活动内容>(
+                tbName: $"tfn_继教某人可参与的活动内容('{活动编号}','{人员类型}',{人员编号})",
+                orderStr: nameof(v_继教活动内容.排序值),
+                orderType: true,
+                transaction: transaction);
+
+            return new
+            {
+                活动基本信息,
+                活动内容列表
+            };
+        }
+        #endregion
     }
 
     public class 发布继教活动

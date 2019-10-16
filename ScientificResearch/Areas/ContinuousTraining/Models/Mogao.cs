@@ -21,6 +21,8 @@ namespace ScientificResearch.Models
 
     public partial class 继教慕课
     {
+        #region pc端管理端
+
         async static public Task<object> 获取某慕课活动内容详情(
             int 活动内容编号,
             string accessKey,
@@ -59,7 +61,7 @@ namespace ScientificResearch.Models
             //putPolicy.Scope = bucket + ":" + fileName;
             putPolicy.Scope = bucket;
             // 上传策略有效期(对应于生成的凭证的有效期)          
-            putPolicy.SetExpires(3600*24);
+            putPolicy.SetExpires(3600 * 24);
             // 上传到云端多少天后自动删除该文件，如果不设置（即保持默认默认）则不删除
             //putPolicy.DeleteAfterDays = 1;
             // 生成上传凭证，参见
@@ -78,15 +80,62 @@ namespace ScientificResearch.Models
         /// <param name="transaction"></param>
         /// <returns></returns>
         async static public Task 增改继教慕课(
-            增改继教慕课 data, 
-            IDbConnection db, 
+            增改继教慕课 data,
+            IDbConnection db,
             IDbTransaction transaction = null)
         {
             data.活动内容.类型 = 活动内容类型.继教慕课.ToString();
-            data.活动内容 = await 继教活动内容.增改继教活动内容(data.活动内容,db,transaction);
+            data.活动内容 = await 继教活动内容.增改继教活动内容(data.活动内容, db, transaction);
             data.慕课.编号 = data.活动内容.编号;
-            data.慕课 = await db.Merge(data.慕课,transaction:transaction);
+            data.慕课 = await db.Merge(data.慕课, transaction: transaction);
         }
+
+        #endregion
+
+        #region 微信端学习者
+        async static public Task<object> 获取某慕课活动内容详情以及某人参与情况(
+            int 活动内容编号,
+            string 人员类型,
+            int 人员编号,
+            string accessKey,
+            string secretKey,
+            string domain,
+            IDbConnection db,
+            IDbTransaction transaction = null)
+        {
+            var 基本信息 = await db.GetModelByIdSpAsync<v_继教慕课>(活动内容编号, transaction: transaction);
+
+            //v_继教慕课 的 慕课素材路径,是在这里计算出来的;
+            基本信息.慕课素材路径 = MyQiniu.GetPrivateUrl(accessKey, secretKey, domain, 基本信息.慕课素材名称);
+
+            var 参与情况 = await db.GetListSpAsync<v_继教慕课参与情况, 继教慕课参与情况Filter>(
+                new 继教慕课参与情况Filter()
+                {
+                    慕课编号 = 活动内容编号,
+                    参与人类型 = 人员类型,
+                    参与人编号 = 人员编号
+                }, transaction: transaction);
+            return new
+            {
+                基本信息,
+                参与情况 = 参与情况.FirstOrDefault()
+            };
+        }
+
+        async static public Task 增改某人某慕课活动内容参与情况(
+            继教慕课参与情况 model,
+            IDbConnection db,
+            IDbTransaction transaction = null)
+        {
+            var 相关活动内容 = await db.GetModelByIdSpAsync<继教活动内容>(model.慕课编号, transaction: transaction);
+            if(DateTime.Now < 相关活动内容.开始时间 || DateTime.Now > 相关活动内容.结束时间)
+            {
+                throw new Exception("请在活动时间内参与活动");
+            }
+            await db.Merge(model, transaction);
+        }
+
+        #endregion
     }
 
     public class 设置继教活动学分
@@ -133,6 +182,8 @@ namespace ScientificResearch.Models
     public class 继教慕课参与情况Filter
     {
         public int? 慕课编号 { get; set; }
+        public string 参与人类型 { get; set; }
+        public int? 参与人编号 { get; set; }
     }
 
     public class 继教课后练习参与情况Filter
@@ -170,7 +221,7 @@ namespace ScientificResearch.Models
 
     public class 继教慕课素材Filter
     {
-        [Required(ErrorMessage ="请提供文件件编号")]
+        [Required(ErrorMessage = "请提供文件件编号")]
         public int 文件夹编号 { get; set; }
 
         public string Like名称 { get; set; }

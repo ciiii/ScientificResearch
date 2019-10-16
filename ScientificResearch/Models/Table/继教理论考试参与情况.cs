@@ -41,7 +41,6 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        [Required(ErrorMessage ="请提供[答题结束时间]")]
 		public DateTime? 答题结束时间 { get; set; }
         /// <summary>
 		/// 
