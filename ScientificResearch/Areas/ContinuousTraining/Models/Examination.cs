@@ -396,6 +396,7 @@ namespace ScientificResearch.Models
 
     public class 继教试题正确答案Filter
     {
+        //public int? 试卷编号 { get; set; }
         public string WhereIn试题编号 { get; set; }
         public int? 试题编号 { get; set; }
     }

@@ -196,6 +196,14 @@ namespace ScientificResearch.Models
 		/// 
 		/// </summary>
         public int? 得分 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public DateTime? 答题开始时间 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public DateTime? 答题结束时间 { get; set; }
         
           
         #endregion

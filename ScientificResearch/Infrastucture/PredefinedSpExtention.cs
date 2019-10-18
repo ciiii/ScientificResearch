@@ -633,6 +633,13 @@ namespace ScientificResearch.Infrastucture
             }
         }
 
+        //不需要返回的,要用直接抄
+        //async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+        //{
+        //    await 继教操作考试.增改继教操作考试(data, dbForTransaction, transaction);
+        //}
+
+        //await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
         async public static Task ExecuteTransaction(string dbConnectionString, Func<SqlConnection, SqlTransaction, Task> myTran)
         {
             using (var dbForTransaction = new SqlConnection(dbConnectionString))

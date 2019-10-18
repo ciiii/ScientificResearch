@@ -134,6 +134,7 @@
             <param name="filter"></param>
             <returns></returns>
         </member>
+        <!-- 对于成员“M:ScientificResearch.Areas.ContinuousTraining.Controllers.ExaminationOfLearnerController.参与理论考试(System.Int32)”忽略有格式错误的 XML 注释 -->
         <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.FolderController.获取登录人可用的文件夹(ScientificResearch.Models.继教文件夹Filter)">
             <summary>
             继教文件夹类型,是定死的,有下面几种
@@ -5549,6 +5550,36 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_继教理论考试_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教理论考试参与情况_增改">
+            <summary>
+            sp_继教理论考试参与情况_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教理论考试参与情况_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教理论考试答题情况_增改">
+            <summary>
+            sp_继教理论考试答题情况_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教理论考试答题情况_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教理论考试答题答案_增改">
+            <summary>
+            sp_继教理论考试答题答案_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教理论考试答题答案_增改.tt">
             <summary>
             
             </summary>
@@ -23358,6 +23389,16 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的理论考试.答题开始时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的理论考试.答题结束时间">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v_tfn_继教某人可查看的文件夹">
             <summary>
             v_tfn_继教某人可查看的文件夹[类]
@@ -27658,6 +27699,76 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.v_继教理论考试批次">
+            <summary>
+            v_继教理论考试批次[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试批次.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试批次.考试编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试批次.排序值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试批次.考试开始时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试批次.考试结束时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试批次.考试地点">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试批次.人数上限">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试批次.二维码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试批次.口令">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试批次.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试批次.试卷编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试批次.时长">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试批次.及格分数">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v_继教理论考试活动">
             <summary>
             v_继教理论考试活动[类]
@@ -28464,6 +28575,91 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_继教试卷.试题数量">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_继教试卷中试题">
+            <summary>
+            v_继教试卷中试题[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试卷中试题.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试卷中试题.文件夹编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试卷中试题.类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试卷中试题.题干">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试卷中试题.题目解析">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试卷中试题.难易度">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试卷中试题.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试卷中试题.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试卷中试题.试卷编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试卷中试题.试卷结构编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试卷中试题.分值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_继教试卷中试题正确答案">
+            <summary>
+            v_继教试卷中试题正确答案[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试卷中试题正确答案.试题编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试卷中试题正确答案.正确答案编码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试卷中试题正确答案.试卷编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试卷中试题正确答案.试卷结构编号">
             <summary>
             
             </summary>

@@ -228,7 +228,7 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
                    select new
                    {
                        试题基本信息 = item,
-                       备选答案列表 = from item2 in 试题备选答案列表 where item2.试题编号 == item.编号 select item2,
+                       备选答案列表 = from item2 in 试题备选答案列表 orderby item2.备选答案编码 where item2.试题编号 == item.编号 select item2,
 
                    };
         }
@@ -243,7 +243,10 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
         async public Task<object> 分页获取某文件夹下的理论考试活动(Paging paging, 继教理论考试活动Filter filter)
         {
             //return await Db.GetPagingListSpAsync<v_继教理论考试活动, 继教理论考试活动Filter>(paging, filter);
-            var 理论考试活动列表 = await Db.GetPagingListSpAsync<v_继教理论考试活动, 继教理论考试活动Filter>(paging, filter);
+            var 理论考试活动列表 = await Db.GetPagingListSpAsync<v_继教理论考试活动, 继教理论考试活动Filter>(
+                paging, 
+                filter,
+                orderStr:nameof(v_继教理论考试活动.编号));
             var 考试批次列表 = await Db.GetListSpAsync<继教考试批次, 继教考试批次Filter>(new 继教考试批次Filter()
             {
                 WhereIn考试编号 = 理论考试活动列表.list.Select(i => i.编号).ToStringIdWithSpacer()
