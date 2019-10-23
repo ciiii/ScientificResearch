@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -106,6 +107,20 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
                        菜单 = item,
                        子级菜单 = RecursivePermission(permission, item.编号)
                    };
+        }
+
+        /// <summary>
+        /// 获取微信jsapi的临时票据
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        [HttpGet]
+        async public Task<object> GetWxJsApiTickect(string url)
+        {
+            var appId = Config.GetValue<string>(Env.IsDevelopment() == true ? "WechatSetting:TestappId" : "WechatSetting:appId");
+            var appSecret = Config.GetValue<string>(Env.IsDevelopment() == true ? "WechatSetting:TestappSecret" : "WechatSetting:appSecret");
+
+            return await MyWx.GetWxTickect(appId, appSecret, url);
         }
     }
 }

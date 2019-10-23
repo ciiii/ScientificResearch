@@ -64,6 +64,10 @@ namespace ScientificResearch.Models
 		/// 
 		/// </summary>
         public int 及格分数 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int 活动编号 { get; set; }
         
           
         #endregion

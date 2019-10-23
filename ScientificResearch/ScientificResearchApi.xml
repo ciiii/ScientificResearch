@@ -190,6 +190,13 @@
             <param name="topId"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.HomePageController.GetWxJsApiTickect(System.String)">
+            <summary>
+            获取微信jsapi的临时票据
+            </summary>
+            <param name="url"></param>
+            <returns></returns>
+        </member>
         <member name="T:ScientificResearch.Areas.ContinuousTraining.Controllers.MogaoController">
             <summary>
             Mogao是慕课的意思
@@ -5520,6 +5527,16 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_继教活动可参与人_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教活动可参与人_普通增改">
+            <summary>
+            sp_继教活动可参与人_普通增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教活动可参与人_普通增改.tt">
             <summary>
             
             </summary>
@@ -27769,6 +27786,11 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.v_继教理论考试批次.活动编号">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v_继教理论考试活动">
             <summary>
             v_继教理论考试活动[类]
@@ -30857,6 +30879,47 @@
             </summary>
             <param name="directoryPath"></param>
             <returns></returns>
+        </member>
+        <!-- 对于成员“M:MyLib.MyWx.GetTickect(System.String)”忽略有格式错误的 XML 注释 -->
+        <member name="M:MyLib.MyWx.CreatenNonce_str">
+             <summary>
+             创建随机字符串
+            本代码来自开源微信SDK项目：https://github.com/night-king/weixinSDK
+             </summary>
+             <returns></returns>
+        </member>
+        <member name="M:MyLib.MyWx.CreatenTimestamp">
+             <summary>
+             创建时间戳
+            本代码来自开源微信SDK项目：https://github.com/night-king/weixinSDK
+             </summary>
+             <returns></returns>
+        </member>
+        <member name="M:MyLib.MyWx.GetSignature(System.String,System.String,System.Int64,System.String)">
+             <summary>
+             签名算法
+            本代码来自开源微信SDK项目：https://github.com/night-king/weixinSDK
+             </summary>
+             <param name="jsapi_ticket">jsapi_ticket</param>
+             <param name="noncestr">随机字符串(必须与wx.config中的nonceStr相同)</param>
+             <param name="timestamp">时间戳(必须与wx.config中的timestamp相同)</param>
+             <param name="url">当前网页的URL，不包含#及其后面部分(必须是调用JS接口页面的完整URL)</param>
+             <returns></returns>
+        </member>
+        <member name="M:MyLib.MyWx.SHA1(System.String)">
+            <summary>
+            SHA1 加密，返回大写字符串
+            </summary>
+            <param name="content">需要加密字符串</param>
+            <returns>返回40位UTF8 大写</returns>
+        </member>
+        <member name="M:MyLib.MyWx.SHA1(System.String,System.Text.Encoding)">
+            <summary>
+            SHA1 加密，返回大写字符串
+            </summary>
+            <param name="content">需要加密字符串</param>
+            <param name="encode">指定加密编码</param>
+            <returns>返回40位大写字符串</returns>
         </member>
         <member name="T:MyLib.MyWxOAuthAccessTokenResult">
             <summary>

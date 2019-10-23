@@ -52,7 +52,7 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
         [HttpPost]
         async public Task 参与理论考试([FromBody]int 考试批次编号)
         {
-            var 考试批次 = await Db.GetModelByIdSpAsync<继教考试批次>(考试批次编号);
+            var 考试批次 = await Db.GetModelByIdSpAsync<v_继教理论考试批次>(考试批次编号);
             if (DateTime.Now < 考试批次.考试开始时间)
             {
                 throw new Exception("考试还没有开始");
@@ -89,7 +89,18 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
                 await Db.Merge(参与情况);
 
                 //var 该考试批次可参与人 = new 继教考试批次可参与人();
-                //var 该活动可参与人 = new 继教活动可参与人() { 活动编号 }
+
+                //19-10-21 如果某人没有被添加到可参与人,但是他有口令,则要把他放到可参与人里面去,方便他查看
+                var 该活动可参与人 = new 继教活动可参与人()
+                {
+                    活动编号 = 考试批次.活动编号,
+                    可参与人类型 = CurrentUser.人员类型,
+                    可参与人编号 = CurrentUser.编号
+                };
+                await Db.ExecuteSpAsync(new sp_继教活动可参与人_普通增改()
+                {
+                    tt = 该活动可参与人.ToDataTable()
+                });
             }
         }
 
