@@ -39,7 +39,7 @@ namespace ScientificResearch.Models
     {
         public int 试题编号 { get; set; }
         public int 显示排序值 { get; set; }
-        public DateTime 答题时间 { get; set; }
+        public DateTime? 答题时间 { get; set; }
         public int 分值 { get; set; }
         public IEnumerable<string> 答案编码 { get; set; }
     }
