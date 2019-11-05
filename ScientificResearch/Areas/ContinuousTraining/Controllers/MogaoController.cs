@@ -274,7 +274,7 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
                 item.路径 = MyQiniu.GetPrivateUrl(
                     Config.GetValue<string>("七牛:AccessKey"),
                 Config.GetValue<string>("七牛:SecretKey"),
-                Config.GetValue<string>("七牛:Domain"), item.名称);  
+                Config.GetValue<string>("七牛:Domain"), item.路径);  
             }
 
             return result;

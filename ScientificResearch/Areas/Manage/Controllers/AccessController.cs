@@ -158,6 +158,7 @@ namespace ScientificResearch.Areas.Manage.Controllers
             var dbWhenLogin = new SqlConnection(DbConnectionStringLack.Replace("{0}", 绑定信息.DbKey));
             var user = await dbWhenLogin.GetModelByIdSpAsync<v1_人员_带部门名>(绑定信息.人员编号);
             var currentUser = Tool.ModelToModel<v1_人员_带部门名, CurrentUser>(user);
+            currentUser.人员类型 = nameof(人员);
             //
             currentUser.DbKey = 绑定信息.DbKey;
 
