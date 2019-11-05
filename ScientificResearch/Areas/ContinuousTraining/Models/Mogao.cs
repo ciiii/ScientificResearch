@@ -224,6 +224,8 @@ namespace ScientificResearch.Models
 
     public class 继教慕课素材Filter
     {
+        public string WhereIn编号 { get; set; }
+
         [Required(ErrorMessage = "请提供文件件编号")]
         public int 文件夹编号 { get; set; }
 

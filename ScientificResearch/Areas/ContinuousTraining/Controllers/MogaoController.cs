@@ -268,7 +268,7 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
         [HttpGet]
         async public Task<object> 分页获取素材(Paging paging, 继教慕课素材Filter filter)
         {
-            var result = await Db.GetPagingListSpAsync<继教慕课素材, 继教慕课素材Filter>(paging, filter);
+            var result = await Db.GetPagingListSpAsync<v_继教慕课素材, 继教慕课素材Filter>(paging, filter);
             foreach (var item in result.list)
             {
                 item.路径 = MyQiniu.GetPrivateUrl(
@@ -301,6 +301,22 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
             await Db.Merge(data);
         }
 
+        [HttpPost]
+        async public Task 删除素材([FromBody]IEnumerable<int> 编号列表)
+        {
+            var 要删除的素材视图 = await Db.GetListSpAsync<v_继教慕课素材, 继教慕课素材Filter>(
+                new 继教慕课素材Filter()
+                {
+                    WhereIn编号 = 编号列表.ToStringIdWithSpacer()
+                });
+
+            if(要删除的素材视图.Any(i=>i.是否被引用 == true))
+            {
+                throw new Exception("被引用的素材不能被删除");
+            }
+
+            await Db.Delete<继教慕课素材>(编号列表);
+        }
         #endregion
     }
 }
