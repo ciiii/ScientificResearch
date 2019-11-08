@@ -39,7 +39,7 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        public DateTime 答题结束时间 { get; set; }
+        public DateTime? 答题结束时间 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>

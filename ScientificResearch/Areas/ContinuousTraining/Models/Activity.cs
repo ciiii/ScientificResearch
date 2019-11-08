@@ -72,7 +72,10 @@ namespace ScientificResearch.Models
             }
             else
             {
-                throw new Exception("已发布的活动不能修改");
+                //throw new Exception("已发布的活动不能修改");
+                //2019-11-6 改为在已发布状态下,可以修改
+                //下一句虽然可以和上面的合并,但这里为了强调这一次的修改,暂不合并;
+                return await db.Merge(model, transaction: transaction);
             }
         }
         /// <summary>
@@ -87,19 +90,21 @@ namespace ScientificResearch.Models
         async static public Task 发布继教活动(发布继教活动 data, IDbConnection db, IDbTransaction transaction = null)
         {
             var 活动视图 = await db.GetModelByIdSpAsync<v_继教活动>(data.活动编号, transaction: transaction);
-            if (活动视图.状态 != 活动状态.未发布.ToString())
-            {
-                throw new Exception("只有未发布的活动才可以发布");
-            }
+
+            //2019-11-6 改为在已发布状态下,可以再次发布.也就是注释了下面一个判断;
+            //if (活动视图.状态 != 活动状态.未发布.ToString())
+            //{
+            //    throw new Exception("只有未发布的活动才可以发布");
+            //}
 
             if (data.开始时间 >= data.结束时间)
             {
-                throw new Exception("结束时间必须大于结束时间");
+                throw new Exception("结束时间必须大于开始时间");
             }
 
             if (DateTime.Now >= data.结束时间)
             {
-                throw new Exception("结束时间必须当前时间");
+                throw new Exception("结束时间必须大于当前时间");
             }
 
             var 活动内容列表 = await db.GetListSpAsync<继教活动内容, 继教活动内容Filter>(

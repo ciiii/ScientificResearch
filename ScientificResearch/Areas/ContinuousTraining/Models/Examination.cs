@@ -501,4 +501,16 @@ namespace ScientificResearch.Models
         //public 继教理论考试 理论考试 { get; set; }
         //public IEnumerable<增改继教考试批次> 增改继教考试批次 { get; set; }
     }
+
+    public class 考生继续考试
+    {
+        public string 人员类型 { get; set; }
+        public int 人员编号 { get; set; }
+        public int 考试批次编号 { get; set; }
+    }
+
+    //public class 继教理论考试答题情况Filter
+    //{
+    //    public int? 理论考试参与情况编号 { get; set; }
+    //}
 }

@@ -137,6 +137,13 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
             //        试卷编号 = 考试批次.试卷编号
             //    });
 
+            //2 2019-11-7 修改为交卷的时候,清除以前的答题情况
+            var 已有的答题情况 = await Db.GetListSpAsync<继教理论考试答题情况, 继教理论考试答题情况Filter>(
+                new 继教理论考试答题情况Filter()
+                {
+                    理论考试参与情况编号 = 参与情况.编号
+                });
+
             var 正确答案 = await Db.GetListSpAsync<v_继教试卷中试题正确答案, 继教试卷中试题正确答案Filter>(
                 new 继教试卷中试题正确答案Filter()
                 {
@@ -178,6 +185,13 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
             async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
             {
                 //await 继教操作考试.增改继教操作考试(data, dbForTransaction, transaction);
+
+
+                //2019-11-7删除该参与情况下的已有答题情况
+                await dbForTransaction.Delete<继教理论考试答题情况>(已有的答题情况.Select(i => i.编号), transaction);
+
+                //2019-11-7删除该答题情况下的已有答题答案
+                await dbForTransaction.Delete<继教理论考试答题答案>(已有的答题情况.Select(i => i.编号), transaction);
 
                 //保存"继教理论考试答题情况" 和 其下的多个"继教理论考试答题答案"
                 var 保存的继教理论考试答题情况列表 = await dbForTransaction.Merge

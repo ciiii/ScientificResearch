@@ -156,6 +156,8 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
             await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
         }
 
+        //async public Task<object> 分页获取某继教活动的参与情况
+
         /// <summary>
         /// 同时更新"继教活动内容","继教慕课"
         /// 第一个第二个分别是"继教活动内容","继教慕课"

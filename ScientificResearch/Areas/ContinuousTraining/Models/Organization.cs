@@ -31,8 +31,23 @@ namespace ScientificResearch.Models
         public int? 编号 { get; set; }
         public int? NotEqual编号 { get; set; }
         public int? 部门编号 { get; set; }
+        /// <summary>
+        /// 形式为"1,2,3"的字串
+        /// </summary>
+        public string WhereIn部门编号 { get; set; }
+
         //public string Like姓名 { get; set; }
         public bool? 是否启用 { get; set; }
+
+        /// <summary>
+        /// 形式为"1,2,3"的字串
+        /// </summary>
+        public int? 能级编号 { get; set; }
+        public string WhereIn能级编号 { get; set; }
+
+        public int? 科室编号 { get; set; }
+        public string Like职务名称 { get; set; }
+
         //public string Like部门名称 { get; set; }
         /// <summary>
         /// 同时对姓名和部门名称做搜索

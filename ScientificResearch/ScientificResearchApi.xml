@@ -116,6 +116,16 @@
             <param name="data"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.ExaminationController.让某考生继续考试(ScientificResearch.Models.考生继续考试)">
+            <summary>
+            当某个考生在考试进行中,因为意外情况导致被动交卷,
+            他可以请求监考老师/管理员让其继续考试
+            继续考试会让其回到未交卷状态,保留已经做过的题/答案,继续答题
+            如果考试还没有开始,或者已经结束,无法进行此操作;
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
         <member name="T:ScientificResearch.Areas.ContinuousTraining.Controllers.ExaminationOfLearnerController">
             <summary>
             针对移动端的理论考试活动
@@ -2364,6 +2374,16 @@
         <member name="T:ScientificResearch.Models.继教助教老师Filter">
             <summary>
             
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教人员Filter.WhereIn部门编号">
+            <summary>
+            形式为"1,2,3"的字串
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教人员Filter.能级编号">
+            <summary>
+            形式为"1,2,3"的字串
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.继教人员Filter.LikeAllName">
@@ -5406,6 +5426,16 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.sp_继教慕课素材_删">
+            <summary>
+            sp_继教慕课素材_删[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教慕课素材_删.tt_编号">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_继教慕课素材_增改">
             <summary>
             sp_继教慕课素材_增改[类]
@@ -5581,12 +5611,32 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.sp_继教理论考试答题情况_删">
+            <summary>
+            sp_继教理论考试答题情况_删[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教理论考试答题情况_删.tt_编号">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_继教理论考试答题情况_增改">
             <summary>
             sp_继教理论考试答题情况_增改[类]
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_继教理论考试答题情况_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教理论考试答题答案_删">
+            <summary>
+            sp_继教理论考试答题答案_删[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教理论考试答题答案_删.tt_编号">
             <summary>
             
             </summary>
@@ -27137,6 +27187,56 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_继教慕课参与情况.是否通过">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_继教慕课素材">
+            <summary>
+            v_继教慕课素材[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教慕课素材.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教慕课素材.文件夹编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教慕课素材.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教慕课素材.路径">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教慕课素材.大小">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教慕课素材.时长">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教慕课素材.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教慕课素材.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教慕课素材.是否被引用">
             <summary>
             
             </summary>

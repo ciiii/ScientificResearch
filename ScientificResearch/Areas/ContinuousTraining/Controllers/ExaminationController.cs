@@ -322,5 +322,75 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
 
             await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
         }
+
+        /// <summary>
+        /// 当某个考生在考试进行中,因为意外情况导致被动交卷,
+        /// 他可以请求监考老师/管理员让其继续考试
+        /// 继续考试会让其回到未交卷状态,保留已经做过的题/答案,继续答题
+        /// 如果考试还没有开始,或者已经结束,无法进行此操作;
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task 让某考生继续考试([FromBody]考生继续考试 data)
+        {
+            var 考试批次 = await Db.GetModelByIdSpAsync<v_继教理论考试批次>(data.考试批次编号);
+            if (DateTime.Now < 考试批次.考试开始时间)
+            {
+                throw new Exception("考试还没有开始");
+            }
+            if (DateTime.Now > 考试批次.考试结束时间)
+            {
+                throw new Exception("考试已经结束");
+            }
+
+            var filter = new 继教理论考试参与情况Filter()
+            {
+                考试批次编号 = data.考试批次编号,
+                参与人类型 = data.人员类型,
+                参与人编号 = data.人员编号
+            };
+
+            //1
+            var 参与情况 = (await Db.GetListSpAsync<继教理论考试参与情况, 继教理论考试参与情况Filter>(filter)).FirstOrDefault();
+
+            if (参与情况?.答题结束时间 == null)
+            {
+                throw new Exception("该考生还没有交卷");
+            }
+            //设参与情况为没有交卷
+            参与情况.答题结束时间 = null;
+            参与情况.得分 = null;
+
+            //2 2019-11-7 修改为交卷的时候,清除以前的答题情况
+            //var 答题情况 = await Db.GetListSpAsync<继教理论考试答题情况, 继教理论考试答题情况Filter>(
+            //    new 继教理论考试答题情况Filter()
+            //    {
+            //        理论考试参与情况编号 = 参与情况.编号
+            //    });
+
+            ////3从      
+            //var 答题答案 = await Db.GetListSpAsync<继教理论考试答题答案, 继教理论考试答题答案Filter>(
+            //    new 继教理论考试答题答案Filter()
+            //    {
+            //        WhereIn理论考试答题情况编号 = 答题情况.Select(i => i.编号).ToStringIdWithSpacer()
+            //    });
+
+
+            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+            {
+                //更新参与情况
+                await dbForTransaction.Merge(参与情况, transaction);
+
+                ////删除该参与情况下的答题情况
+                //await dbForTransaction.Delete<继教理论考试答题情况>(答题情况.Select(i=>i.编号), transaction);
+
+                ////删除该答题情况下的答题答案
+                //await dbForTransaction.Delete<继教理论考试答题答案>(答题情况.Select(i=>i.编号), transaction);
+
+            }
+
+            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+        }
     }
 }

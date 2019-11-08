@@ -221,3 +221,88 @@ VALUES  ( 1, N'单项选择题',1,1,1,N''),
 ( 4, N'判断题',1,1,1,N'判断题的编码为对错,而不是ABCD')
 
 GO
+
+
+ALTER VIEW [dbo].[v_继教理论考试参与情况]
+AS
+    SELECT  b.考试编号,
+	a.考试批次编号 ,
+            a.参与人类型 ,
+            a.参与人编号 ,
+            dbo.FNGetPersonInfoByType(a.参与人类型, a.参与人编号) AS 参与人称谓 ,
+            a.答题开始时间 ,
+			a.答题结束时间,
+            a.得分 ,
+            CAST(IIF(a.得分 >= c.及格分数, 1, 0) AS BIT) AS 是否通过
+    FROM    dbo.继教理论考试参与情况 a
+            JOIN dbo.继教考试批次 b ON a.考试批次编号 = b.编号
+			JOIN 继教理论考试 c ON b.考试编号 = c.编号
+
+GO
+
+
+ALTER FUNCTION [dbo].[FNGetPersonInfoByType]
+    (
+      @PersonType NVARCHAR(50) ,
+      @PersonId INT 
+    )
+RETURNS NVARCHAR(500)
+AS
+    BEGIN
+
+        DECLARE @result NVARCHAR(500);
+
+        IF ( @PersonType IS NULL )
+            BEGIN
+
+                IF ( @PersonId = 0 )
+                    SELECT  @result = '发起人或负责人';
+            END;
+
+        IF ( @PersonType = '人员' )
+            BEGIN
+                IF ( @PersonId = 0 )
+                    SELECT  @result = '所有医院员工';
+                ELSE
+                    SELECT  @result =CONCAT(部门名称,'/',工号,'/', 姓名)
+                    FROM    dbo.v1_人员_带部门名
+                    WHERE   编号 = @PersonId;
+            END;
+            
+        IF ( @PersonType = '教学学员' )
+            BEGIN
+                IF ( @PersonId = 0 )
+                    SELECT  @result = '所有教学学员';
+                ELSE
+                    SELECT  @result = 姓名
+                    FROM    dbo.教学学员
+                    WHERE   编号 = @PersonId;
+            END;
+
+        IF ( @PersonType = '教学角色' )
+            SELECT  @result = 名称
+            FROM    dbo.教学角色
+            WHERE   编号 = @PersonId;
+
+		IF ( @PersonType = '继教角色' )
+            SELECT  @result = 名称
+            FROM    dbo.继教角色
+            WHERE   编号 = @PersonId;
+
+        IF ( @PersonType = '部门'
+             OR @PersonType = '教学科室'
+           )
+            BEGIN
+                IF ( @PersonId = 0 )
+                    SELECT  @result = '所有部门';
+                ELSE
+                    SELECT  @result = 名称
+                    FROM    dbo.部门
+                    WHERE   编号 = @PersonId;
+            END;
+            
+        RETURN @result;
+
+    END;
+GO
+
