@@ -16,6 +16,7 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
 {
     public class ExaminationController : ContinuousTrainingBaseController
     {
+        #region 试题试卷
         [HttpGet]
         async public Task<object> 获取试题类型()
         {
@@ -204,7 +205,9 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
                        }
             };
         }
+        #endregion
 
+        #region 理论考试活动 活动内容
         /// <summary>
         /// 考试前预约,或者考试时获取整个试卷的试题;
         /// </summary>
@@ -422,5 +425,70 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
 
             await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
         }
+        #endregion
+
+        #region 评分表
+        [HttpGet]
+        async public Task<object> 分页获取评分表(Paging paging, 继教评分表Filter filter)
+        {
+            return await Db.GetPagingListSpAsync<v_继教评分表, 继教评分表Filter>(
+                paging,
+                filter);
+        }
+
+        [HttpPost]
+        async public Task 增改评分表([FromBody]继教评分表 model)
+        {
+            await Db.Merge(model);
+        }
+
+        [HttpGet]
+        async public Task<object> 分页获取某评分表的项目(Paging paging,继教评分表项目Filter filter)
+        {
+            var result = await Db.GetPagingListSpAsync<继教评分表项目, 继教评分表项目Filter>(paging, filter);
+
+            var 项目编号列表 = result.list.Select(i => i.编号);
+
+            var 相关的评分表项目要求 = await Db.GetListSpAsync<继教评分表项目要求, 继教评分表项目要求Filter>(
+                new 继教评分表项目要求Filter()
+                {
+                    WhereIn评分表项目编号 = 项目编号列表.ToStringIdWithSpacer()
+                });
+
+            return new
+            {
+                result.total,
+                list = from item in result.list
+                       select new
+                       {
+                           评分表项目 = item,
+                           评分表项目要求 = from item2 in 相关的评分表项目要求 where item2.评分表项目编号 == item.编号 select item2
+                       }
+            };
+        }
+
+        /// <summary>
+        /// 同时增改一个评分表项目,以及其包含的多个要求.不在参数中的要求将删除;
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task 增改评分表项目([FromBody]增改评分表项目 data)
+        {
+            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+            {
+                var 项目 = await dbForTransaction.Merge(data.评分表项目, transaction: transaction);
+                await dbForTransaction.Merge(项目.编号, data.评分表项目要求列表, transaction: transaction);
+            }
+
+            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+        }
+
+        [HttpPost]
+        async public Task 删除评分表项目([FromBody]IEnumerable<int> 编号列表)
+        {
+            await Db.Delete<继教评分表项目>(编号列表);
+        }
+        #endregion
     }
 }

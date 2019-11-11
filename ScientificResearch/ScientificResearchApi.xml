@@ -126,6 +126,13 @@
             <param name="data"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.ExaminationController.增改评分表项目(ScientificResearch.Models.增改评分表项目)">
+            <summary>
+            同时增改一个评分表项目,以及其包含的多个要求.不在参数中的要求将删除;
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
         <member name="T:ScientificResearch.Areas.ContinuousTraining.Controllers.ExaminationOfLearnerController">
             <summary>
             针对移动端的理论考试活动
@@ -5471,6 +5478,21 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.sp_继教操作考试评分表_增改">
+            <summary>
+            sp_继教操作考试评分表_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教操作考试评分表_增改.fId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教操作考试评分表_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.sp_继教文件夹_增改">
             <summary>
             sp_继教文件夹_增改[类]
@@ -5752,6 +5774,51 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_继教设置_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教评分表_增改">
+            <summary>
+            sp_继教评分表_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教评分表_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教评分表项目_删">
+            <summary>
+            sp_继教评分表项目_删[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教评分表项目_删.tt_编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教评分表项目_增改">
+            <summary>
+            sp_继教评分表项目_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教评分表项目_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教评分表项目要求_增改">
+            <summary>
+            sp_继教评分表项目要求_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教评分表项目要求_增改.fId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教评分表项目要求_增改.tt">
             <summary>
             
             </summary>
@@ -13132,6 +13199,36 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.继教评分表项目.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.继教评分表项目要求">
+            <summary>
+            继教评分表项目要求[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教评分表项目要求.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教评分表项目要求.评分表项目编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教评分表项目要求.要求">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教评分表项目要求.标准分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.继教评分表项目要求.备注">
             <summary>
             
             </summary>
@@ -27401,6 +27498,26 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.v_继教操作考试评分表">
+            <summary>
+            v_继教操作考试评分表[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教操作考试评分表.操作考试编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教操作考试评分表.评分表编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教操作考试评分表.评分表名称">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v_继教文件夹可使用人">
             <summary>
             v_继教文件夹可使用人[类]
@@ -28627,6 +28744,36 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_继教角色权限.该角色是否拥有该权限">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_继教评分表">
+            <summary>
+            v_继教评分表[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教评分表.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教评分表.文件夹编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教评分表.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教评分表.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教评分表.是否被引用">
             <summary>
             
             </summary>

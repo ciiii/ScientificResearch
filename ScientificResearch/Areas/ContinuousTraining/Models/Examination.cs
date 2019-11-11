@@ -28,6 +28,7 @@ namespace ScientificResearch.Models
         public 继教活动内容 活动内容 { get; set; }
         public 继教操作考试 操作考试 { get; set; }
         public IEnumerable<继教操作考试助教老师> 助教老师列表 { get; set; }
+        public IEnumerable<继教操作考试评分表> 评分表列表 { get; set; }
         public IEnumerable<增改继教考试批次> 增改继教考试批次 { get; set; }
     }
 
@@ -190,7 +191,13 @@ namespace ScientificResearch.Models
                 new 继教操作考试助教老师Filter()
                 {
                     操作考试编号 = 活动内容编号
-                });
+                },transaction:transaction);
+
+            var 评分表 = await db.GetListSpAsync<v_继教操作考试评分表, 继教操作考试评分表Filter>(
+                new 继教操作考试评分表Filter()
+                {
+                    操作考试编号 = 活动内容编号
+                }, transaction: transaction);
 
             var 批次 = await db.GetListSpAsync<继教考试批次, 继教考试批次Filter>(new 继教考试批次Filter()
             {
@@ -212,6 +219,7 @@ namespace ScientificResearch.Models
             {
                 基本信息,
                 助教老师,
+                评分表,
                 批次 = from item in 批次
                      select new
                      {
@@ -239,6 +247,7 @@ namespace ScientificResearch.Models
             data.操作考试 = await db.Merge(data.操作考试, transaction: transaction);
 
             await db.Merge(data.操作考试.编号, data.助教老师列表, transaction: transaction);
+            await db.Merge(data.操作考试.编号, data.评分表列表, transaction: transaction);
 
             foreach (var item in data.增改继教考试批次)
             {
@@ -314,11 +323,44 @@ namespace ScientificResearch.Models
         }
     }
 
+    #region 评分表
     public class 继教操作考试助教老师Filter
     {
         public int? 操作考试编号 { get; set; }
     }
 
+    public class 继教操作考试评分表Filter
+    {
+        public int? 操作考试编号 { get; set; }
+    }
+
+    public class 继教评分表Filter
+    {
+        [Required(ErrorMessage = "请提供文件夹编号")]
+        public int? 文件夹编号 { get; set; }
+
+        public string Like名称 { get; set; }
+    }
+
+    public class 继教评分表项目Filter
+    {
+        [Required(ErrorMessage = "请提评分表编号")]
+        public int? 评分表编号 { get; set; }
+
+        public string Like名称 { get; set; }
+    }
+
+    public class 继教评分表项目要求Filter
+    {
+        public string WhereIn评分表项目编号 { get; set; }
+    }
+
+    public class 增改评分表项目
+    {
+        public 继教评分表项目 评分表项目  { get; set; }
+        public IEnumerable<继教评分表项目要求> 评分表项目要求列表 { get; set; }
+    }
+    #endregion
 
     #region 试题 试卷管理
 
@@ -491,8 +533,6 @@ namespace ScientificResearch.Models
         public int? 文件夹编号 { get; set; }
 
     }
-    #endregion
-
     public class 增改继教理论考试活动 : 增改继教理论考试
     {
         public int 文件夹编号 { get; set; }
@@ -538,4 +578,6 @@ namespace ScientificResearch.Models
         public string 是否通过 { get; set; }
         #endregion
     }
+    #endregion
+
 }
