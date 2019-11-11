@@ -513,4 +513,29 @@ namespace ScientificResearch.Models
     //{
     //    public int? 理论考试参与情况编号 { get; set; }
     //}
+
+    public partial class 导出继教理论考试参与情况
+    {
+
+        #region 属性
+        [DisplayName("考试编号")]
+        public int 考试编号 { get; set; }
+        [DisplayName("考试批次编号")]
+        public int 考试批次编号 { get; set; }
+        //[DisplayName("参与人类型")]
+        //public string 参与人类型 { get; set; }
+        //[DisplayName("参与人编号")]
+        //public int 参与人编号 { get; set; }
+        [DisplayName("参与人称谓")]
+        public string 参与人称谓 { get; set; }
+        [DisplayName("答题开始时间")]
+        public DateTime 答题开始时间 { get; set; }
+        [DisplayName("答题结束时间")]
+        public DateTime? 答题结束时间 { get; set; }
+        [DisplayName("得分")]
+        public int? 得分 { get; set; }
+        [DisplayName("是否通过")]
+        public string 是否通过 { get; set; }
+        #endregion
+    }
 }

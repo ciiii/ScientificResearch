@@ -225,6 +225,17 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
         [HttpGet]
         async public Task<object> 获取答题情况(int 考试批次编号)
         {
+            return await 获取某人答题情况(考试批次编号, CurrentUser.人员类型,CurrentUser.编号);
+        }
+
+        [HttpGet]
+        async public Task<object> 获取某人的答题情况(int 考试批次编号, string 人员类型, int 人员编号)
+        {
+            return await 获取某人答题情况(考试批次编号, 人员类型, 人员编号);
+        }
+
+        private async Task<object> 获取某人答题情况(int 考试批次编号,string 人员类型 ,int 人员编号)
+        {
             var 考试批次 = await Db.GetModelByIdSpAsync<v_继教理论考试批次>(考试批次编号);
 
             var result = await Db.GetListSpAsync<v_继教试卷试题, 继教考试时试题Filter>(
@@ -251,8 +262,8 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
                 new 继教理论考试参与情况Filter
                 {
                     考试批次编号 = 考试批次编号,
-                    参与人类型 = CurrentUser.人员类型,
-                    参与人编号 = CurrentUser.编号
+                    参与人类型 = 人员类型,
+                    参与人编号 = 人员编号
                 })).FirstOrDefault();
 
             var 答题情况 = await Db.GetListSpAsync<继教理论考试答题情况, 继教理论考试答题情况Filter>(

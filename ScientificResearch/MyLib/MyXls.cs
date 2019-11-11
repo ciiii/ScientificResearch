@@ -199,7 +199,7 @@ namespace MyLib
         /// <param name="list"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static string Export<T>(string folder, IEnumerable<T> list, string name) where T : new()
+        public static string Export<T>(string localRootPath, string folder,  string name, IEnumerable<T> list) where T : new()
         {
             //string folder = _hostingEnvironment.WebRootPath;
 
@@ -210,15 +210,25 @@ namespace MyLib
             //var pName = t.GetProperty("Name");
             //var displayName = pName.GetCustomAttribute<DisplayNameAttribute>();
 
-            var displayNameOfT = Path.Combine("excel", name);
+            var localPath = MyPath.Combine(localRootPath, folder);
 
-            string sFileName = $"{displayNameOfT}{Guid.NewGuid()}.xlsx";
-            FileInfo file = new FileInfo(Path.Combine(folder, sFileName));
+            if (!Directory.Exists(localPath))
+            {
+                Directory.CreateDirectory(localPath);
+            }
+
+            //var displayNameOfT = Path.Combine(name);
+            //var displayNameOfT = Path.Combine("excel", name);
+
+            //string sFileName = $"{name}{Guid.NewGuid()}.xlsx";
+            string sFileName = $"{name}{DateTime.Now.ToString("yyyyMMddhhmmss")}.xlsx";
+
+            FileInfo file = new FileInfo(Path.Combine(localPath, sFileName));
 
             using (ExcelPackage package = new ExcelPackage(file))
             {
                 // 添加worksheet
-                ExcelWorksheet worksheet = package.Workbook.Worksheets.Add(displayNameOfT);
+                ExcelWorksheet worksheet = package.Workbook.Worksheets.Add(name);
 
                 var propertys = t.GetProperties();
                 for (int i = 0; i < propertys.Count(); i++)
@@ -270,7 +280,7 @@ namespace MyLib
                 package.Save();
             }
 
-            return sFileName;
+            return MyPath.Combine( folder, sFileName); ;
             //return File(sFileName, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         }
     }

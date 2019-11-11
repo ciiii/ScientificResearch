@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using MyLib;
 using ScientificResearch.Infrastucture;
 using ScientificResearch.Models;
 
@@ -278,6 +279,35 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
         async public Task<object> 获取某理论考试活动详情(int 考试编号)
         {
             return await 继教理论考试.获取某理论考试活动详情(考试编号, Db);
+        }
+
+        [HttpGet]
+        async public Task<object> 导出某理论考试参与情况(int 活动内容编号)
+        {
+            var 基本信息 = await Db.GetModelByIdSpAsync<v_继教理论考试>(活动内容编号);
+            if(基本信息 == null)
+            {
+                throw new Exception("没有找到该理论考试");
+            }
+            var 参与情况 = await Db.GetListSpAsync<v_继教理论考试参与情况, 继教理论考试参与情况Filter>(
+                new 继教理论考试参与情况Filter()
+                {
+                    考试编号 = 活动内容编号
+                });
+
+            var 参与情况导出格式 = 参与情况.Select(i => new 导出继教理论考试参与情况()
+            {
+                考试编号= i.考试编号,
+                考试批次编号 = i.考试批次编号,
+                参与人称谓 = i.参与人称谓,
+                答题开始时间 = i.答题开始时间,
+                答题结束时间 = i.答题结束时间,
+                得分 = i.得分,
+                是否通过 = i.是否通过 == true ? "合格":"不合格"
+            });
+
+            var filePathName = MyXls.Export(Env.WebRootPath, "upload/继教/导出理论考试参与情况", 基本信息.名称, 参与情况导出格式);
+            return filePathName;
         }
 
         [HttpPost]

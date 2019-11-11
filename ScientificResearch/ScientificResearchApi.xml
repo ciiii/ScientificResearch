@@ -31112,7 +31112,7 @@
             <param name="dataStartFrom">数据从哪一行开始</param>
             <returns></returns>
         </member>
-        <member name="M:MyLib.MyXls.Export``1(System.String,System.Collections.Generic.IEnumerable{``0},System.String)">
+        <member name="M:MyLib.MyXls.Export``1(System.String,System.String,System.String,System.Collections.Generic.IEnumerable{``0})">
             <summary>
             根据IEnumerable T类型的数据导出
             </summary>

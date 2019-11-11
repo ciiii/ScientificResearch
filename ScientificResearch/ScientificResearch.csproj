@@ -956,6 +956,7 @@
     <Folder Include="wwwroot\upload\纵向项目\结题资料\" />
     <Folder Include="wwwroot\upload\纵向项目\项目申报书\" />
     <Folder Include="wwwroot\upload\组织架构\学术任职\" />
+    <Folder Include="wwwroot\upload\继教\导出理论考试参与情况\" />
     <Folder Include="wwwroot\upload\继教\组织结构\" />
     <Folder Include="wwwroot\upload\项目经费到账\到账凭证\" />
   </ItemGroup>
