@@ -185,13 +185,18 @@ namespace ScientificResearch.Models
     {
         async static public Task<object> 获取某操作考试活动内容详情(int 活动内容编号, IDbConnection db, IDbTransaction transaction = null)
         {
-            var 基本信息 = await db.GetModelByIdSpAsync<v_继教操作考试>(活动内容编号, transaction: transaction);
+            return await 获取某操作考试活动或活动内容详情<v_继教操作考试>(活动内容编号, db, transaction);
+        }
+
+        private static async Task<object> 获取某操作考试活动或活动内容详情<T>(int 活动内容编号, IDbConnection db, IDbTransaction transaction)
+        {
+            var 基本信息 = await db.GetModelByIdSpAsync<T>(活动内容编号, transaction: transaction);
 
             var 助教老师 = await db.GetListSpAsync<v_继教操作考试助教老师, 继教操作考试助教老师Filter>(
                 new 继教操作考试助教老师Filter()
                 {
                     操作考试编号 = 活动内容编号
-                },transaction:transaction);
+                }, transaction: transaction);
 
             var 评分表 = await db.GetListSpAsync<v_继教操作考试评分表, 继教操作考试评分表Filter>(
                 new 继教操作考试评分表Filter()
@@ -228,6 +233,11 @@ namespace ScientificResearch.Models
                      },
                 参与情况
             };
+        }
+
+        async static public Task<object> 获取某操作考试活动详情(int 活动内容编号, IDbConnection db, IDbTransaction transaction = null)
+        {
+            return await 获取某操作考试活动或活动内容详情<v_继教操作考试活动>(活动内容编号, db, transaction);
         }
 
         async static public Task 增改继教操作考试(
@@ -580,4 +590,25 @@ namespace ScientificResearch.Models
     }
     #endregion
 
+    #region 继教操作考试 继教考试活动
+    public class 继教操作考试Filter
+    {
+        public string Like名称 { get; set; }
+    }
+
+    public class 继教操作考试活动Filter : 继教操作考试Filter
+    {
+        [Required(ErrorMessage = "请提供文件夹编号")]
+        public int? 文件夹编号 { get; set; }
+
+    }
+    public class 增改继教操作考试活动 : 增改继教操作考试
+    {
+        public int 文件夹编号 { get; set; }
+        public int 学分 { get; set; }
+        //public 继教活动内容 活动内容 { get; set; }
+        //public 继教理论考试 理论考试 { get; set; }
+        //public IEnumerable<增改继教考试批次> 增改继教考试批次 { get; set; }
+    }
+    #endregion
 }

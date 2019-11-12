@@ -20,8 +20,7 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        [Required(ErrorMessage ="请提供[能级编号]")]
-		public int 能级编号 { get; set; }
+		public int? 能级编号 { get; set; }
         
         
         #endregion
