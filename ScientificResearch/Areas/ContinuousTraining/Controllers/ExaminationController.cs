@@ -437,9 +437,27 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
         }
 
         [HttpPost]
-        async public Task 增改评分表([FromBody]继教评分表 model)
+        async public Task<object> 增改评分表([FromBody]继教评分表 model)
         {
-            await Db.Merge(model);
+            var result = await Db.Merge(model);
+            return result.编号;
+        }
+
+        [HttpPost]
+        async public Task 删除评分表([FromBody]IEnumerable<int> 编号列表)
+        {
+            var 要删除的评分表列表 = await Db.GetListSpAsync<v_继教评分表, 继教评分表Filter>(
+                new 继教评分表Filter()
+                {
+                    WhereIn编号 = 编号列表.ToStringIdWithSpacer()
+                });
+
+            if(要删除的评分表列表.Any(i=>i.是否被引用 == true))
+            {
+                throw new Exception("不能删除已经被使用的评分表");
+            }
+
+            await Db.Delete<继教评分表>(编号列表);
         }
 
         [HttpGet]
@@ -462,7 +480,7 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
                        select new
                        {
                            评分表项目 = item,
-                           评分表项目要求 = from item2 in 相关的评分表项目要求 where item2.评分表项目编号 == item.编号 select item2
+                           评分表项目要求 = from item2 in 相关的评分表项目要求 where item2.评分表项目编号 == item.编号 orderby item2.编号 select item2
                        }
             };
         }

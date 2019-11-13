@@ -13188,6 +13188,11 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.继教评分表.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.继教评分表.备注">
             <summary>
             
@@ -28968,7 +28973,22 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.v_继教评分表.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.v_继教评分表.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教评分表.项目数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教评分表.总分值">
             <summary>
             
             </summary>

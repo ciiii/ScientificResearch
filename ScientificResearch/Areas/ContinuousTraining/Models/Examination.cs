@@ -346,6 +346,8 @@ namespace ScientificResearch.Models
 
     public class 继教评分表Filter
     {
+        public string WhereIn编号 { get; set; }
+
         [Required(ErrorMessage = "请提供文件夹编号")]
         public int? 文件夹编号 { get; set; }
 

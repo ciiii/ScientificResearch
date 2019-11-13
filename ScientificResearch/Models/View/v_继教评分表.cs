@@ -27,7 +27,19 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        public DateTime 建立时间 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
         public string 备注 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int? 项目数 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int? 总分值 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
