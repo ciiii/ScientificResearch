@@ -35,6 +35,11 @@ namespace ScientificResearch.Models
         public string Like医师资格证书编号 { get; set; }
     }
 
+    public class 教学学员_当前在科科室Filter: 教学学员Filter
+    {
+        public int? 当前在科的科室编号 { get; set; }
+    }
+
     public class 学员导入
     {
         #region 属性

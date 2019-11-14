@@ -107,6 +107,12 @@ namespace ScientificResearch.Areas.TeachingManagement.Controllers
             return await Db.GetPagingListSpAsync<v_教学学员, 教学学员Filter>(paging, filter, orderType: true);
         }
 
+        [HttpGet]
+        async public Task<object> 分页获取教学学员带当前科室(Paging paging, 教学学员_当前在科科室Filter filter)
+        {
+            return await Db.GetPagingListSpAsync<v_教学学员_当前在科科室, 教学学员_当前在科科室Filter>(paging, filter, orderType: true);
+        }
+
         /// <summary>
         /// 
         /// </summary>
