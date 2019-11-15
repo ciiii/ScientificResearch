@@ -452,7 +452,7 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
                     WhereIn编号 = 编号列表.ToStringIdWithSpacer()
                 });
 
-            if(要删除的评分表列表.Any(i=>i.是否被引用 == true))
+            if (要删除的评分表列表.Any(i => i.是否被引用 == true))
             {
                 throw new Exception("不能删除已经被使用的评分表");
             }
@@ -541,6 +541,30 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
             };
         }
 
+        [HttpGet]
+        async public Task<object> 分页获取某助教可以打分的操作考试活动(Paging paging, 继教操作考试Filter filter)
+        {
+            //return await Db.GetPagingListSpAsync<v_继教操作考试活动, 继教操作考试活动Filter>(paging, filter);
+            var 操作考试活动列表 = await Db.GetPagingListSpAsync<v_继教操作考试活动, 继教操作考试Filter>(
+                paging,
+                filter,
+                tbName:$"tfn_继教某助教可打分的操作考试({CurrentUser.编号})",
+                orderStr: nameof(v_继教操作考试活动.编号));
+            var 考试批次列表 = await Db.GetListSpAsync<继教考试批次, 继教考试批次Filter>(new 继教考试批次Filter()
+            {
+                WhereIn考试编号 = 操作考试活动列表.list.Select(i => i.编号).ToStringIdWithSpacer()
+            });
+            return new
+            {
+                操作考试活动列表.total,
+                list = from item in 操作考试活动列表.list
+                       select new
+                       {
+                           操作考试活动基本信息 = item,
+                           批次列表 = from item2 in 考试批次列表 where item2.考试编号 == item.编号 select item2
+                       }
+            };
+        }
 
         [HttpGet]
         async public Task<object> 获取某操作考试活动详情(int 考试编号)
@@ -590,6 +614,85 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
 
             await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
         }
+
+        [HttpGet]
+        async public Task<object> 获取某操作考试评分表信息(int 操作考试编号)
+        {
+            var 评分表列表 = await Db.GetListSpAsync<v_继教操作考试评分表, 继教操作考试评分表Filter>(
+                new 继教操作考试评分表Filter()
+                {
+                    操作考试编号 = 操作考试编号
+                });
+
+            var 项目列表 = await Db.GetListSpAsync<继教评分表项目, 继教评分表项目Filter>(new 继教评分表项目Filter()
+            {
+                WhereIn评分表编号 = 评分表列表.Select(i => i.评分表编号).ToStringIdWithSpacer()
+            });
+
+            var 项目编号列表 = 项目列表.Select(i => i.编号);
+
+            var 评分表项目要求列表 = await Db.GetListSpAsync<继教评分表项目要求, 继教评分表项目要求Filter>(
+                new 继教评分表项目要求Filter()
+                {
+                    WhereIn评分表项目编号 = 项目编号列表.ToStringIdWithSpacer()
+                });
+
+            return from item in 评分表列表
+                   select new
+                   {
+                       评分表 = item,
+                       评分表项目列表 = from item2 in 项目列表
+                                 where item2.评分表编号 == item.评分表编号
+                                 orderby item2.编号
+                                 select new
+                                 {
+                                     评分表项目 = item2,
+                                     评分表项目要求列表 = from item3 in 评分表项目要求列表 where item3.评分表项目编号 == item2.编号 orderby item3.编号 select item3
+                                 },
+                   };
+        }
+
+        [HttpPost]
+        async public Task 操作考试打分(操作考试打分 data)
+        {
+            var 现有参与情况 = (await Db.GetListSpAsync<继教操作考试参与情况, 继教操作考试参与情况Filter>(
+               new 继教操作考试参与情况Filter
+               {
+                   考试批次编号 = data.参与情况.考试批次编号,
+                   参与人类型 = data.参与情况.参与人类型,
+                   参与人编号 = data.参与情况.参与人编号
+               })).FirstOrDefault();
+
+            if (现有参与情况 != null)
+            {
+                throw new Exception("该考生本次操作考试已经打分");
+            }
+
+            var 批次信息 = await Db.GetModelByIdSpAsync<继教考试批次>(data.参与情况.考试批次编号);
+
+            if (DateTime.Now < 批次信息.考试开始时间 || DateTime.Now > 批次信息.考试结束时间)
+            {
+                throw new Exception("当前不在考试时间范围内不能打分");
+            }
+
+            if (data.参与情况.开始操作时间 > data.参与情况.结束操作时间)
+            {
+                throw new Exception("开始操作时间不能大于结束操作时间");
+            }
+
+            //注意:操作考试参与情况中的得分,是int;而在某一个项目的某一个打分中,是可以为一位小数的
+            data.参与情况.得分 = (int)data.打分情况列表.Sum(i => i.打分);
+
+            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+            {
+                var 参与情况 = await dbForTransaction.Merge(data.参与情况, transaction: transaction);
+                await dbForTransaction.Merge(参与情况.编号, data.打分情况列表, transaction: transaction);
+            }
+
+            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+
+        }
+
         #endregion
     }
 }

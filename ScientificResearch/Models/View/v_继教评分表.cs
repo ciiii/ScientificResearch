@@ -39,7 +39,7 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        public int? 总分值 { get; set; }
+        public decimal? 总分值 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>

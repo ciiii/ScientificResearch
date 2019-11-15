@@ -20,6 +20,7 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        [Obsolete]
         [Required(ErrorMessage ="请提供[操作考试参与情况编号]")]
 		public int 操作考试参与情况编号 { get; set; }
         /// <summary>
@@ -31,7 +32,7 @@ namespace ScientificResearch.Models
 		/// 
 		/// </summary>
         [Required(ErrorMessage ="请提供[打分]")]
-		public int 打分 { get; set; }
+		public decimal 打分 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>

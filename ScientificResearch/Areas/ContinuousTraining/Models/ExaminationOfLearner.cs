@@ -57,4 +57,14 @@ namespace ScientificResearch.Models
     //{
     //    public string 答题答案编码 { get; set; }
     //}
+
+    public class 继教操作考试打分情况Filter
+    {
+        public int? 操作考试参与情况编号 { get; set; }
+    }
+
+    public class 继教某人可参与的操作考试Filter : 继教某人可参与的活动Filter
+    {
+        //public string 口令 { get; set; }
+    }
 }

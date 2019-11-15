@@ -220,6 +220,9 @@ namespace ScientificResearch.Models
     public class 继教操作考试参与情况Filter
     {
         public int? 考试编号 { get; set; }
+        public int? 考试批次编号 { get; set; }
+        public string 参与人类型 { get; set; }
+        public int? 参与人编号 { get; set; }
     }
 
     public class 继教慕课素材Filter

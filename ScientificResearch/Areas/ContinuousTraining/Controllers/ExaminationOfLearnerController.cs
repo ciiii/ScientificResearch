@@ -91,6 +91,17 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
                 //var 该考试批次可参与人 = new 继教考试批次可参与人();
 
                 //19-10-21 如果某人没有被添加到可参与人,但是他有口令,则要把他放到可参与人里面去,方便他查看
+                var 该批次可参与人 = new 继教考试批次可参与人()
+                {
+                    考试批次编号 = 考试批次编号,
+                    可参与人类型 = CurrentUser.人员类型,
+                    可参与人编号 = CurrentUser.编号
+                };
+                await Db.ExecuteSpAsync(new sp_继教考试批次可参与人_普通增改()
+                {
+                    tt = 该批次可参与人.ToDataTable()
+                });
+
                 var 该活动可参与人 = new 继教活动可参与人()
                 {
                     活动编号 = 考试批次.活动编号,
@@ -225,7 +236,7 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
         [HttpGet]
         async public Task<object> 获取答题情况(int 考试批次编号)
         {
-            return await 获取某人答题情况(考试批次编号, CurrentUser.人员类型,CurrentUser.编号);
+            return await 获取某人答题情况(考试批次编号, CurrentUser.人员类型, CurrentUser.编号);
         }
 
         [HttpGet]
@@ -234,7 +245,7 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
             return await 获取某人答题情况(考试批次编号, 人员类型, 人员编号);
         }
 
-        private async Task<object> 获取某人答题情况(int 考试批次编号,string 人员类型 ,int 人员编号)
+        private async Task<object> 获取某人答题情况(int 考试批次编号, string 人员类型, int 人员编号)
         {
             var 考试批次 = await Db.GetModelByIdSpAsync<v_继教理论考试批次>(考试批次编号);
 
@@ -294,6 +305,64 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
                            ? from item4 in 答题答案 where item4.理论考试答题情况编号 == 答题情况字典[item.试题编号]?.编号 orderby item4.答题答案编码 select item4
                            : null
                    };
+        }
+
+
+        [HttpGet]
+        async public Task<object> 获取操作考试打分情况(int 考试批次编号)
+        {
+            return await 获取某人操作考试打分情况(考试批次编号, CurrentUser.人员类型, CurrentUser.编号);
+        }
+
+        [HttpGet]
+        async public Task<object> 获取某人的操作考试打分情况(int 考试批次编号, string 人员类型, int 人员编号)
+        {
+            return await 获取某人操作考试打分情况(考试批次编号, 人员类型, 人员编号);
+        }
+
+        private async Task<object> 获取某人操作考试打分情况(int 考试批次编号, string 人员类型, int 人员编号)
+        {
+
+            var 参与情况 = (await Db.GetListSpAsync<继教操作考试参与情况, 继教操作考试参与情况Filter>(
+                new 继教操作考试参与情况Filter
+                {
+                    考试批次编号 = 考试批次编号,
+                    参与人类型 = 人员类型,
+                    参与人编号 = 人员编号
+                })).FirstOrDefault();
+
+            var 打分情况 = await Db.GetListSpAsync<继教操作考试打分情况, 继教操作考试打分情况Filter>(
+                new 继教操作考试打分情况Filter()
+                {
+                    操作考试参与情况编号 = 参与情况.编号
+                });
+
+
+            return new
+            {
+                参与情况,
+                打分情况
+            };
+        }
+
+        /// <summary>
+        /// 注意
+        /// 1:对于一个某人可参与的活动来说,状态有:未开始,进行中,已结束,而没有"未发布"!
+        /// 2:适应的情况有:
+        /// 2-1 登录微信查看我的操作考试,就会给出"可参与人中有我"的操作考试
+        /// 看到的东西,是以"考试批次"数据为核心的.和"慕课活动"以及"后台管理考试活动"都不一样
+        /// </summary>
+        /// <param name="paging"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        [HttpGet]
+        async public Task<object> 分页获取自己可参与的操作考试活动(Paging paging, 继教某人可参与的操作考试Filter filter)
+        {
+            filter.活动类型 = 继教文件夹类型.继教操作考试.ToString();
+            return await Db.GetPagingListSpAsync<v_tfn_继教某人可参与的操作考试, 继教某人可参与的操作考试Filter>(
+                paging,
+                filter,
+                $"tfn_继教某人可参与的操作考试('{CurrentUser.人员类型}',{CurrentUser.编号})");
         }
     }
 }

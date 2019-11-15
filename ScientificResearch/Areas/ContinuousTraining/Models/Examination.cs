@@ -356,6 +356,7 @@ namespace ScientificResearch.Models
 
     public class 继教评分表项目Filter
     {
+        public string WhereIn评分表编号 { get; set; }
         [Required(ErrorMessage = "请提评分表编号")]
         public int? 评分表编号 { get; set; }
 
@@ -371,6 +372,12 @@ namespace ScientificResearch.Models
     {
         public 继教评分表项目 评分表项目  { get; set; }
         public IEnumerable<继教评分表项目要求> 评分表项目要求列表 { get; set; }
+    }
+
+    public class 操作考试打分
+    {
+        public 继教操作考试参与情况 参与情况 { get; set; }
+        public IEnumerable<继教操作考试打分情况> 打分情况列表{ get; set; }
     }
     #endregion
 
