@@ -334,7 +334,7 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
             var 打分情况 = await Db.GetListSpAsync<继教操作考试打分情况, 继教操作考试打分情况Filter>(
                 new 继教操作考试打分情况Filter()
                 {
-                    操作考试参与情况编号 = 参与情况.编号
+                    操作考试参与情况编号 = 参与情况?.编号
                 });
 
 

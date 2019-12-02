@@ -653,7 +653,7 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
         }
 
         [HttpPost]
-        async public Task 操作考试打分(操作考试打分 data)
+        async public Task 操作考试打分([FromBody]操作考试打分 data)
         {
             var 现有参与情况 = (await Db.GetListSpAsync<继教操作考试参与情况, 继教操作考试参与情况Filter>(
                new 继教操作考试参与情况Filter

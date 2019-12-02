@@ -70,6 +70,15 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
                 tableName: $"tfn_继教某人可参与的理论考试('{CurrentUser.人员类型}',{CurrentUser.编号},'')");
         }
 
+        [HttpGet]
+        async public Task<object> 获取某操作考试活动内容详情以及自己的参与情况(int 活动内容编号)
+        {
+            return await Db.GetModelByIdSpAsync<v_tfn_继教某人可参与的操作考试>(
+                活动内容编号,
+                nameof(v_tfn_继教某人可参与的操作考试.考试编号),
+                tableName: $"tfn_继教某人可参与的操作考试('{CurrentUser.人员类型}',{CurrentUser.编号})");
+        }
+
         [HttpPost]
         async public Task 参与慕课活动内容([FromBody]继教慕课参与情况 model)
         {

@@ -43,7 +43,7 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        public int 得分 { get; set; }
+        public decimal 得分 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>

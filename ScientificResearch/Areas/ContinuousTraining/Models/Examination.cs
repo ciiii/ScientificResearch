@@ -551,6 +551,8 @@ namespace ScientificResearch.Models
         [Required(ErrorMessage = "请提供文件夹编号")]
         public int? 文件夹编号 { get; set; }
 
+        public string 状态 { get; set; }
+
     }
     public class 增改继教理论考试活动 : 增改继教理论考试
     {

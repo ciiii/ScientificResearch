@@ -9,25 +9,58 @@ using System.Threading.Tasks;
 
 namespace ScientificResearch.Models
 {
+
+    public class 继教签到活动Filter 
+    {
+        public string Like名称 { get; set; }
+        [Required(ErrorMessage = "请提供文件夹编号")]
+        public int? 文件夹编号 { get; set; }
+
+    }
+
     public class 增改继教签到
     {
         public 继教活动内容 活动内容 { get; set; }
         public IEnumerable<继教签到规定> 继教签到规定列表 { get; set; }
     }
 
+    public class 增改继教签到活动 : 增改继教签到
+    {
+        public int 文件夹编号 { get; set; }
+        public int 学分 { get; set; }
+    }
+
     public partial class 继教签到
     {
+        async static public Task<object> 获取某签到活动详情(int 活动内容编号, IDbConnection db, IDbTransaction transaction = null)
+        {
+            return await 获取某签到活动或活动内容详情<v_继教签到活动>(活动内容编号, db, transaction);
+        }
+
         async static public Task<object> 获取某签到活动内容详情(int 活动内容编号, IDbConnection db, IDbTransaction transaction = null)
         {
-            var 基本信息 = await db.GetModelByIdSpAsync<v_继教签到参与情况>(活动内容编号, transaction: transaction);
-            var 参与情况 = await db.GetListSpAsync<v_继教签到参与情况, 继教签到参与情况Filter>(
+            return await 获取某签到活动或活动内容详情<v_继教签到>(活动内容编号, db, transaction);
+        }
+
+        private static async Task<object> 获取某签到活动或活动内容详情<T>(int 活动内容编号, IDbConnection db, IDbTransaction transaction)
+        {
+            var 基本信息 = await db.GetModelByIdSpAsync<T>(活动内容编号, transaction: transaction);
+            var 签到规定 = await db.GetListSpAsync<继教签到规定, 继教签到规定Filter>(new 继教签到规定Filter()
+            {
+                签到编号 = 活动内容编号
+            }, transaction: transaction);
+
+            var 参与情况 = await db.GetListSpAsync<v_tfn_继教签到参与情况, 继教签到参与情况Filter>(
                 new 继教签到参与情况Filter()
                 {
                     签到编号 = 活动内容编号
-                }, transaction: transaction);
+                },
+                tbName: $"tfn_继教签到参与情况({活动内容编号})",
+                transaction: transaction);
             return new
             {
                 基本信息,
+                签到规定,
                 参与情况
             };
         }
@@ -47,10 +80,10 @@ namespace ScientificResearch.Models
                     //如果j是i,或者j是i之前的,不管.只有j>i的情况才去判断
                     if (j > i)
                     {
-                        if(MyLib.Tool.CheckDate(
+                        if (MyLib.Tool.CheckDate(
                             (DateTime)ls[i].签到开始时间,
                             (DateTime)ls[i].签到结束时间,
-                            (DateTime)ls[j].签到开始时间, 
+                            (DateTime)ls[j].签到开始时间,
                             (DateTime)ls[j].签到结束时间))
                         {
                             throw new Exception("签到规定的签到时间范围不能重复");

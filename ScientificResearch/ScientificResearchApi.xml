@@ -540,6 +540,23 @@
             <param name="data"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.SignInController.分页获取某签到的签到情况(ScientificResearch.Models.Paging,System.Int32)">
+            <summary>
+            这个地方获取到的签到情况，是每个签到每个人一条记录，
+            比如某次签到包含两次签到规定，但对于一个人来说，只有一条记录，说明他一共签到了几次
+            </summary>
+            <param name="paging"></param>
+            <param name="签到编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.SignInController.获取某签到某人的签到记录(ScientificResearch.Models.继教签到参与情况Filter)">
+            <summary>
+            与上面的不同，这个地方获取到的是某次签到某人的签到记录，可能是多条记录
+            比如某次签到包含两次签到规定，某人按规定签到了两次，那么他就有两个签到记录
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
         <member name="M:ScientificResearch.Areas.Manage.Controllers.AccessController.getOpenId(System.String)">
             <summary>
             根据code取openid,接着取该openid绑定的用户信息;
@@ -29016,6 +29033,106 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_继教签到参与情况.签到时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_继教签到活动">
+            <summary>
+            v_继教签到活动[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到活动.文件夹编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到活动.学分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到活动.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到活动.活动编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到活动.类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到活动.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到活动.排序值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到活动.开始时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到活动.结束时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到活动.地点">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到活动.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到活动.规定签到次数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到活动.参与人数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到活动.通过人数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到活动.状态">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到活动.应考人数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到活动.建立人">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到活动.建立人姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到活动.建立时间">
             <summary>
             
             </summary>

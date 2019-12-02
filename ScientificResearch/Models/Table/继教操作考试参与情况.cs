@@ -51,7 +51,7 @@ namespace ScientificResearch.Models
 		/// 
 		/// </summary>
         [Required(ErrorMessage ="请提供[得分]")]
-		public int 得分 { get; set; }
+		public decimal 得分 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
