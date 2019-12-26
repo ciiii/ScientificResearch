@@ -19,6 +19,30 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        public int 签到规定编号 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public string 签到规定名称 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public DateTime 签到规定开始时间 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public DateTime 签到规定结束时间 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int 二维码变化秒数 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public string 签到规定备注 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
         public string 参与人类型 { get; set; }
         /// <summary>
 		/// 

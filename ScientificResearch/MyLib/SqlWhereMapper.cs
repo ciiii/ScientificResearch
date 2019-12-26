@@ -31,7 +31,8 @@ namespace MyLib
         protected string pSymbol = "@";//参数符号
         protected string cSymbol = "+";//连接符号 
         protected string dSymbol = "'";
-        private static Regex reg = new Regex(@"^(?<tab>\w+\.)?(?<Pre>(NotEqual|WhereIn|WhereNotIn|PK|Begin|End|Like|UnLike|Null))?(?<Key>\w+)$");
+        protected string WhereStrInSymbol = ","; //WhereStrIn用来分隔各个关键字的符号，在sql里面肯定是,了
+        private static Regex reg = new Regex(@"^(?<tab>\w+\.)?(?<Pre>(NotEqual|WhereIn|WhereNotIn|WhereStrIn|PK|Begin|End|Like|UnLike|Null))?(?<Key>\w+)$");
         private IDictionary<string, object> entity;//条件字典
         private Dictionary<string, Type> typeMapper = new Dictionary<string, Type>();
 
@@ -162,6 +163,7 @@ namespace MyLib
                 case "NotEqual": return NotEqual(colName, table, colValue, isString);
                 case "WhereIn": return WhereIn(colName, table, colValue, false); //手动写成false,
                 case "WhereNotIn": return WhereNotIn(colName, table, colValue, false); //手动写成false,
+                case "WhereStrIn": return WhereStrIn(colName, table, colValue, false); //手动写成false,
                 case "Like": return Like(colName, table, colValue, isString);
                 case "UnLike": return Like(colName, table, colValue, isString, false);
                 case "Begin": return Begin(colName, table, colValue, isString);
@@ -196,10 +198,15 @@ namespace MyLib
         {
             return string.Format("{0}{1} in ({3}{2}{3})", tab, colName, colValue.ToString(), isString ? dSymbol : string.Empty);
         }
-
         protected virtual string WhereNotIn(string colName, string tab, object colValue, bool isString = false)
         {
             return string.Format("{0}{1} not in ({3}{2}{3})", tab, colName, colValue.ToString(), isString ? dSymbol : string.Empty);
+        }
+
+        protected virtual string WhereStrIn(string colName, string tab, object colValue, bool isString = false)
+        {
+            var strWhere = string.Join(WhereStrInSymbol, colValue.ToString().Split(WhereStrInSymbol).Select(i=> dSymbol + i+ dSymbol));
+            return string.Format("{0}{1} in ({3}{2}{3})", tab, colName, strWhere, isString ? dSymbol : string.Empty);
         }
 
         protected virtual string Like(string colName, string tab, object colValue, bool isString = false, bool not = true)

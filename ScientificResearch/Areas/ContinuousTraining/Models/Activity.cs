@@ -19,12 +19,19 @@ namespace ScientificResearch.Models
     /// </summary>
     public enum 活动内容类型
     {
-        继教慕课, 继教课后练习, 继教理论考试, 继教操作考试, 继教签到
+        继教慕课, 继教课后练习, 继教理论考试, 继教操作考试, 继教签到,继教自测
     }
 
     public partial class 继教活动
     {
         #region Pc管理端
+        /// <summary>
+        /// 好像只有“获取某慕课活动详情”在用这个，是不是改个名字更好
+        /// </summary>
+        /// <param name="活动编号"></param>
+        /// <param name="db"></param>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
         async static public Task<object> 获取某活动详情(int 活动编号, IDbConnection db, IDbTransaction transaction = null)
         {
             var 活动基本信息 = await db.GetModelByIdSpAsync<v_继教活动>(活动编号, transaction: transaction);

@@ -9,7 +9,7 @@ namespace ScientificResearch.Models
 {
     public enum 继教文件夹类型
     {
-        继教慕课, 继教理论考试, 继教操作考试, 继教签到, 继教慕课素材, 继教试题, 继教试卷, 继教品分表
+        继教慕课, 继教理论考试, 继教操作考试, 继教签到, 继教慕课素材, 继教试题, 继教试卷, 继教品分表,继教自测
     }
 
     public class 继教文件夹Filter

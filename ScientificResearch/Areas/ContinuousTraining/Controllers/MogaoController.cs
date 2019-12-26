@@ -94,6 +94,24 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
             return await 继教操作考试.获取某操作考试活动内容详情(活动内容编号, Db);
         }
 
+        [HttpGet]
+        async public Task<object> 获取某自测活动内容详情(int 活动内容编号)
+        {
+            return await Db.GetModelByIdSpAsync<v_继教自测>(活动内容编号);
+        }
+
+        /// <summary>
+        /// 考试编号 必须填,活动内容编号就是考试编号/或者叫自测编号;
+        /// </summary>
+        /// <param name="paging"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        [HttpGet]
+        async public Task<object> 分页获取某自测活动内容参与情况(Paging paging , 继教理论考试参与情况Filter filter)
+        {
+            return await Db.GetPagingListSpAsync<v_继教理论考试参与情况, 继教理论考试参与情况Filter>(paging, filter);
+        }
+
         #endregion
 
         #region 增改慕课活动/活动内容
@@ -233,6 +251,17 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
             async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
             {
                 await 继教签到.增改继教签到(data, dbForTransaction, transaction);
+            }
+
+            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+        }
+
+        [HttpPost]
+        async public Task 增改继教自测活动内容([FromBody]增改继教自测 data)
+        {
+            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+            {
+                await 继教理论考试.增改继教自测(data, dbForTransaction, transaction);
             }
 
             await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);

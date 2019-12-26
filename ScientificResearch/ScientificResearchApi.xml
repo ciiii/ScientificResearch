@@ -148,6 +148,22 @@
             <param name="data"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.ExaminationController.分页获取某文件夹下的自测活动(ScientificResearch.Models.Paging,ScientificResearch.Models.继教理论考试活动Filter)">
+            <summary>
+            文件夹编号必填,而且必然是"继教自测"的文件夹
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.ExaminationController.分页获取某自测活动内容参与情况(ScientificResearch.Models.Paging,ScientificResearch.Models.继教理论考试参与情况Filter)">
+            <summary>
+            考试编号 必须填,"分页获取某文件夹下的自测活动"中的"编号"就是考试编号/或者叫自测编号;
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
         <member name="T:ScientificResearch.Areas.ContinuousTraining.Controllers.ExaminationOfLearnerController">
             <summary>
             针对移动端的理论考试活动
@@ -177,6 +193,13 @@
             </summary>
             <param name="paging"></param>
             <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.ExaminationOfLearnerController.自测交卷(ScientificResearch.Models.自测交卷)">
+            <summary>
+            需要进一步测试
+            </summary>
+            <param name="data"></param>
             <returns></returns>
         </member>
         <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.FolderController.获取登录人可用的文件夹(ScientificResearch.Models.继教文件夹Filter)">
@@ -279,6 +302,14 @@
             通过/不通过的数据要从"tfn_继教签到参与情况"拿才对
             </summary>
             <param name="活动内容编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.MogaoController.分页获取某自测活动内容参与情况(ScientificResearch.Models.Paging,ScientificResearch.Models.继教理论考试参与情况Filter)">
+            <summary>
+            考试编号 必须填,活动内容编号就是考试编号/或者叫自测编号;
+            </summary>
+            <param name="paging"></param>
+            <param name="filter"></param>
             <returns></returns>
         </member>
         <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.MogaoController.增改继教活动基本信息(ScientificResearch.Models.继教活动)">
@@ -540,7 +571,7 @@
             <param name="data"></param>
             <returns></returns>
         </member>
-        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.SignInController.分页获取某签到的签到情况(ScientificResearch.Models.Paging,System.Int32)">
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.SignInController.分页获取某签到的签到情况(ScientificResearch.Models.Paging,ScientificResearch.Models.继教签到参与情况Filter)">
             <summary>
             这个地方获取到的签到情况，是每个签到每个人一条记录，
             比如某次签到包含两次签到规定，但对于一个人来说，只有一条记录，说明他一共签到了几次
@@ -1975,6 +2006,15 @@
             <summary>
             继教活动[类]
             </summary>
+        </member>
+        <member name="M:ScientificResearch.Models.继教活动.获取某活动详情(System.Int32,System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            好像只有“获取某慕课活动详情”在用这个，是不是改个名字更好
+            </summary>
+            <param name="活动编号"></param>
+            <param name="db"></param>
+            <param name="transaction"></param>
+            <returns></returns>
         </member>
         <member name="M:ScientificResearch.Models.继教活动.增改继教活动(ScientificResearch.Models.继教活动,System.Data.IDbConnection,System.Data.IDbTransaction)">
             <summary>
@@ -5758,6 +5798,16 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_继教签到_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教签到参与情况_增改">
+            <summary>
+            sp_继教签到参与情况_增改[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教签到参与情况_增改.tt">
             <summary>
             
             </summary>
@@ -23882,6 +23932,361 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.v_tfn_继教某人可参与的签到">
+            <summary>
+            v_tfn_继教某人可参与的签到[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.文件夹编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.活动类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.培训计划编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.培训计划名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.培训计划年份">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.项目分类编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.项目分类名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.活动开始时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.活动结束时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.学分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.封面">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.简介">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.必须按顺序学习">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.建立人">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.建立人姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.活动备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.状态">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.签到编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.签到名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.签到开始时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.签到结束时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.地点">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.签到备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.规定签到次数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.参与人数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.通过人数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.参与人称谓">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.签到次数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的签到.是否通过">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_tfn_继教某人可参与的自测">
+            <summary>
+            v_tfn_继教某人可参与的自测[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.文件夹编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.活动类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.培训计划编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.培训计划名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.培训计划年份">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.项目分类编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.项目分类名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.活动开始时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.活动结束时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.学分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.封面">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.简介">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.必须按顺序学习">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.建立人">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.建立人姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.活动备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.状态">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.考试编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.考试名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.考试开始时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.考试结束时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.地点">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.是否允许任何人参与">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.试卷编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.试卷名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.时长">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.及格分数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.是否试题乱序">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.是否允许考生查看成绩">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.是否允许考生查看答案">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.自测人次">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.考试备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.参与次数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某人可参与的自测.通过次数">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v_tfn_继教某人可查看的文件夹">
             <summary>
             v_tfn_继教某人可查看的文件夹[类]
@@ -28432,7 +28837,7 @@
             
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.v_继教活动内容.参与人数">
+        <member name="P:ScientificResearch.Models.v_继教活动内容.参与人次">
             <summary>
             
             </summary>
@@ -29017,6 +29422,36 @@
             
             </summary>
         </member>
+        <member name="P:ScientificResearch.Models.v_继教签到参与情况.签到规定编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到参与情况.签到规定名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到参与情况.签到规定开始时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到参与情况.签到规定结束时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到参与情况.二维码变化秒数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到参与情况.签到规定备注">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ScientificResearch.Models.v_继教签到参与情况.参与人类型">
             <summary>
             
@@ -29137,6 +29572,51 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.v_继教签到规定">
+            <summary>
+            v_继教签到规定[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到规定.活动编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到规定.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到规定.签到编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到规定.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到规定.签到开始时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到规定.签到结束时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到规定.二维码变化秒数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教签到规定.备注">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v_继教考试批次可参与人">
             <summary>
             v_继教考试批次可参与人[类]
@@ -29168,6 +29648,231 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_继教考试批次可参与人.可参与人称谓">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_继教自测">
+            <summary>
+            v_继教自测[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测.活动编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测.类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测.排序值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测.开始时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测.结束时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测.地点">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测.是否允许任何人参与">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测.试卷编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测.试卷名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测.时长">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测.及格分数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测.是否试题乱序">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测.是否允许考生查看成绩">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测.是否允许考生查看答案">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测.自测人次">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_继教自测活动">
+            <summary>
+            v_继教自测活动[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测活动.文件夹编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测活动.学分">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测活动.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测活动.活动编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测活动.类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测活动.名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测活动.排序值">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测活动.开始时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测活动.结束时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测活动.地点">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测活动.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测活动.是否允许任何人参与">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测活动.试卷编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测活动.试卷名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测活动.时长">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测活动.及格分数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测活动.是否试题乱序">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测活动.是否允许考生查看成绩">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测活动.是否允许考生查看答案">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测活动.自测人次">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测活动.状态">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测活动.应考人数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测活动.建立人">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测活动.建立人姓名">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教自测活动.建立时间">
             <summary>
             
             </summary>

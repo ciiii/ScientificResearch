@@ -96,5 +96,11 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
         {
             return await Db.GetListSpAsync<v_继教签到参与情况, 继教签到参与情况Filter>(filter);
         }
+
+        [HttpGet]
+        public object 获取服务器时间()
+        {
+            return DateTime.Now;
+        }
     }
 }

@@ -694,5 +694,85 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
         }
 
         #endregion
+
+        #region 自测活动 活动内容
+        /// <summary>
+        /// 文件夹编号必填,而且必然是"继教自测"的文件夹
+        /// </summary>
+        /// <param name="paging"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        [HttpGet]
+        async public Task<object> 分页获取某文件夹下的自测活动(Paging paging, 继教理论考试活动Filter filter)
+        {
+            return await Db.GetPagingListSpAsync<v_继教自测活动, 继教理论考试活动Filter>(
+                paging,
+                filter,
+                orderStr: nameof(v_继教自测活动.编号));
+        }
+
+
+        [HttpGet]
+        async public Task<object> 获取某自测活动详情(int 自测编号)
+        {
+            var 基本信息 = await Db.GetModelByIdSpAsync<v_继教自测活动>(自测编号);
+            var 活动可参与人列表 = await Db.GetListSpAsync<v_继教活动可参与人, 继教活动可参与人Filter>(
+                new 继教活动可参与人Filter()
+                {
+                    活动编号 = 基本信息.活动编号
+                });
+            return new { 基本信息, 活动可参与人列表 };
+        }
+
+        /// <summary>
+        /// 考试编号 必须填,"分页获取某文件夹下的自测活动"中的"编号"就是考试编号/或者叫自测编号;
+        /// </summary>
+        /// <param name="paging"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        [HttpGet]
+        async public Task<object> 分页获取某自测活动内容参与情况(Paging paging, 继教理论考试参与情况Filter filter)
+        {
+            return await Db.GetPagingListSpAsync<v_继教理论考试参与情况, 继教理论考试参与情况Filter>(paging, filter);
+        }
+
+        [HttpPost]
+        async public Task 增改继教自测活动([FromBody]增改继教自测活动 data)
+        {
+            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+            {
+                var 活动 = new 继教活动()
+                {
+                    编号 = data.活动内容.活动编号,
+                    文件夹编号 = data.文件夹编号,
+                    建立人 = CurrentUser.编号,
+                    名称 = data.活动内容.名称,
+                    学分 = 0,
+                    必须按顺序学习 = true,
+                    //开始时间 = data.活动内容.开始时间,
+                    //结束时间 = data.活动内容.结束时间,
+                };
+
+                //活动 = await dbForTransaction.Merge(活动, transaction: transaction);
+                活动 = await 继教活动.增改继教活动(活动, dbForTransaction, transaction: transaction);
+                data.活动内容.活动编号 = 活动.编号;
+
+                await 继教理论考试.增改继教自测(data, dbForTransaction, transaction);
+            }
+
+            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+        }
+
+        [HttpPost]
+        async public Task 发布继教自测活动([FromBody]发布继教活动 data)
+        {
+            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+            {
+                await 继教活动.发布继教活动(data, dbForTransaction, transaction);
+            }
+
+            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+        }
+        #endregion
     }
 }

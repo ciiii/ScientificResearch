@@ -23,6 +23,13 @@ namespace ScientificResearch.Models
         public IEnumerable<增改继教考试批次> 增改继教考试批次 { get; set; }
     }
 
+    public class 增改继教自测
+    {
+        public 继教活动内容 活动内容 { get; set; }
+        public 继教理论考试 理论考试 { get; set; }
+        //public IEnumerable<增改继教考试批次> 增改继教考试批次 { get; set; }
+    }
+
     public class 增改继教操作考试
     {
         public 继教活动内容 活动内容 { get; set; }
@@ -161,6 +168,20 @@ namespace ScientificResearch.Models
 
                 await db.Merge(考试批次.编号, item.可参与人, transaction: transaction);
             }
+        }
+
+        async static public Task 增改继教自测(
+            增改继教自测 data,
+            IDbConnection db,
+            IDbTransaction transaction = null)
+        {
+           
+            data.活动内容.类型 = 活动内容类型.继教自测.ToString();
+            data.活动内容 = await 继教活动内容.增改继教活动内容(data.活动内容, db, transaction);
+                        
+            data.理论考试.编号 = data.活动内容.编号;
+            data.理论考试 = await db.Merge(data.理论考试, transaction: transaction);
+
         }
 
         async public static Task<string> 为特定批次生成一个新口令(int 批次编号, IDbConnection db,
@@ -617,6 +638,18 @@ namespace ScientificResearch.Models
     {
         public int 文件夹编号 { get; set; }
         public int 学分 { get; set; }
+        //public 继教活动内容 活动内容 { get; set; }
+        //public 继教理论考试 理论考试 { get; set; }
+        //public IEnumerable<增改继教考试批次> 增改继教考试批次 { get; set; }
+    }
+    #endregion
+
+    #region 继教自测 继教自测活动
+    public class 增改继教自测活动 : 增改继教自测
+    {
+        public int 文件夹编号 { get; set; }
+        //public int 学分 { get; set; }
+
         //public 继教活动内容 活动内容 { get; set; }
         //public 继教理论考试 理论考试 { get; set; }
         //public IEnumerable<增改继教考试批次> 增改继教考试批次 { get; set; }

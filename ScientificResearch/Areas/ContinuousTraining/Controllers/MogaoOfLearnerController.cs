@@ -71,12 +71,30 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
         }
 
         [HttpGet]
+        async public Task<object> 获取某自测活动内容详情以及自己的参与情况(int 活动内容编号)
+        {
+            return await Db.GetModelByIdSpAsync<v_tfn_继教某人可参与的自测>(
+                活动内容编号,
+                nameof(v_tfn_继教某人可参与的自测.考试编号),
+                tableName: $"tfn_继教某人可参与的自测('{CurrentUser.人员类型}',{CurrentUser.编号})");
+        }
+
+        [HttpGet]
         async public Task<object> 获取某操作考试活动内容详情以及自己的参与情况(int 活动内容编号)
         {
             return await Db.GetModelByIdSpAsync<v_tfn_继教某人可参与的操作考试>(
                 活动内容编号,
                 nameof(v_tfn_继教某人可参与的操作考试.考试编号),
                 tableName: $"tfn_继教某人可参与的操作考试('{CurrentUser.人员类型}',{CurrentUser.编号})");
+        }
+
+        [HttpGet]
+        async public Task<object> 获取某签到活动内容详情以及自己的参与情况(int 活动内容编号)
+        {
+            return await Db.GetModelByIdSpAsync<v_tfn_继教某人可参与的签到>(
+                活动内容编号,
+                nameof(v_tfn_继教某人可参与的签到.签到编号),
+                tableName: $"tfn_继教某人可参与的签到('{CurrentUser.人员类型}',{CurrentUser.编号})");
         }
 
         [HttpPost]

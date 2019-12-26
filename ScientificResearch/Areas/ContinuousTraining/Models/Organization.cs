@@ -47,6 +47,8 @@ namespace ScientificResearch.Models
 
         public int? 科室编号 { get; set; }
         public string Like职务名称 { get; set; }
+        public string WhereStrIn职务名称{ get; set; }
+
 
         //public string Like部门名称 { get; set; }
         /// <summary>

@@ -364,5 +364,172 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
                 filter,
                 $"tfn_继教某人可参与的操作考试('{CurrentUser.人员类型}',{CurrentUser.编号})");
         }
+
+        #region 自测
+        [HttpGet]
+        async public Task<object> 分页获取自己可参与的自测活动(Paging paging, 继教某人可参与的理论考试Filter filter)
+        {
+            filter.活动类型 = 继教文件夹类型.继教自测.ToString();
+            return await Db.GetPagingListSpAsync<v_tfn_继教某人可参与的自测, 继教某人可参与的理论考试Filter>(
+                paging,
+                filter,
+                $"tfn_继教某人可参与的自测('{CurrentUser.人员类型}',{CurrentUser.编号})");
+        }
+
+        [HttpGet]
+        async public Task<object> 分页获取自己在某自测的参与情况(Paging paging, int 考试编号)
+        {
+            return await Db.GetPagingListSpAsync<v_继教理论考试参与情况, 继教理论考试参与情况Filter>(paging,
+                new 继教理论考试参与情况Filter()
+                {
+                    考试编号 = 考试编号,
+                    参与人类型 = CurrentUser.人员类型,
+                    参与人编号 = CurrentUser.编号
+                });
+        }
+
+        /// <summary>
+        /// 需要进一步测试
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task 自测交卷([FromBody]自测交卷 data)
+        {
+
+            var 考试批次temp = await Db.Merge(new 继教考试批次()
+            {
+                编号 = 0,
+                考试编号 = data.考试编号,
+                考试开始时间 = data.答题开始时间,
+                考试结束时间 = data.答题结束时间,
+                人数上限 = 0,
+                排序值 = 0,
+                考试地点 = string.Empty,
+                口令 = null,
+                二维码 = null,
+                备注 = null
+            });
+            var 考试批次 = await Db.GetModelByIdSpAsync<v_继教理论考试批次>(考试批次temp.编号);
+
+            var 参与情况 = new 继教理论考试参与情况()
+            {
+                考试批次编号 = 考试批次.编号,
+                参与人类型 = CurrentUser.人员类型,
+                参与人编号 = CurrentUser.编号,
+                答题开始时间 = data.答题开始时间,
+                答题结束时间 = data.答题结束时间,
+                得分 = null
+            };
+
+            参与情况 = await Db.Merge(参与情况);
+
+            //var 该考试批次可参与人 = new 继教考试批次可参与人();
+
+            //19-10-21 如果某人没有被添加到可参与人,但是他有口令,则要把他放到可参与人里面去,方便他查看
+            var 该批次可参与人 = new 继教考试批次可参与人()
+            {
+                考试批次编号 = 考试批次.编号,
+                可参与人类型 = CurrentUser.人员类型,
+                可参与人编号 = CurrentUser.编号
+            };
+            await Db.ExecuteSpAsync(new sp_继教考试批次可参与人_普通增改()
+            {
+                tt = 该批次可参与人.ToDataTable()
+            });
+
+            var 该活动可参与人 = new 继教活动可参与人()
+            {
+                活动编号 = 考试批次.活动编号,
+                可参与人类型 = CurrentUser.人员类型,
+                可参与人编号 = CurrentUser.编号
+            };
+            await Db.ExecuteSpAsync(new sp_继教活动可参与人_普通增改()
+            {
+                tt = 该活动可参与人.ToDataTable()
+            });
+           
+            var 正确答案 = await Db.GetListSpAsync<v_继教试卷中试题正确答案, 继教试卷中试题正确答案Filter>(
+                new 继教试卷中试题正确答案Filter()
+                {
+                    试卷编号 = 考试批次.试卷编号
+                });
+
+            var 正确答案拼串字典 = 正确答案.GroupBy(i => i.试题编号)
+                                    .ToDictionary(
+                                        i => i.Key,
+                                        j => string.Join("",
+                                            j.Select(h => h.正确答案编码)));
+
+            //根据正确答案 和 data 生成每道题的 "继教理论考试答题情况" 和 其下的多个"继教理论考试答题答案"
+            var 将提交的继教理论考试答题情况列表 = new List<继教理论考试答题情况>();
+            foreach (var item in data.答题情况)
+            {
+                var 是否正确 = 正确答案拼串字典[item.试题编号] == string.Join("", item.答案编码);
+
+                var 将提交的继教理论考试答题情况 = new 继教理论考试答题情况()
+                {
+                    编号 = 0,
+                    理论考试参与情况编号 = 参与情况.编号,
+                    试题编号 = item.试题编号,
+                    答题时间 = item.答题时间,
+                    显示排序值 = item.显示排序值,
+
+                    是否正确 = 是否正确,
+                    得分 = 是否正确 == true ? item.分值 : 0,
+
+                    纠错 = null,
+                    备注 = null
+                };
+
+                将提交的继教理论考试答题情况列表.Add(将提交的继教理论考试答题情况);
+            }
+
+            var 将提交的继教理论考试答题答案列表 = new List<继教理论考试答题答案>();
+
+            async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
+            {
+
+                //保存"继教理论考试答题情况" 和 其下的多个"继教理论考试答题答案"
+                var 保存的继教理论考试答题情况列表 = await dbForTransaction.Merge
+                    (将提交的继教理论考试答题情况列表.AsEnumerable(), transaction);
+                //需要取得本次新增时,每个试题对应的"继教理论考试答题情况的自增id"
+                var 保存的继教理论考试答题情况字典 = 保存的继教理论考试答题情况列表.ToDictionary(i => i.试题编号, j => j.编号);
+                foreach (var i in data.答题情况)
+                {
+                    foreach (var j in i.答案编码)
+                    {
+                        var 将提交的继教理论考试答题答案 = new 继教理论考试答题答案()
+                        {
+                            理论考试答题情况编号 = 保存的继教理论考试答题情况字典[i.试题编号],
+                            答题答案编码 = j
+                        };
+
+                        将提交的继教理论考试答题答案列表.Add(将提交的继教理论考试答题答案);
+                    }
+                }
+                await dbForTransaction.Merge(将提交的继教理论考试答题答案列表.AsEnumerable(), transaction);
+
+                //更新一下"继教理论考试参与情况"中的结束时间和得分
+                参与情况.答题结束时间 = data.答题结束时间;
+                参与情况.得分 = 将提交的继教理论考试答题情况列表.Sum(i => i.得分);
+                await dbForTransaction.Merge(参与情况, transaction);
+            }
+
+            await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+        }
+
+        [HttpGet]
+        async public Task<object> 获取自测答题情况(int 考试批次编号)
+        {
+            return await 获取某人答题情况(考试批次编号, CurrentUser.人员类型, CurrentUser.编号);
+        }
+
+        [HttpGet]
+        async public Task<object> 获取某人的自测答题情况(int 考试批次编号, string 人员类型, int 人员编号)
+        {
+            return await 获取某人答题情况(考试批次编号, 人员类型, 人员编号);
+        }
+        #endregion
     }
 }

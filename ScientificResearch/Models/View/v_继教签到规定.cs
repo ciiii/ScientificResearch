@@ -5,17 +5,13 @@ using System.ComponentModel;
 namespace ScientificResearch.Models
 {
     /// <summary>
-    /// v_继教活动内容[类]
+    /// v_继教签到规定[类]
     /// </summary>
     [Serializable]
-	public partial class v_继教活动内容 
+	public partial class v_继教签到规定 
 	{       
               
         #region 属性
-        /// <summary>
-		/// 
-		/// </summary>
-        public int 编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
@@ -23,7 +19,11 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        public string 类型 { get; set; }
+        public int 编号 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int 签到编号 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
@@ -31,31 +31,19 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        public int 排序值 { get; set; }
+        public DateTime 签到开始时间 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public DateTime 开始时间 { get; set; }
+        public DateTime 签到结束时间 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public DateTime 结束时间 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public string 地点 { get; set; }
+        public int 二维码变化秒数 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
         public string 备注 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public int? 参与人次 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public int? 通过人数 { get; set; }
         
           
         #endregion

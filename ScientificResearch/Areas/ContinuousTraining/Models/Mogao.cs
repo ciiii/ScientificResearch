@@ -108,7 +108,7 @@ namespace ScientificResearch.Models
             var 基本信息 = await db.GetModelByIdSpAsync<v_继教慕课>(活动内容编号, transaction: transaction);
 
             //v_继教慕课 的 慕课素材路径,是在这里计算出来的;
-            基本信息.慕课素材路径 = MyQiniu.GetPrivateUrl(accessKey, secretKey, domain, 基本信息.慕课素材名称);
+            基本信息.慕课素材路径 = MyQiniu.GetPrivateUrl(accessKey, secretKey, domain, 基本信息.慕课素材路径);
 
             var 参与情况 = await db.GetListSpAsync<v_继教慕课参与情况, 继教慕课参与情况Filter>(
                 new 继教慕课参与情况Filter()
@@ -224,6 +224,7 @@ namespace ScientificResearch.Models
         public int? 考试批次编号 { get; set; }
         public string 参与人类型 { get; set; }
         public int? 参与人编号 { get; set; }
+        public string Like参与人称谓 { get; set; }
     }
 
     public class 继教操作考试参与情况Filter

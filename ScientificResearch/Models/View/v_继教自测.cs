@@ -5,10 +5,10 @@ using System.ComponentModel;
 namespace ScientificResearch.Models
 {
     /// <summary>
-    /// v_继教活动内容[类]
+    /// v_继教自测[类]
     /// </summary>
     [Serializable]
-	public partial class v_继教活动内容 
+	public partial class v_继教自测 
 	{       
               
         #region 属性
@@ -51,11 +51,39 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
-        public int? 参与人次 { get; set; }
+        public bool 是否允许任何人参与 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public int? 通过人数 { get; set; }
+        public int 试卷编号 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public string 试卷名称 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int 时长 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int 及格分数 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public bool 是否试题乱序 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public bool 是否允许考生查看成绩 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public bool 是否允许考生查看答案 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int? 自测人次 { get; set; }
         
           
         #endregion

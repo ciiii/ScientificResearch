@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using MyLib;
 
 namespace ScientificResearch.Models
 {
@@ -34,17 +35,83 @@ namespace ScientificResearch.Models
     {
         async static public Task<object> 获取某签到活动详情(int 活动内容编号, IDbConnection db, IDbTransaction transaction = null)
         {
-            return await 获取某签到活动或活动内容详情<v_继教签到活动>(活动内容编号, db, transaction);
+            //return await 获取某签到活动或活动内容详情<v_继教签到活动>(活动内容编号, db, transaction);
+
+            var 基本信息 = await db.GetModelByIdSpAsync<v_继教签到活动>(活动内容编号, transaction: transaction);
+
+            var 活动可参与人列表 = await db.GetListSpAsync<v_继教活动可参与人, 继教活动可参与人Filter>(
+                new 继教活动可参与人Filter()
+                {
+                    活动编号 = 基本信息.活动编号
+                }, transaction: transaction);
+
+            var 签到规定 = await db.GetListSpAsync<继教签到规定, 继教签到规定Filter>(new 继教签到规定Filter()
+            {
+                签到编号 = 活动内容编号
+            },orderType:true, transaction: transaction);
+
+            var 参与情况 = await db.GetListSpAsync<v_tfn_继教签到参与情况, 继教签到参与情况Filter>(
+                new 继教签到参与情况Filter()
+                {
+                    签到编号 = 活动内容编号
+                },
+                tbName: $"tfn_继教签到参与情况({活动内容编号})",
+                transaction: transaction);
+            return new
+            {
+                基本信息,
+                活动可参与人列表,
+                签到规定,
+                参与情况
+            };
+
         }
 
         async static public Task<object> 获取某签到活动内容详情(int 活动内容编号, IDbConnection db, IDbTransaction transaction = null)
         {
-            return await 获取某签到活动或活动内容详情<v_继教签到>(活动内容编号, db, transaction);
+            //return await 获取某签到活动或活动内容详情<v_继教签到>(活动内容编号, db, transaction);
+
+            var 基本信息 = await db.GetModelByIdSpAsync<v_继教签到>(活动内容编号, transaction: transaction);
+
+            var 活动可参与人列表 = await db.GetListSpAsync<v_继教活动可参与人, 继教活动可参与人Filter>(
+                new 继教活动可参与人Filter()
+                {
+                    活动编号 = 基本信息.活动编号
+                }, transaction: transaction);
+
+            var 签到规定 = await db.GetListSpAsync<继教签到规定, 继教签到规定Filter>(new 继教签到规定Filter()
+            {
+                签到编号 = 活动内容编号
+            }, transaction: transaction);
+
+            var 参与情况 = await db.GetListSpAsync<v_tfn_继教签到参与情况, 继教签到参与情况Filter>(
+                new 继教签到参与情况Filter()
+                {
+                    签到编号 = 活动内容编号
+                },
+                tbName: $"tfn_继教签到参与情况({活动内容编号})",
+                transaction: transaction);
+            return new
+            {
+                基本信息,
+                活动可参与人列表,
+                签到规定,
+                参与情况
+            };
         }
 
+        //2019-12-3 本来用的是这个方法。改成了上面两个自己调，自己去找"活动可参与人列表"
         private static async Task<object> 获取某签到活动或活动内容详情<T>(int 活动内容编号, IDbConnection db, IDbTransaction transaction)
         {
             var 基本信息 = await db.GetModelByIdSpAsync<T>(活动内容编号, transaction: transaction);
+
+            
+            //var 活动可参与人列表 = await db.GetListSpAsync<v_继教活动可参与人, 继教活动可参与人Filter>(
+            //    new 继教活动可参与人Filter()
+            //    {
+            //        活动编号 = 基本信息.GetValueByPropertyName(v_继教活动可参与人.)
+            //    }, transaction: transaction);
+
             var 签到规定 = await db.GetListSpAsync<继教签到规定, 继教签到规定Filter>(new 继教签到规定Filter()
             {
                 签到编号 = 活动内容编号

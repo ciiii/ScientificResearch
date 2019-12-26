@@ -67,4 +67,13 @@ namespace ScientificResearch.Models
     {
         //public string 口令 { get; set; }
     }
+
+    public class 自测交卷
+    {
+        public int 考试编号 { get; set; }
+        public DateTime 答题开始时间 { get; set; }
+        public DateTime 答题结束时间 { get; set; }
+        public IEnumerable<交卷答题情况> 答题情况 { get; set; }
+
+    }
 }
