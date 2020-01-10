@@ -113,5 +113,22 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
         {
             return await Db.Merge(data.Id, data.List);
         }
+
+        [HttpGet]
+        async public Task<object> 获取继教微信端人员的权限()
+        {
+            //如果不是"人员"类型,那么久没有"自定义的微信端的权限".当然固定的那几个还是有的;
+            if(CurrentUser.人员类型 != nameof(人员))
+            {
+                return null;
+            };
+
+            var filter = new 继教微信端人员权限Filter()
+            {
+                人员编号 = CurrentUser.编号
+            };
+
+            return await Db.GetListSpAsync<v_继教人员微信的权限, 继教微信端人员权限Filter>(filter);
+        }
     }
 }

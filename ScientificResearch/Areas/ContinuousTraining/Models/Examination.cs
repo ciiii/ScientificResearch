@@ -655,4 +655,35 @@ namespace ScientificResearch.Models
         //public IEnumerable<增改继教考试批次> 增改继教考试批次 { get; set; }
     }
     #endregion
+
+    #region 统计
+    public class 分数段
+    {
+        public decimal 起始分数 { get; set; }
+        public decimal 结束分数 { get; set; }
+    }
+
+    public class 分数段以及理论考试编号
+    {
+        public int 理论考试编号 { get; set; }
+        public IEnumerable<分数段> 分数段列表 { get; set; }
+    }
+
+    public class 分数段统计:分数段
+    {
+        public int 人数 { get; set; }
+    }
+
+    public class 分数段以及操作考试编号
+    {
+        public int 操作考试编号 { get; set; }
+        public IEnumerable<分数段> 分数段列表 { get; set; }
+    }
+
+    public class 某次考试某试题答题统计
+    {
+        public string 答题答案编码 { get; set; }
+        public int 选择该答案次数 { get; set; }
+    }
+    #endregion
 }

@@ -107,7 +107,7 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
         /// <param name="filter"></param>
         /// <returns></returns>
         [HttpGet]
-        async public Task<object> 分页获取某自测活动内容参与情况(Paging paging , 继教理论考试参与情况Filter filter)
+        async public Task<object> 分页获取某自测活动内容参与情况(Paging paging, 继教理论考试参与情况Filter filter)
         {
             return await Db.GetPagingListSpAsync<v_继教理论考试参与情况, 继教理论考试参与情况Filter>(paging, filter);
         }
@@ -305,7 +305,7 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
                 item.路径 = MyQiniu.GetPrivateUrl(
                     Config.GetValue<string>("七牛:AccessKey"),
                 Config.GetValue<string>("七牛:SecretKey"),
-                Config.GetValue<string>("七牛:Domain"), item.路径);  
+                Config.GetValue<string>("七牛:Domain"), item.路径);
             }
 
             return result;
@@ -341,12 +341,23 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
                     WhereIn编号 = 编号列表.ToStringIdWithSpacer()
                 });
 
-            if(要删除的素材视图.Any(i=>i.是否被引用 == true))
+            if (要删除的素材视图.Any(i => i.是否被引用 == true))
             {
                 throw new Exception("被引用的素材不能被删除");
             }
 
             await Db.Delete<继教慕课素材>(编号列表);
+        }
+        #endregion
+
+        #region 活动层面的统计,相对于512的"活动统计"
+        [HttpGet]
+        async public Task<object> 分页获取某活动的通过情况统计(Paging paging, int 活动编号)
+        {
+            return await Db.GetPagingListSpAsync<v_tfn_继教某活动的通过情况统计>(
+                paging,
+                $"tfn_继教某活动的通过情况统计({活动编号})"
+                );
         }
         #endregion
     }

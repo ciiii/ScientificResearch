@@ -184,12 +184,12 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
             var 试题备选答案列表 = await Db.GetListSpAsync<继教试题备选答案, 继教试题备选答案Filter>(new 继教试题备选答案Filter()
             {
                 WhereIn试题编号 = 试题编号字串
-            });
+            }, orderStr: nameof(继教试题备选答案.备选答案编码), orderType: true);
 
             var 试题正确答案列表 = await Db.GetListSpAsync<继教试题正确答案, 继教试题正确答案Filter>(new 继教试题正确答案Filter()
             {
                 WhereIn试题编号 = 试题编号字串
-            });
+            }, orderStr: nameof(继教试题正确答案.正确答案编码), orderType: true);
 
             return new
             {
@@ -548,7 +548,7 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
             var 操作考试活动列表 = await Db.GetPagingListSpAsync<v_继教操作考试活动, 继教操作考试Filter>(
                 paging,
                 filter,
-                tbName:$"tfn_继教某助教可打分的操作考试({CurrentUser.编号})",
+                tbName: $"tfn_继教某助教可打分的操作考试({CurrentUser.编号})",
                 orderStr: nameof(v_继教操作考试活动.编号));
             var 考试批次列表 = await Db.GetListSpAsync<继教考试批次, 继教考试批次Filter>(new 继教考试批次Filter()
             {
@@ -772,6 +772,112 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
             }
 
             await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+        }
+        #endregion
+
+        #region 统计
+        /// <summary>
+        /// 需要注意的是,区间一般都是左开右闭型的,除了起始数值为0的区间为左闭右闭类型
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="理论考试编号"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task<object> 获取某理论考试成绩分析([FromBody]分数段以及理论考试编号 data)
+        {
+            var 理论考试参与情况 = await Db.GetListSpAsync<v_继教理论考试参与情况, 继教理论考试参与情况Filter>(
+                 new 继教理论考试参与情况Filter()
+                 {
+                     考试编号 = data.理论考试编号
+                 });
+
+            var 统计结果 = new List<分数段统计>();
+
+            foreach (var item in data.分数段列表)
+            {
+                var 该分段统计结果 = new 分数段统计()
+                {
+                    起始分数 = item.起始分数,
+                    结束分数 = item.结束分数,
+                    人数 = 理论考试参与情况.Count(i => i.得分 > item.起始分数 && i.得分 <= item.结束分数 || (item.起始分数 == 0 && i.得分 == 0))
+                };
+                统计结果.Add(该分段统计结果);
+            }
+
+            return 统计结果;
+        }
+
+        [HttpGet]
+        async public Task<object> 分页获取某理论考试错题分析(Paging paging, int 理论考试编号)
+        {
+            return await Db.GetPagingListSpAsync<object>(paging, $"tfn_继教某次考试试题正确率统计({理论考试编号})");
+        }
+
+        [HttpGet]
+        async public Task<object> 获取某次理论考试某试题答题统计(int 理论考试编号, int 试题编号)
+        {
+            var 备选答案 = await Db.GetListSpAsync<继教试题备选答案, 继教试题备选答案Filter>(
+                new 继教试题备选答案Filter()
+                {
+                    试题编号 = 试题编号
+                });
+
+            var 正确答案 = await Db.GetListSpAsync<继教试题正确答案, 继教试题正确答案Filter>(
+                new 继教试题正确答案Filter()
+                {
+                    试题编号 = 试题编号
+                });
+
+            var 本次考试该试题的答案统计 =
+                await Db.GetListSpAsync<某次考试某试题答题统计>($"tfn_继教某次考试某试题答题统计({理论考试编号},{试题编号})");
+
+            return new
+            {
+                备选答案以及选择次数 = from item in 备选答案
+                             select new
+                             {
+                                 备选答案 = item,
+                                 选择次数 = (from item2 in 本次考试该试题的答案统计 where item2.答题答案编码 == item.备选答案编码 select item2.选择该答案次数).FirstOrDefault()
+
+                             },
+                正确答案
+            };
+        }
+
+        /// <summary>
+        /// 需要注意的是,区间一般都是左开右闭型的,除了起始数值为0的区间为左闭右闭类型
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task<object> 获取某操作考试成绩分析([FromBody]分数段以及操作考试编号 data)
+        {
+            var 操作考试参与情况 = await Db.GetListSpAsync<v_继教操作考试参与情况, 继教操作考试参与情况Filter>(
+                 new 继教操作考试参与情况Filter()
+                 {
+                     考试编号 = data.操作考试编号
+                 });
+
+            var 统计结果 = new List<分数段统计>();
+
+            foreach (var item in data.分数段列表)
+            {
+                var 该分段统计结果 = new 分数段统计()
+                {
+                    起始分数 = item.起始分数,
+                    结束分数 = item.结束分数,
+                    人数 = 操作考试参与情况.Count(i => i.得分 > item.起始分数 && i.得分 <= item.结束分数 || (item.起始分数 == 0 && i.得分 == 0))
+                };
+                统计结果.Add(该分段统计结果);
+            }
+
+            return 统计结果;
+        }
+
+        [HttpGet]
+        async public Task<object> 分页获取某操作考试某评分表打分统计(int 操作考试编号,int 评分表编号)
+        {
+            return await Db.GetListSpAsync<object>($"tfn_继教某次考试评分表正确率统计({操作考试编号},{评分表编号})");
         }
         #endregion
     }

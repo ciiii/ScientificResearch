@@ -164,6 +164,21 @@
             <param name="filter"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.ExaminationController.获取某理论考试成绩分析(ScientificResearch.Models.分数段以及理论考试编号)">
+            <summary>
+            需要注意的是,区间一般都是左开右闭型的,除了起始数值为0的区间为左闭右闭类型
+            </summary>
+            <param name="data"></param>
+            <param name="理论考试编号"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.ExaminationController.获取某操作考试成绩分析(ScientificResearch.Models.分数段以及操作考试编号)">
+            <summary>
+            需要注意的是,区间一般都是左开右闭型的,除了起始数值为0的区间为左闭右闭类型
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
         <member name="T:ScientificResearch.Areas.ContinuousTraining.Controllers.ExaminationOfLearnerController">
             <summary>
             针对移动端的理论考试活动
@@ -24352,6 +24367,41 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.v_tfn_继教某活动的通过情况统计">
+            <summary>
+            v_tfn_继教某活动的通过情况统计[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某活动的通过情况统计.参与人类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某活动的通过情况统计.参与人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某活动的通过情况统计.参与人称谓">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某活动的通过情况统计.活动内容数量">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某活动的通过情况统计.参与活动内容次数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某活动的通过情况统计.通过活动内容次数">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v_tfn_继教签到参与情况">
             <summary>
             v_tfn_继教签到参与情况[类]
@@ -30688,6 +30738,76 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_继教试题.被引次数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_继教试题_统计">
+            <summary>
+            v_继教试题_统计[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试题_统计.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试题_统计.文件夹编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试题_统计.类型编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试题_统计.类型名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试题_统计.题干">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试题_统计.题目解析">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试题_统计.难易度">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试题_统计.建立时间">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试题_统计.备注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试题_统计.答题次数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试题_统计.正确答题次数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试题_统计.答题正确率">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教试题_统计.被引次数">
             <summary>
             
             </summary>
