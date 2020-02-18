@@ -49,7 +49,7 @@ namespace MyLib
             //}
         }
 
-        async public static Task<string> GetAccessToken(string appId,string appSecret)
+        async public static Task<string> GetAccessToken(string appId, string appSecret)
         {
             var url = $"https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={appId}&secret={appSecret}";
             var result = await MyHttpLib.MyGetAsync<MyWxGetAccessTokenReturn>(url);
@@ -57,7 +57,7 @@ namespace MyLib
 
         }
 
-        async public static Task<MyWxTemplateResult> SentMessage(string appId, string appSecret,MyWxTemplate template)
+        async public static Task<MyWxTemplateResult> SentMessage(string appId, string appSecret, MyWxTemplate template)
         {
             var access_token = await GetAccessToken(appId, appSecret);
             string url = $"https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={access_token}";
@@ -67,7 +67,7 @@ namespace MyLib
 
 
         #region wxjsapi临时票据,需要进一步整理
-        async public static Task<object> GetWxTickect(string appId, string appSecret,string url)
+        async public static Task<object> GetWxTickect(string appId, string appSecret, string url)
         {
             var access_token = await GetAccessToken(appId, appSecret);
             var tickect = await GetTickect(access_token);
@@ -192,12 +192,50 @@ namespace MyLib
         }
 
         #endregion
+
+
+        public static void 群发模板消息(
+            string appId,
+            string appSecret,
+            List<string> toUserList,
+            string url,
+            string template_id,
+            MyWxData wxData)
+        {
+            foreach (var item in toUserList)
+            {
+                var myMessage = new MyWxTemplate()
+                {
+                    //oMv5Pw5WzNf-GipqdDuyFjk3syTI 阿彪的测试号的openid
+                    //oMv5PwzbAb_RrhTwUa7nfW--gYFs 我的测试号的
+                    //我的正式号的o0E1B1SWkxRc98BzP1TvSQE3L1y4
+                    //这个只能循环发送????不能群发?
+                    touser = item,
+                    url = url,
+                    template_id = template_id,
+                    //data = new MyWxData()
+                    //{
+                    //    first = new MyWxFirst() { value = "您好，您有新的待参与的项目！" },
+                    //    keyword1 = new MyWxKeynote() { value = "新型冠状病毒肺炎防治统一考试", color = "red" },
+                    //    keyword2 = new MyWxKeynote() { value = "2020-02-04 10:35" },
+                    //    keyword3 = new MyWxKeynote() { value = "2020-02-04 12:15" },
+                    //    keyword4 = new MyWxKeynote() { value = "电教室202" },
+                    //    keyword5 = new MyWxKeynote() { value = "测试部门" },
+                    //    remark = new MyWxRemark() { value = "请准时参与！" }
+                    //}
+                    data = wxData
+
+                };
+
+                MyLib.MyWx.SentMessage(appId, appSecret, myMessage);
+            }
+        }
     }
 
 
     public class MyWxGetAccessTokenReturn
     {
-        public string access_token  { get; set; }
+        public string access_token { get; set; }
         public int expires_in { get; set; }
     }
     /// <summary>
@@ -269,18 +307,19 @@ namespace MyLib
         public MyWxKeynote keyword2 { get; set; }
         public MyWxKeynote keyword3 { get; set; }
         public MyWxKeynote keyword4 { get; set; }
+        public MyWxKeynote keyword5 { get; set; }
         public MyWxRemark remark { get; set; }
     }
 
     /// <summary>
     /// 头部消息
     /// </summary>
-    public class MyWxFirst:MyWxRemark    {    }
+    public class MyWxFirst : MyWxRemark { }
 
     /// <summary>
     /// 内容消息
     /// </summary>
-    public class MyWxKeynote:MyWxRemark    {    }
+    public class MyWxKeynote : MyWxRemark { }
 
     public class MyWxRemark
     {
@@ -292,7 +331,7 @@ namespace MyLib
     {
         public string msgid { get; set; }
         public string errcode { get; set; }
-        public string  errmsg { get; set; }
+        public string errmsg { get; set; }
     }
 
 
@@ -304,5 +343,7 @@ namespace MyLib
         public string ticket { get; set; }
         public int expires_in { get; set; }
     }
+
+
 
 }

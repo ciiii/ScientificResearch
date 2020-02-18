@@ -41,7 +41,33 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
 
             var result = await Db.GetPagingListSpAsync<v_继教试题, 继教试题Filter>(paging, filter, orderStr: "NEWID()");
 
-            return result.list.Select(i => i.编号);
+            return result.list.Select(i => new 继教随机试题返回() {编号 = i.编号 ,题干 = i.题干});
+        }
+
+        /// <summary>
+        /// 和"随机获取试题"类似,但是必须指定"试卷编号"或者"试卷结构编号"之一
+        /// </summary>
+        /// <param name="数量"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        [HttpGet]
+        async public Task<object> 随机获取试卷试题(int 数量, 继教试卷试题Filter filter)
+        {
+            if (filter.试卷结构编号 == null && filter.试卷编号 == null)
+            {
+                throw new Exception("请提供试卷编号或者试卷结构编号");
+            }
+
+            if (数量 > Config.GetValue<int>("随机选择试题最大数量"))
+            {
+                throw new Exception($"随机选择试题最大数量不要超过{Config.GetValue<int>("随机选择试题最大数量")}");
+            }
+
+            var paging = new Paging() { Index = 1, Size = 数量 };
+
+            var result = await Db.GetPagingListSpAsync<v_继教试卷试题, 继教试卷试题Filter>(paging, filter, orderStr: "NEWID()");
+
+            return result.list.Select(i => new 继教随机试题返回() { 编号 = i.编号, 题干 = i.题干 });
         }
 
         /// <summary>
@@ -101,6 +127,28 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
             }
 
             await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
+        }
+
+        /// <summary>
+        /// 前后台都需要判断"是否引用"字段大于0则不能删除;
+        /// </summary>
+        /// <param name="编号列表"></param>
+        /// <returns></returns>
+        [HttpPost]
+        async public Task 删除试题([FromBody]IEnumerable<int> 编号列表)
+        {
+            var 被引用过的待删除试题列表 = await Db.GetListSpAsync<v_继教试题, 继教试题Filter>(new 继教试题Filter()
+            {
+                WhereIn编号 = 编号列表.ToStringIdWithSpacer(),
+                Begin被引次数 = 1
+            });
+
+            if (被引用过的待删除试题列表.Count() > 0)
+            {
+                throw new Exception("待删除的试题中,有已经被使用的试题,删除失败");
+            }
+
+            await Db.Delete<继教试题>(编号列表);
         }
 
         [HttpPost]
@@ -173,6 +221,11 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
         [HttpGet]
         async public Task<object> 分页获取试卷试题(Paging paging, 继教试卷试题Filter filter)
         {
+            if(filter.试卷结构编号 == null && filter.试卷编号 == null)
+            {
+                throw new Exception("请提供试卷编号或者试卷结构编号");
+            }
+
             var result = await Db.GetPagingListSpAsync<v_继教试卷试题, 继教试卷试题Filter>(paging, filter);
             var 试题编号字串 = result.list.Select(i => i.编号).ToStringIdWithSpacer();
 
@@ -201,7 +254,6 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
                            标签列表 = from item1 in 试题标签列表 where item1.试题编号 == item.编号 select item1,
                            备选答案列表 = from item2 in 试题备选答案列表 where item2.试题编号 == item.编号 select item2,
                            正确答案列表 = from item3 in 试题正确答案列表 where item3.试题编号 == item.编号 select item3
-
                        }
             };
         }

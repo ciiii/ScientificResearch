@@ -539,28 +539,64 @@ namespace ScientificResearch.Controllers
         }
 
         [HttpPost]
-        async public Task<object> 测试发送微信模板消息([FromBody]MyWxTemplate myData)
+        async public Task<object> 测试发送微信模板消息()
         {
             var appId = Config.GetValue<string>(Env.IsDevelopment() == true ? "WechatSetting:TestappId" : "WechatSetting:appId");
             var appSecret = Config.GetValue<string>(Env.IsDevelopment() == true ? "WechatSetting:TestappSecret" : "WechatSetting:appSecret");
 
             var myMessage = new MyWxTemplate()
             {
-                touser = "o67SQ1t_HcG8izl34cNWjfvWVJMQ",
+                //oMv5Pw5WzNf-GipqdDuyFjk3syTI 阿彪的测试号的openid
+                //oMv5PwzbAb_RrhTwUa7nfW--gYFs 我的测试号的
+                //这个只能循环发送????不能群发?
+                touser = "oMv5Pw5WzNf-GipqdDuyFjk3syTI",
                 url = "www.baidu.com",
-                template_id = "WmBf7XFKUDLuq09KliZa0FPayzLUNQT0DNhZqeBPluI",
+                template_id = "LdDZqRLQQevoe0v8d9ZYd3IHqD2U4NQK7bTuaqbl6Ok",
                 data = new MyWxData()
                 {
-                    first = new MyWxFirst() { value = "小贾同志" },
-                    keyword1 = new MyWxKeynote() { value = "你的模板消息", color = "red" },
-                    keyword2 = new MyWxKeynote() { value = "老子" },
-                    keyword3 = new MyWxKeynote() { value = "给你搞定了" },
-                    keyword4 = new MyWxKeynote() { value = "你要请我吃饭" },
-                    remark = new MyWxRemark() { value = "哈哈哈哈" }
+                    first = new MyWxFirst() { value = "您好，您有新的待参与的项目！" },
+                    keyword1 = new MyWxKeynote() { value = "新型冠状病毒肺炎防治统一考试", color = "red" },
+                    keyword2 = new MyWxKeynote() { value = "2020-02-04 10:35" },
+                    keyword3 = new MyWxKeynote() { value = "2020-02-04 12:15" },
+                    keyword4 = new MyWxKeynote() { value = "电教室202" },
+                    keyword5 = new MyWxKeynote() { value = "测试部门" },
+                    remark = new MyWxRemark() { value = "请准时参与！" }
+                }
+                
+            };
+
+            return MyLib.MyWx.SentMessage(appId, appSecret, myMessage);
+        }
+
+        [HttpPost]
+        async public Task<object> 测试发送正式号的微信模板消息()
+        {
+            var appId = Config.GetValue<string>("WechatSetting:appId");
+            var appSecret = Config.GetValue<string>("WechatSetting:appSecret");
+
+            var myMessage = new MyWxTemplate()
+            {
+                //我在正式号的openid:o0E1B1SWkxRc98BzP1TvSQE3L1y4
+                //阿彪在正式号的openid:o0E1B1a82dd5ByiPixO-DhoM_p7U
+                //杨老师的o0E1B1YUPAt1ZiIWG3zquRkyHrNs
+                touser = "o0E1B1a82dd5ByiPixO-DhoM_p7U",
+                url = "www.baidu.com",
+                //这个模板消息是用的别人的一个模板消息.
+                template_id = "NP2FW-tYrE9_v9vOuplFwCMoi1InEc2kyT8MXi4TdrU",
+                data = new MyWxData()
+                {
+                    first = new MyWxFirst() { value = "您有新的待参与的项目!" },
+                    keyword1 = new MyWxKeynote() { value = "新型冠状病毒肺炎防治统一考试", color = "red" },
+                    keyword2 = new MyWxKeynote() { value = "2020-02-04 10:35" },
+                    keyword3 = new MyWxKeynote() { value = "2020-02-04 12:15" },
+                    keyword4 = new MyWxKeynote() { value = "电教室202" },
+                    keyword5 = new MyWxKeynote() { value = "测试部门" },
+                    remark = new MyWxRemark() { value = "请准时参与！" }
                 }
             };
 
-            return MyLib.MyWx.SentMessage(appId, appSecret, myData);
+            var result=await  MyLib.MyWx.SentMessage(appId, appSecret, myMessage);
+            return result;
         }
 
         public class 测试时间传入model

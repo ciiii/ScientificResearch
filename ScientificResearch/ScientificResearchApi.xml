@@ -69,6 +69,14 @@
             <param name="filter"></param>
             <returns></returns>
         </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.ExaminationController.随机获取试卷试题(System.Int32,ScientificResearch.Models.继教试卷试题Filter)">
+            <summary>
+            和"随机获取试题"类似,但是必须指定"试卷编号"或者"试卷结构编号"之一
+            </summary>
+            <param name="数量"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
         <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.ExaminationController.分页获取试题(ScientificResearch.Models.Paging,ScientificResearch.Models.继教试题Filter)">
             <summary>
             如果是随机选择,那么Paging中的Size也就是随机选择的数量,随机选择试题最大数量不要超过100
@@ -77,6 +85,13 @@
             <param name="paging"></param>
             <param name="filter"></param>
             <param name="是否随机选择"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.ExaminationController.删除试题(System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            前后台都需要判断"是否引用"字段大于0则不能删除;
+            </summary>
+            <param name="编号列表"></param>
             <returns></returns>
         </member>
         <member name="M:ScientificResearch.Areas.ContinuousTraining.Controllers.ExaminationController.分页获取试卷试题(ScientificResearch.Models.Paging,ScientificResearch.Models.继教试卷试题Filter)">

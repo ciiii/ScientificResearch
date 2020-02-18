@@ -445,6 +445,12 @@ namespace ScientificResearch.Models
         }
     }
 
+    public class 继教随机试题返回
+    {
+        public int 编号 { get; set; }
+        public string 题干 { get; set; }
+    }
+
     public class 继教试题Filter
     {
         /// <summary>
@@ -462,6 +468,8 @@ namespace ScientificResearch.Models
         public int? End正确答题次数 { get; set; }
         public int? Begin答题正确率 { get; set; }
         public int? End答题正确率 { get; set; }
+        public int? Begin被引次数 { get; set; }
+
     }
 
     public class 继教试题标签Filter
@@ -549,7 +557,7 @@ namespace ScientificResearch.Models
     public class 继教试卷试题Filter : 继教试题Filter
     {
         public int? 试卷编号 { get; set; }
-        [Required(ErrorMessage = "请提供试卷结构编号")]
+        //[Required(ErrorMessage = "请提供试卷结构编号")]
         public int? 试卷结构编号 { get; set; }
     }
 
