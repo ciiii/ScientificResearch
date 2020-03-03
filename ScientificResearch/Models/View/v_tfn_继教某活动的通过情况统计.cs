@@ -27,15 +27,19 @@ namespace ScientificResearch.Models
         /// <summary>
 		/// 
 		/// </summary>
+        public int 参与活动内容次数 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
+        public int 通过活动内容次数 { get; set; }
+        /// <summary>
+		/// 
+		/// </summary>
         public int? 活动内容数量 { get; set; }
         /// <summary>
 		/// 
 		/// </summary>
-        public int? 参与活动内容次数 { get; set; }
-        /// <summary>
-		/// 
-		/// </summary>
-        public int? 通过活动内容次数 { get; set; }
+        public bool? 是否完成 { get; set; }
         
           
         #endregion

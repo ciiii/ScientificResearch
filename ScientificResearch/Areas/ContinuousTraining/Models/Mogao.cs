@@ -244,4 +244,12 @@ namespace ScientificResearch.Models
 
         public string Like名称 { get; set; }
     }
+
+    public class 某活动的通过情况统计Filter
+    {
+        public string Like参与人称谓 { get; set; }
+        public bool? 是否完成 { get; set; }
+        public int? Begin通过活动内容次数 { get; set; }
+
+    }
 }

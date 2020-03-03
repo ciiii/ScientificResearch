@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -168,7 +169,16 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
         {
             async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
             {
-                await 继教活动.发布继教活动(data, dbForTransaction, transaction);
+                //await 继教活动.发布继教活动(data, dbForTransaction, transaction);
+                await 继教活动.发布继教活动(
+                    data,
+                    CurrentUser.DbKey,
+                    Config.GetValue<string>(Env.IsDevelopment() == true ? "WechatSetting:TestappId" : "WechatSetting:appId"),
+                    Config.GetValue<string>(Env.IsDevelopment() == true ? "WechatSetting:TestappSecret" : "WechatSetting:appSecret"),
+                    Config.GetValue<string>(Env.IsDevelopment() == true ? "WechatSetting:TestTemplate_id" : "WechatSetting:template_id_appointment"),
+                    CurrentUser.部门名称,
+                    dbForTransaction,
+                    transaction);
             }
 
             await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
@@ -352,10 +362,11 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
 
         #region 活动层面的统计,相对于512的"活动统计"
         [HttpGet]
-        async public Task<object> 分页获取某活动的通过情况统计(Paging paging, int 活动编号)
+        async public Task<object> 分页获取某活动的通过情况统计(Paging paging, int 活动编号, 某活动的通过情况统计Filter filter)
         {
-            return await Db.GetPagingListSpAsync<v_tfn_继教某活动的通过情况统计>(
+            return await Db.GetPagingListSpAsync<v_tfn_继教某活动的通过情况统计, 某活动的通过情况统计Filter>(
                 paging,
+                filter,
                 $"tfn_继教某活动的通过情况统计({活动编号})"
                 );
         }

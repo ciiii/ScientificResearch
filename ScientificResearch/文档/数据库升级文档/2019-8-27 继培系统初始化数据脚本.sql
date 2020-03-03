@@ -79,8 +79,8 @@ INSERT dbo.继教权限
         ( 编号, 上级编号, 深度, 排序值, 名称, 组件名, 是否菜单, 图标, 备注 )
 VALUES  ( 1,0,1,0,N'学习',N'ForClass', 1,N'',N'' ),
 ( 101,1,2,1,N'学习活动',N'ForClassActivity', 1,N'',N'' ),
-( 102,1,2,2,N'素材库',N'ForClassMaterial', 1,N'',N'' ),
-( 103,1,2,3,N'题库',N'ForClassQuestionBank', 1,N'',N'' ),
+( 102,1,2,2,N'学习资源',N'ForClassMaterial', 1,N'',N'' ),
+( 103,1,2,3,N'题库资源',N'ForClassQuestionBank', 1,N'',N'' ),
 
 ( 2,0,1,0,N'考试',N'Test', 1,N'',N'' ),
 ( 201,2,2,1,N'理论考试',N'TestTheory', 1,N'',N'' ),

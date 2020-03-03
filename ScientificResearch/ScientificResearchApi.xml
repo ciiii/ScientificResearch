@@ -2056,7 +2056,7 @@
             <param name="transaction"></param>
             <returns></returns>
         </member>
-        <member name="M:ScientificResearch.Models.继教活动.发布继教活动(ScientificResearch.Models.发布继教活动,System.Data.IDbConnection,System.Data.IDbTransaction)">
+        <member name="M:ScientificResearch.Models.继教活动.发布继教活动(ScientificResearch.Models.发布继教活动,System.String,System.String,System.String,System.String,System.String,System.Data.IDbConnection,System.Data.IDbTransaction)">
             <summary>
             只有未发布的活动才可以发布
             必须要有活动内容
@@ -6033,6 +6033,16 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.sp_继教试卷试题_增改.tt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.sp_继教试题_删">
+            <summary>
+            sp_继教试题_删[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.sp_继教试题_删.tt_编号">
             <summary>
             
             </summary>
@@ -24402,17 +24412,22 @@
             
             </summary>
         </member>
-        <member name="P:ScientificResearch.Models.v_tfn_继教某活动的通过情况统计.活动内容数量">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="P:ScientificResearch.Models.v_tfn_继教某活动的通过情况统计.参与活动内容次数">
             <summary>
             
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_tfn_继教某活动的通过情况统计.通过活动内容次数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某活动的通过情况统计.活动内容数量">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某活动的通过情况统计.是否完成">
             <summary>
             
             </summary>
@@ -28933,6 +28948,41 @@
             </summary>
         </member>
         <member name="P:ScientificResearch.Models.v_继教活动可参与人.可参与人称谓">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ScientificResearch.Models.v_继教活动可参与人OpenId">
+            <summary>
+            v_继教活动可参与人OpenId[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教活动可参与人OpenId.活动编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教活动可参与人OpenId.可参与人类型">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教活动可参与人OpenId.可参与人编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教活动可参与人OpenId.编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教活动可参与人OpenId.OpenId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_继教活动可参与人OpenId.DbKey">
             <summary>
             
             </summary>

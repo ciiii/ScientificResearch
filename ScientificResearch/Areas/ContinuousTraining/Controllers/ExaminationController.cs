@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -402,7 +403,16 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
         {
             async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
             {
-                await 继教活动.发布继教活动(data, dbForTransaction, transaction);
+                //await 继教活动.发布继教活动(data, dbForTransaction, transaction);
+                await 继教活动.发布继教活动(
+                    data,
+                    CurrentUser.DbKey,
+                    Config.GetValue<string>(Env.IsDevelopment() == true ? "WechatSetting:TestappId" : "WechatSetting:appId"),
+                    Config.GetValue<string>(Env.IsDevelopment() == true ? "WechatSetting:TestappSecret" : "WechatSetting:appSecret"),
+                    Config.GetValue<string>(Env.IsDevelopment() == true ? "WechatSetting:TestTemplate_id" : "WechatSetting:template_id_appointment"),
+                    CurrentUser.部门名称,
+                    dbForTransaction,
+                    transaction);
             }
 
             await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
@@ -661,7 +671,17 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
         {
             async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
             {
-                await 继教活动.发布继教活动(data, dbForTransaction, transaction);
+                //await 继教活动.发布继教活动(data, dbForTransaction, transaction);
+
+                await 继教活动.发布继教活动(
+                    data,
+                    CurrentUser.DbKey,
+                    Config.GetValue<string>(Env.IsDevelopment() == true ? "WechatSetting:TestappId" : "WechatSetting:appId"),
+                    Config.GetValue<string>(Env.IsDevelopment() == true ? "WechatSetting:TestappSecret" : "WechatSetting:appSecret"),
+                    Config.GetValue<string>(Env.IsDevelopment() == true ? "WechatSetting:TestTemplate_id" : "WechatSetting:template_id_appointment"),
+                    CurrentUser.部门名称,
+                    dbForTransaction,
+                    transaction);
             }
 
             await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);
@@ -820,7 +840,16 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
         {
             async Task myTran(SqlConnection dbForTransaction, SqlTransaction transaction)
             {
-                await 继教活动.发布继教活动(data, dbForTransaction, transaction);
+                //await 继教活动.发布继教活动(data, dbForTransaction, transaction);
+                await 继教活动.发布继教活动(
+                    data,
+                    CurrentUser.DbKey,
+                    Config.GetValue<string>(Env.IsDevelopment() == true ? "WechatSetting:TestappId" : "WechatSetting:appId"),
+                    Config.GetValue<string>(Env.IsDevelopment() == true ? "WechatSetting:TestappSecret" : "WechatSetting:appSecret"),
+                    Config.GetValue<string>(Env.IsDevelopment() == true ? "WechatSetting:TestTemplate_id" : "WechatSetting:template_id_appointment"),
+                    CurrentUser.部门名称,
+                    dbForTransaction,
+                    transaction);
             }
 
             await PredefinedSpExtention.ExecuteTransaction(DbConnectionString, myTran);

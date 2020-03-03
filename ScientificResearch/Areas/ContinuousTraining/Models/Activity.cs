@@ -1,4 +1,5 @@
-﻿using ScientificResearch.Infrastucture;
+﻿using MyLib;
+using ScientificResearch.Infrastucture;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,7 +20,13 @@ namespace ScientificResearch.Models
     /// </summary>
     public enum 活动内容类型
     {
-        继教慕课, 继教课后练习, 继教理论考试, 继教操作考试, 继教签到,继教自测
+        继教慕课, 继教课后练习, 继教理论考试, 继教操作考试, 继教签到, 继教自测
+    }
+
+    public class 继教活动可参与人OpenId_Filter
+    {
+        public string DbKey { get; set; }
+        public int 活动编号 { get; set; }
     }
 
     public partial class 继教活动
@@ -94,7 +101,15 @@ namespace ScientificResearch.Models
         /// <param name="db"></param>
         /// <param name="transaction"></param>
         /// <returns></returns>
-        async static public Task 发布继教活动(发布继教活动 data, IDbConnection db, IDbTransaction transaction = null)
+        async static public Task 发布继教活动(
+            发布继教活动 data, 
+            string dbKey, 
+            string appId,
+            string appSecret,
+            string template_id,
+            string 发送部门名称, 
+            IDbConnection db, 
+            IDbTransaction transaction = null)
         {
             var 活动视图 = await db.GetModelByIdSpAsync<v_继教活动>(data.活动编号, transaction: transaction);
 
@@ -128,7 +143,7 @@ namespace ScientificResearch.Models
                 new 继教考试批次可参与人Filter()
                 {
                     活动编号 = data.活动编号
-                },transaction:transaction);
+                }, transaction: transaction);
 
             if (!考试可参与人列表.All(i => data.活动可参与人.Any(j => j.可参与人类型 == i.可参与人类型 && j.可参与人编号 == i.可参与人编号)))
             {
@@ -142,15 +157,78 @@ namespace ScientificResearch.Models
 
             await db.Merge(data.活动编号, data.活动可参与人, transaction: transaction);
 
+            //群发微信模板消息
+            await 发送微信模板消息(
+                db, 
+                dbKey, 
+                data.活动编号, 
+                appId, 
+                appSecret, 
+                template_id, 
+                活动.名称, 
+                data.开始时间.ToString(), 
+                data.结束时间.ToString(), 
+                发送部门名称,transaction);
         }
+
+        async static Task 发送微信模板消息(
+            IDbConnection db,
+            string dbKey,
+            int 活动编号,
+            string appId,
+            string appSecret,
+            string template_id,
+            string 活动名称,
+            string 开始时间,
+            string 结束时间,
+            //string 地点,
+            string 发送部门名称, IDbTransaction transaction = null)
+        {
+            //var appId = Config.GetValue<string>(Env.IsDevelopment() == true ? "WechatSetting:TestappId" : "WechatSetting:appId");
+            //var appSecret = Config.GetValue<string>(Env.IsDevelopment() == true ? "WechatSetting:TestappSecret" : "WechatSetting:appSecret");
+
+            var openIdList = await db.GetListSpAsync<v_继教活动可参与人OpenId, 继教活动可参与人OpenId_Filter>(
+                new 继教活动可参与人OpenId_Filter()
+                {
+                    DbKey = dbKey,
+                    活动编号 = 活动编号
+                },transaction: transaction);
+
+            foreach (var item in openIdList)
+            {
+                var myMessage = new MyWxTemplate()
+                {
+                    //touser = Config.GetValue<string>(Env.IsDevelopment() == true ? "WechatSetting:TestOpenId" : "WechatSetting:openId"),
+                    touser = item.OpenId,
+                    //url = "www.baidu.com",
+                    //template_id = Config.GetValue<string>(Env.IsDevelopment() ==
+                    //true ? "WechatSetting:TestTemplate_id" : "WechatSetting:template_id_appointment"),
+                    template_id = template_id,
+                    data = new MyWxData()
+                    {
+                        first = new MyWxFirst() { value = "您好，您有新的待参与的项目！" },
+                        keyword1 = new MyWxKeynote() { value = 活动名称 },
+                        keyword2 = new MyWxKeynote() { value = 开始时间 },
+                        keyword3 = new MyWxKeynote() { value = 结束时间 },
+                        keyword4 = new MyWxKeynote() { value = "" },
+                        keyword5 = new MyWxKeynote() { value = 发送部门名称 },
+                        remark = new MyWxRemark() { value = "请准时参与！" }
+                    }
+                };
+
+                MyWx.SentMessage(appId, appSecret, myMessage);
+            }
+        }
+
+
         #endregion
 
         #region 微信端参与者
-        async static public Task<object> 获取某人可参与的活动详情(int 活动编号,string 人员类型,int 人员编号 ,IDbConnection db, IDbTransaction transaction = null)
+        async static public Task<object> 获取某人可参与的活动详情(int 活动编号, string 人员类型, int 人员编号, IDbConnection db, IDbTransaction transaction = null)
         {
             var 活动基本信息 = await db.GetModelByIdSpAsync<v_tfn_继教某人可参与的活动>(
                 活动编号,
-                tableName: $"tfn_继教某人可参与的活动('{人员类型}',{人员编号})", 
+                tableName: $"tfn_继教某人可参与的活动('{人员类型}',{人员编号})",
                 transaction: transaction);
 
             var 活动内容列表 = await db.GetListSpAsync<v_tfn_继教某人可参与的活动内容>(
