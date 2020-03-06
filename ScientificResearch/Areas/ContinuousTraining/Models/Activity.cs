@@ -168,6 +168,7 @@ namespace ScientificResearch.Models
                 活动.名称, 
                 data.开始时间.ToString(), 
                 data.结束时间.ToString(), 
+                data.地点,
                 发送部门名称,transaction);
         }
 
@@ -181,6 +182,7 @@ namespace ScientificResearch.Models
             string 活动名称,
             string 开始时间,
             string 结束时间,
+            string 地点,
             //string 地点,
             string 发送部门名称, IDbTransaction transaction = null)
         {
@@ -210,7 +212,7 @@ namespace ScientificResearch.Models
                         keyword1 = new MyWxKeynote() { value = 活动名称 },
                         keyword2 = new MyWxKeynote() { value = 开始时间 },
                         keyword3 = new MyWxKeynote() { value = 结束时间 },
-                        keyword4 = new MyWxKeynote() { value = "" },
+                        keyword4 = new MyWxKeynote() { value = 地点 },
                         keyword5 = new MyWxKeynote() { value = 发送部门名称 },
                         remark = new MyWxRemark() { value = "请准时参与！" }
                     }
@@ -251,6 +253,7 @@ namespace ScientificResearch.Models
         public int 活动编号 { get; set; }
         public DateTime 开始时间 { get; set; }
         public DateTime 结束时间 { get; set; }
+        public string 地点 { get; set; }
         public IEnumerable<继教活动可参与人> 活动可参与人 { get; set; }
 
     }

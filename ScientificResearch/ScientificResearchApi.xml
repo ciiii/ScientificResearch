@@ -24392,6 +24392,31 @@
             
             </summary>
         </member>
+        <member name="T:ScientificResearch.Models.v_tfn_继教某活动按科室统计通过人数">
+            <summary>
+            v_tfn_继教某活动按科室统计通过人数[类]
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某活动按科室统计通过人数.部门编号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某活动按科室统计通过人数.部门名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某活动按科室统计通过人数.参与人数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ScientificResearch.Models.v_tfn_继教某活动按科室统计通过人数.完成人数">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ScientificResearch.Models.v_tfn_继教某活动的通过情况统计">
             <summary>
             v_tfn_继教某活动的通过情况统计[类]

@@ -370,6 +370,12 @@ namespace ScientificResearch.Areas.ContinuousTraining.Controllers
                 $"tfn_继教某活动的通过情况统计({活动编号})"
                 );
         }
+
+        [HttpGet]
+        async public Task<object> 获取某活动按科室统计通过人数(int 活动编号)
+        {
+            return await Db.GetListSpAsync<v_tfn_继教某活动按科室统计通过人数>($"tfn_继教某活动按科室统计通过人数({活动编号})");
+        }
         #endregion
     }
 }
